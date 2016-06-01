@@ -19,7 +19,10 @@ public class WxMpUserGsonAdapter implements JsonDeserializer<WxMpUser> {
   public WxMpUser deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     JsonObject o = json.getAsJsonObject();
     WxMpUser wxMpUser = new WxMpUser();
-    wxMpUser.setSubscribe(new Integer(0).equals(GsonHelper.getInteger(o, "subscribe")) ? false : true);
+    Integer subscribe = GsonHelper.getInteger(o, "subscribe");
+    if (subscribe != null) {
+      wxMpUser.setSubscribe(new Integer(0).equals(subscribe) ? false : true);
+    }
     wxMpUser.setCity(GsonHelper.getString(o, "city"));
     wxMpUser.setCountry(GsonHelper.getString(o, "country"));
     wxMpUser.setHeadImgUrl(GsonHelper.getString(o, "headimgurl"));

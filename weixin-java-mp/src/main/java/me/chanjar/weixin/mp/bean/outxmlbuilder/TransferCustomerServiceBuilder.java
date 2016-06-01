@@ -5,7 +5,7 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutTransferCustomerServiceMessage;
 /**
  * 客服消息builder
  * <pre>
- * 用法: WxMpCustomMessage m = WxMpCustomMessage.TRANSFER_CUSTOMER_SERVICE().content(...).toUser(...).build();
+ * 用法: WxMpCustomMessage m = WxMpXmlOutMessage.TRANSFER_CUSTOMER_SERVICE().content(...).toUser(...).build();
  * </pre>
  *
  * @author chanjarster

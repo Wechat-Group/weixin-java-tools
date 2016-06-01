@@ -2,6 +2,8 @@ package me.chanjar.weixin.mp.api;
 
 import java.io.File;
 
+import javax.net.ssl.SSLContext;
+
 import me.chanjar.weixin.common.bean.WxAccessToken;
 
 /**
@@ -34,6 +36,8 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
    * 临时文件目录
    */
   protected volatile File tmpDirFile;
+  
+  protected volatile SSLContext sslContext;
   
   public String getAccessToken() {
     return this.accessToken;
@@ -217,6 +221,15 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
 
   public void setTmpDirFile(File tmpDirFile) {
     this.tmpDirFile = tmpDirFile;
+  }
+
+  @Override
+  public SSLContext getSSLContext() {
+    return sslContext;
+  }
+  
+  public void setSSLContext(SSLContext context) {
+    sslContext = context;
   }
 
 }

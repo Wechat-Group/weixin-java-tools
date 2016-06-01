@@ -1,8 +1,8 @@
 package me.chanjar.weixin.mp.bean.result;
 
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
+
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 public class WxMpOAuth2AccessToken implements Serializable {
 
@@ -15,6 +15,8 @@ public class WxMpOAuth2AccessToken implements Serializable {
   private String openId;
 
   private String scope;
+
+  private String unionId;
 
   public String getRefreshToken() {
     return refreshToken;
@@ -56,6 +58,14 @@ public class WxMpOAuth2AccessToken implements Serializable {
     this.expiresIn = expiresIn;
   }
 
+  public String getUnionId() {
+    return unionId;
+  }
+
+  public void setUnionId(String unionId) {
+    this.unionId = unionId;
+  }
+
   public static WxMpOAuth2AccessToken fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(json, WxMpOAuth2AccessToken.class);
   }
@@ -68,6 +78,7 @@ public class WxMpOAuth2AccessToken implements Serializable {
         ", refreshToken='" + refreshToken + '\'' +
         ", openId='" + openId + '\'' +
         ", scope='" + scope + '\'' +
+        ", unionId='" + unionId + '\'' +
         '}';
   }
 }

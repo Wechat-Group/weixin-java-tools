@@ -248,7 +248,6 @@ public class WxCryptUtil {
             }
         }
         toSign.append("key=" + signKey);
-        System.out.println(toSign.toString());
         String sign = DigestUtils.md5Hex(toSign.toString())
                 .toUpperCase();
         return sign;

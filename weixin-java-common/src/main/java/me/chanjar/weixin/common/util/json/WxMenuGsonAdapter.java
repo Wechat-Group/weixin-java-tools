@@ -10,8 +10,7 @@ package me.chanjar.weixin.common.util.json;
 
 import java.lang.reflect.Type;
 
-import me.chanjar.weixin.common.bean.WxMenu;
-
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -20,6 +19,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+
+import me.chanjar.weixin.common.bean.WxMenu;
 
 /**
  * 
@@ -37,6 +38,11 @@ public class WxMenuGsonAdapter implements JsonSerializer<WxMenu>, JsonDeserializ
       buttonArray.add(buttonJson);
     }
     json.add("button", buttonArray);
+    
+    if (menu.getMatchRule() != null) {
+      Gson gson = new Gson();
+      json.add("matchrule", gson.toJsonTree(menu.getMatchRule()));
+    }
     
     return json;
   }

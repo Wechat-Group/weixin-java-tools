@@ -5,12 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -67,6 +66,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUserCumulate;
 import me.chanjar.weixin.mp.bean.result.WxMpUserList;
 import me.chanjar.weixin.mp.bean.result.WxMpUserSummary;
+import me.chanjar.weixin.mp.bean.result.WxRedpackResult;
 import me.chanjar.weixin.mp.util.http.MaterialDeleteRequestExecutor;
 import me.chanjar.weixin.mp.util.http.MaterialNewsInfoRequestExecutor;
 import me.chanjar.weixin.mp.util.http.MaterialUploadRequestExecutor;
@@ -75,7 +75,6 @@ import me.chanjar.weixin.mp.util.http.MaterialVoiceAndImageDownloadRequestExecut
 import me.chanjar.weixin.mp.util.http.QrCodeRequestExecutor;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -86,13 +85,16 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.MessageFormatter;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -228,13 +230,23 @@ public class WxMpServiceImpl implements WxMpService {
   }
 
   public void menuCreate(WxMenu menu) throws WxErrorException {
-    String url = "https://api.weixin.qq.com/cgi-bin/menu/create";
-    execute(new SimplePostRequestExecutor(), url, menu.toJson());
+    if (menu.getMatchRule() != null) {
+      String url = "https://api.weixin.qq.com/cgi-bin/menu/addconditional";
+      execute(new SimplePostRequestExecutor(), url, menu.toJson());
+    } else {
+      String url = "https://api.weixin.qq.com/cgi-bin/menu/create";
+      execute(new SimplePostRequestExecutor(), url, menu.toJson());
+    }
   }
 
   public void menuDelete() throws WxErrorException {
     String url = "https://api.weixin.qq.com/cgi-bin/menu/delete";
     execute(new SimpleGetRequestExecutor(), url, null);
+  }
+  
+  public void menuDelete(String menuid) throws WxErrorException {
+    String url = "https://api.weixin.qq.com/cgi-bin/menu/delconditional";
+    execute(new SimpleGetRequestExecutor(), url, "menuid=" + menuid);
   }
 
   public WxMenu menuGet() throws WxErrorException {
@@ -245,6 +257,20 @@ public class WxMpServiceImpl implements WxMpService {
     } catch (WxErrorException e) {
       // 46003 不存在的菜单数据
       if (e.getError().getErrorCode() == 46003) {
+        return null;
+      }
+      throw e;
+    }
+  }
+  
+  public WxMenu menuTryMatch(String userid) throws WxErrorException {
+    String url = "https://api.weixin.qq.com/cgi-bin/menu/trymatch";
+    try {
+      String resultContent = execute(new SimpleGetRequestExecutor(), url, "user_id=" + userid);
+      return WxMenu.fromJson(resultContent);
+    } catch (WxErrorException e) {
+      // 46003 不存在的菜单数据     46002 不存在的菜单版本
+      if (e.getError().getErrorCode() == 46003 || e.getError().getErrorCode() == 46002) {
         return null;
       }
       throw e;
@@ -506,7 +532,10 @@ public class WxMpServiceImpl implements WxMpService {
     String url = "https://api.weixin.qq.com/cgi-bin/message/template/send";
     String responseContent = execute(new SimplePostRequestExecutor(), url, templateMessage.toJson());
     JsonElement tmpJsonElement = Streams.parse(new JsonReader(new StringReader(responseContent)));
-    return tmpJsonElement.getAsJsonObject().get("msgid").getAsString();
+    final JsonObject jsonObject = tmpJsonElement.getAsJsonObject();
+    if (jsonObject.get("errcode").getAsInt() == 0)
+      return jsonObject.get("msgid").getAsString();
+    throw new WxErrorException(WxError.fromJson(responseContent));
   }
 
   public WxMpSemanticQueryResult semanticQuery(WxMpSemanticQuery semanticQuery) throws WxErrorException {
@@ -634,8 +663,9 @@ public class WxMpServiceImpl implements WxMpService {
     param.addProperty("end_date", SIMPLE_DATE_FORMAT.format(endDate));
     String responseContent = post(url, param.toString());
     JsonElement tmpJsonElement = Streams.parse(new JsonReader(new StringReader(responseContent)));
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(tmpJsonElement.getAsJsonObject().get("list"), new TypeToken<List<WxMpUserSummary>>() {
-    }.getType());
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(tmpJsonElement.getAsJsonObject().get("list"),
+        new TypeToken<List<WxMpUserSummary>>() {
+        }.getType());
   }
 
   @Override
@@ -695,7 +725,7 @@ public class WxMpServiceImpl implements WxMpService {
     throw new RuntimeException("微信服务端异常，超出重试次数");
   }
 
-  protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  protected synchronized <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
     if (uri.indexOf("access_token=") != -1) {
       throw new IllegalArgumentException("uri参数中不允许有access_token: " + uri);
     }
@@ -741,6 +771,7 @@ public class WxMpServiceImpl implements WxMpService {
     String http_proxy_username = wxMpConfigStorage.getHttp_proxy_username();
     String http_proxy_password = wxMpConfigStorage.getHttp_proxy_password();
 
+    final HttpClientBuilder builder = HttpClients.custom();
     if (StringUtils.isNotBlank(http_proxy_host)) {
       // 使用代理服务器
       if (StringUtils.isNotBlank(http_proxy_username)) {
@@ -749,18 +780,22 @@ public class WxMpServiceImpl implements WxMpService {
         credsProvider.setCredentials(
             new AuthScope(http_proxy_host, http_proxy_port),
             new UsernamePasswordCredentials(http_proxy_username, http_proxy_password));
-        httpClient = HttpClients
-            .custom()
-            .setDefaultCredentialsProvider(credsProvider)
-            .build();
+        builder
+            .setDefaultCredentialsProvider(credsProvider);
       } else {
         // 无需用户认证的代理服务器
-        httpClient = HttpClients.createDefault();
       }
       httpProxy = new HttpHost(http_proxy_host, http_proxy_port);
-    } else {
-      httpClient = HttpClients.createDefault();
     }
+    if (wxConfigProvider.getSSLContext() != null){
+      SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+          wxConfigProvider.getSSLContext(),
+          new String[] { "TLSv1" },
+          null,
+          SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+      builder.setSSLSocketFactory(sslsf);
+    }
+    httpClient = builder.build();
   }
 
   @Override
@@ -776,35 +811,37 @@ public class WxMpServiceImpl implements WxMpService {
 
   @Override
   public WxMpPrepayIdResult getPrepayId(String openId, String outTradeNo, double amt, String body, String tradeType, String ip, String callbackUrl) {
-    String nonce_str = System.currentTimeMillis() + "";
-
-    SortedMap<String, String> packageParams = new TreeMap<String, String>();
+    Map<String, String> packageParams = new HashMap<String, String>();
     packageParams.put("appid", wxMpConfigStorage.getAppId());
     packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
-    packageParams.put("nonce_str", nonce_str);
     packageParams.put("body", body);
     packageParams.put("out_trade_no", outTradeNo);
-
     packageParams.put("total_fee", (int) (amt * 100) + "");
     packageParams.put("spbill_create_ip", ip);
     packageParams.put("notify_url", callbackUrl);
     packageParams.put("trade_type", tradeType);
     packageParams.put("openid", openId);
 
+    return getPrepayId(packageParams);
+  }
+
+  public WxMpPrepayIdResult getPrepayId(final Map<String, String> parameters) {
+    String nonce_str = System.currentTimeMillis() + "";
+
+    final SortedMap<String, String> packageParams = new TreeMap<String, String>(parameters);
+    packageParams.put("appid", wxMpConfigStorage.getAppId());
+    packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
+    packageParams.put("nonce_str", nonce_str);
+    checkParameters(packageParams);
+
     String sign = WxCryptUtil.createSign(packageParams, wxMpConfigStorage.getPartnerKey());
-    String xml = "<xml>" +
-        "<appid>" + wxMpConfigStorage.getAppId() + "</appid>" +
-        "<mch_id>" + wxMpConfigStorage.getPartnerId() + "</mch_id>" +
-        "<nonce_str>" + nonce_str + "</nonce_str>" +
-        "<sign>" + sign + "</sign>" +
-        "<body><![CDATA[" + body + "]]></body>" +
-        "<out_trade_no>" + outTradeNo + "</out_trade_no>" +
-        "<total_fee>" + packageParams.get("total_fee") + "</total_fee>" +
-        "<spbill_create_ip>" + ip + "</spbill_create_ip>" +
-        "<notify_url>" + callbackUrl + "</notify_url>" +
-        "<trade_type>" + tradeType + "</trade_type>" +
-        "<openid>" + openId + "</openid>" +
-        "</xml>";
+    packageParams.put("sign", sign);
+
+    StringBuilder request = new StringBuilder("<xml>");
+    for (Entry<String, String> para : packageParams.entrySet()) {
+      request.append(String.format("<%s>%s</%s>", para.getKey(), para.getValue(), para.getKey()));
+    }
+    request.append("</xml>");
 
     HttpPost httpPost = new HttpPost("https://api.mch.weixin.qq.com/pay/unifiedorder");
     if (httpProxy != null) {
@@ -812,7 +849,7 @@ public class WxMpServiceImpl implements WxMpService {
       httpPost.setConfig(config);
     }
 
-    StringEntity entity = new StringEntity(xml, Consts.UTF_8);
+    StringEntity entity = new StringEntity(request.toString(), Consts.UTF_8);
     httpPost.setEntity(entity);
     try {
       CloseableHttpResponse response = getHttpclient().execute(httpPost);
@@ -822,17 +859,46 @@ public class WxMpServiceImpl implements WxMpService {
       WxMpPrepayIdResult wxMpPrepayIdResult = (WxMpPrepayIdResult) xstream.fromXML(responseContent);
       return wxMpPrepayIdResult;
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException("Failed to get prepay id due to IO exception.", e);
     }
-    return new WxMpPrepayIdResult();
+  }
+
+  final String[] REQUIRED_ORDER_PARAMETERS = new String[] { "appid", "mch_id", "body", "out_trade_no", "total_fee", "spbill_create_ip", "notify_url",
+      "trade_type", };
+
+  private void checkParameters(Map<String, String> parameters) {
+    for (String para : REQUIRED_ORDER_PARAMETERS) {
+      if (!parameters.containsKey(para))
+        throw new IllegalArgumentException("Reqiured argument '" + para + "' is missing.");
+    }
+    if ("JSAPI".equals(parameters.get("trade_type")) && !parameters.containsKey("openid"))
+      throw new IllegalArgumentException("Reqiured argument 'openid' is missing when trade_type is 'JSAPI'.");
+    if ("NATIVE".equals(parameters.get("trade_type")) && !parameters.containsKey("product_id"))
+      throw new IllegalArgumentException("Reqiured argument 'product_id' is missing when trade_type is 'NATIVE'.");
   }
 
   @Override
   public Map<String, String> getJSSDKPayInfo(String openId, String outTradeNo, double amt, String body, String tradeType, String ip, String callbackUrl) {
-    WxMpPrepayIdResult wxMpPrepayIdResult = getPrepayId(openId, outTradeNo, amt, body, tradeType, ip, callbackUrl);
+    Map<String, String> packageParams = new HashMap<String, String>();
+    packageParams.put("appid", wxMpConfigStorage.getAppId());
+    packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
+    packageParams.put("body", body);
+    packageParams.put("out_trade_no", outTradeNo);
+    packageParams.put("total_fee", (int) (amt * 100) + "");
+    packageParams.put("spbill_create_ip", ip);
+    packageParams.put("notify_url", callbackUrl);
+    packageParams.put("trade_type", tradeType);
+    packageParams.put("openid", openId);
+
+    return getJSSDKPayInfo(packageParams);
+  }
+
+  @Override
+  public Map<String, String> getJSSDKPayInfo(Map<String, String> parameters) {
+    WxMpPrepayIdResult wxMpPrepayIdResult = getPrepayId(parameters);
     String prepayId = wxMpPrepayIdResult.getPrepay_id();
     if (prepayId == null || prepayId.equals("")) {
-      throw new RuntimeException("get prepayid error");
+      throw new RuntimeException(String.format("Failed to get prepay id due to error code '%s'(%s).", wxMpPrepayIdResult.getErr_code(), wxMpPrepayIdResult.getErr_code_des()));
     }
 
     Map<String, String> payInfo = new HashMap<String, String>();
@@ -850,44 +916,44 @@ public class WxMpServiceImpl implements WxMpService {
 
   @Override
   public WxMpPayResult getJSSDKPayResult(String transactionId, String outTradeNo) {
-      String nonce_str = System.currentTimeMillis() + "";
+    String nonce_str = System.currentTimeMillis() + "";
 
-      SortedMap<String, String> packageParams = new TreeMap<String, String>();
-      packageParams.put("appid", wxMpConfigStorage.getAppId());
-      packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
+    SortedMap<String, String> packageParams = new TreeMap<String, String>();
+    packageParams.put("appid", wxMpConfigStorage.getAppId());
+    packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
+    if (transactionId != null && !"".equals(transactionId.trim()))
       packageParams.put("transaction_id", transactionId);
+    else if (outTradeNo != null && !"".equals(outTradeNo.trim()))
       packageParams.put("out_trade_no", outTradeNo);
-      packageParams.put("nonce_str", nonce_str);
+    else
+      throw new IllegalArgumentException("Either 'transactionId' or 'outTradeNo' must be given.");
+    packageParams.put("nonce_str", nonce_str);
+    packageParams.put("sign", WxCryptUtil.createSign(packageParams, wxMpConfigStorage.getPartnerKey()));
 
-      String sign = WxCryptUtil.createSign(packageParams, wxMpConfigStorage.getPartnerKey());
-      String xml = "<xml>" +
-              "<appid>" + wxMpConfigStorage.getAppId() + "</appid>" +
-              "<mch_id>" + wxMpConfigStorage.getPartnerId() + "</mch_id>" +
-              "<transaction_id>" + transactionId + "</transaction_id>" +
-              "<out_trade_no>" + outTradeNo + "</out_trade_no>" +
-              "<nonce_str>" + nonce_str + "</nonce_str>" +
-              "<sign>" + sign + "</sign>" +
-              "</xml>";
+    StringBuilder request = new StringBuilder("<xml>");
+    for (Entry<String, String> para : packageParams.entrySet()) {
+      request.append(String.format("<%s>%s</%s>", para.getKey(), para.getValue(), para.getKey()));
+    }
+    request.append("</xml>");
 
-      HttpPost httpPost = new HttpPost("https://api.mch.weixin.qq.com/pay/orderquery");
-      if (httpProxy != null) {
-        RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
-        httpPost.setConfig(config);
-      }
+    HttpPost httpPost = new HttpPost("https://api.mch.weixin.qq.com/pay/orderquery");
+    if (httpProxy != null) {
+      RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
+      httpPost.setConfig(config);
+    }
 
-      StringEntity entity = new StringEntity(xml, Consts.UTF_8);
-      httpPost.setEntity(entity);
-      try {
-        CloseableHttpResponse response = httpClient.execute(httpPost);
-        String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-        XStream xstream = XStreamInitializer.getInstance();
-        xstream.alias("xml", WxMpPayResult.class);
-        WxMpPayResult wxMpPayResult = (WxMpPayResult) xstream.fromXML(responseContent);
-        return wxMpPayResult;
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      return new WxMpPayResult();
+    StringEntity entity = new StringEntity(request.toString(), Consts.UTF_8);
+    httpPost.setEntity(entity);
+    try {
+      CloseableHttpResponse response = httpClient.execute(httpPost);
+      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
+      XStream xstream = XStreamInitializer.getInstance();
+      xstream.alias("xml", WxMpPayResult.class);
+      WxMpPayResult wxMpPayResult = (WxMpPayResult) xstream.fromXML(responseContent);
+      return wxMpPayResult;
+    } catch (IOException e) {
+      throw new RuntimeException("Failed to query order due to IO exception.", e);
+    }
   }
 
   @Override
@@ -903,5 +969,49 @@ public class WxMpServiceImpl implements WxMpService {
     return new WxMpPayCallback();
   }
   
-  
+  @Override
+  public boolean checkJSSDKCallbackDataSignature(Map<String, String> kvm, String signature) {
+	  return signature.equals(WxCryptUtil.createSign(kvm, wxMpConfigStorage.getPartnerKey()));
+  }
+
+  @Override
+  public WxRedpackResult sendRedpack(Map<String, String> parameters) throws WxErrorException {
+    String nonce_str = System.currentTimeMillis() + "";
+
+    SortedMap<String, String> packageParams = new TreeMap<String, String>(parameters);
+    packageParams.put("wxappid", wxMpConfigStorage.getAppId());
+    packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
+    packageParams.put("nonce_str", nonce_str);
+
+    String sign = WxCryptUtil.createSign(packageParams, wxMpConfigStorage.getPartnerKey());
+    packageParams.put("sign", sign);
+    
+    StringBuilder request = new StringBuilder("<xml>");
+    for (Entry<String, String> para : packageParams.entrySet()) {
+      request.append(String.format("<%s>%s</%s>", para.getKey(), para.getValue(), para.getKey()));
+    }
+    request.append("</xml>");
+    
+    HttpPost httpPost = new HttpPost("https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack");
+    if (httpProxy != null) {
+      RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
+      httpPost.setConfig(config);
+    }
+
+    StringEntity entity = new StringEntity(request.toString(), Consts.UTF_8);
+    httpPost.setEntity(entity);
+    try {
+      CloseableHttpResponse response = getHttpclient().execute(httpPost);
+      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
+      XStream xstream = XStreamInitializer.getInstance();
+      xstream.processAnnotations(WxRedpackResult.class);
+      WxRedpackResult wxMpRedpackResult = (WxRedpackResult) xstream.fromXML(responseContent);
+      return wxMpRedpackResult;
+    } catch (IOException e) {
+      log.error(MessageFormatter.format("The exception was happened when sending redpack '{}'.", request.toString()).getMessage(), e);
+      WxError error = new WxError();
+      error.setErrorCode(-1);
+      throw new WxErrorException(error);
+    }
+  }
 }

@@ -11,6 +11,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 
 import me.chanjar.weixin.common.bean.result.WxError;
@@ -35,6 +36,7 @@ public class MediaUploadRequestExecutor implements RequestExecutor<WxMediaUpload
       HttpEntity entity = MultipartEntityBuilder
             .create()
             .addBinaryBody("media", file)
+            .setMode(HttpMultipartMode.RFC6532)
             .build();
       httpPost.setEntity(entity);
       httpPost.setHeader("Content-Type", ContentType.MULTIPART_FORM_DATA.toString());

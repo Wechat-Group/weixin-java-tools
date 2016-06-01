@@ -30,6 +30,8 @@ public class WxConsts {
   public static final String CUSTOM_MSG_NEWS = "news";
   public static final String CUSTOM_MSG_FILE = "file";
   public static final String CUSTOM_MSG_TRANSFER_CUSTOMER_SERVICE = "transfer_customer_service";
+  public static final String CUSTOM_MSG_SAFE_NO = "0";
+  public static final String CUSTOM_MSG_SAFE_YES = "1";
   
   ///////////////////////
   // 群发消息的消息类型

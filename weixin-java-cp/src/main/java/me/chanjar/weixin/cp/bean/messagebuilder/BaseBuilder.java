@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.bean.messagebuilder;
 
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 
 public class BaseBuilder<T> {
@@ -8,6 +9,7 @@ public class BaseBuilder<T> {
   protected String toUser;
   protected String toParty;
   protected String toTag;
+  protected String safe;
 
   public T agentId(String agentId) {
     this.agentId = agentId;
@@ -29,6 +31,11 @@ public class BaseBuilder<T> {
     return (T) this;
   }
 
+  public T safe(String safe) {
+    this.safe = safe;
+    return (T) this;
+  }
+
   public WxCpMessage build() {
     WxCpMessage m = new WxCpMessage();
     m.setAgentId(this.agentId);
@@ -36,6 +43,8 @@ public class BaseBuilder<T> {
     m.setToUser(this.toUser);
     m.setToParty(this.toParty);
     m.setToTag(this.toTag);
+    m.setSafe(
+      (this.safe == null || "".equals(this.safe))? WxConsts.CUSTOM_MSG_SAFE_NO: this.safe);
     return m;
   }
 

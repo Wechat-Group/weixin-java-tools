@@ -3,12 +3,12 @@ package me.chanjar.weixin.common.bean;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.apache.commons.codec.Charsets;
+
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
  * 企业号菜单
@@ -19,12 +19,22 @@ public class WxMenu implements Serializable {
 
   private List<WxMenuButton> buttons = new ArrayList<WxMenuButton>();
 
+  private WxMenuRule matchRule;
+  
   public List<WxMenuButton> getButtons() {
     return buttons;
   }
 
   public void setButtons(List<WxMenuButton> buttons) {
     this.buttons = buttons;
+  }
+  
+  public WxMenuRule getMatchRule() {
+    return matchRule;
+  }
+  
+  public void setMatchRule(WxMenuRule matchRule) {
+    this.matchRule = matchRule;
   }
   
   public String toJson() {
@@ -118,5 +128,74 @@ public class WxMenu implements Serializable {
           '}';
     }
   }
-
+  
+  public static class WxMenuRule {
+    private String groupId;
+    private String sex;
+    private String country;
+    private String province;
+    private String city;
+    private String clientPlatformType;
+    
+    public String getGroupId() {
+      return groupId;
+    }
+	
+    public void setGroupId(String groupId) {
+      this.groupId = groupId;
+    }
+	
+    public String getSex() {
+      return sex;
+    }
+	
+    public void setSex(String sex) {
+      this.sex = sex;
+    }
+	
+    public String getCountry() {
+      return country;
+    }
+	
+    public void setCountry(String country) {
+      this.country = country;
+    }
+	
+    public String getProvince() {
+      return province;
+    }
+	
+    public void setProvince(String province) {
+      this.province = province;
+    }
+	
+    public String getCity() {
+      return city;
+    }
+	
+    public void setCity(String city) {
+      this.city = city;
+    }
+	
+    public String getClientPlatformType() {
+      return clientPlatformType;
+    }
+	
+    public void setClientPlatformType(String clientPlatformType) {
+      this.clientPlatformType = clientPlatformType;
+    }
+	
+    @Override
+    public String toString() {
+      return "matchrule:{" +
+          "group_id='" + groupId + '\'' +
+          ", sex='" + sex + '\'' +
+          ", country" + country + '\'' +
+          ", province" + province + '\'' +
+          ", city" + city + '\'' +
+          ", client_platform_type" + clientPlatformType + '\'' +
+          "}";
+    }
+  }
+	
 }

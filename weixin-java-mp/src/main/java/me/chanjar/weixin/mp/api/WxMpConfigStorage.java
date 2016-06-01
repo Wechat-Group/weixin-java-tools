@@ -2,6 +2,8 @@ package me.chanjar.weixin.mp.api;
 
 import java.io.File;
 
+import javax.net.ssl.SSLContext;
+
 import me.chanjar.weixin.common.bean.WxAccessToken;
 
 /**
@@ -74,4 +76,5 @@ public interface WxMpConfigStorage {
   
   public File getTmpDirFile();
 
+  public SSLContext getSSLContext();
 }

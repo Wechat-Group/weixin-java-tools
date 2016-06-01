@@ -22,7 +22,7 @@ public class WxUserListGsonAdapter implements JsonDeserializer<WxMpUserList> {
     wxMpUserList.setTotal(GsonHelper.getInteger(o, "total"));
     wxMpUserList.setCount(GsonHelper.getInteger(o, "count"));
     wxMpUserList.setNextOpenId(GsonHelper.getString(o, "next_openid"));
-    if (!o.get("data").isJsonNull() && !o.get("data").getAsJsonObject().get("openid").isJsonNull()) {
+    if (o.get("data") != null && !o.get("data").isJsonNull() && !o.get("data").getAsJsonObject().get("openid").isJsonNull()) {
       JsonArray data = o.get("data").getAsJsonObject().get("openid").getAsJsonArray();
       for (int i = 0; i < data.size(); i++) {
         wxMpUserList.getOpenIds().add(GsonHelper.getAsString(data.get(i)));

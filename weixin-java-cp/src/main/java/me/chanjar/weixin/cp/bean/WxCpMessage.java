@@ -26,6 +26,7 @@ public class WxCpMessage implements Serializable {
   private String description;
   private String musicUrl;
   private String hqMusicUrl;
+  private String safe;
   private List<WxArticle> articles = new ArrayList<WxArticle>();
   
   public String getToUser() {
@@ -63,6 +64,14 @@ public class WxCpMessage implements Serializable {
     return msgType;
   }
   
+  public String getSafe() {
+    return safe;
+  }
+
+  public void setSafe(String safe) {
+    this.safe = safe;
+  }
+
   /**
    * <pre>
    * 请使用

@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.chanjar</groupId>
   <artifactId>weixin-java-parent</artifactId>
-  <version>1.3.0</version>
+  <version>1.3.3</version>
   <packaging>pom</packaging>
   <name>WeiXin Java Tools - Parent</name>
   <description>微信公众号、企业号上级POM</description>

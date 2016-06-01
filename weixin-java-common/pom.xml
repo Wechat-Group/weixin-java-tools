@@ -6,7 +6,7 @@
   <parent>
     <groupId>me.chanjar</groupId>
     <artifactId>weixin-java-parent</artifactId>
-    <version>1.3.0</version>
+    <version>1.3.3</version>
   </parent>
 
   <artifactId>weixin-java-common</artifactId>
