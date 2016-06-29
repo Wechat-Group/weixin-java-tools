@@ -9,7 +9,7 @@
 ===========
 ## 使用开发交流工具：
 * QQ群：343954419 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=078f7a153d243853e24cf2b542e7a6ccbf2a592bc138080f84d11297f736ec46"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="weixin-java-tools" title="weixin-java-tools"></a>
-* 微信群： 因二维码有时间限制，如有想加入微信群的，请入QQ群后咨询群主获取最新入群二维码。
+* 微信群： 因二维码有时间限制，如有想加入微信群的，请入QQ群后咨询获取最新入群二维码。
  
 ===========
 
