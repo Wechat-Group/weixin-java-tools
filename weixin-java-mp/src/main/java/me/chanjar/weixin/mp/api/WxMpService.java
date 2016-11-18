@@ -43,6 +43,14 @@ public interface WxMpService {
    */
   String getAccessToken(boolean forceRefresh) throws WxErrorException;
 
+
+  /**
+   * <pre>
+   * 强制accessToken过期
+   * </pre>
+   */
+  void expireAccessToken();
+
   /**
    * 获得jsapi_ticket,不强制刷新jsapi_ticket
    *
