@@ -99,7 +99,7 @@ public class WxMpServiceImpl implements WxMpService {
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
     if (forceRefresh) {
-      this.configStorage.expireAccessToken();
+      expireAccessToken();
     }
     if (this.configStorage.isAccessTokenExpired()) {
       synchronized (this.globalAccessTokenRefreshLock) {
@@ -132,6 +132,11 @@ public class WxMpServiceImpl implements WxMpService {
       }
     }
     return this.configStorage.getAccessToken();
+  }
+
+  @Override
+  public void expireAccessToken(){
+    this.configStorage.expireAccessToken();
   }
 
   @Override
@@ -410,8 +415,10 @@ public class WxMpServiceImpl implements WxMpService {
        */
       if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001) {
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
-        this.configStorage.expireAccessToken();
-        return this.execute(executor, uri, data);
+        //this.configStorage.expireAccessToken();
+        //return this.execute(executor, uri, data);
+        //此方法可被重写
+        expireAccessToken();
       }
       if (error.getErrorCode() != 0) {
         this.log.error("\n[URL]:  {}\n[PARAMS]: {}\n[RESPONSE]: {}", uri, data,
