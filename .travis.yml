@@ -2,7 +2,7 @@ language: java
 jdk:
   - oraclejdk7
 
-script: "mvn clean install -Dmaven.test.skip=true"
+script: "mvn clean package -Dmaven.test.skip=true"
 
 branches:
   only:
@@ -10,4 +10,4 @@ branches:
 
 notifications:
   email:
-    - binarywang@qq.com
+    - binaryw@qq.com
