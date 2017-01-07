@@ -382,7 +382,7 @@ public class WxMpXmlMessage implements Serializable {
   }
 
   public String getOpenId() {
-    return OpenId;
+    return openId;
   }
 
   public void setOpenId(String openId) {
