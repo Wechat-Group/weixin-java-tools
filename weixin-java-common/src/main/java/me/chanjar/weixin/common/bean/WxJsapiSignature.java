@@ -8,9 +8,9 @@ import java.io.Serializable;
 public class WxJsapiSignature implements Serializable {
   private static final long serialVersionUID = -1116808193154384804L;
 
-  private String appid;
+  private String appId;
 
-  private String noncestr;
+  private String nonceStr;
 
   private long timestamp;
 
@@ -26,12 +26,12 @@ public class WxJsapiSignature implements Serializable {
     this.signature = signature;
   }
 
-  public String getNoncestr() {
-    return this.noncestr;
+  public String getNonceStr() {
+    return nonceStr;
   }
 
-  public void setNoncestr(String noncestr) {
-    this.noncestr = noncestr;
+  public void setNonceStr(String nonceStr) {
+    this.nonceStr = nonceStr;
   }
 
   public long getTimestamp() {
@@ -50,12 +50,11 @@ public class WxJsapiSignature implements Serializable {
     this.url = url;
   }
 
-  public String getAppid() {
-    return this.appid;
+  public String getAppId() {
+    return appId;
   }
 
-  public void setAppid(String appid) {
-    this.appid = appid;
+  public void setAppId(String appId) {
+    this.appId = appId;
   }
-
 }

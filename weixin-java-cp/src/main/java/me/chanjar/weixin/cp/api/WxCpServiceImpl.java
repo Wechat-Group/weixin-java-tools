@@ -166,12 +166,12 @@ public class WxCpServiceImpl implements WxCpService {
     );
     WxJsapiSignature jsapiSignature = new WxJsapiSignature();
     jsapiSignature.setTimestamp(timestamp);
-    jsapiSignature.setNoncestr(noncestr);
+    jsapiSignature.setNonceStr(noncestr);
     jsapiSignature.setUrl(url);
     jsapiSignature.setSignature(signature);
 
     // Fixed bug
-    jsapiSignature.setAppid(this.configStorage.getCorpId());
+    jsapiSignature.setAppId(this.configStorage.getCorpId());
 
     return jsapiSignature;
   }

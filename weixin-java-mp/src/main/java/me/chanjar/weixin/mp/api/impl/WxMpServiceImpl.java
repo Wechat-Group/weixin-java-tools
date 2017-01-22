@@ -151,9 +151,9 @@ public class WxMpServiceImpl implements WxMpService {
     String signature = SHA1.genWithAmple("jsapi_ticket=" + jsapiTicket,
       "noncestr=" + noncestr, "timestamp=" + timestamp, "url=" + url);
     WxJsapiSignature jsapiSignature = new WxJsapiSignature();
-    jsapiSignature.setAppid(this.wxMpConfigStorage.getAppId());
+    jsapiSignature.setAppId(this.wxMpConfigStorage.getAppId());
     jsapiSignature.setTimestamp(timestamp);
-    jsapiSignature.setNoncestr(noncestr);
+    jsapiSignature.setNonceStr(noncestr);
     jsapiSignature.setUrl(url);
     jsapiSignature.setSignature(signature);
     return jsapiSignature;
