@@ -30,7 +30,6 @@ public class WxEntPayQueryRequest extends WxPayBaseRequest {
    * 微信支付分配的商户号
    * </pre>
   */
-  @SuppressWarnings("hiding")
   @XStreamAlias("mchid")
   private String mchId;
 

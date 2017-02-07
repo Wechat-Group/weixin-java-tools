@@ -4,6 +4,7 @@ import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.ApacheHttpClientBuilder;
 
 import javax.net.ssl.SSLContext;
+
 import java.io.File;
 import java.util.concurrent.locks.Lock;
 
@@ -81,6 +82,23 @@ public interface WxMpConfigStorage {
   String getPartnerId();
 
   String getPartnerKey();
+  
+  /**
+   * 微信支付异步回掉地址，通知url必须为直接可访问的url，不能携带参数。
+   * @since 2.5.0
+   * @return
+   */
+  String getNotifyURL();
+  
+  /**
+   * 交易类型
+   * <pre>
+   * JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付
+   * </pre>
+   * @since 2.5.0
+   * @return
+   */
+  String getTradeType();
 
   String getToken();
 
@@ -112,4 +130,5 @@ public interface WxMpConfigStorage {
    * 是否自动刷新token
    */
   boolean autoRefreshToken();
+  
 }

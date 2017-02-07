@@ -8,12 +8,14 @@ public abstract class BaseBuilder<BuilderType, ValueType> {
 
   protected String fromUserName;
 
-  public BuilderType toUser(String touser) {
+  @SuppressWarnings("unchecked")
+	public BuilderType toUser(String touser) {
     this.toUserName = touser;
     return (BuilderType) this;
   }
 
-  public BuilderType fromUser(String fromusername) {
+  @SuppressWarnings("unchecked")
+	public BuilderType fromUser(String fromusername) {
     this.fromUserName = fromusername;
     return (BuilderType) this;
   }

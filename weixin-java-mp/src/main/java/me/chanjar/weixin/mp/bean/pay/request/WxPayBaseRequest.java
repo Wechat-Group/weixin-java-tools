@@ -1,5 +1,7 @@
 package me.chanjar.weixin.mp.bean.pay.request;
 
+import java.math.BigDecimal;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
@@ -71,6 +73,10 @@ public abstract class WxPayBaseRequest {
     return this.appid;
   }
 
+  /**
+   * 如果配置中已经设置，可以不设置值
+   * @param appid
+   */
   public void setAppid(String appid) {
     this.appid = appid;
   }
@@ -79,6 +85,10 @@ public abstract class WxPayBaseRequest {
     return this.mchId;
   }
 
+  /**
+   * 如果配置中已经设置，可以不设置值
+   * @param mchId
+   */
   public void setMchId(String mchId) {
     this.mchId = mchId;
   }
@@ -87,6 +97,10 @@ public abstract class WxPayBaseRequest {
     return this.nonceStr;
   }
 
+  /**
+   * 默认采用时间戳为随机字符串，可以不设置
+   * @param nonceStr
+   */
   public void setNonceStr(String nonceStr) {
     this.nonceStr = nonceStr;
   }
@@ -97,6 +111,16 @@ public abstract class WxPayBaseRequest {
 
   public void setSign(String sign) {
     this.sign = sign;
+  }
+  
+  /**
+   * 将单位为元转换为单位为分
+   *
+   * @param yuan
+   * @return
+   */
+  public static Integer yuanToFee(String yuan) {
+    return  new BigDecimal(yuan).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).intValue();
   }
 
   @Override

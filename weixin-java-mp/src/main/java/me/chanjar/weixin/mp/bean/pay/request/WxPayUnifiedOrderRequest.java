@@ -360,6 +360,10 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
     return this.notifyURL;
   }
 
+  /**
+   * 如果配置中已经设置，可以不设置值
+   * @param notifyURL
+   */
   public void setNotifyURL(String notifyURL) {
     this.notifyURL = notifyURL;
   }
@@ -368,6 +372,10 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
     return this.tradeType;
   }
 
+  /**
+   * 如果配置中已经设置，可以不设置值
+   * @param tradeType 交易类型
+   */
   public void setTradeType(String tradeType) {
     this.tradeType = tradeType;
   }

@@ -23,7 +23,6 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 public class MaterialVoiceAndImageDownloadRequestExecutor implements RequestExecutor<InputStream, String> {
 
-  private File tmpDirFile;
 
   public MaterialVoiceAndImageDownloadRequestExecutor() {
     super();
@@ -31,7 +30,6 @@ public class MaterialVoiceAndImageDownloadRequestExecutor implements RequestExec
 
   public MaterialVoiceAndImageDownloadRequestExecutor(File tmpDirFile) {
     super();
-    this.tmpDirFile = tmpDirFile;
   }
 
   @Override

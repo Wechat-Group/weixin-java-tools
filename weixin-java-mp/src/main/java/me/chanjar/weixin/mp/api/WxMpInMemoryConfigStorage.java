@@ -20,6 +20,8 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   protected volatile String secret;
   protected volatile String partnerId;
   protected volatile String partnerKey;
+  protected volatile String notifyURL;
+  protected volatile String tradeType;
   protected volatile String token;
   protected volatile String accessToken;
   protected volatile String aesKey;
@@ -267,8 +269,25 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   public void setPartnerKey(String partnerKey) {
       this.partnerKey = partnerKey;
   }
+  
+ 
+	public String getNotifyURL() {
+		return notifyURL;
+	}
 
-  @Override
+	public void setNotifyURL(String notifyURL) {
+		this.notifyURL = notifyURL;
+	}
+
+	public String getTradeType() {
+		return tradeType;
+	}
+
+	public void setTradeType(String tradeType) {
+		this.tradeType = tradeType;
+	}
+
+	@Override
   public File getTmpDirFile() {
     return this.tmpDirFile;
   }

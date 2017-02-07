@@ -2,7 +2,7 @@ allprojects  {
   apply plugin: 'maven'
 
   group = 'com.github.binarywang'
-  version = '2.4.0'
+  version = '2.5.0-SNAPSHOT'
 }
 
 subprojects {

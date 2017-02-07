@@ -62,7 +62,8 @@ public abstract class WxMpXmlOutMessage implements Serializable {
     this.msgType = msgType;
   }
 
-  public String toXml() {
+  @SuppressWarnings("unchecked")
+	public String toXml() {
     return XStreamTransformer.toXml((Class<WxMpXmlOutMessage>) this.getClass(), this);
   }
 

@@ -1,7 +1,6 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.bean.pay.WxPayJsSDKCallback;
 import me.chanjar.weixin.mp.bean.pay.request.WxEntPayRequest;
 import me.chanjar.weixin.mp.bean.pay.request.WxPayRefundRequest;
 import me.chanjar.weixin.mp.bean.pay.request.WxPaySendRedpackRequest;
@@ -31,9 +30,8 @@ public interface WxMpPayService {
    * 接口地址：https://api.mch.weixin.qq.com/pay/orderquery
    * </pre>
    *
-   * @param transactionId 微信支付分配的商户号
+   * @param transactionId 微信订单号
    * @param outTradeNo    商户系统内部的订单号，当没提供transaction_id时需要传这个。
-   * @throws WxErrorException
    */
   WxPayOrderQueryResult queryOrder(String transactionId, String outTradeNo) throws WxErrorException;
 
@@ -50,7 +48,6 @@ public interface WxMpPayService {
    * </pre>
    *
    * @param outTradeNo 商户系统内部的订单号，当没提供transaction_id时需要传这个。
-   * @throws WxErrorException
    */
   WxPayOrderCloseResult closeOrder(String outTradeNo) throws WxErrorException;
 
@@ -60,7 +57,6 @@ public interface WxMpPayService {
    * 接口地址：https://api.mch.weixin.qq.com/pay/unifiedorder
    *
    * @param request 请求对象，注意一些参数如appid、mchid等不用设置，方法内会自动从配置对象中获取到（前提是对应配置中已经设置）
-   * @throws WxErrorException
    */
   WxPayUnifiedOrderResult unifiedOrder(WxPayUnifiedOrderRequest request) throws WxErrorException;
 
@@ -69,7 +65,6 @@ public interface WxMpPayService {
    * 详见http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115&token=&lang=zh_CN
    *
    * @param request 请求对象，注意一些参数如appid、mchid等不用设置，方法内会自动从配置对象中获取到（前提是对应配置中已经设置）
-   * @throws WxErrorException
    */
   Map<String, String> getPayInfo(WxPayUnifiedOrderRequest request) throws WxErrorException;
 
@@ -81,7 +76,7 @@ public interface WxMpPayService {
    * </pre>
    *
    * @param request 请求对象
-   * @param keyFile 证书文件对象
+   * @param keyFile 证书文件对象（即apiclient_cert.p12 商户证书文件，详细参考https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3）
    * @return 退款操作结果
    */
   WxPayRefundResult refund(WxPayRefundRequest request, File keyFile) throws WxErrorException;
@@ -94,7 +89,8 @@ public interface WxMpPayService {
    * 详见 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5
    * 接口链接：https://api.mch.weixin.qq.com/pay/refundquery
    * </pre>
-   *  以下四个参数四选一
+   * 以下四个参数四选一
+   *
    * @param transactionId 微信订单号
    * @param outTradeNo    商户订单号
    * @param outRefundNo   商户退款单号
@@ -107,15 +103,86 @@ public interface WxMpPayService {
    * 读取支付结果通知
    * 详见http://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_7
    */
-  WxPayJsSDKCallback getJSSDKCallbackData(String xmlData) throws WxErrorException;
+  WxPayOrderNotifyResult getOrderNotifyResult(String xmlData) throws WxErrorException;
 
   /**
-   * <pre>
-   * 计算Map键值对是否和签名相符,
-   * 按照字段名的 ASCII 码从小到大排序(字典序)后,使用 URL 键值对的 格式(即 key1=value1&key2=value2...)拼接成字符串
-   * </pre>
+   * 微信公众号支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3)
+   *
+   * @param xmlbean Bean需要标记有XML注解，默认使用配置中的PartnerKey进行签名
+   * @return 签名字符串
+   * @see #createSign(Map, String)
+   * @since 2.5.0
    */
-  boolean checkJSSDKCallbackDataSignature(Map<String, String> kvm, String signature);
+  String createSign(Object xmlbean);
+
+  /**
+   * 微信公众号支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3)
+   *
+   * @param xmlbean Bean需要标记有XML注解
+   * @param signKey 签名Key
+   * @return 签名字符串
+   * @see #createSign(Map, String)
+   */
+  String createSign(Object xmlbean, String signKey);
+
+  /**
+   * 微信公众号支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3)
+   *
+   * @param prams   参数信息，默认使用配置中的PartnerKey进行签名
+   * @return 签名字符串
+   * @see #createSign(Map, String)
+   */
+  String createSign(Map<String, String> prams);
+
+
+  /**
+   * 微信公众号支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3)
+   *
+   * @param prams   参数信息
+   * @param signKey 签名Key
+   * @return 签名字符串
+   */
+  String createSign(Map<String, String> prams, String signKey);
+
+
+  /**
+   * 校验签名是否正确，默认使用配置中的PartnerKey进行签名
+   *
+   * @param xmlbean Bean需要标记有XML注解
+   * @return true - 签名校验成功，false - 签名校验失败
+   * @see #checkSign(Map, String)
+   */
+  boolean checkSign(Object xmlbean);
+
+  /**
+   * 校验签名是否正确
+   *
+   * @param xmlbean Bean需要标记有XML注解
+   * @param signKey 校验的签名Key
+   * @return true - 签名校验成功，false - 签名校验失败
+   * @see #checkSign(Map, String)
+   */
+  boolean checkSign(Object xmlbean, String signKey);
+
+  /**
+   * 校验签名是否正确，默认使用配置中的PartnerKey进行签名
+   *
+   * @param prams 需要校验的参数Map
+   * @return true - 签名校验成功，false - 签名校验失败
+   * @see #checkSign(Map, String)
+   */
+  boolean checkSign(Map<String, String> prams);
+
+  /**
+   * 校验签名是否正确
+   *
+   * @param params   需要校验的参数Map
+   * @param signKey 校验的签名Key
+   * @return true - 签名校验成功，false - 签名校验失败
+   * @see #checkSign(Map, String)
+   */
+  boolean checkSign(Map<String, String> params, String signKey);
+
 
   /**
    * 发送微信红包给个人用户
@@ -128,7 +195,7 @@ public interface WxMpPayService {
    * </pre>
    *
    * @param request 请求对象
-   * @param keyFile 证书文件对象
+   * @param keyFile 证书文件对象（即apiclient_cert.p12 商户证书文件，详细参考https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3）
    */
   WxPaySendRedpackResult sendRedpack(WxPaySendRedpackRequest request, File keyFile) throws WxErrorException;
 
@@ -140,8 +207,9 @@ public interface WxMpPayService {
    *   是否需要证书	是（证书及使用说明详见商户证书）
    *   请求方式	POST
    * </pre>
+   *
    * @param mchBillNo 商户发放红包的商户订单号，比如10000098201411111234567890
-   * @param keyFile 证书文件对象
+   * @param keyFile   证书文件对象（即apiclient_cert.p12 商户证书文件，详细参考https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3）
    */
   WxPayRedpackQueryResult queryRedpack(String mchBillNo, File keyFile) throws WxErrorException;
 
@@ -156,7 +224,7 @@ public interface WxMpPayService {
    * </pre>
    *
    * @param request 请求对象
-   * @param keyFile 证书文件对象
+   * @param keyFile 证书文件对象（即apiclient_cert.p12 商户证书文件，详细参考https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3）
    */
   WxEntPayResult entPay(WxEntPayRequest request, File keyFile) throws WxErrorException;
 
@@ -169,7 +237,7 @@ public interface WxMpPayService {
    * </pre>
    *
    * @param partnerTradeNo 商户订单号
-   * @param keyFile        证书文件对象
+   * @param keyFile        证书文件对象（即apiclient_cert.p12 商户证书文件，详细参考https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3）
    */
   WxEntPayQueryResult queryEntPay(String partnerTradeNo, File keyFile) throws WxErrorException;
 

@@ -5,7 +5,6 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
-import me.chanjar.weixin.mp.bean.menu.WxMpSelfMenuInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

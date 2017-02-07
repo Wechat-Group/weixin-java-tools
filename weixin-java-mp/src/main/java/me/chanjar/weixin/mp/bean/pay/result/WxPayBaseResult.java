@@ -1,6 +1,11 @@
 package me.chanjar.weixin.mp.bean.pay.result;
 
+import java.math.BigDecimal;
+import java.util.Map;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+import me.chanjar.weixin.common.util.BeanUtils;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
 /**
@@ -140,5 +145,18 @@ public abstract class WxPayBaseResult {
 
   public void setSign(String sign) {
     this.sign = sign;
+  }
+  
+  /**
+   * 将单位分转换成单位圆
+   * @param fee
+   * @return
+   */
+  public static String feeToYuan(Integer fee) {
+    return new BigDecimal(Double.valueOf(fee) / 100).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+  }
+  
+  public Map<String,String> toMap(){
+  	return BeanUtils.xmlBean2Map(this);
   }
 }
