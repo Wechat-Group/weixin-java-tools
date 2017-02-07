@@ -281,6 +281,12 @@ public class WxMpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String deviceId;
 
+  /**
+   * 微信用户账号的OpenID
+   */
+  @XStreamAlias("OpenID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String openId;
 
   @XStreamAlias("HardWare")
   private HardWare hardWare = new HardWare();
@@ -373,6 +379,14 @@ public class WxMpXmlMessage implements Serializable {
 
   public void setDeviceId(String deviceId) {
     this.deviceId = deviceId;
+  }
+
+  public String getOpenId() {
+    return OpenId;
+  }
+
+  public void setOpenId(String openId) {
+    this.openId = openId;
   }
 
   public Long getExpiredTime() {
