@@ -404,6 +404,7 @@ public class WxMpPayServiceImpl implements WxMpPayService {
 
     WxPayCommonResult result = WxPayBaseResult.fromXML(responseContent, WxPayCommonResult.class);
     this.checkResult(result);
+    //TODO 待实现，暂时无测试帐号，无法调试
     return null;
   }
 

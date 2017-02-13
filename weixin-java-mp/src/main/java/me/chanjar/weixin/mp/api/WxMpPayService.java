@@ -28,7 +28,7 @@ public interface WxMpPayService {
    * </pre>
    *
    * @param transactionId 微信订单号
-   * @param outTradeNo    商户系统内部的订单号，当没提供transaction_id时需要传这个。
+   * @param outTradeNo    商户系统内部的订单号，当没提供transactionId时需要传这个。
    */
   WxPayOrderQueryResult queryOrder(String transactionId, String outTradeNo) throws WxErrorException;
 
@@ -44,7 +44,7 @@ public interface WxMpPayService {
    * 是否需要证书：   不需要。
    * </pre>
    *
-   * @param outTradeNo 商户系统内部的订单号，当没提供transaction_id时需要传这个。
+   * @param outTradeNo 商户系统内部的订单号
    */
   WxPayOrderCloseResult closeOrder(String outTradeNo) throws WxErrorException;
 
