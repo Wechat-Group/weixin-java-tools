@@ -179,7 +179,8 @@ public class WxMpPayServiceImpl implements WxMpPayService {
     }
     String responseContent = this.executeWithKey(url, request.toXML());
     WxPaySendRedpackResult result = WxPaySendRedpackResult.fromXML(responseContent, WxPaySendRedpackResult.class);
-    this.checkResult(result);
+    //毋须校验，因为没有返回签名信息
+    // this.checkResult(result);
     return result;
   }
 
