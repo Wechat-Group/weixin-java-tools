@@ -26,6 +26,6 @@ package me.chanjar.weixin.common.session;
 
 public class Constants {
 
-    public static final String Package = "me.chanjar.weixin.common.session";
+  public static final String Package = "me.chanjar.weixin.common.session";
 
 }

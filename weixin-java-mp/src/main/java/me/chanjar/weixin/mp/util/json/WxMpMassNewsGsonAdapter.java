@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 
 public class WxMpMassNewsGsonAdapter implements JsonSerializer<WxMpMassNews>, JsonDeserializer<WxMpMassNews> {
 
+  @Override
   public JsonElement serialize(WxMpMassNews message, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject newsJson = new JsonObject();
 
@@ -28,6 +29,7 @@ public class WxMpMassNewsGsonAdapter implements JsonSerializer<WxMpMassNews>, Js
     return newsJson;
   }
 
+  @Override
   public WxMpMassNews deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
     WxMpMassNews wxMpMassNews = new WxMpMassNews();
     JsonObject json = jsonElement.getAsJsonObject();

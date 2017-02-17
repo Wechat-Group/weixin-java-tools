@@ -4,8 +4,8 @@ import me.chanjar.weixin.cp.bean.WxCpXmlOutTextMessage;
 
 /**
  * 文本消息builder
- * @author Daniel Qian
  *
+ * @author Daniel Qian
  */
 public final class TextBuilder extends BaseBuilder<TextBuilder, WxCpXmlOutTextMessage> {
   private String content;
@@ -15,6 +15,7 @@ public final class TextBuilder extends BaseBuilder<TextBuilder, WxCpXmlOutTextMe
     return this;
   }
 
+  @Override
   public WxCpXmlOutTextMessage build() {
     WxCpXmlOutTextMessage m = new WxCpXmlOutTextMessage();
     setCommon(m);

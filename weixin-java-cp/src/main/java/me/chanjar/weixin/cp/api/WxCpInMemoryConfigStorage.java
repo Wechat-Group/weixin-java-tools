@@ -1,13 +1,15 @@
 package me.chanjar.weixin.cp.api;
 
-import java.io.File;
-
 import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.util.ToStringUtils;
+import me.chanjar.weixin.common.util.http.ApacheHttpClientBuilder;
+
+import java.io.File;
 
 /**
  * 基于内存的微信配置provider，在实际生产环境中应该将这些配置持久化
- * @author Daniel Qian
  *
+ * @author Daniel Qian
  */
 public class WxCpInMemoryConfigStorage implements WxCpConfigStorage {
 
@@ -17,37 +19,48 @@ public class WxCpInMemoryConfigStorage implements WxCpConfigStorage {
   protected volatile String token;
   protected volatile String accessToken;
   protected volatile String aesKey;
-  protected volatile String agentId;
+  protected volatile Integer agentId;
   protected volatile long expiresTime;
 
   protected volatile String oauth2redirectUri;
 
-  protected volatile String http_proxy_host;
-  protected volatile int http_proxy_port;
-  protected volatile String http_proxy_username;
-  protected volatile String http_proxy_password;
+  protected volatile String httpProxyHost;
+  protected volatile int httpProxyPort;
+  protected volatile String httpProxyUsername;
+  protected volatile String httpProxyPassword;
 
   protected volatile String jsapiTicket;
   protected volatile long jsapiTicketExpiresTime;
 
   protected volatile File tmpDirFile;
 
+  private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
+
+  @Override
   public String getAccessToken() {
     return this.accessToken;
   }
 
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
+  }
+
+  @Override
   public boolean isAccessTokenExpired() {
     return System.currentTimeMillis() > this.expiresTime;
   }
 
+  @Override
   public void expireAccessToken() {
     this.expiresTime = 0;
   }
 
+  @Override
   public synchronized void updateAccessToken(WxAccessToken accessToken) {
     updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
   }
-  
+
+  @Override
   public synchronized void updateAccessToken(String accessToken, int expiresInSeconds) {
     this.accessToken = accessToken;
     this.expiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000l;
@@ -55,7 +68,7 @@ public class WxCpInMemoryConfigStorage implements WxCpConfigStorage {
 
   @Override
   public String getJsapiTicket() {
-    return jsapiTicket;
+    return this.jsapiTicket;
   }
 
   public void setJsapiTicket(String jsapiTicket) {
@@ -63,76 +76,81 @@ public class WxCpInMemoryConfigStorage implements WxCpConfigStorage {
   }
 
   public long getJsapiTicketExpiresTime() {
-    return jsapiTicketExpiresTime;
+    return this.jsapiTicketExpiresTime;
   }
 
   public void setJsapiTicketExpiresTime(long jsapiTicketExpiresTime) {
     this.jsapiTicketExpiresTime = jsapiTicketExpiresTime;
   }
 
+  @Override
   public boolean isJsapiTicketExpired() {
     return System.currentTimeMillis() > this.jsapiTicketExpiresTime;
   }
 
+  @Override
   public synchronized void updateJsapiTicket(String jsapiTicket, int expiresInSeconds) {
     this.jsapiTicket = jsapiTicket;
     // 预留200秒的时间
     this.jsapiTicketExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000l;
   }
 
+  @Override
   public void expireJsapiTicket() {
     this.jsapiTicketExpiresTime = 0;
   }
 
+  @Override
   public String getCorpId() {
     return this.corpId;
-  }
-
-  public String getCorpSecret() {
-    return this.corpSecret;
-  }
-
-  public String getToken() {
-    return this.token;
-  }
-
-  public long getExpiresTime() {
-    return this.expiresTime;
   }
 
   public void setCorpId(String corpId) {
     this.corpId = corpId;
   }
 
+  @Override
+  public String getCorpSecret() {
+    return this.corpSecret;
+  }
+
   public void setCorpSecret(String corpSecret) {
     this.corpSecret = corpSecret;
+  }
+
+  @Override
+  public String getToken() {
+    return this.token;
   }
 
   public void setToken(String token) {
     this.token = token;
   }
 
-  public String getAesKey() {
-    return aesKey;
-  }
-
-  public void setAesKey(String aesKey) {
-    this.aesKey = aesKey;
-  }
-
-  public void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
+  @Override
+  public long getExpiresTime() {
+    return this.expiresTime;
   }
 
   public void setExpiresTime(long expiresTime) {
     this.expiresTime = expiresTime;
   }
 
-  public String getAgentId() {
-    return agentId;
+  @Override
+  public String getAesKey() {
+    return this.aesKey;
   }
 
-  public void setAgentId(String agentId) {
+  public void setAesKey(String aesKey) {
+    this.aesKey = aesKey;
+  }
+
+  @Override
+  public Integer getAgentId() {
+    return this.agentId;
+  }
+
+  public void setAgentId(Integer agentId) {
     this.agentId = agentId;
   }
 
@@ -145,64 +163,62 @@ public class WxCpInMemoryConfigStorage implements WxCpConfigStorage {
     this.oauth2redirectUri = oauth2redirectUri;
   }
 
-  public String getHttp_proxy_host() {
-    return http_proxy_host;
+  @Override
+  public String getHttpProxyHost() {
+    return this.httpProxyHost;
   }
 
-  public void setHttp_proxy_host(String http_proxy_host) {
-    this.http_proxy_host = http_proxy_host;
+  public void setHttpProxyHost(String httpProxyHost) {
+    this.httpProxyHost = httpProxyHost;
   }
 
-  public int getHttp_proxy_port() {
-    return http_proxy_port;
+  @Override
+  public int getHttpProxyPort() {
+    return this.httpProxyPort;
   }
 
-  public void setHttp_proxy_port(int http_proxy_port) {
-    this.http_proxy_port = http_proxy_port;
+  public void setHttpProxyPort(int httpProxyPort) {
+    this.httpProxyPort = httpProxyPort;
   }
 
-  public String getHttp_proxy_username() {
-    return http_proxy_username;
+  @Override
+  public String getHttpProxyUsername() {
+    return this.httpProxyUsername;
   }
 
-  public void setHttp_proxy_username(String http_proxy_username) {
-    this.http_proxy_username = http_proxy_username;
+  public void setHttpProxyUsername(String httpProxyUsername) {
+    this.httpProxyUsername = httpProxyUsername;
   }
 
-  public String getHttp_proxy_password() {
-    return http_proxy_password;
+  @Override
+  public String getHttpProxyPassword() {
+    return this.httpProxyPassword;
   }
 
-  public void setHttp_proxy_password(String http_proxy_password) {
-    this.http_proxy_password = http_proxy_password;
+  public void setHttpProxyPassword(String httpProxyPassword) {
+    this.httpProxyPassword = httpProxyPassword;
   }
 
   @Override
   public String toString() {
-    return "WxCpInMemoryConfigStorage{" +
-        "corpId='" + corpId + '\'' +
-        ", corpSecret='" + corpSecret + '\'' +
-        ", token='" + token + '\'' +
-        ", accessToken='" + accessToken + '\'' +
-        ", aesKey='" + aesKey + '\'' +
-        ", agentId='" + agentId + '\'' +
-        ", expiresTime=" + expiresTime +
-        ", http_proxy_host='" + http_proxy_host + '\'' +
-        ", http_proxy_port=" + http_proxy_port +
-        ", http_proxy_username='" + http_proxy_username + '\'' +
-        ", http_proxy_password='" + http_proxy_password + '\'' +
-        ", jsapiTicket='" + jsapiTicket + '\'' +
-        ", jsapiTicketExpiresTime='" + jsapiTicketExpiresTime + '\'' +
-        ", tmpDirFile='" + tmpDirFile + '\'' +
-        '}';
+    return ToStringUtils.toSimpleString(this);
   }
 
+  @Override
   public File getTmpDirFile() {
-    return tmpDirFile;
+    return this.tmpDirFile;
   }
 
   public void setTmpDirFile(File tmpDirFile) {
     this.tmpDirFile = tmpDirFile;
   }
 
+  @Override
+  public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
+    return this.apacheHttpClientBuilder;
+  }
+
+  public void setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
+    this.apacheHttpClientBuilder = apacheHttpClientBuilder;
+  }
 }

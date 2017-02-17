@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <project
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>me.chanjar</groupId>
+  <groupId>com.github.binarywang</groupId>
   <artifactId>weixin-java-parent</artifactId>
-  <version>1.3.3</version>
+  <version>2.5.0</version>
   <packaging>pom</packaging>
   <name>WeiXin Java Tools - Parent</name>
   <description>微信公众号、企业号上级POM</description>
-  <url>https://github.com/chanjarster/weixin-java-tools</url>
+  <url>https://github.com/wechat-group/weixin-java-tools</url>
 
   <licenses>
     <license>
@@ -22,28 +22,89 @@
     <developer>
       <name>Daniel Qian</name>
       <email>chanjarster@gmail.com</email>
+      <url>https://github.com/chanjarster</url>
+    </developer>
+    <developer>
+      <name>Binary Wang</name>
+      <email>binarywang@gmail.com</email>
+      <url>https://github.com/binarywang</url>
+    </developer>
+    <developer>
+      <name>gaigeshen</name>
+      <email>gaigeshen@qq.com</email>
+      <url>https://github.com/gaigeshen</url>
+    </developer>
+    <developer>
+      <name>Liu Mingbo</name>
+      <email>liumingbo2008@gmail.com</email>
+      <url>https://github.com/FirenzesEagle</url>
+    </developer>
+    <developer>
+      <name>kakotor</name>
+      <email>kakotor@gmail.com</email>
+      <url>https://github.com/kakotor</url>
+    </developer>
+    <developer>
+      <name>xiong</name>
+      <email>zhaoxiong.tan@gmail.com</email>
+      <url>https://github.com/ZhaoxiongTan</url>
+    </developer>
+    <developer>
+      <name>LiuJunGuang</name>
+      <email>aimilin@yeah.net</email>
+      <url>https://github.com/aimilin6688</url>
+    </developer>
+    <developer>
+      <name>Eric.Tsai</name>
+      <email>xiaodong.cai.ks@gmail.com</email>
+      <url>https://github.com/iwareserictsai</url>
+    </developer>
+    <developer>
+      <name>withinthefog</name>
+      <email>withinthefog@gmail.com</email>
+      <url>https://github.com/withinthefog</url>
+    </developer>
+    <developer>
+      <name>Keung</name>
+      <email>dongfuqiang1988@163.com</email>
+      <url>https://github.com/johnnytung</url>
+    </developer>
+    <developer>
+      <name>Jonk</name>
+      <email>aimilin@yeah.net</email>
+      <url>https://github.com/aimilin6688</url>
     </developer>
   </developers>
 
   <scm>
-    <connection>scm:git:https://github.com/chanjarster/weixin-java-tools.git</connection>
-    <developerConnection>scm:git:git@github.com:chanjarster/weixin-java-tools.git</developerConnection>
-    <url>https://github.com/chanjarster/weixin-java-tools</url>
+    <connection>scm:git:https://github.com/wechat-group/weixin-java-tools.git</connection>
+    <developerConnection>scm:git:git@github.com:wechat-group/weixin-java-tools.git</developerConnection>
+    <url>https://github.com/wechat-group/weixin-java-tools</url>
   </scm>
 
   <modules>
     <module>weixin-java-common</module>
     <module>weixin-java-cp</module>
     <module>weixin-java-mp</module>
+    <module>weixin-java-osgi</module>
   </modules>
 
   <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <downloadJavadocs>true</downloadJavadocs>
     <downloadSources>true</downloadSources>
     <httpclient.version>4.5</httpclient.version>
     <slf4j.version>1.7.10</slf4j.version>
     <logback.version>1.1.2</logback.version>
+    <gson.version>2.7</gson.version>
+    <guava.version>19.0</guava.version>
+    <commons-lang3.version>3.5</commons-lang3.version>
+    <commons-io.version>2.5</commons-io.version>
+    <commons-codec.version>1.10</commons-codec.version>
+    <jetty.version>9.3.0.RC0</jetty.version>
   </properties>
 
   <dependencies>
@@ -60,7 +121,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>fluent-hc</artifactId>
+      <artifactId>httpclient</artifactId>
       <version>${httpclient.version}</version>
     </dependency>
     <dependency>
@@ -71,17 +132,26 @@
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>2.2.2</version>
+      <version>${gson.version}</version>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
-      <version>1.9</version>
+      <version>${commons-codec.version}</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.4</version>
+      <version>${commons-io.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
     </dependency>
   </dependencies>
 
@@ -114,14 +184,19 @@
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-server</artifactId>
-        <version>9.3.0.M0</version>
+        <version>${jetty.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-servlet</artifactId>
-        <version>9.3.0.M0</version>
+        <version>${jetty.version}</version>
         <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -138,6 +213,16 @@
   </distributionManagement>
 
   <profiles>
+    <profile>
+      <id>doclint-java8-disable</id>
+      <activation>
+        <jdk>[1.8,)</jdk>
+      </activation>
+      <properties>
+        <javadoc.opts>-Xdoclint:none</javadoc.opts>
+      </properties>
+    </profile>
+
     <profile>
       <id>release</id>
       <build>
@@ -168,6 +253,7 @@
               </execution>
             </executions>
             <configuration>
+              <additionalparam>${javadoc.opts}</additionalparam>
               <charset>UTF-8</charset>
               <locale>zh_CN</locale>
             </configuration>
@@ -198,6 +284,9 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.17</version>
+          <configuration>
+            <skip>true</skip>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -211,7 +300,7 @@
         <configuration>
           <serverId>ossrh</serverId>
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
       <plugin>
@@ -228,15 +317,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>3.6.0</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
     </plugins>
   </build>
-
 
 </project>

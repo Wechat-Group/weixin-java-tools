@@ -14,12 +14,11 @@ import me.chanjar.weixin.common.bean.result.WxError;
 import java.lang.reflect.Type;
 
 /**
- * 
  * @author Daniel Qian
- *
  */
 public class WxErrorAdapter implements JsonDeserializer<WxError> {
 
+  @Override
   public WxError deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     WxError wxError = new WxError();
     JsonObject wxErrorJsonObject = json.getAsJsonObject();
@@ -33,5 +32,5 @@ public class WxErrorAdapter implements JsonDeserializer<WxError> {
     wxError.setJson(json.toString());
     return wxError;
   }
-  
+
 }

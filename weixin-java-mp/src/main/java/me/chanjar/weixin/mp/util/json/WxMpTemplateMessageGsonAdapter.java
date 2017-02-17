@@ -12,13 +12,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import me.chanjar.weixin.mp.bean.WxMpTemplateData;
-import me.chanjar.weixin.mp.bean.WxMpTemplateMessage;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 
 import java.lang.reflect.Type;
 
 public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTemplateMessage> {
 
+  @Override
   public JsonElement serialize(WxMpTemplateMessage message, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject messageJson = new JsonObject();
     messageJson.addProperty("touser", message.getToUser());
@@ -26,20 +27,17 @@ public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTempla
     if (message.getUrl() != null) {
       messageJson.addProperty("url", message.getUrl());
     }
-    if (message.getTopColor() != null) {
-      messageJson.addProperty("topcolor", message.getTopColor());
-    }
 
-    JsonObject datas = new JsonObject();
-    messageJson.add("data", datas);
+    JsonObject data = new JsonObject();
+    messageJson.add("data", data);
 
-    for (WxMpTemplateData data : message.getDatas()) {
+    for (WxMpTemplateData datum : message.getData()) {
       JsonObject dataJson = new JsonObject();
-      dataJson.addProperty("value", data.getValue());
-      if (data.getColor() != null) {
-        dataJson.addProperty("color", data.getColor());
+      dataJson.addProperty("value", datum.getValue());
+      if (datum.getColor() != null) {
+        dataJson.addProperty("color", datum.getColor());
       }
-      datas.add(data.getName(), dataJson);
+      data.add(datum.getName(), dataJson);
     }
 
     return messageJson;

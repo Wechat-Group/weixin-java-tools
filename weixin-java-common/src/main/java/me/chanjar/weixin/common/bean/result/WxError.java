@@ -5,21 +5,30 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import java.io.Serializable;
 
 /**
- * 微信错误码说明
- * http://mp.weixin.qq.com/wiki/index.php?title=全局返回码说明
- * @author Daniel Qian
+ * 微信错误码说明，请阅读： <a href="http://mp.weixin.qq.com/wiki/10/6380dc743053a91c544ffd2b7c959166.html">全局返回码说明</a>
  *
+ * @author Daniel Qian
  */
 public class WxError implements Serializable {
 
+  private static final long serialVersionUID = 7869786563361406291L;
+
   private int errorCode;
-  
+
   private String errorMsg;
 
   private String json;
-  
+
+  public static WxError fromJson(String json) {
+    return WxGsonBuilder.create().fromJson(json, WxError.class);
+  }
+
+  public static Builder newBuilder() {
+    return new Builder();
+  }
+
   public int getErrorCode() {
-    return errorCode;
+    return this.errorCode;
   }
 
   public void setErrorCode(int errorCode) {
@@ -27,7 +36,7 @@ public class WxError implements Serializable {
   }
 
   public String getErrorMsg() {
-    return errorMsg;
+    return this.errorMsg;
   }
 
   public void setErrorMsg(String errorMsg) {
@@ -35,21 +44,41 @@ public class WxError implements Serializable {
   }
 
   public String getJson() {
-    return json;
+    return this.json;
   }
 
   public void setJson(String json) {
     this.json = json;
   }
 
-  public static WxError fromJson(String json) {
-    WxError error = WxGsonBuilder.create().fromJson(json, WxError.class);
-    return error;
-  }
-
   @Override
   public String toString() {
-    return "微信错误: errcode=" + errorCode + ", errmsg=" + errorMsg + "\njson:" + json;
+    if (this.json != null) {
+      return this.json;
+    }
+    return "错误: Code=" + this.errorCode + ", Msg=" + this.errorMsg;
   }
 
+  public static class Builder {
+    private int errorCode;
+    private String errorMsg;
+
+    public Builder setErrorCode(int errorCode) {
+      this.errorCode = errorCode;
+      return this;
+    }
+
+    public Builder setErrorMsg(String errorMsg) {
+      this.errorMsg = errorMsg;
+      return this;
+    }
+
+    public WxError build() {
+      WxError wxError = new WxError();
+      wxError.setErrorCode(this.errorCode);
+      wxError.setErrorMsg(this.errorMsg);
+      return wxError;
+    }
+
+  }
 }

@@ -15,12 +15,11 @@ import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import java.lang.reflect.Type;
 
 /**
- * 
  * @author Daniel Qian
- *
  */
 public class WxQrCodeTicketAdapter implements JsonDeserializer<WxMpQrCodeTicket> {
 
+  @Override
   public WxMpQrCodeTicket deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     WxMpQrCodeTicket ticket = new WxMpQrCodeTicket();
     JsonObject ticketJsonObject = json.getAsJsonObject();
@@ -36,5 +35,5 @@ public class WxQrCodeTicketAdapter implements JsonDeserializer<WxMpQrCodeTicket>
     }
     return ticket;
   }
-  
+
 }

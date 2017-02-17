@@ -2,8 +2,8 @@ package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
-import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
-import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 
 import java.util.Map;
 
@@ -21,9 +21,9 @@ public interface WxMpMessageHandler {
    * @param sessionManager
    * @return xml格式的消息，如果在异步规则里处理的话，可以返回null
    */
-  public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
-                                  Map<String, Object> context,
-                                  WxMpService wxMpService,
-                                  WxSessionManager sessionManager) throws WxErrorException;
+  WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
+                           Map<String, Object> context,
+                           WxMpService wxMpService,
+                           WxSessionManager sessionManager) throws WxErrorException;
 
 }

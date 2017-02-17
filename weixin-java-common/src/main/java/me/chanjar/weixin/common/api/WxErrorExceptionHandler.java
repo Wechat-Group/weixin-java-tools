@@ -7,6 +7,6 @@ import me.chanjar.weixin.common.exception.WxErrorException;
  */
 public interface WxErrorExceptionHandler {
 
-  public void handle(WxErrorException e);
+  void handle(WxErrorException e);
 
 }

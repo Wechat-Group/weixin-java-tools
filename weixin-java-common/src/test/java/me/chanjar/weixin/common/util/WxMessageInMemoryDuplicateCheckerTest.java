@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class WxMessageInMemoryDuplicateCheckerTest {
 
   public void test() throws InterruptedException {
-    Long[] msgIds = new Long[] { 1l, 2l, 3l, 4l, 5l, 6l, 7l, 8l };
+    Long[] msgIds = new Long[]{1l, 2l, 3l, 4l, 5l, 6l, 7l, 8l};
     WxMessageInMemoryDuplicateChecker checker = new WxMessageInMemoryDuplicateChecker(2000l, 1000l);
 
     // 第一次检查

@@ -1,0 +1,7 @@
+engines:
+  fixme:
+    enabled: true
+ratings:
+  paths: []
+exclude_paths:
+- "README.md"

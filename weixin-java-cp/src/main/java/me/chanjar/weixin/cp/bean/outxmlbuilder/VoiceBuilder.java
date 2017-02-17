@@ -4,6 +4,7 @@ import me.chanjar.weixin.cp.bean.WxCpXmlOutVoiceMessage;
 
 /**
  * 语音消息builder
+ *
  * @author Daniel Qian
  */
 public final class VoiceBuilder extends BaseBuilder<VoiceBuilder, WxCpXmlOutVoiceMessage> {
@@ -14,12 +15,13 @@ public final class VoiceBuilder extends BaseBuilder<VoiceBuilder, WxCpXmlOutVoic
     this.mediaId = mediaId;
     return this;
   }
-  
+
+  @Override
   public WxCpXmlOutVoiceMessage build() {
     WxCpXmlOutVoiceMessage m = new WxCpXmlOutVoiceMessage();
     setCommon(m);
-    m.setMediaId(mediaId);
+    m.setMediaId(this.mediaId);
     return m;
   }
-  
+
 }

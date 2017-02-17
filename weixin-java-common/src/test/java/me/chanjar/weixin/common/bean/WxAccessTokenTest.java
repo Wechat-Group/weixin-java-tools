@@ -14,5 +14,5 @@ public class WxAccessTokenTest {
     Assert.assertTrue(wxError.getExpiresIn() == 7200);
 
   }
-  
+
 }

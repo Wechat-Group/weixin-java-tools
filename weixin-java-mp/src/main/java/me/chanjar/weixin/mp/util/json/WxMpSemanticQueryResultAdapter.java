@@ -15,12 +15,11 @@ import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
 import java.lang.reflect.Type;
 
 /**
- * 
  * @author Daniel Qian
- *
  */
 public class WxMpSemanticQueryResultAdapter implements JsonDeserializer<WxMpSemanticQueryResult> {
 
+  @Override
   public WxMpSemanticQueryResult deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     WxMpSemanticQueryResult result = new WxMpSemanticQueryResult();
     JsonObject resultJsonObject = json.getAsJsonObject();
@@ -45,5 +44,5 @@ public class WxMpSemanticQueryResultAdapter implements JsonDeserializer<WxMpSema
     }
     return result;
   }
-  
+
 }

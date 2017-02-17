@@ -3,24 +3,24 @@ package me.chanjar.weixin.common.util.crypto;
 import java.util.ArrayList;
 
 public class ByteGroup {
-	ArrayList<Byte> byteContainer = new ArrayList<Byte>();
+  ArrayList<Byte> byteContainer = new ArrayList<>();
 
   public byte[] toBytes() {
-		byte[] bytes = new byte[byteContainer.size()];
-		for (int i = 0; i < byteContainer.size(); i++) {
-			bytes[i] = byteContainer.get(i);
-		}
-		return bytes;
-	}
+    byte[] bytes = new byte[this.byteContainer.size()];
+    for (int i = 0; i < this.byteContainer.size(); i++) {
+      bytes[i] = this.byteContainer.get(i);
+    }
+    return bytes;
+  }
 
-	public ByteGroup addBytes(byte[] bytes) {
-		for (byte b : bytes) {
-			byteContainer.add(b);
-		}
-		return this;
-	}
+  public ByteGroup addBytes(byte[] bytes) {
+    for (byte b : bytes) {
+      this.byteContainer.add(b);
+    }
+    return this;
+  }
 
-	public int size() {
-		return byteContainer.size();
-	}
+  public int size() {
+    return this.byteContainer.size();
+  }
 }

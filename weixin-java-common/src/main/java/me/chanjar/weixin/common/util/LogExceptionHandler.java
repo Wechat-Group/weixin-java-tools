@@ -13,7 +13,7 @@ public class LogExceptionHandler implements WxErrorExceptionHandler {
   @Override
   public void handle(WxErrorException e) {
 
-    log.error("Error happens", e);
+    this.log.error("Error happens", e);
 
   }
 

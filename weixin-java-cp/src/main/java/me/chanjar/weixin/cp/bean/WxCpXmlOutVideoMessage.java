@@ -2,11 +2,13 @@ package me.chanjar.weixin.cp.bean;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 
 @XStreamAlias("xml")
 public class WxCpXmlOutVideoMessage extends WxCpXmlOutMessage {
+  private static final long serialVersionUID = -8672761162722733622L;
 
   @XStreamAlias("Video")
   protected final Video video = new Video();
@@ -16,47 +18,47 @@ public class WxCpXmlOutVideoMessage extends WxCpXmlOutMessage {
   }
 
   public String getMediaId() {
-    return video.getMediaId();
+    return this.video.getMediaId();
   }
 
   public void setMediaId(String mediaId) {
-    video.setMediaId(mediaId);
+    this.video.setMediaId(mediaId);
   }
 
   public String getTitle() {
-    return video.getTitle();
+    return this.video.getTitle();
   }
 
   public void setTitle(String title) {
-    video.setTitle(title);
+    this.video.setTitle(title);
   }
 
   public String getDescription() {
-    return video.getDescription();
+    return this.video.getDescription();
   }
 
   public void setDescription(String description) {
-    video.setDescription(description);
+    this.video.setDescription(description);
   }
-  
+
 
   @XStreamAlias("Video")
   public static class Video {
-    
+
     @XStreamAlias("MediaId")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String mediaId;
 
     @XStreamAlias("Title")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String title;
 
     @XStreamAlias("Description")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String description;
 
     public String getMediaId() {
-      return mediaId;
+      return this.mediaId;
     }
 
     public void setMediaId(String mediaId) {
@@ -64,7 +66,7 @@ public class WxCpXmlOutVideoMessage extends WxCpXmlOutMessage {
     }
 
     public String getTitle() {
-      return title;
+      return this.title;
     }
 
     public void setTitle(String title) {
@@ -72,13 +74,13 @@ public class WxCpXmlOutVideoMessage extends WxCpXmlOutMessage {
     }
 
     public String getDescription() {
-      return description;
+      return this.description;
     }
 
     public void setDescription(String description) {
       this.description = description;
     }
-    
+
   }
 
 }

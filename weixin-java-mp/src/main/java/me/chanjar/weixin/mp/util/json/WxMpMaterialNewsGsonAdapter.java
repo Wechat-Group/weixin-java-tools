@@ -9,12 +9,13 @@
 package me.chanjar.weixin.mp.util.json;
 
 import com.google.gson.*;
-import me.chanjar.weixin.mp.bean.WxMpMaterialNews;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
 
 import java.lang.reflect.Type;
 
 public class WxMpMaterialNewsGsonAdapter implements JsonSerializer<WxMpMaterialNews>, JsonDeserializer<WxMpMaterialNews> {
 
+  @Override
   public JsonElement serialize(WxMpMaterialNews wxMpMaterialNews, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject newsJson = new JsonObject();
 
@@ -28,6 +29,7 @@ public class WxMpMaterialNewsGsonAdapter implements JsonSerializer<WxMpMaterialN
     return newsJson;
   }
 
+  @Override
   public WxMpMaterialNews deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
     WxMpMaterialNews wxMpMaterialNews = new WxMpMaterialNews();
     JsonObject json = jsonElement.getAsJsonObject();

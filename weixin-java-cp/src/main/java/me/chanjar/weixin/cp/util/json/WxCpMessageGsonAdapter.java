@@ -10,18 +10,17 @@ package me.chanjar.weixin.cp.util.json;
 
 import com.google.gson.*;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.util.StringUtils;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
 
 /**
- * 
  * @author Daniel Qian
- *
  */
 public class WxCpMessageGsonAdapter implements JsonSerializer<WxCpMessage> {
 
+  @Override
   public JsonElement serialize(WxCpMessage message, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject messageJson = new JsonObject();
     messageJson.addProperty("agentid", message.getAgentId());
@@ -83,7 +82,7 @@ public class WxCpMessageGsonAdapter implements JsonSerializer<WxCpMessage> {
       newsJsonObject.add("articles", articleJsonArray);
       messageJson.add("news", newsJsonObject);
     }
-    
+
     return messageJson;
   }
 

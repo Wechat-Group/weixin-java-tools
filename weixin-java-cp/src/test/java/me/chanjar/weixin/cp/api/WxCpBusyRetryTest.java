@@ -14,12 +14,15 @@ import java.util.concurrent.Future;
 @Test
 public class WxCpBusyRetryTest {
 
-  @DataProvider(name="getService")
+  @DataProvider(name = "getService")
   public Object[][] getService() {
     WxCpService service = new WxCpServiceImpl() {
 
       @Override
-      protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+      protected synchronized <T, E> T executeInternal(
+          RequestExecutor<T, E> executor, String uri, E data)
+          throws WxErrorException {
+        this.log.info("Executed");
         WxError error = new WxError();
         error.setErrorCode(-1);
         throw new WxErrorException(error);
@@ -28,8 +31,8 @@ public class WxCpBusyRetryTest {
 
     service.setMaxRetryTimes(3);
     service.setRetrySleepMillis(500);
-    return new Object[][] {
-        new Object[] { service }
+    return new Object[][]{
+            new Object[]{service}
     };
   }
 

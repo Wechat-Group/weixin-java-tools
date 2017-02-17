@@ -19,14 +19,15 @@ import java.lang.reflect.Type;
  */
 public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSerializer<WxCpUser> {
 
+  @Override
   public WxCpUser deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-      throws JsonParseException {
+          throws JsonParseException {
     JsonObject o = json.getAsJsonObject();
     WxCpUser user = new WxCpUser();
     user.setUserId(GsonHelper.getString(o, "userid"));
     user.setName(GsonHelper.getString(o, "name"));
 
-    if(o.get("department") != null) {
+    if (o.get("department") != null) {
       JsonArray departJsonArray = o.get("department").getAsJsonArray();
       Integer[] departIds = new Integer[departJsonArray.size()];
       int i = 0;
@@ -49,8 +50,8 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
       JsonArray attrJsonElements = o.get("extattr").getAsJsonObject().get("attrs").getAsJsonArray();
       for (JsonElement attrJsonElement : attrJsonElements) {
         WxCpUser.Attr attr = new WxCpUser.Attr(
-            GsonHelper.getString(attrJsonElement.getAsJsonObject(), "name"),
-            GsonHelper.getString(attrJsonElement.getAsJsonObject(), "value")
+                GsonHelper.getString(attrJsonElement.getAsJsonObject(), "name"),
+                GsonHelper.getString(attrJsonElement.getAsJsonObject(), "value")
         );
         user.getExtAttrs().add(attr);
       }

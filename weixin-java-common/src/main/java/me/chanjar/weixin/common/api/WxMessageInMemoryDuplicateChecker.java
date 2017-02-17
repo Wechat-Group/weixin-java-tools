@@ -25,7 +25,7 @@ public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChec
   /**
    * 消息id->消息时间戳的map
    */
-  private final ConcurrentHashMap<String, Long> msgId2Timestamp = new ConcurrentHashMap<String, Long>();
+  private final ConcurrentHashMap<String, Long> msgId2Timestamp = new ConcurrentHashMap<>();
 
   /**
    * 后台清理线程是否已经开启
@@ -46,7 +46,8 @@ public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChec
 
   /**
    * WxMsgIdInMemoryDuplicateChecker构造函数
-   * @param timeToLive 一个消息ID在内存的过期时间：毫秒
+   *
+   * @param timeToLive  一个消息ID在内存的过期时间：毫秒
    * @param clearPeriod 每隔多少周期检查消息ID是否过期：毫秒
    */
   public WxMessageInMemoryDuplicateChecker(Long timeToLive, Long clearPeriod) {
@@ -55,7 +56,7 @@ public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChec
   }
 
   protected void checkBackgroundProcessStarted() {
-    if (backgroundProcessStarted.getAndSet(true)) {
+    if (this.backgroundProcessStarted.getAndSet(true)) {
       return;
     }
     Thread t = new Thread(new Runnable() {
@@ -63,11 +64,11 @@ public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChec
       public void run() {
         try {
           while (true) {
-            Thread.sleep(clearPeriod);
+            Thread.sleep(WxMessageInMemoryDuplicateChecker.this.clearPeriod);
             Long now = System.currentTimeMillis();
-            for (Map.Entry<String, Long> entry : msgId2Timestamp.entrySet()) {
-              if (now - entry.getValue() > timeToLive) {
-                msgId2Timestamp.entrySet().remove(entry);
+            for (Map.Entry<String, Long> entry : WxMessageInMemoryDuplicateChecker.this.msgId2Timestamp.entrySet()) {
+              if (now - entry.getValue() > WxMessageInMemoryDuplicateChecker.this.timeToLive) {
+                WxMessageInMemoryDuplicateChecker.this.msgId2Timestamp.entrySet().remove(entry);
               }
             }
           }
@@ -86,12 +87,8 @@ public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChec
       return false;
     }
     checkBackgroundProcessStarted();
-    Long timestamp = msgId2Timestamp.putIfAbsent(messageId, System.currentTimeMillis());
-    if (timestamp == null) {
-      // 第一次接收到这个消息
-      return false;
-    }
-    return true;
+    Long timestamp = this.msgId2Timestamp.putIfAbsent(messageId, System.currentTimeMillis());
+    return timestamp != null;
   }
 
 

@@ -11,41 +11,95 @@ public class StandardSession implements WxSession, InternalSession {
   /**
    * The string manager for this package.
    */
-  protected static final StringManager sm =
-      StringManager.getManager(Constants.Package);
+  protected static final StringManager sm = StringManager.getManager(Constants.Package);
+  /**
+   * Type array.
+   */
+  private static final String[] EMPTY_ARRAY = new String[0];
 
   // ------------------------------ WxSession
-  protected Map<String, Object> attributes = new ConcurrentHashMap<String, Object>();
+  protected Map<String, Object> attributes = new ConcurrentHashMap<>();
+  /**
+   * The session identifier of this Session.
+   */
+  protected String id = null;
+  /**
+   * Flag indicating whether this session is valid or not.
+   */
+  protected volatile boolean isValid = false;
+  /**
+   * We are currently processing a session expiration, so bypass
+   * certain IllegalStateException tests.  NOTE:  This value is not
+   * included in the serialized version of this object.
+   */
+  protected transient volatile boolean expiring = false;
+  /**
+   * The Manager with which this Session is associated.
+   */
+  protected transient InternalSessionManager manager = null;
+
+  // ------------------------------ InternalSession
+  /**
+   * The time this session was created, in milliseconds since midnight,
+   * January 1, 1970 GMT.
+   */
+  protected long creationTime = 0L;
+  /**
+   * The current accessed time for this session.
+   */
+  protected volatile long thisAccessedTime = this.creationTime;
+  /**
+   * The default maximum inactive interval for Sessions created by
+   * this Manager.
+   */
+  protected int maxInactiveInterval = 30 * 60;
+  /**
+   * The facade associated with this session.  NOTE:  This value is not
+   * included in the serialized version of this object.
+   */
+  protected transient StandardSessionFacade facade = null;
+  /**
+   * The access count for this session.
+   */
+  protected transient AtomicInteger accessCount = null;
+
+  public StandardSession(InternalSessionManager manager) {
+    this.manager = manager;
+    this.accessCount = new AtomicInteger();
+  }
 
   @Override
   public Object getAttribute(String name) {
 
-    if (!isValidInternal())
+    if (!isValidInternal()) {
       throw new IllegalStateException
-          (sm.getString("sessionImpl.getAttribute.ise"));
+        (sm.getString("sessionImpl.getAttribute.ise"));
+    }
 
-    if (name == null) return null;
+    if (name == null) {
+      return null;
+    }
 
-    return (attributes.get(name));
+    return this.attributes.get(name);
   }
 
   @Override
   public Enumeration<String> getAttributeNames() {
-    if (!isValidInternal())
-      throw new IllegalStateException
-          (sm.getString("sessionImpl.getAttributeNames.ise"));
+    if (!isValidInternal()) {
+      throw new IllegalStateException(sm.getString("sessionImpl.getAttributeNames.ise"));
+    }
 
-    Set<String> names = new HashSet<String>();
-    names.addAll(attributes.keySet());
+    Set<String> names = new HashSet<>();
+    names.addAll(this.attributes.keySet());
     return Collections.enumeration(names);
   }
 
   @Override
   public void setAttribute(String name, Object value) {
     // Name cannot be null
-    if (name == null)
-      throw new IllegalArgumentException
-          (sm.getString("sessionImpl.setAttribute.namenull"));
+    if (name == null) {
+      throw new IllegalArgumentException(sm.getString("sessionImpl.setAttribute.namenull"));
+    }
 
     // Null value is the same as removeAttribute()
     if (value == null) {
@@ -54,103 +108,36 @@ public class StandardSession implements WxSession, InternalSession {
     }
 
     // Validate our current state
-    if (!isValidInternal())
-      throw new IllegalStateException(sm.getString(
-          "sessionImpl.setAttribute.ise", getIdInternal()));
+    if (!isValidInternal()) {
+      throw new IllegalStateException(sm.getString("sessionImpl.setAttribute.ise", getIdInternal()));
+    }
 
-    attributes.put(name, value);
+    this.attributes.put(name, value);
 
   }
-
 
   @Override
   public void removeAttribute(String name) {
     removeAttributeInternal(name);
   }
 
-
   @Override
   public void invalidate() {
     if (!isValidInternal())
-      throw new IllegalStateException
-          (sm.getString("sessionImpl.invalidate.ise"));
+      throw new IllegalStateException(sm.getString("sessionImpl.invalidate.ise"));
 
     // Cause this session to expire
     expire();
 
   }
 
-  // ------------------------------ InternalSession
-  /**
-   * The session identifier of this Session.
-   */
-  protected String id = null;
-
-  /**
-   * Flag indicating whether this session is valid or not.
-   */
-  protected volatile boolean isValid = false;
-
-  /**
-   * We are currently processing a session expiration, so bypass
-   * certain IllegalStateException tests.  NOTE:  This value is not
-   * included in the serialized version of this object.
-   */
-  protected transient volatile boolean expiring = false;
-
-  /**
-   * The Manager with which this Session is associated.
-   */
-  protected transient InternalSessionManager manager = null;
-
-  /**
-   * Type array.
-   */
-  protected static final String EMPTY_ARRAY[] = new String[0];
-
-  /**
-   * The time this session was created, in milliseconds since midnight,
-   * January 1, 1970 GMT.
-   */
-  protected long creationTime = 0L;
-
-  /**
-   * The current accessed time for this session.
-   */
-  protected volatile long thisAccessedTime = creationTime;
-
-  /**
-   * The default maximum inactive interval for Sessions created by
-   * this Manager.
-   */
-  protected int maxInactiveInterval = 30 * 60;
-
-  /**
-   * The facade associated with this session.  NOTE:  This value is not
-   * included in the serialized version of this object.
-   */
-  protected transient StandardSessionFacade facade = null;
-
-  /**
-   * The access count for this session.
-   */
-  protected transient AtomicInteger accessCount = null;
-
-
-  public StandardSession(InternalSessionManager manager) {
-    this.manager = manager;
-    this.accessCount = new AtomicInteger();
-  }
-
-
   @Override
   public WxSession getSession() {
-
-    if (facade == null){
-      facade = new StandardSessionFacade(this);
+    if (this.facade == null) {
+      this.facade = new StandardSessionFacade(this);
     }
-    return (facade);
 
+    return this.facade;
   }
 
   /**
@@ -158,6 +145,32 @@ public class StandardSession implements WxSession, InternalSession {
    * check.
    */
   protected boolean isValidInternal() {
+    return this.isValid;
+  }
+
+  @Override
+  public boolean isValid() {
+    if (!this.isValid) {
+      return false;
+    }
+
+    if (this.expiring) {
+      return true;
+    }
+
+    if (this.accessCount.get() > 0) {
+      return true;
+    }
+
+    if (this.maxInactiveInterval > 0) {
+      long timeNow = System.currentTimeMillis();
+      int timeIdle;
+      timeIdle = (int) ((timeNow - this.thisAccessedTime) / 1000L);
+      if (timeIdle >= this.maxInactiveInterval) {
+        expire();
+      }
+    }
+
     return this.isValid;
   }
 
@@ -172,42 +185,18 @@ public class StandardSession implements WxSession, InternalSession {
   }
 
   @Override
-  public boolean isValid() {
-    if (!this.isValid) {
-      return false;
-    }
-
-    if (this.expiring) {
-      return true;
-    }
-
-    if (accessCount.get() > 0) {
-      return true;
-    }
-
-    if (maxInactiveInterval > 0) {
-      long timeNow = System.currentTimeMillis();
-      int timeIdle;
-      timeIdle = (int) ((timeNow - thisAccessedTime) / 1000L);
-      if (timeIdle >= maxInactiveInterval) {
-        expire();
-      }
-    }
-
-    return this.isValid;
-  }
-
-  @Override
   public String getIdInternal() {
-    return (this.id);
+    return this.id;
   }
 
   protected void removeAttributeInternal(String name) {
     // Avoid NPE
-    if (name == null) return;
+    if (name == null) {
+      return;
+    }
 
     // Remove this attribute from our collection
-    attributes.remove(name);
+    this.attributes.remove(name);
 
   }
 
@@ -216,37 +205,40 @@ public class StandardSession implements WxSession, InternalSession {
     // Check to see if session has already been invalidated.
     // Do not check expiring at this point as expire should not return until
     // isValid is false
-    if (!isValid)
+    if (!this.isValid) {
       return;
+    }
 
     synchronized (this) {
       // Check again, now we are inside the sync so this code only runs once
       // Double check locking - isValid needs to be volatile
       // The check of expiring is to ensure that an infinite loop is not
       // entered as per bug 56339
-      if (expiring || !isValid)
+      if (this.expiring || !this.isValid) {
         return;
+      }
 
-      if (manager == null)
+      if (this.manager == null) {
         return;
+      }
 
       // Mark this session as "being expired"
-      expiring = true;
+      this.expiring = true;
 
-      accessCount.set(0);
+      this.accessCount.set(0);
 
       // Remove this session from our manager's active sessions
-      manager.remove(this, true);
+      this.manager.remove(this, true);
 
 
       // We have completed expire of this session
       setValid(false);
-      expiring = false;
+      this.expiring = false;
 
       // Unbind any objects associated with this session
-      String keys[] = keys();
-      for (int i = 0; i < keys.length; i++) {
-        removeAttributeInternal(keys[i]);
+      String[] keys = keys();
+      for (String key : keys) {
+        removeAttributeInternal(key);
       }
     }
 
@@ -258,7 +250,7 @@ public class StandardSession implements WxSession, InternalSession {
   public void access() {
 
     this.thisAccessedTime = System.currentTimeMillis();
-    accessCount.incrementAndGet();
+    this.accessCount.incrementAndGet();
 
   }
 
@@ -267,7 +259,7 @@ public class StandardSession implements WxSession, InternalSession {
   public void endAccess() {
 
     this.thisAccessedTime = System.currentTimeMillis();
-    accessCount.decrementAndGet();
+    this.accessCount.decrementAndGet();
 
   }
 
@@ -287,13 +279,15 @@ public class StandardSession implements WxSession, InternalSession {
 
   @Override
   public void setId(String id) {
-    if ((this.id != null) && (manager != null))
-      manager.remove(this);
+    if ((this.id != null) && (this.manager != null)) {
+      this.manager.remove(this);
+    }
 
     this.id = id;
 
-    if (manager != null)
-      manager.add(this);
+    if (this.manager != null) {
+      this.manager.add(this);
+    }
   }
 
   /**
@@ -303,43 +297,62 @@ public class StandardSession implements WxSession, InternalSession {
    */
   protected String[] keys() {
 
-    return attributes.keySet().toArray(EMPTY_ARRAY);
+    return this.attributes.keySet().toArray(EMPTY_ARRAY);
 
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof StandardSession)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof StandardSession)) {
+      return false;
+    }
 
     StandardSession session = (StandardSession) o;
 
-    if (creationTime != session.creationTime) return false;
-    if (expiring != session.expiring) return false;
-    if (isValid != session.isValid) return false;
-    if (maxInactiveInterval != session.maxInactiveInterval) return false;
-    if (thisAccessedTime != session.thisAccessedTime) return false;
-    if (!accessCount.equals(session.accessCount)) return false;
-    if (!attributes.equals(session.attributes)) return false;
-    if (!facade.equals(session.facade)) return false;
-    if (!id.equals(session.id)) return false;
-    if (!manager.equals(session.manager)) return false;
+    if (this.creationTime != session.creationTime) {
+      return false;
+    }
+    if (this.expiring != session.expiring) {
+      return false;
+    }
+    if (this.isValid != session.isValid) {
+      return false;
+    }
+    if (this.maxInactiveInterval != session.maxInactiveInterval) {
+      return false;
+    }
+    if (this.thisAccessedTime != session.thisAccessedTime) {
+      return false;
+    }
+    if (this.accessCount.get() != session.accessCount.get()) {
+      return false;
+    }
+    if (!this.attributes.equals(session.attributes)) {
+      return false;
+    }
+    if (!this.facade.equals(session.facade)) {
+      return false;
+    }
 
-    return true;
+    return this.id.equals(session.id) && this.manager.equals(session.manager);
+
   }
 
   @Override
   public int hashCode() {
-    int result = attributes.hashCode();
-    result = 31 * result + id.hashCode();
-    result = 31 * result + (isValid ? 1 : 0);
-    result = 31 * result + (expiring ? 1 : 0);
-    result = 31 * result + manager.hashCode();
-    result = 31 * result + (int) (creationTime ^ (creationTime >>> 32));
-    result = 31 * result + (int) (thisAccessedTime ^ (thisAccessedTime >>> 32));
-    result = 31 * result + maxInactiveInterval;
-    result = 31 * result + facade.hashCode();
-    result = 31 * result + accessCount.hashCode();
+    int result = this.attributes.hashCode();
+    result = 31 * result + this.id.hashCode();
+    result = 31 * result + (this.isValid ? 1 : 0);
+    result = 31 * result + (this.expiring ? 1 : 0);
+    result = 31 * result + this.manager.hashCode();
+    result = 31 * result + (int) (this.creationTime ^ (this.creationTime >>> 32));
+    result = 31 * result + (int) (this.thisAccessedTime ^ (this.thisAccessedTime >>> 32));
+    result = 31 * result + this.maxInactiveInterval;
+    result = 31 * result + this.facade.hashCode();
+    result = 31 * result + this.accessCount.hashCode();
     return result;
   }
 

@@ -15,7 +15,7 @@ public class WxErrorTest {
     Assert.assertEquals(wxError.getErrorMsg(), "invalid openid");
 
   }
-  
+
   public void testFromBadJson1() {
 
     String json = "{ \"errcode\": 40003, \"errmsg\": \"invalid openid\", \"media_id\": \"12323423dsfafsf232f\" }";
@@ -24,7 +24,7 @@ public class WxErrorTest {
     Assert.assertEquals(wxError.getErrorMsg(), "invalid openid");
 
   }
-  
+
   public void testFromBadJson2() {
 
     String json = "{\"access_token\":\"ACCESS_TOKEN\",\"expires_in\":7200}";
@@ -33,5 +33,5 @@ public class WxErrorTest {
     Assert.assertEquals(wxError.getErrorMsg(), null);
 
   }
-  
+
 }

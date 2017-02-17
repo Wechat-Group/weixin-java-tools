@@ -14,12 +14,11 @@ import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import java.lang.reflect.Type;
 
 /**
- * 
  * @author Daniel Qian
- *
  */
 public class WxMediaUploadResultAdapter implements JsonDeserializer<WxMediaUploadResult> {
 
+  @Override
   public WxMediaUploadResult deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     WxMediaUploadResult uploadResult = new WxMediaUploadResult();
     JsonObject uploadResultJsonObject = json.getAsJsonObject();
@@ -38,5 +37,5 @@ public class WxMediaUploadResultAdapter implements JsonDeserializer<WxMediaUploa
     }
     return uploadResult;
   }
-  
+
 }

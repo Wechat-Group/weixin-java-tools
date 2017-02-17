@@ -1,66 +1,74 @@
 package me.chanjar.weixin.cp.api;
 
-import java.io.File;
-
 import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.util.http.ApacheHttpClientBuilder;
+
+import java.io.File;
 
 /**
  * 微信客户端配置存储
- * @author Daniel Qian
  *
+ * @author Daniel Qian
  */
 public interface WxCpConfigStorage {
 
-  public String getAccessToken();
+  String getAccessToken();
 
-  public boolean isAccessTokenExpired();
+  boolean isAccessTokenExpired();
 
   /**
    * 强制将access token过期掉
    */
-  public void expireAccessToken();
+  void expireAccessToken();
 
-  public void updateAccessToken(WxAccessToken accessToken);
+  void updateAccessToken(WxAccessToken accessToken);
 
-  public void updateAccessToken(String accessToken, int expiresIn);
+  void updateAccessToken(String accessToken, int expiresIn);
 
-  public String getJsapiTicket();
+  String getJsapiTicket();
 
-  public boolean isJsapiTicketExpired();
+  boolean isJsapiTicketExpired();
 
   /**
    * 强制将jsapi ticket过期掉
    */
-  public void expireJsapiTicket();
+  void expireJsapiTicket();
 
   /**
    * 应该是线程安全的
+   *
    * @param jsapiTicket
    */
-  public void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
+  void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
 
-  public String getCorpId();
-  
-  public String getCorpSecret();
+  String getCorpId();
 
-  public String getAgentId();
+  String getCorpSecret();
 
-  public String getToken();
+  Integer getAgentId();
 
-  public String getAesKey();
+  String getToken();
 
-  public long getExpiresTime();
+  String getAesKey();
 
-  public String getOauth2redirectUri();
+  long getExpiresTime();
 
-  public String getHttp_proxy_host();
+  String getOauth2redirectUri();
 
-  public int getHttp_proxy_port();
+  String getHttpProxyHost();
 
-  public String getHttp_proxy_username();
+  int getHttpProxyPort();
 
-  public String getHttp_proxy_password();
-  
-  public File getTmpDirFile();
+  String getHttpProxyUsername();
 
+  String getHttpProxyPassword();
+
+  File getTmpDirFile();
+
+  /**
+   * http client builder
+   *
+   * @return ApacheHttpClientBuilder
+   */
+  ApacheHttpClientBuilder getApacheHttpClientBuilder();
 }

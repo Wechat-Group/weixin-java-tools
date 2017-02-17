@@ -10,31 +10,29 @@ package me.chanjar.weixin.mp.util.json;
 
 import com.google.gson.*;
 import me.chanjar.weixin.common.util.json.GsonHelper;
-import me.chanjar.weixin.mp.bean.result.WxMpMassUploadResult;
-import me.chanjar.weixin.mp.bean.result.WxMpUserCumulate;
-import me.chanjar.weixin.mp.bean.result.WxMpUserSummary;
+import me.chanjar.weixin.mp.bean.datacube.WxDataCubeUserCumulate;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 /**
- * 
  * @author Daniel Qian
- *
  */
-public class WxMpUserCumulateGsonAdapter implements JsonDeserializer<WxMpUserCumulate> {
+public class WxMpUserCumulateGsonAdapter implements JsonDeserializer<WxDataCubeUserCumulate> {
 
-  private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+  private static final FastDateFormat DATE_FORMAT = FastDateFormat
+    .getInstance("yyyy-MM-dd");
 
-  public WxMpUserCumulate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-    WxMpUserCumulate cumulate = new WxMpUserCumulate();
+  @Override
+  public WxDataCubeUserCumulate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    WxDataCubeUserCumulate cumulate = new WxDataCubeUserCumulate();
     JsonObject summaryJsonObject = json.getAsJsonObject();
 
     try {
       String refDate = GsonHelper.getString(summaryJsonObject, "ref_date");
       if (refDate != null) {
-        cumulate.setRefDate(SIMPLE_DATE_FORMAT.parse(refDate));
+        cumulate.setRefDate(DATE_FORMAT.parse(refDate));
       }
       cumulate.setCumulateUser(GsonHelper.getInteger(summaryJsonObject, "cumulate_user"));
     } catch (ParseException e) {
@@ -43,5 +41,5 @@ public class WxMpUserCumulateGsonAdapter implements JsonDeserializer<WxMpUserCum
     return cumulate;
 
   }
-  
+
 }

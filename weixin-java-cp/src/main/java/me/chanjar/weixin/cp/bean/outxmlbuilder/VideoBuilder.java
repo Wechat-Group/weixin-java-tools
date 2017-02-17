@@ -4,8 +4,8 @@ import me.chanjar.weixin.cp.bean.WxCpXmlOutVideoMessage;
 
 /**
  * 视频消息builder
- * @author Daniel Qian
  *
+ * @author Daniel Qian
  */
 public final class VideoBuilder extends BaseBuilder<VideoBuilder, WxCpXmlOutVideoMessage> {
 
@@ -17,22 +17,25 @@ public final class VideoBuilder extends BaseBuilder<VideoBuilder, WxCpXmlOutVide
     this.title = title;
     return this;
   }
+
   public VideoBuilder description(String description) {
     this.description = description;
     return this;
   }
+
   public VideoBuilder mediaId(String mediaId) {
     this.mediaId = mediaId;
     return this;
   }
-  
+
+  @Override
   public WxCpXmlOutVideoMessage build() {
     WxCpXmlOutVideoMessage m = new WxCpXmlOutVideoMessage();
     setCommon(m);
-    m.setTitle(title);
-    m.setDescription(description);
-    m.setMediaId(mediaId);
+    m.setTitle(this.title);
+    m.setDescription(this.description);
+    m.setMediaId(this.mediaId);
     return m;
   }
-  
+
 }

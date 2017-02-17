@@ -9,15 +9,16 @@ import java.util.List;
 
 /**
  * 消息
- * @author Daniel Qian
  *
+ * @author Daniel Qian
  */
 public class WxCpMessage implements Serializable {
 
+  private static final long serialVersionUID = -2082278303476631708L;
   private String toUser;
   private String toParty;
   private String toTag;
-  private String agentId;
+  private Integer agentId;
   private String msgType;
   private String content;
   private String mediaId;
@@ -27,17 +28,60 @@ public class WxCpMessage implements Serializable {
   private String musicUrl;
   private String hqMusicUrl;
   private String safe;
-  private List<WxArticle> articles = new ArrayList<WxArticle>();
-  
-  public String getToUser() {
-    return toUser;
+  private List<WxArticle> articles = new ArrayList<>();
+
+  /**
+   * 获得文本消息builder
+   */
+  public static TextBuilder TEXT() {
+    return new TextBuilder();
   }
+
+  /**
+   * 获得图片消息builder
+   */
+  public static ImageBuilder IMAGE() {
+    return new ImageBuilder();
+  }
+
+  /**
+   * 获得语音消息builder
+   */
+  public static VoiceBuilder VOICE() {
+    return new VoiceBuilder();
+  }
+
+  /**
+   * 获得视频消息builder
+   */
+  public static VideoBuilder VIDEO() {
+    return new VideoBuilder();
+  }
+
+  /**
+   * 获得图文消息builder
+   */
+  public static NewsBuilder NEWS() {
+    return new NewsBuilder();
+  }
+
+  /**
+   * 获得文件消息builder
+   */
+  public static FileBuilder FILE() {
+    return new FileBuilder();
+  }
+
+  public String getToUser() {
+    return this.toUser;
+  }
+
   public void setToUser(String toUser) {
     this.toUser = toUser;
   }
 
   public String getToParty() {
-    return toParty;
+    return this.toParty;
   }
 
   public void setToParty(String toParty) {
@@ -45,31 +89,23 @@ public class WxCpMessage implements Serializable {
   }
 
   public String getToTag() {
-    return toTag;
+    return this.toTag;
   }
 
   public void setToTag(String toTag) {
     this.toTag = toTag;
   }
 
-  public String getAgentId() {
-    return agentId;
+  public Integer getAgentId() {
+    return this.agentId;
   }
 
-  public void setAgentId(String agentId) {
+  public void setAgentId(Integer agentId) {
     this.agentId = agentId;
   }
 
   public String getMsgType() {
-    return msgType;
-  }
-  
-  public String getSafe() {
-    return safe;
-  }
-
-  public void setSafe(String safe) {
-    this.safe = safe;
+    return this.msgType;
   }
 
   /**
@@ -82,144 +118,128 @@ public class WxCpMessage implements Serializable {
    * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_VIDEO}
    * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_NEWS}
    * </pre>
+   *
    * @param msgType
    */
   public void setMsgType(String msgType) {
     this.msgType = msgType;
   }
-  public String getContent() {
-    return content;
+
+  public String getSafe() {
+    return this.safe;
   }
+
+  public void setSafe(String safe) {
+    this.safe = safe;
+  }
+
+  public String getContent() {
+    return this.content;
+  }
+
   public void setContent(String content) {
     this.content = content;
   }
+
   public String getMediaId() {
-    return mediaId;
+    return this.mediaId;
   }
+
   public void setMediaId(String mediaId) {
     this.mediaId = mediaId;
   }
+
   public String getThumbMediaId() {
-    return thumbMediaId;
+    return this.thumbMediaId;
   }
+
   public void setThumbMediaId(String thumbMediaId) {
     this.thumbMediaId = thumbMediaId;
   }
+
   public String getTitle() {
-    return title;
+    return this.title;
   }
+
   public void setTitle(String title) {
     this.title = title;
   }
+
   public String getDescription() {
-    return description;
+    return this.description;
   }
+
   public void setDescription(String description) {
     this.description = description;
   }
+
   public String getMusicUrl() {
-    return musicUrl;
+    return this.musicUrl;
   }
+
   public void setMusicUrl(String musicUrl) {
     this.musicUrl = musicUrl;
   }
+
   public String getHqMusicUrl() {
-    return hqMusicUrl;
+    return this.hqMusicUrl;
   }
+
   public void setHqMusicUrl(String hqMusicUrl) {
     this.hqMusicUrl = hqMusicUrl;
   }
+
   public List<WxArticle> getArticles() {
-    return articles;
+    return this.articles;
   }
+
   public void setArticles(List<WxArticle> articles) {
     this.articles = articles;
   }
-  
+
   public String toJson() {
     return WxCpGsonBuilder.INSTANCE.create().toJson(this);
   }
-  
+
   public static class WxArticle {
-    
+
     private String title;
     private String description;
     private String url;
     private String picUrl;
-    
+
     public String getTitle() {
-      return title;
+      return this.title;
     }
+
     public void setTitle(String title) {
       this.title = title;
     }
+
     public String getDescription() {
-      return description;
+      return this.description;
     }
+
     public void setDescription(String description) {
       this.description = description;
     }
+
     public String getUrl() {
-      return url;
+      return this.url;
     }
+
     public void setUrl(String url) {
       this.url = url;
     }
+
     public String getPicUrl() {
-      return picUrl;
+      return this.picUrl;
     }
+
     public void setPicUrl(String picUrl) {
       this.picUrl = picUrl;
     }
-    
-  }
-  
-  /**
-   * 获得文本消息builder
-   * @return
-   */
-  public static TextBuilder TEXT() {
-    return new TextBuilder();
+
   }
 
-  /**
-   * 获得图片消息builder
-   * @return
-   */
-  public static ImageBuilder IMAGE() {
-    return new ImageBuilder();
-  }
-
-  /**
-   * 获得语音消息builder
-   * @return
-   */
-  public static VoiceBuilder VOICE() {
-    return new VoiceBuilder();
-  }
-  
-  /**
-   * 获得视频消息builder
-   * @return
-   */
-  public static VideoBuilder VIDEO() {
-    return new VideoBuilder();
-  }
-  
-  /**
-   * 获得图文消息builder
-   * @return
-   */
-  public static NewsBuilder NEWS() {
-    return new NewsBuilder();
-  }
-
-  /**
-   * 获得文件消息builder
-   * @return
-   */
-  public static FileBuilder FILE() {
-    return new FileBuilder();
-  }
-  
 }

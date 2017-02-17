@@ -6,6 +6,11 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 public class WxMpOAuth2AccessToken implements Serializable {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -1345910558078620805L;
+
   private String accessToken;
 
   private int expiresIn = -1;
@@ -19,7 +24,7 @@ public class WxMpOAuth2AccessToken implements Serializable {
   private String unionId;
 
   public String getRefreshToken() {
-    return refreshToken;
+    return this.refreshToken;
   }
 
   public void setRefreshToken(String refreshToken) {
@@ -27,7 +32,7 @@ public class WxMpOAuth2AccessToken implements Serializable {
   }
 
   public String getOpenId() {
-    return openId;
+    return this.openId;
   }
 
   public void setOpenId(String openId) {
@@ -35,7 +40,7 @@ public class WxMpOAuth2AccessToken implements Serializable {
   }
 
   public String getScope() {
-    return scope;
+    return this.scope;
   }
 
   public void setScope(String scope) {
@@ -43,7 +48,7 @@ public class WxMpOAuth2AccessToken implements Serializable {
   }
 
   public String getAccessToken() {
-    return accessToken;
+    return this.accessToken;
   }
 
   public void setAccessToken(String accessToken) {
@@ -51,7 +56,7 @@ public class WxMpOAuth2AccessToken implements Serializable {
   }
 
   public int getExpiresIn() {
-    return expiresIn;
+    return this.expiresIn;
   }
 
   public void setExpiresIn(int expiresIn) {
@@ -59,7 +64,7 @@ public class WxMpOAuth2AccessToken implements Serializable {
   }
 
   public String getUnionId() {
-    return unionId;
+    return this.unionId;
   }
 
   public void setUnionId(String unionId) {
@@ -73,12 +78,12 @@ public class WxMpOAuth2AccessToken implements Serializable {
   @Override
   public String toString() {
     return "WxMpOAuth2AccessToken{" +
-        "accessToken='" + accessToken + '\'' +
-        ", expiresTime=" + expiresIn +
-        ", refreshToken='" + refreshToken + '\'' +
-        ", openId='" + openId + '\'' +
-        ", scope='" + scope + '\'' +
-        ", unionId='" + unionId + '\'' +
+        "accessToken='" + this.accessToken + '\'' +
+        ", expiresTime=" + this.expiresIn +
+        ", refreshToken='" + this.refreshToken + '\'' +
+        ", openId='" + this.openId + '\'' +
+        ", scope='" + this.scope + '\'' +
+        ", unionId='" + this.unionId + '\'' +
         '}';
   }
 }

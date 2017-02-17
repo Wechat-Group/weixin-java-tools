@@ -1,11 +1,16 @@
 package me.chanjar.weixin.mp.demo;
 
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.mp.api.*;
+import me.chanjar.weixin.mp.api.WxMpConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpMessageHandler;
+import me.chanjar.weixin.mp.api.WxMpMessageRouter;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class WxMpDemoServer {
@@ -22,10 +27,13 @@ public class WxMpDemoServer {
     ServletHandler servletHandler = new ServletHandler();
     server.setHandler(servletHandler);
 
-    ServletHolder endpointServletHolder = new ServletHolder(new WxMpEndpointServlet(wxMpConfigStorage, wxMpService, wxMpMessageRouter));
+    ServletHolder endpointServletHolder = new ServletHolder(
+      new WxMpEndpointServlet(wxMpConfigStorage, wxMpService,
+        wxMpMessageRouter));
     servletHandler.addServletWithMapping(endpointServletHolder, "/*");
 
-    ServletHolder oauthServletHolder = new ServletHolder(new WxMpOAuth2Servlet(wxMpService));
+    ServletHolder oauthServletHolder = new ServletHolder(
+      new WxMpOAuth2Servlet(wxMpService));
     servletHandler.addServletWithMapping(oauthServletHolder, "/oauth2/*");
 
     server.start();
@@ -33,27 +41,30 @@ public class WxMpDemoServer {
   }
 
   private static void initWeixin() {
-    InputStream is1 = ClassLoader.getSystemResourceAsStream("test-config.xml");
-    WxMpDemoInMemoryConfigStorage config = WxMpDemoInMemoryConfigStorage.fromXml(is1);
+    try (InputStream is1 = ClassLoader
+      .getSystemResourceAsStream("test-config.xml")) {
+      WxMpDemoInMemoryConfigStorage config = WxMpDemoInMemoryConfigStorage
+        .fromXml(is1);
 
-    wxMpConfigStorage = config;
-    wxMpService = new WxMpServiceImpl();
-    wxMpService.setWxMpConfigStorage(config);
+      wxMpConfigStorage = config;
+      wxMpService = new WxMpServiceImpl();
+      wxMpService.setWxMpConfigStorage(config);
 
-    WxMpMessageHandler logHandler = new DemoLogHandler();
-    WxMpMessageHandler textHandler = new DemoTextHandler();
-    WxMpMessageHandler imageHandler = new DemoImageHandler();
-    WxMpMessageHandler oauth2handler = new DemoOAuth2Handler();
-    DemoGuessNumberHandler guessNumberHandler = new DemoGuessNumberHandler();
+      WxMpMessageHandler logHandler = new DemoLogHandler();
+      WxMpMessageHandler textHandler = new DemoTextHandler();
+      WxMpMessageHandler imageHandler = new DemoImageHandler();
+      WxMpMessageHandler oauth2handler = new DemoOAuth2Handler();
+      DemoGuessNumberHandler guessNumberHandler = new DemoGuessNumberHandler();
 
-    wxMpMessageRouter = new WxMpMessageRouter(wxMpService);
-      wxMpMessageRouter
-          .rule().handler(logHandler).next()
-          .rule().msgType(WxConsts.XML_MSG_TEXT).matcher(guessNumberHandler).handler(guessNumberHandler).end()
-          .rule().async(false).content("哈哈").handler(textHandler).end()
-          .rule().async(false).content("图片").handler(imageHandler).end()
-          .rule().async(false).content("oauth").handler(oauth2handler).end()
-      ;
-
+      wxMpMessageRouter = new WxMpMessageRouter(wxMpService);
+      wxMpMessageRouter.rule().handler(logHandler).next().rule()
+        .msgType(WxConsts.XML_MSG_TEXT).matcher(guessNumberHandler)
+        .handler(guessNumberHandler).end().rule().async(false).content("哈哈")
+        .handler(textHandler).end().rule().async(false).content("图片")
+        .handler(imageHandler).end().rule().async(false).content("oauth")
+        .handler(oauth2handler).end();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

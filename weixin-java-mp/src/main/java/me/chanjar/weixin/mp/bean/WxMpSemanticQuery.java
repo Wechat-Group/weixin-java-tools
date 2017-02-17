@@ -13,6 +13,10 @@ import java.io.Serializable;
  */
 public class WxMpSemanticQuery implements Serializable {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 7685873048199870690L;
   private String query;
   private String category;
   private Float latitude;
@@ -23,7 +27,7 @@ public class WxMpSemanticQuery implements Serializable {
   private String uid;
 
   public String getQuery() {
-    return query;
+    return this.query;
   }
 
   public void setQuery(String query) {
@@ -31,7 +35,7 @@ public class WxMpSemanticQuery implements Serializable {
   }
 
   public String getCategory() {
-    return category;
+    return this.category;
   }
 
   public void setCategory(String category) {
@@ -39,7 +43,7 @@ public class WxMpSemanticQuery implements Serializable {
   }
 
   public Float getLatitude() {
-    return latitude;
+    return this.latitude;
   }
 
   public void setLatitude(Float latitude) {
@@ -47,7 +51,7 @@ public class WxMpSemanticQuery implements Serializable {
   }
 
   public Float getLongitude() {
-    return longitude;
+    return this.longitude;
   }
 
   public void setLongitude(Float longitude) {
@@ -55,7 +59,7 @@ public class WxMpSemanticQuery implements Serializable {
   }
 
   public String getCity() {
-    return city;
+    return this.city;
   }
 
   public void setCity(String city) {
@@ -63,7 +67,7 @@ public class WxMpSemanticQuery implements Serializable {
   }
 
   public String getRegion() {
-    return region;
+    return this.region;
   }
 
   public void setRegion(String region) {
@@ -71,7 +75,7 @@ public class WxMpSemanticQuery implements Serializable {
   }
 
   public String getAppid() {
-    return appid;
+    return this.appid;
   }
 
   public void setAppid(String appid) {
@@ -79,7 +83,7 @@ public class WxMpSemanticQuery implements Serializable {
   }
 
   public String getUid() {
-    return uid;
+    return this.uid;
   }
 
   public void setUid(String uid) {

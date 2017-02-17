@@ -14,32 +14,32 @@ public class StandardSessionFacade implements WxSession {
   }
 
   public InternalSession getInternalSession() {
-    return (InternalSession) session;
+    return (InternalSession) this.session;
   }
 
   @Override
   public Object getAttribute(String name) {
-    return session.getAttribute(name);
+    return this.session.getAttribute(name);
   }
 
   @Override
   public Enumeration<String> getAttributeNames() {
-    return session.getAttributeNames();
+    return this.session.getAttributeNames();
   }
 
   @Override
   public void setAttribute(String name, Object value) {
-    session.setAttribute(name, value);
+    this.session.setAttribute(name, value);
   }
 
   @Override
   public void removeAttribute(String name) {
-    session.removeAttribute(name);
+    this.session.removeAttribute(name);
   }
 
   @Override
   public void invalidate() {
-    session.invalidate();
+    this.session.invalidate();
   }
 
 }

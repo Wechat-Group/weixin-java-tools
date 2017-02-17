@@ -16,6 +16,7 @@ import java.lang.reflect.Type;
 
 public class WxUserListGsonAdapter implements JsonDeserializer<WxMpUserList> {
 
+  @Override
   public WxMpUserList deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     JsonObject o = json.getAsJsonObject();
     WxMpUserList wxMpUserList = new WxMpUserList();

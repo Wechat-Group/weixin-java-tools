@@ -14,12 +14,16 @@ import java.io.Serializable;
  */
 public class WxMpMassUploadResult implements Serializable {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 6568157943644994029L;
   private String type;
   private String mediaId;
   private long createdAt;
 
   public String getType() {
-    return type;
+    return this.type;
   }
 
   public void setType(String type) {
@@ -27,7 +31,7 @@ public class WxMpMassUploadResult implements Serializable {
   }
 
   public String getMediaId() {
-    return mediaId;
+    return this.mediaId;
   }
 
   public void setMediaId(String mediaId) {
@@ -35,7 +39,7 @@ public class WxMpMassUploadResult implements Serializable {
   }
 
   public long getCreatedAt() {
-    return createdAt;
+    return this.createdAt;
   }
 
   public void setCreatedAt(long createdAt) {
@@ -48,7 +52,7 @@ public class WxMpMassUploadResult implements Serializable {
 
   @Override
   public String toString() {
-    return "WxUploadResult [type=" + type + ", media_id=" + mediaId + ", created_at=" + createdAt + "]";
+    return "WxUploadResult [type=" + this.type + ", media_id=" + this.mediaId + ", created_at=" + this.createdAt + "]";
   }
 
 }

@@ -10,8 +10,8 @@ public class SessionTest {
   @DataProvider
   public Object[][] getSessionManager() {
 
-    return new Object[][] {
-        new Object[] { new StandardSessionManager() }
+    return new Object[][]{
+            new Object[]{new StandardSessionManager()}
     };
 
   }
@@ -106,7 +106,7 @@ public class SessionTest {
   }
 
   @Test(dataProvider = "getSessionManager")
-  public void testMaxActive(WxSessionManager sessionManager) throws InterruptedException {
+  public void testMaxActive(WxSessionManager sessionManager) {
 
     InternalSessionManager ism = (InternalSessionManager) sessionManager;
     ism.setMaxActiveSessions(2);
@@ -118,7 +118,7 @@ public class SessionTest {
   }
 
   @Test(dataProvider = "getSessionManager", expectedExceptions = TooManyActiveSessionsException.class)
-  public void testMaxActive2(WxSessionManager sessionManager) throws InterruptedException {
+  public void testMaxActive2(WxSessionManager sessionManager) {
 
     InternalSessionManager ism = (InternalSessionManager) sessionManager;
     ism.setMaxActiveSessions(2);

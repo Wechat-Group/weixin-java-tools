@@ -22,9 +22,9 @@ public interface WxCpMessageInterceptor {
    * @param sessionManager
    * @return true代表OK，false代表不OK
    */
-  public boolean intercept(WxCpXmlMessage wxMessage,
-                          Map<String, Object> context,
-                          WxCpService wxCpService,
-                          WxSessionManager sessionManager) throws WxErrorException;
+  boolean intercept(WxCpXmlMessage wxMessage,
+                    Map<String, Object> context,
+                    WxCpService wxCpService,
+                    WxSessionManager sessionManager) throws WxErrorException;
 
 }

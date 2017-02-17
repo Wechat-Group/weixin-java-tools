@@ -5,14 +5,19 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import java.io.Serializable;
 
 public class WxMediaUploadResult implements Serializable {
+  private static final long serialVersionUID = 330834334738622341L;
 
   private String type;
   private String mediaId;
   private String thumbMediaId;
   private long createdAt;
 
+  public static WxMediaUploadResult fromJson(String json) {
+    return WxGsonBuilder.create().fromJson(json, WxMediaUploadResult.class);
+  }
+
   public String getType() {
-    return type;
+    return this.type;
   }
 
   public void setType(String type) {
@@ -20,7 +25,7 @@ public class WxMediaUploadResult implements Serializable {
   }
 
   public String getMediaId() {
-    return mediaId;
+    return this.mediaId;
   }
 
   public void setMediaId(String mediaId) {
@@ -28,7 +33,7 @@ public class WxMediaUploadResult implements Serializable {
   }
 
   public long getCreatedAt() {
-    return createdAt;
+    return this.createdAt;
   }
 
   public void setCreatedAt(long createdAt) {
@@ -36,21 +41,17 @@ public class WxMediaUploadResult implements Serializable {
   }
 
   public String getThumbMediaId() {
-    return thumbMediaId;
+    return this.thumbMediaId;
   }
 
   public void setThumbMediaId(String thumbMediaId) {
     this.thumbMediaId = thumbMediaId;
   }
 
-  public static WxMediaUploadResult fromJson(String json) {
-    return WxGsonBuilder.create().fromJson(json, WxMediaUploadResult.class);
-  }
-
   @Override
   public String toString() {
-    return "WxUploadResult [type=" + type + ", media_id=" + mediaId + ", thumb_media_id=" + thumbMediaId
-        + ", created_at=" + createdAt + "]";
+    return "WxUploadResult [type=" + this.type + ", media_id=" + this.mediaId + ", thumb_media_id=" + this.thumbMediaId
+            + ", created_at=" + this.createdAt + "]";
   }
 
 }

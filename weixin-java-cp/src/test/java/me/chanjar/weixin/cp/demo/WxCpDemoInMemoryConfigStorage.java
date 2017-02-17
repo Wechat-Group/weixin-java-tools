@@ -13,17 +13,16 @@ import java.io.InputStream;
 @XStreamAlias("xml")
 class WxCpDemoInMemoryConfigStorage extends WxCpInMemoryConfigStorage {
 
-  @Override
-  public String toString() {
-    return "SimpleWxConfigProvider [appidOrCorpid=" + corpId + ", corpSecret=" + corpSecret + ", accessToken=" + accessToken
-        + ", expiresTime=" + expiresTime + ", token=" + token + ", aesKey=" + aesKey + "]";
-  }
-
-
   public static WxCpDemoInMemoryConfigStorage fromXml(InputStream is) {
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(WxCpDemoInMemoryConfigStorage.class);
     return (WxCpDemoInMemoryConfigStorage) xstream.fromXML(is);
+  }
+
+  @Override
+  public String toString() {
+    return "SimpleWxConfigProvider [appidOrCorpid=" + this.corpId + ", corpSecret=" + this.corpSecret + ", accessToken=" + this.accessToken
+            + ", expiresTime=" + this.expiresTime + ", token=" + this.token + ", aesKey=" + this.aesKey + "]";
   }
 
 }

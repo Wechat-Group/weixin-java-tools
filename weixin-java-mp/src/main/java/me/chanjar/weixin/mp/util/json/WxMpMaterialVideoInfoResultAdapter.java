@@ -2,7 +2,7 @@ package me.chanjar.weixin.mp.util.json;
 
 import com.google.gson.*;
 import me.chanjar.weixin.common.util.json.GsonHelper;
-import me.chanjar.weixin.mp.bean.result.WxMpMaterialVideoInfoResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialVideoInfoResult;
 
 import java.lang.reflect.Type;
 
@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
  */
 public class WxMpMaterialVideoInfoResultAdapter implements JsonDeserializer<WxMpMaterialVideoInfoResult> {
 
+  @Override
   public WxMpMaterialVideoInfoResult deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     WxMpMaterialVideoInfoResult uploadResult = new WxMpMaterialVideoInfoResult();
     JsonObject uploadResultJsonObject = json.getAsJsonObject();

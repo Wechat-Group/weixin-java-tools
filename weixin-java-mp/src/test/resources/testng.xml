@@ -3,32 +3,28 @@
 <suite name="Weixin-java-tool-suite" verbose="1">
 	<test name="API_Test">
 		<classes>
-      <class name="me.chanjar.weixin.mp.api.WxMpBusyRetryTest" />
+      		<class name="me.chanjar.weixin.mp.api.WxMpBusyRetryTest" />
 			<class name="me.chanjar.weixin.mp.api.WxMpBaseAPITest" />
-			<class name="me.chanjar.weixin.mp.api.WxMpCustomMessageAPITest" />
-			<class name="me.chanjar.weixin.mp.api.WxMpMenuAPITest" />
-			<class name="me.chanjar.weixin.mp.api.WxMpGroupAPITest" />
 			<class name="me.chanjar.weixin.mp.api.WxMpMassMessageAPITest" />
-			<class name="me.chanjar.weixin.mp.api.WxMpMediaAPITest" />
-			<class name="me.chanjar.weixin.mp.api.WxMpUserAPITest" />
-			<class name="me.chanjar.weixin.mp.api.WxMpQrCodeAPITest" />
+			<class name="me.chanjar.weixin.mp.api.impl.WxMpUserServiceImplTest" />
+			<class name="me.chanjar.weixin.mp.api.impl.WxMpQrcodeServiceImplTest" />
 			<class name="me.chanjar.weixin.mp.api.WxMpShortUrlAPITest" />
 			<class name="me.chanjar.weixin.mp.api.WxMpMessageRouterTest" />
-      <class name="me.chanjar.weixin.mp.api.WxMpJsAPITest" />
-      <class name="me.chanjar.weixin.mp.api.WxMpMiscAPITest" />
+			<class name="me.chanjar.weixin.mp.api.WxMpJsAPITest" />
+			<class name="me.chanjar.weixin.mp.api.WxMpMiscAPITest" />
 		</classes>
 	</test>
 
 	<test name="Bean_Test">
 		<classes>
-			<class name="me.chanjar.weixin.mp.bean.WxMpCustomMessageTest" />
-			<class name="me.chanjar.weixin.mp.bean.WxMpXmlMessageTest" />
-			<class name="me.chanjar.weixin.mp.bean.WxMpXmlOutImageMessageTest" />
-			<class name="me.chanjar.weixin.mp.bean.WxXmlOutMusicMessageTest" />
-			<class name="me.chanjar.weixin.mp.bean.WxXmlOutNewsMessageTest" />
-			<class name="me.chanjar.weixin.mp.bean.WxXmlOutVideoMessageTest" />
-			<class name="me.chanjar.weixin.mp.bean.WxXmlOutVoiceMessageTest" />
-			<class name="me.chanjar.weixin.mp.bean.WxXmlOutTextMessageTest" />
+			<class name="me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessageTest" />
+			<class name="me.chanjar.weixin.mp.bean.message.WxMpXmlMessageTest" />
+			<class name="me.chanjar.weixin.mp.bean.message.WxMpXmlOutImageMessageTest" />
+			<class name="me.chanjar.weixin.mp.bean.message.WxMpXmlOutMusicMessageTest" />
+			<class name="me.chanjar.weixin.mp.bean.message.WxMpXmlOutNewsMessageTest" />
+			<class name="me.chanjar.weixin.mp.bean.message.WxMpXmlOutVideoMessageTest" />
+			<class name="me.chanjar.weixin.mp.bean.message.WxMpXmlOutVoiceMessageTest" />
+			<class name="me.chanjar.weixin.mp.bean.message.WxMpXmlOutTextMessageTest" />
 		</classes>
 	</test>
 </suite>

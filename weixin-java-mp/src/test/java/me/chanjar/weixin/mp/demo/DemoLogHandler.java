@@ -3,8 +3,8 @@ package me.chanjar.weixin.mp.demo;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
-import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ import java.util.Map;
 public class DemoLogHandler implements WxMpMessageHandler {
   @Override
   public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
-      WxSessionManager sessionManager) {
+                                  WxSessionManager sessionManager) {
     System.out.println(wxMessage.toString());
     return null;
   }

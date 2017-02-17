@@ -11,12 +11,16 @@ import java.io.Serializable;
  */
 public class WxMpMassVideo implements Serializable {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 9153925016061915637L;
   private String mediaId;
   private String title;
   private String description;
 
   public String getTitle() {
-    return title;
+    return this.title;
   }
 
   public void setTitle(String title) {
@@ -24,7 +28,7 @@ public class WxMpMassVideo implements Serializable {
   }
 
   public String getDescription() {
-    return description;
+    return this.description;
   }
 
   public void setDescription(String description) {
@@ -32,7 +36,7 @@ public class WxMpMassVideo implements Serializable {
   }
 
   public String getMediaId() {
-    return mediaId;
+    return this.mediaId;
   }
 
   public void setMediaId(String mediaId) {

@@ -1,25 +1,16 @@
 package me.chanjar.weixin.cp.api;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 
-import java.io.InputStream;
-
 public class ApiTestModule implements Module {
-
-  @Override
-  public void configure(Binder binder) {
-      InputStream is1 = ClassLoader.getSystemResourceAsStream("test-config.xml");
-      WxXmlCpInMemoryConfigStorage config = fromXml(WxXmlCpInMemoryConfigStorage.class, is1);
-      WxCpServiceImpl wxService = new WxCpServiceImpl();
-      wxService.setWxCpConfigStorage(config);
-
-      binder.bind(WxCpServiceImpl.class).toInstance(wxService);
-      binder.bind(WxCpConfigStorage.class).toInstance(config);
-  }
 
   public static <T> T fromXml(Class<T> clazz, InputStream is) {
     XStream xstream = XStreamInitializer.getInstance();
@@ -28,9 +19,25 @@ public class ApiTestModule implements Module {
     return (T) xstream.fromXML(is);
   }
 
+  @Override
+  public void configure(Binder binder) {
+    try (InputStream is1 = ClassLoader
+        .getSystemResourceAsStream("test-config.xml")) {
+      WxXmlCpInMemoryConfigStorage config = fromXml(
+          WxXmlCpInMemoryConfigStorage.class, is1);
+      WxCpServiceImpl wxService = new WxCpServiceImpl();
+      wxService.setWxCpConfigStorage(config);
+
+      binder.bind(WxCpServiceImpl.class).toInstance(wxService);
+      binder.bind(WxCpConfigStorage.class).toInstance(config);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   @XStreamAlias("xml")
   public static class WxXmlCpInMemoryConfigStorage extends WxCpInMemoryConfigStorage {
-    
+
     protected String userId;
 
     protected String departmentId;
@@ -38,14 +45,15 @@ public class ApiTestModule implements Module {
     protected String tagId;
 
     public String getUserId() {
-      return userId;
+      return this.userId;
     }
+
     public void setUserId(String userId) {
       this.userId = userId;
     }
 
     public String getDepartmentId() {
-      return departmentId;
+      return this.departmentId;
     }
 
     public void setDepartmentId(String departmentId) {
@@ -53,7 +61,7 @@ public class ApiTestModule implements Module {
     }
 
     public String getTagId() {
-      return tagId;
+      return this.tagId;
     }
 
     public void setTagId(String tagId) {
@@ -63,11 +71,11 @@ public class ApiTestModule implements Module {
     @Override
     public String toString() {
       return super.toString() + " > WxXmlCpConfigStorage{" +
-          "userId='" + userId + '\'' +
-          ", departmentId='" + departmentId + '\'' +
-          ", tagId='" + tagId + '\'' +
-          '}';
+              "userId='" + this.userId + '\'' +
+              ", departmentId='" + this.departmentId + '\'' +
+              ", tagId='" + this.tagId + '\'' +
+              '}';
     }
   }
-  
+
 }

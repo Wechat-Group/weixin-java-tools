@@ -7,11 +7,10 @@ public interface InternalSessionManager {
    * specified session id (if any); otherwise return <code>null</code>.
    *
    * @param id The session id for the session to be returned
-   *
-   * @exception IllegalStateException if a new session cannot be
-   *  instantiated for any reason
-   * @exception java.io.IOException if an input/output error occurs while
-   *  processing this request
+   * @throws IllegalStateException if a new session cannot be
+   *                               instantiated for any reason
+   * @throws java.io.IOException   if an input/output error occurs while
+   *                               processing this request
    */
   InternalSession findSession(String id);
 
@@ -23,27 +22,27 @@ public interface InternalSessionManager {
    * <code>null</code>.
    *
    * @param sessionId The session id which should be used to create the
-   *  new session; if <code>null</code>, a new session id will be
-   *  generated
-   * @exception IllegalStateException if a new session cannot be
-   *  instantiated for any reason
+   *                  new session; if <code>null</code>, a new session id will be
+   *                  generated
+   * @throws IllegalStateException if a new session cannot be
+   *                               instantiated for any reason
    */
-  public InternalSession createSession(String sessionId);
+  InternalSession createSession(String sessionId);
 
   /**
    * Remove this Session from the active Sessions for this Manager.
    *
    * @param session Session to be removed
    */
-  public void remove(InternalSession session);
+  void remove(InternalSession session);
 
   /**
    * Remove this Session from the active Sessions for this Manager.
    *
-   * @param session   Session to be removed
-   * @param update    Should the expiration statistics be updated
+   * @param session Session to be removed
+   * @param update  Should the expiration statistics be updated
    */
-  public void remove(InternalSession session, boolean update);
+  void remove(InternalSession session, boolean update);
 
   /**
    * Add this Session to the set of active Sessions for this Manager.
@@ -59,6 +58,7 @@ public interface InternalSessionManager {
    * @return number of sessions active
    */
   int getActiveSessions();
+
   /**
    * Get a session from the recycled ones or create a new empty one.
    * The PersistentManager manager does not need to create session data
@@ -71,7 +71,7 @@ public interface InternalSessionManager {
   /**
    * Implements the Manager interface, direct call to processExpires
    */
-  public void backgroundProcess();
+  void backgroundProcess();
 
   /**
    * Set the default maximum inactive interval (in seconds)
@@ -88,6 +88,7 @@ public interface InternalSessionManager {
    * 要和{@link #setBackgroundProcessorDelay(int)}联合起来看
    * 如果把这个数字设置为6（默认），那么就是说manager要等待 6 * backgroundProcessorDay的时间才会清理过期session
    * </pre>
+   *
    * @param processExpiresFrequency the new manager checks frequency
    */
   void setProcessExpiresFrequency(int processExpiresFrequency);
@@ -97,6 +98,7 @@ public interface InternalSessionManager {
    * Set the manager background processor delay
    * 设置manager sleep几秒，尝试执行一次background操作（清理过期session）
    * </pre>
+   *
    * @param backgroundProcessorDelay
    */
   void setBackgroundProcessorDelay(int backgroundProcessorDelay);
@@ -106,6 +108,7 @@ public interface InternalSessionManager {
    * Set the maximum number of active Sessions allowed, or -1 for
    * no limit.
    * 设置最大活跃session数，默认无限
+   *
    * @param max The new maximum number of sessions
    */
   void setMaxActiveSessions(int max);

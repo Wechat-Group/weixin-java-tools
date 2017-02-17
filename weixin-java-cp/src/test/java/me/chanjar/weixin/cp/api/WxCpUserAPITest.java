@@ -28,14 +28,14 @@ public class WxCpUserAPITest {
     WxCpUser user = new WxCpUser();
     user.setUserId("some.woman");
     user.setName("Some Woman");
-    user.setDepartIds(new Integer[] { 9, 8 });
+    user.setDepartIds(new Integer[]{9, 8});
     user.setEmail("none@none.com");
     user.setGender("女");
     user.setMobile("13560084979");
     user.setPosition("woman");
     user.setTel("3300393");
     user.addExtAttr("爱好", "table");
-    wxCpService.userCreate(user);
+    this.wxCpService.userCreate(user);
   }
 
   @Test(dependsOnMethods = "testUserCreate")
@@ -44,23 +44,23 @@ public class WxCpUserAPITest {
     user.setUserId("some.woman");
     user.setName("Some Woman");
     user.addExtAttr("爱好", "table2");
-    wxCpService.userUpdate(user);
+    this.wxCpService.userUpdate(user);
   }
 
   @Test(dependsOnMethods = "testUserUpdate")
   public void testUserGet() throws WxErrorException {
-    WxCpUser user = wxCpService.userGet("some.woman");
+    WxCpUser user = this.wxCpService.userGet("some.woman");
     Assert.assertNotNull(user);
   }
 
   @Test(dependsOnMethods = "testUserGet")
   public void testDepartGetUsers() throws WxErrorException {
-    List<WxCpUser> users = wxCpService.departGetUsers(1, true, 0);
+    List<WxCpUser> users = this.wxCpService.departGetUsers(1, true, 0);
     Assert.assertNotEquals(users.size(), 0);
   }
 
   @Test(dependsOnMethods = "testDepartGetUsers")
   public void testUserDelete() throws WxErrorException {
-    wxCpService.userDelete("some.woman");
+    this.wxCpService.userDelete("some.woman");
   }
 }

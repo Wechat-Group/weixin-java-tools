@@ -2,27 +2,27 @@ package me.chanjar.weixin.mp.api;
 
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.common.util.StringUtils;
-import org.testng.Assert;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+import me.chanjar.weixin.mp.api.test.ApiTestModule;
+import org.apache.commons.lang3.StringUtils;
+import org.testng.*;
+import org.testng.annotations.*;
 
 /**
  * 基础API测试
- * @author chanjarster
  *
+ * @author chanjarster
  */
 @Test(groups = "baseAPI")
 @Guice(modules = ApiTestModule.class)
 public class WxMpBaseAPITest {
 
   @Inject
-  protected WxMpServiceImpl wxService;
+  protected WxMpService wxService;
 
   public void testRefreshAccessToken() throws WxErrorException {
-    WxMpConfigStorage configStorage = wxService.wxMpConfigStorage;
+    WxMpConfigStorage configStorage = this.wxService.getWxMpConfigStorage();
     String before = configStorage.getAccessToken();
-    wxService.getAccessToken(false);
+    this.wxService.getAccessToken(false);
 
     String after = configStorage.getAccessToken();
     Assert.assertNotEquals(before, after);
