@@ -62,6 +62,16 @@ public abstract class WxPayBaseResult {
   @XStreamAlias("mch_id")
   private String mchId;
   /**
+   * 服务商模式下的子公众账号ID
+   */
+  @XStreamAlias("appid")
+  private String subAppId;
+  /**
+   * 服务商模式下的子商户号
+   */
+  @XStreamAlias("sub_mch_id")
+  private String subMchId;
+  /**
    * 随机字符串
    */
   @XStreamAlias("nonce_str")
@@ -179,6 +189,22 @@ public abstract class WxPayBaseResult {
 
   public void setSign(String sign) {
     this.sign = sign;
+  }
+
+  public String getSubAppId() {
+    return subAppId;
+  }
+
+  public void setSubAppId(String subAppId) {
+    this.subAppId = subAppId;
+  }
+
+  public String getSubMchId() {
+    return subMchId;
+  }
+
+  public void setSubMchId(String subMchId) {
+    this.subMchId = subMchId;
   }
 
   /**

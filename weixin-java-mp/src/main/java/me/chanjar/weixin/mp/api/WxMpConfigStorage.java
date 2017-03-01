@@ -80,6 +80,16 @@ public interface WxMpConfigStorage {
 
   String getAppId();
 
+  /**
+   * 服务商模式下的子商户公众账号ID
+   */
+  String getSubAppId();
+
+  /**
+   * 服务商模式下的子商户号
+   */
+  String getSubMchId();
+
   String getSecret();
 
   String getPartnerId();

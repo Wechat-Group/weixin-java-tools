@@ -47,6 +47,32 @@ public abstract class WxPayBaseRequest {
    */
   @XStreamAlias("mch_id")
   protected String mchId;
+
+  /**
+   * <pre>
+   * 服务商模式下的子商户公众账号ID
+   * sub_appid
+   * 是
+   * String(32)
+   * wxd678efh567hg6787
+   * 微信分配的子商户公众账号ID
+   * </pre>
+   */
+  @XStreamAlias("sub_appid")
+  protected String subAppId;
+
+  /**
+   * <pre>
+   * 服务商模式下的子商户号
+   * sub_mch_id
+   * 是
+   * String(32)
+   * 1230000109
+   * 微信支付分配的子商户号，开发者模式下必填
+   * </pre>
+   */
+  @XStreamAlias("sub_mch_id")
+  protected String subMchId;
   /**
    * <pre>
    * 随机字符串
@@ -126,6 +152,22 @@ public abstract class WxPayBaseRequest {
 
   public void setSign(String sign) {
     this.sign = sign;
+  }
+
+  public String getSubAppId() {
+    return subAppId;
+  }
+
+  public void setSubAppId(String subAppId) {
+    this.subAppId = subAppId;
+  }
+
+  public String getSubMchId() {
+    return subMchId;
+  }
+
+  public void setSubMchId(String subMchId) {
+    this.subMchId = subMchId;
   }
 
   @Override

@@ -268,9 +268,19 @@ public class WxMpPayServiceImpl implements WxMpPayService {
     if (StringUtils.isBlank(request.getAppid())) {
       request.setAppid(getConfig().getAppId());
     }
+
     if (StringUtils.isBlank(request.getMchId())) {
       request.setMchId(getConfig().getPartnerId());
     }
+
+    if (StringUtils.isBlank(request.getSubAppId())) {
+      request.setAppid(getConfig().getSubAppId());
+    }
+
+    if (StringUtils.isBlank(request.getSubMchId())) {
+      request.setMchId(getConfig().getSubMchId());
+    }
+
     if (StringUtils.isBlank(request.getNonceStr())) {
       request.setNonceStr(String.valueOf(System.currentTimeMillis()));
     }

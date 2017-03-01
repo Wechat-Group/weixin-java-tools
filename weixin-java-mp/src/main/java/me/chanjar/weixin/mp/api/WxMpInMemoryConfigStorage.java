@@ -20,6 +20,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
 
   protected volatile String appId;
+  protected volatile String subAppId;
+  protected volatile String subMchId;
   protected volatile String secret;
   protected volatile String partnerId;
   protected volatile String partnerKey;
@@ -348,5 +350,23 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   @Override
   public boolean useSandboxForWxPay() {
     return false;
+  }
+
+  @Override
+  public String getSubAppId() {
+    return subAppId;
+  }
+
+  public void setSubAppId(String subAppId) {
+    this.subAppId = subAppId;
+  }
+
+  @Override
+  public String getSubMchId() {
+    return subMchId;
+  }
+
+  public void setSubMchId(String subMchId) {
+    this.subMchId = subMchId;
   }
 }
