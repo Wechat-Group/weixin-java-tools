@@ -16,7 +16,7 @@ public class ApiTestModule implements Module {
   @Override
   public void configure(Binder binder) {
     try (InputStream is1 = ClassLoader.getSystemResourceAsStream("test-config.xml")) {
-      TestPayConfig config = this.fromXml(TestPayConfig.class, is1);
+      XmlWxPayConfig config = this.fromXml(XmlWxPayConfig.class, is1);
       WxPayService wxService = new WxPayServiceImpl();
       wxService.setConfig(config);
 

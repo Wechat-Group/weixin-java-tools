@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.security.KeyStore;
 
 @XStreamAlias("xml")
-public class TestPayConfig extends WxPayConfig {
+public class XmlWxPayConfig extends WxPayConfig {
   private String openid;
 
   public String getOpenid() {

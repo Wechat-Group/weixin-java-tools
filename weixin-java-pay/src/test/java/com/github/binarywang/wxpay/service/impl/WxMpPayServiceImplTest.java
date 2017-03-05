@@ -5,7 +5,7 @@ import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
-import com.github.binarywang.wxpay.testbase.TestPayConfig;
+import com.github.binarywang.wxpay.testbase.XmlWxPayConfig;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.slf4j.Logger;
@@ -105,7 +105,7 @@ public class WxMpPayServiceImplTest {
     request.setActName("abc");
     request.setClientIp("aaa");
     request.setMchBillNo("aaaa");
-    request.setReOpenid(((TestPayConfig) this.wxService.getConfig()).getOpenid());
+    request.setReOpenid(((XmlWxPayConfig) this.wxService.getConfig()).getOpenid());
     WxPaySendRedpackResult redpackResult = this.wxService.sendRedpack(request);
     this.logger.info(redpackResult.toString());
   }
@@ -131,7 +131,7 @@ public class WxMpPayServiceImplTest {
         .spbillCreateIp("111111")
         .notifyURL("111111")
         .tradeType("JSAPI")
-        .openid("122")
+        .openid(((XmlWxPayConfig) this.wxService.getConfig()).getOpenid())
         .outTradeNo("111111")
         .build());
     this.logger.info(result.toString());
