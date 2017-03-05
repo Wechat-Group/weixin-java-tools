@@ -45,7 +45,6 @@ public class WxMpServiceImpl implements WxMpService {
   private WxMpUserTagService tagService = new WxMpUserTagServiceImpl(this);
   private WxMpQrcodeService qrCodeService = new WxMpQrcodeServiceImpl(this);
   private WxMpCardService cardService = new WxMpCardServiceImpl(this);
-  private WxMpPayService payService = new WxMpPayServiceImpl(this);
   private WxMpStoreService storeService = new WxMpStoreServiceImpl(this);
   private WxMpDataCubeService dataCubeService = new WxMpDataCubeServiceImpl(this);
   private WxMpUserBlacklistService blackListService = new WxMpUserBlacklistServiceImpl(this);
@@ -503,11 +502,6 @@ public class WxMpServiceImpl implements WxMpService {
   @Override
   public WxMpCardService getCardService() {
     return this.cardService;
-  }
-
-  @Override
-  public WxMpPayService getPayService() {
-    return this.payService;
   }
 
   @Override

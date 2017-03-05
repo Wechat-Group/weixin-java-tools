@@ -3,7 +3,6 @@ package me.chanjar.weixin.mp.api;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.ApacheHttpClientBuilder;
 
-import javax.net.ssl.SSLContext;
 import java.io.File;
 import java.util.concurrent.locks.Lock;
 
@@ -80,38 +79,7 @@ public interface WxMpConfigStorage {
 
   String getAppId();
 
-  /**
-   * 服务商模式下的子商户公众账号ID
-   */
-  String getSubAppId();
-
-  /**
-   * 服务商模式下的子商户号
-   */
-  String getSubMchId();
-
   String getSecret();
-
-  String getPartnerId();
-
-  String getPartnerKey();
-
-  /**
-   * 微信支付异步回掉地址，通知url必须为直接可访问的url，不能携带参数。
-   *
-   * @since 2.5.0
-   */
-  String getNotifyURL();
-
-  /**
-   * 交易类型
-   * <pre>
-   * JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付
-   * </pre>
-   *
-   * @since 2.5.0
-   */
-  String getTradeType();
 
   String getToken();
 
@@ -131,17 +99,6 @@ public interface WxMpConfigStorage {
 
   File getTmpDirFile();
 
-  SSLContext getSslContext();
-
-  void setSslContext(SSLContext sslContext);
-
-  /**
-   * 在此之前，必须将partnerId进行赋值
-   *
-   * @param filePath apiclient_cert.p12的文件的绝对路径
-   */
-  void setSslContextFilePath(String filePath) throws Exception;
-
   /**
    * http client builder
    *
@@ -154,8 +111,4 @@ public interface WxMpConfigStorage {
    */
   boolean autoRefreshToken();
 
-  /**
-   * 微信支付是否使用仿真测试环境
-   */
-  boolean useSandboxForWxPay();
 }
