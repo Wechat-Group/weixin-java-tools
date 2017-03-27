@@ -106,6 +106,7 @@
     <commons-io.version>2.5</commons-io.version>
     <commons-codec.version>1.10</commons-codec.version>
     <jetty.version>9.3.0.RC0</jetty.version>
+    <jedis.version>2.9.0</jedis.version>
   </properties>
 
   <dependencies>
@@ -192,6 +193,11 @@
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>${guava.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>${jedis.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
