@@ -93,7 +93,7 @@ public class WxMpMenuServiceImplTest {
   }
 
   @Test
-  public void testCreateMenu2() throws WxErrorException {
+  public void testCreateMenu_by_json() throws WxErrorException {
     String a = "{\n"
       + "  \"menu\": {\n"
       + "    \"button\": [\n"

@@ -38,23 +38,25 @@ public class BaseResp extends AbstractDeviceBean{
   }
 
   private class BaseInfo {
-    private String device_type;
-    private String device_id;
+    @SerializedName("device_type")
+    private String deviceType;
+    @SerializedName("device_id")
+    private String deviceId;
 
-    public String getDevice_type() {
-      return device_type;
+    public String getDeviceType() {
+      return deviceType;
     }
 
-    public void setDevice_type(String device_type) {
-      this.device_type = device_type;
+    public void setDeviceType(String deviceType) {
+      this.deviceType = deviceType;
     }
 
-    public String getDevice_id() {
-      return device_id;
+    public String getDeviceId() {
+      return deviceId;
     }
 
-    public void setDevice_id(String device_id) {
-      this.device_id = device_id;
+    public void setDeviceId(String deviceId) {
+      this.deviceId = deviceId;
     }
   }
 }

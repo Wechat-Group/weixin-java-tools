@@ -6,15 +6,15 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 /**
  * Created by keungtung on 10/12/2016.
  */
-public class WxDeviceQrCodeResult extends AbstractDeviceBean{
+public class WxDeviceQrCodeResult extends AbstractDeviceBean {
   @SerializedName("deviceid")
   private String deviceId;
   @SerializedName("qrticket")
   private String qrTicket;
   @SerializedName("devicelicence")
   private String deviceLicence;
-  @SerializedName("resp_msg")
-  private RespMsg respMsg;
+  @SerializedName("base_resp")
+  private BaseResp baseResp;
 
   public static WxDeviceQrCodeResult fromJson(String json) {
     return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxDeviceQrCodeResult.class);
@@ -28,12 +28,12 @@ public class WxDeviceQrCodeResult extends AbstractDeviceBean{
     this.deviceLicence = deviceLicence;
   }
 
-  public RespMsg getRespMsg() {
-    return respMsg;
+  public BaseResp getBaseResp() {
+    return baseResp;
   }
 
-  public void setRespMsg(RespMsg respMsg) {
-    this.respMsg = respMsg;
+  public void setBaseResp(BaseResp baseResp) {
+    this.baseResp = baseResp;
   }
 
   public String getDeviceId() {

@@ -76,5 +76,24 @@ public interface WxMpDeviceService {
    */
   WxDeviceBindResult compelUnbind(WxDeviceBind wxDeviceBind) throws WxErrorException;
 
+  /**
+   * <pre>
+   *   通过device type和device id 获取设备主人的openid
+   *   详情请见：http://iot.weixin.qq.com/wiki/new/index.html?page=3-4-11
+   * </pre>
+   * @param deviceType 设备类型，目前为"公众账号原始ID"
+   * @param deviceId 设备ID
+   * @return WxDeviceOpenIdResult
+   */
+  WxDeviceOpenIdResult getOpenId(String deviceType,String deviceId) throws WxErrorException;
 
+  /**
+   * <pre>
+   *   通过openid获取用户在当前devicetype下绑定的deviceid列表`
+   *   详情请见：http://iot.weixin.qq.com/wiki/new/index.html?page=3-4-12
+   * </pre>
+   * @param openId 要查询的用户的openid
+   * @return WxDeviceBindDeviceResult
+   */
+  WxDeviceBindDeviceResult getBindDevice(String openId) throws WxErrorException;
 }

@@ -101,6 +101,7 @@ public class WxConsts {
   public static final String EVT_KF_CLOSE_SESSION = "kf_close_session"; // 客服关闭会话
   public static final String EVT_KF_SWITCH_SESSION = "kf_switch_session"; // 客服转接会话
   public static final String EVT_POI_CHECK_NOTIFY = "poi_check_notify"; //门店审核事件推送
+  public static final String EVN_SUBMIT_MEMBERCARD_USER_INFO = "submit_membercard_user_info"; //接收会员信息事件推送
   //以下为微信认证事件
   /**
    * 资质认证成功
@@ -135,13 +136,6 @@ public class WxConsts {
   public static final String MEDIA_VIDEO = "video";
   public static final String MEDIA_THUMB = "thumb";
   public static final String MEDIA_FILE = "file";
-  ///////////////////////
-  // 文件类型
-  ///////////////////////
-  public static final String FILE_JPG = "jpeg";
-  public static final String FILE_MP3 = "mp3";
-  public static final String FILE_AMR = "amr";
-  public static final String FILE_MP4 = "mp4";
   /**
    * 点击推事件
    */

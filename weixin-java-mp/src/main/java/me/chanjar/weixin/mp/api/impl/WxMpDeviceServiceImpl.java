@@ -23,7 +23,7 @@ public class WxMpDeviceServiceImpl implements WxMpDeviceService {
   @Override
   public TransMsgResp transMsg(WxDeviceMsg msg) throws WxErrorException {
     String url = API_URL_PREFIX + "/transmsg";
-    String response = this.wxMpService.post(url,msg.toJson());
+    String response = this.wxMpService.post(url, msg.toJson());
     return TransMsgResp.fromJson(response);
   }
 
@@ -37,21 +37,21 @@ public class WxMpDeviceServiceImpl implements WxMpDeviceService {
   @Override
   public WxDeviceAuthorizeResult authorize(WxDeviceAuthorize wxDeviceAuthorize) throws WxErrorException {
     String url = API_URL_PREFIX + "/authorize_device";
-    String response = this.wxMpService.post(url,wxDeviceAuthorize.toJson());
+    String response = this.wxMpService.post(url, wxDeviceAuthorize.toJson());
     return WxDeviceAuthorizeResult.fromJson(response);
   }
 
   @Override
   public WxDeviceBindResult bind(WxDeviceBind wxDeviceBind) throws WxErrorException {
     String url = API_URL_PREFIX + "/bind";
-    String response = this.wxMpService.post(url,wxDeviceBind.toJson());
+    String response = this.wxMpService.post(url, wxDeviceBind.toJson());
     return WxDeviceBindResult.fromJson(response);
   }
 
   @Override
   public WxDeviceBindResult compelBind(WxDeviceBind wxDeviceBind) throws WxErrorException {
     String url = API_URL_PREFIX + "/compel_bind";
-    String response = this.wxMpService.post(url,wxDeviceBind.toJson());
+    String response = this.wxMpService.post(url, wxDeviceBind.toJson());
     return WxDeviceBindResult.fromJson(response);
   }
 
@@ -67,6 +67,20 @@ public class WxMpDeviceServiceImpl implements WxMpDeviceService {
     String url = API_URL_PREFIX + "/compel_unbind?";
     String response = this.wxMpService.post(url, wxDeviceBind.toJson());
     return WxDeviceBindResult.fromJson(response);
+  }
+
+  @Override
+  public WxDeviceOpenIdResult getOpenId(String deviceType, String deviceId) throws WxErrorException {
+    String url = API_URL_PREFIX + "/get_openid";
+    String response = this.wxMpService.get(url, "device_type=" + deviceType + "&device_id=" + deviceId);
+    return WxDeviceOpenIdResult.fromJson(response);
+  }
+
+  @Override
+  public WxDeviceBindDeviceResult getBindDevice(String openId) throws WxErrorException {
+    String url = API_URL_PREFIX+"/get_bind_device";
+    String response = this.wxMpService.get(url,"openid="+openId);
+    return WxDeviceBindDeviceResult.fromJson(response);
   }
 }
 

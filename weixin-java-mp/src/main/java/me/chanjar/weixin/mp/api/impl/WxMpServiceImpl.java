@@ -28,9 +28,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.concurrent.locks.Lock;
 
-//import org.apache.http.conn.ssl.DefaultHostnameVerifier;
-//import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-
 public class WxMpServiceImpl implements WxMpService {
 
   private static final JsonParser JSON_PARSER = new JsonParser();
@@ -45,7 +42,6 @@ public class WxMpServiceImpl implements WxMpService {
   private WxMpUserTagService tagService = new WxMpUserTagServiceImpl(this);
   private WxMpQrcodeService qrCodeService = new WxMpQrcodeServiceImpl(this);
   private WxMpCardService cardService = new WxMpCardServiceImpl(this);
-  private WxMpPayService payService = new WxMpPayServiceImpl(this);
   private WxMpStoreService storeService = new WxMpStoreServiceImpl(this);
   private WxMpDataCubeService dataCubeService = new WxMpDataCubeServiceImpl(this);
   private WxMpUserBlacklistService blackListService = new WxMpUserBlacklistServiceImpl(this);
@@ -59,7 +55,7 @@ public class WxMpServiceImpl implements WxMpService {
   @Override
   public boolean checkSignature(String timestamp, String nonce, String signature) {
     try {
-      return SHA1.gen(this.wxMpConfigStorage.getToken(), timestamp, nonce)
+      return SHA1.gen(this.getWxMpConfigStorage().getToken(), timestamp, nonce)
         .equals(signature);
     } catch (Exception e) {
       return false;
@@ -73,18 +69,18 @@ public class WxMpServiceImpl implements WxMpService {
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.wxMpConfigStorage.getAccessTokenLock();
+    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
     try {
       lock.lock();
 
       if (forceRefresh) {
-        this.wxMpConfigStorage.expireAccessToken();
+        this.getWxMpConfigStorage().expireAccessToken();
       }
 
-      if (this.wxMpConfigStorage.isAccessTokenExpired()) {
+      if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
         String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential" +
-          "&appid=" + this.wxMpConfigStorage.getAppId() + "&secret="
-          + this.wxMpConfigStorage.getSecret();
+          "&appid=" + this.getWxMpConfigStorage().getAppId() + "&secret="
+          + this.getWxMpConfigStorage().getSecret();
         try {
           HttpGet httpGet = new HttpGet(url);
           if (this.httpProxy != null) {
@@ -98,7 +94,7 @@ public class WxMpServiceImpl implements WxMpService {
               throw new WxErrorException(error);
             }
             WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-            this.wxMpConfigStorage.updateAccessToken(accessToken.getAccessToken(),
+            this.getWxMpConfigStorage().updateAccessToken(accessToken.getAccessToken(),
               accessToken.getExpiresIn());
           } finally {
             httpGet.releaseConnection();
@@ -110,7 +106,7 @@ public class WxMpServiceImpl implements WxMpService {
     } finally {
       lock.unlock();
     }
-    return this.wxMpConfigStorage.getAccessToken();
+    return this.getWxMpConfigStorage().getAccessToken();
   }
 
   @Override
@@ -120,27 +116,27 @@ public class WxMpServiceImpl implements WxMpService {
 
   @Override
   public String getJsapiTicket(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.wxMpConfigStorage.getJsapiTicketLock();
+    Lock lock = this.getWxMpConfigStorage().getJsapiTicketLock();
     try {
       lock.lock();
 
       if (forceRefresh) {
-        this.wxMpConfigStorage.expireJsapiTicket();
+        this.getWxMpConfigStorage().expireJsapiTicket();
       }
 
-      if (this.wxMpConfigStorage.isJsapiTicketExpired()) {
+      if (this.getWxMpConfigStorage().isJsapiTicketExpired()) {
         String url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi";
         String responseContent = execute(new SimpleGetRequestExecutor(), url, null);
         JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
         JsonObject tmpJsonObject = tmpJsonElement.getAsJsonObject();
         String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
         int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
-        this.wxMpConfigStorage.updateJsapiTicket(jsapiTicket, expiresInSeconds);
+        this.getWxMpConfigStorage().updateJsapiTicket(jsapiTicket, expiresInSeconds);
       }
     } finally {
       lock.unlock();
     }
-    return this.wxMpConfigStorage.getJsapiTicket();
+    return this.getWxMpConfigStorage().getJsapiTicket();
   }
 
   @Override
@@ -151,7 +147,7 @@ public class WxMpServiceImpl implements WxMpService {
     String signature = SHA1.genWithAmple("jsapi_ticket=" + jsapiTicket,
       "noncestr=" + noncestr, "timestamp=" + timestamp, "url=" + url);
     WxJsapiSignature jsapiSignature = new WxJsapiSignature();
-    jsapiSignature.setAppId(this.wxMpConfigStorage.getAppId());
+    jsapiSignature.setAppId(this.getWxMpConfigStorage().getAppId());
     jsapiSignature.setTimestamp(timestamp);
     jsapiSignature.setNonceStr(noncestr);
     jsapiSignature.setUrl(url);
@@ -216,7 +212,7 @@ public class WxMpServiceImpl implements WxMpService {
   public String oauth2buildAuthorizationUrl(String redirectURI, String scope, String state) {
     StringBuilder url = new StringBuilder();
     url.append("https://open.weixin.qq.com/connect/oauth2/authorize?");
-    url.append("appid=").append(this.wxMpConfigStorage.getAppId());
+    url.append("appid=").append(this.getWxMpConfigStorage().getAppId());
     url.append("&redirect_uri=").append(URIUtil.encodeURIComponent(redirectURI));
     url.append("&response_type=code");
     url.append("&scope=").append(scope);
@@ -232,7 +228,7 @@ public class WxMpServiceImpl implements WxMpService {
                                   String state) {
     StringBuilder url = new StringBuilder();
     url.append("https://open.weixin.qq.com/connect/qrconnect?");
-    url.append("appid=").append(this.wxMpConfigStorage.getAppId());
+    url.append("appid=").append(this.getWxMpConfigStorage().getAppId());
     url.append("&redirect_uri=").append(URIUtil.encodeURIComponent(redirectURI));
     url.append("&response_type=code");
     url.append("&scope=").append(scope);
@@ -258,8 +254,8 @@ public class WxMpServiceImpl implements WxMpService {
   public WxMpOAuth2AccessToken oauth2getAccessToken(String code) throws WxErrorException {
     StringBuilder url = new StringBuilder();
     url.append("https://api.weixin.qq.com/sns/oauth2/access_token?");
-    url.append("appid=").append(this.wxMpConfigStorage.getAppId());
-    url.append("&secret=").append(this.wxMpConfigStorage.getSecret());
+    url.append("appid=").append(this.getWxMpConfigStorage().getAppId());
+    url.append("&secret=").append(this.getWxMpConfigStorage().getSecret());
     url.append("&code=").append(code);
     url.append("&grant_type=authorization_code");
 
@@ -270,7 +266,7 @@ public class WxMpServiceImpl implements WxMpService {
   public WxMpOAuth2AccessToken oauth2refreshAccessToken(String refreshToken) throws WxErrorException {
     StringBuilder url = new StringBuilder();
     url.append("https://api.weixin.qq.com/sns/oauth2/refresh_token?");
-    url.append("appid=").append(this.wxMpConfigStorage.getAppId());
+    url.append("appid=").append(this.getWxMpConfigStorage().getAppId());
     url.append("&grant_type=refresh_token");
     url.append("&refresh_token=").append(refreshToken);
 
@@ -397,8 +393,8 @@ public class WxMpServiceImpl implements WxMpService {
        */
       if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001) {
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
-        this.wxMpConfigStorage.expireAccessToken();
-        if (this.wxMpConfigStorage.autoRefreshToken()) {
+        this.getWxMpConfigStorage().expireAccessToken();
+        if (this.getWxMpConfigStorage().autoRefreshToken()) {
           return this.execute(executor, uri, data);
         }
       }
@@ -424,26 +420,19 @@ public class WxMpServiceImpl implements WxMpService {
   }
 
   private void initHttpClient() {
-    ApacheHttpClientBuilder apacheHttpClientBuilder = this.wxMpConfigStorage
-      .getApacheHttpClientBuilder();
+    WxMpConfigStorage configStorage = this.getWxMpConfigStorage();
+    ApacheHttpClientBuilder apacheHttpClientBuilder = configStorage.getApacheHttpClientBuilder();
     if (null == apacheHttpClientBuilder) {
       apacheHttpClientBuilder = DefaultApacheHttpClientBuilder.get();
     }
 
-    apacheHttpClientBuilder.httpProxyHost(this.wxMpConfigStorage.getHttpProxyHost())
-      .httpProxyPort(this.wxMpConfigStorage.getHttpProxyPort())
-      .httpProxyUsername(this.wxMpConfigStorage.getHttpProxyUsername())
-      .httpProxyPassword(this.wxMpConfigStorage.getHttpProxyPassword());
+    apacheHttpClientBuilder.httpProxyHost(configStorage.getHttpProxyHost())
+      .httpProxyPort(configStorage.getHttpProxyPort())
+      .httpProxyUsername(configStorage.getHttpProxyUsername())
+      .httpProxyPassword(configStorage.getHttpProxyPassword());
 
-    // if (this.wxMpConfigStorage.getSSLContext() != null) {
-    // SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
-    // this.wxMpConfigStorage.getSSLContext(), new String[] { "TLSv1" }, null,
-    // new DefaultHostnameVerifier());
-    // apacheHttpClientBuilder.sslConnectionSocketFactory(sslsf);
-    // }
-
-    if (this.wxMpConfigStorage.getHttpProxyHost() != null && this.wxMpConfigStorage.getHttpProxyPort() > 0) {
-      this.httpProxy = new HttpHost(this.wxMpConfigStorage.getHttpProxyHost(), this.wxMpConfigStorage.getHttpProxyPort());
+    if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
+      this.httpProxy = new HttpHost(configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort());
     }
 
     this.httpClient = apacheHttpClientBuilder.build();
@@ -503,11 +492,6 @@ public class WxMpServiceImpl implements WxMpService {
   @Override
   public WxMpCardService getCardService() {
     return this.cardService;
-  }
-
-  @Override
-  public WxMpPayService getPayService() {
-    return this.payService;
   }
 
   @Override

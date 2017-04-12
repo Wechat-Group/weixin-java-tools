@@ -1,5 +1,6 @@
 package me.chanjar.weixin.common.bean.menu;
 
+import com.google.gson.annotations.SerializedName;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
 import java.io.Serializable;
@@ -13,8 +14,11 @@ public class WxMenuButton implements Serializable {
   private String name;
   private String key;
   private String url;
+
+  @SerializedName("media_id")
   private String mediaId;
 
+  @SerializedName("sub_button")
   private List<WxMenuButton> subButtons = new ArrayList<>();
 
   @Override
