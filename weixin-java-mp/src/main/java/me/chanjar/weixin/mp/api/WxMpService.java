@@ -312,13 +312,6 @@ public interface WxMpService {
   WxMpCardService getCardService();
 
   /**
-   * 返回微信支付相关接口方法的实现类对象，以方便调用其各个接口
-   *
-   * @return WxMpPayService
-   */
-  WxMpPayService getPayService();
-
-  /**
    * 返回数据分析统计相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpDataCubeService
