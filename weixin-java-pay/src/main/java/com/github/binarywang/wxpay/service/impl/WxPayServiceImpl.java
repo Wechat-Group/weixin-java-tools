@@ -196,10 +196,11 @@ public class WxPayServiceImpl implements WxPayService {
     }
 
     Map<String, String> payInfo = new HashMap<>();
-    if ("NATIVE".equals(request.getTradeType())){
+    if ("NATIVE".equals(request.getTradeType()))
+    {
       payInfo.put("codeUrl", unifiedOrderResult.getCodeURL());
     }else if ("APP".equals(request.getTradeType())){
-      //APP支付绑定的是微信开放平台上的账号，APPID为开放平台上绑定APP后发放的参数
+      // APP支付绑定的是微信开放平台上的账号，APPID为开放平台上绑定APP后发放的参数
       String appId = getConfig().getAppId();
       Map<String, String> configMap = new HashMap<>();
       // 此map用于参与调起sdk支付的二次签名,格式全小写，timestamp只能是10位,格式固定，切勿修改
@@ -218,7 +219,7 @@ public class WxPayServiceImpl implements WxPayService {
       payInfo.put("packageValue", "Sign=WXPay");
       payInfo.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
       payInfo.put("nonceStr", String.valueOf(System.currentTimeMillis()));
-     }else if("JSAPI".equals(request.getTradeType())){
+    }else if ("JSAPI".equals(request.getTradeType())){
       payInfo.put("appId", unifiedOrderResult.getAppid());
       // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
       payInfo.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
@@ -226,7 +227,7 @@ public class WxPayServiceImpl implements WxPayService {
       payInfo.put("package", "prepay_id=" + prepayId);
       payInfo.put("signType", "MD5");
       payInfo.put("paySign", SignUtils.createSign(payInfo, this.getConfig().getMchKey()));
-     }
+    }
     return payInfo;
   }
 
