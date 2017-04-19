@@ -111,6 +111,12 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.jodd</groupId>
+      <artifactId>jodd-http</artifactId>
+      <version>3.7</version>
+      <!-- 由于较新的3.8版本需要jdk8，故而此处采用较低版本 -->
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>

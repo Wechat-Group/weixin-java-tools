@@ -37,6 +37,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
+
+
 public class WxCpServiceImpl implements WxCpService {
 
   protected final Logger log = LoggerFactory.getLogger(WxCpServiceImpl.class);
@@ -580,7 +582,7 @@ public class WxCpServiceImpl implements WxCpService {
     uriWithAccessToken += uri.indexOf('?') == -1 ? "?access_token=" + accessToken : "&access_token=" + accessToken;
 
     try {
-      return executor.execute(getHttpclient(), this.httpProxy, uriWithAccessToken, data);
+      return executor.execute(uriWithAccessToken, data);
     } catch (WxErrorException e) {
       WxError error = e.getError();
       /*

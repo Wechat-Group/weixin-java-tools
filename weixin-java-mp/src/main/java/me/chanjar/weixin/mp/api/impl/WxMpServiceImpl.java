@@ -243,7 +243,8 @@ public class WxMpServiceImpl implements WxMpService {
   private WxMpOAuth2AccessToken getOAuth2AccessToken(StringBuilder url) throws WxErrorException {
     try {
       RequestExecutor<String, String> executor = new SimpleGetRequestExecutor();
-      String responseText = executor.execute(this.getHttpclient(), this.httpProxy, url.toString(), null);
+      //String responseText = executor.execute(this.getHttpclient(), this.httpProxy, url.toString(), null);
+      String responseText = executor.execute(url.toString(), null);
       return WxMpOAuth2AccessToken.fromJson(responseText);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -287,7 +288,8 @@ public class WxMpServiceImpl implements WxMpService {
 
     try {
       RequestExecutor<String, String> executor = new SimpleGetRequestExecutor();
-      String responseText = executor.execute(getHttpclient(), this.httpProxy, url.toString(), null);
+      //String responseText = executor.execute(getHttpclient(), this.httpProxy, url.toString(), null);
+      String responseText = executor.execute(url.toString(), null);
       return WxMpUser.fromJson(responseText);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -303,7 +305,8 @@ public class WxMpServiceImpl implements WxMpService {
 
     try {
       RequestExecutor<String, String> executor = new SimpleGetRequestExecutor();
-      executor.execute(getHttpclient(), this.httpProxy, url.toString(), null);
+      //executor.execute(getHttpclient(), this.httpProxy, url.toString(), null);
+      executor.execute(url.toString(), null);
     } catch (IOException e) {
       throw new RuntimeException(e);
     } catch (WxErrorException e) {
@@ -383,7 +386,8 @@ public class WxMpServiceImpl implements WxMpService {
     uriWithAccessToken += uri.indexOf('?') == -1 ? "?access_token=" + accessToken : "&access_token=" + accessToken;
 
     try {
-      return executor.execute(getHttpclient(), this.httpProxy, uriWithAccessToken, data);
+      //return executor.execute(getHttpclient(), this.httpProxy, uriWithAccessToken, data);
+      return executor.execute(uriWithAccessToken, data);
     } catch (WxErrorException e) {
       WxError error = e.getError();
       /*
