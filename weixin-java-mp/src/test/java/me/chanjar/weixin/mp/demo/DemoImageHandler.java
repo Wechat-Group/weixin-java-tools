@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpMessageHandler;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.test.TestConstants;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutImageMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
@@ -18,7 +19,7 @@ public class DemoImageHandler implements WxMpMessageHandler {
                                   WxMpService wxMpService, WxSessionManager sessionManager) {
     try {
       WxMediaUploadResult wxMediaUploadResult = wxMpService.getMaterialService()
-        .mediaUpload(WxConsts.MEDIA_IMAGE, WxConsts.FILE_JPG, ClassLoader.getSystemResourceAsStream("mm.jpeg"));
+        .mediaUpload(WxConsts.MEDIA_IMAGE, TestConstants.FILE_JPG, ClassLoader.getSystemResourceAsStream("mm.jpeg"));
       WxMpXmlOutImageMessage m
         = WxMpXmlOutMessage
         .IMAGE()

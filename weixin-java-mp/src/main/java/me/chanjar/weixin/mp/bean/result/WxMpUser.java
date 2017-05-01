@@ -32,7 +32,7 @@ public class WxMpUser implements Serializable {
   private Integer sexId;
   private String remark;
   private Integer groupId;
-  private Integer[] tagIds;
+  private Long[] tagIds;
 
   public Boolean getSubscribe() {
     return this.subscribe;
@@ -150,11 +150,11 @@ public class WxMpUser implements Serializable {
     this.groupId = groupId;
   }
 
-  public Integer[] getTagIds() {
+  public Long[] getTagIds() {
     return this.tagIds;
   }
 
-  public void setTagIds(Integer[] tagIds) {
+  public void setTagIds(Long[] tagIds) {
     this.tagIds = tagIds;
   }
 

@@ -9,7 +9,8 @@ import java.io.Serializable;
  */
 public class WxMpMassPreviewMessage implements Serializable {
   private static final long serialVersionUID = 9095211638358424020L;
-  private String toWxUsername;
+  private String toWxUserName;
+  private String toWxUserOpenid;
   private String msgType;
   private String content;
   private String mediaId;
@@ -18,12 +19,12 @@ public class WxMpMassPreviewMessage implements Serializable {
     super();
   }
 
-  public String getToWxUsername() {
-    return this.toWxUsername;
+  public String getToWxUserName() {
+    return this.toWxUserName;
   }
 
-  public void setToWxUsername(String toWxUsername) {
-    this.toWxUsername = toWxUsername;
+  public void setToWxUserName(String toWxUserName) {
+    this.toWxUserName = toWxUserName;
   }
 
   public String getMsgType() {
@@ -41,7 +42,7 @@ public class WxMpMassPreviewMessage implements Serializable {
    * 如果msgtype和media_id不匹配的话，会返回系统繁忙的错误
    * </pre>
    *
-   * @param msgType
+   * @param msgType 消息类型
    */
   public void setMsgType(String msgType) {
     this.msgType = msgType;
@@ -61,6 +62,14 @@ public class WxMpMassPreviewMessage implements Serializable {
 
   public void setMediaId(String mediaId) {
     this.mediaId = mediaId;
+  }
+
+  public String getToWxUserOpenid() {
+    return this.toWxUserOpenid;
+  }
+
+  public void setToWxUserOpenid(String toWxUserOpenid) {
+    this.toWxUserOpenid = toWxUserOpenid;
   }
 
   public String toJson() {

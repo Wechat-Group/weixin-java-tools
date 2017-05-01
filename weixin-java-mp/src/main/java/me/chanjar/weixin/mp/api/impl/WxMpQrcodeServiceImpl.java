@@ -43,9 +43,8 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
     String url = API_URL_PREFIX + "/create";
     JsonObject json = new JsonObject();
     json.addProperty("action_name", "QR_SCENE");
-    if (expireSeconds != null) {
-      json.addProperty("expire_seconds", expireSeconds);
-    }
+    json.addProperty("expire_seconds", expireSeconds);
+
     JsonObject actionInfo = new JsonObject();
     JsonObject scene = new JsonObject();
     scene.addProperty("scene_id", sceneId);

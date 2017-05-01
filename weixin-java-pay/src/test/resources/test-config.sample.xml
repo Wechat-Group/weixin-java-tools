@@ -1,0 +1,13 @@
+<xml>
+  <appId>公众号appid</appId>
+  <mchId>微信商户平台ID</mchId>
+  <mchKey>商户平台设置的API密钥</mchKey>
+  <!---
+  以下为官网文档所提供样例参数，仅供部分接口测试使用
+  <appId>wxd930ea5d5a258f4f</appId>
+  <mchId>10000100</mchId>
+  <mchKey>192006250b4c09247ec02edce69f6a2d</mchKey>
+  -->
+  <keyPath>商户平台的证书文件地址</keyPath>
+  <openid>某个openId</openid>
+</xml>

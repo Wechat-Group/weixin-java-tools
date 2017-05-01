@@ -238,12 +238,12 @@ public class WxCpServiceImpl implements WxCpService {
   }
 
   @Override
-  public File mediaDownload(String media_id) throws WxErrorException {
+  public File mediaDownload(String mediaId) throws WxErrorException {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/media/get";
     return execute(
       new MediaDownloadRequestExecutor(
         this.configStorage.getTmpDirFile()),
-      url, "media_id=" + media_id);
+      url, "media_id=" + mediaId);
   }
 
 

@@ -54,10 +54,10 @@ public class WxCpMediaAPITest {
   @DataProvider
   public Object[][] uploadMedia() {
     return new Object[][]{
-            new Object[]{WxConsts.MEDIA_IMAGE, WxConsts.FILE_JPG, "mm.jpeg"},
-            new Object[]{WxConsts.MEDIA_VOICE, WxConsts.FILE_MP3, "mm.mp3"},
-            new Object[]{WxConsts.MEDIA_VIDEO, WxConsts.FILE_MP4, "mm.mp4"},
-            new Object[]{WxConsts.MEDIA_FILE, WxConsts.FILE_JPG, "mm.jpeg"}
+            new Object[]{WxConsts.MEDIA_IMAGE, TestConstants.FILE_JPG, "mm.jpeg"},
+            new Object[]{WxConsts.MEDIA_VOICE, TestConstants.FILE_MP3, "mm.mp3"},
+            new Object[]{WxConsts.MEDIA_VIDEO, TestConstants.FILE_MP4, "mm.mp4"},
+            new Object[]{WxConsts.MEDIA_FILE, TestConstants.FILE_JPG, "mm.jpeg"}
     };
   }
 

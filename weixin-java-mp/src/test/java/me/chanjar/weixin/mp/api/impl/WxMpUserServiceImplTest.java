@@ -70,7 +70,7 @@ public class WxMpUserServiceImplTest {
     Assert.assertNotNull(wxMpUserList);
     Assert.assertFalse(wxMpUserList.getCount() == -1);
     Assert.assertFalse(wxMpUserList.getTotal() == -1);
-    Assert.assertFalse(wxMpUserList.getOpenIds().size() == -1);
+    Assert.assertFalse(wxMpUserList.getOpenids().size() == -1);
     System.out.println(wxMpUserList);
   }
 

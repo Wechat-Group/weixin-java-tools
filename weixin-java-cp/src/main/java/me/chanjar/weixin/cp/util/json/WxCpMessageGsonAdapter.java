@@ -11,6 +11,8 @@ package me.chanjar.weixin.cp.util.json;
 import com.google.gson.*;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
+import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
+import me.chanjar.weixin.cp.bean.article.NewArticle;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
@@ -71,7 +73,7 @@ public class WxCpMessageGsonAdapter implements JsonSerializer<WxCpMessage> {
     if (WxConsts.CUSTOM_MSG_NEWS.equals(message.getMsgType())) {
       JsonObject newsJsonObject = new JsonObject();
       JsonArray articleJsonArray = new JsonArray();
-      for (WxCpMessage.WxArticle article : message.getArticles()) {
+      for (NewArticle article : message.getArticles()) {
         JsonObject articleJson = new JsonObject();
         articleJson.addProperty("title", article.getTitle());
         articleJson.addProperty("description", article.getDescription());
@@ -81,6 +83,29 @@ public class WxCpMessageGsonAdapter implements JsonSerializer<WxCpMessage> {
       }
       newsJsonObject.add("articles", articleJsonArray);
       messageJson.add("news", newsJsonObject);
+    }
+
+    if (WxConsts.CUSTOM_MSG_MPNEWS.equals(message.getMsgType())) {
+      JsonObject newsJsonObject = new JsonObject();
+      if (message.getMediaId() != null) {
+        newsJsonObject.addProperty("media_id", message.getMediaId());
+      }else {
+        JsonArray articleJsonArray = new JsonArray();
+        for (MpnewsArticle article : message.getMpnewsArticles()) {
+          JsonObject articleJson = new JsonObject();
+          articleJson.addProperty("title", article.getTitle());
+          articleJson.addProperty("thumb_media_id", article.getThumbMediaId());
+          articleJson.addProperty("author", article.getAuthor());
+          articleJson.addProperty("content_source_url", article.getContentSourceUrl());
+          articleJson.addProperty("content", article.getContent());
+          articleJson.addProperty("digest", article.getDigest());
+          articleJson.addProperty("show_cover_pic", article.getShowCoverPic());
+          articleJsonArray.add(articleJson);
+        }
+
+        newsJsonObject.add("articles", articleJsonArray);
+      }
+      messageJson.add("mpnews", newsJsonObject);
     }
 
     return messageJson;

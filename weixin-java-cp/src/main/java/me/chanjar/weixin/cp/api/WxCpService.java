@@ -28,9 +28,9 @@ public interface WxCpService {
    * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=验证消息真实性
    * </pre>
    *
-   * @param msgSignature
-   * @param timestamp
-   * @param nonce
+   * @param msgSignature 消息签名
+   * @param timestamp    时间戳
+   * @param nonce        随机数
    * @param data         微信传输过来的数据，有可能是echoStr，有可能是xml消息
    */
   boolean checkSignature(String msgSignature, String timestamp, String nonce, String data);
@@ -41,14 +41,13 @@ public interface WxCpService {
    *   企业在员工验证成功后，调用本方法告诉企业号平台该员工关注成功。
    * </pre>
    *
-   * @param userId
+   * @param userId 用户id
    */
   void userAuthenticated(String userId) throws WxErrorException;
 
   /**
    * 获取access_token, 不强制刷新access_token
    *
-   * @throws WxErrorException
    * @see #getAccessToken(boolean)
    */
   String getAccessToken() throws WxErrorException;
@@ -63,14 +62,12 @@ public interface WxCpService {
    * </pre>
    *
    * @param forceRefresh 强制刷新
-   * @throws me.chanjar.weixin.common.exception.WxErrorException
    */
   String getAccessToken(boolean forceRefresh) throws WxErrorException;
 
   /**
    * 获得jsapi_ticket,不强制刷新jsapi_ticket
    *
-   * @throws WxErrorException
    * @see #getJsapiTicket(boolean)
    */
   String getJsapiTicket() throws WxErrorException;
@@ -84,7 +81,6 @@ public interface WxCpService {
    * </pre>
    *
    * @param forceRefresh 强制刷新
-   * @throws WxErrorException
    */
   String getJsapiTicket(boolean forceRefresh) throws WxErrorException;
 
@@ -113,15 +109,13 @@ public interface WxCpService {
    * @param mediaType   媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
    * @param fileType    文件类型，请看{@link me.chanjar.weixin.common.api.WxConsts}
    * @param inputStream 输入流
-   * @throws WxErrorException
    */
   WxMediaUploadResult mediaUpload(String mediaType, String fileType, InputStream inputStream)
-          throws WxErrorException, IOException;
+    throws WxErrorException, IOException;
 
   /**
-   * @param mediaType
-   * @param file
-   * @throws WxErrorException
+   * @param mediaType 媒体类型
+   * @param file      文件对象
    * @see #mediaUpload(String, String, InputStream)
    */
   WxMediaUploadResult mediaUpload(String mediaType, File file) throws WxErrorException;
@@ -133,20 +127,18 @@ public interface WxCpService {
    * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=上传下载多媒体文件
    * </pre>
    *
-   * @param media_id
+   * @param mediaId 媒体id
    * @return 保存到本地的临时文件
-   * @throws WxErrorException
    */
-  File mediaDownload(String media_id) throws WxErrorException;
+  File mediaDownload(String mediaId) throws WxErrorException;
 
   /**
    * <pre>
    * 发送消息
-   * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=发送消息
+   * 详情请见: http://qydev.weixin.qq.com/wiki/index.php?title=%E5%8F%91%E9%80%81%E6%8E%A5%E5%8F%A3%E8%AF%B4%E6%98%8E
    * </pre>
    *
-   * @param message
-   * @throws WxErrorException
+   * @param message 要发送的消息对象
    */
   void messageSend(WxCpMessage message) throws WxErrorException;
 
@@ -158,8 +150,7 @@ public interface WxCpService {
    * 注意: 这个方法使用WxCpConfigStorage里的agentId
    * </pre>
    *
-   * @param menu
-   * @throws WxErrorException
+   * @param menu 菜单对象
    * @see #menuCreate(Integer, WxMenu)
    */
   void menuCreate(WxMenu menu) throws WxErrorException;
@@ -173,8 +164,7 @@ public interface WxCpService {
    * </pre>
    *
    * @param agentId 企业号应用的id
-   * @param menu
-   * @throws WxErrorException
+   * @param menu    菜单对象
    * @see #menuCreate(me.chanjar.weixin.common.bean.menu.WxMenu)
    */
   void menuCreate(Integer agentId, WxMenu menu) throws WxErrorException;
@@ -187,7 +177,6 @@ public interface WxCpService {
    * 注意: 这个方法使用WxCpConfigStorage里的agentId
    * </pre>
    *
-   * @throws WxErrorException
    * @see #menuDelete(Integer)
    */
   void menuDelete() throws WxErrorException;
@@ -201,7 +190,6 @@ public interface WxCpService {
    * </pre>
    *
    * @param agentId 企业号应用的id
-   * @throws WxErrorException
    * @see #menuDelete()
    */
   void menuDelete(Integer agentId) throws WxErrorException;
@@ -214,7 +202,6 @@ public interface WxCpService {
    * 注意: 这个方法使用WxCpConfigStorage里的agentId
    * </pre>
    *
-   * @throws WxErrorException
    * @see #menuGet(Integer)
    */
   WxMenu menuGet() throws WxErrorException;
@@ -228,7 +215,6 @@ public interface WxCpService {
    * </pre>
    *
    * @param agentId 企业号应用的id
-   * @throws WxErrorException
    * @see #menuGet()
    */
   WxMenu menuGet(Integer agentId) throws WxErrorException;
@@ -242,7 +228,6 @@ public interface WxCpService {
    *
    * @param depart 部门
    * @return 部门id
-   * @throws WxErrorException
    */
   Integer departCreate(WxCpDepart depart) throws WxErrorException;
 
@@ -251,8 +236,6 @@ public interface WxCpService {
    * 部门管理接口 - 查询所有部门
    * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=部门管理接口
    * </pre>
-   *
-   * @throws WxErrorException
    */
   List<WxCpDepart> departGet() throws WxErrorException;
 
@@ -264,7 +247,6 @@ public interface WxCpService {
    * </pre>
    *
    * @param group 要更新的group，group的id,name必须设置
-   * @throws WxErrorException
    */
   void departUpdate(WxCpDepart group) throws WxErrorException;
 
@@ -273,8 +255,7 @@ public interface WxCpService {
    * 部门管理接口 - 删除部门
    * </pre>
    *
-   * @param departId
-   * @throws WxErrorException
+   * @param departId 部门id
    */
   void departDelete(Integer departId) throws WxErrorException;
 
@@ -288,7 +269,6 @@ public interface WxCpService {
    * @param departId   必填。部门id
    * @param fetchChild 非必填。1/0：是否递归获取子部门下面的成员
    * @param status     非必填。0获取全部员工，1获取已关注成员列表，2获取禁用成员列表，4获取未关注成员列表。status可叠加
-   * @throws WxErrorException
    */
   List<WxCpUser> userList(Integer departId, Boolean fetchChild, Integer status) throws WxErrorException;
 
@@ -302,73 +282,66 @@ public interface WxCpService {
    * @param departId   必填。部门id
    * @param fetchChild 非必填。1/0：是否递归获取子部门下面的成员
    * @param status     非必填。0获取全部员工，1获取已关注成员列表，2获取禁用成员列表，4获取未关注成员列表。status可叠加
-   * @throws WxErrorException
    */
   List<WxCpUser> departGetUsers(Integer departId, Boolean fetchChild, Integer status) throws WxErrorException;
 
   /**
    * 新建用户
    *
-   * @param user
-   * @throws WxErrorException
+   * @param user 用户对象
    */
   void userCreate(WxCpUser user) throws WxErrorException;
 
   /**
    * 更新用户
    *
-   * @param user
-   * @throws WxErrorException
+   * @param user 用户对象
    */
   void userUpdate(WxCpUser user) throws WxErrorException;
 
   /**
    * 删除用户
    *
-   * @param userid
-   * @throws WxErrorException
+   * @param userid 用户id
    */
   void userDelete(String userid) throws WxErrorException;
 
   /**
    * <pre>
    * 批量删除成员
-   *
    * http://qydev.weixin.qq.com/wiki/index.php?title=管理成员#.E6.89.B9.E9.87.8F.E5.88.A0.E9.99.A4.E6.88.90.E5.91.98
    * </pre>
    *
    * @param userids 员工UserID列表。对应管理端的帐号
-   * @throws WxErrorException
    */
   void userDelete(String[] userids) throws WxErrorException;
 
   /**
    * 获取用户
    *
-   * @param userid
-   * @throws WxErrorException
+   * @param userid 用户id
    */
   WxCpUser userGet(String userid) throws WxErrorException;
 
   /**
    * 创建标签
    *
-   * @param tagName
+   * @param tagName 标签名
    */
   String tagCreate(String tagName) throws WxErrorException;
 
   /**
    * 更新标签
    *
-   * @param tagId
-   * @param tagName
+   * @param tagId   标签id
+   * @param tagName 标签名
    */
   void tagUpdate(String tagId, String tagName) throws WxErrorException;
 
   /**
    * 删除标签
    *
-   * @param tagId
+   * @param tagId 标签id
    */
   void tagDelete(String tagId) throws WxErrorException;
 
@@ -380,24 +353,24 @@ public interface WxCpService {
   /**
    * 获取标签成员
    *
-   * @param tagId
+   * @param tagId 标签ID
    */
   List<WxCpUser> tagGetUsers(String tagId) throws WxErrorException;
 
   /**
    * 增加标签成员
    *
-   * @param tagId
-   * @param userIds
+   * @param tagId   标签id
+   * @param userIds 用户ID 列表
    */
   void tagAddUsers(String tagId, List<String> userIds, List<String> partyIds) throws WxErrorException;
 
   /**
-   *  <pre>
+   * <pre>
    * 构造oauth2授权的url连接
    * </pre>
    *
-   * @param state
+   * @param state 状态码
    * @return url
    */
   String oauth2buildAuthorizationUrl(String state);
@@ -408,8 +381,8 @@ public interface WxCpService {
    * 详情请见: http://qydev.weixin.qq.com/wiki/index.php?title=企业获取code
    * </pre>
    *
-   * @param redirectUri
-   * @param state
+   * @param redirectUri 跳转链接地址
+   * @param state       状态码
    * @return url
    */
   String oauth2buildAuthorizationUrl(String redirectUri, String state);
@@ -423,7 +396,7 @@ public interface WxCpService {
    * 注意: 这个方法使用WxCpConfigStorage里的agentId
    * </pre>
    *
-   * @param code
+   * @param code 微信oauth授权返回的代码
    * @return [userid, deviceid]
    * @see #oauth2getUserInfo(Integer, String)
    */
@@ -439,7 +412,7 @@ public interface WxCpService {
    * </pre>
    *
    * @param agentId 企业号应用的id
-   * @param code
+   * @param code    微信oauth授权返回的代码
    * @return [userid, deviceid]
    * @see #oauth2getUserInfo(String)
    */
@@ -449,8 +422,8 @@ public interface WxCpService {
   /**
    * 移除标签成员
    *
-   * @param tagId
-   * @param userIds
+   * @param tagId   标签id
+   * @param userIds 用户id列表
    */
   void tagRemoveUsers(String tagId, List<String> userIds) throws WxErrorException;
 
@@ -463,7 +436,6 @@ public interface WxCpService {
    * @param userId     用户的userid
    * @param inviteTips 推送到微信上的提示语（只有认证号可以使用）。当使用微信推送时，该字段默认为“请关注XXX企业号”，邮件邀请时，该字段无效。
    * @return 1:微信邀请 2.邮件邀请
-   * @throws WxErrorException
    */
   int invite(String userId, String inviteTips) throws WxErrorException;
 
@@ -474,25 +446,22 @@ public interface WxCpService {
    * </pre>
    *
    * @return { "ip_list": ["101.226.103.*", "101.226.62.*"] }
-   * @throws WxErrorException
    */
   String[] getCallbackIp() throws WxErrorException;
 
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求
    *
-   * @param url
-   * @param queryParam
-   * @throws WxErrorException
+   * @param url        接口地址
+   * @param queryParam 请求参数
    */
   String get(String url, String queryParam) throws WxErrorException;
 
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的POST请求
    *
-   * @param url
-   * @param postData
-   * @throws WxErrorException
+   * @param url      接口地址
+   * @param postData 请求body字符串
    */
   String post(String url, String postData) throws WxErrorException;
 
@@ -503,19 +472,18 @@ public interface WxCpService {
    * 可以参考，{@link me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor}的实现方法
    * </pre>
    *
-   * @param executor
-   * @param uri
-   * @param data
-   * @param <T>
-   * @param <E>
-   * @throws WxErrorException
+   * @param executor 执行器
+   * @param uri      请求地址
+   * @param data     参数
+   * @param <T>      请求值类型
+   * @param <E>      返回值类型
    */
   <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException;
 
   /**
    * 注入 {@link WxCpConfigStorage} 的实现
    *
-   * @param wxConfigProvider
+   * @param wxConfigProvider 配置对象
    */
   void setWxCpConfigStorage(WxCpConfigStorage wxConfigProvider);
 
@@ -525,7 +493,7 @@ public interface WxCpService {
    * 默认：1000ms
    * </pre>
    *
-   * @param retrySleepMillis
+   * @param retrySleepMillis 重试休息时间
    */
   void setRetrySleepMillis(int retrySleepMillis);
 
@@ -535,7 +503,7 @@ public interface WxCpService {
    * 默认：5次
    * </pre>
    *
-   * @param maxRetryTimes
+   * @param maxRetryTimes 最大重试次数
    */
   void setMaxRetryTimes(int maxRetryTimes);
 
@@ -550,7 +518,7 @@ public interface WxCpService {
    * 获取某个sessionId对应的session,如果sessionId没有对应的session，若create为true则新建一个，否则返回null。
    *
    * @param id     id可以为任意字符串，建议使用FromUserName作为id
-   * @param create
+   * @param create 是否新建
    */
   WxSession getSession(String id, boolean create);
 
@@ -560,31 +528,26 @@ public interface WxCpService {
    * WxCpService默认使用的是{@link me.chanjar.weixin.common.session.StandardSessionManager}
    * </pre>
    *
-   * @param sessionManager
+   * @param sessionManager 会话管理器
    */
   void setSessionManager(WxSessionManager sessionManager);
 
   /**
    * 上传部门列表覆盖企业号上的部门信息
    *
-   * @param mediaId
-   * @throws WxErrorException
+   * @param mediaId 媒体id
    */
   String replaceParty(String mediaId) throws WxErrorException;
 
   /**
    * 上传用户列表覆盖企业号上的用户信息
    *
-   * @param mediaId
-   * @throws WxErrorException
+   * @param mediaId 媒体id
    */
   String replaceUser(String mediaId) throws WxErrorException;
 
   /**
    * 获取异步任务结果
-   *
-   * @param joinId
-   * @throws WxErrorException
    */
   String getTaskResult(String joinId) throws WxErrorException;
 }

@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConfigStorage;
+import me.chanjar.weixin.mp.api.test.TestConstants;
 import me.chanjar.weixin.mp.bean.WxMpMassNews;
 import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
 import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
@@ -101,7 +102,7 @@ public class WxMpMassMessageAPITest {
       .getSystemResourceAsStream("mm.mp4")) {
       // 上传视频到媒体库
       WxMediaUploadResult uploadMediaRes = this.wxService.getMaterialService()
-        .mediaUpload(WxConsts.MEDIA_VIDEO, WxConsts.FILE_MP4, inputStream);
+        .mediaUpload(WxConsts.MEDIA_VIDEO, TestConstants.FILE_MP4, inputStream);
       Assert.assertNotNull(uploadMediaRes);
       Assert.assertNotNull(uploadMediaRes.getMediaId());
 
@@ -122,7 +123,7 @@ public class WxMpMassMessageAPITest {
     try (InputStream inputStream = ClassLoader
       .getSystemResourceAsStream("mm.jpeg")) {
       WxMediaUploadResult uploadMediaRes = this.wxService.getMaterialService()
-        .mediaUpload(WxConsts.MEDIA_IMAGE, WxConsts.FILE_JPG, inputStream);
+        .mediaUpload(WxConsts.MEDIA_IMAGE, TestConstants.FILE_JPG, inputStream);
       Assert.assertNotNull(uploadMediaRes);
       Assert.assertNotNull(uploadMediaRes.getMediaId());
       messages[1] = new Object[]{WxConsts.MASS_MSG_IMAGE, uploadMediaRes.getMediaId()};
@@ -134,7 +135,7 @@ public class WxMpMassMessageAPITest {
     try (InputStream inputStream = ClassLoader
       .getSystemResourceAsStream("mm.mp3")) {
       WxMediaUploadResult uploadMediaRes = this.wxService.getMaterialService()
-        .mediaUpload(WxConsts.MEDIA_VOICE, WxConsts.FILE_MP3, inputStream);
+        .mediaUpload(WxConsts.MEDIA_VOICE, TestConstants.FILE_MP3, inputStream);
       Assert.assertNotNull(uploadMediaRes);
       Assert.assertNotNull(uploadMediaRes.getMediaId());
       messages[2] = new Object[]{WxConsts.MASS_MSG_VOICE, uploadMediaRes.getMediaId()};
@@ -147,7 +148,7 @@ public class WxMpMassMessageAPITest {
       .getSystemResourceAsStream("mm.jpeg")) {
       // 上传照片到媒体库
       WxMediaUploadResult uploadMediaRes = this.wxService.getMaterialService()
-        .mediaUpload(WxConsts.MEDIA_IMAGE, WxConsts.FILE_JPG, inputStream);
+        .mediaUpload(WxConsts.MEDIA_IMAGE, TestConstants.FILE_JPG, inputStream);
       Assert.assertNotNull(uploadMediaRes);
       Assert.assertNotNull(uploadMediaRes.getMediaId());
 

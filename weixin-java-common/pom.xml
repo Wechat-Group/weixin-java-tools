@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>weixin-java-parent</artifactId>
-    <version>2.5.0</version>
+    <version>2.6.0</version>
   </parent>
 
   <artifactId>weixin-java-common</artifactId>
@@ -14,16 +14,6 @@
   <description>微信公众号、企业号Java SDK Common</description>
 
   <dependencies>
-    <dependency>
-      <groupId>com.thoughtworks.xstream</groupId>
-      <artifactId>xstream</artifactId>
-      <version>1.4.7</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
