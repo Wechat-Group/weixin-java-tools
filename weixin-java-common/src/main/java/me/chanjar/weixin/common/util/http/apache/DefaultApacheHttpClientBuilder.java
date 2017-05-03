@@ -1,4 +1,4 @@
-package me.chanjar.weixin.common.util.http;
+package me.chanjar.weixin.common.util.http.apache;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.annotation.NotThreadSafe;

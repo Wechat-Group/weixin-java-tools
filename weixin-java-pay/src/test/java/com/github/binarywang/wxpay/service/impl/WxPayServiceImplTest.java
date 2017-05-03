@@ -1,5 +1,7 @@
 package com.github.binarywang.wxpay.service.impl;
 
+import static org.testng.Assert.*;
+
 import com.github.binarywang.utils.qrcode.QrcodeUtils;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
@@ -10,14 +12,13 @@ import com.google.inject.Inject;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.*;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
-
-import static org.testng.Assert.*;
 
 /**
  * 测试支付相关接口
@@ -263,5 +264,6 @@ public class WxPayServiceImplTest {
     assertNotNull(result);
     this.logger.info(result);
   }
+
 
 }

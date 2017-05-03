@@ -12,7 +12,7 @@ import java.util.List;
  * @author  <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  *         Created by Binary Wang on 2016-09-23.
  */
-public interface WxMpStoreService {
+public interface WxMpStoreService<H,P> {
   /**
    * <pre>
    * 创建门店

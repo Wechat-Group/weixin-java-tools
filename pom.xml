@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>weixin-java-parent</artifactId>
-  <version>2.6.0</version>
+  <version>2.7.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>WeiXin Java Tools - Parent</name>
   <description>微信公众号、企业号上级POM</description>
@@ -107,9 +107,21 @@
     <commons-codec.version>1.10</commons-codec.version>
     <jetty.version>9.3.0.RC0</jetty.version>
     <jedis.version>2.9.0</jedis.version>
+    <!-- 由于较新的3.8版本需要jdk8，故而此处采用较低版本 -->
+    <jodd-http.version>3.7</jodd-http.version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.jodd</groupId>
+      <artifactId>jodd-http</artifactId>
+      <version>${jodd-http.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>3.7.0</version>
+    </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>

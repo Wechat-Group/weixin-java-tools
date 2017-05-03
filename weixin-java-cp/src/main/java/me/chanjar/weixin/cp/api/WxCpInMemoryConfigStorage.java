@@ -2,7 +2,7 @@ package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.common.util.http.ApacheHttpClientBuilder;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 
 import java.io.File;
 

@@ -2,7 +2,9 @@ rootProject.name = 'weixin-java-parent'
 include ':weixin-java-common'
 include ':weixin-java-cp'
 include ':weixin-java-mp'
+include ':weixin-java-pay'
 
 project(':weixin-java-common').projectDir = "$rootDir/weixin-java-common" as File
 project(':weixin-java-cp').projectDir = "$rootDir/weixin-java-cp" as File
 project(':weixin-java-mp').projectDir = "$rootDir/weixin-java-mp" as File
+project(':weixin-java-pay').projectDir = "$rootDir/weixin-java-pay" as File

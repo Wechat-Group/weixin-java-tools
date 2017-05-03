@@ -6,9 +6,15 @@ import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
 
 /**
  * 卡券相关接口
- * @author YuJian(mgcnrx11@hotmail.com) on 01/11/2016  
+ * @author YuJian(mgcnrx11@hotmail.com) on 01/11/2016
  */
-public interface WxMpCardService {
+public interface WxMpCardService<H, P> {
+
+  /**
+   * 得到WxMpService
+   * @return
+   */
+  WxMpService getWxMpService();
 
   /**
    * 获得卡券api_ticket，不强制刷新卡券api_ticket

@@ -9,27 +9,19 @@ import com.github.binarywang.wxpay.util.SignUtils;
 import com.google.common.collect.Maps;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
+import jodd.http.net.SSLSocketHttpConnectionProvider;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.Consts;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ssl.DefaultHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.SSLContext;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.net.ssl.SSLContext;
 
 /**
  * Created by Binary Wang on 2016/7/28.
@@ -196,10 +188,9 @@ public class WxPayServiceImpl implements WxPayService {
     }
 
     Map<String, String> payInfo = new HashMap<>();
-    if ("NATIVE".equals(request.getTradeType()))
-    {
+    if ("NATIVE".equals(request.getTradeType())) {
       payInfo.put("codeUrl", unifiedOrderResult.getCodeURL());
-    }else if ("APP".equals(request.getTradeType())){
+    } else if ("APP".equals(request.getTradeType())) {
       // APP支付绑定的是微信开放平台上的账号，APPID为开放平台上绑定APP后发放的参数
       String appId = getConfig().getAppId();
       Map<String, String> configMap = new HashMap<>();
@@ -219,7 +210,7 @@ public class WxPayServiceImpl implements WxPayService {
       payInfo.put("packageValue", "Sign=WXPay");
       payInfo.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
       payInfo.put("nonceStr", String.valueOf(System.currentTimeMillis()));
-    }else if ("JSAPI".equals(request.getTradeType())){
+    } else if ("JSAPI".equals(request.getTradeType())) {
       payInfo.put("appId", unifiedOrderResult.getAppid());
       // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
       payInfo.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
@@ -404,7 +395,7 @@ public class WxPayServiceImpl implements WxPayService {
   }
 
   /**
-   * 由于暂时未找到使用jodd-http实现证书配置的办法，故而暂时使用httpclient
+   * ecoolper(20170418)，修改为jodd-http方式
    */
   private String postWithKey(String url, String requestStr) throws WxErrorException {
     try {
@@ -413,21 +404,12 @@ public class WxPayServiceImpl implements WxPayService {
         sslContext = this.getConfig().initSSLContext();
       }
 
-      SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext,
-        new String[]{"TLSv1"}, null, new DefaultHostnameVerifier());
-
-      HttpPost httpPost = new HttpPost(url);
-
-      try (CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build()) {
-        httpPost.setEntity(new StringEntity(new String(requestStr.getBytes(CharEncoding.UTF_8), CharEncoding.ISO_8859_1)));
-        try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
-          String result = EntityUtils.toString(response.getEntity(), Consts.UTF_8);
-          this.log.debug("\n[URL]:  {}\n[PARAMS]: {}\n[RESPONSE]: {}", url, requestStr, result);
-          return result;
-        }
-      } finally {
-        httpPost.releaseConnection();
-      }
+      HttpRequest request = HttpRequest.post(url).withConnectionProvider(new SSLSocketHttpConnectionProvider(sslContext));
+      request.bodyText(requestStr);
+      HttpResponse response = request.send();
+      String result = response.bodyText();
+      this.log.debug("\n[URL]:  {}\n[PARAMS]: {}\n[RESPONSE]: {}", url, requestStr, result);
+      return result;
     } catch (Exception e) {
       this.log.error("\n[URL]:  {}\n[PARAMS]: {}\n[EXCEPTION]: {}", url, requestStr, e.getMessage());
       throw new WxErrorException(WxError.newBuilder().setErrorCode(-1).setErrorMsg(e.getMessage()).build(), e);

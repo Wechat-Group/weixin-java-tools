@@ -1,8 +1,7 @@
-package me.chanjar.weixin.cp.api;
+package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.result.WxError;
@@ -16,18 +15,14 @@ import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.*;
 import me.chanjar.weixin.common.util.json.GsonHelper;
+import me.chanjar.weixin.cp.api.WxCpConfigStorage;
+import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpDepart;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpTag;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +32,9 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
-public class WxCpServiceImpl implements WxCpService {
+public abstract class AbstractWxCpServiceImpl<H, P> implements WxCpService, RequestHttp<H, P> {
 
-  protected final Logger log = LoggerFactory.getLogger(WxCpServiceImpl.class);
+  protected final Logger log = LoggerFactory.getLogger(AbstractWxCpServiceImpl.class);
 
   /**
    * 全局的是否正在刷新access token的锁
@@ -53,9 +48,7 @@ public class WxCpServiceImpl implements WxCpService {
 
   protected WxCpConfigStorage configStorage;
 
-  protected CloseableHttpClient httpClient;
 
-  protected HttpHost httpProxy;
   protected WxSessionManager sessionManager = new StandardSessionManager();
   /**
    * 临时文件目录
@@ -85,46 +78,6 @@ public class WxCpServiceImpl implements WxCpService {
     return getAccessToken(false);
   }
 
-  @Override
-  public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    if (forceRefresh) {
-      this.configStorage.expireAccessToken();
-    }
-    if (this.configStorage.isAccessTokenExpired()) {
-      synchronized (this.globalAccessTokenRefreshLock) {
-        if (this.configStorage.isAccessTokenExpired()) {
-          String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"
-            + "&corpid=" + this.configStorage.getCorpId()
-            + "&corpsecret=" + this.configStorage.getCorpSecret();
-          try {
-            HttpGet httpGet = new HttpGet(url);
-            if (this.httpProxy != null) {
-              RequestConfig config = RequestConfig.custom()
-                .setProxy(this.httpProxy).build();
-              httpGet.setConfig(config);
-            }
-            String resultContent = null;
-            try (CloseableHttpClient httpclient = getHttpclient();
-                 CloseableHttpResponse response = httpclient.execute(httpGet)) {
-              resultContent = new BasicResponseHandler().handleResponse(response);
-            } finally {
-              httpGet.releaseConnection();
-            }
-            WxError error = WxError.fromJson(resultContent);
-            if (error.getErrorCode() != 0) {
-              throw new WxErrorException(error);
-            }
-            WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-            this.configStorage.updateAccessToken(
-              accessToken.getAccessToken(), accessToken.getExpiresIn());
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-        }
-      }
-    }
-    return this.configStorage.getAccessToken();
-  }
 
   @Override
   public String getJsapiTicket() throws WxErrorException {
@@ -538,9 +491,7 @@ public class WxCpServiceImpl implements WxCpService {
     int retryTimes = 0;
     do {
       try {
-        T result = this.executeInternal(executor, uri, data);
-        this.log.debug("\n[URL]:  {}\n[PARAMS]: {}\n[RESPONSE]: {}",uri, data, result);
-        return result;
+        return this.executeInternal(executor, uri, data);
       } catch (WxErrorException e) {
         if (retryTimes + 1 > this.maxRetryTimes) {
           this.log.warn("重试达到最大次数【{}】", this.maxRetryTimes);
@@ -576,58 +527,41 @@ public class WxCpServiceImpl implements WxCpService {
     }
     String accessToken = getAccessToken(false);
 
-    String uriWithAccessToken = uri;
-    uriWithAccessToken += uri.indexOf('?') == -1 ? "?access_token=" + accessToken : "&access_token=" + accessToken;
+    String uriWithAccessToken = uri + (uri.contains("?") ? "&" : "?") + "access_token=" + accessToken;
 
     try {
-      return executor.execute(getHttpclient(), this.httpProxy, uriWithAccessToken, data);
+      T result = executor.execute(this, uriWithAccessToken, data);
+      this.log.debug("\n[URL]:  {}\n[PARAMS]: {}\n[RESPONSE]: {}", uriWithAccessToken, data, result);
+      return result;
     } catch (WxErrorException e) {
       WxError error = e.getError();
       /*
        * 发生以下情况时尝试刷新access_token
        * 40001 获取access_token时AppSecret错误，或者access_token无效
        * 42001 access_token超时
+       * 40014 不合法的access_token，请开发者认真比对access_token的有效性（如是否过期），或查看是否正在为恰当的公众号调用接口
        */
-      if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001) {
+      if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001 || error.getErrorCode() == 40014) {
         // 强制设置wxCpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
         this.configStorage.expireAccessToken();
         return execute(executor, uri, data);
       }
 
       if (error.getErrorCode() != 0) {
-        this.log.error("\n[URL]:  {}\n[PARAMS]: {}\n[RESPONSE]: {}", uri, data, error);
+        this.log.error("\n[URL]:  {}\n[PARAMS]: {}\n[RESPONSE]: {}", uriWithAccessToken, data, error);
         throw new WxErrorException(error);
       }
       return null;
     } catch (IOException e) {
-      this.log.error("\n[URL]:  {}\n[PARAMS]: {}\n[EXCEPTION]: {}", uri, data, e.getMessage());
+      this.log.error("\n[URL]:  {}\n[PARAMS]: {}\n[EXCEPTION]: {}", uriWithAccessToken, data, e.getMessage());
       throw new RuntimeException(e);
     }
-  }
-
-  protected CloseableHttpClient getHttpclient() {
-    return this.httpClient;
   }
 
   @Override
   public void setWxCpConfigStorage(WxCpConfigStorage wxConfigProvider) {
     this.configStorage = wxConfigProvider;
-    ApacheHttpClientBuilder apacheHttpClientBuilder = this.configStorage
-      .getApacheHttpClientBuilder();
-    if (null == apacheHttpClientBuilder) {
-      apacheHttpClientBuilder = DefaultApacheHttpClientBuilder.get();
-    }
-
-    apacheHttpClientBuilder.httpProxyHost(this.configStorage.getHttpProxyHost())
-      .httpProxyPort(this.configStorage.getHttpProxyPort())
-      .httpProxyUsername(this.configStorage.getHttpProxyUsername())
-      .httpProxyPassword(this.configStorage.getHttpProxyPassword());
-
-    if (this.configStorage.getHttpProxyHost() != null && this.configStorage.getHttpProxyPort() > 0) {
-      this.httpProxy = new HttpHost(this.configStorage.getHttpProxyHost(), this.configStorage.getHttpProxyPort());
-    }
-
-    this.httpClient = apacheHttpClientBuilder.build();
+    this.initHttp();
   }
 
   @Override
@@ -692,6 +626,5 @@ public class WxCpServiceImpl implements WxCpService {
   public void setTmpDirFile(File tmpDirFile) {
     this.tmpDirFile = tmpDirFile;
   }
-
 
 }

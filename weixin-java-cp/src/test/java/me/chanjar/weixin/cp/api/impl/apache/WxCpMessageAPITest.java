@@ -1,13 +1,12 @@
-package me.chanjar.weixin.cp.api;
-
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+package me.chanjar.weixin.cp.api.impl.apache;
 
 import com.google.inject.Inject;
-
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
 /***
  * 测试发送消息
@@ -22,7 +21,7 @@ public class WxCpMessageAPITest {
   protected WxCpServiceImpl wxService;
 
   public void testSendCustomMessage() throws WxErrorException {
-    ApiTestModule.WxXmlCpInMemoryConfigStorage configStorage = (ApiTestModule.WxXmlCpInMemoryConfigStorage) this.wxService.configStorage;
+    ApiTestModule.WxXmlCpInMemoryConfigStorage configStorage = (ApiTestModule.WxXmlCpInMemoryConfigStorage) this.wxService.getWxCpConfigStorage();
     WxCpMessage message1 = new WxCpMessage();
     message1.setAgentId(configStorage.getAgentId());
     message1.setMsgType(WxConsts.CUSTOM_MSG_TEXT);

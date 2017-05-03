@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.common.session.WxSessionManager;
+import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.cp.bean.WxCpDepart;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
@@ -469,7 +470,7 @@ public interface WxCpService {
    * <pre>
    * Service没有实现某个API的时候，可以用这个，
    * 比{@link #get}和{@link #post}方法更灵活，可以自己构造RequestExecutor用来处理不同的参数和不同的返回类型。
-   * 可以参考，{@link me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor}的实现方法
+   * 可以参考，{@link MediaUploadRequestExecutor}的实现方法
    * </pre>
    *
    * @param executor 执行器
@@ -550,4 +551,16 @@ public interface WxCpService {
    * 获取异步任务结果
    */
   String getTaskResult(String joinId) throws WxErrorException;
+
+  /**
+   * 初始化http请求对象
+   */
+  void initHttp();
+
+  /**
+   * 获取WxMpConfigStorage 对象
+   *
+   * @return WxMpConfigStorage
+   */
+  WxCpConfigStorage getWxCpConfigStorage();
 }

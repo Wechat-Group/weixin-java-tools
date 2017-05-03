@@ -13,7 +13,7 @@ import me.chanjar.weixin.cp.api.WxCpConfigStorage;
 import me.chanjar.weixin.cp.api.WxCpMessageHandler;
 import me.chanjar.weixin.cp.api.WxCpMessageRouter;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.api.WxCpServiceImpl;
+import me.chanjar.weixin.cp.api.impl.apache.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
 import me.chanjar.weixin.cp.bean.WxCpXmlOutTextMessage;

@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.api;
 
 import java.util.List;
 
+import me.chanjar.weixin.cp.api.impl.apache.WxCpServiceImpl;
 import org.testng.Assert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;

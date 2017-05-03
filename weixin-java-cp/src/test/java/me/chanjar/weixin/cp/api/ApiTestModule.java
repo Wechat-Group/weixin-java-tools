@@ -9,6 +9,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.cp.api.impl.apache.WxCpServiceImpl;
 
 public class ApiTestModule implements Module {
 

@@ -25,7 +25,7 @@ public class WxMpStoreServiceImplTest {
   private WxMpService wxMpService;
 
   /**
-   * Test method for {@link me.chanjar.weixin.mp.api.impl.WxMpStoreServiceImpl#add(me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo)}.
+   * Test method for {@link WxMpStoreServiceImpl#add(me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo)}.
    *
    * @throws WxErrorException
    */

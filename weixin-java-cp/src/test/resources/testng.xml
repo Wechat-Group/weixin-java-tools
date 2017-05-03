@@ -3,9 +3,9 @@
 <suite name="Weixin-java-tool-suite" verbose="1">
   <test name="API_Test">
     <classes>
-      <class name="me.chanjar.weixin.cp.api.WxCpBusyRetryTest"/>
-      <class name="me.chanjar.weixin.cp.api.WxCpBaseAPITest"/>
-      <class name="me.chanjar.weixin.cp.api.WxCpMessageAPITest"/>
+      <class name="me.chanjar.weixin.cp.api.impl.apache.WxCpBusyRetryTest"/>
+      <class name="me.chanjar.weixin.cp.api.impl.apache.WxCpBaseAPITest"/>
+      <class name="me.chanjar.weixin.cp.api.impl.apache.WxCpMessageAPITest"/>
       <class name="me.chanjar.weixin.cp.api.WxMenuAPITest"/>
       <class name="me.chanjar.weixin.cp.api.WxCpDepartAPITest"/>
       <class name="me.chanjar.weixin.cp.api.WxCpMediaAPITest"/>

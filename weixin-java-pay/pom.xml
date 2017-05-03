@@ -5,7 +5,7 @@
   <parent>
     <artifactId>weixin-java-parent</artifactId>
     <groupId>com.github.binarywang</groupId>
-    <version>2.6.0</version>
+    <version>2.7.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -18,13 +18,6 @@
       <groupId>com.github.binarywang</groupId>
       <artifactId>weixin-java-common</artifactId>
       <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jodd</groupId>
-      <artifactId>jodd-http</artifactId>
-      <version>3.7</version>
-      <!-- 由于较新的3.8版本需要jdk8，故而此处采用较低版本 -->
     </dependency>
     <dependency>
       <groupId>com.github.binarywang</groupId>

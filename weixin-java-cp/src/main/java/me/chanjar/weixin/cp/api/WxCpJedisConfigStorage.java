@@ -1,9 +1,10 @@
 package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.util.http.ApacheHttpClientBuilder;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 import java.io.File;
 
@@ -36,6 +37,15 @@ public class WxCpJedisConfigStorage implements WxCpConfigStorage {
 
   public WxCpJedisConfigStorage(String host, int port) {
     this.jedisPool = new JedisPool(host, port);
+  }
+
+  
+  public WxCpJedisConfigStorage(JedisPoolConfig poolConfig, String host, int port) {
+	    this.jedisPool = new JedisPool(poolConfig, host, port);
+  }
+  
+  public WxCpJedisConfigStorage(JedisPoolConfig poolConfig, String host, int port, int timeout, final String password) {
+	    this.jedisPool = new JedisPool(poolConfig, host, port, timeout, password);
   }
 
   /**
