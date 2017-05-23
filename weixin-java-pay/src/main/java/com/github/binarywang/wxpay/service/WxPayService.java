@@ -246,7 +246,7 @@ public interface WxPayService {
    * @param deviceInfo 设备号	device_info	非必传参数，终端设备号
    * @return 保存到本地的临时文件
    */
-  File downloadBill(String billDate, String billType, String tarType, String deviceInfo) throws WxErrorException;
+  WxPayBillResult downloadBill(String billDate, String billType, String tarType, String deviceInfo) throws WxErrorException;
 
   /**
    * <pre>
