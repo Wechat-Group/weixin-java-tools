@@ -50,8 +50,9 @@ public class WxPayServiceImplTest {
 
   @Test
   public void testDownloadBill() throws Exception {
-    File file = this.payService.downloadBill("20170101", "ALL", "GZIP", "1111111");
-    assertNotNull(file);
+    WxPayBillResult wxPayBillResult = this.payService.downloadBill("20170101", "ALL", "GZIP", "1111111");
+    //前一天没有账单记录返回null
+    assertNotNull(wxPayBillResult);
     //必填字段为空时，抛出异常
     this.payService.downloadBill("", "", "", null);
   }
