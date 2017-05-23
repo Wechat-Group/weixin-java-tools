@@ -299,7 +299,7 @@ public class WxPayServiceImpl implements WxPayService {
   }
 
   @Override
-  public File downloadBill(String billDate, String billType, String tarType, String deviceInfo) throws WxErrorException {
+  public WxPayBillResult downloadBill(String billDate, String billType, String tarType, String deviceInfo) throws WxErrorException {
     WxPayDownloadBillRequest request = new WxPayDownloadBillRequest();
     request.setBillType(billType);
     request.setBillDate(billDate);
@@ -311,11 +311,85 @@ public class WxPayServiceImpl implements WxPayService {
     String url = this.getPayBaseUrl() + "/pay/downloadbill";
     //TODO 返回的内容可能是文件流，也有可能是xml，需要区分对待
     String responseContent = this.post(url, request.toXML());
+    if (responseContent.startsWith("<")){
+      WxPayCommonResult result = WxPayBaseResult.fromXML(responseContent, WxPayCommonResult.class);
+      result.checkResult(this);
+      return null;
+    }else{
+      WxPayBillResult wxPayBillResult = billInformationDeal(responseContent);
+      return wxPayBillResult;
+    }
+  }
+  
+    private WxPayBillResult billInformationDeal(String responseContent){
+    WxPayBillResult wxPayBillResult = new WxPayBillResult();
 
-    WxPayCommonResult result = WxPayBaseResult.fromXML(responseContent, WxPayCommonResult.class);
-    result.checkResult(this);
-    //TODO 待实现，暂时无测试帐号，无法调试
-    return null;
+    String listStr = "";
+    String objStr = "";
+    if (responseContent.indexOf("总交易单数") >= 0){
+      listStr = responseContent.substring(0, responseContent.indexOf("总交易单数"));
+      objStr = responseContent.substring(responseContent.indexOf("总交易单数"));
+    }
+
+    /*
+     * 交易时间:2017-04-06 01:00:02 公众账号ID: 商户号: 子商户号:0 设备号:WEB 微信订单号: 商户订单号:2017040519091071873216 用户标识: 交易类型:NATIVE
+     * 交易状态:REFUND 付款银行:CFT 货币种类:CNY 总金额:0.00 企业红包金额:0.00 微信退款单号: 商户退款单号:20170406010000933 退款金额:0.01 企业红包退款金额:0.00
+     * 退款类型:ORIGINAL 退款状态:SUCCESS 商品名称: 商户数据包: 手续费:0.00000 费率 :0.60%
+     */
+
+    // 参考以上格式进行取值
+
+    List<WxPayBillBaseResult> wxPayBillBaseResultLst = new LinkedList<WxPayBillBaseResult>();
+    String newStr = listStr.replaceAll(",", " "); // 去空格
+    String[] tempStr = newStr.split("`"); // 数据分组
+    String[] t = tempStr[0].split(" ");// 分组标题
+    int j = tempStr.length / t.length; // 计算循环次数
+    int k = 1; // 纪录数组下标
+    for (int i = 0; i < j; i++){
+      WxPayBillBaseResult wxPayBillBaseResult = new WxPayBillBaseResult();
+
+      wxPayBillBaseResult.setTradeTime(tempStr[k]);
+      wxPayBillBaseResult.setAppId(tempStr[k + 1]);
+      wxPayBillBaseResult.setMchId(tempStr[k + 2]);
+      wxPayBillBaseResult.setSubMchId(tempStr[k + 3]);
+      wxPayBillBaseResult.setDeviceInfo(tempStr[k + 4]);
+      wxPayBillBaseResult.setTransationId(tempStr[k + 5]);
+      wxPayBillBaseResult.setOutTradeNo(tempStr[k + 6]);
+      wxPayBillBaseResult.setOpenId(tempStr[k + 7]);
+      wxPayBillBaseResult.setTradeType(tempStr[k + 8]);
+      wxPayBillBaseResult.setTradeState(tempStr[k + 9]);
+      wxPayBillBaseResult.setBankType(tempStr[k + 10]);
+      wxPayBillBaseResult.setFeeType(tempStr[k + 11]);
+      wxPayBillBaseResult.setTotalFee(tempStr[k + 12]);
+      wxPayBillBaseResult.setCouponFee(tempStr[k + 13]);
+      wxPayBillBaseResult.setRefundId(tempStr[k + 14]);
+      wxPayBillBaseResult.setOutRefundNo(tempStr[k + 15]);
+      wxPayBillBaseResult.setSettlementRefundFee(tempStr[k + 16]);
+      wxPayBillBaseResult.setCouponRefundFee(tempStr[k + 17]);
+      wxPayBillBaseResult.setRefundChannel(tempStr[k + 18]);
+      wxPayBillBaseResult.setRefundState(tempStr[k + 19]);
+      wxPayBillBaseResult.setBody(tempStr[k + 20]);
+      wxPayBillBaseResult.setAttach(tempStr[k + 21]);
+      wxPayBillBaseResult.setPoundage(tempStr[k + 22]);
+      wxPayBillBaseResult.setPoundageRate(tempStr[k + 23]);
+      wxPayBillBaseResultLst.add(wxPayBillBaseResult);
+      k += t.length;
+    }
+    /*
+     * 总交易单数,总交易额,总退款金额,总代金券或立减优惠退款金额,手续费总金额 `2,`0.02,`0.0,`0.0,`0
+     */
+
+    // 参考以上格式进行取值
+
+    String totalStr = objStr.replaceAll(",", " ");
+    String[] totalTempStr = totalStr.split("`");
+    wxPayBillResult.setTotalRecord(totalTempStr[1]);
+    wxPayBillResult.setTotalFee(totalTempStr[2]);
+    wxPayBillResult.setTotalRefundFee(totalTempStr[3]);
+    wxPayBillResult.setTotalCouponFee(totalTempStr[4]);
+    wxPayBillResult.setTotalPoundageFee(totalTempStr[5]);
+    
+    return wxPayBillResult;
   }
 
   @Override
