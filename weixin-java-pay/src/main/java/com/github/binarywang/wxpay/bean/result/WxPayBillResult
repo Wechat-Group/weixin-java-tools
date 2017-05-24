@@ -2,8 +2,13 @@ package com.github.binarywang.wxpay.bean.result;
 
 import java.util.List;
 
-public class WxPayBillResult
+public class WxPayBillResult implements Serializable
 {
+  /**
+   * 退款返回对象
+   */
+  private static final long serialVersionUID = 1L;
+  
   private List<WxPayBillBaseResult> wxPayBillBaseResultLst;
   /**总交易单数*/
   private String totalRecord;
