@@ -1,5 +1,4 @@
 package com.github.binarywang.wxpay.bean.result;
-
 import java.io.Serializable;
 
 public class WxPayBillBaseResult implements Serializable
