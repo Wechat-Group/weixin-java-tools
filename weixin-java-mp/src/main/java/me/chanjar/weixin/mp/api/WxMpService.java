@@ -409,6 +409,12 @@ public interface WxMpService {
    */
   WxMpDeviceService getDeviceService();
 
+  /**
+   * 返回摇一摇周边相关接口方法的实现类对象，以方便调用其各个接口
+   *
+   * @return WxMpShakeService
+   */
+  WxMpShakeService getShakeService();
 
   /**
    * 初始化http请求对象

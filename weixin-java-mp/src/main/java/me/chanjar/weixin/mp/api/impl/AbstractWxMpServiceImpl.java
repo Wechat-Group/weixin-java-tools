@@ -41,6 +41,7 @@ public abstract class AbstractWxMpServiceImpl<H, P> implements WxMpService, Requ
   private WxMpUserBlacklistService blackListService = new WxMpUserBlacklistServiceImpl(this);
   private WxMpTemplateMsgService templateMsgService = new WxMpTemplateMsgServiceImpl(this);
   private WxMpDeviceService deviceService = new WxMpDeviceServiceImpl(this);
+  private WxMpShakeService shakeService = new WxMpShakeServiceImpl(this);
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -393,5 +394,10 @@ public abstract class AbstractWxMpServiceImpl<H, P> implements WxMpService, Requ
   @Override
   public WxMpDeviceService getDeviceService() {
     return this.deviceService;
+  }
+
+  @Override
+  public WxMpShakeService getShakeService(){
+    return this.shakeService;
   }
 }
