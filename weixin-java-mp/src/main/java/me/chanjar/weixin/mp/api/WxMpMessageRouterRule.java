@@ -193,13 +193,16 @@ public class WxMpMessageRouterRule {
    * @return true 代表继续执行别的router，false 代表停止执行别的router
    */
   protected WxMpXmlOutMessage service(WxMpXmlMessage wxMessage,
+                                      Map<String, Object> context,
                                       WxMpService wxMpService,
                                       WxSessionManager sessionManager,
                                       WxErrorExceptionHandler exceptionHandler) {
 
-    try {
+    if (context == null) {
+      context = new HashMap<>();
+    }
 
-      Map<String, Object> context = new HashMap<>();
+    try {
       // 如果拦截器不通过
       for (WxMpMessageInterceptor interceptor : this.interceptors) {
         if (!interceptor.intercept(wxMessage, context, wxMpService, sessionManager)) {

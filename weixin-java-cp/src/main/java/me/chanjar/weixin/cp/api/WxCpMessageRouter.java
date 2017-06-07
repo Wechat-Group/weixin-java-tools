@@ -14,7 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -135,8 +137,9 @@ public class WxCpMessageRouter {
    * 处理微信消息
    *
    * @param wxMessage
+   * @param context
    */
-  public WxCpXmlOutMessage route(final WxCpXmlMessage wxMessage) {
+  public WxCpXmlOutMessage route(final WxCpXmlMessage wxMessage, final Map<String, Object> context) {
     if (isDuplicateMessage(wxMessage)) {
       // 如果是重复消息，那么就不做处理
       return null;
@@ -166,12 +169,12 @@ public class WxCpMessageRouter {
           this.executorService.submit(new Runnable() {
             @Override
             public void run() {
-              rule.service(wxMessage, WxCpMessageRouter.this.wxCpService, WxCpMessageRouter.this.sessionManager, WxCpMessageRouter.this.exceptionHandler);
+              rule.service(wxMessage, context, WxCpMessageRouter.this.wxCpService, WxCpMessageRouter.this.sessionManager, WxCpMessageRouter.this.exceptionHandler);
             }
           })
         );
       } else {
-        res = rule.service(wxMessage, this.wxCpService, this.sessionManager, this.exceptionHandler);
+        res = rule.service(wxMessage, context, this.wxCpService, this.sessionManager, this.exceptionHandler);
         // 在同步操作结束，session访问结束
         this.log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUserName());
         sessionEndAccess(wxMessage);
@@ -198,6 +201,16 @@ public class WxCpMessageRouter {
       });
     }
     return res;
+  }
+
+
+  /**
+   * 处理微信消息
+   *
+   * @param wxMessage
+   */
+  public WxCpXmlOutMessage route(final WxCpXmlMessage wxMessage) {
+    return this.route(wxMessage, new HashMap<String, Object>());
   }
 
   protected boolean isDuplicateMessage(WxCpXmlMessage wxMessage) {
