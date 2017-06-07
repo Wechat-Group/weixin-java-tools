@@ -373,7 +373,7 @@ public class WxPayServiceImpl implements WxPayService {
     HttpResponse response = request.send();
     String responseString = null;
     try {
-      responseString = new String(response.bodyText().getBytes(CharEncoding.ISO_8859_1), CharEncoding.UTF_8);
+      responseString = EntityUtils.toString(response.getEntity(), Consts.UTF_8);
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
