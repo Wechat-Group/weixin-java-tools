@@ -89,6 +89,24 @@ public class WxPayOrderNotifyResult extends WxPayBaseResult implements Serializa
   @XStreamAlias("bank_type")
   private String bankType;
 
+  /**
+   * <pre>
+   *     用户是否关注子公众账号
+   *     String(1)
+   *     Y-关注，N-未关注，仅在公众账号类型支付有效
+   * </pre>
+   */
+  @XStreamAlias("sub_is_subscribe")
+  private String subIsSubscribe;
+
+  /**
+   * <pre>
+   *     用户在子商户appid下的唯一标识
+   *     String(128)
+   * </pre>
+   */
+  @XStreamAlias("sub_openid")
+  private String subOpenId;
 
   /**
    * <pre>
@@ -291,6 +309,22 @@ public class WxPayOrderNotifyResult extends WxPayBaseResult implements Serializa
 
   public void setBankType(String bankType) {
     this.bankType = bankType;
+  }
+
+  public String getSubIsSubscribe() {
+    return subIsSubscribe;
+  }
+
+  public void setSubIsSubscribe(String subIsSubscribe) {
+    this.subIsSubscribe = subIsSubscribe;
+  }
+
+  public String getSubOpenId() {
+    return subOpenId;
+  }
+
+  public void setSubOpenId(String subOpenId) {
+    this.subOpenId = subOpenId;
   }
 
   public Integer getTotalFee() {
