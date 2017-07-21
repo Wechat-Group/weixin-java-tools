@@ -359,33 +359,34 @@ public abstract class WxPayServiceAbstractImpl implements WxPayService {
     for (int i = 0; i < j; i++) {
       WxPayBillBaseResult wxPayBillBaseResult = new WxPayBillBaseResult();
 
-      wxPayBillBaseResult.setTradeTime(tempStr[k]);
-      wxPayBillBaseResult.setAppId(tempStr[k + 1]);
-      wxPayBillBaseResult.setMchId(tempStr[k + 2]);
-      wxPayBillBaseResult.setSubMchId(tempStr[k + 3]);
-      wxPayBillBaseResult.setDeviceInfo(tempStr[k + 4]);
-      wxPayBillBaseResult.setTransationId(tempStr[k + 5]);
-      wxPayBillBaseResult.setOutTradeNo(tempStr[k + 6]);
-      wxPayBillBaseResult.setOpenId(tempStr[k + 7]);
-      wxPayBillBaseResult.setTradeType(tempStr[k + 8]);
-      wxPayBillBaseResult.setTradeState(tempStr[k + 9]);
-      wxPayBillBaseResult.setBankType(tempStr[k + 10]);
-      wxPayBillBaseResult.setFeeType(tempStr[k + 11]);
-      wxPayBillBaseResult.setTotalFee(tempStr[k + 12]);
-      wxPayBillBaseResult.setCouponFee(tempStr[k + 13]);
-      wxPayBillBaseResult.setRefundId(tempStr[k + 14]);
-      wxPayBillBaseResult.setOutRefundNo(tempStr[k + 15]);
-      wxPayBillBaseResult.setSettlementRefundFee(tempStr[k + 16]);
-      wxPayBillBaseResult.setCouponRefundFee(tempStr[k + 17]);
-      wxPayBillBaseResult.setRefundChannel(tempStr[k + 18]);
-      wxPayBillBaseResult.setRefundState(tempStr[k + 19]);
-      wxPayBillBaseResult.setBody(tempStr[k + 20]);
-      wxPayBillBaseResult.setAttach(tempStr[k + 21]);
-      wxPayBillBaseResult.setPoundage(tempStr[k + 22]);
-      wxPayBillBaseResult.setPoundageRate(tempStr[k + 23]);
+      wxPayBillBaseResult.setTradeTime(tempStr[k].trim());
+      wxPayBillBaseResult.setAppId(tempStr[k + 1].trim());
+      wxPayBillBaseResult.setMchId(tempStr[k + 2].trim());
+      wxPayBillBaseResult.setSubMchId(tempStr[k + 3].trim());
+      wxPayBillBaseResult.setDeviceInfo(tempStr[k + 4].trim());
+      wxPayBillBaseResult.setTransationId(tempStr[k + 5].trim());
+      wxPayBillBaseResult.setOutTradeNo(tempStr[k + 6].trim());
+      wxPayBillBaseResult.setOpenId(tempStr[k + 7].trim());
+      wxPayBillBaseResult.setTradeType(tempStr[k + 8].trim());
+      wxPayBillBaseResult.setTradeState(tempStr[k + 9].trim());
+      wxPayBillBaseResult.setBankType(tempStr[k + 10].trim());
+      wxPayBillBaseResult.setFeeType(tempStr[k + 11].trim());
+      wxPayBillBaseResult.setTotalFee(tempStr[k + 12].trim());
+      wxPayBillBaseResult.setCouponFee(tempStr[k + 13].trim());
+      wxPayBillBaseResult.setRefundId(tempStr[k + 14].trim());
+      wxPayBillBaseResult.setOutRefundNo(tempStr[k + 15].trim());
+      wxPayBillBaseResult.setSettlementRefundFee(tempStr[k + 16].trim());
+      wxPayBillBaseResult.setCouponRefundFee(tempStr[k + 17].trim());
+      wxPayBillBaseResult.setRefundChannel(tempStr[k + 18].trim());
+      wxPayBillBaseResult.setRefundState(tempStr[k + 19].trim());
+      wxPayBillBaseResult.setBody(tempStr[k + 20].trim());
+      wxPayBillBaseResult.setAttach(tempStr[k + 21].trim());
+      wxPayBillBaseResult.setPoundage(tempStr[k + 22].trim());
+      wxPayBillBaseResult.setPoundageRate(tempStr[k + 23].trim());
       wxPayBillBaseResultLst.add(wxPayBillBaseResult);
       k += t.length;
     }
+    wxPayBillResult.setWxPayBillBaseResultLst(wxPayBillBaseResultLst);
     /*
      * 总交易单数,总交易额,总退款金额,总代金券或立减优惠退款金额,手续费总金额 `2,`0.02,`0.0,`0.0,`0
      */
