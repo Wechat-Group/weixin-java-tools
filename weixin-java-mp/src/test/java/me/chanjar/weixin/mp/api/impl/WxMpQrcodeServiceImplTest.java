@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.*;
 import org.testng.annotations.*;
 
@@ -26,9 +27,24 @@ public class WxMpQrcodeServiceImplTest {
     return new Object[][]{{-1}, {0}, {1}, {200000}};
   }
 
+  @DataProvider
+  public Object[][] sceneStrs() {
+    return new Object[][]{{null}, {""}, {"test"}, {RandomStringUtils.randomAlphanumeric(100)}};
+  }
+
   @Test(dataProvider = "sceneIds")
   public void testQrCodeCreateTmpTicket(int sceneId) throws WxErrorException {
     WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateTmpTicket(sceneId, null);
+    Assert.assertNotNull(ticket.getUrl());
+    Assert.assertNotNull(ticket.getTicket());
+    Assert.assertTrue(ticket.getExpire_seconds() != -1);
+    System.out.println(ticket);
+  }
+
+
+  @Test(dataProvider = "sceneStrs")
+  public void testQrCodeCreateTmpTicketWithSceneStr(String sceneStr) throws WxErrorException {
+    WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateTmpTicket(sceneStr, null);
     Assert.assertNotNull(ticket.getUrl());
     Assert.assertNotNull(ticket.getTicket());
     Assert.assertTrue(ticket.getExpire_seconds() != -1);
