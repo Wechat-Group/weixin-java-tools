@@ -7,6 +7,7 @@ import me.chanjar.weixin.mp.api.WxMpQrcodeService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import me.chanjar.weixin.mp.util.http.QrCodeRequestExecutor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -53,6 +54,38 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
     String responseContent = this.wxMpService.post(url, json.toString());
     return WxMpQrCodeTicket.fromJson(responseContent);
   }
+
+
+  @Override
+  public WxMpQrCodeTicket qrCodeCreateTmpTicket(String sceneStr, Integer expireSeconds) throws WxErrorException {
+    if (StringUtils.isBlank(sceneStr)) {
+      throw new WxErrorException(WxError.newBuilder().setErrorCode(-1).setErrorMsg("临时二维码场景值不能为空！").build());
+    }
+
+    //expireSeconds 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
+    if (expireSeconds != null && expireSeconds > 2592000) {
+      throw new WxErrorException(WxError.newBuilder().setErrorCode(-1)
+        .setErrorMsg("临时二维码有效时间最大不能超过2592000（即30天）！").build());
+    }
+
+    if (expireSeconds == null) {
+      expireSeconds = 30;
+    }
+
+    String url = API_URL_PREFIX + "/create";
+    JsonObject json = new JsonObject();
+    json.addProperty("action_name", "QR_STR_SCENE");
+    json.addProperty("expire_seconds", expireSeconds);
+
+    JsonObject actionInfo = new JsonObject();
+    JsonObject scene = new JsonObject();
+    scene.addProperty("scene_str", sceneStr);
+    actionInfo.add("scene", scene);
+    json.add("action_info", actionInfo);
+    String responseContent = this.wxMpService.post(url, json.toString());
+    return WxMpQrCodeTicket.fromJson(responseContent);
+  }
+
 
   @Override
   public WxMpQrCodeTicket qrCodeCreateLastTicket(int sceneId) throws WxErrorException {
