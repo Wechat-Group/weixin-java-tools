@@ -2,8 +2,8 @@ package cn.binarywang.wx.miniapp.demo;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
-import cn.binarywang.wx.miniapp.bean.WxMaMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
+import cn.binarywang.wx.miniapp.bean.WxMaMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
@@ -69,7 +69,7 @@ public class WxMaDemoServer {
       }
     }
   };
-  
+
   private static final WxMaMessageHandler qrcodeHandler = new WxMaMessageHandler() {
     @Override
     public void handle(WxMaMessage wxMessage, Map<String, Object> context,

@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.util.http;
 
-import cn.binarywang.wx.miniapp.bean.WxMaQrcode;
+import cn.binarywang.wx.miniapp.bean.WxMaQrcodeWrapper;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
@@ -25,7 +25,7 @@ import java.util.UUID;
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class QrCodeRequestExecutor implements RequestExecutor<File, WxMaQrcode> {
+public class QrCodeRequestExecutor implements RequestExecutor<File, WxMaQrcodeWrapper> {
   protected RequestHttp<CloseableHttpClient, HttpHost> requestHttp;
 
   public QrCodeRequestExecutor(RequestHttp requestHttp) {
@@ -33,7 +33,7 @@ public class QrCodeRequestExecutor implements RequestExecutor<File, WxMaQrcode> 
   }
 
   @Override
-  public File execute(String uri, WxMaQrcode ticket) throws WxErrorException, IOException {
+  public File execute(String uri, WxMaQrcodeWrapper ticket) throws WxErrorException, IOException {
     HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       httpPost
