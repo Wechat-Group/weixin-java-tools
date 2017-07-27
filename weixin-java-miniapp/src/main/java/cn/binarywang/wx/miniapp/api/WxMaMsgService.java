@@ -31,5 +31,5 @@ public interface WxMaMsgService {
    * 接口url格式：https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=ACCESS_TOKEN
    * </pre>
    */
-  void sendTemplateMsg(WxMaTemplateMessage templateMessage) throws WxErrorException;
+  String sendTemplateMsg(WxMaTemplateMessage templateMessage) throws WxErrorException;
 }

@@ -1,6 +1,5 @@
 package cn.binarywang.wx.miniapp.bean;
 
-import cn.binarywang.wx.miniapp.bean.WxMaMessage;
 import me.chanjar.weixin.common.api.WxConsts;
 import org.testng.annotations.Test;
 

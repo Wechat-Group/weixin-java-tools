@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class WxMaQrcode implements Serializable {
+public class WxMaQrcode extends WxMaQrcodeWrapper implements Serializable {
   private static final long serialVersionUID = 5777119669111011584L;
   private String path;
   private int width = 430;
