@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Created by Element on 2017/7/27.
  */
-public class WxMaWxcodeLimit extends WxMaQrcodeWrapper implements Serializable{
+public class WxMaWxcodeLimit extends WxMaQrcodeWrapper implements Serializable {
   private static final long serialVersionUID = 4782193774524960401L;
   private String scene;
   private String page;
@@ -20,7 +20,11 @@ public class WxMaWxcodeLimit extends WxMaQrcodeWrapper implements Serializable{
   private boolean autoColor = true;
 
   @SerializedName("line_color")
-  private WxMaQrcodeService.LineColor lineColor = new WxMaQrcodeService.LineColor("0","0","0");
+  private WxMaQrcodeService.LineColor lineColor = new WxMaQrcodeService.LineColor("0", "0", "0");
+
+  public static WxMaWxcodeLimit fromJson(String json) {
+    return WxMaGsonBuilder.create().fromJson(json, WxMaWxcodeLimit.class);
+  }
 
   public String getPage() {
     return page;
@@ -28,10 +32,6 @@ public class WxMaWxcodeLimit extends WxMaQrcodeWrapper implements Serializable{
 
   public void setPage(String page) {
     this.page = page;
-  }
-
-  public static WxMaWxcodeLimit fromJson(String json) {
-    return WxMaGsonBuilder.create().fromJson(json, WxMaWxcodeLimit.class);
   }
 
   public String getScene() {

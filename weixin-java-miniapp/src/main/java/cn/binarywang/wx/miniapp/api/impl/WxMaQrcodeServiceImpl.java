@@ -29,7 +29,7 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
 
   @Override
   public File createQrcode(String path) throws WxErrorException {
-    return this.createQrcode(path,430);
+    return this.createQrcode(path, 430);
   }
 
   @Override
@@ -46,12 +46,12 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
 
   @Override
   public File createWxCode(String path, int width) throws WxErrorException {
-    return this.createWxCode(path,width,true,null);
+    return this.createWxCode(path, width, true, null);
   }
 
   @Override
   public File createWxCode(String path) throws WxErrorException {
-    return this.createWxCode(path,430,true,null);
+    return this.createWxCode(path, 430, true, null);
   }
 
   @Override
@@ -69,7 +69,7 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
 
   @Override
   public File createWxCodeLimit(String scene, String page) throws WxErrorException {
-    return this.createWxCodeLimit(scene,page,430,true,null);
+    return this.createWxCodeLimit(scene, page, 430, true, null);
   }
 
 }

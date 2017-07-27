@@ -10,7 +10,7 @@ public final class ImageBuilder extends BaseBuilder<ImageBuilder> {
   private String mediaId;
 
   public ImageBuilder() {
-    this.msgType =  WxMaConstants.KefuMsgType.IMAGE;
+    this.msgType = WxMaConstants.KefuMsgType.IMAGE;
   }
 
   public ImageBuilder mediaId(String media_id) {

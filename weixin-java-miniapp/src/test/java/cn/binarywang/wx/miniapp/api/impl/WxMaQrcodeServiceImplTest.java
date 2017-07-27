@@ -24,14 +24,14 @@ public class WxMaQrcodeServiceImplTest {
   }
 
   @Test
-  public void testCreateWxCode() throws Exception{
+  public void testCreateWxCode() throws Exception {
     final File wxCode = this.wxService.getQrcodeService().createWxCode("111", 122);
     System.out.println(wxCode);
   }
 
   @Test
-  public void testCreateWxCodeLimit() throws Exception{
-    final File wxCode = this.wxService.getQrcodeService().createWxCodeLimit("111",null);
+  public void testCreateWxCodeLimit() throws Exception {
+    final File wxCode = this.wxService.getQrcodeService().createWxCodeLimit("111", null);
     System.out.println(wxCode);
   }
 

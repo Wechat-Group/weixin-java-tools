@@ -19,7 +19,7 @@ public class WxMaWxcode extends WxMaQrcodeWrapper implements Serializable {
   private boolean autoColor = true;
 
   @SerializedName("line_color")
-  private WxMaQrcodeService.LineColor lineColor = new WxMaQrcodeService.LineColor("0","0","0");
+  private WxMaQrcodeService.LineColor lineColor = new WxMaQrcodeService.LineColor("0", "0", "0");
 
   public static WxMaWxcode fromJson(String json) {
     return WxMaGsonBuilder.create().fromJson(json, WxMaWxcode.class);

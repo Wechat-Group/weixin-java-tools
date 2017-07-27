@@ -34,7 +34,6 @@ public class FileUtils {
       }
 
       fos.flush();
-      fos.close();
       return tmpFile;
     }
   }
