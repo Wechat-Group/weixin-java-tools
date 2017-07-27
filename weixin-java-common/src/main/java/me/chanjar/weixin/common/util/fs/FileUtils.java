@@ -24,7 +24,7 @@ public class FileUtils {
       tmpFile = File.createTempFile(name, '.' + ext, tmpDirFile);
     }
 
-    tmpFile.deleteOnExit();
+//    tmpFile.deleteOnExit();
 
     try (FileOutputStream fos = new FileOutputStream(tmpFile)) {
       int read = 0;
@@ -34,6 +34,7 @@ public class FileUtils {
       }
 
       fos.flush();
+      fos.close();
       return tmpFile;
     }
   }

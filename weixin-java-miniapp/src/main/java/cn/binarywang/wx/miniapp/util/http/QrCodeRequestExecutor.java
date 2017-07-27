@@ -1,5 +1,7 @@
 package cn.binarywang.wx.miniapp.util.http;
 
+import cn.binarywang.wx.miniapp.bean.WxMaQrcode;
+import cn.binarywang.wx.miniapp.bean.WxMaQrcodeWrapper;
 import cn.binarywang.wx.miniapp.bean.WxMaQrcodeWrapper;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
