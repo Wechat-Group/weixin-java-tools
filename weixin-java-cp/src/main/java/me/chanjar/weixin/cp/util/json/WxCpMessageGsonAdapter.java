@@ -43,6 +43,14 @@ public class WxCpMessageGsonAdapter implements JsonSerializer<WxCpMessage> {
       messageJson.add("text", text);
     }
 
+    if (WxConsts.CUSTOM_MSG_TEXTCARD.equals(message.getMsgType())) {
+      JsonObject text = new JsonObject();
+      text.addProperty("title", message.getTitle());
+      text.addProperty("description", message.getDescription());
+      text.addProperty("url", message.getUrl());
+      messageJson.add("textcard", text);
+    }
+
     if (WxConsts.CUSTOM_MSG_IMAGE.equals(message.getMsgType())) {
       JsonObject image = new JsonObject();
       image.addProperty("media_id", message.getMediaId());

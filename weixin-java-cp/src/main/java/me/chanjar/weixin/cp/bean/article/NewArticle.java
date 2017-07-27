@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.bean.article;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  *  Created by BinaryWang on 2017/3/27.
@@ -7,7 +9,8 @@ package me.chanjar.weixin.cp.bean.article;
  *
  * @author Binary Wang
  */
-public class NewArticle {
+public class NewArticle implements Serializable {
+  private static final long serialVersionUID = 4087852055781140659L;
 
   private String title;
   private String description;

@@ -25,12 +25,12 @@ public class WxPayOrderNotifyResult extends WxPayBaseResult implements Serializa
 
   /**
    * <pre>
-   * 设备号
-   * device_info
-   * 否
-   * String(32)
-   * 013467007045764
-   * 微信支付分配的终端设备号，
+   * 字段名：设备号
+   * 变量名：device_info
+   * 是否必填：否
+   * 类型：String(32)
+   * 示例值：013467007045764
+   * 描述：微信支付分配的终端设备号，
    * </pre>
    */
   @XStreamAlias("device_info")
@@ -38,12 +38,12 @@ public class WxPayOrderNotifyResult extends WxPayBaseResult implements Serializa
 
   /**
    * <pre>
-   * 用户标识
-   * openid
-   * 是
-   * String(128)
-   * wxd930ea5d5a258f4f
-   * 用户在商户appid下的唯一标识
+   * 字段名：用户标识
+   * 变量名：openid
+   * 是否必填：是
+   * 类型：String(128)
+   * 示例值：wxd930ea5d5a258f4f
+   * 描述：用户在商户appid下的唯一标识
    * </pre>
    */
   @XStreamAlias("openid")
@@ -51,25 +51,52 @@ public class WxPayOrderNotifyResult extends WxPayBaseResult implements Serializa
 
   /**
    * <pre>
-   * 是否关注公众账号
-   * is_subscribe
-   * 否
-   * String(1)
-   * Y
-   * 用户是否关注公众账号，Y-关注，N-未关注，仅在公众账号类型支付有效
+   * 字段名：是否关注公众账号
+   * 变量名：is_subscribe
+   * 是否必填：否
+   * 类型：String(1)
+   * 示例值：Y
+   * 描述：用户是否关注公众账号，Y-关注，N-未关注，仅在公众账号类型支付有效
    * </pre>
    */
   @XStreamAlias("is_subscribe")
   private String isSubscribe;
 
+  /**
+   * <pre>
+   * 字段名：用户子标识
+   * 变量名：sub_openid
+   * 是否必填：是
+   * 类型：String(128)
+   * 示例值：wxd930ea5d5a258f4f
+   * 描述：用户在子商户appid下的唯一标识
+   * </pre>
+   */
+  @XStreamAlias("sub_openid")
+  private String subOpenid;
 
   /**
    * <pre>
-   * 交易类型
-   * trade_type
-   * 是
-   * String(16)
-   * JSAPI	JSAPI、NATIVE、APP
+   * 字段名：是否关注子公众账号
+   * 变量名：sub_is_subscribe
+   * 是否必填：否
+   * 类型：String(1)
+   * 示例值：Y
+   * 描述：用户是否关注子公众账号，Y-关注，N-未关注，仅在公众账号类型支付有效
+   * </pre>
+   */
+  @XStreamAlias("sub_is_subscribe")
+  private String subIsSubscribe;
+
+
+  /**
+   * <pre>
+   * 字段名：交易类型
+   * 变量名：trade_type
+   * 是否必填：是
+   * 类型：String(16)
+   * 示例值：JSAPI
+   * JSA描述：PI、NATIVE、APP
    * </pre>
    */
   @XStreamAlias("trade_type")
@@ -78,86 +105,85 @@ public class WxPayOrderNotifyResult extends WxPayBaseResult implements Serializa
 
   /**
    * <pre>
-   * 付款银行
-   * bank_type
-   * 是
-   * String(16)
-   * CMC
-   * 银行类型，采用字符串类型的银行标识，银行类型见银行列表
+   * 字段名：付款银行
+   * 变量名：bank_type
+   * 是否必填：是
+   * 类型：String(16)
+   * 示例值：CMC
+   * 描述：银行类型，采用字符串类型的银行标识，银行类型见银行列表
    * </pre>
    */
   @XStreamAlias("bank_type")
   private String bankType;
 
-
   /**
    * <pre>
-   * 订单金额
-   * total_fee
-   * 是
-   * Int
-   * 100
-   * 订单总金额，单位为分
+   * 字段名：订单金额
+   * 变量名：total_fee
+   * 是否必填：是
+   * 类型：Int
+   * 示例值：100
+   * 描述：订单总金额，单位为分
    * </pre>
    */
   @XStreamAlias("total_fee")
   private Integer totalFee;
   /**
    * <pre>
-   * 应结订单金额
-   * settlement_total_fee
-   * 否
-   * Int
-   * 100
-   * 应结订单金额=订单金额-非充值代金券金额，应结订单金额<=订单金额。
+   * 字段名：应结订单金额
+   * 变量名：settlement_total_fee
+   * 是否必填：否
+   * 类型：Int
+   * 示例值：100
+   * 描述：应结订单金额=订单金额-非充值代金券金额，应结订单金额<=订单金额。
    * </pre>
    */
   @XStreamAlias("settlement_total_fee")
   private Integer settlementTotalFee;
   /**
    * <pre>
-   * 货币种类
-   * fee_type
-   * 否
-   * String(8)
-   * CNY
-   * 货币类型，符合ISO4217标准的三位字母代码，默认人民币：CNY，其他值列表详见货币类型
+   * 字段名：货币种类
+   * 变量名：fee_type
+   * 是否必填：否
+   * 类型：String(8)
+   * 示例值：CNY
+   * 描述：货币类型，符合ISO4217标准的三位字母代码，默认人民币：CNY，其他值列表详见货币类型
    * </pre>
    */
   @XStreamAlias("fee_type")
   private String feeType;
   /**
    * <pre>
-   * 现金支付金额
-   * cash_fee
-   * 是
-   * Int
-   * 100
-   * 现金支付金额订单现金支付金额，详见支付金额
+   * 字段名：现金支付金额
+   * 变量名：cash_fee
+   * 是否必填：是
+   * 类型：Int
+   * 示例值：100
+   * 描述：现金支付金额订单现金支付金额，详见支付金额
    * </pre>
    */
   @XStreamAlias("cash_fee")
   private Integer cashFee;
   /**
    * <pre>
-   * 现金支付货币类型
-   * cash_fee_type
-   * 否
-   * String(16)
-   * CNY
-   * 货币类型，符合ISO4217标准的三位字母代码，默认人民币：CNY，其他值列表详见货币类型
+   * 字段名：现金支付货币类型
+   * 变量名：cash_fee_type
+   * 是否必填：否
+   * 类型：String(16)
+   * 示例值：CNY
+   * 描述：货币类型，符合ISO4217标准的三位字母代码，默认人民币：CNY，其他值列表详见货币类型
    * </pre>
    */
   @XStreamAlias("cash_fee_type")
   private String cashFeeType;
   /**
    * <pre>
-   * 总代金券金额
-   * coupon_fee
-   * 否
-   * Int
-   * 10
-   * 代金券金额<=订单金额，订单金额-代金券金额=现金支付金额，详见支付金额
+   * 字段名：总代金券金额
+   * 变量名：coupon_fee
+   * 是否必填：否
+   * 类型：Int
+   * 示例值：10
+   * 描述：代金券金额<=订单金额，订单金额-代金券金额=现金支付金额，详见支付金额
    * </pre>
    */
   @XStreamAlias("coupon_fee")
@@ -165,12 +191,12 @@ public class WxPayOrderNotifyResult extends WxPayBaseResult implements Serializa
 
   /**
    * <pre>
-   * 代金券使用数量
-   * coupon_count
-   * 否
-   * Int
-   * 1
-   * 代金券使用数量
+   * 字段名：代金券使用数量
+   * 变量名：coupon_count
+   * 是否必填：否
+   * 类型：Int
+   * 示例值：1
+   * 描述：代金券使用数量
    * </pre>
    */
   @XStreamAlias("coupon_count")
@@ -180,12 +206,12 @@ public class WxPayOrderNotifyResult extends WxPayBaseResult implements Serializa
 
   /**
    * <pre>
-   * 微信支付订单号
-   * transaction_id
-   * 是
-   * String(32)
-   * 1217752501201407033233368018
-   * 微信支付订单号
+   * 字段名：微信支付订单号
+   * 变量名：transaction_id
+   * 是否必填：是
+   * 类型：String(32)
+   * 示例值：1217752501201407033233368018
+   * 描述：微信支付订单号
    * </pre>
    */
   @XStreamAlias("transaction_id")
@@ -193,36 +219,36 @@ public class WxPayOrderNotifyResult extends WxPayBaseResult implements Serializa
 
   /**
    * <pre>
-   * 商户订单号
-   * out_trade_no
-   * 是
-   * String(32)
-   * 1212321211201407033568112322
-   * 商户系统的订单号，与请求一致。
+   * 字段名：商户订单号
+   * 变量名：out_trade_no
+   * 是否必填：是
+   * 类型：String(32)
+   * 示例值：1212321211201407033568112322
+   * 描述：商户系统的订单号，与请求一致。
    * </pre>
    */
   @XStreamAlias("out_trade_no")
   private String outTradeNo;
   /**
    * <pre>
-   * 商家数据包
-   * attach
-   * 否
-   * String(128)
-   * 123456
-   * 商家数据包，原样返回
+   * 字段名：商家数据包
+   * 变量名：attach
+   * 是否必填：否
+   * 类型：String(128)
+   * 示例值：123456
+   * 描述：商家数据包，原样返回
    * </pre>
    */
   @XStreamAlias("attach")
   private String attach;
   /**
    * <pre>
-   * 支付完成时间
-   * time_end
-   * 是
-   * String(14)
-   * 20141030133525
-   * 支付完成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
+   * 字段名：支付完成时间
+   * 变量名：time_end
+   * 是否必填：是
+   * 类型：String(14)
+   * 示例值：20141030133525
+   * 描述：支付完成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
    * </pre>
    */
   @XStreamAlias("time_end")
@@ -371,6 +397,22 @@ public class WxPayOrderNotifyResult extends WxPayBaseResult implements Serializa
 
   public void setTimeEnd(String timeEnd) {
     this.timeEnd = timeEnd;
+  }
+
+  public String getSubOpenid() {
+    return this.subOpenid;
+  }
+
+  public void setSubOpenid(String subOpenid) {
+    this.subOpenid = subOpenid;
+  }
+
+  public String getSubIsSubscribe() {
+    return this.subIsSubscribe;
+  }
+
+  public void setSubIsSubscribe(String subIsSubscribe) {
+    this.subIsSubscribe = subIsSubscribe;
   }
 
   @Override

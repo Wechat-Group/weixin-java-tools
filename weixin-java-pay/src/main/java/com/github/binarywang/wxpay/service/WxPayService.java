@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.service;
 
+import com.github.binarywang.wxpay.bean.coupon.*;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
@@ -112,7 +113,7 @@ public interface WxPayService {
 
   /**
    * 读取支付结果通知
-   * 详见http://com.github.binarywang.wechat.pay.bean.pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_7
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_7
    */
   WxPayOrderNotifyResult getOrderNotifyResult(String xmlData) throws WxPayException;
 
@@ -339,4 +340,32 @@ public interface WxPayService {
    * </pre>
    */
   String getSandboxSignKey() throws WxPayException;
+
+  /**
+   * <pre>
+   * 发放代金券
+   * 接口请求链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/send_coupon
+   * 是否需要证书：请求需要双向证书。
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_3
+   * </pre>
+   */
+  WxPayCouponSendResult sendCoupon(WxPayCouponSendRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 查询代金券批次
+   * 接口请求链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/query_coupon_stock
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_4
+   * </pre>
+   */
+  WxPayCouponStockQueryResult queryCouponStock(WxPayCouponStockQueryRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 查询代金券信息
+   * 接口请求链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/querycouponsinfo
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_5
+   * </pre>
+   */
+  WxPayCouponInfoQueryResult queryCouponInfo(WxPayCouponInfoQueryRequest request) throws WxPayException;
 }

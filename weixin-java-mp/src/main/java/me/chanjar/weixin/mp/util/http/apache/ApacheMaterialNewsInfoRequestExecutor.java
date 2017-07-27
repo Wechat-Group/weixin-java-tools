@@ -14,6 +14,8 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,6 +25,8 @@ import java.util.Map;
  * Created by ecoolper on 2017/5/5.
  */
 public class ApacheMaterialNewsInfoRequestExecutor extends MaterialNewsInfoRequestExecutor<CloseableHttpClient, HttpHost> {
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
   public ApacheMaterialNewsInfoRequestExecutor(RequestHttp requestHttp) {
     super(requestHttp);
   }
@@ -40,6 +44,7 @@ public class ApacheMaterialNewsInfoRequestExecutor extends MaterialNewsInfoReque
     httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
     try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
       String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
+      this.logger.debug("响应原始数据：{}", responseContent);
       WxError error = WxError.fromJson(responseContent);
       if (error.getErrorCode() != 0) {
         throw new WxErrorException(error);

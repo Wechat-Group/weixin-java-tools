@@ -12,6 +12,8 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
 import me.chanjar.weixin.mp.util.http.MaterialNewsInfoRequestExecutor;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -19,6 +21,7 @@ import java.io.IOException;
  * Created by ecoolper on 2017/5/5.
  */
 public class JoddMaterialNewsInfoRequestExecutor extends MaterialNewsInfoRequestExecutor<HttpConnectionProvider, ProxyInfo> {
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
   public JoddMaterialNewsInfoRequestExecutor(RequestHttp requestHttp) {
     super(requestHttp);
   }
@@ -36,6 +39,7 @@ public class JoddMaterialNewsInfoRequestExecutor extends MaterialNewsInfoRequest
     response.charset(StringPool.UTF_8);
 
     String responseContent = response.bodyText();
+    this.logger.debug("响应原始数据：{}", responseContent);
     WxError error = WxError.fromJson(responseContent);
     if (error.getErrorCode() != 0) {
       throw new WxErrorException(error);

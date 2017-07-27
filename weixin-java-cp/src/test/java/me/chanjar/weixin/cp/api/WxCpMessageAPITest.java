@@ -57,6 +57,5 @@ public class WxCpMessageAPITest {
     System.out.println(messageSendResult.getInvalidPartyList());
     System.out.println(messageSendResult.getInvalidUserList());
     System.out.println(messageSendResult.getInvalidTagList());
-
   }
 }

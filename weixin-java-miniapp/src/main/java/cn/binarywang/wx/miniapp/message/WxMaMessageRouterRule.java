@@ -189,8 +189,6 @@ public class WxMaMessageRouterRule {
 
   /**
    * 处理微信推送过来的消息
-   *
-   * @return true 代表继续执行别的router，false 代表停止执行别的router
    */
   protected void service(WxMaMessage wxMessage,
                          Map<String, Object> context,

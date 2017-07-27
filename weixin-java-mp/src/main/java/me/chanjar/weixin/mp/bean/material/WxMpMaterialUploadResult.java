@@ -1,17 +1,16 @@
 package me.chanjar.weixin.mp.bean.material;
 
+import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
 
 public class WxMpMaterialUploadResult implements Serializable {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -128818731449449537L;
   private String mediaId;
   private String url;
+  private Integer errCode;
+  private String errMsg;
 
   public static WxMpMaterialUploadResult fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(json, WxMpMaterialUploadResult.class);
@@ -33,9 +32,25 @@ public class WxMpMaterialUploadResult implements Serializable {
     this.url = url;
   }
 
+  public Integer getErrCode() {
+    return this.errCode;
+  }
+
+  public void setErrCode(Integer errCode) {
+    this.errCode = errCode;
+  }
+
+  public String getErrMsg() {
+    return this.errMsg;
+  }
+
+  public void setErrMsg(String errMsg) {
+    this.errMsg = errMsg;
+  }
+
   @Override
   public String toString() {
-    return "WxMpMaterialUploadResult [media_id=" + this.mediaId + ", url=" + this.url + "]";
+    return ToStringUtils.toSimpleString(this);
   }
 
 }

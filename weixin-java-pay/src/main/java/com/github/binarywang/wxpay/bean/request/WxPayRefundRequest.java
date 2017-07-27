@@ -142,17 +142,26 @@ public class WxPayRefundRequest extends WxPayBaseRequest {
    */
   @XStreamAlias("refund_account")
   private String refundAccount;
-
-  public WxPayRefundRequest() {
-  }
+  /**
+   * <pre>
+   * 退款原因
+   * refund_account
+   * 否
+   * String(80)
+   * 商品已售完
+   * 若商户传入，会在下发给用户的退款消息中体现退款原因
+   * </pre>
+   */
+  @XStreamAlias("refund_desc")
+  private String refundDesc;
 
   private WxPayRefundRequest(Builder builder) {
     setDeviceInfo(builder.deviceInfo);
     setAppid(builder.appid);
     setTransactionId(builder.transactionId);
     setMchId(builder.mchId);
-    setOutTradeNo(builder.outTradeNo);
     setSubAppId(builder.subAppId);
+    setOutTradeNo(builder.outTradeNo);
     setSubMchId(builder.subMchId);
     setOutRefundNo(builder.outRefundNo);
     setNonceStr(builder.nonceStr);
@@ -162,19 +171,11 @@ public class WxPayRefundRequest extends WxPayBaseRequest {
     setRefundFeeType(builder.refundFeeType);
     setOpUserId(builder.opUserId);
     setRefundAccount(builder.refundAccount);
+    setRefundDesc(builder.refundDesc);
   }
 
   public static Builder newBuilder() {
     return new Builder();
-  }
-
-  @Override
-  public void checkAndSign(WxPayConfig config) throws WxPayException {
-    if (StringUtils.isBlank(this.getOpUserId())) {
-      this.setOpUserId(config.getMchId());
-    }
-
-    super.checkAndSign(config);
   }
 
   public String getDeviceInfo() {
@@ -249,6 +250,26 @@ public class WxPayRefundRequest extends WxPayBaseRequest {
     this.refundAccount = refundAccount;
   }
 
+  public String getRefundDesc() {
+    return this.refundDesc;
+  }
+
+  public void setRefundDesc(String refundDesc) {
+    this.refundDesc = refundDesc;
+  }
+
+  public WxPayRefundRequest() {
+  }
+
+  @Override
+  public void checkAndSign(WxPayConfig config) throws WxPayException {
+    if (StringUtils.isBlank(this.getOpUserId())) {
+      this.setOpUserId(config.getMchId());
+    }
+
+    super.checkAndSign(config);
+  }
+
   @Override
   protected void checkConstraints() {
     if (StringUtils.isNotBlank(this.getRefundAccount())) {
@@ -268,8 +289,8 @@ public class WxPayRefundRequest extends WxPayBaseRequest {
     private String appid;
     private String transactionId;
     private String mchId;
-    private String outTradeNo;
     private String subAppId;
+    private String outTradeNo;
     private String subMchId;
     private String outRefundNo;
     private String nonceStr;
@@ -279,6 +300,7 @@ public class WxPayRefundRequest extends WxPayBaseRequest {
     private String refundFeeType;
     private String opUserId;
     private String refundAccount;
+    private String refundDesc;
 
     private Builder() {
     }
@@ -303,13 +325,13 @@ public class WxPayRefundRequest extends WxPayBaseRequest {
       return this;
     }
 
-    public Builder outTradeNo(String outTradeNo) {
-      this.outTradeNo = outTradeNo;
+    public Builder subAppId(String subAppId) {
+      this.subAppId = subAppId;
       return this;
     }
 
-    public Builder subAppId(String subAppId) {
-      this.subAppId = subAppId;
+    public Builder outTradeNo(String outTradeNo) {
+      this.outTradeNo = outTradeNo;
       return this;
     }
 
@@ -355,6 +377,11 @@ public class WxPayRefundRequest extends WxPayBaseRequest {
 
     public Builder refundAccount(String refundAccount) {
       this.refundAccount = refundAccount;
+      return this;
+    }
+
+    public Builder refundDesc(String refundDesc) {
+      this.refundDesc = refundDesc;
       return this;
     }
 

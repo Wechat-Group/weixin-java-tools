@@ -13,21 +13,23 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Random;
 
 /**
+ * <pre>
  * 对公众平台发送给公众账号的消息加解密示例代码.
- *
- * @copyright Copyright (c) 1998-2014 Tencent Inc.
+ * Copyright (c) 1998-2014 Tencent Inc.
  * 针对org.apache.commons.codec.binary.Base64，
  * 需要导入架包commons-codec-1.9（或commons-codec-1.8等其他版本）
  * 官方下载地址：http://commons.apache.org/proper/commons-codec/download_codec.cgi
+ * </pre>
  */
 public class WxCryptUtil {
 
   private static final Base64 base64 = new Base64();
-  private static final Charset CHARSET = Charset.forName("utf-8");
+  private static final Charset CHARSET = StandardCharsets.UTF_8;
 
   private static final ThreadLocal<DocumentBuilder> builderLocal = new ThreadLocal<DocumentBuilder>() {
     @Override
@@ -76,8 +78,6 @@ public class WxCryptUtil {
 
   /**
    * 将一个数字转换成生成4个字节的网络字节序bytes数组
-   *
-   * @param number
    */
   private static byte[] number2BytesInNetworkOrder(int number) {
     byte[] orderBytes = new byte[4];
@@ -90,8 +90,6 @@ public class WxCryptUtil {
 
   /**
    * 4个字节的网络字节序bytes数组还原成一个数字
-   *
-   * @param bytesInNetworkOrder
    */
   private static int bytesNetworkOrder2Number(byte[] bytesInNetworkOrder) {
     int sourceNumber = 0;

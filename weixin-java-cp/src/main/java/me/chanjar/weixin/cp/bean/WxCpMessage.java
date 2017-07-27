@@ -30,6 +30,7 @@ public class WxCpMessage implements Serializable {
   private String musicUrl;
   private String hqMusicUrl;
   private String safe;
+  private String url;
   private List<NewArticle> articles = new ArrayList<>();
   private List<MpnewsArticle> mpnewsArticles = new ArrayList<>();
 
@@ -38,6 +39,13 @@ public class WxCpMessage implements Serializable {
    */
   public static TextBuilder TEXT() {
     return new TextBuilder();
+  }
+
+  /**
+   * 获得文本卡片消息builder
+   */
+  public static TextCardBuilder TEXTCARD() {
+    return new TextCardBuilder();
   }
 
   /**
@@ -220,4 +228,11 @@ public class WxCpMessage implements Serializable {
     return WxCpGsonBuilder.INSTANCE.create().toJson(this);
   }
 
+  public String getUrl() {
+    return this.url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
 }

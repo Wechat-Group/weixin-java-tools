@@ -175,7 +175,7 @@ public class WxMpMaterialServiceImplTest {
     }
   }
 
-  @Test(dependsOnMethods = {"testAddNews"})
+  @Test(dependsOnMethods = {"testAddNews","testUploadMaterial"})
   public void testGetNewsInfo() throws WxErrorException {
     WxMpMaterialNews wxMpMaterialNewsSingle = this.wxService
       .getMaterialService().materialNewsInfo(this.singleNewsMediaId);
@@ -183,6 +183,9 @@ public class WxMpMaterialServiceImplTest {
       .getMaterialService().materialNewsInfo(this.multiNewsMediaId);
     assertNotNull(wxMpMaterialNewsSingle);
     assertNotNull(wxMpMaterialNewsMultiple);
+
+    System.out.println(wxMpMaterialNewsSingle);
+    System.out.println(wxMpMaterialNewsMultiple);
   }
 
   @Test(dependsOnMethods = {"testGetNewsInfo"})

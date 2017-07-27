@@ -25,6 +25,14 @@ public class OkhttpMaterialUploadRequestExecutor extends MaterialUploadRequestEx
 
   @Override
   public WxMpMaterialUploadResult execute(String uri, WxMpMaterial material) throws WxErrorException, IOException {
+    if (material == null) {
+      throw new WxErrorException(WxError.newBuilder().setErrorMsg("非法请求，material参数为空").build());
+    }
+    File file = material.getFile();
+    if (file == null || !file.exists()) {
+      throw new FileNotFoundException();
+    }
+
     OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().connectionPool(requestHttp.getRequestHttpClient());
     //设置代理
     if (requestHttp.getRequestHttpProxy() != null) {
@@ -40,27 +48,19 @@ public class OkhttpMaterialUploadRequestExecutor extends MaterialUploadRequestEx
           .build();
       }
     });
-    //得到httpClient
-    OkHttpClient client = clientBuilder.build();
 
-
-    if (material == null) {
-      throw new WxErrorException(WxError.newBuilder().setErrorMsg("非法请求，material参数为空").build());
-    }
-
-    File file = material.getFile();
-    if (file == null || !file.exists()) {
-      throw new FileNotFoundException();
-    }
-    RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-    MultipartBody.Builder bodyBuilder = new MultipartBody.Builder().addFormDataPart("media", null, fileBody);
+    MultipartBody.Builder bodyBuilder = new MultipartBody.Builder()
+      .setType(MediaType.parse("multipart/form-data"))
+      .addFormDataPart("media",
+        file.getName(),
+        RequestBody.create(MediaType.parse("application/octet-stream"), file));
     Map<String, String> form = material.getForm();
-    if (material.getForm() != null) {
+    if (form != null) {
       bodyBuilder.addFormDataPart("description", WxGsonBuilder.create().toJson(form));
     }
-    RequestBody body = bodyBuilder.build();
-    Request request = new Request.Builder().url(uri).post(body).build();
-    Response response = client.newCall(request).execute();
+
+    Request request = new Request.Builder().url(uri).post(bodyBuilder.build()).build();
+    Response response = clientBuilder.build().newCall(request).execute();
     String responseContent = response.body().string();
     WxError error = WxError.fromJson(responseContent);
     if (error.getErrorCode() != 0) {
@@ -69,4 +69,5 @@ public class OkhttpMaterialUploadRequestExecutor extends MaterialUploadRequestEx
       return WxMpMaterialUploadResult.fromJson(responseContent);
     }
   }
+
 }

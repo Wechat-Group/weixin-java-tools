@@ -13,6 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by ecoolper on 2017/5/5.
@@ -50,7 +51,7 @@ public class OkhttpMaterialVoiceAndImageDownloadRequestExecutor extends Material
 
       // 下载媒体文件出错
       byte[] responseContent = IOUtils.toByteArray(inputStream);
-      String responseContentString = new String(responseContent, "UTF-8");
+      String responseContentString = new String(responseContent, StandardCharsets.UTF_8);
       if (responseContentString.length() < 100) {
         try {
           WxError wxError = WxGsonBuilder.create().fromJson(responseContentString, WxError.class);

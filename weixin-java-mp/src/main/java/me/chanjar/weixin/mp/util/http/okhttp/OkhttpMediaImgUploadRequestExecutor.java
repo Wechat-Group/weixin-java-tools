@@ -21,7 +21,7 @@ public class OkhttpMediaImgUploadRequestExecutor extends MediaImgUploadRequestEx
   }
 
   @Override
-  public WxMediaImgUploadResult execute(String uri, File data) throws WxErrorException, IOException {
+  public WxMediaImgUploadResult execute(String uri, File file) throws WxErrorException, IOException {
     OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().connectionPool(requestHttp.getRequestHttpClient());
     //设置代理
     if (requestHttp.getRequestHttpProxy() != null) {
@@ -37,14 +37,16 @@ public class OkhttpMediaImgUploadRequestExecutor extends MediaImgUploadRequestEx
           .build();
       }
     });
-    //得到httpClient
-    OkHttpClient client = clientBuilder.build();
 
-    RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), data);
-    RequestBody body = new MultipartBody.Builder().addFormDataPart("media", null, fileBody).build();
+    RequestBody body = new MultipartBody.Builder()
+      .setType(MediaType.parse("multipart/form-data"))
+      .addFormDataPart("media",
+        file.getName(),
+        RequestBody.create(MediaType.parse("application/octet-stream"), file))
+      .build();
+
     Request request = new Request.Builder().url(uri).post(body).build();
-
-    Response response = client.newCall(request).execute();
+    Response response = clientBuilder.build().newCall(request).execute();
     String responseContent = response.body().string();
     WxError error = WxError.fromJson(responseContent);
     if (error.getErrorCode() != 0) {

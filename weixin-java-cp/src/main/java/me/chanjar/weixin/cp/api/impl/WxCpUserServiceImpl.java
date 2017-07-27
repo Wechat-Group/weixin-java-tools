@@ -42,15 +42,12 @@ public class WxCpUserServiceImpl implements WxCpUserService {
     this.mainService.post(url, user.toJson());
   }
 
-  public void deleteOne(String userId) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/user/delete?userid=" + userId;
-    this.mainService.get(url, null);
-  }
-
   @Override
   public void delete(String... userIds) throws WxErrorException {
     if (userIds.length == 1) {
-      this.deleteOne(userIds[0]);
+      String url = "https://qyapi.weixin.qq.com/cgi-bin/user/delete?userid=" + userIds[0];
+      this.mainService.get(url, null);
+      return;
     }
 
     String url = "https://qyapi.weixin.qq.com/cgi-bin/user/batchdelete";

@@ -4,6 +4,7 @@ import me.chanjar.weixin.cp.bean.WxCpXmlOutNewsMessage;
 import me.chanjar.weixin.cp.bean.WxCpXmlOutNewsMessage.Item;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,11 +13,15 @@ import java.util.List;
  * @author Daniel Qian
  */
 public final class NewsBuilder extends BaseBuilder<NewsBuilder, WxCpXmlOutNewsMessage> {
+  private List<Item> articles = new ArrayList<>();
 
-  protected final List<Item> articles = new ArrayList<>();
+  public NewsBuilder addArticle(Item... items) {
+    Collections.addAll(this.articles, items);
+    return this;
+  }
 
-  public NewsBuilder addArticle(Item item) {
-    this.articles.add(item);
+  public NewsBuilder articles(List<Item> articles){
+    this.articles = articles;
     return this;
   }
 

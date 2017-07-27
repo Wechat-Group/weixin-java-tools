@@ -42,6 +42,7 @@ public abstract class AbstractWxMpServiceImpl<H, P> implements WxMpService, Requ
   private WxMpTemplateMsgService templateMsgService = new WxMpTemplateMsgServiceImpl(this);
   private WxMpDeviceService deviceService = new WxMpDeviceServiceImpl(this);
   private WxMpShakeService shakeService = new WxMpShakeServiceImpl(this);
+  private WxMpMemberCardService memberCardService = new WxMpMemberCardServiceImpl(this);
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -232,6 +233,11 @@ public abstract class AbstractWxMpServiceImpl<H, P> implements WxMpService, Requ
   }
 
   @Override
+  public WxMpCurrentAutoReplyInfo getCurrentAutoReplyInfo() throws WxErrorException {
+    return WxMpCurrentAutoReplyInfo.fromJson(this.get(GET_CURRENT_AUTOREPLY_INFO_URL, null));
+  }
+
+  @Override
   public String get(String url, String queryParam) throws WxErrorException {
     return execute(SimpleGetRequestExecutor.create(this), url, queryParam);
   }
@@ -306,7 +312,7 @@ public abstract class AbstractWxMpServiceImpl<H, P> implements WxMpService, Requ
 
       if (error.getErrorCode() != 0) {
         this.log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, data, error);
-        throw new WxErrorException(error);
+        throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
@@ -397,8 +403,13 @@ public abstract class AbstractWxMpServiceImpl<H, P> implements WxMpService, Requ
   }
 
   @Override
-  public WxMpShakeService getShakeService(){
+  public WxMpShakeService getShakeService() {
     return this.shakeService;
+  }
+
+  @Override
+  public WxMpMemberCardService getMemberCardService() {
+    return this.memberCardService;
   }
 
   @Override

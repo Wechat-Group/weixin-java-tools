@@ -31,7 +31,7 @@ public class WxMaMsgServiceImpl implements WxMaMsgService {
     String responseContent = this.wxMaService.post(TEMPLATE_MSG_SEND_URL, templateMessage.toJson());
     JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
     if (jsonObject.get("errcode").getAsInt() == 0) {
-      return jsonObject.get("msgid").getAsString();
+      return jsonObject.get("errmsg").getAsString();
     }
 
     throw new WxErrorException(WxError.fromJson(responseContent));

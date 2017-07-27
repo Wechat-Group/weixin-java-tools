@@ -13,12 +13,10 @@ public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> impleme
   protected RequestHttp<H, P> requestHttp;
   protected File tmpDirFile;
 
-
   public MaterialVoiceAndImageDownloadRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {
     this.requestHttp = requestHttp;
     this.tmpDirFile = tmpDirFile;
   }
-
 
   public static RequestExecutor<InputStream, String> create(RequestHttp requestHttp, File tmpDirFile) {
     switch (requestHttp.getRequestType()) {

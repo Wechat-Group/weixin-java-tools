@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.bean.article;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  *  Created by BinaryWang on 2017/3/27.
@@ -7,7 +9,9 @@ package me.chanjar.weixin.cp.bean.article;
  *
  * @author Binary Wang
  */
-public class MpnewsArticle {
+public class MpnewsArticle implements Serializable {
+  private static final long serialVersionUID = 6985871812170756481L;
+
   private String title;
   private String thumbMediaId;
   private String author;

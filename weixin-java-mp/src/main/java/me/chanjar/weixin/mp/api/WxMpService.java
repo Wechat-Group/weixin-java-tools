@@ -78,6 +78,11 @@ public interface WxMpService {
   String CONNECT_OAUTH2_AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect";
 
   /**
+   * 获取公众号的自动回复规则
+   */
+  String GET_CURRENT_AUTOREPLY_INFO_URL = "https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info";
+
+  /**
    * <pre>
    * 验证消息的确来自微信服务器
    * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319&token=&lang=zh_CN
@@ -274,6 +279,24 @@ public interface WxMpService {
   String[] getCallbackIP() throws WxErrorException;
 
   /**
+   * <pre>
+   * 获取公众号的自动回复规则
+   * http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751299&token=&lang=zh_CN
+   * 开发者可以通过该接口，获取公众号当前使用的自动回复规则，包括关注后自动回复、消息自动回复（60分钟内触发一次）、关键词自动回复。
+   * 请注意：
+   * 1、第三方平台开发者可以通过本接口，在旗下公众号将业务授权给你后，立即通过本接口检测公众号的自动回复配置，并通过接口再次给公众号设置好自动回复规则，以提升公众号运营者的业务体验。
+   * 2、本接口仅能获取公众号在公众平台官网的自动回复功能中设置的自动回复规则，若公众号自行开发实现自动回复，或通过第三方平台开发者来实现，则无法获取。
+   * 3、认证/未认证的服务号/订阅号，以及接口测试号，均拥有该接口权限。
+   * 4、从第三方平台的公众号登录授权机制上来说，该接口从属于消息与菜单权限集。
+   * 5、本接口中返回的图片/语音/视频为临时素材（临时素材每次获取都不同，3天内有效，通过素材管理-获取临时素材接口来获取这些素材），本接口返回的图文消息为永久素材素材（通过素材管理-获取永久素材接口来获取这些素材）。
+   * 接口调用请求说明
+   * http请求方式: GET（请使用https协议）
+   * https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=ACCESS_TOKEN
+   * </pre>
+   */
+  WxMpCurrentAutoReplyInfo getCurrentAutoReplyInfo() throws WxErrorException;
+
+  /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求
    */
   String get(String url, String queryParam) throws WxErrorException;
@@ -293,14 +316,9 @@ public interface WxMpService {
   <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException;
 
   /**
-   * 获取代理对象
-   */
-  //HttpHost getRequestHttpProxy();
-
-  /**
    * <pre>
    * 设置当微信系统响应系统繁忙时，要等待多少 retrySleepMillis(ms) * 2^(重试次数 - 1) 再发起重试
-   * 默认：1000ms
+   * @param retrySleepMillis 默认：1000ms
    * </pre>
    */
   void setRetrySleepMillis(int retrySleepMillis);
@@ -417,12 +435,19 @@ public interface WxMpService {
   WxMpShakeService getShakeService();
 
   /**
+   * 返回会员卡相关接口方法的实现类对象，以方便调用其各个接口
+   *
+   * @return WxMpMemberCardService
+   */
+  WxMpMemberCardService getMemberCardService();
+
+  /**
    * 初始化http请求对象
    */
   void initHttp();
 
   /**
-   * @return
+   * @return RequestHttp对象
    */
   RequestHttp getRequestHttp();
 

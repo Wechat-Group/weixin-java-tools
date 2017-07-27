@@ -39,8 +39,12 @@ public class OkHttpMediaUploadRequestExecutor extends MediaUploadRequestExecutor
     //得到httpClient
     OkHttpClient client = clientBuilder.build();
 
-    RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-    RequestBody body = new MultipartBody.Builder().addFormDataPart("media", null, fileBody).build();
+    RequestBody body = new MultipartBody.Builder()
+      .setType(MediaType.parse("multipart/form-data"))
+      .addFormDataPart("media",
+        file.getName(),
+        RequestBody.create(MediaType.parse("application/octet-stream"), file))
+      .build();
     Request request = new Request.Builder().url(uri).post(body).build();
 
     Response response = client.newCall(request).execute();
