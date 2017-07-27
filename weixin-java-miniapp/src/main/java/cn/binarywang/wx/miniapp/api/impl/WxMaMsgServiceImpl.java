@@ -27,14 +27,12 @@ public class WxMaMsgServiceImpl implements WxMaMsgService {
   }
 
   @Override
-  public String sendTemplateMsg(WxMaTemplateMessage templateMessage) throws WxErrorException {
+  public void sendTemplateMsg(WxMaTemplateMessage templateMessage) throws WxErrorException {
     String responseContent = this.wxMaService.post(TEMPLATE_MSG_SEND_URL, templateMessage.toJson());
     JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
-    if (jsonObject.get("errcode").getAsInt() == 0) {
-      return jsonObject.get("errmsg").getAsString();
+    if (jsonObject.get("errcode").getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent));
     }
-
-    throw new WxErrorException(WxError.fromJson(responseContent));
   }
 
 }
