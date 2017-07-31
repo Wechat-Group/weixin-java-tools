@@ -5,22 +5,20 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
-import me.chanjar.weixin.mp.api.ApiTestModule;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialArticleUpdate;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
+import me.chanjar.weixin.mp.api.test.ApiTestModule;
+import me.chanjar.weixin.mp.api.test.TestConstants;
 import me.chanjar.weixin.mp.bean.material.*;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * 素材管理相关接口的测试
@@ -44,14 +42,16 @@ public class WxMpMaterialServiceImplTest {
   private String multiNewsMediaId = "";
   // 先查询保存测试开始前永久素材数据
   private WxMpMaterialCountResult wxMaterialCountResultBeforeTest;
+  // 以下为media接口的测试
+  private List<String> mediaIdsToDownload = new ArrayList<>();
 
   @DataProvider
   public Object[][] mediaFiles() {
-    return new Object[][] {
-            new Object[] { WxConsts.MEDIA_IMAGE, WxConsts.FILE_JPG, "mm.jpeg" },
-            new Object[] { WxConsts.MEDIA_VOICE, WxConsts.FILE_MP3, "mm.mp3" },
-            new Object[] { WxConsts.MEDIA_VIDEO, WxConsts.FILE_MP4, "mm.mp4" },
-            new Object[] { WxConsts.MEDIA_THUMB, WxConsts.FILE_JPG, "mm.jpeg" }
+    return new Object[][]{
+      new Object[]{WxConsts.MEDIA_IMAGE, TestConstants.FILE_JPG, "mm.jpeg"},
+      new Object[]{WxConsts.MEDIA_VOICE, TestConstants.FILE_MP3, "mm.mp3"},
+      new Object[]{WxConsts.MEDIA_VIDEO, TestConstants.FILE_MP4, "mm.mp4"},
+      new Object[]{WxConsts.MEDIA_THUMB, TestConstants.FILE_JPG, "mm.jpeg"}
     };
   }
 
@@ -59,13 +59,13 @@ public class WxMpMaterialServiceImplTest {
   public void testUploadMaterial(String mediaType, String fileType, String fileName) throws WxErrorException, IOException {
     if (this.wxMaterialCountResultBeforeTest == null) {
       this.wxMaterialCountResultBeforeTest = this.wxService.getMaterialService()
-          .materialCount();
+        .materialCount();
     }
 
     try (InputStream inputStream = ClassLoader
-        .getSystemResourceAsStream(fileName)) {
+      .getSystemResourceAsStream(fileName)) {
       File tempFile = FileUtils.createTmpFile(inputStream,
-          UUID.randomUUID().toString(), fileType);
+        UUID.randomUUID().toString(), fileType);
       WxMpMaterial wxMaterial = new WxMpMaterial();
       wxMaterial.setFile(tempFile);
       wxMaterial.setName(fileName);
@@ -75,11 +75,11 @@ public class WxMpMaterialServiceImplTest {
       }
 
       WxMpMaterialUploadResult res = this.wxService.getMaterialService()
-          .materialFileUpload(mediaType, wxMaterial);
+        .materialFileUpload(mediaType, wxMaterial);
       assertNotNull(res.getMediaId());
 
       if (WxConsts.MEDIA_IMAGE.equals(mediaType)
-          || WxConsts.MEDIA_THUMB.equals(mediaType)) {
+        || WxConsts.MEDIA_THUMB.equals(mediaType)) {
         assertNotNull(res.getUrl());
       }
 
@@ -145,16 +145,16 @@ public class WxMpMaterialServiceImplTest {
     WxMpMaterialCountResult wxMaterialCountResult = this.wxService.getMaterialService().materialCount();
     // 测试上传过程中添加了一个音频，一个视频，两个图片，两个图文消息
     assertEquals(
-        this.wxMaterialCountResultBeforeTest.getVoiceCount() + 1,
-        wxMaterialCountResult.getVoiceCount());
+      this.wxMaterialCountResultBeforeTest.getVoiceCount() + 1,
+      wxMaterialCountResult.getVoiceCount());
     assertEquals(
-        this.wxMaterialCountResultBeforeTest.getVideoCount() + 1,
-        wxMaterialCountResult.getVideoCount());
+      this.wxMaterialCountResultBeforeTest.getVideoCount() + 1,
+      wxMaterialCountResult.getVideoCount());
     assertEquals(
-        this.wxMaterialCountResultBeforeTest.getImageCount() + 2,
-        wxMaterialCountResult.getImageCount());
+      this.wxMaterialCountResultBeforeTest.getImageCount() + 2,
+      wxMaterialCountResult.getImageCount());
     assertEquals(this.wxMaterialCountResultBeforeTest.getNewsCount() + 2,
-        wxMaterialCountResult.getNewsCount());
+      wxMaterialCountResult.getNewsCount());
   }
 
   @Test(dependsOnMethods = {"testMaterialCount"}, dataProvider = "downloadMaterial")
@@ -164,7 +164,7 @@ public class WxMpMaterialServiceImplTest {
     String filename = materialInfo.get("filename").toString();
     if (filename.endsWith(".mp3") || filename.endsWith(".jpeg")) {
       try (InputStream inputStream = this.wxService.getMaterialService()
-          .materialImageOrVoiceDownload(mediaId)) {
+        .materialImageOrVoiceDownload(mediaId)) {
         assertNotNull(inputStream);
       }
     }
@@ -178,9 +178,9 @@ public class WxMpMaterialServiceImplTest {
   @Test(dependsOnMethods = {"testAddNews"})
   public void testGetNewsInfo() throws WxErrorException {
     WxMpMaterialNews wxMpMaterialNewsSingle = this.wxService
-        .getMaterialService().materialNewsInfo(this.singleNewsMediaId);
+      .getMaterialService().materialNewsInfo(this.singleNewsMediaId);
     WxMpMaterialNews wxMpMaterialNewsMultiple = this.wxService
-        .getMaterialService().materialNewsInfo(this.multiNewsMediaId);
+      .getMaterialService().materialNewsInfo(this.multiNewsMediaId);
     assertNotNull(wxMpMaterialNewsSingle);
     assertNotNull(wxMpMaterialNewsMultiple);
   }
@@ -188,7 +188,7 @@ public class WxMpMaterialServiceImplTest {
   @Test(dependsOnMethods = {"testGetNewsInfo"})
   public void testUpdateNewsInfo() throws WxErrorException {
     WxMpMaterialNews wxMpMaterialNewsSingle = this.wxService
-        .getMaterialService().materialNewsInfo(this.singleNewsMediaId);
+      .getMaterialService().materialNewsInfo(this.singleNewsMediaId);
     assertNotNull(wxMpMaterialNewsSingle);
     WxMpMaterialArticleUpdate wxMpMaterialArticleUpdateSingle = new WxMpMaterialArticleUpdate();
     WxMpMaterialNews.WxMpMaterialNewsArticle articleSingle = wxMpMaterialNewsSingle.getArticles().get(0);
@@ -199,13 +199,13 @@ public class WxMpMaterialServiceImplTest {
     boolean resultSingle = this.wxService.getMaterialService().materialNewsUpdate(wxMpMaterialArticleUpdateSingle);
     assertTrue(resultSingle);
     wxMpMaterialNewsSingle = this.wxService.getMaterialService()
-        .materialNewsInfo(this.singleNewsMediaId);
+      .materialNewsInfo(this.singleNewsMediaId);
     assertNotNull(wxMpMaterialNewsSingle);
     assertEquals("content single update",
-        wxMpMaterialNewsSingle.getArticles().get(0).getContent());
+      wxMpMaterialNewsSingle.getArticles().get(0).getContent());
 
     WxMpMaterialNews wxMpMaterialNewsMultiple = this.wxService
-        .getMaterialService().materialNewsInfo(this.multiNewsMediaId);
+      .getMaterialService().materialNewsInfo(this.multiNewsMediaId);
     assertNotNull(wxMpMaterialNewsMultiple);
     WxMpMaterialArticleUpdate wxMpMaterialArticleUpdateMulti = new WxMpMaterialArticleUpdate();
     WxMpMaterialNews.WxMpMaterialNewsArticle articleMulti = wxMpMaterialNewsMultiple.getArticles().get(1);
@@ -216,10 +216,10 @@ public class WxMpMaterialServiceImplTest {
     boolean resultMulti = this.wxService.getMaterialService().materialNewsUpdate(wxMpMaterialArticleUpdateMulti);
     assertTrue(resultMulti);
     wxMpMaterialNewsMultiple = this.wxService.getMaterialService()
-        .materialNewsInfo(this.multiNewsMediaId);
+      .materialNewsInfo(this.multiNewsMediaId);
     assertNotNull(wxMpMaterialNewsMultiple);
     assertEquals("content 2 update",
-        wxMpMaterialNewsMultiple.getArticles().get(1).getContent());
+      wxMpMaterialNewsMultiple.getArticles().get(1).getContent());
   }
 
   @Test(dependsOnMethods = {"testUpdateNewsInfo"})
@@ -266,12 +266,9 @@ public class WxMpMaterialServiceImplTest {
     return params.iterator();
   }
 
-  // 以下为media接口的测试
-  private List<String> mediaIdsToDownload = new ArrayList<>();
-
-  @Test(dataProvider="mediaFiles")
+  @Test(dataProvider = "mediaFiles")
   public void testUploadMedia(String mediaType, String fileType, String fileName) throws WxErrorException, IOException {
-    try(InputStream inputStream = ClassLoader.getSystemResourceAsStream(fileName)){
+    try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(fileName)) {
       WxMediaUploadResult res = this.wxService.getMaterialService().mediaUpload(mediaType, fileType, inputStream);
       assertNotNull(res.getType());
       assertNotNull(res.getCreatedAt());
@@ -294,12 +291,12 @@ public class WxMpMaterialServiceImplTest {
   public Object[][] downloadMedia() {
     Object[][] params = new Object[this.mediaIdsToDownload.size()][];
     for (int i = 0; i < this.mediaIdsToDownload.size(); i++) {
-      params[i] = new Object[] { this.mediaIdsToDownload.get(i) };
+      params[i] = new Object[]{this.mediaIdsToDownload.get(i)};
     }
     return params;
   }
 
-  @Test(dependsOnMethods = { "testUploadMedia" }, dataProvider="downloadMedia")
+  @Test(dependsOnMethods = {"testUploadMedia"}, dataProvider = "downloadMedia")
   public void testDownloadMedia(String mediaId) throws WxErrorException {
     File file = this.wxService.getMaterialService().mediaDownload(mediaId);
     assertNotNull(file);

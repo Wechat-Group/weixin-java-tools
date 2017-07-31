@@ -1,8 +1,8 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
 
 /**
  * Created by Daniel Qian

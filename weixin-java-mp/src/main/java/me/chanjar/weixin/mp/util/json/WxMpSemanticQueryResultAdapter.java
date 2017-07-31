@@ -15,9 +15,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
 import java.lang.reflect.Type;
 
 /**
- * 
  * @author Daniel Qian
- *
  */
 public class WxMpSemanticQueryResultAdapter implements JsonDeserializer<WxMpSemanticQueryResult> {
 
@@ -46,5 +44,5 @@ public class WxMpSemanticQueryResultAdapter implements JsonDeserializer<WxMpSema
     }
     return result;
   }
-  
+
 }

@@ -4,8 +4,8 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutVideoMessage;
 
 /**
  * 视频消息builder
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public final class VideoBuilder extends BaseBuilder<VideoBuilder, WxMpXmlOutVideoMessage> {
 
@@ -17,10 +17,12 @@ public final class VideoBuilder extends BaseBuilder<VideoBuilder, WxMpXmlOutVide
     this.title = title;
     return this;
   }
+
   public VideoBuilder description(String description) {
     this.description = description;
     return this;
   }
+
   public VideoBuilder mediaId(String mediaId) {
     this.mediaId = mediaId;
     return this;

@@ -2,23 +2,21 @@ package me.chanjar.weixin.mp.api.impl;
 
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.ApiTestModule;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreInfo;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreListResult;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
+import static org.testng.AssertJUnit.assertNotNull;
 
 /**
  * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  *         Created by Binary Wang on 2016-09-23.
- *
  */
 @Test
 @Guice(modules = ApiTestModule.class)
@@ -27,17 +25,18 @@ public class WxMpStoreServiceImplTest {
   private WxMpService wxMpService;
 
   /**
-   * Test method for {@link me.chanjar.weixin.mp.api.impl.WxMpStoreServiceImpl#add(me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo)}.
+   * Test method for {@link WxMpStoreServiceImpl#add(me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo)}.
+   *
    * @throws WxErrorException
    */
   public void testAdd() throws WxErrorException {
     this.wxMpService.getStoreService().add(WxMpStoreBaseInfo.builder().build());
     this.wxMpService.getStoreService()
-        .add(WxMpStoreBaseInfo.builder().businessName("haha").branchName("abc")
-            .province("aaa").district("aaa").telephone("122").address("abc").categories(new String[] { "美食,江浙菜" })
-            .longitude(new BigDecimal("115.32375"))
-            .latitude(new BigDecimal("25.097486")).city("aaa").offsetType(1)
-            .build());
+      .add(WxMpStoreBaseInfo.builder().businessName("haha").branchName("abc")
+        .province("aaa").district("aaa").telephone("122").address("abc").categories(new String[]{"美食,江浙菜"})
+        .longitude(new BigDecimal("115.32375"))
+        .latitude(new BigDecimal("25.097486")).city("aaa").offsetType(1)
+        .build());
   }
 
   public void testUpdate() throws WxErrorException {

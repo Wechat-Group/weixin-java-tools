@@ -1,13 +1,13 @@
 <xml>
-    <corpId>企业号corpid</corpId>
-    <corpSecret>企业号corpsecret</corpSecret>
-    <agentId>企业号应用id</agentId>
-    <token>企业号应用Token</token>
-    <aesKey>企业号应用EncodingAESKey</aesKey>
-    <accessToken>可以不填写</accessToken>
-    <expiresTime>可以不填写</expiresTime>
-    <userId>企业号通讯录里的某个userid</userId>
-    <departmentId>企业号通讯录的某个部门id</departmentId>
-    <tagId>企业号通讯录里的某个tagid</tagId>
-    <oauth2redirectUri>网页授权获取用户信息回调地址</oauth2redirectUri>
+  <corpId>企业号corpid</corpId>
+  <corpSecret>企业号corpsecret</corpSecret>
+  <agentId>企业号应用id</agentId>
+  <token>企业号应用Token</token>
+  <aesKey>企业号应用EncodingAESKey</aesKey>
+  <accessToken>可以不填写</accessToken>
+  <expiresTime>可以不填写</expiresTime>
+  <userId>企业号通讯录里的某个userid</userId>
+  <departmentId>企业号通讯录的某个部门id</departmentId>
+  <tagId>企业号通讯录里的某个tagid</tagId>
+  <oauth2redirectUri>网页授权获取用户信息回调地址</oauth2redirectUri>
 </xml>

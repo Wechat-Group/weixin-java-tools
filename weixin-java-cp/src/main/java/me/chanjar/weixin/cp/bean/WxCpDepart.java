@@ -1,8 +1,8 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
 
 /**
  * 微信部门
@@ -60,10 +60,10 @@ public class WxCpDepart implements Serializable {
   @Override
   public String toString() {
     return "WxCpDepart{" +
-            "id=" + this.id +
-            ", name='" + this.name + '\'' +
-            ", parentId=" + this.parentId +
-            ", order=" + this.order +
-            '}';
+      "id=" + this.id +
+      ", name='" + this.name + '\'' +
+      ", parentId=" + this.parentId +
+      ", order=" + this.order +
+      '}';
   }
 }

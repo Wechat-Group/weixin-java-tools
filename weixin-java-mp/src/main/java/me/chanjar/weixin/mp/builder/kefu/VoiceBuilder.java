@@ -8,8 +8,8 @@ import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
  * <pre>
  * 用法: WxMpKefuMessage m = WxMpKefuMessage.VOICE().mediaId(...).toUser(...).build();
  * </pre>
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public final class VoiceBuilder extends BaseBuilder<VoiceBuilder> {
   private String mediaId;

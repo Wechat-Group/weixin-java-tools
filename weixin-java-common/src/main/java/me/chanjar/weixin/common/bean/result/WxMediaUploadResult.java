@@ -1,6 +1,8 @@
 package me.chanjar.weixin.common.bean.result;
 
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
 
@@ -50,8 +52,7 @@ public class WxMediaUploadResult implements Serializable {
 
   @Override
   public String toString() {
-    return "WxUploadResult [type=" + this.type + ", media_id=" + this.mediaId + ", thumb_media_id=" + this.thumbMediaId
-            + ", created_at=" + this.createdAt + "]";
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 
 }

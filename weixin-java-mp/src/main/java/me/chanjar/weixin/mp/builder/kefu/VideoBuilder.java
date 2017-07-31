@@ -14,8 +14,8 @@ import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
  *                              .toUser(...)
  *                              .build();
  * </pre>
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public final class VideoBuilder extends BaseBuilder<VideoBuilder> {
   private String mediaId;

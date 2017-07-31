@@ -2,9 +2,6 @@ package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialArticleUpdate;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
 import me.chanjar.weixin.mp.bean.material.*;
 
 import java.io.File;
@@ -37,12 +34,13 @@ public interface WxMpMaterialService {
    *    语音（voice）：2M，播放长度不超过60s，支持AMR\MP3格式
    *    视频（video）：10MB，支持MP4格式
    *    缩略图（thumb）：64KB，支持JPG格式
-   *媒体文件在后台保存时间为3天，即3天后media_id失效。
+   * 媒体文件在后台保存时间为3天，即3天后media_id失效。
    * 详情请见: <a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726&token=&lang=zh_CN">新增临时素材</a>
    * 接口url格式：https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE
    * </pre>
+   *
    * @param mediaType 媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
-   * @param file 文件对象
+   * @param file      文件对象
    * @throws WxErrorException
    * @see #mediaUpload(String, String, InputStream)
    */
@@ -106,12 +104,12 @@ public interface WxMpMaterialService {
    * 接口url格式：https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=ACCESS_TOKEN&type=TYPE
    *
    * 除了3天就会失效的临时素材外，开发者有时需要永久保存一些素材，届时就可以通过本接口新增永久素材。
-   永久图片素材新增后，将带有URL返回给开发者，开发者可以在腾讯系域名内使用（腾讯系域名外使用，图片将被屏蔽）。
-   请注意：
-   1、新增的永久素材也可以在公众平台官网素材管理模块中看到
-   2、永久素材的数量是有上限的，请谨慎新增。图文消息素材和图片素材的上限为5000，其他类型为1000
-   3、素材的格式大小等要求与公众平台官网一致。具体是，图片大小不超过2M，支持bmp/png/jpeg/jpg/gif格式，语音大小不超过5M，长度不超过60秒，支持mp3/wma/wav/amr格式
-   4、调用该接口需https协议
+   * 永久图片素材新增后，将带有URL返回给开发者，开发者可以在腾讯系域名内使用（腾讯系域名外使用，图片将被屏蔽）。
+   * 请注意：
+   * 1、新增的永久素材也可以在公众平台官网素材管理模块中看到
+   * 2、永久素材的数量是有上限的，请谨慎新增。图文消息素材和图片素材的上限为5000，其他类型为1000
+   * 3、素材的格式大小等要求与公众平台官网一致。具体是，图片大小不超过2M，支持bmp/png/jpeg/jpg/gif格式，语音大小不超过5M，长度不超过60秒，支持mp3/wma/wav/amr格式
+   * 4、调用该接口需https协议
    * </pre>
    *
    * @param mediaType 媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
@@ -127,12 +125,12 @@ public interface WxMpMaterialService {
    * 接口url格式：https://api.weixin.qq.com/cgi-bin/material/add_news?access_token=ACCESS_TOKEN
    *
    * 除了3天就会失效的临时素材外，开发者有时需要永久保存一些素材，届时就可以通过本接口新增永久素材。
-   永久图片素材新增后，将带有URL返回给开发者，开发者可以在腾讯系域名内使用（腾讯系域名外使用，图片将被屏蔽）。
-   请注意：
-   1、新增的永久素材也可以在公众平台官网素材管理模块中看到
-   2、永久素材的数量是有上限的，请谨慎新增。图文消息素材和图片素材的上限为5000，其他类型为1000
-   3、素材的格式大小等要求与公众平台官网一致。具体是，图片大小不超过2M，支持bmp/png/jpeg/jpg/gif格式，语音大小不超过5M，长度不超过60秒，支持mp3/wma/wav/amr格式
-   4、调用该接口需https协议
+   * 永久图片素材新增后，将带有URL返回给开发者，开发者可以在腾讯系域名内使用（腾讯系域名外使用，图片将被屏蔽）。
+   * 请注意：
+   * 1、新增的永久素材也可以在公众平台官网素材管理模块中看到
+   * 2、永久素材的数量是有上限的，请谨慎新增。图文消息素材和图片素材的上限为5000，其他类型为1000
+   * 3、素材的格式大小等要求与公众平台官网一致。具体是，图片大小不超过2M，支持bmp/png/jpeg/jpg/gif格式，语音大小不超过5M，长度不超过60秒，支持mp3/wma/wav/amr格式
+   * 4、调用该接口需https协议
    * </pre>
    *
    * @param news 上传的图文消息, 请看{@link WxMpMaterialNews}

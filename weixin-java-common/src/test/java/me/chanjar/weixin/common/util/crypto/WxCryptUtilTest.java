@@ -1,6 +1,6 @@
 package me.chanjar.weixin.common.util.crypto;
 
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -13,8 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
+import static org.testng.Assert.*;
 
 @Test
 public class WxCryptUtilTest {
@@ -77,7 +76,7 @@ public class WxCryptUtilTest {
   }
 
   public void testValidateSignatureError() throws ParserConfigurationException, SAXException,
-          IOException {
+    IOException {
     try {
       WxCryptUtil pc = new WxCryptUtil(this.token, this.encodingAesKey, this.appId);
       String afterEncrpt = pc.encrypt(this.replyMsg);

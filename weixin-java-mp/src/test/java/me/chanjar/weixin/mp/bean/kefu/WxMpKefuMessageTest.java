@@ -2,8 +2,8 @@ package me.chanjar.weixin.mp.bean.kefu;
 
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage.WxArticle;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.*;
+import org.testng.annotations.*;
 
 @Test
 public class WxMpKefuMessageTest {
@@ -77,13 +77,13 @@ public class WxMpKefuMessageTest {
 
   public void testMusicBuild() {
     WxMpKefuMessage reply = WxMpKefuMessage.MUSIC()
-          .toUser("OPENID")
-          .title("TITLE")
-          .thumbMediaId("MEDIA_ID")
-          .description("DESCRIPTION")
-          .musicUrl("MUSIC_URL")
-          .hqMusicUrl("HQ_MUSIC_URL")
-          .build();
+      .toUser("OPENID")
+      .title("TITLE")
+      .thumbMediaId("MEDIA_ID")
+      .description("DESCRIPTION")
+      .musicUrl("MUSIC_URL")
+      .hqMusicUrl("HQ_MUSIC_URL")
+      .build();
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"music\",\"music\":{\"title\":\"TITLE\",\"description\":\"DESCRIPTION\",\"thumb_media_id\":\"MEDIA_ID\",\"musicurl\":\"MUSIC_URL\",\"hqmusicurl\":\"HQ_MUSIC_URL\"}}");
   }
 

@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 获取图文群发总数据接口(getarticletotal)中的详细字段
+ *
  * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  *         Created by Binary Wang on 2016/8/24.
  */
@@ -14,7 +15,7 @@ public class WxDataCubeArticleTotalDetail {
    * 统计的日期，在getarticletotal接口中，ref_date指的是文章群发出日期， 而stat_date是数据统计日期
    */
   @SerializedName("stat_date")
-  private Integer statDate;
+  private String statDate;
 
   /**
    * target_user
@@ -80,122 +81,122 @@ public class WxDataCubeArticleTotalDetail {
   private Integer addToFavCount;
 
   /**
-  * int_page_from_session_read_user
-  * 公众号会话阅读人数
-  */
+   * int_page_from_session_read_user
+   * 公众号会话阅读人数
+   */
   @SerializedName("int_page_from_session_read_user")
   private Integer intPageFromSessionReadUser;
 
   /**
-  * int_page_from_session_read_count
-  * 公众号会话阅读次数
-  */
+   * int_page_from_session_read_count
+   * 公众号会话阅读次数
+   */
   @SerializedName("int_page_from_session_read_count")
   private Integer intPageFromSessionReadCount;
 
   /**
-  * int_page_from_hist_msg_read_user
-  * 历史消息页阅读人数
-  */
+   * int_page_from_hist_msg_read_user
+   * 历史消息页阅读人数
+   */
   @SerializedName("int_page_from_hist_msg_read_user")
   private Integer intPageFromHistMsgReadUser;
 
   /**
-  * int_page_from_hist_msg_read_count
-  * 历史消息页阅读次数
-  */
+   * int_page_from_hist_msg_read_count
+   * 历史消息页阅读次数
+   */
   @SerializedName("int_page_from_hist_msg_read_count")
   private Integer intPageFromHistMsgReadCount;
 
   /**
-  * int_page_from_feed_read_user
-  * 朋友圈阅读人数
-  */
+   * int_page_from_feed_read_user
+   * 朋友圈阅读人数
+   */
   @SerializedName("int_page_from_feed_read_user")
   private Integer intPageFromFeedReadUser;
 
   /**
-  * int_page_from_feed_read_count
-  * 朋友圈阅读次数
-  */
+   * int_page_from_feed_read_count
+   * 朋友圈阅读次数
+   */
   @SerializedName("int_page_from_feed_read_count")
   private Integer intPageFromFeedReadCount;
 
   /**
-  * int_page_from_friends_read_user
-  * 好友转发阅读人数
-  */
+   * int_page_from_friends_read_user
+   * 好友转发阅读人数
+   */
   @SerializedName("int_page_from_friends_read_user")
   private Integer intPageFromFriendsReadUser;
 
   /**
-  * int_page_from_friends_read_count
-  * 好友转发阅读次数
-  */
+   * int_page_from_friends_read_count
+   * 好友转发阅读次数
+   */
   @SerializedName("int_page_from_friends_read_count")
   private Integer intPageFromFriendsReadCount;
 
   /**
-  * int_page_from_other_read_user
-  * 其他场景阅读人数
-  */
+   * int_page_from_other_read_user
+   * 其他场景阅读人数
+   */
   @SerializedName("int_page_from_other_read_user")
   private Integer intPageFromOtherReadUser;
 
   /**
-  * int_page_from_other_read_count
-  * 其他场景阅读次数
-  */
+   * int_page_from_other_read_count
+   * 其他场景阅读次数
+   */
   @SerializedName("int_page_from_other_read_count")
   private Integer intPageFromOtherReadCount;
 
   /**
-  * feed_share_from_session_user
-  * 公众号会话转发朋友圈人数
-  */
+   * feed_share_from_session_user
+   * 公众号会话转发朋友圈人数
+   */
   @SerializedName("feed_share_from_session_user")
   private Integer feedShareFromSessionUser;
 
   /**
-  * feed_share_from_session_cnt
-  * 公众号会话转发朋友圈次数
-  */
+   * feed_share_from_session_cnt
+   * 公众号会话转发朋友圈次数
+   */
   @SerializedName("feed_share_from_session_cnt")
   private Integer feedShareFromSessionCnt;
 
   /**
-  * feed_share_from_feed_user
-  * 朋友圈转发朋友圈人数
-  */
+   * feed_share_from_feed_user
+   * 朋友圈转发朋友圈人数
+   */
   @SerializedName("feed_share_from_feed_user")
   private Integer feedShareFromFeedUser;
 
   /**
-  * feed_share_from_feed_cnt
-  * 朋友圈转发朋友圈次数
-  */
+   * feed_share_from_feed_cnt
+   * 朋友圈转发朋友圈次数
+   */
   @SerializedName("feed_share_from_feed_cnt")
   private Integer feedShareFromFeedCnt;
 
   /**
-  * feed_share_from_other_user
-  * 其他场景转发朋友圈人数
-  */
+   * feed_share_from_other_user
+   * 其他场景转发朋友圈人数
+   */
   @SerializedName("feed_share_from_other_user")
   private Integer feedShareFromOtherUser;
 
   /**
-  * feed_share_from_other_cnt
-  * 其他场景转发朋友圈次数
-  */
+   * feed_share_from_other_cnt
+   * 其他场景转发朋友圈次数
+   */
   @SerializedName("feed_share_from_other_cnt")
   private Integer feedShareFromOtherCnt;
 
-  public Integer getStatDate() {
+  public String getStatDate() {
     return this.statDate;
   }
 
-  public void setStatDate(Integer statDate) {
+  public void setStatDate(String statDate) {
     this.statDate = statDate;
   }
 
@@ -284,7 +285,7 @@ public class WxDataCubeArticleTotalDetail {
   }
 
   public void setIntPageFromSessionReadCount(
-      Integer intPageFromSessionReadCount) {
+    Integer intPageFromSessionReadCount) {
     this.intPageFromSessionReadCount = intPageFromSessionReadCount;
   }
 
@@ -301,7 +302,7 @@ public class WxDataCubeArticleTotalDetail {
   }
 
   public void setIntPageFromHistMsgReadCount(
-      Integer intPageFromHistMsgReadCount) {
+    Integer intPageFromHistMsgReadCount) {
     this.intPageFromHistMsgReadCount = intPageFromHistMsgReadCount;
   }
 
@@ -334,7 +335,7 @@ public class WxDataCubeArticleTotalDetail {
   }
 
   public void setIntPageFromFriendsReadCount(
-      Integer intPageFromFriendsReadCount) {
+    Integer intPageFromFriendsReadCount) {
     this.intPageFromFriendsReadCount = intPageFromFriendsReadCount;
   }
 

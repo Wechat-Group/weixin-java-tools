@@ -19,13 +19,13 @@ public class WxMpMassOpenIdsMessageGsonAdapter implements JsonSerializer<WxMpMas
   @Override
   public JsonElement serialize(WxMpMassOpenIdsMessage message, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject messageJson = new JsonObject();
-    
+
     JsonArray toUsers = new JsonArray();
     for (String openId : message.getToUsers()) {
       toUsers.add(new JsonPrimitive(openId));
     }
     messageJson.add("touser", toUsers);
-    
+
     if (WxConsts.MASS_MSG_NEWS.equals(message.getMsgType())) {
       JsonObject sub = new JsonObject();
       sub.addProperty("media_id", message.getMediaId());
@@ -52,6 +52,7 @@ public class WxMpMassOpenIdsMessageGsonAdapter implements JsonSerializer<WxMpMas
       messageJson.add(WxConsts.MASS_MSG_VIDEO, sub);
     }
     messageJson.addProperty("msgtype", message.getMsgType());
+    messageJson.addProperty("send_ignore_reprint", message.isSendIgnoreReprint() ? 0 : 1);
     return messageJson;
   }
 

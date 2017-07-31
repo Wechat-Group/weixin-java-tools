@@ -7,9 +7,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 import java.util.List;
 
 /**
- *
  * @author Binary Wang
- *
  */
 public class WxMpKfSessionList {
   /**
@@ -18,14 +16,14 @@ public class WxMpKfSessionList {
   @SerializedName("sessionlist")
   private List<WxMpKfSession> kfSessionList;
 
+  public static WxMpKfSessionList fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(json,
+      WxMpKfSessionList.class);
+  }
+
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
-  }
-
-  public static WxMpKfSessionList fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json,
-        WxMpKfSessionList.class);
   }
 
   public List<WxMpKfSession> getKfSessionList() {

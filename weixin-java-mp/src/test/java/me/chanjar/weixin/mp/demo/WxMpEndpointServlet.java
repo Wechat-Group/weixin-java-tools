@@ -23,7 +23,7 @@ public class WxMpEndpointServlet extends HttpServlet {
   protected WxMpMessageRouter wxMpMessageRouter;
 
   public WxMpEndpointServlet(WxMpConfigStorage wxMpConfigStorage, WxMpService wxMpService,
-      WxMpMessageRouter wxMpMessageRouter) {
+                             WxMpMessageRouter wxMpMessageRouter) {
     this.wxMpConfigStorage = wxMpConfigStorage;
     this.wxMpService = wxMpService;
     this.wxMpMessageRouter = wxMpMessageRouter;
@@ -31,7 +31,7 @@ public class WxMpEndpointServlet extends HttpServlet {
 
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
+    throws IOException {
 
     response.setContentType("text/html;charset=utf-8");
     response.setStatus(HttpServletResponse.SC_OK);
@@ -54,8 +54,8 @@ public class WxMpEndpointServlet extends HttpServlet {
     }
 
     String encryptType = StringUtils.isBlank(request.getParameter("encrypt_type")) ?
-        "raw" :
-        request.getParameter("encrypt_type");
+      "raw" :
+      request.getParameter("encrypt_type");
 
     if ("raw".equals(encryptType)) {
       // 明文传输的消息

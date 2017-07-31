@@ -1,8 +1,8 @@
 package me.chanjar.weixin.common.bean;
 
 import me.chanjar.weixin.common.bean.result.WxError;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.*;
+import org.testng.annotations.*;
 
 @Test
 public class WxErrorTest {

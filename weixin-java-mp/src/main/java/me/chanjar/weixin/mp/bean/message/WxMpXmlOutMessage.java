@@ -16,64 +16,19 @@ public abstract class WxMpXmlOutMessage implements Serializable {
   private static final long serialVersionUID = -381382011286216263L;
 
   @XStreamAlias("ToUserName")
-  @XStreamConverter(value=XStreamCDataConverter.class)
+  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String toUserName;
 
   @XStreamAlias("FromUserName")
-  @XStreamConverter(value=XStreamCDataConverter.class)
+  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String fromUserName;
 
   @XStreamAlias("CreateTime")
   protected Long createTime;
 
   @XStreamAlias("MsgType")
-  @XStreamConverter(value=XStreamCDataConverter.class)
+  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String msgType;
-
-  public String getToUserName() {
-    return this.toUserName;
-  }
-
-  public void setToUserName(String toUserName) {
-    this.toUserName = toUserName;
-  }
-
-  public String getFromUserName() {
-    return this.fromUserName;
-  }
-
-  public void setFromUserName(String fromUserName) {
-    this.fromUserName = fromUserName;
-  }
-
-  public Long getCreateTime() {
-    return this.createTime;
-  }
-
-  public void setCreateTime(Long createTime) {
-    this.createTime = createTime;
-  }
-
-  public String getMsgType() {
-    return this.msgType;
-  }
-
-  public void setMsgType(String msgType) {
-    this.msgType = msgType;
-  }
-
-  public String toXml() {
-    return XStreamTransformer.toXml((Class<WxMpXmlOutMessage>) this.getClass(), this);
-  }
-
-  /**
-   * 转换成加密的xml格式
-   */
-  public String toEncryptedXml(WxMpConfigStorage wxMpConfigStorage) {
-    String plainXml = toXml();
-    WxMpCryptUtil pc = new WxMpCryptUtil(wxMpConfigStorage);
-    return pc.encrypt(plainXml);
-  }
 
   /**
    * 获得文本消息builder
@@ -122,5 +77,51 @@ public abstract class WxMpXmlOutMessage implements Serializable {
    */
   public static TransferCustomerServiceBuilder TRANSFER_CUSTOMER_SERVICE() {
     return new TransferCustomerServiceBuilder();
+  }
+
+  public String getToUserName() {
+    return this.toUserName;
+  }
+
+  public void setToUserName(String toUserName) {
+    this.toUserName = toUserName;
+  }
+
+  public String getFromUserName() {
+    return this.fromUserName;
+  }
+
+  public void setFromUserName(String fromUserName) {
+    this.fromUserName = fromUserName;
+  }
+
+  public Long getCreateTime() {
+    return this.createTime;
+  }
+
+  public void setCreateTime(Long createTime) {
+    this.createTime = createTime;
+  }
+
+  public String getMsgType() {
+    return this.msgType;
+  }
+
+  public void setMsgType(String msgType) {
+    this.msgType = msgType;
+  }
+
+  @SuppressWarnings("unchecked")
+  public String toXml() {
+    return XStreamTransformer.toXml((Class<WxMpXmlOutMessage>) this.getClass(), this);
+  }
+
+  /**
+   * 转换成加密的xml格式
+   */
+  public String toEncryptedXml(WxMpConfigStorage wxMpConfigStorage) {
+    String plainXml = toXml();
+    WxMpCryptUtil pc = new WxMpCryptUtil(wxMpConfigStorage);
+    return pc.encrypt(plainXml);
   }
 }

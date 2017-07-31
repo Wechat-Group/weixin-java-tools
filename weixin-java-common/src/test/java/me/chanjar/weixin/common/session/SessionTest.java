@@ -1,8 +1,7 @@
 package me.chanjar.weixin.common.session;
 
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.*;
+import org.testng.annotations.*;
 
 @Test
 public class SessionTest {
@@ -11,7 +10,7 @@ public class SessionTest {
   public Object[][] getSessionManager() {
 
     return new Object[][]{
-            new Object[]{new StandardSessionManager()}
+      new Object[]{new StandardSessionManager()}
     };
 
   }

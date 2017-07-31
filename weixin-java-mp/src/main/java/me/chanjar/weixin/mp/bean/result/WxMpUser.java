@@ -12,8 +12,8 @@ import java.util.List;
 
 /**
  * 微信用户信息
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public class WxMpUser implements Serializable {
 
@@ -32,7 +32,19 @@ public class WxMpUser implements Serializable {
   private Integer sexId;
   private String remark;
   private Integer groupId;
-  private Integer[] tagIds;
+  private Long[] tagIds;
+
+  public static WxMpUser fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpUser.class);
+  }
+
+  public static List<WxMpUser> fromJsonList(String json) {
+    Type collectionType = new TypeToken<List<WxMpUser>>() {
+    }.getType();
+    Gson gson = WxMpGsonBuilder.INSTANCE.create();
+    JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+    return gson.fromJson(jsonObject.get("user_info_list"), collectionType);
+  }
 
   public Boolean getSubscribe() {
     return this.subscribe;
@@ -115,7 +127,7 @@ public class WxMpUser implements Serializable {
   }
 
   /**
-   *只有在将公众号绑定到微信开放平台帐号后，才会出现该字段。
+   * 只有在将公众号绑定到微信开放平台帐号后，才会出现该字段。
    */
   public String getUnionId() {
     return this.unionId;
@@ -150,24 +162,12 @@ public class WxMpUser implements Serializable {
     this.groupId = groupId;
   }
 
-  public Integer[] getTagIds() {
+  public Long[] getTagIds() {
     return this.tagIds;
   }
 
-  public void setTagIds(Integer[] tagIds) {
+  public void setTagIds(Long[] tagIds) {
     this.tagIds = tagIds;
-  }
-
-  public static WxMpUser fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpUser.class);
-  }
-
-  public static List<WxMpUser> fromJsonList(String json) {
-    Type collectionType = new TypeToken<List<WxMpUser>>() {
-    }.getType();
-    Gson gson = WxMpGsonBuilder.INSTANCE.create();
-    JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
-    return gson.fromJson(jsonObject.get("user_info_list"), collectionType);
   }
 
   @Override

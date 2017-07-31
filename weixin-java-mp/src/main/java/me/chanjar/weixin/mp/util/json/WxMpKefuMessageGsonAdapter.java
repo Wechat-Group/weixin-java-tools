@@ -87,7 +87,7 @@ public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMpKefuMessag
       messageJson.add("wxcard", wxcard);
     }
 
-    if (StringUtils.isNotBlank(message.getKfAccount())){
+    if (StringUtils.isNotBlank(message.getKfAccount())) {
       JsonObject newsJsonObject = new JsonObject();
       newsJsonObject.addProperty("kf_account", message.getKfAccount());
       messageJson.add("customservice", newsJsonObject);

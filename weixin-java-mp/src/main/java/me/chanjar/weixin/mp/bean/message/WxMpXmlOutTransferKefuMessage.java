@@ -28,7 +28,7 @@ public class WxMpXmlOutTransferKefuMessage extends WxMpXmlOutMessage {
   public static class TransInfo {
 
     @XStreamAlias("KfAccount")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String kfAccount;
 
     public String getKfAccount() {

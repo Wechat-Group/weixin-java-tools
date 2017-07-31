@@ -5,9 +5,7 @@ import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
- *
  * @author Binary Wang
- *
  */
 public class WxMpKfSessionGetResult {
   /**
@@ -22,13 +20,13 @@ public class WxMpKfSessionGetResult {
   @SerializedName("createtime")
   private long createTime;
 
+  public static WxMpKfSessionGetResult fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpKfSessionGetResult.class);
+  }
+
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
-  }
-
-  public static WxMpKfSessionGetResult fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpKfSessionGetResult.class);
   }
 
   public String getKfAccount() {

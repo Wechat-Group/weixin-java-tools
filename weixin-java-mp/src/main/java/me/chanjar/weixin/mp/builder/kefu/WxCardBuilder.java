@@ -8,8 +8,8 @@ import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
  * <pre>
  * 用法: WxMpKefuMessage m = WxMpKefuMessage.WXCARD().cardId(...).toUser(...).build();
  * </pre>
- * @author mgcnrx11
  *
+ * @author mgcnrx11
  */
 public final class WxCardBuilder extends BaseBuilder<WxCardBuilder> {
   private String cardId;

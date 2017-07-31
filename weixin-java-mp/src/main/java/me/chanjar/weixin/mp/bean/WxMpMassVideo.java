@@ -6,13 +6,13 @@ import java.io.Serializable;
 
 /**
  * 群发时用到的视频素材
- * 
+ *
  * @author chanjarster
  */
 public class WxMpMassVideo implements Serializable {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 9153925016061915637L;
   private String mediaId;

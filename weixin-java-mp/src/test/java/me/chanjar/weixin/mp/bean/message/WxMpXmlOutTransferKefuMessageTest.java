@@ -1,7 +1,7 @@
 package me.chanjar.weixin.mp.bean.message;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.*;
+import org.testng.annotations.*;
 
 /**
  * Created by ben on 2015/12/29.

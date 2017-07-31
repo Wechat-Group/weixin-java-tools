@@ -1,18 +1,11 @@
 package me.chanjar.weixin.mp.bean.kefu;
 
+import me.chanjar.weixin.mp.builder.kefu.*;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import me.chanjar.weixin.mp.builder.kefu.ImageBuilder;
-import me.chanjar.weixin.mp.builder.kefu.MpNewsBuilder;
-import me.chanjar.weixin.mp.builder.kefu.MusicBuilder;
-import me.chanjar.weixin.mp.builder.kefu.NewsBuilder;
-import me.chanjar.weixin.mp.builder.kefu.TextBuilder;
-import me.chanjar.weixin.mp.builder.kefu.VideoBuilder;
-import me.chanjar.weixin.mp.builder.kefu.VoiceBuilder;
-import me.chanjar.weixin.mp.builder.kefu.WxCardBuilder;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * 客服消息
@@ -104,14 +97,6 @@ public class WxMpKefuMessage implements Serializable {
     return this.msgType;
   }
 
-  public String getMpNewsMediaId() {
-    return this.mpNewsMediaId;
-  }
-
-  public void setMpNewsMediaId(String mpNewsMediaId) {
-    this.mpNewsMediaId = mpNewsMediaId;
-  }
-
   /**
    * <pre>
    * 请使用
@@ -129,6 +114,14 @@ public class WxMpKefuMessage implements Serializable {
    */
   public void setMsgType(String msgType) {
     this.msgType = msgType;
+  }
+
+  public String getMpNewsMediaId() {
+    return this.mpNewsMediaId;
+  }
+
+  public void setMpNewsMediaId(String mpNewsMediaId) {
+    this.mpNewsMediaId = mpNewsMediaId;
   }
 
   public String getContent() {

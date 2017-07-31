@@ -1,69 +1,37 @@
 package me.chanjar.weixin.mp.util.http;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.common.util.http.InputStreamResponseHandler;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.mp.util.http.apache.ApacheMaterialVoiceAndImageDownloadRequestExecutor;
+import me.chanjar.weixin.mp.util.http.jodd.JoddMaterialVoiceAndImageDownloadRequestExecutor;
+import me.chanjar.weixin.mp.util.http.okhttp.OkhttpMaterialVoiceAndImageDownloadRequestExecutor;
 
-public class MaterialVoiceAndImageDownloadRequestExecutor implements RequestExecutor<InputStream, String> {
+import java.io.File;
+import java.io.InputStream;
 
-  private File tmpDirFile;
+public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> implements RequestExecutor<InputStream, String> {
+  protected RequestHttp<H, P> requestHttp;
+  protected File tmpDirFile;
 
-  public MaterialVoiceAndImageDownloadRequestExecutor() {
-    super();
-  }
 
-  public MaterialVoiceAndImageDownloadRequestExecutor(File tmpDirFile) {
-    super();
+  public MaterialVoiceAndImageDownloadRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {
+    this.requestHttp = requestHttp;
     this.tmpDirFile = tmpDirFile;
   }
 
-  @Override
-  public InputStream execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, String materialId) throws WxErrorException, IOException {
-    HttpPost httpPost = new HttpPost(uri);
-    if (httpProxy != null) {
-      RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
-      httpPost.setConfig(config);
-    }
 
-    Map<String, String> params = new HashMap<>();
-    params.put("media_id", materialId);
-    httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
-    try (CloseableHttpResponse response = httpclient.execute(httpPost);
-        InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response);){
-      // 下载媒体文件出错
-      byte[] responseContent = IOUtils.toByteArray(inputStream);
-      String responseContentString = new String(responseContent, "UTF-8");
-      if (responseContentString.length() < 100) {
-        try {
-          WxError wxError = WxGsonBuilder.create().fromJson(responseContentString, WxError.class);
-          if (wxError.getErrorCode() != 0) {
-            throw new WxErrorException(wxError);
-          }
-        } catch (com.google.gson.JsonSyntaxException ex) {
-          return new ByteArrayInputStream(responseContent);
-        }
-      }
-      return new ByteArrayInputStream(responseContent);
-    }finally {
-      httpPost.releaseConnection();
+  public static RequestExecutor<InputStream, String> create(RequestHttp requestHttp, File tmpDirFile) {
+    switch (requestHttp.getRequestType()) {
+      case APACHE_HTTP:
+        return new ApacheMaterialVoiceAndImageDownloadRequestExecutor(requestHttp, tmpDirFile);
+      case JODD_HTTP:
+        return new JoddMaterialVoiceAndImageDownloadRequestExecutor(requestHttp, tmpDirFile);
+      case OK_HTTP:
+        return new OkhttpMaterialVoiceAndImageDownloadRequestExecutor(requestHttp, tmpDirFile);
+      default:
+        return null;
     }
   }
+
 
 }

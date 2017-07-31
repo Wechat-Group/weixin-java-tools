@@ -1,8 +1,8 @@
 package me.chanjar.weixin.mp.api;
 
+import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
-import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 
@@ -168,22 +168,22 @@ public class WxMpMessageRouterRule {
    */
   protected boolean test(WxMpXmlMessage wxMessage) {
     return
-        (this.fromUser == null || this.fromUser.equals(wxMessage.getFromUser()))
-            &&
-            (this.msgType == null || this.msgType.toLowerCase().equals((wxMessage.getMsgType()==null?null:wxMessage.getMsgType().toLowerCase())))
-            &&
-            (this.event == null || this.event.toLowerCase().equals((wxMessage.getEvent()==null?null:wxMessage.getEvent().toLowerCase())))
-            &&
-            (this.eventKey == null || this.eventKey.toLowerCase().equals((wxMessage.getEventKey()==null?null:wxMessage.getEventKey().toLowerCase())))
-            &&
-            (this.content == null || this.content
-                .equals(wxMessage.getContent() == null ? null : wxMessage.getContent().trim()))
-            &&
-            (this.rContent == null || Pattern
-                .matches(this.rContent, wxMessage.getContent() == null ? "" : wxMessage.getContent().trim()))
-            &&
-            (this.matcher == null || this.matcher.match(wxMessage))
-        ;
+      (this.fromUser == null || this.fromUser.equals(wxMessage.getFromUser()))
+        &&
+        (this.msgType == null || this.msgType.toLowerCase().equals((wxMessage.getMsgType() == null ? null : wxMessage.getMsgType().toLowerCase())))
+        &&
+        (this.event == null || this.event.toLowerCase().equals((wxMessage.getEvent() == null ? null : wxMessage.getEvent().toLowerCase())))
+        &&
+        (this.eventKey == null || this.eventKey.toLowerCase().equals((wxMessage.getEventKey() == null ? null : wxMessage.getEventKey().toLowerCase())))
+        &&
+        (this.content == null || this.content
+          .equals(wxMessage.getContent() == null ? null : wxMessage.getContent().trim()))
+        &&
+        (this.rContent == null || Pattern
+          .matches(this.rContent, wxMessage.getContent() == null ? "" : wxMessage.getContent().trim()))
+        &&
+        (this.matcher == null || this.matcher.match(wxMessage))
+      ;
   }
 
   /**
@@ -193,13 +193,16 @@ public class WxMpMessageRouterRule {
    * @return true 代表继续执行别的router，false 代表停止执行别的router
    */
   protected WxMpXmlOutMessage service(WxMpXmlMessage wxMessage,
-      WxMpService wxMpService,
-      WxSessionManager sessionManager,
-      WxErrorExceptionHandler exceptionHandler) {
+                                      Map<String, Object> context,
+                                      WxMpService wxMpService,
+                                      WxSessionManager sessionManager,
+                                      WxErrorExceptionHandler exceptionHandler) {
+
+    if (context == null) {
+      context = new HashMap<>();
+    }
 
     try {
-
-      Map<String, Object> context = new HashMap<>();
       // 如果拦截器不通过
       for (WxMpMessageInterceptor interceptor : this.interceptors) {
         if (!interceptor.intercept(wxMessage, context, wxMpService, sessionManager)) {
@@ -211,7 +214,7 @@ public class WxMpMessageRouterRule {
       WxMpXmlOutMessage res = null;
       for (WxMpMessageHandler handler : this.handlers) {
         // 返回最后handler的结果
-        if(handler == null){
+        if (handler == null) {
           continue;
         }
         res = handler.handle(wxMessage, context, wxMpService, sessionManager);

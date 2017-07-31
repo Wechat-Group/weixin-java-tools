@@ -13,6 +13,10 @@ public class WxMpMaterialUploadResult implements Serializable {
   private String mediaId;
   private String url;
 
+  public static WxMpMaterialUploadResult fromJson(String json) {
+    return WxMpGsonBuilder.create().fromJson(json, WxMpMaterialUploadResult.class);
+  }
+
   public String getMediaId() {
     return this.mediaId;
   }
@@ -27,10 +31,6 @@ public class WxMpMaterialUploadResult implements Serializable {
 
   public void setUrl(String url) {
     this.url = url;
-  }
-
-  public static WxMpMaterialUploadResult fromJson(String json) {
-    return WxMpGsonBuilder.create().fromJson(json, WxMpMaterialUploadResult.class);
   }
 
   @Override

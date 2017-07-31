@@ -4,6 +4,7 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutImageMessage;
 
 /**
  * 图片消息builder
+ *
  * @author chanjarster
  */
 public final class ImageBuilder extends BaseBuilder<ImageBuilder, WxMpXmlOutImageMessage> {

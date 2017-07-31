@@ -4,9 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
 /**
- *
  * @author Binary Wang
- *
  */
 public class WxMpKfSession {
   /**

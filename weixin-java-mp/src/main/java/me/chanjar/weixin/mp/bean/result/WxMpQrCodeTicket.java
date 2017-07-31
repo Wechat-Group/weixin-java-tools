@@ -6,18 +6,22 @@ import java.io.Serializable;
 
 /**
  * 换取二维码的Ticket
- * 
+ *
  * @author chanjarster
  */
 public class WxMpQrCodeTicket implements Serializable {
-  
+
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 5777119669111011584L;
   protected String ticket;
   protected int expire_seconds = -1;
   protected String url;
+
+  public static WxMpQrCodeTicket fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpQrCodeTicket.class);
+  }
 
   public String getTicket() {
     return this.ticket;
@@ -44,10 +48,6 @@ public class WxMpQrCodeTicket implements Serializable {
 
   public void setUrl(String url) {
     this.url = url;
-  }
-
-  public static WxMpQrCodeTicket fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpQrCodeTicket.class);
   }
 
   @Override

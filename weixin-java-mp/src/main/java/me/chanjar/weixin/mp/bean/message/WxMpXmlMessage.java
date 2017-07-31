@@ -12,8 +12,6 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <pre>
@@ -199,6 +197,129 @@ public class WxMpXmlMessage implements Serializable {
   @XStreamAlias("OuterId")
   private Integer outerId;
 
+  /**
+   * 用户删除会员卡后可重新找回，当用户本次操作为找回时，该值为1，否则为0
+   */
+  @XStreamAlias("IsRestoreMemberCard")
+  private String isRestoreMemberCard;
+
+  /**
+   * <pre>
+   * 领取场景值，用于领取渠道数据统计。可在生成二维码接口及添加Addcard接口中自定义该字段的字符串值。
+   * 核销卡券时：开发者发起核销时传入的自定义参数，用于进行核销渠道统计
+   * 另外：
+   * 官网文档中，微信卡券>>卡券事件推送>>2.7 进入会员卡事件推送 user_view_card
+   * OuterStr：商户自定义二维码渠道参数，用于标识本次扫码打开会员卡来源来自于某个渠道值的二维码
+   * </pre>
+   */
+  @XStreamAlias("OuterStr")
+  private String outerStr;
+
+  /**
+   * 是否转赠退回，0代表不是，1代表是。
+   */
+  @XStreamAlias("IsReturnBack")
+  private String isReturnBack;
+
+  /**
+   * 是否是群转赠，0代表不是，1代表是。
+   */
+  @XStreamAlias("IsChatRoom")
+  private String isChatRoom;
+
+  /**
+   * 核销来源。支持开发者统计API核销（FROM_API）、公众平台核销（FROM_MP）、卡券商户助手核销（FROM_MOBILE_HELPER）（核销员微信号）
+   */
+  @XStreamAlias("ConsumeSource")
+  private String consumeSource;
+
+  /**
+   * 门店名称，当前卡券核销的门店名称（只有通过自助核销和买单核销时才会出现该字段）
+   */
+  @XStreamAlias("LocationName")
+  private String locationName;
+
+  /**
+   * 核销该卡券核销员的openid（只有通过卡券商户助手核销时才会出现）
+   */
+  @XStreamAlias("StaffOpenId")
+  private String staffOpenId;
+
+  /**
+   * 自助核销时，用户输入的验证码
+   */
+  @XStreamAlias("VerifyCode")
+  private String verifyCode;
+
+  /**
+   * 自助核销时，用户输入的备注金额
+   */
+  @XStreamAlias("RemarkAmount")
+  private String remarkAmount;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.10 库存报警事件card_sku_remind
+   * Detail：报警详细信息
+   * </pre>
+   */
+  @XStreamAlias("Detail")
+  private String detail;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.9 会员卡内容更新事件 update_member_card
+   * ModifyBonus：变动的积分值
+   * </pre>
+   */
+  @XStreamAlias("ModifyBonus")
+  private String modifyBonus;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.9 会员卡内容更新事件 update_member_card
+   * ModifyBalance：变动的余额值
+   * </pre>
+   */
+  @XStreamAlias("ModifyBalance")
+  private String modifyBalance;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.6 买单事件推送 User_pay_from_pay_cell
+   * TransId：微信支付交易订单号（只有使用买单功能核销的卡券才会出现）
+   * </pre>
+   */
+  @XStreamAlias("TransId")
+  private String transId;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.6 买单事件推送 User_pay_from_pay_cell
+   * LocationId：门店ID，当前卡券核销的门店ID（只有通过卡券商户助手和买单核销时才会出现）
+   * </pre>
+   */
+  @XStreamAlias("LocationId")
+  private String locationId;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.6 买单事件推送 User_pay_from_pay_cell
+   * Fee：实付金额，单位为分
+   * </pre>
+   */
+  @XStreamAlias("Fee")
+  private String fee;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.6 买单事件推送 User_pay_from_pay_cell
+   * OriginalFee：应付金额，单位为分
+   * </pre>
+   */
+  @XStreamAlias("OriginalFee")
+  private String originalFee;
+
   @XStreamAlias("ScanCodeInfo")
   private ScanCodeInfo scanCodeInfo = new ScanCodeInfo();
 
@@ -263,6 +384,132 @@ public class WxMpXmlMessage implements Serializable {
   @XStreamAlias("FailReason")
   private String failReason;
 
+
+  ///////////////////////////////////////
+  // 微信硬件平台相关事件推送
+  ///////////////////////////////////////
+  /**
+   * 设备类型，目前为"公众账号原始ID"
+   */
+  @XStreamAlias("DeviceType")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String deviceType;
+
+  /**
+   * 设备ID，第三方提供
+   */
+  @XStreamAlias("DeviceID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String deviceId;
+
+  /**
+   * 微信用户账号的OpenID
+   */
+  @XStreamAlias("OpenID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String openId;
+
+  @XStreamAlias("HardWare")
+  private HardWare hardWare = new HardWare();
+
+  /**
+   * 请求类型：0：退订设备状态；1：心跳；（心跳的处理方式跟订阅一样）2：订阅设备状态
+   */
+  @XStreamAlias("OpType")
+  private Integer opType;
+
+  /**
+   * 设备状态：0：未连接；1：已连接
+   */
+  @XStreamAlias("DeviceStatus")
+  private Integer deviceStatus;
+
+  public static WxMpXmlMessage fromXml(String xml) {
+    return XStreamTransformer.fromXml(WxMpXmlMessage.class, xml);
+  }
+
+  public static WxMpXmlMessage fromXml(InputStream is) {
+    return XStreamTransformer.fromXml(WxMpXmlMessage.class, is);
+  }
+
+  /**
+   * 从加密字符串转换
+   *
+   * @param encryptedXml      密文
+   * @param wxMpConfigStorage 配置存储器对象
+   * @param timestamp         时间戳
+   * @param nonce             随机串
+   * @param msgSignature      签名串
+   */
+  public static WxMpXmlMessage fromEncryptedXml(String encryptedXml,
+                                                WxMpConfigStorage wxMpConfigStorage, String timestamp, String nonce,
+                                                String msgSignature) {
+    WxMpCryptUtil cryptUtil = new WxMpCryptUtil(wxMpConfigStorage);
+    String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce,
+      encryptedXml);
+    return fromXml(plainText);
+  }
+
+  public static WxMpXmlMessage fromEncryptedXml(InputStream is,
+                                                WxMpConfigStorage wxMpConfigStorage, String timestamp, String nonce,
+                                                String msgSignature) {
+    try {
+      return fromEncryptedXml(IOUtils.toString(is, "UTF-8"), wxMpConfigStorage,
+        timestamp, nonce, msgSignature);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public Integer getOpType() {
+    return opType;
+  }
+
+  public void setOpType(Integer opType) {
+    this.opType = opType;
+  }
+
+  public Integer getDeviceStatus() {
+
+    return deviceStatus;
+  }
+
+  public void setDeviceStatus(Integer deviceStatus) {
+    this.deviceStatus = deviceStatus;
+  }
+
+  public HardWare getHardWare() {
+    return hardWare;
+  }
+
+  public void setHardWare(HardWare hardWare) {
+    this.hardWare = hardWare;
+  }
+
+  public String getDeviceType() {
+    return deviceType;
+  }
+
+  public void setDeviceType(String deviceType) {
+    this.deviceType = deviceType;
+  }
+
+  public String getDeviceId() {
+    return deviceId;
+  }
+
+  public void setDeviceId(String deviceId) {
+    this.deviceId = deviceId;
+  }
+
+  public String getOpenId() {
+    return openId;
+  }
+
+  public void setOpenId(String openId) {
+    this.openId = openId;
+  }
+
   public Long getExpiredTime() {
     return this.expiredTime;
   }
@@ -285,6 +532,62 @@ public class WxMpXmlMessage implements Serializable {
 
   public void setFailReason(String failReason) {
     this.failReason = failReason;
+  }
+
+  public String getDetail() {
+    return detail;
+  }
+
+  public void setDetail(String detail) {
+    this.detail = detail;
+  }
+
+  public String getModifyBonus() {
+    return modifyBonus;
+  }
+
+  public void setModifyBonus(String modifyBonus) {
+    this.modifyBonus = modifyBonus;
+  }
+
+  public String getModifyBalance() {
+    return modifyBalance;
+  }
+
+  public void setModifyBalance(String modifyBalance) {
+    this.modifyBalance = modifyBalance;
+  }
+
+  public String getTransId() {
+    return transId;
+  }
+
+  public void setTransId(String transId) {
+    this.transId = transId;
+  }
+
+  public String getLocationId() {
+    return locationId;
+  }
+
+  public void setLocationId(String locationId) {
+    this.locationId = locationId;
+  }
+
+  public String getFee() {
+    return fee;
+  }
+
+  public void setFee(String fee) {
+    this.fee = fee;
+  }
+
+  public String getOriginalFee() {
+    return originalFee;
+  }
+
+  public void setOriginalFee(String originalFee) {
+    this.originalFee = originalFee;
   }
 
   public String getStoreUniqId() {
@@ -346,7 +649,6 @@ public class WxMpXmlMessage implements Serializable {
    * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_LINK}
    * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_EVENT}
    * </pre>
-   *
    */
   public String getMsgType() {
     return this.msgType;
@@ -537,43 +839,6 @@ public class WxMpXmlMessage implements Serializable {
     this.fromUser = fromUser;
   }
 
-  public static WxMpXmlMessage fromXml(String xml) {
-    return XStreamTransformer.fromXml(WxMpXmlMessage.class, xml);
-  }
-
-  public static WxMpXmlMessage fromXml(InputStream is) {
-    return XStreamTransformer.fromXml(WxMpXmlMessage.class, is);
-  }
-
-  /**
-   * 从加密字符串转换
-   *
-   * @param encryptedXml
-   * @param wxMpConfigStorage
-   * @param timestamp
-   * @param nonce
-   * @param msgSignature
-   */
-  public static WxMpXmlMessage fromEncryptedXml(String encryptedXml,
-      WxMpConfigStorage wxMpConfigStorage, String timestamp, String nonce,
-      String msgSignature) {
-    WxMpCryptUtil cryptUtil = new WxMpCryptUtil(wxMpConfigStorage);
-    String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce,
-        encryptedXml);
-    return fromXml(plainText);
-  }
-
-  public static WxMpXmlMessage fromEncryptedXml(InputStream is,
-      WxMpConfigStorage wxMpConfigStorage, String timestamp, String nonce,
-      String msgSignature) {
-    try {
-      return fromEncryptedXml(IOUtils.toString(is, "UTF-8"), wxMpConfigStorage,
-          timestamp, nonce, msgSignature);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
   public String getStatus() {
     return this.status;
   }
@@ -662,28 +927,28 @@ public class WxMpXmlMessage implements Serializable {
     this.outerId = outerId;
   }
 
-  public WxMpXmlMessage.ScanCodeInfo getScanCodeInfo() {
+  public ScanCodeInfo getScanCodeInfo() {
     return this.scanCodeInfo;
   }
 
-  public void setScanCodeInfo(WxMpXmlMessage.ScanCodeInfo scanCodeInfo) {
+  public void setScanCodeInfo(ScanCodeInfo scanCodeInfo) {
     this.scanCodeInfo = scanCodeInfo;
   }
 
-  public WxMpXmlMessage.SendPicsInfo getSendPicsInfo() {
+  public SendPicsInfo getSendPicsInfo() {
     return this.sendPicsInfo;
   }
 
-  public void setSendPicsInfo(WxMpXmlMessage.SendPicsInfo sendPicsInfo) {
+  public void setSendPicsInfo(SendPicsInfo sendPicsInfo) {
     this.sendPicsInfo = sendPicsInfo;
   }
 
-  public WxMpXmlMessage.SendLocationInfo getSendLocationInfo() {
+  public SendLocationInfo getSendLocationInfo() {
     return this.sendLocationInfo;
   }
 
   public void setSendLocationInfo(
-      WxMpXmlMessage.SendLocationInfo sendLocationInfo) {
+    SendLocationInfo sendLocationInfo) {
     this.sendLocationInfo = sendLocationInfo;
   }
 
@@ -719,163 +984,81 @@ public class WxMpXmlMessage implements Serializable {
     this.fromKfAccount = fromKfAccount;
   }
 
-  @XStreamAlias("ScanCodeInfo")
-  public static class ScanCodeInfo {
-    @Override
-    public String toString() {
-      return ToStringUtils.toSimpleString(this);
-    }
-
-    @XStreamAlias("ScanType")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String scanType;
-
-    @XStreamAlias("ScanResult")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String scanResult;
-
-    /**
-     * 扫描类型，一般是qrcode
-     */
-    public String getScanType() {
-
-      return this.scanType;
-    }
-
-    public void setScanType(String scanType) {
-      this.scanType = scanType;
-    }
-
-    /**
-     * 扫描结果，即二维码对应的字符串信息
-     */
-    public String getScanResult() {
-      return this.scanResult;
-    }
-
-    public void setScanResult(String scanResult) {
-      this.scanResult = scanResult;
-    }
-
+  public String getIsRestoreMemberCard() {
+    return isRestoreMemberCard;
   }
 
-  @XStreamAlias("SendPicsInfo")
-  public static class SendPicsInfo {
-    @Override
-    public String toString() {
-      return ToStringUtils.toSimpleString(this);
-    }
-
-    @XStreamAlias("Count")
-    private Long count;
-
-    @XStreamAlias("PicList")
-    protected final List<Item> picList = new ArrayList<>();
-
-    public Long getCount() {
-      return this.count;
-    }
-
-    public void setCount(Long count) {
-      this.count = count;
-    }
-
-    public List<Item> getPicList() {
-      return this.picList;
-    }
-
-    @XStreamAlias("item")
-    public static class Item {
-      @Override
-      public String toString() {
-        return ToStringUtils.toSimpleString(this);
-      }
-
-      @XStreamAlias("PicMd5Sum")
-      @XStreamConverter(value = XStreamCDataConverter.class)
-      private String picMd5Sum;
-
-      public String getPicMd5Sum() {
-        return this.picMd5Sum;
-      }
-
-      public void setPicMd5Sum(String picMd5Sum) {
-        this.picMd5Sum = picMd5Sum;
-      }
-    }
+  public void setIsRestoreMemberCard(String isRestoreMemberCard) {
+    this.isRestoreMemberCard = isRestoreMemberCard;
   }
 
-  @XStreamAlias("SendLocationInfo")
-  public static class SendLocationInfo {
+  public String getOuterStr() {
+    return outerStr;
+  }
 
-    @XStreamAlias("Location_X")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String locationX;
+  public void setOuterStr(String outerStr) {
+    this.outerStr = outerStr;
+  }
 
-    @XStreamAlias("Location_Y")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String locationY;
+  public String getIsReturnBack() {
+    return isReturnBack;
+  }
 
-    @XStreamAlias("Scale")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String scale;
+  public void setIsReturnBack(String isReturnBack) {
+    this.isReturnBack = isReturnBack;
+  }
 
-    @XStreamAlias("Label")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String label;
+  public String getIsChatRoom() {
+    return isChatRoom;
+  }
 
-    @XStreamAlias("Poiname")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String poiname;
+  public void setIsChatRoom(String isChatRoom) {
+    this.isChatRoom = isChatRoom;
+  }
 
-    @Override
-    public String toString() {
-      return ToStringUtils.toSimpleString(this);
-    }
+  public String getConsumeSource() {
+    return this.consumeSource;
+  }
 
-    public String getLocationX() {
-      return this.locationX;
-    }
+  public void setConsumeSource(String consumeSource) {
+    this.consumeSource = consumeSource;
+  }
 
-    public void setLocationX(String locationX) {
-      this.locationX = locationX;
-    }
+  public String getLocationName() {
+    return this.locationName;
+  }
 
-    public String getLocationY() {
-      return this.locationY;
-    }
+  public void setLocationName(String locationName) {
+    this.locationName = locationName;
+  }
 
-    public void setLocationY(String locationY) {
-      this.locationY = locationY;
-    }
+  public String getStaffOpenId() {
+    return this.staffOpenId;
+  }
 
-    public String getScale() {
-      return this.scale;
-    }
+  public void setStaffOpenId(String staffOpenId) {
+    this.staffOpenId = staffOpenId;
+  }
 
-    public void setScale(String scale) {
-      this.scale = scale;
-    }
+  public String getVerifyCode() {
+    return this.verifyCode;
+  }
 
-    public String getLabel() {
-      return this.label;
-    }
+  public void setVerifyCode(String verifyCode) {
+    this.verifyCode = verifyCode;
+  }
 
-    public void setLabel(String label) {
-      this.label = label;
-    }
+  public String getRemarkAmount() {
+    return this.remarkAmount;
+  }
 
-    public String getPoiname() {
-      return this.poiname;
-    }
-
-    public void setPoiname(String poiname) {
-      this.poiname = poiname;
-    }
+  public void setRemarkAmount(String remarkAmount) {
+    this.remarkAmount = remarkAmount;
   }
 
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
   }
+
 }

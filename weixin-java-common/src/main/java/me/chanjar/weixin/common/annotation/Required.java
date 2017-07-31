@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * 标识某个字段是否是必填的
- * 
+ * <p>
  * Created by Binary Wang on 2016/9/25.
- * @author binarywang (https://github.com/binarywang)
  *
+ * @author binarywang (https://github.com/binarywang)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

@@ -16,9 +16,9 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 import java.util.List;
 
 /**
- *  Created by Binary Wang on 2016/9/26.
- * @author binarywang (https://github.com/binarywang)
+ * Created by Binary Wang on 2016/9/26.
  *
+ * @author binarywang (https://github.com/binarywang)
  */
 public class WxMpStoreServiceImpl implements WxMpStoreService {
   private static final String API_BASE_URL = "http://api.weixin.qq.com/cgi-bin/poi";
@@ -45,21 +45,21 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
   public WxMpStoreBaseInfo get(String poiId) throws WxErrorException {
     String url = API_BASE_URL + "/getpoi";
     JsonObject paramObject = new JsonObject();
-    paramObject.addProperty("poi_id",poiId);
+    paramObject.addProperty("poi_id", poiId);
     String response = this.wxMpService.post(url, paramObject.toString());
     WxError wxError = WxError.fromJson(response);
     if (wxError.getErrorCode() != 0) {
       throw new WxErrorException(wxError);
     }
     return WxMpStoreBaseInfo.fromJson(new JsonParser().parse(response).getAsJsonObject()
-        .get("business").getAsJsonObject().get("base_info").toString());
+      .get("business").getAsJsonObject().get("base_info").toString());
   }
 
   @Override
   public void delete(String poiId) throws WxErrorException {
     String url = API_BASE_URL + "/delpoi";
     JsonObject paramObject = new JsonObject();
-    paramObject.addProperty("poi_id",poiId);
+    paramObject.addProperty("poi_id", poiId);
     String response = this.wxMpService.post(url, paramObject.toString());
     WxError wxError = WxError.fromJson(response);
     if (wxError.getErrorCode() != 0) {
@@ -69,7 +69,7 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
 
   @Override
   public WxMpStoreListResult list(int begin, int limit)
-      throws WxErrorException {
+    throws WxErrorException {
     String url = API_BASE_URL + "/getpoilist";
     JsonObject params = new JsonObject();
     params.addProperty("begin", begin);
@@ -125,8 +125,9 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
     }
 
     return WxMpGsonBuilder.create().fromJson(
-        new JsonParser().parse(response).getAsJsonObject().get("category_list"),
-        new TypeToken<List<String>>(){}.getType());
+      new JsonParser().parse(response).getAsJsonObject().get("category_list"),
+      new TypeToken<List<String>>() {
+      }.getType());
   }
 
 }

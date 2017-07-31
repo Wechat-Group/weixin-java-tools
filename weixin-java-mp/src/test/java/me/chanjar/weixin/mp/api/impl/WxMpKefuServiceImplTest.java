@@ -3,25 +3,23 @@ package me.chanjar.weixin.mp.api.impl;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.ApiTestModule;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.WxXmlMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.api.test.ApiTestModule;
+import me.chanjar.weixin.mp.api.test.TestConfigStorage;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.kefu.request.WxMpKfAccountRequest;
 import me.chanjar.weixin.mp.bean.kefu.result.*;
 import org.joda.time.DateTime;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+import org.testng.*;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.util.Date;
 
 /**
  * 测试客服相关接口
- * @author Binary Wang
  *
+ * @author Binary Wang
  */
 @Test
 @Guice(modules = ApiTestModule.class)
@@ -31,7 +29,7 @@ public class WxMpKefuServiceImplTest {
   protected WxMpService wxService;
 
   public void testSendKefuMpNewsMessage() throws WxErrorException {
-    WxXmlMpInMemoryConfigStorage configStorage = (WxXmlMpInMemoryConfigStorage) this.wxService
+    TestConfigStorage configStorage = (TestConfigStorage) this.wxService
       .getWxMpConfigStorage();
     WxMpKefuMessage message = new WxMpKefuMessage();
     message.setMsgType(WxConsts.CUSTOM_MSG_MPNEWS);
@@ -42,26 +40,26 @@ public class WxMpKefuServiceImplTest {
   }
 
   public void testSendKefuMessage() throws WxErrorException {
-    WxXmlMpInMemoryConfigStorage configStorage = (WxXmlMpInMemoryConfigStorage) this.wxService
-        .getWxMpConfigStorage();
+    TestConfigStorage configStorage = (TestConfigStorage) this.wxService
+      .getWxMpConfigStorage();
     WxMpKefuMessage message = new WxMpKefuMessage();
     message.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
     message.setToUser(configStorage.getOpenid());
     message.setContent(
-        "欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>");
+      "欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>");
 
     this.wxService.getKefuService().sendKefuMessage(message);
   }
 
   public void testSendKefuMessageWithKfAccount() throws WxErrorException {
-    WxXmlMpInMemoryConfigStorage configStorage = (WxXmlMpInMemoryConfigStorage) this.wxService
-        .getWxMpConfigStorage();
+    TestConfigStorage configStorage = (TestConfigStorage) this.wxService
+      .getWxMpConfigStorage();
     WxMpKefuMessage message = new WxMpKefuMessage();
     message.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
     message.setToUser(configStorage.getOpenid());
     message.setKfAccount(configStorage.getKfAccount());
     message.setContent(
-        "欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>");
+      "欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>");
 
     this.wxService.getKefuService().sendKefuMessage(message);
   }
@@ -76,7 +74,7 @@ public class WxMpKefuServiceImplTest {
 
   public void testKfOnlineList() throws WxErrorException {
     WxMpKfOnlineList kfOnlineList = this.wxService.getKefuService()
-        .kfOnlineList();
+      .kfOnlineList();
     Assert.assertNotNull(kfOnlineList);
     for (WxMpKfInfo k : kfOnlineList.getKfOnlineList()) {
       System.err.println(k);
@@ -85,41 +83,41 @@ public class WxMpKefuServiceImplTest {
 
   @DataProvider
   public Object[][] getKfAccount() {
-    WxXmlMpInMemoryConfigStorage configStorage = (WxXmlMpInMemoryConfigStorage) this.wxService
-        .getWxMpConfigStorage();
-    return new Object[][] { { configStorage.getKfAccount() } };
+    TestConfigStorage configStorage = (TestConfigStorage) this.wxService
+      .getWxMpConfigStorage();
+    return new Object[][]{{configStorage.getKfAccount()}};
   }
 
   @Test(dataProvider = "getKfAccount")
   public void testKfAccountAdd(String kfAccount) throws WxErrorException {
     WxMpKfAccountRequest request = WxMpKfAccountRequest.builder()
-        .kfAccount(kfAccount).nickName("我晕").build();
+      .kfAccount(kfAccount).nickName("我晕").build();
     Assert.assertTrue(this.wxService.getKefuService().kfAccountAdd(request));
   }
 
   @Test(dependsOnMethods = {
-      "testKfAccountAdd" }, dataProvider = "getKfAccount")
+    "testKfAccountAdd"}, dataProvider = "getKfAccount")
   public void testKfAccountUpdate(String kfAccount) throws WxErrorException {
     WxMpKfAccountRequest request = WxMpKfAccountRequest.builder()
-        .kfAccount(kfAccount).nickName("我晕").build();
+      .kfAccount(kfAccount).nickName("我晕").build();
     Assert.assertTrue(this.wxService.getKefuService().kfAccountUpdate(request));
   }
 
   @Test(dependsOnMethods = {
-          "testKfAccountAdd" }, dataProvider = "getKfAccount")
+    "testKfAccountAdd"}, dataProvider = "getKfAccount")
   public void testKfAccountInviteWorker(String kfAccount) throws WxErrorException {
     WxMpKfAccountRequest request = WxMpKfAccountRequest.builder()
-        .kfAccount(kfAccount).inviteWx("    ").build();
+      .kfAccount(kfAccount).inviteWx("    ").build();
     Assert.assertTrue(this.wxService.getKefuService().kfAccountInviteWorker(request));
   }
 
   @Test(dependsOnMethods = {
-      "testKfAccountUpdate" }, dataProvider = "getKfAccount")
+    "testKfAccountUpdate"}, dataProvider = "getKfAccount")
   public void testKfAccountUploadHeadImg(String kfAccount)
-      throws WxErrorException {
+    throws WxErrorException {
     File imgFile = new File("src\\test\\resources\\mm.jpeg");
     boolean result = this.wxService.getKefuService()
-        .kfAccountUploadHeadImg(kfAccount, imgFile);
+      .kfAccountUploadHeadImg(kfAccount, imgFile);
     Assert.assertTrue(result);
   }
 
@@ -131,33 +129,33 @@ public class WxMpKefuServiceImplTest {
 
   @DataProvider
   public Object[][] getKfAccountAndOpenid() {
-    WxXmlMpInMemoryConfigStorage configStorage = (WxXmlMpInMemoryConfigStorage) this.wxService
-        .getWxMpConfigStorage();
-    return new Object[][] {
-        { configStorage.getKfAccount(), configStorage.getOpenid() } };
+    TestConfigStorage configStorage = (TestConfigStorage) this.wxService
+      .getWxMpConfigStorage();
+    return new Object[][]{
+      {configStorage.getKfAccount(), configStorage.getOpenid()}};
   }
 
   @Test(dataProvider = "getKfAccountAndOpenid")
   public void testKfSessionCreate(String kfAccount, String openid)
-      throws WxErrorException {
+    throws WxErrorException {
     boolean result = this.wxService.getKefuService().kfSessionCreate(openid,
-        kfAccount);
+      kfAccount);
     Assert.assertTrue(result);
   }
 
   @Test(dataProvider = "getKfAccountAndOpenid")
   public void testKfSessionClose(String kfAccount, String openid)
-      throws WxErrorException {
+    throws WxErrorException {
     boolean result = this.wxService.getKefuService().kfSessionClose(openid,
-        kfAccount);
+      kfAccount);
     Assert.assertTrue(result);
   }
 
   @Test(dataProvider = "getKfAccountAndOpenid")
   public void testKfSessionGet(@SuppressWarnings("unused") String kfAccount,
-      String openid) throws WxErrorException {
+                               String openid) throws WxErrorException {
     WxMpKfSessionGetResult result = this.wxService.getKefuService()
-        .kfSessionGet(openid);
+      .kfSessionGet(openid);
     Assert.assertNotNull(result);
     System.err.println(result);
   }
@@ -165,7 +163,7 @@ public class WxMpKefuServiceImplTest {
   @Test(dataProvider = "getKfAccount")
   public void testKfSessionList(String kfAccount) throws WxErrorException {
     WxMpKfSessionList result = this.wxService.getKefuService()
-        .kfSessionList(kfAccount);
+      .kfSessionList(kfAccount);
     Assert.assertNotNull(result);
     System.err.println(result);
   }
@@ -173,7 +171,7 @@ public class WxMpKefuServiceImplTest {
   @Test
   public void testKfSessionGetWaitCase() throws WxErrorException {
     WxMpKfSessionWaitCaseList result = this.wxService.getKefuService()
-        .kfSessionGetWaitCase();
+      .kfSessionGetWaitCase();
     Assert.assertNotNull(result);
     System.err.println(result);
   }
@@ -182,7 +180,7 @@ public class WxMpKefuServiceImplTest {
   public void testKfMsgList() throws WxErrorException {
     Date startTime = DateTime.now().minusDays(1).toDate();
     Date endTime = DateTime.now().minusDays(0).toDate();
-    WxMpKfMsgList result = this.wxService.getKefuService().kfMsgList(startTime,endTime, 1L, 50);
+    WxMpKfMsgList result = this.wxService.getKefuService().kfMsgList(startTime, endTime, 1L, 50);
     Assert.assertNotNull(result);
     System.err.println(result);
   }
@@ -191,7 +189,7 @@ public class WxMpKefuServiceImplTest {
   public void testKfMsgListAll() throws WxErrorException {
     Date startTime = DateTime.now().minusDays(1).toDate();
     Date endTime = DateTime.now().minusDays(0).toDate();
-    WxMpKfMsgList result = this.wxService.getKefuService().kfMsgList(startTime,endTime);
+    WxMpKfMsgList result = this.wxService.getKefuService().kfMsgList(startTime, endTime);
     Assert.assertNotNull(result);
     System.err.println(result);
   }

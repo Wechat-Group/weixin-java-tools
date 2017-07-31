@@ -63,23 +63,23 @@ public class WxMpXmlOutMusicMessage extends WxMpXmlOutMessage {
   public static class Music {
 
     @XStreamAlias("Title")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String title;
 
     @XStreamAlias("Description")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String description;
 
     @XStreamAlias("ThumbMediaId")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String thumbMediaId;
 
     @XStreamAlias("MusicUrl")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String musicUrl;
 
     @XStreamAlias("HQMusicUrl")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String hqMusicUrl;
 
     public String getTitle() {

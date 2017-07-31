@@ -12,8 +12,8 @@ import java.util.List;
  * 用法:
  * WxMpKefuMessage m = WxMpKefuMessage.NEWS().addArticle(article).toUser(...).build();
  * </pre>
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public final class NewsBuilder extends BaseBuilder<NewsBuilder> {
 

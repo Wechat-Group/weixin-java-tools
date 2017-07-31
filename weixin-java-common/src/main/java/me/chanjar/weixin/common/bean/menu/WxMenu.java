@@ -1,5 +1,8 @@
 package me.chanjar.weixin.common.bean.menu;
 
+import me.chanjar.weixin.common.util.ToStringUtils;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
@@ -7,11 +10,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.chanjar.weixin.common.bean.menu.WxMenuButton;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
-
 /**
- * 企业号菜单
+ * 菜单（公众号和企业号共用的）
  *
  * @author Daniel Qian
  */
@@ -61,9 +61,7 @@ public class WxMenu implements Serializable {
 
   @Override
   public String toString() {
-    return "WxMenu{" +
-            "buttons=" + this.buttons +
-            '}';
+    return ToStringUtils.toSimpleString(this);
   }
 
 }

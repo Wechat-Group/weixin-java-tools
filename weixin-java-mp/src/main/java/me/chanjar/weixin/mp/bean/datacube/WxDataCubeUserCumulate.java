@@ -25,6 +25,13 @@ public class WxDataCubeUserCumulate implements Serializable {
 
   private Integer cumulateUser;
 
+  public static List<WxDataCubeUserCumulate> fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(
+      JSON_PARSER.parse(json).getAsJsonObject().get("list"),
+      new TypeToken<List<WxDataCubeUserCumulate>>() {
+      }.getType());
+  }
+
   public Date getRefDate() {
     return this.refDate;
   }
@@ -44,12 +51,5 @@ public class WxDataCubeUserCumulate implements Serializable {
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
-  }
-
-  public static List<WxDataCubeUserCumulate> fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(
-        JSON_PARSER.parse(json).getAsJsonObject().get("list"),
-        new TypeToken<List<WxDataCubeUserCumulate>>() {
-        }.getType());
   }
 }

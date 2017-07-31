@@ -47,7 +47,7 @@ import java.util.*;
 public class StringManager {
 
   private static final Map<String, Map<Locale, StringManager>> managers =
-          new Hashtable<>();
+    new Hashtable<>();
   private static int LOCALE_CACHE_SIZE = 10;
   /**
    * The ResourceBundle for this StringManager.
@@ -103,7 +103,7 @@ public class StringManager {
    * @param packageName The package name
    */
   public static final synchronized StringManager getManager(
-          String packageName) {
+    String packageName) {
     return getManager(packageName, Locale.getDefault());
   }
 
@@ -116,7 +116,7 @@ public class StringManager {
    * @param locale      The Locale
    */
   public static final synchronized StringManager getManager(
-          String packageName, Locale locale) {
+    String packageName, Locale locale) {
 
     Map<Locale, StringManager> map = managers.get(packageName);
     if (map == null) {
@@ -133,7 +133,7 @@ public class StringManager {
 
         @Override
         protected boolean removeEldestEntry(
-                Map.Entry<Locale, StringManager> eldest) {
+          Map.Entry<Locale, StringManager> eldest) {
           return size() > (LOCALE_CACHE_SIZE - 1);
         }
       };

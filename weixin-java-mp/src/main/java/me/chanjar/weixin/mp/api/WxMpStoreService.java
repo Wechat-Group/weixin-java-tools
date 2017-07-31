@@ -9,10 +9,11 @@ import java.util.List;
 
 /**
  * 门店管理的相关接口代码
- * @author  <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ *
+ * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  *         Created by Binary Wang on 2016-09-23.
  */
-public interface WxMpStoreService {
+public interface WxMpStoreService<H, P> {
   /**
    * <pre>
    * 创建门店
@@ -23,7 +24,6 @@ public interface WxMpStoreService {
    * 详情请见: <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120&token=&lang=zh_CN">微信门店接口</a>
    * 接口格式： http://api.weixin.qq.com/cgi-bin/poi/addpoi?access_token=TOKEN
    * </pre>
-   *
    */
   void add(WxMpStoreBaseInfo request) throws WxErrorException;
 
@@ -37,7 +37,8 @@ public interface WxMpStoreService {
    * 详情请见: <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120&token=&lang=zh_CN">微信门店接口</a>
    * 接口格式：http://api.weixin.qq.com/cgi-bin/poi/getpoi?access_token=TOKEN
    * </pre>
-   * @param poiId  门店Id
+   *
+   * @param poiId 门店Id
    * @throws WxErrorException
    */
   WxMpStoreBaseInfo get(String poiId) throws WxErrorException;
@@ -49,7 +50,8 @@ public interface WxMpStoreService {
    * 详情请见: <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120&token=&lang=zh_CN">微信门店接口</a>
    * 接口格式：http://api.weixin.qq.com/cgi-bin/poi/delpoi?access_token=TOKEN
    * </pre>
-   * @param poiId  门店Id
+   *
+   * @param poiId 门店Id
    * @throws WxErrorException
    */
   void delete(String poiId) throws WxErrorException;
@@ -61,6 +63,7 @@ public interface WxMpStoreService {
    * 详情请见: <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120&token=&lang=zh_CN">微信门店接口</a>
    * 接口格式：http://api.weixin.qq.com/cgi-bin/poi/getpoilist?access_token=TOKEN
    * </pre>
+   *
    * @param begin 开始位置，0 即为从第一条开始查询
    * @param limit 返回数据条数，最大允许50，默认为20
    * @throws WxErrorException
@@ -74,6 +77,7 @@ public interface WxMpStoreService {
    * 详情请见: <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120&token=&lang=zh_CN">微信门店接口</a>
    * 接口格式：http://api.weixin.qq.com/cgi-bin/poi/getpoilist?access_token=TOKEN
    * </pre>
+   *
    * @throws WxErrorException
    */
   List<WxMpStoreInfo> listAll() throws WxErrorException;
@@ -85,6 +89,7 @@ public interface WxMpStoreService {
    * 详情请见: <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120&token=&lang=zh_CN">微信门店接口</a>
    * 接口格式：http://api.weixin.qq.com/cgi-bin/poi/updatepoi?access_token=TOKEN
    * </pre>
+   *
    * @throws WxErrorException
    */
   void update(WxMpStoreBaseInfo info) throws WxErrorException;
@@ -96,6 +101,7 @@ public interface WxMpStoreService {
    * 详情请见: <a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120&token=&lang=zh_CN">微信门店接口</a>
    * 接口格式：http://api.weixin.qq.com/cgi-bin/poi/getwxcategory?access_token=TOKEN
    * </pre>
+   *
    * @throws WxErrorException
    */
   List<String> listCategories() throws WxErrorException;

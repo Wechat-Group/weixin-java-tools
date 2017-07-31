@@ -20,8 +20,7 @@ public class WxError implements Serializable {
   private String json;
 
   public static WxError fromJson(String json) {
-    WxError error = WxGsonBuilder.create().fromJson(json, WxError.class);
-    return error;
+    return WxGsonBuilder.create().fromJson(json, WxError.class);
   }
 
   public static Builder newBuilder() {

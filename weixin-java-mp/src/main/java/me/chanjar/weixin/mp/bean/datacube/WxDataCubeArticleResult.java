@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 图文分析数据接口返回结果对象
+ *
  * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  *         Created by Binary Wang on 2016/8/24.
  */
@@ -108,6 +109,13 @@ public class WxDataCubeArticleResult extends WxDataCubeBaseResult {
    */
   @SerializedName("user_source")
   private Integer userSource;
+
+  public static List<WxDataCubeArticleResult> fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(
+      JSON_PARSER.parse(json).getAsJsonObject().get("list"),
+      new TypeToken<List<WxDataCubeArticleResult>>() {
+      }.getType());
+  }
 
   public Integer getRefHour() {
     return this.refHour;
@@ -211,12 +219,5 @@ public class WxDataCubeArticleResult extends WxDataCubeBaseResult {
 
   public void setUserSource(Integer userSource) {
     this.userSource = userSource;
-  }
-
-  public static List<WxDataCubeArticleResult> fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(
-        JSON_PARSER.parse(json).getAsJsonObject().get("list"),
-        new TypeToken<List<WxDataCubeArticleResult>>() {
-        }.getType());
   }
 }

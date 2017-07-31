@@ -28,10 +28,15 @@ public class WxMpMaterialNews implements Serializable {
     return this.articles == null || this.articles.isEmpty();
   }
 
+  @Override
+  public String toString() {
+    return ToStringUtils.toSimpleString(this);
+  }
+
   /**
    * <pre>
    * 群发图文消息article
-   * 1. thumbMediaId  (必填) 图文消息缩略图的media_id，可以在基础支持-上传多媒体文件接口中获得
+   * 1. thumbMediaId  (必填) 图文消息的封面图片素材id（必须是永久mediaID）
    * 2. author          图文消息的作者
    * 3. title           (必填) 图文消息的标题
    * 4. contentSourceUrl 在图文消息页面点击“阅读原文”后的页面链接
@@ -79,7 +84,7 @@ public class WxMpMaterialNews implements Serializable {
 
     /**
      * 点击图文消息跳转链接
-    */
+     */
     private String url;
 
     public String getThumbMediaId() {
@@ -139,11 +144,11 @@ public class WxMpMaterialNews implements Serializable {
     }
 
     public String getUrl() {
-        return this.url;
+      return this.url;
     }
 
     public void setUrl(String url) {
-        this.url = url;
+      this.url = url;
     }
 
     public String getThumbUrl() {
@@ -158,10 +163,5 @@ public class WxMpMaterialNews implements Serializable {
     public String toString() {
       return ToStringUtils.toSimpleString(this);
     }
-  }
-
-  @Override
-  public String toString() {
-    return ToStringUtils.toSimpleString(this);
   }
 }

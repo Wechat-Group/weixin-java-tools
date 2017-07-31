@@ -6,6 +6,7 @@ public class BaseBuilder<T> {
   protected String msgType;
   protected String toUser;
 
+  @SuppressWarnings("unchecked")
   public T toUser(String toUser) {
     this.toUser = toUser;
     return (T) this;

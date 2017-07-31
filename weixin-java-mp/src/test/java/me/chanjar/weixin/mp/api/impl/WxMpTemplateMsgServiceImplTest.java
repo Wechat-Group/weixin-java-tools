@@ -2,16 +2,16 @@ package me.chanjar.weixin.mp.api.impl;
 
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.ApiTestModule;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.WxXmlMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.api.test.ApiTestModule;
+import me.chanjar.weixin.mp.api.test.TestConfigStorage;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateIndustry;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
-import org.testng.Assert;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.*;
+import org.testng.annotations.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,17 +28,20 @@ public class WxMpTemplateMsgServiceImplTest {
   @Inject
   protected WxMpService wxService;
 
-  @Test(invocationCount = 10, threadPoolSize = 10)
+  @Test(invocationCount = 5, threadPoolSize = 3)
   public void testSendTemplateMsg() throws WxErrorException {
     SimpleDateFormat dateFormat = new SimpleDateFormat(
       "yyyy-MM-dd HH:mm:ss.SSS");
-    WxXmlMpInMemoryConfigStorage configStorage = (WxXmlMpInMemoryConfigStorage) this.wxService
+    TestConfigStorage configStorage = (TestConfigStorage) this.wxService
       .getWxMpConfigStorage();
     WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder()
       .toUser(configStorage.getOpenid())
       .templateId(configStorage.getTemplateId()).build();
     templateMessage.addWxMpTemplateData(
-      new WxMpTemplateData("first", dateFormat.format(new Date())));
+      new WxMpTemplateData("first", dateFormat.format(new Date()), "#FF00FF"));
+    templateMessage.addWxMpTemplateData(
+      new WxMpTemplateData("remark", RandomStringUtils.randomAlphanumeric(100), "#FF00FF"));
+    templateMessage.setUrl(" ");
     String msgId = this.wxService.getTemplateMsgService().sendTemplateMsg(templateMessage);
     Assert.assertNotNull(msgId);
     System.out.println(msgId);
@@ -54,7 +57,7 @@ public class WxMpTemplateMsgServiceImplTest {
   @Test
   public void testSetIndustry() throws Exception {
     WxMpTemplateIndustry industry = new WxMpTemplateIndustry(new WxMpTemplateIndustry.Industry("1"),
-        new WxMpTemplateIndustry.Industry("04"));
+      new WxMpTemplateIndustry.Industry("04"));
     boolean result = this.wxService.getTemplateMsgService().setIndustry(industry);
     Assert.assertTrue(result);
   }

@@ -16,16 +16,16 @@ public class WxMpXmlOutImageMessage extends WxMpXmlOutMessage {
   @XStreamConverter(value = XStreamMediaIdConverter.class)
   private String mediaId;
 
+  public WxMpXmlOutImageMessage() {
+    this.msgType = WxConsts.XML_MSG_IMAGE;
+  }
+
   public String getMediaId() {
     return this.mediaId;
   }
 
   public void setMediaId(String mediaId) {
     this.mediaId = mediaId;
-  }
-
-  public WxMpXmlOutImageMessage() {
-    this.msgType = WxConsts.XML_MSG_IMAGE;
   }
 
 }

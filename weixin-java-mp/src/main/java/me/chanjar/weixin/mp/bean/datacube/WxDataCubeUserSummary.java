@@ -28,6 +28,13 @@ public class WxDataCubeUserSummary implements Serializable {
 
   private Integer cancelUser;
 
+  public static List<WxDataCubeUserSummary> fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(
+      JSON_PARSER.parse(json).getAsJsonObject().get("list"),
+      new TypeToken<List<WxDataCubeUserSummary>>() {
+      }.getType());
+  }
+
   public Date getRefDate() {
     return this.refDate;
   }
@@ -63,12 +70,5 @@ public class WxDataCubeUserSummary implements Serializable {
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
-  }
-
-  public static List<WxDataCubeUserSummary> fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(
-        JSON_PARSER.parse(json).getAsJsonObject().get("list"),
-        new TypeToken<List<WxDataCubeUserSummary>>() {
-        }.getType());
   }
 }

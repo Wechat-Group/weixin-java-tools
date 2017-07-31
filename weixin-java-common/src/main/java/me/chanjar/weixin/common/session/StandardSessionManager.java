@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class StandardSessionManager implements WxSessionManager, InternalSessionManager {
 
   protected static final StringManager sm =
-          StringManager.getManager(Constants.Package);
+    StringManager.getManager(Constants.Package);
   /**
    * The descriptive name of this Manager implementation (for logging).
    */
@@ -82,7 +82,7 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
   public WxSession getSession(String sessionId, boolean create) {
     if (sessionId == null) {
       throw new IllegalStateException
-              (sm.getString("sessionManagerImpl.getSession.ise"));
+        (sm.getString("sessionManagerImpl.getSession.ise"));
     }
 
     InternalSession session = findSession(sessionId);
@@ -135,15 +135,15 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
   public InternalSession createSession(String sessionId) {
     if (sessionId == null) {
       throw new IllegalStateException
-              (sm.getString("sessionManagerImpl.createSession.ise"));
+        (sm.getString("sessionManagerImpl.createSession.ise"));
     }
 
     if ((this.maxActiveSessions >= 0) &&
-            (getActiveSessions() >= this.maxActiveSessions)) {
+      (getActiveSessions() >= this.maxActiveSessions)) {
       this.rejectedSessions++;
       throw new TooManyActiveSessionsException(
-              sm.getString("sessionManagerImpl.createSession.tmase"),
-              this.maxActiveSessions);
+        sm.getString("sessionManagerImpl.createSession.tmase"),
+        this.maxActiveSessions);
     }
 
     // Recycle or create a Session instance

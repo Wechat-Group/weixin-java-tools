@@ -2,7 +2,11 @@ package me.chanjar.weixin.common.bean.menu;
 
 import me.chanjar.weixin.common.util.ToStringUtils;
 
-public class WxMenuRule {
+import java.io.Serializable;
+
+public class WxMenuRule implements Serializable {
+  private static final long serialVersionUID = -4587181819499286670L;
+
   private String tagId;
   private String sex;
   private String country;

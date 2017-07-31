@@ -48,7 +48,7 @@ public interface WxMpUserService {
    * </pre>
    *
    * @param openid 用户openid
-   * @param lang 语言，zh_CN 简体(默认)，zh_TW 繁体，en 英语
+   * @param lang   语言，zh_CN 简体(默认)，zh_TW 繁体，en 英语
    */
   WxMpUser userInfo(String openid, String lang) throws WxErrorException;
 

@@ -19,6 +19,10 @@ public class WxMpKfMsgList {
   @SerializedName("msgid")
   private Long msgId;
 
+  public static WxMpKfMsgList fromJson(String responseContent) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(responseContent, WxMpKfMsgList.class);
+  }
+
   public List<WxMpKfMsgRecord> getRecords() {
     return this.records;
   }
@@ -46,9 +50,5 @@ public class WxMpKfMsgList {
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
-  }
-
-  public static WxMpKfMsgList fromJson(String responseContent) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(responseContent, WxMpKfMsgList.class);
   }
 }

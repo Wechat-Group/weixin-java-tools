@@ -3,6 +3,9 @@ package me.chanjar.weixin.cp.api;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
+import me.chanjar.weixin.cp.message.WxCpMessageHandler;
+import me.chanjar.weixin.cp.message.WxCpMessageMatcher;
+import me.chanjar.weixin.cp.message.WxCpMessageRouter;
 import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
 import org.testng.Assert;
@@ -22,33 +25,33 @@ public class WxCpMessageRouterTest {
   @Test(enabled = false)
   public void prepare(boolean async, StringBuffer sb, WxCpMessageRouter router) {
     router
-            .rule()
-            .async(async)
-            .msgType(WxConsts.XML_MSG_TEXT).event(WxConsts.EVT_CLICK).eventKey("KEY_1").content("CONTENT_1")
-            .handler(new WxEchoCpMessageHandler(sb, "COMBINE_4"))
-            .end()
-            .rule()
-            .async(async)
-            .msgType(WxConsts.XML_MSG_TEXT).event(WxConsts.EVT_CLICK).eventKey("KEY_1")
-            .handler(new WxEchoCpMessageHandler(sb, "COMBINE_3"))
-            .end()
-            .rule()
-            .async(async)
-            .msgType(WxConsts.XML_MSG_TEXT).event(WxConsts.EVT_CLICK)
-            .handler(new WxEchoCpMessageHandler(sb, "COMBINE_2"))
-            .end()
-            .rule().async(async).msgType(WxConsts.XML_MSG_TEXT).handler(new WxEchoCpMessageHandler(sb, WxConsts.XML_MSG_TEXT)).end()
-            .rule().async(async).event(WxConsts.EVT_CLICK).handler(new WxEchoCpMessageHandler(sb, WxConsts.EVT_CLICK)).end()
-            .rule().async(async).eventKey("KEY_1").handler(new WxEchoCpMessageHandler(sb, "KEY_1")).end()
-            .rule().async(async).content("CONTENT_1").handler(new WxEchoCpMessageHandler(sb, "CONTENT_1")).end()
-            .rule().async(async).rContent(".*bc.*").handler(new WxEchoCpMessageHandler(sb, "abcd")).end()
-            .rule().async(async).matcher(new WxCpMessageMatcher() {
+      .rule()
+      .async(async)
+      .msgType(WxConsts.XML_MSG_TEXT).event(WxConsts.EVT_CLICK).eventKey("KEY_1").content("CONTENT_1")
+      .handler(new WxEchoCpMessageHandler(sb, "COMBINE_4"))
+      .end()
+      .rule()
+      .async(async)
+      .msgType(WxConsts.XML_MSG_TEXT).event(WxConsts.EVT_CLICK).eventKey("KEY_1")
+      .handler(new WxEchoCpMessageHandler(sb, "COMBINE_3"))
+      .end()
+      .rule()
+      .async(async)
+      .msgType(WxConsts.XML_MSG_TEXT).event(WxConsts.EVT_CLICK)
+      .handler(new WxEchoCpMessageHandler(sb, "COMBINE_2"))
+      .end()
+      .rule().async(async).msgType(WxConsts.XML_MSG_TEXT).handler(new WxEchoCpMessageHandler(sb, WxConsts.XML_MSG_TEXT)).end()
+      .rule().async(async).event(WxConsts.EVT_CLICK).handler(new WxEchoCpMessageHandler(sb, WxConsts.EVT_CLICK)).end()
+      .rule().async(async).eventKey("KEY_1").handler(new WxEchoCpMessageHandler(sb, "KEY_1")).end()
+      .rule().async(async).content("CONTENT_1").handler(new WxEchoCpMessageHandler(sb, "CONTENT_1")).end()
+      .rule().async(async).rContent(".*bc.*").handler(new WxEchoCpMessageHandler(sb, "abcd")).end()
+      .rule().async(async).matcher(new WxCpMessageMatcher() {
       @Override
       public boolean match(WxCpXmlMessage message) {
         return "strangeformat".equals(message.getFormat());
       }
     }).handler(new WxEchoCpMessageHandler(sb, "matcher")).end()
-            .rule().async(async).handler(new WxEchoCpMessageHandler(sb, "ALL")).end();
+      .rule().async(async).handler(new WxEchoCpMessageHandler(sb, "ALL")).end();
   }
 
   @Test(dataProvider = "messages-1")
@@ -138,16 +141,16 @@ public class WxCpMessageRouterTest {
 
 
     return new Object[][]{
-            new Object[]{message1, WxConsts.XML_MSG_TEXT + ","},
-            new Object[]{message2, WxConsts.EVT_CLICK + ","},
-            new Object[]{message3, "KEY_1,"},
-            new Object[]{message4, "CONTENT_1,"},
-            new Object[]{message5, "ALL,"},
-            new Object[]{message6, "abcd,"},
-            new Object[]{message7, "matcher,"},
-            new Object[]{c2, "COMBINE_2,"},
-            new Object[]{c3, "COMBINE_3,"},
-            new Object[]{c4, "COMBINE_4,"}
+      new Object[]{message1, WxConsts.XML_MSG_TEXT + ","},
+      new Object[]{message2, WxConsts.EVT_CLICK + ","},
+      new Object[]{message3, "KEY_1,"},
+      new Object[]{message4, "CONTENT_1,"},
+      new Object[]{message5, "ALL,"},
+      new Object[]{message6, "abcd,"},
+      new Object[]{message7, "matcher,"},
+      new Object[]{c2, "COMBINE_2,"},
+      new Object[]{c3, "COMBINE_3,"},
+      new Object[]{c4, "COMBINE_4,"}
     };
 
   }
@@ -162,7 +165,7 @@ public class WxCpMessageRouterTest {
     ism.setBackgroundProcessorDelay(1);
 
     return new Object[][]{
-            new Object[]{ism}
+      new Object[]{ism}
     };
 
   }
@@ -174,8 +177,8 @@ public class WxCpMessageRouterTest {
     final WxCpMessageRouter router = new WxCpMessageRouter(null);
     router.setSessionManager(ism);
     router
-            .rule().async(false).handler(new WxSessionMessageHandler()).next()
-            .rule().async(false).handler(new WxSessionMessageHandler()).end();
+      .rule().async(false).handler(new WxSessionMessageHandler()).next()
+      .rule().async(false).handler(new WxSessionMessageHandler()).end();
 
     WxCpXmlMessage msg = new WxCpXmlMessage();
     msg.setFromUserName("abc");
@@ -194,8 +197,8 @@ public class WxCpMessageRouterTest {
       final WxCpMessageRouter router = new WxCpMessageRouter(null);
       router.setSessionManager(ism);
       router
-              .rule().async(false).handler(new WxSessionMessageHandler()).next()
-              .rule().async(true).handler(new WxSessionMessageHandler()).end();
+        .rule().async(false).handler(new WxSessionMessageHandler()).next()
+        .rule().async(true).handler(new WxSessionMessageHandler()).end();
 
       WxCpXmlMessage msg = new WxCpXmlMessage();
       msg.setFromUserName("abc");
@@ -208,8 +211,8 @@ public class WxCpMessageRouterTest {
       final WxCpMessageRouter router = new WxCpMessageRouter(null);
       router.setSessionManager(ism);
       router
-              .rule().async(true).handler(new WxSessionMessageHandler()).next()
-              .rule().async(false).handler(new WxSessionMessageHandler()).end();
+        .rule().async(true).handler(new WxSessionMessageHandler()).next()
+        .rule().async(false).handler(new WxSessionMessageHandler()).end();
 
       WxCpXmlMessage msg = new WxCpXmlMessage();
       msg.setFromUserName("abc");
@@ -228,8 +231,8 @@ public class WxCpMessageRouterTest {
     final WxCpMessageRouter router = new WxCpMessageRouter(null);
     router.setSessionManager(ism);
     router
-            .rule().async(true).handler(new WxSessionMessageHandler()).next()
-            .rule().async(true).handler(new WxSessionMessageHandler()).end();
+      .rule().async(true).handler(new WxSessionMessageHandler()).next()
+      .rule().async(true).handler(new WxSessionMessageHandler()).end();
 
     WxCpXmlMessage msg = new WxCpXmlMessage();
     msg.setFromUserName("abc");
@@ -248,7 +251,7 @@ public class WxCpMessageRouterTest {
       final WxCpMessageRouter router = new WxCpMessageRouter(null);
       router.setSessionManager(ism);
       router
-              .rule().async(false).handler(new WxSessionMessageHandler()).end();
+        .rule().async(false).handler(new WxSessionMessageHandler()).end();
 
       WxCpXmlMessage msg = new WxCpXmlMessage();
       msg.setFromUserName("abc");
@@ -262,7 +265,7 @@ public class WxCpMessageRouterTest {
       final WxCpMessageRouter router = new WxCpMessageRouter(null);
       router.setSessionManager(ism);
       router
-              .rule().async(true).handler(new WxSessionMessageHandler()).end();
+        .rule().async(true).handler(new WxSessionMessageHandler()).end();
 
       WxCpXmlMessage msg = new WxCpXmlMessage();
       msg.setFromUserName("abc");

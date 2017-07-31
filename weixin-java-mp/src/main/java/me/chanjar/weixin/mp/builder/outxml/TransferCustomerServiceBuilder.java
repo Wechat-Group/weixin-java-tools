@@ -23,7 +23,7 @@ public final class TransferCustomerServiceBuilder extends BaseBuilder<TransferCu
   public WxMpXmlOutTransferKefuMessage build() {
     WxMpXmlOutTransferKefuMessage m = new WxMpXmlOutTransferKefuMessage();
     setCommon(m);
-    if(StringUtils.isNotBlank(this.kfAccount)){
+    if (StringUtils.isNotBlank(this.kfAccount)) {
       WxMpXmlOutTransferKefuMessage.TransInfo transInfo = new WxMpXmlOutTransferKefuMessage.TransInfo();
       transInfo.setKfAccount(this.kfAccount);
       m.setTransInfo(transInfo);

@@ -40,7 +40,7 @@ public class WxMpUserServiceImpl implements WxMpUserService {
     String url = API_URL_PREFIX + "/info";
     lang = lang == null ? "zh_CN" : lang;
     String responseContent = this.wxMpService.get(url,
-        "openid=" + openid + "&lang=" + lang);
+      "openid=" + openid + "&lang=" + lang);
     return WxMpUser.fromJson(responseContent);
   }
 
@@ -48,13 +48,13 @@ public class WxMpUserServiceImpl implements WxMpUserService {
   public WxMpUserList userList(String next_openid) throws WxErrorException {
     String url = API_URL_PREFIX + "/get";
     String responseContent = this.wxMpService.get(url,
-        next_openid == null ? null : "next_openid=" + next_openid);
+      next_openid == null ? null : "next_openid=" + next_openid);
     return WxMpUserList.fromJson(responseContent);
   }
 
   @Override
   public List<WxMpUser> userInfoList(List<String> openids)
-      throws WxErrorException {
+    throws WxErrorException {
     return this.userInfoList(new WxMpUserQuery(openids));
   }
 
@@ -62,7 +62,7 @@ public class WxMpUserServiceImpl implements WxMpUserService {
   public List<WxMpUser> userInfoList(WxMpUserQuery userQuery) throws WxErrorException {
     String url = API_URL_PREFIX + "/info/batchget";
     String responseContent = this.wxMpService.post(url,
-        userQuery.toJsonString());
+      userQuery.toJsonString());
     return WxMpUser.fromJsonList(responseContent);
   }
 

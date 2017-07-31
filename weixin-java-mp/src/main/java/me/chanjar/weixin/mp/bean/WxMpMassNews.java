@@ -36,6 +36,11 @@ public class WxMpMassNews implements Serializable {
     return this.articles == null || this.articles.isEmpty();
   }
 
+  @Override
+  public String toString() {
+    return ToStringUtils.toSimpleString(this);
+  }
+
   /**
    * <pre>
    * 群发图文消息article
@@ -140,10 +145,5 @@ public class WxMpMassNews implements Serializable {
     public String toString() {
       return ToStringUtils.toSimpleString(this);
     }
-  }
-
-  @Override
-  public String toString() {
-    return ToStringUtils.toSimpleString(this);
   }
 }

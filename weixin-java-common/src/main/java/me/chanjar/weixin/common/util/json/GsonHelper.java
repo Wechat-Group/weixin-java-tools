@@ -9,12 +9,12 @@
 package me.chanjar.weixin.common.util.json;
 
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 
 public class GsonHelper {
@@ -128,6 +128,20 @@ public class GsonHelper {
     }
 
     return result.toArray(new Integer[0]);
+  }
+
+  public static Long[] getLongArray(JsonObject o, String string) {
+    JsonArray jsonArray = getAsJsonArray(o.getAsJsonArray(string));
+    if (jsonArray == null) {
+      return null;
+    }
+
+    List<Long> result = Lists.newArrayList();
+    for (int i = 0; i < jsonArray.size(); i++) {
+      result.add(jsonArray.get(i).getAsLong());
+    }
+
+    return result.toArray(new Long[0]);
   }
 
   public static JsonArray getAsJsonArray(JsonElement element) {

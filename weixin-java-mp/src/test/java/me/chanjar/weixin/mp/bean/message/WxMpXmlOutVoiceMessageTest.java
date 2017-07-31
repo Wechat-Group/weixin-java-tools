@@ -1,7 +1,7 @@
 package me.chanjar.weixin.mp.bean.message;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.*;
+import org.testng.annotations.*;
 
 @Test
 public class WxMpXmlOutVoiceMessageTest {
@@ -14,12 +14,12 @@ public class WxMpXmlOutVoiceMessageTest {
     m.setToUserName("to");
 
     String expected = "<xml>"
-        + "<ToUserName><![CDATA[to]]></ToUserName>"
-        + "<FromUserName><![CDATA[from]]></FromUserName>"
-        + "<CreateTime>1122</CreateTime>"
-        + "<MsgType><![CDATA[voice]]></MsgType>"
-        + "<Voice><MediaId><![CDATA[ddfefesfsdfef]]></MediaId></Voice>"
-        + "</xml>";
+      + "<ToUserName><![CDATA[to]]></ToUserName>"
+      + "<FromUserName><![CDATA[from]]></FromUserName>"
+      + "<CreateTime>1122</CreateTime>"
+      + "<MsgType><![CDATA[voice]]></MsgType>"
+      + "<Voice><MediaId><![CDATA[ddfefesfsdfef]]></MediaId></Voice>"
+      + "</xml>";
     System.out.println(m.toXml());
     Assert.assertEquals(m.toXml().replaceAll("\\s", ""), expected.replaceAll("\\s", ""));
   }
@@ -27,22 +27,22 @@ public class WxMpXmlOutVoiceMessageTest {
   public void testBuild() {
     WxMpXmlOutVoiceMessage m = WxMpXmlOutMessage.VOICE().mediaId("ddfefesfsdfef").fromUser("from").toUser("to").build();
     String expected = "<xml>"
-        + "<ToUserName><![CDATA[to]]></ToUserName>"
-        + "<FromUserName><![CDATA[from]]></FromUserName>"
-        + "<CreateTime>1122</CreateTime>"
-        + "<MsgType><![CDATA[voice]]></MsgType>"
-        + "<Voice><MediaId><![CDATA[ddfefesfsdfef]]></MediaId></Voice>"
-        + "</xml>";
+      + "<ToUserName><![CDATA[to]]></ToUserName>"
+      + "<FromUserName><![CDATA[from]]></FromUserName>"
+      + "<CreateTime>1122</CreateTime>"
+      + "<MsgType><![CDATA[voice]]></MsgType>"
+      + "<Voice><MediaId><![CDATA[ddfefesfsdfef]]></MediaId></Voice>"
+      + "</xml>";
     System.out.println(m.toXml());
     Assert.assertEquals(
-        m
+      m
         .toXml()
         .replaceAll("\\s", "")
         .replaceAll("<CreateTime>.*?</CreateTime>", ""),
-        expected
+      expected
         .replaceAll("\\s", "")
         .replaceAll("<CreateTime>.*?</CreateTime>", "")
-        );
+    );
   }
 
 }

@@ -31,7 +31,7 @@ public class WxMpKfMsgRecord {
   @SerializedName("text")
   private String text;
 
-   /**
+  /**
    * time	操作时间，unix时间戳
    */
   @SerializedName("time")

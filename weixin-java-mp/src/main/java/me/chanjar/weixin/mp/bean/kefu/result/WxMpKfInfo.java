@@ -8,8 +8,8 @@ import java.io.Serializable;
 
 /**
  * 客服基本信息以及客服在线状态信息
- * @author Binary Wang
  *
+ * @author Binary Wang
  */
 public class WxMpKfInfo implements Serializable {
   private static final long serialVersionUID = -5877300750666022290L;
@@ -63,7 +63,7 @@ public class WxMpKfInfo implements Serializable {
   private String inviteStatus;
 
   /**
-   *  status 客服在线状态，目前为：1、web 在线
+   * status 客服在线状态，目前为：1、web 在线
    */
   @SerializedName("status")
   private Integer status;

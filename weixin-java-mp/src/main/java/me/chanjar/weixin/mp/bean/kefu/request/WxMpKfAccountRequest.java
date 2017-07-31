@@ -1,12 +1,10 @@
 package me.chanjar.weixin.mp.bean.kefu.request;
 
-import java.io.Serializable;
-
+import com.google.gson.annotations.SerializedName;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import com.google.gson.annotations.SerializedName;
-
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import java.io.Serializable;
 
 public class WxMpKfAccountRequest implements Serializable {
   private static final long serialVersionUID = -5451863610674856927L;
@@ -16,7 +14,7 @@ public class WxMpKfAccountRequest implements Serializable {
    */
   @SerializedName("kf_account")
   private String kfAccount;
-  
+
   /**
    * nickname   客服昵称，最长6个汉字或12个英文字符
    */
@@ -28,12 +26,16 @@ public class WxMpKfAccountRequest implements Serializable {
    */
   @SerializedName("invite_wx")
   private String inviteWx;
-  
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this);
   }
-  
+
   public String toJson() {
     return WxMpGsonBuilder.INSTANCE.create().toJson(this);
   }
@@ -54,10 +56,6 @@ public class WxMpKfAccountRequest implements Serializable {
     this.nickName = nickName;
   }
 
-  public static Builder builder() {
-      return new Builder();
-  }
-
   public String getInviteWx() {
     return this.inviteWx;
   }
@@ -67,39 +65,39 @@ public class WxMpKfAccountRequest implements Serializable {
   }
 
   public static class Builder {
-      private String kfAccount;
-      private String nickName;
-      private String inviteWx;
+    private String kfAccount;
+    private String nickName;
+    private String inviteWx;
 
-      public Builder kfAccount(String kfAccount) {
-          this.kfAccount = kfAccount;
-          return this;
-      }
+    public Builder kfAccount(String kfAccount) {
+      this.kfAccount = kfAccount;
+      return this;
+    }
 
-      public Builder nickName(String nickName) {
-          this.nickName = nickName;
-          return this;
-      }
+    public Builder nickName(String nickName) {
+      this.nickName = nickName;
+      return this;
+    }
 
-      public Builder inviteWx(String inviteWx) {
-        this.inviteWx = inviteWx;
-        return this;
-      }
+    public Builder inviteWx(String inviteWx) {
+      this.inviteWx = inviteWx;
+      return this;
+    }
 
-      public Builder from(WxMpKfAccountRequest origin) {
-          this.kfAccount(origin.kfAccount);
-          this.nickName(origin.nickName);
-          this.inviteWx(origin.inviteWx);
-          return this;
-      }
+    public Builder from(WxMpKfAccountRequest origin) {
+      this.kfAccount(origin.kfAccount);
+      this.nickName(origin.nickName);
+      this.inviteWx(origin.inviteWx);
+      return this;
+    }
 
-      public WxMpKfAccountRequest build() {
-          WxMpKfAccountRequest m = new WxMpKfAccountRequest();
-          m.kfAccount = this.kfAccount;
-          m.nickName = this.nickName;
-          m.inviteWx = this.inviteWx;
-          return m;
-      }
+    public WxMpKfAccountRequest build() {
+      WxMpKfAccountRequest m = new WxMpKfAccountRequest();
+      m.kfAccount = this.kfAccount;
+      m.nickName = this.nickName;
+      m.inviteWx = this.inviteWx;
+      return m;
+    }
   }
 
 }

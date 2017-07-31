@@ -45,18 +45,18 @@ public class WxMpXmlOutVideoMessage extends WxMpXmlOutMessage {
 
 
   @XStreamAlias("Video")
-    public static class Video {
+  public static class Video {
 
     @XStreamAlias("MediaId")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String mediaId;
 
     @XStreamAlias("Title")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String title;
 
     @XStreamAlias("Description")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String description;
 
     public String getMediaId() {

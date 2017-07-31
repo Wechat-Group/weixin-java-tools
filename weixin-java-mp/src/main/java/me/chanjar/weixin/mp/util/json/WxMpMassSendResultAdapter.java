@@ -15,9 +15,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
 import java.lang.reflect.Type;
 
 /**
- * 
  * @author Daniel Qian
- *
  */
 public class WxMpMassSendResultAdapter implements JsonDeserializer<WxMpMassSendResult> {
 
@@ -40,5 +38,5 @@ public class WxMpMassSendResultAdapter implements JsonDeserializer<WxMpMassSendR
     }
     return sendResult;
   }
-  
+
 }

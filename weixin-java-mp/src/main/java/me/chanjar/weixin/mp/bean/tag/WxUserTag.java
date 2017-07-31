@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 用户标签对象
+ *
  * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  *         Created by Binary Wang on 2016/9/2.
  */
@@ -27,6 +28,19 @@ public class WxUserTag {
    * count 此标签下粉丝数
    */
   private Integer count;
+
+  public static WxUserTag fromJson(String json) {
+    return WxMpGsonBuilder.create().fromJson(
+      new JsonParser().parse(json).getAsJsonObject().get("tag"),
+      WxUserTag.class);
+  }
+
+  public static List<WxUserTag> listFromJson(String json) {
+    return WxMpGsonBuilder.create().fromJson(
+      new JsonParser().parse(json).getAsJsonObject().get("tags"),
+      new TypeToken<List<WxUserTag>>() {
+      }.getType());
+  }
 
   public String getName() {
     return this.name;
@@ -50,18 +64,6 @@ public class WxUserTag {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public static WxUserTag fromJson(String json) {
-    return WxMpGsonBuilder.create().fromJson(
-        new JsonParser().parse(json).getAsJsonObject().get("tag"),
-        WxUserTag.class);
-  }
-
-  public static List<WxUserTag> listFromJson(String json) {
-    return WxMpGsonBuilder.create().fromJson(
-        new JsonParser().parse(json).getAsJsonObject().get("tags"),
-        new TypeToken<List<WxUserTag>>(){}.getType());
   }
 
   public String toJson() {

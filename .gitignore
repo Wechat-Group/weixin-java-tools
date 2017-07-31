@@ -26,6 +26,7 @@ test-config.xml
 /gradle/
 *.bat
 /gradlew
+**/build/
 
 # OSX
 # Icon must end with two \r
@@ -47,3 +48,5 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+/.sonar/
+sonar-project.properties

@@ -25,7 +25,7 @@ public class FileUtils {
     }
 
     tmpFile.deleteOnExit();
-    
+
     try (FileOutputStream fos = new FileOutputStream(tmpFile)) {
       int read = 0;
       byte[] bytes = new byte[1024 * 100];
@@ -35,7 +35,7 @@ public class FileUtils {
 
       fos.flush();
       return tmpFile;
-    }  
+    }
   }
 
   /**

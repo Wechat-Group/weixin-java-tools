@@ -15,12 +15,10 @@ public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
    *
    */
   private static final long serialVersionUID = -4604402850905714772L;
-
-  @XStreamAlias("ArticleCount")
-  protected int articleCount;
-
   @XStreamAlias("Articles")
   protected final List<Item> articles = new ArrayList<>();
+  @XStreamAlias("ArticleCount")
+  protected int articleCount;
 
   public WxMpXmlOutNewsMessage() {
     this.msgType = WxConsts.XML_MSG_NEWS;
@@ -44,19 +42,19 @@ public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
   public static class Item {
 
     @XStreamAlias("Title")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String Title;
 
     @XStreamAlias("Description")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String Description;
 
     @XStreamAlias("PicUrl")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String PicUrl;
 
     @XStreamAlias("Url")
-    @XStreamConverter(value=XStreamCDataConverter.class)
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String Url;
 
     public String getTitle() {

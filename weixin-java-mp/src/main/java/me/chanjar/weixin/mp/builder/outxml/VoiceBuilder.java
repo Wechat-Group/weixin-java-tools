@@ -4,6 +4,7 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutVoiceMessage;
 
 /**
  * 语音消息builder
+ *
  * @author chanjarster
  */
 public final class VoiceBuilder extends BaseBuilder<VoiceBuilder, WxMpXmlOutVoiceMessage> {
