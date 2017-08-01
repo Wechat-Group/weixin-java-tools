@@ -55,7 +55,10 @@ public class WxMpMenu implements Serializable{
     return WxGsonBuilder.create().toJson(this);
   }
 
-  public static class WxMpConditionalMenu {
+  public static class WxMpConditionalMenu implements Serializable {
+
+    private static final long serialVersionUID = -2279946921755382289L;
+
     @SerializedName("button")
     private List<WxMenuButton> buttons;
     @SerializedName("matchrule")
