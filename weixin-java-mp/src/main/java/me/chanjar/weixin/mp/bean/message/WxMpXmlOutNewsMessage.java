@@ -5,6 +5,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,9 @@ public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
 
 
   @XStreamAlias("item")
-  public static class Item {
+  public static class Item implements Serializable {
+
+    private static final long serialVersionUID = -4971456355028904754L;
 
     @XStreamAlias("Title")
     @XStreamConverter(value = XStreamCDataConverter.class)
