@@ -25,6 +25,17 @@ public interface WxMpQrcodeService {
    * @param expireSeconds 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
    */
   WxMpQrCodeTicket qrCodeCreateTmpTicket(int sceneId, Integer expireSeconds) throws WxErrorException;
+  
+  /**
+   * <pre>
+   * 换取临时二维码ticket
+   * 详情请见: <a href="https://mp.weixin.qq.com/wiki?action=doc&id=mp1443433542&t=0.9274944716856435">生成带参数的二维码</a>
+   * </pre>
+   *
+   * @param sceneStr      参数。字符串类型长度现在为1到64
+   * @param expireSeconds 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
+   */
+  WxMpQrCodeTicket qrCodeCreateTmpTicket(String sceneStr, Integer expireSeconds) throws WxErrorException;
 
   /**
    * <pre>
