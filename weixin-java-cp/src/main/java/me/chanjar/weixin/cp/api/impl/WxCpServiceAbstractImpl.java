@@ -131,6 +131,10 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
   @Override
   public WxCpMessageSendResult messageSend(WxCpMessage message) throws WxErrorException {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/message/send";
+    Integer agentId = message.getAgentId();
+    if(null == agentId){
+      message.setAgentId(this.getWxCpConfigStorage().getAgentId());
+    }
     return WxCpMessageSendResult.fromJson(this.post(url, message.toJson()));
   }
 
