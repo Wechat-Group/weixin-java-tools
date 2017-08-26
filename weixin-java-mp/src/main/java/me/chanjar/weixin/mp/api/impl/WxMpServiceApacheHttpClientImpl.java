@@ -65,12 +65,7 @@ public class WxMpServiceApacheHttpClientImpl extends WxMpServiceAbstractImpl<Clo
     Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
     try {
       lock.lock();
-
-      if (forceRefresh) {
-        this.getWxMpConfigStorage().expireAccessToken();
-      }
-
-      if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
+      if (this.getWxMpConfigStorage().isAccessTokenExpired() || forceRefresh) {
         String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
           this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
         try {
