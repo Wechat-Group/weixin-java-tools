@@ -364,6 +364,8 @@ public interface WxMpService {
    */
   WxMpMemberCardService getMemberCardService();
 
+  WxMpCardInvoiceService getCardInvoiceService();
+
   /**
    * 初始化http请求对象
    */
@@ -409,4 +411,6 @@ public interface WxMpService {
   void setMemberCardService(WxMpMemberCardService memberCardService);
 
   void setMassMessageService(WxMpMassMessageService massMessageService);
+
+  void setCardInvoiceService(WxMpCardInvoiceService cardInvoiceService);
 }
