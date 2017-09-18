@@ -44,6 +44,11 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   private WxMpShakeService shakeService = new WxMpShakeServiceImpl(this);
   private WxMpMemberCardService memberCardService = new WxMpMemberCardServiceImpl(this);
   private WxMpMassMessageService massMessageService = new WxMpMassMessageServiceImpl(this);
+  private WxMpCardInvoiceService cardInvoiceService = new WxMpCardInvoiceServiceImpl(this);
+
+
+
+
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -393,6 +398,11 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   }
 
   @Override
+  public WxMpCardInvoiceService getCardInvoiceService() {
+    return cardInvoiceService;
+  }
+
+  @Override
   public void setKefuService(WxMpKefuService kefuService) {
     this.kefuService = kefuService;
   }
@@ -465,5 +475,10 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   @Override
   public void setMassMessageService(WxMpMassMessageService massMessageService) {
     this.massMessageService = massMessageService;
+  }
+
+  @Override
+  public void setCardInvoiceService(WxMpCardInvoiceService cardInvoiceService) {
+    this.cardInvoiceService = cardInvoiceService;
   }
 }
