@@ -507,7 +507,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 //    }
 
     if ("JSAPI".equals(this.getTradeType()) && this.getOpenid() == null && this.getSubOpenid() == null) {
-      throw new WxPayException("当 trade_type是'JSAPI'时未指定openid或subOpenId");
+      throw new WxPayException("当 trade_type是'JSAPI'时未指定openid或sub_openid");
     }
 
     if ("NATIVE".equals(this.getTradeType()) && this.getProductId() == null) {
