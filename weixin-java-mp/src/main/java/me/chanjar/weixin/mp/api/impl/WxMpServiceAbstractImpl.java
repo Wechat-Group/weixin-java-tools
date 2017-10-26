@@ -48,7 +48,6 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
 
-
   @Override
   public boolean checkSignature(String timestamp, String nonce, String signature) {
     try {

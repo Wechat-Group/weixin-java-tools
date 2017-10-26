@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Weixin-java-tool-suite" verbose="1">
+  <test name="API_Test">
+    <classes>
+      <class name="us.wili.jason.weixin.open.api.impl.WxOpenServiceImplTest"></class>
+      <class name="us.wili.jason.weixin.open.api.impl.WxOpenTemplateMsgServiceImplTest"></class>
+    </classes>
+  </test>
+
+  <test name="Bean_Test">
+  </test>
+</suite>

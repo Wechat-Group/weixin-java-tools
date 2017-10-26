@@ -1,0 +1,11 @@
+<xml>
+  <componentAppid></componentAppid>
+  <componentAppsecret></componentAppsecret>
+  <componentToken></componentToken>
+  <componentAesKey></componentAesKey>
+  <componentVerifyTicket></componentVerifyTicket>
+  <authorizerAppid></authorizerAppid>
+  <authorizerRefreshToken></authorizerRefreshToken>
+  <templateId></templateId>
+  <openid></openid>
+</xml>
