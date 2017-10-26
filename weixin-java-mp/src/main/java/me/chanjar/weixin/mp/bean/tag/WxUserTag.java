@@ -14,7 +14,7 @@ import java.util.List;
  *  Created by Binary Wang on 2016/9/2.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxUserTag implements Serializable {
   private static final long serialVersionUID = -7722428695667031252L;

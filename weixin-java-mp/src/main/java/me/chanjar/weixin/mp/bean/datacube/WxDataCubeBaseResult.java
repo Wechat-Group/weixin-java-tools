@@ -12,7 +12,7 @@ import java.io.Serializable;
  *  Created by Binary Wang on 2016/8/25.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public abstract class WxDataCubeBaseResult implements Serializable {
   private static final long serialVersionUID = 8780389911053297600L;

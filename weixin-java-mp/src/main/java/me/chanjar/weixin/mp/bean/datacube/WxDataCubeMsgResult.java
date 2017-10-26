@@ -1,6 +1,5 @@
 package me.chanjar.weixin.mp.bean.datacube;
 
-import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
@@ -9,9 +8,10 @@ import java.util.List;
 
 /**
  * 消息分析数据接口返回结果对象
+ * <p>
+ * Created by Binary Wang on 2016/8/29.
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- *         Created by Binary Wang on 2016/8/29.
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxDataCubeMsgResult extends WxDataCubeBaseResult {
   private static final long serialVersionUID = 6932121822150573659L;

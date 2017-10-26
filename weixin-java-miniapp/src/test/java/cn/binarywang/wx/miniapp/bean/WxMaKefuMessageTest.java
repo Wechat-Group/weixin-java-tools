@@ -19,7 +19,7 @@ public class WxMaKefuMessageTest {
   }
 
   public void testTextBuild() {
-    WxMaKefuMessage reply = WxMaKefuMessage.TEXT().toUser("OPENID").content("sfsfdsdf").build();
+    WxMaKefuMessage reply = WxMaKefuMessage.newTextBuilder().toUser("OPENID").content("sfsfdsdf").build();
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"text\",\"text\":{\"content\":\"sfsfdsdf\"}}");
   }
 
@@ -32,7 +32,7 @@ public class WxMaKefuMessageTest {
   }
 
   public void testImageBuild() {
-    WxMaKefuMessage reply = WxMaKefuMessage.IMAGE().toUser("OPENID").mediaId("MEDIA_ID").build();
+    WxMaKefuMessage reply = WxMaKefuMessage.newImageBuilder().toUser("OPENID").mediaId("MEDIA_ID").build();
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"image\",\"image\":{\"media_id\":\"MEDIA_ID\"}}");
   }
 

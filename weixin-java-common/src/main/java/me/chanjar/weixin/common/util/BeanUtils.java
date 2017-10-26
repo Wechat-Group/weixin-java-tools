@@ -20,8 +20,9 @@ import java.util.Map;
  * <pre>
  * bean操作的一些工具类
  * Created by Binary Wang on 2016-10-21.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  */
 public class BeanUtils {
   private static Logger log = LoggerFactory.getLogger(BeanUtils.class);
@@ -42,15 +43,20 @@ public class BeanUtils {
         boolean isAccessible = field.isAccessible();
         field.setAccessible(true);
         if (field.isAnnotationPresent(Required.class)) {
-          if (field.get(bean) == null || (field.get(bean) instanceof String && StringUtils.isBlank(field.get(bean).toString()))) {
-            //两种情况，一种是值为null，另外一种情况是类型为字符串，但是字符串内容为空的，都认为是没有提供值
+          // 两种情况，一种是值为null，
+          // 另外一种情况是类型为字符串，但是字符串内容为空的，都认为是没有提供值
+          boolean isRequiredMissing = field.get(bean) == null
+            || (field.get(bean) instanceof String
+            && StringUtils.isBlank(field.get(bean).toString())
+          );
+          if (isRequiredMissing) {
             requiredFields.add(field.getName());
           }
         }
         field.setAccessible(isAccessible);
       } catch (SecurityException | IllegalArgumentException
         | IllegalAccessException e) {
-        e.printStackTrace();
+        log.error(e.getMessage(), e);
       }
     }
 
@@ -82,11 +88,13 @@ public class BeanUtils {
 
         if (field.isAnnotationPresent(XStreamAlias.class)) {
           result.put(field.getAnnotation(XStreamAlias.class).value(), field.get(bean).toString());
+        } else {
+          result.put(field.getName(), field.get(bean).toString());
         }
 
         field.setAccessible(isAccessible);
       } catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
-        e.printStackTrace();
+        log.error(e.getMessage(), e);
       }
 
     }

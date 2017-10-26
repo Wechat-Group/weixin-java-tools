@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Binary Wang on 2016-09-19.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxTagListUser implements Serializable {
   private static final long serialVersionUID = -4551768374200676112L;

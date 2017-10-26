@@ -9,8 +9,9 @@ import java.io.Serializable;
 /**
  * <pre>
  * Created by Binary Wang on 2016-11-25.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMpGetSelfMenuInfoResult implements Serializable {
   private static final long serialVersionUID = -5612495636936835166L;

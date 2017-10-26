@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.bean.request;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 
 /**
  * <pre>
@@ -12,9 +13,15 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *   类型
  *   说明
  * Created by Binary Wang on 2016-11-28.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayRedpackQueryRequest extends WxPayBaseRequest {
   /**
@@ -38,22 +45,6 @@ public class WxPayRedpackQueryRequest extends WxPayBaseRequest {
    */
   @XStreamAlias("bill_type")
   private String billType;
-
-  public String getBillType() {
-    return billType;
-  }
-
-  public void setBillType(String billType) {
-    this.billType = billType;
-  }
-
-  public String getMchBillNo() {
-    return mchBillNo;
-  }
-
-  public void setMchBillNo(String mchBillNo) {
-    this.mchBillNo = mchBillNo;
-  }
 
   @Override
   protected void checkConstraints() {

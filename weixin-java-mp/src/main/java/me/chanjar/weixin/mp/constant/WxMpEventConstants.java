@@ -4,8 +4,9 @@ package me.chanjar.weixin.mp.constant;
  * <pre>
  * 微信公众号事件的相关常量
  * Created by Binary Wang on 2017-5-10.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMpEventConstants {
   /**

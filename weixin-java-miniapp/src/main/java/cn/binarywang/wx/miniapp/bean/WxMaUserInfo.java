@@ -4,10 +4,14 @@ import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serializable;
+
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class WxMaUserInfo {
+public class WxMaUserInfo implements Serializable {
+  private static final long serialVersionUID = 6719822331555402137L;
+
   private String openId;
   private String nickName;
   private String gender;

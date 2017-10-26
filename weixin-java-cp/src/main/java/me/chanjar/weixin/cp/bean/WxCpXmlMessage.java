@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.bean;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
@@ -175,12 +176,6 @@ public class WxCpXmlMessage implements Serializable {
 
   /**
    * 从加密字符串转换
-   *
-   * @param encryptedXml
-   * @param wxCpConfigStorage
-   * @param timestamp
-   * @param nonce
-   * @param msgSignature
    */
   public static WxCpXmlMessage fromEncryptedXml(
     String encryptedXml,
@@ -492,41 +487,7 @@ public class WxCpXmlMessage implements Serializable {
 
   @Override
   public String toString() {
-    return "WxCpXmlMessage{" +
-      "agentId=" + this.agentId +
-      ", toUserName='" + this.toUserName + '\'' +
-      ", fromUserName='" + this.fromUserName + '\'' +
-      ", createTime=" + this.createTime +
-      ", msgType='" + this.msgType + '\'' +
-      ", content='" + this.content + '\'' +
-      ", msgId=" + this.msgId +
-      ", picUrl='" + this.picUrl + '\'' +
-      ", mediaId='" + this.mediaId + '\'' +
-      ", format='" + this.format + '\'' +
-      ", thumbMediaId='" + this.thumbMediaId + '\'' +
-      ", locationX=" + this.locationX +
-      ", locationY=" + this.locationY +
-      ", scale=" + this.scale +
-      ", label='" + this.label + '\'' +
-      ", title='" + this.title + '\'' +
-      ", description='" + this.description + '\'' +
-      ", url='" + this.url + '\'' +
-      ", event='" + this.event + '\'' +
-      ", eventKey='" + this.eventKey + '\'' +
-      ", ticket='" + this.ticket + '\'' +
-      ", latitude=" + this.latitude +
-      ", longitude=" + this.longitude +
-      ", precision=" + this.precision +
-      ", recognition='" + this.recognition + '\'' +
-      ", status='" + this.status + '\'' +
-      ", totalCount=" + this.totalCount +
-      ", filterCount=" + this.filterCount +
-      ", sentCount=" + this.sentCount +
-      ", errorCount=" + this.errorCount +
-      ", scanCodeInfo=" + this.scanCodeInfo +
-      ", sendPicsInfo=" + this.sendPicsInfo +
-      ", sendLocationInfo=" + this.sendLocationInfo +
-      '}';
+    return ToStringUtils.toSimpleString(this);
   }
 
   @XStreamAlias("ScanCodeInfo")
@@ -567,7 +528,6 @@ public class WxCpXmlMessage implements Serializable {
 
   @XStreamAlias("SendPicsInfo")
   public static class SendPicsInfo {
-
     @XStreamAlias("PicList")
     protected final List<Item> picList = new ArrayList<>();
     @XStreamAlias("Count")

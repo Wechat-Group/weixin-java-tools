@@ -3,12 +3,16 @@ package cn.binarywang.wx.miniapp.bean;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * {"session_key":"nzoqhc3OnwHzeTxJs+inbQ==","expires_in":2592000,"openid":"oVBkZ0aYgDMDIywRdgPW8-joxXc4"}
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class WxMaJscode2SessionResult {
+public class WxMaJscode2SessionResult implements Serializable {
+  private static final long serialVersionUID = -1060216618475607933L;
+
   @SerializedName("session_key")
   private String sessionKey;
 

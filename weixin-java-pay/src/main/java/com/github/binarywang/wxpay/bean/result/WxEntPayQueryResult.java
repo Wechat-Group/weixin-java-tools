@@ -1,13 +1,19 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * 企业付款查询返回结果
  * Created by Binary Wang on 2016/10/19.
  *
- * @author binarywang (https://github.com/binarywang)
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxEntPayQueryResult extends WxPayBaseResult {
 
@@ -65,75 +71,4 @@ public class WxEntPayQueryResult extends WxPayBaseResult {
   @XStreamAlias("desc")
   private String desc;
 
-  public String getPartnerTradeNo() {
-    return this.partnerTradeNo;
-  }
-
-  public void setPartnerTradeNo(String partnerTradeNo) {
-    this.partnerTradeNo = partnerTradeNo;
-  }
-
-  public String getDetailId() {
-    return this.detailId;
-  }
-
-  public void setDetailId(String detailId) {
-    this.detailId = detailId;
-  }
-
-  public String getStatus() {
-    return this.status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-  public String getReason() {
-    return this.reason;
-  }
-
-  public void setReason(String reason) {
-    this.reason = reason;
-  }
-
-  public String getOpenid() {
-    return this.openid;
-  }
-
-  public void setOpenid(String openid) {
-    this.openid = openid;
-  }
-
-  public String getTransferName() {
-    return this.transferName;
-  }
-
-  public void setTransferName(String transferName) {
-    this.transferName = transferName;
-  }
-
-  public Integer getPaymentAmount() {
-    return this.paymentAmount;
-  }
-
-  public void setPaymentAmount(Integer paymentAmount) {
-    this.paymentAmount = paymentAmount;
-  }
-
-  public String getTransferTime() {
-    return this.transferTime;
-  }
-
-  public void setTransferTime(String transferTime) {
-    this.transferTime = transferTime;
-  }
-
-  public String getDesc() {
-    return this.desc;
-  }
-
-  public void setDesc(String desc) {
-    this.desc = desc;
-  }
 }

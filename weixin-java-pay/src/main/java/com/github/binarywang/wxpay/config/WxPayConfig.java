@@ -36,6 +36,7 @@ public class WxPayConfig {
   private String subMchId;
   private String notifyUrl;
   private String tradeType;
+  private String signType;
   private SSLContext sslContext;
   private String keyPath;
   private boolean useSandboxEnv = false;
@@ -137,6 +138,19 @@ public class WxPayConfig {
 
   public void setTradeType(String tradeType) {
     this.tradeType = tradeType;
+  }
+
+  /**
+   * 签名方式
+   * 有两种HMAC_SHA256 和MD5
+   * @see com.github.binarywang.wxpay.constant.WxPayConstants.SignType
+   */
+  public String getSignType() {
+    return this.signType;
+  }
+
+  public void setSignType(String signType) {
+    this.signType = signType;
   }
 
   public SSLContext getSslContext() {

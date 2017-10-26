@@ -1,6 +1,9 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -12,9 +15,13 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *   类型
  *   说明
  * Created by Binary Wang on 2016-11-28.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPayRedpackQueryResult extends WxPayBaseResult {
 
@@ -259,148 +266,4 @@ public class WxPayRedpackQueryResult extends WxPayBaseResult {
    */
   @XStreamAlias("rcv_time")
   private String receiveTime;
-
-  public String getMchBillNo() {
-    return mchBillNo;
-  }
-
-  public void setMchBillNo(String mchBillNo) {
-    this.mchBillNo = mchBillNo;
-  }
-
-  public String getDetailId() {
-    return detailId;
-  }
-
-  public void setDetailId(String detailId) {
-    this.detailId = detailId;
-  }
-
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-  public String getSendType() {
-    return sendType;
-  }
-
-  public void setSendType(String sendType) {
-    this.sendType = sendType;
-  }
-
-  public String getHbType() {
-    return hbType;
-  }
-
-  public void setHbType(String hbType) {
-    this.hbType = hbType;
-  }
-
-  public Integer getTotalNum() {
-    return totalNum;
-  }
-
-  public void setTotalNum(Integer totalNum) {
-    this.totalNum = totalNum;
-  }
-
-  public Integer getTotalAmount() {
-    return totalAmount;
-  }
-
-  public void setTotalAmount(Integer totalAmount) {
-    this.totalAmount = totalAmount;
-  }
-
-  public String getReason() {
-    return reason;
-  }
-
-  public void setReason(String reason) {
-    this.reason = reason;
-  }
-
-  public String getSendTime() {
-    return sendTime;
-  }
-
-  public void setSendTime(String sendTime) {
-    this.sendTime = sendTime;
-  }
-
-  public String getRefundTime() {
-    return refundTime;
-  }
-
-  public void setRefundTime(String refundTime) {
-    this.refundTime = refundTime;
-  }
-
-  public Integer getRefundAmount() {
-    return refundAmount;
-  }
-
-  public void setRefundAmount(Integer refundAmount) {
-    this.refundAmount = refundAmount;
-  }
-
-  public String getWishing() {
-    return wishing;
-  }
-
-  public void setWishing(String wishing) {
-    this.wishing = wishing;
-  }
-
-  public String getRemark() {
-    return remark;
-  }
-
-  public void setRemark(String remark) {
-    this.remark = remark;
-  }
-
-  public String getActName() {
-    return actName;
-  }
-
-  public void setActName(String actName) {
-    this.actName = actName;
-  }
-
-  public String getHblist() {
-    return hblist;
-  }
-
-  public void setHblist(String hblist) {
-    this.hblist = hblist;
-  }
-
-  public String getOpenid() {
-    return openid;
-  }
-
-  public void setOpenid(String openid) {
-    this.openid = openid;
-  }
-
-  public Integer getAmount() {
-    return amount;
-  }
-
-  public void setAmount(Integer amount) {
-    this.amount = amount;
-  }
-
-  public String getReceiveTime() {
-    return receiveTime;
-  }
-
-  public void setReceiveTime(String receiveTime) {
-    this.receiveTime = receiveTime;
-  }
 }

@@ -9,8 +9,9 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
-import org.testng.*;
 import org.testng.annotations.*;
+
+import static org.testng.Assert.*;
 
 /**
  * 测试菜单
@@ -88,6 +89,14 @@ public class WxMpMenuServiceImplTest {
   }
 
   @Test(dependsOnMethods = {"testCreateConditionalMenu"})
+  public void testMenuGet_AfterCreateConditionalMenu() throws WxErrorException {
+    WxMpMenu wxMenu = this.wxService.getMenuService().menuGet();
+    assertNotNull(wxMenu);
+    System.out.println(wxMenu.toJson());
+    assertNotNull(wxMenu.getConditionalMenu().get(0).getRule().getTagId());
+  }
+
+  @Test(dependsOnMethods = {"testCreateConditionalMenu"})
   public void testDeleteConditionalMenu() throws WxErrorException {
     this.wxService.getMenuService().menuDelete(menuId);
   }
@@ -134,7 +143,7 @@ public class WxMpMenuServiceImplTest {
   @Test(dependsOnMethods = {"testMenuCreate"})
   public void testMenuGet() throws WxErrorException {
     WxMpMenu wxMenu = this.wxService.getMenuService().menuGet();
-    Assert.assertNotNull(wxMenu);
+    assertNotNull(wxMenu);
     System.out.println(wxMenu.toJson());
   }
 

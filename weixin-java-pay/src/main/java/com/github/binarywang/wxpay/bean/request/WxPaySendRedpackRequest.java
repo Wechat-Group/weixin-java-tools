@@ -1,13 +1,19 @@
 package com.github.binarywang.wxpay.bean.request;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 
 /**
  * 发送红包请求参数对象
  * Created by Binary Wang on 2016/9/24.
  *
- * @author binarywang (https://github.com/binarywang)
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPaySendRedpackRequest extends WxPayBaseRequest {
   /**
@@ -137,85 +143,6 @@ public class WxPaySendRedpackRequest extends WxPayBaseRequest {
   @XStreamAlias("consume_mch_id")
   private String consumeMchId;
 
-  public String getMchBillNo() {
-    return mchBillNo;
-  }
-
-  public void setMchBillNo(String mchBillNo) {
-    this.mchBillNo = mchBillNo;
-  }
-
-  public String getSendName() {
-    return this.sendName;
-  }
-
-  public void setSendName(String sendName) {
-    this.sendName = sendName;
-  }
-
-  public String getReOpenid() {
-    return this.reOpenid;
-  }
-
-  public void setReOpenid(String reOpenid) {
-    this.reOpenid = reOpenid;
-  }
-
-  public Integer getTotalAmount() {
-    return this.totalAmount;
-  }
-
-  public void setTotalAmount(Integer totalAmount) {
-    this.totalAmount = totalAmount;
-  }
-
-  public Integer getTotalNum() {
-    return this.totalNum;
-  }
-
-  public void setTotalNum(Integer totalNum) {
-    this.totalNum = totalNum;
-  }
-
-  public String getAmtType() {
-    return this.amtType;
-  }
-
-  public void setAmtType(String amtType) {
-    this.amtType = amtType;
-  }
-
-  public String getWishing() {
-    return this.wishing;
-  }
-
-  public void setWishing(String wishing) {
-    this.wishing = wishing;
-  }
-
-  public String getClientIp() {
-    return this.clientIp;
-  }
-
-  public void setClientIp(String clientIp) {
-    this.clientIp = clientIp;
-  }
-
-  public String getActName() {
-    return this.actName;
-  }
-
-  public void setActName(String actName) {
-    this.actName = actName;
-  }
-
-  public String getRemark() {
-    return this.remark;
-  }
-
-  public void setRemark(String remark) {
-    this.remark = remark;
-  }
 
   @Override
   protected void checkConstraints() {
@@ -230,30 +157,6 @@ public class WxPaySendRedpackRequest extends WxPayBaseRequest {
   @Override
   public void setAppid(String appid) {
     this.wxAppid = appid;
-  }
-
-  public String getSceneId() {
-    return this.sceneId;
-  }
-
-  public void setSceneId(String sceneId) {
-    this.sceneId = sceneId;
-  }
-
-  public String getRiskInfo() {
-    return this.riskInfo;
-  }
-
-  public void setRiskInfo(String riskInfo) {
-    this.riskInfo = riskInfo;
-  }
-
-  public String getConsumeMchId() {
-    return this.consumeMchId;
-  }
-
-  public void setConsumeMchId(String consumeMchId) {
-    this.consumeMchId = consumeMchId;
   }
 
 }

@@ -52,7 +52,8 @@ public class ApacheQrCodeRequestExecutor extends QrCodeRequestExecutor<Closeable
       Header[] contentTypeHeader = response.getHeaders("Content-Type");
       if (contentTypeHeader != null && contentTypeHeader.length > 0) {
         // 出错
-        if (ContentType.TEXT_PLAIN.getMimeType().equals(contentTypeHeader[0].getValue())) {
+        if (ContentType.TEXT_PLAIN.getMimeType()
+          .equals(ContentType.parse(contentTypeHeader[0].getValue()).getMimeType())) {
           String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
           throw new WxErrorException(WxError.fromJson(responseContent));
         }

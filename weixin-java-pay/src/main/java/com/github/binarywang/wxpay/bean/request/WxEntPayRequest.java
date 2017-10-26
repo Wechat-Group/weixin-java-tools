@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.bean.request;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
@@ -10,8 +11,14 @@ import me.chanjar.weixin.common.util.ToStringUtils;
  * </pre>
  * Created by Binary Wang on 2016/10/02.
  *
- * @author binarywang (https://github.com/binarywang)
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxEntPayRequest extends WxPayBaseRequest {
   /**
@@ -153,32 +160,6 @@ public class WxEntPayRequest extends WxPayBaseRequest {
   @XStreamAlias("spbill_create_ip")
   private String spbillCreateIp;
 
-  public WxEntPayRequest() {
-  }
-
-  private WxEntPayRequest(Builder builder) {
-    setAppid(builder.appid);
-    setMchId(builder.mchId);
-    setSubAppId(builder.subAppId);
-    setSubMchId(builder.subMchId);
-    setNonceStr(builder.nonceStr);
-    setSign(builder.sign);
-    mchAppid = builder.mchAppid;
-    setMchId(builder.mchId);
-    setDeviceInfo(builder.deviceInfo);
-    setPartnerTradeNo(builder.partnerTradeNo);
-    setOpenid(builder.openid);
-    setCheckName(builder.checkName);
-    setReUserName(builder.reUserName);
-    setAmount(builder.amount);
-    setDescription(builder.description);
-    setSpbillCreateIp(builder.spbillCreateIp);
-  }
-
-  public static Builder newBuilder() {
-    return new Builder();
-  }
-
   @Override
   protected void checkConstraints() {
 
@@ -204,172 +185,9 @@ public class WxEntPayRequest extends WxPayBaseRequest {
     this.mchId = mchId;
   }
 
-  public String getDeviceInfo() {
-    return this.deviceInfo;
-  }
-
-  public void setDeviceInfo(String deviceInfo) {
-    this.deviceInfo = deviceInfo;
-  }
-
-  public String getPartnerTradeNo() {
-    return this.partnerTradeNo;
-  }
-
-  public void setPartnerTradeNo(String partnerTradeNo) {
-    this.partnerTradeNo = partnerTradeNo;
-  }
-
-  public String getOpenid() {
-    return this.openid;
-  }
-
-  public void setOpenid(String openid) {
-    this.openid = openid;
-  }
-
-  public String getCheckName() {
-    return this.checkName;
-  }
-
-  public void setCheckName(String checkName) {
-    this.checkName = checkName;
-  }
-
-  public String getReUserName() {
-    return this.reUserName;
-  }
-
-  public void setReUserName(String reUserName) {
-    this.reUserName = reUserName;
-  }
-
-  public Integer getAmount() {
-    return this.amount;
-  }
-
-  public void setAmount(Integer amount) {
-    this.amount = amount;
-  }
-
-  public String getDescription() {
-    return this.description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getSpbillCreateIp() {
-    return this.spbillCreateIp;
-  }
-
-  public void setSpbillCreateIp(String spbillCreateIp) {
-    this.spbillCreateIp = spbillCreateIp;
-  }
-
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
   }
 
-  public static final class Builder {
-    private String appid;
-    private String mchId;
-    private String deviceInfo;
-    private String partnerTradeNo;
-    private String openid;
-    private String checkName;
-    private String reUserName;
-    private Integer amount;
-    private String description;
-    private String spbillCreateIp;
-    private String subAppId;
-    private String subMchId;
-    private String nonceStr;
-    private String sign;
-    private String mchAppid;
-
-    private Builder() {
-    }
-
-    public Builder appid(String appid) {
-      this.appid = appid;
-      return this;
-    }
-
-    public Builder mchId(String mchId) {
-      this.mchId = mchId;
-      return this;
-    }
-
-    public Builder deviceInfo(String deviceInfo) {
-      this.deviceInfo = deviceInfo;
-      return this;
-    }
-
-    public Builder partnerTradeNo(String partnerTradeNo) {
-      this.partnerTradeNo = partnerTradeNo;
-      return this;
-    }
-
-    public Builder openid(String openid) {
-      this.openid = openid;
-      return this;
-    }
-
-    public Builder checkName(String checkName) {
-      this.checkName = checkName;
-      return this;
-    }
-
-    public Builder reUserName(String reUserName) {
-      this.reUserName = reUserName;
-      return this;
-    }
-
-    public Builder amount(Integer amount) {
-      this.amount = amount;
-      return this;
-    }
-
-    public Builder description(String description) {
-      this.description = description;
-      return this;
-    }
-
-    public Builder spbillCreateIp(String spbillCreateIp) {
-      this.spbillCreateIp = spbillCreateIp;
-      return this;
-    }
-
-    public WxEntPayRequest build() {
-      return new WxEntPayRequest(this);
-    }
-
-    public Builder subAppId(String subAppId) {
-      this.subAppId = subAppId;
-      return this;
-    }
-
-    public Builder subMchId(String subMchId) {
-      this.subMchId = subMchId;
-      return this;
-    }
-
-    public Builder nonceStr(String nonceStr) {
-      this.nonceStr = nonceStr;
-      return this;
-    }
-
-    public Builder sign(String sign) {
-      this.sign = sign;
-      return this;
-    }
-
-    public Builder mchAppid(String mchAppid) {
-      this.mchAppid = mchAppid;
-      return this;
-    }
-  }
 }

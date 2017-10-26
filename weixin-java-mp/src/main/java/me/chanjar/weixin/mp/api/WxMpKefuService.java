@@ -92,11 +92,10 @@ public interface WxMpKefuService {
    * <pre>
    * 上传客服头像
    * 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044813&token=&lang=zh_CN">客服管理</a>
-   * 接口url格式：http://api.weixin.qq.com/customservice/kfaccount/uploadheadimg?access_token=ACCESS_TOKEN&kf_account=KFACCOUNT
+   * 接口url格式：https://api.weixin.qq.com/customservice/kfaccount/uploadheadimg?access_token=ACCESS_TOKEN&kf_account=KFACCOUNT
    * </pre>
    */
-  boolean kfAccountUploadHeadImg(String kfAccount, File imgFile)
-    throws WxErrorException;
+  boolean kfAccountUploadHeadImg(String kfAccount, File imgFile)    throws WxErrorException;
 
   /**
    * <pre>

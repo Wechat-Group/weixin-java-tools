@@ -17,7 +17,7 @@ import java.util.List;
  *  Created by Binary Wang on 2016-09-23.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMpStoreBaseInfo implements Serializable {
   private static final long serialVersionUID = 829577606838118218L;

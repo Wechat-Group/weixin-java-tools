@@ -2,6 +2,9 @@ package com.github.binarywang.wxpay.bean.coupon;
 
 import com.github.binarywang.wxpay.bean.result.WxPayBaseResult;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -11,6 +14,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPayCouponInfoQueryResult extends WxPayBaseResult {
   /**
@@ -221,131 +227,4 @@ public class WxPayCouponInfoQueryResult extends WxPayBaseResult {
   @XStreamAlias("is_partial_use")
   private String isPartialUse;
 
-  public String getDeviceInfo() {
-    return this.deviceInfo;
-  }
-
-  public void setDeviceInfo(String deviceInfo) {
-    this.deviceInfo = deviceInfo;
-  }
-
-  public String getCouponStockId() {
-    return this.couponStockId;
-  }
-
-  public void setCouponStockId(String couponStockId) {
-    this.couponStockId = couponStockId;
-  }
-
-  public String getCouponId() {
-    return this.couponId;
-  }
-
-  public void setCouponId(String couponId) {
-    this.couponId = couponId;
-  }
-
-  public Integer getCouponValue() {
-    return this.couponValue;
-  }
-
-  public void setCouponValue(Integer couponValue) {
-    this.couponValue = couponValue;
-  }
-
-  public Integer getCouponMininum() {
-    return this.couponMininum;
-  }
-
-  public void setCouponMininum(Integer couponMininum) {
-    this.couponMininum = couponMininum;
-  }
-
-  public String getCouponName() {
-    return this.couponName;
-  }
-
-  public void setCouponName(String couponName) {
-    this.couponName = couponName;
-  }
-
-  public Integer getCouponState() {
-    return this.couponState;
-  }
-
-  public void setCouponState(Integer couponState) {
-    this.couponState = couponState;
-  }
-
-  public String getCouponDesc() {
-    return this.couponDesc;
-  }
-
-  public void setCouponDesc(String couponDesc) {
-    this.couponDesc = couponDesc;
-  }
-
-  public Integer getCouponUseValue() {
-    return this.couponUseValue;
-  }
-
-  public void setCouponUseValue(Integer couponUseValue) {
-    this.couponUseValue = couponUseValue;
-  }
-
-  public Integer getCouponRemainValue() {
-    return this.couponRemainValue;
-  }
-
-  public void setCouponRemainValue(Integer couponRemainValue) {
-    this.couponRemainValue = couponRemainValue;
-  }
-
-  public String getBeginTime() {
-    return this.beginTime;
-  }
-
-  public void setBeginTime(String beginTime) {
-    this.beginTime = beginTime;
-  }
-
-  public String getEndTime() {
-    return this.endTime;
-  }
-
-  public void setEndTime(String endTime) {
-    this.endTime = endTime;
-  }
-
-  public String getSendTime() {
-    return this.sendTime;
-  }
-
-  public void setSendTime(String sendTime) {
-    this.sendTime = sendTime;
-  }
-
-  public String getConsumerMchId() {
-    return this.consumerMchId;
-  }
-
-  public void setConsumerMchId(String consumerMchId) {
-    this.consumerMchId = consumerMchId;
-  }
-
-  public String getSendSource() {
-    return this.sendSource;
-  }
-
-  public void setSendSource(String sendSource) {
-    this.sendSource = sendSource;
-  }
-
-  public String getIsPartialUse() {
-    return this.isPartialUse;
-  }
-
-  public void setIsPartialUse(String isPartialUse) {
-    this.isPartialUse = isPartialUse;
-  }
 }

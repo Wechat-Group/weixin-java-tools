@@ -13,8 +13,9 @@ import java.util.List;
  * <pre>
  *   公众号专用的菜单类，可能包含个性化菜单
  * Created by Binary Wang on 2017-1-17.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMpMenu implements Serializable {
   private static final long serialVersionUID = -5794350513426702252L;

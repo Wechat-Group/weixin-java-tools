@@ -1,14 +1,21 @@
 package com.github.binarywang.wxpay.bean.request;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 
 /**
  * <pre>
  * 转换短链接请求对象类
  * Created by Binary Wang on 2017-3-27.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayShorturlRequest extends WxPayBaseRequest {
   /**
@@ -23,21 +30,6 @@ public class WxPayShorturlRequest extends WxPayBaseRequest {
    */
   @XStreamAlias("long_url")
   private String longUrl;
-
-  public WxPayShorturlRequest() {
-  }
-
-  public WxPayShorturlRequest(String longUrl) {
-    this.longUrl = longUrl;
-  }
-
-  public String getLongUrl() {
-    return this.longUrl;
-  }
-
-  public void setLongUrl(String longUrl) {
-    this.longUrl = longUrl;
-  }
 
   @Override
   protected void checkConstraints() {

@@ -4,12 +4,20 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 
 /**
  * 微信支付订单和退款的异步通知共用的响应类
  */
+@Data
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayNotifyResponse {
   @XStreamOmitField
@@ -23,16 +31,6 @@ public class WxPayNotifyResponse {
   @XStreamConverter(value = XStreamCDataConverter.class)
   @XStreamAlias("return_msg")
   private String returnMsg;
-
-  public WxPayNotifyResponse() {
-    super();
-  }
-
-  public WxPayNotifyResponse(String returnCode, String returnMsg) {
-    super();
-    this.returnCode = returnCode;
-    this.returnMsg = returnMsg;
-  }
 
   public static String fail(String msg) {
     WxPayNotifyResponse response = new WxPayNotifyResponse(FAIL, msg);
@@ -48,19 +46,4 @@ public class WxPayNotifyResponse {
     return xstream.toXML(response);
   }
 
-  public String getReturnCode() {
-    return returnCode;
-  }
-
-  public void setReturnCode(String returnCode) {
-    this.returnCode = returnCode;
-  }
-
-  public String getReturnMsg() {
-    return returnMsg;
-  }
-
-  public void setReturnMsg(String returnMsg) {
-    this.returnMsg = returnMsg;
-  }
 }

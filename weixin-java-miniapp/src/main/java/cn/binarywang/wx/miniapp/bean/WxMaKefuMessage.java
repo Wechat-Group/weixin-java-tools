@@ -25,14 +25,14 @@ public class WxMaKefuMessage implements Serializable {
   /**
    * 获得文本消息builder
    */
-  public static TextBuilder TEXT() {
+  public static TextBuilder newTextBuilder() {
     return new TextBuilder();
   }
 
   /**
    * 获得图片消息builder
    */
-  public static ImageBuilder IMAGE() {
+  public static ImageBuilder newImageBuilder() {
     return new ImageBuilder();
   }
 

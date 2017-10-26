@@ -10,8 +10,9 @@ import java.util.List;
 /**
  * <pre>
  * Created by Binary Wang on 2016-11-25.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMpSelfMenuInfo implements Serializable {
   private static final long serialVersionUID = -81203094124202901L;
@@ -35,7 +36,9 @@ public class WxMpSelfMenuInfo implements Serializable {
     this.buttons = buttons;
   }
 
-  public static class WxMpSelfMenuButton {
+  public static class WxMpSelfMenuButton implements Serializable {
+    private static final long serialVersionUID = -4426602953309048341L;
+
     /**
      * <pre>
      * 菜单的类型，公众平台官网上能够设置的菜单类型有view（跳转网页）、text（返回文本，下同）、img、photo、video、voice。
@@ -148,7 +151,9 @@ public class WxMpSelfMenuInfo implements Serializable {
       this.newsInfo = newsInfo;
     }
 
-    public static class SubButtons {
+    public static class SubButtons implements Serializable {
+      private static final long serialVersionUID = 1763350658575521079L;
+
       @SerializedName("list")
       private List<WxMpSelfMenuButton> subButtons = new ArrayList<>();
 
@@ -166,7 +171,9 @@ public class WxMpSelfMenuInfo implements Serializable {
       }
     }
 
-    public static class NewsInfo {
+    public static class NewsInfo implements Serializable {
+      private static final long serialVersionUID = 3449813746347818457L;
+
       @SerializedName("list")
       private List<NewsInButton> news = new ArrayList<>();
 
@@ -183,7 +190,9 @@ public class WxMpSelfMenuInfo implements Serializable {
         this.news = news;
       }
 
-      public static class NewsInButton {
+      public static class NewsInButton  implements Serializable {
+        private static final long serialVersionUID = 8701455967664912972L;
+
         /**
          * 图文消息的标题
          */

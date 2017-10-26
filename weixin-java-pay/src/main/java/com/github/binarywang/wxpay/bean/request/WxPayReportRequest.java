@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.bean.request;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
 /**
@@ -15,8 +16,13 @@ import me.chanjar.weixin.common.annotation.Required;
  * <li>描述
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayReportRequest extends WxPayBaseRequest {
   /**
@@ -31,19 +37,6 @@ public class WxPayReportRequest extends WxPayBaseRequest {
    */
   @XStreamAlias("device_info")
   private String deviceInfo;
-
-  /**
-   * <pre>
-   * 签名类型
-   * sign_type
-   * 否
-   * String(32)
-   * HMAC-SHA256
-   * 签名类型，目前支持HMAC-SHA256和MD5，默认为MD5
-   * </pre>
-   */
-  @XStreamAlias("sign_type")
-  private String signType;
 
   /**
    * <pre>
@@ -174,102 +167,6 @@ public class WxPayReportRequest extends WxPayBaseRequest {
    */
   @XStreamAlias("time")
   private String time;
-
-  public String getDeviceInfo() {
-    return deviceInfo;
-  }
-
-  public void setDeviceInfo(String deviceInfo) {
-    this.deviceInfo = deviceInfo;
-  }
-
-  public String getSignType() {
-    return signType;
-  }
-
-  public void setSignType(String signType) {
-    this.signType = signType;
-  }
-
-  public String getInterfaceUrl() {
-    return interfaceUrl;
-  }
-
-  public void setInterfaceUrl(String interfaceUrl) {
-    this.interfaceUrl = interfaceUrl;
-  }
-
-  public Integer getExecuteTime() {
-    return executeTime;
-  }
-
-  public void setExecuteTime(Integer executeTime) {
-    this.executeTime = executeTime;
-  }
-
-  public String getReturnCode() {
-    return returnCode;
-  }
-
-  public void setReturnCode(String returnCode) {
-    this.returnCode = returnCode;
-  }
-
-  public String getReturnMsg() {
-    return returnMsg;
-  }
-
-  public void setReturnMsg(String returnMsg) {
-    this.returnMsg = returnMsg;
-  }
-
-  public String getResultCode() {
-    return resultCode;
-  }
-
-  public void setResultCode(String resultCode) {
-    this.resultCode = resultCode;
-  }
-
-  public String getErrCode() {
-    return errCode;
-  }
-
-  public void setErrCode(String errCode) {
-    this.errCode = errCode;
-  }
-
-  public String getErrCodeDes() {
-    return errCodeDes;
-  }
-
-  public void setErrCodeDes(String errCodeDes) {
-    this.errCodeDes = errCodeDes;
-  }
-
-  public String getOutTradeNo() {
-    return outTradeNo;
-  }
-
-  public void setOutTradeNo(String outTradeNo) {
-    this.outTradeNo = outTradeNo;
-  }
-
-  public String getUserIp() {
-    return userIp;
-  }
-
-  public void setUserIp(String userIp) {
-    this.userIp = userIp;
-  }
-
-  public String getTime() {
-    return time;
-  }
-
-  public void setTime(String time) {
-    this.time = time;
-  }
 
   @Override
   protected void checkConstraints() {

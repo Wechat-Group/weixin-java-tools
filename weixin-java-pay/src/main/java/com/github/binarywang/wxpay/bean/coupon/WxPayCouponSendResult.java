@@ -2,6 +2,9 @@ package com.github.binarywang.wxpay.bean.coupon;
 
 import com.github.binarywang.wxpay.bean.result.WxPayBaseResult;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -11,6 +14,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPayCouponSendResult extends WxPayBaseResult {
   /**
@@ -130,75 +136,4 @@ public class WxPayCouponSendResult extends WxPayBaseResult {
   @XStreamAlias("ret_msg")
   private String retMsg;
 
-  public String getDeviceInfo() {
-    return this.deviceInfo;
-  }
-
-  public void setDeviceInfo(String deviceInfo) {
-    this.deviceInfo = deviceInfo;
-  }
-
-  public String getCouponStockId() {
-    return this.couponStockId;
-  }
-
-  public void setCouponStockId(String couponStockId) {
-    this.couponStockId = couponStockId;
-  }
-
-  public Integer getRespCount() {
-    return this.respCount;
-  }
-
-  public void setRespCount(Integer respCount) {
-    this.respCount = respCount;
-  }
-
-  public Integer getSuccessCount() {
-    return this.successCount;
-  }
-
-  public void setSuccessCount(Integer successCount) {
-    this.successCount = successCount;
-  }
-
-  public Integer getFailedCount() {
-    return this.failedCount;
-  }
-
-  public void setFailedCount(Integer failedCount) {
-    this.failedCount = failedCount;
-  }
-
-  public String getOpenid() {
-    return this.openid;
-  }
-
-  public void setOpenid(String openid) {
-    this.openid = openid;
-  }
-
-  public String getRetCode() {
-    return this.retCode;
-  }
-
-  public void setRetCode(String retCode) {
-    this.retCode = retCode;
-  }
-
-  public String getCouponId() {
-    return this.couponId;
-  }
-
-  public void setCouponId(String couponId) {
-    this.couponId = couponId;
-  }
-
-  public String getRetMsg() {
-    return this.retMsg;
-  }
-
-  public void setRetMsg(String retMsg) {
-    this.retMsg = retMsg;
-  }
 }

@@ -231,7 +231,7 @@ public class WxMpMaterialServiceImplTest {
     assertNotNull(wxMpMaterialNewsBatchGetResult);
   }
 
-  @Test(dependsOnMethods = {"testMaterialNewsList"})
+  @Test//(dependsOnMethods = {"testMaterialNewsList"})
   public void testMaterialFileList() throws WxErrorException {
     WxMpMaterialFileBatchGetResult wxMpMaterialVoiceBatchGetResult = this.wxService.getMaterialService().materialFileBatchGet(WxConsts.MATERIAL_VOICE, 0, 20);
     WxMpMaterialFileBatchGetResult wxMpMaterialVideoBatchGetResult = this.wxService.getMaterialService().materialFileBatchGet(WxConsts.MATERIAL_VIDEO, 0, 20);
