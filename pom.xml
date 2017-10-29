@@ -239,12 +239,12 @@
     <repository>
       <id>nexus</id>
       <name>Nexus Release Repository</name>
-      <url>http://gitlab.wili.us:8081/repository/maven-releases/</url>
+      <url>http://118.89.52.207:8081/repository/maven-releases/</url>
     </repository>
     <snapshotRepository>
       <id>nexus</id>
       <name>Nexus Snapshot Repository</name>
-      <url>http://gitlab.wili.us:8081/repository/maven-snapshots/</url>
+      <url>http://118.89.52.207:8081/repository/maven-snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -335,7 +335,7 @@
         <extensions>true</extensions>
         <configuration>
           <serverId>nexus</serverId>
-          <nexusUrl>http://gitlab.wili.us/</nexusUrl>
+          <nexusUrl>http://118.89.52.207:8081/</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
