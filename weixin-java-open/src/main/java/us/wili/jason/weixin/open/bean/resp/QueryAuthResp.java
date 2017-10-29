@@ -15,8 +15,8 @@ public class QueryAuthResp implements Serializable {
   private int expiresIn = -1;
   private List<Integer> funcInfoIds;
 
-  public static AuthorizerTokenResp fromJson(String json) {
-    return WxOpenGsonBuilder.create().fromJson(json, AuthorizerTokenResp.class);
+  public static QueryAuthResp fromJson(String json) {
+    return WxOpenGsonBuilder.create().fromJson(json, QueryAuthResp.class);
   }
 
   public String getAuthorizerAppid() {

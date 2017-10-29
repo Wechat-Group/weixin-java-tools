@@ -9,6 +9,7 @@ import me.chanjar.weixin.mp.bean.*;
 import me.chanjar.weixin.mp.bean.result.*;
 import org.apache.http.HttpHost;
 import us.wili.jason.weixin.open.bean.resp.AuthorizerInfoResp;
+import us.wili.jason.weixin.open.bean.resp.QueryAuthResp;
 
 /**
  * Created by JasonY on 17/10/23.
@@ -130,7 +131,8 @@ public interface WxOpenService {
   String shortUrl(String appid, String long_url) throws WxErrorException;
 
   String buildComponentLoginPageUrl(String redirectURI);
-  AuthorizerInfoResp queryAuth(String authCode) throws WxErrorException;
+  QueryAuthResp queryAuth(String authCode) throws WxErrorException;
+  AuthorizerInfoResp getAuthorizerInfo(String authorizerAppid) throws WxErrorException;
 
   /**
    * <pre>

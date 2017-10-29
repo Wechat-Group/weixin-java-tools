@@ -1,7 +1,6 @@
 package us.wili.jason.weixin.open.api;
 
 
-import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import us.wili.jason.weixin.open.bean.resp.AuthorizerTokenResp;
 import us.wili.jason.weixin.open.bean.resp.ComponentAccessTokenResp;
@@ -15,7 +14,7 @@ import java.util.concurrent.locks.Lock;
  */
 public interface WxOpenConfigStorage {
   String getComponentVerifyTicket();
-  void setComponentVerifyTicket(String componentVerifyTicket);
+  void updateComponentVerifyTicket(String componentVerifyTicket);
 
   String getPreAuthCode();
   Lock getPreAuthCodeLock();

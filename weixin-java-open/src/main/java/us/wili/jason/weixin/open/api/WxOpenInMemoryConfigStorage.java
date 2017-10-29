@@ -57,7 +57,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   }
 
   @Override
-  public void setComponentVerifyTicket(String componentVerifyTicket) {
+  public void updateComponentVerifyTicket(String componentVerifyTicket) {
     this.componentVerifyTicket = componentVerifyTicket;
   }
 
@@ -66,8 +66,30 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     return this.componentAccessToken;
   }
 
-  public void setComponentAccessToken(String componentAccessToken) {
+  @Override
+  public Lock getComponentAccessTokenLock() {
+    return this.componentAccessTokenLock;
+  }
+
+  @Override
+  public boolean isComponentAccessTokenExpired() {
+    return System.currentTimeMillis() > this.expiresTime;
+  }
+
+  @Override
+  public void expireComponentAccessToken() {
+    this.expiresTime = 0;
+  }
+
+  @Override
+  public void updateComponentAccessToken(ComponentAccessTokenResp componentAccessTokenResp) {
+    updateComponentAccessToken(componentAccessTokenResp.getComponentAccessToken(), componentAccessTokenResp.getExpiresIn());
+  }
+
+  @Override
+  public void updateComponentAccessToken(String componentAccessToken, int expiresInSeconds) {
     this.componentAccessToken = componentAccessToken;
+    this.expiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
   }
 
   @Override
@@ -99,32 +121,6 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   public void updatePreAuthCode(String preAuthCode, int expiresInSeconds) {
     this.preAuthCode = preAuthCode;
     this.preAuthCodeExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 100) * 1000L;
-  }
-
-  @Override
-  public Lock getComponentAccessTokenLock() {
-    return this.componentAccessTokenLock;
-  }
-
-  @Override
-  public boolean isComponentAccessTokenExpired() {
-    return System.currentTimeMillis() > this.expiresTime;
-  }
-
-  @Override
-  public void expireComponentAccessToken() {
-    this.expiresTime = 0;
-  }
-
-  @Override
-  public void updateComponentAccessToken(ComponentAccessTokenResp componentAccessTokenResp) {
-    updateComponentAccessToken(componentAccessTokenResp.getComponentAccessToken(), componentAccessTokenResp.getExpiresIn());
-  }
-
-  @Override
-  public void updateComponentAccessToken(String componentAccessToken, int expiresInSeconds) {
-    this.componentAccessToken = componentAccessToken;
-    this.expiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
   }
 
   @Override

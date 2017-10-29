@@ -20,6 +20,7 @@ import us.wili.jason.weixin.open.api.*;
 import us.wili.jason.weixin.open.bean.req.AuthorizerTokenReq;
 import us.wili.jason.weixin.open.bean.resp.AuthorizerInfoResp;
 import us.wili.jason.weixin.open.bean.resp.AuthorizerTokenResp;
+import us.wili.jason.weixin.open.bean.resp.QueryAuthResp;
 
 import java.io.IOException;
 import java.util.concurrent.locks.Lock;
@@ -55,7 +56,7 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
 
   @Override
   public void setComponentVerifyTicket(String componentVerifyTicket) {
-    this.getWxOpenConfigStorage().setComponentVerifyTicket(componentVerifyTicket);
+    this.getWxOpenConfigStorage().updateComponentVerifyTicket(componentVerifyTicket);
   }
 
   @Override
@@ -166,14 +167,25 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
   }
 
   @Override
-  public AuthorizerInfoResp queryAuth(String authCode) throws WxErrorException {
+  public QueryAuthResp queryAuth(String authCode) throws WxErrorException {
     JsonObject req = new JsonObject();
     req.addProperty("component_appid", this.getWxOpenConfigStorage().getAppId());
     req.addProperty("authorization_code", authCode);
 
     String responseContent = this.post(WxOpenService.COMPONENT_API_QUERY_AUTH_URL, req.toString());
-    AuthorizerInfoResp authorizerInfo = AuthorizerInfoResp.fromJson(responseContent);
+    QueryAuthResp queryAuth = QueryAuthResp.fromJson(responseContent);
 
+    return queryAuth;
+  }
+
+  @Override
+  public AuthorizerInfoResp getAuthorizerInfo(String authorizerAppid) throws WxErrorException {
+    JsonObject req = new JsonObject();
+    req.addProperty("component_appid", this.getWxOpenConfigStorage().getAppId());
+    req.addProperty("authorizer_appid", authorizerAppid);
+
+    String responseContent = this.post(WxOpenService.COMPONENT_API_AUTHORIZER_INFO_URL, req.toString());
+    AuthorizerInfoResp authorizerInfo = AuthorizerInfoResp.fromJson(responseContent);
     return authorizerInfo;
   }
 
@@ -257,7 +269,7 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
         AuthorizerTokenReq request = AuthorizerTokenReq.builder()
           .componentAppid(this.getWxOpenConfigStorage().getAppId())
           .authorizerAppid(appid)
-          .authorizerRefreshToken(this.getAuthorizerRefreshToken(appid))
+          .authorizerRefreshToken(refreshToken)
           .build();
 
         String resultContent = post(WxOpenService.COMPONENT_API_AUTHORIZER_TOKEN_URL, request.toJson());
