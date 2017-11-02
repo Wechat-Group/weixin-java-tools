@@ -59,8 +59,6 @@ public interface WxOpenService {
   String getComponentAccessToken(boolean forceRefresh) throws WxErrorException;
 
   String getPreAuthCode() throws WxErrorException;
-  String getPreAuthCode(boolean forceRefresh) throws WxErrorException;
-
 
   /**
    * authorizer_access_token
@@ -128,7 +126,7 @@ public interface WxOpenService {
    */
   String shortUrl(String appid, String long_url) throws WxErrorException;
 
-  String buildComponentLoginPageUrl(String redirectURI);
+  String buildComponentLoginPageUrl(String redirectURI) throws WxErrorException;
   QueryAuthResp queryAuth(String authCode) throws WxErrorException;
   AuthorizerInfoResp getAuthorizerInfo(String authorizerAppid) throws WxErrorException;
 
@@ -166,6 +164,7 @@ public interface WxOpenService {
    * @param lang zh_CN, zh_TW, en
    */
   WxMpUser oauth2getUserInfo(WxMpOAuth2AccessToken oAuth2AccessToken, String lang) throws WxErrorException;
+  WxMpUser oauth2getUserInfo(String appid, String code) throws WxErrorException;
 
   /**
    * <pre>

@@ -29,8 +29,6 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   protected volatile String httpProxyPassword;
 
   protected volatile String componentVerifyTicket;
-  protected volatile String preAuthCode;
-  protected volatile long preAuthCodeExpiresTime;
   protected ConcurrentHashMap<String, String> authorizerAccessTokenMap = new ConcurrentHashMap<>();
   protected ConcurrentHashMap<String, Long> authorizerAccessTokenExpiresTimeMap = new ConcurrentHashMap<>();
   protected ConcurrentHashMap<String, String> jsapiTicketMap = new ConcurrentHashMap<>();
@@ -90,37 +88,6 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   public void updateComponentAccessToken(String componentAccessToken, int expiresInSeconds) {
     this.componentAccessToken = componentAccessToken;
     this.expiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
-  }
-
-  @Override
-  public String getPreAuthCode() {
-    return this.preAuthCode;
-  }
-
-  @Override
-  public Lock getPreAuthCodeLock() {
-    return preAuthCodeLock;
-  }
-
-  @Override
-  public boolean isPreAuthCodeExpired() {
-    return System.currentTimeMillis() > preAuthCodeExpiresTime;
-  }
-
-  @Override
-  public void expirePreAuthCode() {
-    this.preAuthCodeExpiresTime = 0;
-  }
-
-  @Override
-  public void updatePreAuthCode(PreAuthCodeResp preAuthCodeResp) {
-    updatePreAuthCode(preAuthCodeResp.getPreAuthCode(), preAuthCodeResp.getExpiresIn());
-  }
-
-  @Override
-  public void updatePreAuthCode(String preAuthCode, int expiresInSeconds) {
-    this.preAuthCode = preAuthCode;
-    this.preAuthCodeExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 100) * 1000L;
   }
 
   @Override

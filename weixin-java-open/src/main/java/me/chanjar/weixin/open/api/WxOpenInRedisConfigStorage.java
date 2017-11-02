@@ -11,30 +11,23 @@ public class WxOpenInRedisConfigStorage extends WxOpenInMemoryConfigStorage {
 
   private final static String COMPONENT_VERIFY_TICKET_KEY = "wechat_component_verify_ticket_";
   private final static String COMPONENT_ACCESS_TOKEN_KEY = "wechat_component_access_token_";
-  private final static String COMPONENT_PRE_AUTH_CODE_KEY = "wechat_component_pre_auth_code_";
   private final static String COMPONENT_AUTHORIZER_ACCESS_TOKEN_KEY = "wechat_authorizer_access_token_";
   private final static String COMPONENT_JSAPI_TICKET_KEY = "wechat_component_jsapi_ticket_";
   private final static String COMPONENT_CARDAPI_TICKET_KEY = "wechat_component_cardapi_ticket_";
 
-  protected final JedisPool jedisPool;
-  protected Integer redisDb;
+  protected JedisPool jedisPool;
+  protected Integer redisDb = 0;
   protected String componentVerifyTicketKey;
   protected String componentAccessTokenKey;
-  protected String componentPreAuthCodeKey;
   protected String authorizerAccessTokenKey;
   protected String jsapiTicketKey;
   protected String cardapiTicketKey;
-
-  public WxOpenInRedisConfigStorage(JedisPool jedisPool) {
-    this.jedisPool = jedisPool;
-  }
 
   @Override
   public void setAppId(String appid) {
     super.setAppId(appid);
     this.componentVerifyTicketKey = COMPONENT_VERIFY_TICKET_KEY.concat(appid);
     this.componentAccessTokenKey = COMPONENT_ACCESS_TOKEN_KEY.concat(appid);
-    this.componentPreAuthCodeKey = COMPONENT_PRE_AUTH_CODE_KEY.concat(appid);
     this.authorizerAccessTokenKey = COMPONENT_AUTHORIZER_ACCESS_TOKEN_KEY.concat(appid + "_");
     this.jsapiTicketKey = COMPONENT_JSAPI_TICKET_KEY.concat(appid + "_");
     this.cardapiTicketKey = COMPONENT_CARDAPI_TICKET_KEY.concat(appid + "_");
@@ -85,38 +78,6 @@ public class WxOpenInRedisConfigStorage extends WxOpenInMemoryConfigStorage {
     try (Jedis jedis = this.jedisPool.getResource()) {
       jedis.select(redisDb);
       jedis.setex(this.componentAccessTokenKey, expiresInSeconds - 200, componentAccessToken);
-    }
-  }
-
-  @Override
-  public String getPreAuthCode() {
-    try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.select(redisDb);
-      return jedis.get(this.componentPreAuthCodeKey);
-    }
-  }
-
-  @Override
-  public boolean isPreAuthCodeExpired() {
-    try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.select(redisDb);
-      return jedis.ttl(this.componentPreAuthCodeKey) < 2;
-    }
-  }
-
-  @Override
-  public void expirePreAuthCode() {
-    try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.select(redisDb);
-      jedis.expire(this.componentPreAuthCodeKey, 0);
-    }
-  }
-
-  @Override
-  public void updatePreAuthCode(String preAuthCode, int expiresInSeconds) {
-    try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.select(redisDb);
-      jedis.setex(this.componentPreAuthCodeKey, expiresInSeconds - 200, preAuthCode);
     }
   }
 
@@ -214,6 +175,14 @@ public class WxOpenInRedisConfigStorage extends WxOpenInMemoryConfigStorage {
       jedis.select(redisDb);
       jedis.setex(this.cardapiTicketKey.concat(authorizerAppid), expiresInSeconds - 200, cardApiTicket);
     }
+  }
+
+  public JedisPool getJedisPool() {
+    return jedisPool;
+  }
+
+  public void setJedisPool(JedisPool jedisPool) {
+    this.jedisPool = jedisPool;
   }
 
   public Integer getRedisDb() {

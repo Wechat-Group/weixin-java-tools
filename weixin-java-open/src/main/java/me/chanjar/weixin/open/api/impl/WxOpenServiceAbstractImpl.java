@@ -71,35 +71,13 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
 
   @Override
   public String getPreAuthCode() throws WxErrorException {
-    return getPreAuthCode(false);
-  }
+    JsonObject o = new JsonObject();
+    o.addProperty("component_appid", this.getWxOpenConfigStorage().getAppId());
+    String responseContent = this.post(WxOpenService.COMPONENT_API_CREATE_PREAUTHCODE_URL, o.toString());
+    JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
+    String preAuthCode = tmpJsonElement.getAsJsonObject().get("pre_auth_code").getAsString();
 
-  @Override
-  public String getPreAuthCode(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.getWxOpenConfigStorage().getPreAuthCodeLock();
-
-    try {
-      lock.lock();
-
-      if (forceRefresh) {
-        this.getWxOpenConfigStorage().expirePreAuthCode();
-      }
-
-      if (this.getWxOpenConfigStorage().isPreAuthCodeExpired()) {
-        JsonObject o = new JsonObject();
-        o.addProperty("component_appid", this.getWxOpenConfigStorage().getAppId());
-        String responseContent = this.post(WxOpenService.COMPONENT_API_CREATE_PREAUTHCODE_URL, o.toString());
-        JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
-        String preAuthCode = tmpJsonElement.getAsJsonObject().get("pre_auth_code").getAsString();
-        int expiresIn = tmpJsonElement.getAsJsonObject().get("expires_in").getAsInt();
-
-        this.getWxOpenConfigStorage().updatePreAuthCode(preAuthCode, expiresIn);
-      }
-    } finally {
-      lock.unlock();
-    }
-
-    return this.getWxOpenConfigStorage().getPreAuthCode();
+    return preAuthCode;
   }
 
   @Override
@@ -157,11 +135,11 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
   }
 
   @Override
-  public String buildComponentLoginPageUrl(String redirectURI) {
+  public String buildComponentLoginPageUrl(String redirectURI) throws WxErrorException {
     return String.format(
       WxOpenService.COMPONENT_LOGIN_PAGE_URL,
       this.getWxOpenConfigStorage().getAppId(),
-      this.getWxOpenConfigStorage().getPreAuthCode(),
+      getPreAuthCode(),
       URIUtil.encodeURIComponent(redirectURI)
     );
   }
@@ -199,7 +177,7 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
   public WxMpOAuth2AccessToken oauth2getAccessToken(String appid, String code) throws WxErrorException {
     String url = String.format(
       WxOpenService.COMPONENT_CONNECT_OAUTH2_ACCESS_TOKEN_URL,
-      appid, code, this.getWxOpenConfigStorage().getAppId(), this.getWxOpenConfigStorage().getComponentAccessToken());
+      appid, code, this.getWxOpenConfigStorage().getAppId(), getComponentAccessToken());
     return this.getOAuth2AccessToken(url);
   }
 
@@ -207,7 +185,7 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
   public WxMpOAuth2AccessToken oauth2refreshAccessToken(String appid, String refreshToken) throws WxErrorException {
     String url = String.format(
       WxOpenService.COMPONENT_CONNECT_OAUTH2_REFRESH_TOKEN_URL,
-      appid, this.getWxOpenConfigStorage().getAppId(), this.getWxOpenConfigStorage().getComponentAccessToken(), refreshToken);
+      appid, this.getWxOpenConfigStorage().getAppId(), getComponentAccessToken(), refreshToken);
     return this.getOAuth2AccessToken(url);
   }
 
@@ -236,6 +214,12 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public WxMpUser oauth2getUserInfo(String appid, String code) throws WxErrorException {
+    WxMpOAuth2AccessToken oAuth2AccessToken = oauth2getAccessToken(appid, code);
+    return oauth2getUserInfo(oAuth2AccessToken, null);
   }
 
   @Override

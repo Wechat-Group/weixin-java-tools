@@ -116,7 +116,8 @@ public class AuthorizerInfoRespAdapter implements JsonDeserializer<AuthorizerInf
     }
 
     if (authorizationInfoObject != null) {
-      authorizerInfoResp.setAppid(GsonHelper.getString(authorizationInfoObject, "appid"));
+      authorizerInfoResp.setAppid(GsonHelper.getString(authorizationInfoObject, "authorizer_appid"));
+      authorizerInfoResp.setAuthorizerRefreshToken(GsonHelper.getString(authorizationInfoObject, "authorizer_refresh_token"));
 
       JsonArray funcInfoArray = authorizationInfoObject.getAsJsonArray("func_info");
       if (funcInfoArray != null && funcInfoArray.isJsonArray()) {

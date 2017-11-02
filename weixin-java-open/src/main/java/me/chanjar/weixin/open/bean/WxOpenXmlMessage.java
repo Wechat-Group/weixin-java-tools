@@ -3,9 +3,8 @@ package me.chanjar.weixin.open.bean;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
-import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
-import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
 import me.chanjar.weixin.open.util.crypto.WxOpenCryptUtil;
+import me.chanjar.weixin.open.util.xml.XStreamTransformer;
 import org.apache.commons.io.IOUtils;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 
@@ -31,6 +30,10 @@ public class WxOpenXmlMessage  implements Serializable {
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String infoType;
 
+    @XStreamAlias("ComponentVerifyTicket")
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    private String componentVerifyTicket;
+
     @XStreamAlias("AuthorizerAppid")
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String authorizerAppid;
@@ -50,8 +53,8 @@ public class WxOpenXmlMessage  implements Serializable {
     return XStreamTransformer.fromXml(WxOpenXmlMessage.class, xml);
   }
 
-  public static WxMpXmlMessage fromXml(InputStream is) {
-    return XStreamTransformer.fromXml(WxMpXmlMessage.class, is);
+  public static WxOpenXmlMessage fromXml(InputStream is) {
+    return XStreamTransformer.fromXml(WxOpenXmlMessage.class, is);
   }
 
     /**
@@ -79,4 +82,68 @@ public class WxOpenXmlMessage  implements Serializable {
             throw new RuntimeException(e);
         }
     }
+
+  public String getAppid() {
+    return appid;
+  }
+
+  public void setAppid(String appid) {
+    this.appid = appid;
+  }
+
+  public Long getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(Long createTime) {
+    this.createTime = createTime;
+  }
+
+  public String getInfoType() {
+    return infoType;
+  }
+
+  public void setInfoType(String infoType) {
+    this.infoType = infoType;
+  }
+
+  public String getComponentVerifyTicket() {
+    return componentVerifyTicket;
+  }
+
+  public void setComponentVerifyTicket(String componentVerifyTicket) {
+    this.componentVerifyTicket = componentVerifyTicket;
+  }
+
+  public String getAuthorizerAppid() {
+    return authorizerAppid;
+  }
+
+  public void setAuthorizerAppid(String authorizerAppid) {
+    this.authorizerAppid = authorizerAppid;
+  }
+
+  public String getAuthorizationCode() {
+    return authorizationCode;
+  }
+
+  public void setAuthorizationCode(String authorizationCode) {
+    this.authorizationCode = authorizationCode;
+  }
+
+  public Long getAuthorizationCodeExpiredTime() {
+    return authorizationCodeExpiredTime;
+  }
+
+  public void setAuthorizationCodeExpiredTime(Long authorizationCodeExpiredTime) {
+    this.authorizationCodeExpiredTime = authorizationCodeExpiredTime;
+  }
+
+  public String getPreAuthCode() {
+    return preAuthCode;
+  }
+
+  public void setPreAuthCode(String preAuthCode) {
+    this.preAuthCode = preAuthCode;
+  }
 }

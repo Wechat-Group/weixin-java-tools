@@ -16,13 +16,6 @@ public interface WxOpenConfigStorage {
   String getComponentVerifyTicket();
   void updateComponentVerifyTicket(String componentVerifyTicket);
 
-  String getPreAuthCode();
-  Lock getPreAuthCodeLock();
-  boolean isPreAuthCodeExpired();
-  void expirePreAuthCode();
-  void updatePreAuthCode(PreAuthCodeResp preAuthCodeResp);
-  void updatePreAuthCode(String preAuthCode, int expiresInSeconds);
-
   String getComponentAccessToken();
   Lock getComponentAccessTokenLock();
   boolean isComponentAccessTokenExpired();
