@@ -86,7 +86,7 @@ public class WxMpXmlMessageTest {
     assertEquals(wxMessage.getSendLocationInfo().getLocationY(), "113");
     assertEquals(wxMessage.getSendLocationInfo().getScale(), "15");
     assertEquals(wxMessage.getSendLocationInfo().getLabel(), " 广州市海珠区客村艺苑路 106号");
-    assertEquals(wxMessage.getSendLocationInfo().getPoiname(), "wo de poi");
+    assertEquals(wxMessage.getSendLocationInfo().getPoiName(), "wo de poi");
   }
 
   public void testFromXml2() {
@@ -167,7 +167,7 @@ public class WxMpXmlMessageTest {
     assertEquals(wxMessage.getSendLocationInfo().getLocationY(), "113");
     assertEquals(wxMessage.getSendLocationInfo().getScale(), "15");
     assertEquals(wxMessage.getSendLocationInfo().getLabel(), " 广州市海珠区客村艺苑路 106号");
-    assertEquals(wxMessage.getSendLocationInfo().getPoiname(), "wo de poi");
+    assertEquals(wxMessage.getSendLocationInfo().getPoiName(), "wo de poi");
   }
 
 }

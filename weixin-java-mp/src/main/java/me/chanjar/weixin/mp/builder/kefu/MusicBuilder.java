@@ -47,8 +47,8 @@ public final class MusicBuilder extends BaseBuilder<MusicBuilder> {
     return this;
   }
 
-  public MusicBuilder thumbMediaId(String thumb_media_id) {
-    this.thumbMediaId = thumb_media_id;
+  public MusicBuilder thumbMediaId(String thumbMediaId) {
+    this.thumbMediaId = thumbMediaId;
     return this;
   }
 

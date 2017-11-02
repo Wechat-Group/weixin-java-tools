@@ -1,13 +1,16 @@
 package me.chanjar.weixin.mp.bean.device;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.util.List;
 
 /**
- * Created by keungtung on 16/12/2016.
+ * @author keungtung
+ * @date 16/12/2016
  */
+@Data
 public class WxDeviceBindDeviceResult extends AbstractDeviceBean {
   private static final long serialVersionUID = 725870295905935355L;
 
@@ -22,27 +25,13 @@ public class WxDeviceBindDeviceResult extends AbstractDeviceBean {
     return WxMpGsonBuilder.create().fromJson(json, WxDeviceBindDeviceResult.class);
   }
 
+  @Data
   private class Device {
     @SerializedName("device_type")
     private String deviceType;
     @SerializedName("device_id")
     private String deviceId;
 
-    public String getDeviceType() {
-      return deviceType;
-    }
-
-    public void setDeviceType(String deviceType) {
-      this.deviceType = deviceType;
-    }
-
-    public String getDeviceId() {
-      return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-      this.deviceId = deviceId;
-    }
   }
 
 }

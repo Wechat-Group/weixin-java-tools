@@ -213,14 +213,13 @@ public abstract class WxPayServiceAbstractImpl implements WxPayService {
 
     String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
     String nonceStr = String.valueOf(System.currentTimeMillis());
-    Object payResult = null;
     switch (request.getTradeType()) {
       case TradeType.NATIVE: {
-        payResult = WxPayNativeOrderResult.builder()
+        return (T) WxPayNativeOrderResult.builder()
           .codeUrl(unifiedOrderResult.getCodeURL())
           .build();
-        break;
       }
+
       case TradeType.APP: {
         // APP支付绑定的是微信开放平台上的账号，APPID为开放平台上绑定APP后发放的参数
         String appId = this.getConfig().getAppId();
@@ -235,7 +234,7 @@ public abstract class WxPayServiceAbstractImpl implements WxPayService {
         configMap.put("noncestr", nonceStr);
         configMap.put("appid", appId);
 
-        payResult = WxPayAppOrderResult.builder()
+        return (T) WxPayAppOrderResult.builder()
           .sign(SignUtils.createSign(configMap, null, this.getConfig().getMchKey(), false))
           .prepayId(prepayId)
           .partnerId(partnerId)
@@ -244,26 +243,33 @@ public abstract class WxPayServiceAbstractImpl implements WxPayService {
           .timeStamp(timestamp)
           .nonceStr(nonceStr)
           .build();
-        break;
       }
+
       case TradeType.JSAPI: {
-        payResult = WxPayMpOrderResult.builder()
+        String signType = SignType.MD5;
+        WxPayMpOrderResult payResult = WxPayMpOrderResult.builder()
           .appId(unifiedOrderResult.getAppid())
           .timeStamp(timestamp)
           .nonceStr(nonceStr)
           .packageValue("prepay_id=" + prepayId)
-          .signType(SignType.MD5)
+          .signType(signType)
           .build();
-        ((WxPayMpOrderResult) payResult)
-          .setPaySign(SignUtils.createSign(payResult, null, this.getConfig().getMchKey(), false));
-        break;
+
+        payResult.setPaySign(
+          SignUtils.createSign(
+            payResult,
+            signType,
+            this.getConfig().getMchKey(),
+            false)
+        );
+        return (T) payResult;
       }
+
       default: {
         throw new WxPayException("该交易类型暂不支持");
       }
     }
 
-    return (T) payResult;
   }
 
   @Override

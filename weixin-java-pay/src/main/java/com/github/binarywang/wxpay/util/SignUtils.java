@@ -28,7 +28,23 @@ public class SignUtils {
   private static final Logger log = LoggerFactory.getLogger(SignUtils.class);
 
   /**
-   * 微信公众号支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3)
+   * 请参考并使用 {@link #createSign(Object, String, String, boolean)}
+   */
+  @Deprecated
+  public static String createSign(Object xmlBean, String signKey) {
+    return createSign(BeanUtils.xmlBean2Map(xmlBean), signKey);
+  }
+
+  /**
+   * 请参考并使用 {@link #createSign(Map, String, String, boolean)}
+   */
+  @Deprecated
+  public static String createSign(Map<String, String> params, String signKey) {
+    return createSign(params, null, signKey, false);
+  }
+
+  /**
+   * 微信支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3)
    *
    * @param xmlBean          Bean里的属性如果存在XML注解，则使用其作为key，否则使用变量名
    * @param signType         签名类型，如果为空，则默认为MD5
@@ -41,7 +57,7 @@ public class SignUtils {
   }
 
   /**
-   * 微信公众号支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3)
+   * 微信支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3)
    *
    * @param params           参数信息
    * @param signType         签名类型，如果为空，则默认为MD5
@@ -97,7 +113,6 @@ public class SignUtils {
    * @param signType 签名类型，如果为空，则默认为MD5
    * @param signKey  校验的签名Key
    * @return true - 签名校验成功，false - 签名校验失败
-   * @see #checkSign(Map, String, String)
    */
   public static boolean checkSign(Object xmlBean, String signType, String signKey) {
     return checkSign(BeanUtils.xmlBean2Map(xmlBean), signType, signKey);
@@ -110,7 +125,6 @@ public class SignUtils {
    * @param signType 签名类型，如果为空，则默认为MD5
    * @param signKey  校验的签名Key
    * @return true - 签名校验成功，false - 签名校验失败
-   * @see #checkSign(Map, String, String)
    */
   public static boolean checkSign(Map<String, String> params, String signType, String signKey) {
     String sign = createSign(params, signType, signKey, false);

@@ -2,6 +2,7 @@ package me.chanjar.weixin.mp.bean.message;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @author Binary Wang
  */
 @XStreamAlias("SendPicsInfo")
+@Data
 public class SendPicsInfo implements Serializable {
   private static final long serialVersionUID = -4572837013294199227L;
 
@@ -31,19 +33,8 @@ public class SendPicsInfo implements Serializable {
     return ToStringUtils.toSimpleString(this);
   }
 
-  public Long getCount() {
-    return this.count;
-  }
-
-  public void setCount(Long count) {
-    this.count = count;
-  }
-
-  public List<Item> getPicList() {
-    return this.picList;
-  }
-
   @XStreamAlias("item")
+  @Data
   public static class Item implements Serializable {
     private static final long serialVersionUID = 7706235740094081194L;
 
@@ -56,12 +47,5 @@ public class SendPicsInfo implements Serializable {
       return ToStringUtils.toSimpleString(this);
     }
 
-    public String getPicMd5Sum() {
-      return this.picMd5Sum;
-    }
-
-    public void setPicMd5Sum(String picMd5Sum) {
-      this.picMd5Sum = picMd5Sum;
-    }
   }
 }

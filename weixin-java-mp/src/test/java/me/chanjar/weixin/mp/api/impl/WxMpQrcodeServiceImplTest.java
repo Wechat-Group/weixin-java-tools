@@ -37,7 +37,7 @@ public class WxMpQrcodeServiceImplTest {
     WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateTmpTicket(sceneId, null);
     Assert.assertNotNull(ticket.getUrl());
     Assert.assertNotNull(ticket.getTicket());
-    Assert.assertTrue(ticket.getExpire_seconds() != -1);
+    Assert.assertTrue(ticket.getExpireSeconds() != -1);
     System.out.println(ticket);
   }
 
@@ -47,7 +47,7 @@ public class WxMpQrcodeServiceImplTest {
     WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateTmpTicket(sceneStr, null);
     Assert.assertNotNull(ticket.getUrl());
     Assert.assertNotNull(ticket.getTicket());
-    Assert.assertTrue(ticket.getExpire_seconds() != -1);
+    Assert.assertTrue(ticket.getExpireSeconds() != -1);
     System.out.println(ticket);
   }
 
@@ -56,7 +56,7 @@ public class WxMpQrcodeServiceImplTest {
     WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateLastTicket(sceneId);
     Assert.assertNotNull(ticket.getUrl());
     Assert.assertNotNull(ticket.getTicket());
-    Assert.assertTrue(ticket.getExpire_seconds() == -1);
+    Assert.assertTrue(ticket.getExpireSeconds() == -1);
     System.out.println(ticket);
   }
 

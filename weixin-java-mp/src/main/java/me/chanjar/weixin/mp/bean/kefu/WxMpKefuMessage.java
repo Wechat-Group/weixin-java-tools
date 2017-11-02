@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.bean.kefu;
 
+import lombok.Data;
 import me.chanjar.weixin.mp.builder.kefu.*;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -12,6 +13,7 @@ import java.util.List;
  *
  * @author chanjarster
  */
+@Data
 public class WxMpKefuMessage implements Serializable {
   private static final long serialVersionUID = -9196732086954365246L;
 
@@ -85,18 +87,6 @@ public class WxMpKefuMessage implements Serializable {
     return new WxCardBuilder();
   }
 
-  public String getToUser() {
-    return this.toUser;
-  }
-
-  public void setToUser(String toUser) {
-    this.toUser = toUser;
-  }
-
-  public String getMsgType() {
-    return this.msgType;
-  }
-
   /**
    * <pre>
    * 请使用
@@ -110,141 +100,20 @@ public class WxMpKefuMessage implements Serializable {
    * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_WXCARD}
    * </pre>
    *
-   * @param msgType
    */
   public void setMsgType(String msgType) {
     this.msgType = msgType;
-  }
-
-  public String getMpNewsMediaId() {
-    return this.mpNewsMediaId;
-  }
-
-  public void setMpNewsMediaId(String mpNewsMediaId) {
-    this.mpNewsMediaId = mpNewsMediaId;
-  }
-
-  public String getContent() {
-    return this.content;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
-  }
-
-  public String getMediaId() {
-    return this.mediaId;
-  }
-
-  public void setMediaId(String mediaId) {
-    this.mediaId = mediaId;
-  }
-
-  public String getThumbMediaId() {
-    return this.thumbMediaId;
-  }
-
-  public void setThumbMediaId(String thumbMediaId) {
-    this.thumbMediaId = thumbMediaId;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getDescription() {
-    return this.description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getMusicUrl() {
-    return this.musicUrl;
-  }
-
-  public void setMusicUrl(String musicUrl) {
-    this.musicUrl = musicUrl;
-  }
-
-  public String getHqMusicUrl() {
-    return this.hqMusicUrl;
-  }
-
-  public void setHqMusicUrl(String hqMusicUrl) {
-    this.hqMusicUrl = hqMusicUrl;
-  }
-
-  public String getCardId() {
-    return this.cardId;
-  }
-
-  public void setCardId(String cardId) {
-    this.cardId = cardId;
-  }
-
-  public List<WxArticle> getArticles() {
-    return this.articles;
-  }
-
-  public void setArticles(List<WxArticle> articles) {
-    this.articles = articles;
   }
 
   public String toJson() {
     return WxMpGsonBuilder.INSTANCE.create().toJson(this);
   }
 
-  public String getKfAccount() {
-    return this.kfAccount;
-  }
-
-  public void setKfAccount(String kfAccount) {
-    this.kfAccount = kfAccount;
-  }
-
+  @Data
   public static class WxArticle {
     private String title;
     private String description;
     private String url;
     private String picUrl;
-
-    public String getTitle() {
-      return this.title;
-    }
-
-    public void setTitle(String title) {
-      this.title = title;
-    }
-
-    public String getDescription() {
-      return this.description;
-    }
-
-    public void setDescription(String description) {
-      this.description = description;
-    }
-
-    public String getUrl() {
-      return this.url;
-    }
-
-    public void setUrl(String url) {
-      this.url = url;
-    }
-
-    public String getPicUrl() {
-      return this.picUrl;
-    }
-
-    public void setPicUrl(String picUrl) {
-      this.picUrl = picUrl;
-    }
-
   }
 }

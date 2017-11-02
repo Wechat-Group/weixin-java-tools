@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean.tag;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -15,6 +16,7 @@ import java.util.List;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
 public class WxTagListUser implements Serializable {
   private static final long serialVersionUID = -4551768374200676112L;
 
@@ -47,30 +49,7 @@ public class WxTagListUser implements Serializable {
     return ToStringUtils.toSimpleString(this);
   }
 
-  public Integer getCount() {
-    return this.count;
-  }
-
-  public void setCount(Integer count) {
-    this.count = count;
-  }
-
-  public WxTagListUserData getData() {
-    return this.data;
-  }
-
-  public void setData(WxTagListUserData data) {
-    this.data = data;
-  }
-
-  public String getNextOpenid() {
-    return this.nextOpenid;
-  }
-
-  public void setNextOpenid(String nextOpenid) {
-    this.nextOpenid = nextOpenid;
-  }
-
+  @Data
   public static class WxTagListUserData implements Serializable {
     private static final long serialVersionUID = -8584537400336245701L;
 
@@ -83,14 +62,6 @@ public class WxTagListUser implements Serializable {
     @Override
     public String toString() {
       return ToStringUtils.toSimpleString(this);
-    }
-
-    public List<String> getOpenidList() {
-      return this.openidList;
-    }
-
-    public void setOpenidList(List<String> openidList) {
-      this.openidList = openidList;
     }
   }
 }

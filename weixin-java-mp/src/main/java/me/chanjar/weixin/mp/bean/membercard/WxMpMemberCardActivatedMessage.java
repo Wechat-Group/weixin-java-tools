@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean.membercard;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @author YuJian(mgcnrx11@hotmail.com)
  * @version 2017/7/8
  */
+@Data
 public class WxMpMemberCardActivatedMessage implements Serializable {
   private static final long serialVersionUID = -5972713484594266480L;
 
@@ -73,99 +75,4 @@ public class WxMpMemberCardActivatedMessage implements Serializable {
   @SerializedName("init_custom_field_value3")
   private String initCustomFieldValue3;
 
-  public String getMembershipNumber() {
-    return membershipNumber;
-  }
-
-  public void setMembershipNumber(String membershipNumber) {
-    this.membershipNumber = membershipNumber;
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public String getCardId() {
-    return cardId;
-  }
-
-  public void setCardId(String cardId) {
-    this.cardId = cardId;
-  }
-
-  public String getBackgroundPicUrl() {
-    return backgroundPicUrl;
-  }
-
-  public void setBackgroundPicUrl(String backgroundPicUrl) {
-    this.backgroundPicUrl = backgroundPicUrl;
-  }
-
-  public Integer getActivateBeginTime() {
-    return activateBeginTime;
-  }
-
-  public void setActivateBeginTime(Integer activateBeginTime) {
-    this.activateBeginTime = activateBeginTime;
-  }
-
-  public Integer getActivateEndTime() {
-    return activateEndTime;
-  }
-
-  public void setActivateEndTime(Integer activateEndTime) {
-    this.activateEndTime = activateEndTime;
-  }
-
-  public Integer getInitBonus() {
-    return initBonus;
-  }
-
-  public void setInitBonus(Integer initBonus) {
-    this.initBonus = initBonus;
-  }
-
-  public String getInitBonusRecord() {
-    return initBonusRecord;
-  }
-
-  public void setInitBonusRecord(String initBonusRecord) {
-    this.initBonusRecord = initBonusRecord;
-  }
-
-  public Integer getInitBalance() {
-    return initBalance;
-  }
-
-  public void setInitBalance(Integer initBalance) {
-    this.initBalance = initBalance;
-  }
-
-  public String getInitCustomFieldValue1() {
-    return initCustomFieldValue1;
-  }
-
-  public void setInitCustomFieldValue1(String initCustomFieldValue1) {
-    this.initCustomFieldValue1 = initCustomFieldValue1;
-  }
-
-  public String getInitCustomFieldValue2() {
-    return initCustomFieldValue2;
-  }
-
-  public void setInitCustomFieldValue2(String initCustomFieldValue2) {
-    this.initCustomFieldValue2 = initCustomFieldValue2;
-  }
-
-  public String getInitCustomFieldValue3() {
-    return initCustomFieldValue3;
-  }
-
-  public void setInitCustomFieldValue3(String initCustomFieldValue3) {
-    this.initCustomFieldValue3 = initCustomFieldValue3;
-  }
 }

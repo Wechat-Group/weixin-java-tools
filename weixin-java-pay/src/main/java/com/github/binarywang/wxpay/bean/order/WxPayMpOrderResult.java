@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.bean.order;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class WxPayMpOrderResult {
   /**
    * 由于package为java保留关键字，因此改为packageValue
    */
+  @XStreamAlias("package")
   private String packageValue;
   private String signType;
   private String paySign;

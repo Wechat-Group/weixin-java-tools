@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -88,7 +89,8 @@ public class BeanUtils {
 
         if (field.isAnnotationPresent(XStreamAlias.class)) {
           result.put(field.getAnnotation(XStreamAlias.class).value(), field.get(bean).toString());
-        } else {
+        } else if (!Modifier.isStatic(field.getModifiers())) {
+          //忽略掉静态成员变量
           result.put(field.getName(), field.get(bean).toString());
         }
 

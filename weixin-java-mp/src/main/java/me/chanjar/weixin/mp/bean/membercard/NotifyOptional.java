@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean.membercard;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -15,6 +16,7 @@ import java.io.Serializable;
  * @author YuJian(mgcnrx11@gmail.com)
  * @version 2017/7/15
  */
+@Data
 public class NotifyOptional implements Serializable {
   private static final long serialVersionUID = 4488842021504939176L;
 
@@ -41,44 +43,4 @@ public class NotifyOptional implements Serializable {
 
   @SerializedName("is_notify_custom_field3")
   private Boolean isNotifyCustomField3;
-
-  public Boolean getNotifyBonus() {
-    return isNotifyBonus;
-  }
-
-  public void setNotifyBonus(Boolean notifyBonus) {
-    isNotifyBonus = notifyBonus;
-  }
-
-  public Boolean getNotifyBalance() {
-    return isNotifyBalance;
-  }
-
-  public void setNotifyBalance(Boolean notifyBalance) {
-    isNotifyBalance = notifyBalance;
-  }
-
-  public Boolean getNotifyCustomField1() {
-    return isNotifyCustomField1;
-  }
-
-  public void setNotifyCustomField1(Boolean notifyCustomField1) {
-    isNotifyCustomField1 = notifyCustomField1;
-  }
-
-  public Boolean getNotifyCustomField2() {
-    return isNotifyCustomField2;
-  }
-
-  public void setNotifyCustomField2(Boolean notifyCustomField2) {
-    isNotifyCustomField2 = notifyCustomField2;
-  }
-
-  public Boolean getNotifyCustomField3() {
-    return isNotifyCustomField3;
-  }
-
-  public void setNotifyCustomField3(Boolean notifyCustomField3) {
-    isNotifyCustomField3 = notifyCustomField3;
-  }
 }

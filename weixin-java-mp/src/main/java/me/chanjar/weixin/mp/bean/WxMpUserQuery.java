@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean;
 
 import com.google.gson.Gson;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Map;
  *
  * @author LiuJunGuang
  */
+@Data
 public class WxMpUserQuery implements Serializable {
   private static final long serialVersionUID = -1344224837373149313L;
 
@@ -110,75 +112,24 @@ public class WxMpUserQuery implements Serializable {
   }
 
   // 查询参数封装
+  @Data
   public class WxMpUserQueryParam implements Serializable {
     private static final long serialVersionUID = -6863571795702385319L;
     private String openid;
     private String lang;
 
     public WxMpUserQueryParam(String openid, String lang) {
-      super();
       this.openid = openid;
       this.lang = lang;
     }
 
     public WxMpUserQueryParam(String openid) {
-      super();
       this.openid = openid;
       this.lang = "zh_CN";
     }
 
     public WxMpUserQueryParam() {
       super();
-    }
-
-    public String getOpenid() {
-      return this.openid;
-    }
-
-    public void setOpenid(String openid) {
-      this.openid = openid;
-    }
-
-    public String getLang() {
-      return this.lang;
-    }
-
-    public void setLang(String lang) {
-      this.lang = lang;
-    }
-
-    @Override
-    public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + getOuterType().hashCode();
-      result = prime * result + ((this.lang == null) ? 0 : this.lang.hashCode());
-      result = prime * result + ((this.openid == null) ? 0 : this.openid.hashCode());
-      return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (this == obj)
-        return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
-      WxMpUserQueryParam other = (WxMpUserQueryParam) obj;
-      if (!getOuterType().equals(other.getOuterType()))
-        return false;
-      if (this.lang == null) {
-        if (other.lang != null)
-          return false;
-      } else if (!this.lang.equals(other.lang))
-        return false;
-      if (this.openid == null) {
-        if (other.openid != null)
-          return false;
-      } else if (!this.openid.equals(other.openid))
-        return false;
-      return true;
     }
 
     private WxMpUserQuery getOuterType() {
