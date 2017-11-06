@@ -2,6 +2,7 @@ package me.chanjar.weixin.mp.bean.datacube;
 
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
+import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
 public class WxDataCubeMsgResult extends WxDataCubeBaseResult {
   private static final long serialVersionUID = 6932121822150573659L;
 
@@ -70,62 +72,6 @@ public class WxDataCubeMsgResult extends WxDataCubeBaseResult {
       JSON_PARSER.parse(json).getAsJsonObject().get("list"),
       new TypeToken<List<WxDataCubeMsgResult>>() {
       }.getType());
-  }
-
-  public Integer getRefHour() {
-    return this.refHour;
-  }
-
-  public void setRefHour(Integer refHour) {
-    this.refHour = refHour;
-  }
-
-  public Integer getMsgType() {
-    return this.msgType;
-  }
-
-  public void setMsgType(Integer msgType) {
-    this.msgType = msgType;
-  }
-
-  public Integer getMsgUser() {
-    return this.msgUser;
-  }
-
-  public void setMsgUser(Integer msgUser) {
-    this.msgUser = msgUser;
-  }
-
-  public Integer getMsgCount() {
-    return this.msgCount;
-  }
-
-  public void setMsgCount(Integer msgCount) {
-    this.msgCount = msgCount;
-  }
-
-  public Integer getCountInterval() {
-    return this.countInterval;
-  }
-
-  public void setCountInterval(Integer countInterval) {
-    this.countInterval = countInterval;
-  }
-
-  public Integer getIntPageReadCount() {
-    return this.intPageReadCount;
-  }
-
-  public void setIntPageReadCount(Integer intPageReadCount) {
-    this.intPageReadCount = intPageReadCount;
-  }
-
-  public Integer getOriPageReadUser() {
-    return this.oriPageReadUser;
-  }
-
-  public void setOriPageReadUser(Integer oriPageReadUser) {
-    this.oriPageReadUser = oriPageReadUser;
   }
 
 }

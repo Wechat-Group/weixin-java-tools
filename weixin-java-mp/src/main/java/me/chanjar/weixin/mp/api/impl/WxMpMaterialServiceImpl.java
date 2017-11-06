@@ -37,8 +37,7 @@ public class WxMpMaterialServiceImpl implements WxMpMaterialService {
     try {
       return this.mediaUpload(mediaType, FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), fileType));
     } catch (IOException e) {
-      e.printStackTrace();
-      throw new WxErrorException(WxError.newBuilder().setErrorMsg(e.getMessage()).build());
+      throw new WxErrorException(WxError.newBuilder().setErrorMsg(e.getMessage()).build(), e);
     }
   }
 

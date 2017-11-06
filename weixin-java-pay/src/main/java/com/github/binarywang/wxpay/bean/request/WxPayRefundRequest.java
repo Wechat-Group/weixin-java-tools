@@ -165,12 +165,12 @@ public class WxPayRefundRequest extends WxPayBaseRequest {
   private String refundDesc;
 
   @Override
-  public void checkAndSign(WxPayConfig config) throws WxPayException {
+  public void checkAndSign(WxPayConfig config, boolean isIgnoreSignType) throws WxPayException {
     if (StringUtils.isBlank(this.getOpUserId())) {
       this.setOpUserId(config.getMchId());
     }
 
-    super.checkAndSign(config);
+    super.checkAndSign(config, isIgnoreSignType);
   }
 
   @Override

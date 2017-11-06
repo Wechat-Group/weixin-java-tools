@@ -216,12 +216,13 @@ public abstract class WxPayBaseResult {
   /**
    * 校验返回结果签名
    *
+   * @param signType     签名类型
    * @param checkSuccess 是否同时检查结果是否成功
    */
-  public void checkResult(WxPayServiceAbstractImpl wxPayService, boolean checkSuccess) throws WxPayException {
+  public void checkResult(WxPayServiceAbstractImpl wxPayService, String signType, boolean checkSuccess) throws WxPayException {
     //校验返回结果签名
     Map<String, String> map = toMap();
-    if (getSign() != null && !SignUtils.checkSign(map, wxPayService.getConfig().getMchKey())) {
+    if (getSign() != null && !SignUtils.checkSign(map, signType, wxPayService.getConfig().getMchKey())) {
       this.getLogger().debug("校验结果签名失败，参数：{}", map);
       throw new WxPayException("参数格式校验错误！");
     }

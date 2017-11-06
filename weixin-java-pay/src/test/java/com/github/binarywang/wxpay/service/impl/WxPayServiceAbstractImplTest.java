@@ -46,16 +46,17 @@ public class WxPayServiceAbstractImplTest {
    */
   @Test
   public void testUnifiedOrder() throws WxPayException {
-    WxPayUnifiedOrderResult result = this.payService
-      .unifiedOrder(WxPayUnifiedOrderRequest.newBuilder()
-        .body("我去")
-        .totalFee(1)
-        .spbillCreateIp("11.1.11.1")
-        .notifyURL("111111")
-        .tradeType(TradeType.JSAPI)
-        .openid(((XmlWxPayConfig) this.payService.getConfig()).getOpenid())
-        .outTradeNo("1111112")
-        .build());
+    WxPayUnifiedOrderRequest request = WxPayUnifiedOrderRequest.newBuilder()
+      .body("我去")
+      .totalFee(1)
+      .spbillCreateIp("11.1.11.1")
+      .notifyURL("111111")
+      .tradeType(TradeType.JSAPI)
+      .openid(((XmlWxPayConfig) this.payService.getConfig()).getOpenid())
+      .outTradeNo("1111112")
+      .build();
+    request.setSignType(SignType.HMAC_SHA256);
+    WxPayUnifiedOrderResult result = this.payService.unifiedOrder(request);
     this.logger.info(result.toString());
     this.logger.warn(this.payService.getWxApiData().toString());
   }
@@ -66,7 +67,7 @@ public class WxPayServiceAbstractImplTest {
   }
 
   @Test
-  public void testCreateOrder_jssdk() throws Exception {
+  public void testCreateOrder_jsapi() throws Exception {
     WxPayMpOrderResult result = this.payService
       .createOrder(WxPayUnifiedOrderRequest.newBuilder()
         .body("我去")
@@ -284,13 +285,15 @@ public class WxPayServiceAbstractImplTest {
 
   @Test
   public void testMicropay() throws Exception {
-    WxPayMicropayResult result = this.payService.micropay(WxPayMicropayRequest.newBuilder()
-      .body("body")
-      .outTradeNo("aaaaa")
-      .totalFee(123)
-      .spbillCreateIp("127.0.0.1")
-      .authCode("aaa")
-      .build());
+    WxPayMicropayResult result = this.payService.micropay(
+      WxPayMicropayRequest
+        .newBuilder()
+        .body("body")
+        .outTradeNo("aaaaa")
+        .totalFee(123)
+        .spbillCreateIp("127.0.0.1")
+        .authCode("aaa")
+        .build());
     this.logger.info(result.toString());
   }
 
@@ -306,9 +309,11 @@ public class WxPayServiceAbstractImplTest {
 
   @Test
   public void testReverseOrder() throws Exception {
-    WxPayOrderReverseResult result = this.payService.reverseOrder(WxPayOrderReverseRequest.newBuilder()
-      .outTradeNo("1111")
-      .build());
+    WxPayOrderReverseResult result = this.payService.reverseOrder(
+      WxPayOrderReverseRequest
+        .newBuilder()
+        .outTradeNo("1111")
+        .build());
     assertNotNull(result);
     this.logger.info(result.toString());
   }
@@ -359,33 +364,38 @@ public class WxPayServiceAbstractImplTest {
 
   @Test
   public void testQueryCouponStock() throws Exception {
-    WxPayCouponStockQueryResult result = this.payService.queryCouponStock(WxPayCouponStockQueryRequest.newBuilder()
-      .couponStockId("123")
-      .build());
+    WxPayCouponStockQueryResult result = this.payService.queryCouponStock(
+      WxPayCouponStockQueryRequest
+        .newBuilder()
+        .couponStockId("123")
+        .build());
     this.logger.info(result.toString());
   }
 
   @Test
   public void testQueryCouponInfo() throws Exception {
-    WxPayCouponInfoQueryResult result = this.payService.queryCouponInfo(WxPayCouponInfoQueryRequest.newBuilder()
-      .openid("ojOQA0y9o-Eb6Aep7uVTdbkJqrP4")
-      .couponId("11")
-      .stockId("1121")
-      .build());
+    WxPayCouponInfoQueryResult result = this.payService.queryCouponInfo(
+      WxPayCouponInfoQueryRequest
+        .newBuilder()
+        .openid("ojOQA0y9o-Eb6Aep7uVTdbkJqrP4")
+        .couponId("11")
+        .stockId("1121")
+        .build());
     this.logger.info(result.toString());
   }
 
   /**
-   * 目前调用接口总报“系统繁忙，清稍后再试”，怀疑根本没法使用
+   * 只支持拉取90天内的评论数据
    */
   @Test
   public void testQueryComment() throws Exception {
     Calendar calendar = Calendar.getInstance();
-    calendar.add(Calendar.DAY_OF_MONTH, -2);
-    Date beginDate = calendar.getTime();
-    calendar.add(Calendar.MONTH, -1);
+    calendar.add(Calendar.DAY_OF_MONTH, -1);
     Date endDate = calendar.getTime();
-    this.payService.queryComment(beginDate, endDate, 0, null);
+    calendar.add(Calendar.DAY_OF_MONTH, -88);
+    Date beginDate = calendar.getTime();
+    String result = this.payService.queryComment(beginDate, endDate, 0, null);
+    this.logger.info(result);
   }
 
   @Test

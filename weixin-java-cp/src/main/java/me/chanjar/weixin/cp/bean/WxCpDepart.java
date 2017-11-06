@@ -15,7 +15,7 @@ public class WxCpDepart implements Serializable {
   private Integer id;
   private String name;
   private Integer parentId;
-  private Integer order;
+  private Long order;
 
   public static WxCpDepart fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpDepart.class);
@@ -45,11 +45,11 @@ public class WxCpDepart implements Serializable {
     this.parentId = parentId;
   }
 
-  public Integer getOrder() {
+  public Long getOrder() {
     return this.order;
   }
 
-  public void setOrder(Integer order) {
+  public void setOrder(Long order) {
     this.order = order;
   }
 

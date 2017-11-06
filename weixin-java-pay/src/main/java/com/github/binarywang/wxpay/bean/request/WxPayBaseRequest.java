@@ -14,6 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 
+import static com.github.binarywang.wxpay.constant.WxPayConstants.SignType.ALL_SIGN_TYPES;
+
 /**
  * <pre>
  * Created by Binary Wang on 2016-10-24.
@@ -188,9 +190,10 @@ public abstract class WxPayBaseRequest {
    * 3、生成签名，并设置进去
    * </pre>
    *
-   * @param config 支付配置对象，用于读取相应系统配置信息
+   * @param config           支付配置对象，用于读取相应系统配置信息
+   * @param isIgnoreSignType 签名时，是否忽略signType
    */
-  public void checkAndSign(WxPayConfig config) throws WxPayException {
+  public void checkAndSign(WxPayConfig config, boolean isIgnoreSignType) throws WxPayException {
     this.checkFields();
 
     if (StringUtils.isBlank(getAppid())) {
@@ -209,11 +212,24 @@ public abstract class WxPayBaseRequest {
       this.setSubMchId(config.getSubMchId());
     }
 
+    if (StringUtils.isBlank(getSignType())) {
+      if (config.getSignType() != null && !ALL_SIGN_TYPES.contains(config.getSignType())) {
+        throw new WxPayException("非法的signType配置：" + config.getSignType() + "，请检查配置！");
+      }
+      this.setSignType(StringUtils.trimToNull(config.getSignType()));
+    } else {
+      if (!ALL_SIGN_TYPES.contains(this.getSignType())) {
+        throw new WxPayException("非法的sign_type参数：" + this.getSignType());
+      }
+    }
+
     if (StringUtils.isBlank(getNonceStr())) {
       this.setNonceStr(String.valueOf(System.currentTimeMillis()));
     }
+
     //设置签名字段的值
-    this.setSign(SignUtils.createSign(this, config.getMchKey(), this.signType));
+    this.setSign(SignUtils.createSign(this, this.getSignType(), config.getMchKey(),
+      isIgnoreSignType));
   }
 
 }

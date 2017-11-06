@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.bean.material;
 
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class WxMpMaterialNews implements Serializable {
   private static final long serialVersionUID = -3283203652013494976L;
 
@@ -32,22 +34,6 @@ public class WxMpMaterialNews implements Serializable {
     return this.articles == null || this.articles.isEmpty();
   }
 
-  public Date getCreatedTime() {
-    return this.createdTime;
-  }
-
-  public void setCreatedTime(Date createdTime) {
-    this.createdTime = createdTime;
-  }
-
-  public Date getUpdatedTime() {
-    return this.updatedTime;
-  }
-
-  public void setUpdatedTime(Date updatedTime) {
-    this.updatedTime = updatedTime;
-  }
-
   @Override
   public String toString() {
     return this.toJson();
@@ -70,6 +56,7 @@ public class WxMpMaterialNews implements Serializable {
    *
    * @author chanjarster
    */
+  @Data
   public static class WxMpMaterialNewsArticle {
     /**
      * (必填) 图文消息缩略图的media_id，可以在基础支持-上传多媒体文件接口中获得
@@ -120,94 +107,6 @@ public class WxMpMaterialNews implements Serializable {
      * 是否粉丝才可评论，0所有人可评论，1粉丝才可评论
      */
     private Boolean onlyFansCanComment;
-
-    public String getThumbMediaId() {
-      return this.thumbMediaId;
-    }
-
-    public void setThumbMediaId(String thumbMediaId) {
-      this.thumbMediaId = thumbMediaId;
-    }
-
-    public String getAuthor() {
-      return this.author;
-    }
-
-    public void setAuthor(String author) {
-      this.author = author;
-    }
-
-    public String getTitle() {
-      return this.title;
-    }
-
-    public void setTitle(String title) {
-      this.title = title;
-    }
-
-    public String getContentSourceUrl() {
-      return this.contentSourceUrl;
-    }
-
-    public void setContentSourceUrl(String contentSourceUrl) {
-      this.contentSourceUrl = contentSourceUrl;
-    }
-
-    public String getContent() {
-      return this.content;
-    }
-
-    public void setContent(String content) {
-      this.content = content;
-    }
-
-    public String getDigest() {
-      return this.digest;
-    }
-
-    public void setDigest(String digest) {
-      this.digest = digest;
-    }
-
-    public boolean isShowCoverPic() {
-      return this.showCoverPic;
-    }
-
-    public void setShowCoverPic(boolean showCoverPic) {
-      this.showCoverPic = showCoverPic;
-    }
-
-    public String getUrl() {
-      return this.url;
-    }
-
-    public void setUrl(String url) {
-      this.url = url;
-    }
-
-    public String getThumbUrl() {
-      return this.thumbUrl;
-    }
-
-    public void setThumbUrl(String thumbUrl) {
-      this.thumbUrl = thumbUrl;
-    }
-
-    public Boolean getNeedOpenComment() {
-      return this.needOpenComment;
-    }
-
-    public void setNeedOpenComment(Boolean needOpenComment) {
-      this.needOpenComment = needOpenComment;
-    }
-
-    public Boolean getOnlyFansCanComment() {
-      return this.onlyFansCanComment;
-    }
-
-    public void setOnlyFansCanComment(Boolean onlyFansCanComment) {
-      this.onlyFansCanComment = onlyFansCanComment;
-    }
 
     @Override
     public String toString() {

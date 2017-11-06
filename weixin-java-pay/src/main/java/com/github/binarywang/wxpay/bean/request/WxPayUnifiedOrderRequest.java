@@ -333,17 +333,23 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   @Override
   protected void checkConstraints() throws WxPayException {
-    if (TradeType.JSAPI.equals(this.getTradeType()) && this.getOpenid() == null && this.getSubOpenid() == null) {
-      throw new WxPayException("当 trade_type是'JSAPI'时未指定openid或sub_openid");
+    if (TradeType.JSAPI.equals(this.getTradeType())) {
+      if (StringUtils.isBlank(this.getSubAppId()) && StringUtils.isBlank(this.getOpenid())) {
+        throw new WxPayException("当trade_type是'JSAPI'时，需指定非空的openid值");
+      }
+
+      if (StringUtils.isNotBlank(this.getSubAppId()) && StringUtils.isBlank(this.getSubOpenid())) {
+        throw new WxPayException("在服务商模式下，当trade_type是'JSAPI'时，需指定非空的sub_openid值");
+      }
     }
 
-    if (TradeType.NATIVE.equals(this.getTradeType()) && this.getProductId() == null) {
-      throw new WxPayException("当 trade_type是'NATIVE'时未指定product_id");
+    if (TradeType.NATIVE.equals(this.getTradeType()) && StringUtils.isBlank(this.getProductId())) {
+      throw new WxPayException("当trade_type是'NATIVE'时，需指定非空的product_id值");
     }
   }
 
   @Override
-  public void checkAndSign(WxPayConfig config) throws WxPayException {
+  public void checkAndSign(WxPayConfig config, boolean isIgnoreSignType) throws WxPayException {
     if (StringUtils.isBlank(this.getNotifyURL())) {
       this.setNotifyURL(config.getNotifyUrl());
     }
@@ -352,7 +358,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
       this.setTradeType(config.getTradeType());
     }
 
-    super.checkAndSign(config);
+    super.checkAndSign(config, isIgnoreSignType);
   }
 
 }

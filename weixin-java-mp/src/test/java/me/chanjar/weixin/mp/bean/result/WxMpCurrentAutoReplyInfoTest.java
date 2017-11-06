@@ -145,8 +145,8 @@ public class WxMpCurrentAutoReplyInfoTest {
     WxMpCurrentAutoReplyInfo autoReplyInfo = WxMpCurrentAutoReplyInfo.fromJson(json);
 
     assertNotNull(autoReplyInfo);
-    assertTrue(autoReplyInfo.getAddFriendReplyOpen());
-    assertTrue(autoReplyInfo.getAutoReplyOpen());
+    assertTrue(autoReplyInfo.getIsAddFriendReplyOpen());
+    assertTrue(autoReplyInfo.getIsAutoReplyOpen());
     assertNotNull(autoReplyInfo.getAddFriendAutoReplyInfo());
     assertNotNull(autoReplyInfo.getMessageDefaultAutoReplyInfo());
     assertTrue(autoReplyInfo.getKeywordAutoReplyInfo().getList().size() > 0);

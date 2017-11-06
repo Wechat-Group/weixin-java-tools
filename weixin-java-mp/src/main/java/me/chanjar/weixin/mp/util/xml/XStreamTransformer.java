@@ -60,6 +60,8 @@ public class XStreamTransformer {
    */
   private static void registerClass(Class<?> clz) {
     XStream xstream = XStreamInitializer.getInstance();
+    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
+
     xstream.processAnnotations(clz);
     xstream.processAnnotations(getInnerClasses(clz));
     if (clz.equals(WxMpXmlMessage.class)) {

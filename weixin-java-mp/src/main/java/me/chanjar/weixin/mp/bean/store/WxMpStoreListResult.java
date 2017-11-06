@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean.store;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -15,6 +16,7 @@ import java.util.List;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
 public class WxMpStoreListResult implements Serializable {
   private static final long serialVersionUID = 5388907559949538663L;
 
@@ -46,38 +48,6 @@ public class WxMpStoreListResult implements Serializable {
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
-  }
-
-  public Integer getTotalCount() {
-    return this.totalCount;
-  }
-
-  public void setTotalCount(Integer totalCount) {
-    this.totalCount = totalCount;
-  }
-
-  public Integer getErrCode() {
-    return this.errCode;
-  }
-
-  public void setErrCode(Integer errCode) {
-    this.errCode = errCode;
-  }
-
-  public String getErrMsg() {
-    return this.errMsg;
-  }
-
-  public void setErrMsg(String errMsg) {
-    this.errMsg = errMsg;
-  }
-
-  public List<WxMpStoreInfo> getBusinessList() {
-    return this.businessList;
-  }
-
-  public void setBusinessList(List<WxMpStoreInfo> businessList) {
-    this.businessList = businessList;
   }
 
 }

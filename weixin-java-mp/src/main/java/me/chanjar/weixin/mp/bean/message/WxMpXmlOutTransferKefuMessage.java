@@ -2,12 +2,14 @@ package me.chanjar.weixin.mp.bean.message;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import lombok.Data;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 
 import java.io.Serializable;
 
 @XStreamAlias("xml")
+@Data
 public class WxMpXmlOutTransferKefuMessage extends WxMpXmlOutMessage {
   private static final long serialVersionUID = 1850903037285841322L;
 
@@ -18,15 +20,8 @@ public class WxMpXmlOutTransferKefuMessage extends WxMpXmlOutMessage {
     this.msgType = WxConsts.CUSTOM_MSG_TRANSFER_CUSTOMER_SERVICE;
   }
 
-  public TransInfo getTransInfo() {
-    return this.transInfo;
-  }
-
-  public void setTransInfo(TransInfo transInfo) {
-    this.transInfo = transInfo;
-  }
-
   @XStreamAlias("TransInfo")
+  @Data
   public static class TransInfo implements Serializable {
     private static final long serialVersionUID = -6317885617135706056L;
 
@@ -34,12 +29,5 @@ public class WxMpXmlOutTransferKefuMessage extends WxMpXmlOutMessage {
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String kfAccount;
 
-    public String getKfAccount() {
-      return this.kfAccount;
-    }
-
-    public void setKfAccount(String kfAccount) {
-      this.kfAccount = kfAccount;
-    }
   }
 }

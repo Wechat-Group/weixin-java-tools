@@ -1,6 +1,9 @@
 package com.github.binarywang.wxpay.constant;
 
+import com.google.common.collect.Lists;
+
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * <pre>
@@ -96,6 +99,7 @@ public class WxPayConstants {
   public static class SignType {
     public static final String HMAC_SHA256 = "HMAC-SHA256";
     public static final String MD5 = "MD5";
+    public static final List<String> ALL_SIGN_TYPES = Lists.newArrayList(HMAC_SHA256, MD5);
   }
 
   /**

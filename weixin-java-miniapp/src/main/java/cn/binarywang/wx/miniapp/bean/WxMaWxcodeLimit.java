@@ -6,9 +6,11 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 /**
- * Created by Element on 2017/7/27.
+ *
+ * @author Element
+ * @date 2017/7/27
  */
-public class WxMaWxcodeLimit extends WxMaQrcodeWrapper implements Serializable {
+public class WxMaWxcodeLimit extends AbstractWxMaQrcodeWrapper implements Serializable {
   private static final long serialVersionUID = 4782193774524960401L;
   private String scene;
   private String page;

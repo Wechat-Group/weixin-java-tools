@@ -175,6 +175,7 @@ public class WxMaInMemoryConfig implements WxMaConfig {
     return true;
   }
 
+  @Override
   public String getAppid() {
     return appid;
   }
