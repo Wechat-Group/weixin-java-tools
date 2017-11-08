@@ -13,7 +13,7 @@ public class WxCpXmlOutVideoMessage extends WxCpXmlOutMessage {
   protected final Video video = new Video();
 
   public WxCpXmlOutVideoMessage() {
-    this.msgType = WxConsts.XML_MSG_VIDEO;
+    this.msgType = WxConsts.XmlMsgType.VIDEO;
   }
 
   public String getMediaId() {

@@ -24,7 +24,7 @@ public final class MusicBuilder extends BaseBuilder<MusicBuilder> {
   private String hqMusicUrl;
 
   public MusicBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_MUSIC;
+    this.msgType = WxConsts.KefuMsgType.MUSIC;
   }
 
   public MusicBuilder musicUrl(String musicurl) {

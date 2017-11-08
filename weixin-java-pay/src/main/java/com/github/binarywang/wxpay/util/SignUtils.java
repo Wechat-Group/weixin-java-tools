@@ -19,16 +19,17 @@ import java.util.TreeMap;
 
 /**
  * <pre>
- * 签名相关工具类
+ * 签名相关工具类.
  * Created by Binary Wang on 2017-3-23.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  */
 public class SignUtils {
   private static final Logger log = LoggerFactory.getLogger(SignUtils.class);
 
   /**
-   * 请参考并使用 {@link #createSign(Object, String, String, boolean)}
+   * 请参考并使用 {@link #createSign(Object, String, String, boolean)}.
    */
   @Deprecated
   public static String createSign(Object xmlBean, String signKey) {
@@ -36,7 +37,7 @@ public class SignUtils {
   }
 
   /**
-   * 请参考并使用 {@link #createSign(Map, String, String, boolean)}
+   * 请参考并使用 {@link #createSign(Map, String, String, boolean)}.
    */
   @Deprecated
   public static String createSign(Map<String, String> params, String signKey) {
@@ -44,7 +45,7 @@ public class SignUtils {
   }
 
   /**
-   * 微信支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3)
+   * 微信支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3).
    *
    * @param xmlBean          Bean里的属性如果存在XML注解，则使用其作为key，否则使用变量名
    * @param signType         签名类型，如果为空，则默认为MD5
@@ -57,25 +58,25 @@ public class SignUtils {
   }
 
   /**
-   * 微信支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3)
+   * 微信支付签名算法(详见:https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=4_3).
    *
-   * @param params           参数信息
-   * @param signType         签名类型，如果为空，则默认为MD5
-   * @param signKey          签名Key
-   * @param isIgnoreSignType 签名时，是否忽略signType
+   * @param params         参数信息
+   * @param signType       签名类型，如果为空，则默认为MD5
+   * @param signKey        签名Key
+   * @param ignoreSignType 签名时，是否忽略signType
    * @return 签名字符串
    */
-  public static String createSign(Map<String, String> params, String signType, String signKey, boolean isIgnoreSignType) {
+  public static String createSign(Map<String, String> params, String signType, String signKey, boolean ignoreSignType) {
     SortedMap<String, String> sortedMap = new TreeMap<>(params);
 
     StringBuilder toSign = new StringBuilder();
     for (String key : sortedMap.keySet()) {
       String value = params.get(key);
       boolean shouldSign = false;
-      if (isIgnoreSignType && "sign_type".equals(key)) {
+      if (ignoreSignType && "sign_type".equals(key)) {
         shouldSign = false;
       } else if (StringUtils.isNotEmpty(value)
-        && !Lists.newArrayList("sign", "key").contains(key)) {
+        && !Lists.newArrayList("sign", "key", "xmlString", "xmlDoc", "couponList").contains(key)) {
         shouldSign = true;
       }
 
@@ -86,18 +87,18 @@ public class SignUtils {
 
     toSign.append("key=").append(signKey);
     if (SignType.HMAC_SHA256.equals(signType)) {
-      return createHMACSha256Sign(toSign.toString(), signKey);
+      return createHmacSha256Sign(toSign.toString(), signKey);
     } else {
       return DigestUtils.md5Hex(toSign.toString()).toUpperCase();
     }
   }
 
-  private static String createHMACSha256Sign(String message, String key) {
+  private static String createHmacSha256Sign(String message, String key) {
     try {
-      Mac hmacSHA256 = Mac.getInstance("HmacSHA256");
+      Mac sha256 = Mac.getInstance("HmacSHA256");
       SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "HmacSHA256");
-      hmacSHA256.init(secretKeySpec);
-      byte[] bytes = hmacSHA256.doFinal(message.getBytes());
+      sha256.init(secretKeySpec);
+      byte[] bytes = sha256.doFinal(message.getBytes());
       return Hex.encodeHexString(bytes).toUpperCase();
     } catch (NoSuchAlgorithmException | InvalidKeyException e) {
       log.error(e.getMessage(), e);
@@ -107,7 +108,7 @@ public class SignUtils {
   }
 
   /**
-   * 校验签名是否正确
+   * 校验签名是否正确.
    *
    * @param xmlBean  Bean需要标记有XML注解
    * @param signType 签名类型，如果为空，则默认为MD5
@@ -119,7 +120,7 @@ public class SignUtils {
   }
 
   /**
-   * 校验签名是否正确
+   * 校验签名是否正确.
    *
    * @param params   需要校验的参数Map
    * @param signType 签名类型，如果为空，则默认为MD5

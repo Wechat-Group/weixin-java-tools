@@ -249,7 +249,7 @@ public abstract class WxPayBaseResult {
           errorMsg.append("，错误详情：").append(getErrCodeDes());
         }
 
-        this.getLogger().error("\n结果业务代码异常，返回結果：{},\n{}", map, errorMsg.toString());
+        this.getLogger().error("\n结果业务代码异常，返回结果：{},\n{}", map, errorMsg.toString());
         throw WxPayException.from(this);
       }
     }

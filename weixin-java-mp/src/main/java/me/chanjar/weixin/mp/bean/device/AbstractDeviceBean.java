@@ -5,6 +5,8 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import java.io.Serializable;
 
 /**
+ * 设备抽象类.
+ *
  * @author keungtung
  * @date 14/12/2016
  */

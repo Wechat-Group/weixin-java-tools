@@ -36,11 +36,9 @@ public class QrCodeRequestExecutor implements RequestExecutor<File, AbstractWxMa
   public File execute(String uri, AbstractWxMaQrcodeWrapper ticket) throws WxErrorException, IOException {
     HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
-      httpPost
-        .setConfig(RequestConfig.custom()
-          .setProxy(requestHttp.getRequestHttpProxy())
-          .build()
-        );
+      httpPost.setConfig(
+          RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build()
+      );
     }
     httpPost.setEntity(new StringEntity(ticket.toString()));
 
@@ -48,8 +46,8 @@ public class QrCodeRequestExecutor implements RequestExecutor<File, AbstractWxMa
          InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response);) {
       Header[] contentTypeHeader = response.getHeaders("Content-Type");
       if (contentTypeHeader != null && contentTypeHeader.length > 0
-        && ContentType.APPLICATION_JSON.getMimeType()
-        .equals(ContentType.parse(contentTypeHeader[0].getValue()).getMimeType())) {
+          && ContentType.APPLICATION_JSON.getMimeType()
+          .equals(ContentType.parse(contentTypeHeader[0].getValue()).getMimeType())) {
         String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
         throw new WxErrorException(WxError.fromJson(responseContent));
       }

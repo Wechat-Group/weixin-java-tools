@@ -16,7 +16,7 @@ public class WxMpXmlOutImageMessage extends WxMpXmlOutMessage {
   private String mediaId;
 
   public WxMpXmlOutImageMessage() {
-    this.msgType = WxConsts.XML_MSG_IMAGE;
+    this.msgType = WxConsts.XmlMsgType.IMAGE;
   }
 
 }

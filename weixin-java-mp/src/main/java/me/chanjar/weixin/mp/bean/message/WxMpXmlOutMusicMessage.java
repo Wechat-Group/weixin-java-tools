@@ -19,7 +19,7 @@ public class WxMpXmlOutMusicMessage extends WxMpXmlOutMessage {
   protected final Music music = new Music();
 
   public WxMpXmlOutMusicMessage() {
-    this.msgType = WxConsts.XML_MSG_MUSIC;
+    this.msgType = WxConsts.XmlMsgType.MUSIC;
   }
 
   @XStreamAlias("Music")

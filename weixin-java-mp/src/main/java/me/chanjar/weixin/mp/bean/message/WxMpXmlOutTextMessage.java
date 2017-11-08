@@ -16,7 +16,7 @@ public class WxMpXmlOutTextMessage extends WxMpXmlOutMessage {
   private String content;
 
   public WxMpXmlOutTextMessage() {
-    this.msgType = WxConsts.XML_MSG_TEXT;
+    this.msgType = WxConsts.XmlMsgType.TEXT;
   }
 
 }

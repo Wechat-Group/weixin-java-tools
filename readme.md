@@ -1,18 +1,18 @@
-微信支付、小程序、公众号&企业号开发Java SDK
+微信支付/公众号/企业号/小程序的Java开发工具包（SDK）
 ---------------------------------
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.binarywang/weixin-java-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.binarywang/weixin-java-parent)
 [![Build Status](https://travis-ci.org/Wechat-Group/weixin-java-tools.svg?branch=develop)](https://travis-ci.org/Wechat-Group/weixin-java-tools)
 
 #### 声明： ***本项目Fork自chanjarster/weixin-java-tools，但由于原项目已停止维护，故单独维护和发布，且发布到maven上的groupId也会不同，详细信息见下文。***
 
-### [出现`java.security.InvalidKeyException: Illegal key size`问题的解决办法](https://github.com/Wechat-Group/weixin-java-tools/wiki/%E5%8A%A0%E8%A7%A3%E5%AF%86%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%8A%9E%E6%B3%95) （太多人遇到此问题了，特意置顶，希望能引起新手的注意）
+### [出现`java.security.InvalidKeyException: Illegal key size`问题的解决办法](https://github.com/Wechat-Group/weixin-java-tools/wiki/%E5%8A%A0%E8%A7%A3%E5%AF%86%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%8A%9E%E6%B3%95) （太多人遇到此问题而不知所措，因此特意置顶，希望能引起新手的注意）
 
 ***新人提示：本项目仅是一个开发工具包（即SDK），未提供Web实现，建议使用maven或gradle引用本项目即可使用本SDK提供的各种功能，详情可参考下文中提到的Demo项目或本项目中的部分单元测试代码；另外微信开发新手请务必阅读[Wiki首页](https://github.com/Wechat-Group/weixin-java-tools/wiki)的常见问题部分，可以少走很多弯路，节省不少时间。***
 
 ## Demo项目列表
-* https://github.com/binarywang/weixin-java-miniapp-demo （微信小程序Demo） 
 * https://github.com/binarywang/weixin-java-pay-demo （微信支付Demo） 
 * https://github.com/binarywang/weixin-java-cp-demo （企业号/企业微信Demo）
+* https://github.com/binarywang/weixin-java-miniapp-demo （微信小程序Demo） 
 * https://github.com/binarywang/weixin-java-mp-demo （公众号Demo，使用Spring MVC实现）
 * https://github.com/binarywang/weixin-java-mp-demo-springboot （公众号Demo，使用Spring Boot实现）
 * https://github.com/binarywang/weixin-java-mp-multi-demo (支持多公众号)
@@ -21,7 +21,7 @@
 ---------------------------------
 ### 重要提示信息（部分为新手必读）：
 1. 最新更新：**2017-9-3 发布[【2.8.0正式版】](https://github.com/Wechat-Group/weixin-java-tools/releases)**！
-1. 开源中国网站的本项目介绍的首页链接地址：https://www.oschina.net/p/weixin-java-tools-new （欢迎大家积极留言评分 🙂）
+1. 开源中国本项目的首页地址：https://www.oschina.net/p/weixin-java-tools-new （欢迎大家积极留言评分 🙂）
 1. SDK详细开发文档请查阅 [【Wiki】](https://github.com/wechat-group/weixin-java-tools/wiki)，部分文档可能未能及时更新，如有发现，可以及时上报或者自行修改。
 1. 各个模块的Javadoc可以在线查看（有可能是最新的测试版本的，请注意观察版本号）：[weixin-java-miniapp](https://binarywang.github.io/weixin-java-miniapp-javadoc/)、[weixin-java-pay](https://binarywang.github.io/weixin-java-pay-javadoc/)、[weixin-java-mp](https://binarywang.github.io/weixin-java-mp-javadoc/)、[weixin-java-common](https://binarywang.github.io/weixin-java-common-javadoc/)、[weixin-java-cp](https://binarywang.github.io/weixin-java-cp-javadoc/)
 1. 本SDK要求的最低JDK版本是7，还在使用JDK6的用户请参考[【此项目】]( https://github.com/binarywang/weixin-java-tools-for-jdk6) ，而其他更早的JDK版本则需要自己改造实现。

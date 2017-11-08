@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 菜单（公众号和企业号共用的）
+ * 菜单（公众号和企业号共用的）.
  *
  * @author Daniel Qian
  */
@@ -36,7 +36,8 @@ public class WxMenu implements Serializable {
    * 相比 http://mp.weixin.qq.com/wiki/13/43de8269be54a0a6f64413e4dfa94f39.html 的格式，外层多套了一个menu
    */
   public static WxMenu fromJson(InputStream is) {
-    return WxGsonBuilder.create().fromJson(new InputStreamReader(is, StandardCharsets.UTF_8), WxMenu.class);
+    return WxGsonBuilder.create()
+      .fromJson(new InputStreamReader(is, StandardCharsets.UTF_8), WxMenu.class);
   }
 
   public List<WxMenuButton> getButtons() {

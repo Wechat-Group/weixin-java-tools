@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean.kefu;
 
 import lombok.Data;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.builder.kefu.*;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -90,14 +91,14 @@ public class WxMpKefuMessage implements Serializable {
   /**
    * <pre>
    * 请使用
-   * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_TEXT}
-   * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_IMAGE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_VOICE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_MUSIC}
-   * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_VIDEO}
-   * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_NEWS}
-   * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_MPNEWS}
-   * {@link me.chanjar.weixin.common.api.WxConsts#CUSTOM_MSG_WXCARD}
+   * {@link WxConsts.KefuMsgType#TEXT}
+   * {@link WxConsts.KefuMsgType#IMAGE}
+   * {@link WxConsts.KefuMsgType#VOICE}
+   * {@link WxConsts.KefuMsgType#MUSIC}
+   * {@link WxConsts.KefuMsgType#VIDEO}
+   * {@link WxConsts.KefuMsgType#NEWS}
+   * {@link WxConsts.KefuMsgType#MPNEWS}
+   * {@link WxConsts.KefuMsgType#WXCARD}
    * </pre>
    *
    */

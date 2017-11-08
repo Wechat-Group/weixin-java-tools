@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.bean;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -224,13 +225,13 @@ public class WxCpXmlMessage implements Serializable {
   /**
    * <pre>
    * 当接受用户消息时，可能会获得以下值：
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_TEXT}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_IMAGE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VOICE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VIDEO}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_LOCATION}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_LINK}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_EVENT}
+   * {@link WxConsts.XmlMsgType#TEXT}
+   * {@link WxConsts.XmlMsgType#IMAGE}
+   * {@link WxConsts.XmlMsgType#VOICE}
+   * {@link WxConsts.XmlMsgType#VIDEO}
+   * {@link WxConsts.XmlMsgType#LOCATION}
+   * {@link WxConsts.XmlMsgType#LINK}
+   * {@link WxConsts.XmlMsgType#EVENT}
    * </pre>
    */
   public String getMsgType() {
@@ -240,11 +241,11 @@ public class WxCpXmlMessage implements Serializable {
   /**
    * <pre>
    * 当发送消息的时候使用：
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_TEXT}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_IMAGE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VOICE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VIDEO}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_NEWS}
+   * {@link WxConsts.XmlMsgType#TEXT}
+   * {@link WxConsts.XmlMsgType#IMAGE}
+   * {@link WxConsts.XmlMsgType#VOICE}
+   * {@link WxConsts.XmlMsgType#VIDEO}
+   * {@link WxConsts.XmlMsgType#NEWS}
    * </pre>
    *
    * @param msgType

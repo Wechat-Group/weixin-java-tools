@@ -58,7 +58,7 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getToUserName(), "toUser");
     assertEquals(wxMessage.getFromUserName(), "fromUser");
     assertEquals(wxMessage.getCreateTime(), new Long(1348831860l));
-    assertEquals(wxMessage.getMsgType(), WxConsts.XML_MSG_TEXT);
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.TEXT);
     assertEquals(wxMessage.getContent(), "this is a test");
     assertEquals(wxMessage.getMsgId(), new Long(1234567890123456l));
     assertEquals(wxMessage.getPicUrl(), "this is a url");
@@ -108,7 +108,7 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getToUserName(), "wx45a0972125658be9");
     assertEquals(wxMessage.getFromUserName(), "xiaohe");
     assertEquals(wxMessage.getCreateTime(), new Long(1502012364L));
-    assertEquals(wxMessage.getMsgType(), WxConsts.XML_MSG_EVENT);
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
     assertEquals(wxMessage.getAgentId(), Integer.valueOf(1000004));
     assertEquals(wxMessage.getEvent(), "pic_weixin");
     assertEquals(wxMessage.getEventKey(), "faceSimilarity");

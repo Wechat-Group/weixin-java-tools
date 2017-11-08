@@ -20,7 +20,7 @@ public final class NewsBuilder extends BaseBuilder<NewsBuilder> {
   private List<WxMpKefuMessage.WxArticle> articles = new ArrayList<>();
 
   public NewsBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_NEWS;
+    this.msgType = WxConsts.KefuMsgType.NEWS;
   }
 
   public NewsBuilder addArticle(WxMpKefuMessage.WxArticle... articles) {

@@ -22,9 +22,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by ecoolper on 2017/5/5.
+ * httpclient 实现的素材请求执行器.
+ *
+ * @author ecoolper
+ * @date 2017/5/5
  */
-public class ApacheMaterialNewsInfoRequestExecutor extends MaterialNewsInfoRequestExecutor<CloseableHttpClient, HttpHost> {
+public class ApacheMaterialNewsInfoRequestExecutor
+    extends MaterialNewsInfoRequestExecutor<CloseableHttpClient, HttpHost> {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   public ApacheMaterialNewsInfoRequestExecutor(RequestHttp requestHttp) {

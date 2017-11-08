@@ -19,7 +19,7 @@ public class WxMpXmlOutVideoMessage extends WxMpXmlOutMessage {
   protected final Video video = new Video();
 
   public WxMpXmlOutVideoMessage() {
-    this.msgType = WxConsts.XML_MSG_VIDEO;
+    this.msgType = WxConsts.XmlMsgType.VIDEO;
   }
 
   @XStreamAlias("Video")

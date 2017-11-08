@@ -116,7 +116,7 @@ public class WxMpServiceImplTest {
   public void testBuildQrConnectUrl() {
     String qrconnectRedirectUrl = ((TestConfigStorage) this.wxService.getWxMpConfigStorage()).getQrconnectRedirectUrl();
     String qrConnectUrl = this.wxService.buildQrConnectUrl(qrconnectRedirectUrl,
-      WxConsts.QRCONNECT_SCOPE_SNSAPI_LOGIN, null);
+      WxConsts.QrConnectScope.SNSAPI_LOGIN, null);
     Assert.assertNotNull(qrConnectUrl);
     System.out.println(qrConnectUrl);
   }

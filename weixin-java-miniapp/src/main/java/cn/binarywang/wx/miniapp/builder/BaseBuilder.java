@@ -15,6 +15,9 @@ public class BaseBuilder<T> {
     return (T) this;
   }
 
+  /**
+   * 构造器方法.
+   */
   public WxMaKefuMessage build() {
     WxMaKefuMessage m = new WxMaKefuMessage();
     m.setMsgType(this.msgType);

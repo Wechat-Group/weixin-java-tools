@@ -18,7 +18,7 @@ public class WxCpXmlOutNewsMessage extends WxCpXmlOutMessage {
   protected int articleCount;
 
   public WxCpXmlOutNewsMessage() {
-    this.msgType = WxConsts.XML_MSG_NEWS;
+    this.msgType = WxConsts.XmlMsgType.NEWS;
   }
 
   public int getArticleCount() {

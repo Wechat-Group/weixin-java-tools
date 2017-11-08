@@ -38,7 +38,7 @@ public class WxMpMassMessageServiceImplTest {
     TestConfigStorage configProvider = (TestConfigStorage) this.wxService
       .getWxMpConfigStorage();
     WxMpMassOpenIdsMessage massMessage = new WxMpMassOpenIdsMessage();
-    massMessage.setMsgType(WxConsts.MASS_MSG_TEXT);
+    massMessage.setMsgType(WxConsts.MassMsgType.TEXT);
     massMessage.setContent("测试群发消息\n欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>");
     massMessage.getToUsers().add(configProvider.getOpenid());
 
@@ -67,7 +67,7 @@ public class WxMpMassMessageServiceImplTest {
   @Test
   public void testTextMassGroupMessageSend() throws WxErrorException {
     WxMpMassTagMessage massMessage = new WxMpMassTagMessage();
-    massMessage.setMsgType(WxConsts.MASS_MSG_TEXT);
+    massMessage.setMsgType(WxConsts.MassMsgType.TEXT);
     massMessage.setContent("测试群发消息\n欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>");
     massMessage
       .setTagId(this.wxService.getUserTagService().tagGet().get(0).getId());
@@ -103,7 +103,7 @@ public class WxMpMassMessageServiceImplTest {
       .getSystemResourceAsStream("mm.mp4")) {
       // 上传视频到媒体库
       WxMediaUploadResult uploadMediaRes = this.wxService.getMaterialService()
-        .mediaUpload(WxConsts.MEDIA_VIDEO, TestConstants.FILE_MP4, inputStream);
+        .mediaUpload(WxConsts.MediaFileType.VIDEO, TestConstants.FILE_MP4, inputStream);
       assertNotNull(uploadMediaRes);
       assertNotNull(uploadMediaRes.getMediaId());
 
@@ -115,7 +115,7 @@ public class WxMpMassMessageServiceImplTest {
       WxMpMassUploadResult uploadResult = this.wxService.getMassMessageService().massVideoUpload(video);
       assertNotNull(uploadResult);
       assertNotNull(uploadResult.getMediaId());
-      messages[0] = new Object[]{WxConsts.MASS_MSG_VIDEO, uploadResult.getMediaId()};
+      messages[0] = new Object[]{WxConsts.MassMsgType.MPVIDEO, uploadResult.getMediaId()};
     }
 
     /*
@@ -124,10 +124,10 @@ public class WxMpMassMessageServiceImplTest {
     try (InputStream inputStream = ClassLoader
       .getSystemResourceAsStream("mm.jpeg")) {
       WxMediaUploadResult uploadMediaRes = this.wxService.getMaterialService()
-        .mediaUpload(WxConsts.MEDIA_IMAGE, TestConstants.FILE_JPG, inputStream);
+        .mediaUpload(WxConsts.MediaFileType.IMAGE, TestConstants.FILE_JPG, inputStream);
       assertNotNull(uploadMediaRes);
       assertNotNull(uploadMediaRes.getMediaId());
-      messages[1] = new Object[]{WxConsts.MASS_MSG_IMAGE, uploadMediaRes.getMediaId()};
+      messages[1] = new Object[]{WxConsts.MassMsgType.IMAGE, uploadMediaRes.getMediaId()};
     }
 
     /*
@@ -136,10 +136,10 @@ public class WxMpMassMessageServiceImplTest {
     try (InputStream inputStream = ClassLoader
       .getSystemResourceAsStream("mm.mp3")) {
       WxMediaUploadResult uploadMediaRes = this.wxService.getMaterialService()
-        .mediaUpload(WxConsts.MEDIA_VOICE, TestConstants.FILE_MP3, inputStream);
+        .mediaUpload(WxConsts.MediaFileType.VOICE, TestConstants.FILE_MP3, inputStream);
       assertNotNull(uploadMediaRes);
       assertNotNull(uploadMediaRes.getMediaId());
-      messages[2] = new Object[]{WxConsts.MASS_MSG_VOICE, uploadMediaRes.getMediaId()};
+      messages[2] = new Object[]{WxConsts.MassMsgType.VOICE, uploadMediaRes.getMediaId()};
     }
 
     /*
@@ -149,7 +149,7 @@ public class WxMpMassMessageServiceImplTest {
       .getSystemResourceAsStream("mm.jpeg")) {
       // 上传照片到媒体库
       WxMediaUploadResult uploadMediaRes = this.wxService.getMaterialService()
-        .mediaUpload(WxConsts.MEDIA_IMAGE, TestConstants.FILE_JPG, inputStream);
+        .mediaUpload(WxConsts.MediaFileType.IMAGE, TestConstants.FILE_JPG, inputStream);
       assertNotNull(uploadMediaRes);
       assertNotNull(uploadMediaRes.getMediaId());
 
@@ -175,7 +175,7 @@ public class WxMpMassMessageServiceImplTest {
         .massNewsUpload(news);
       assertNotNull(massUploadResult);
       assertNotNull(uploadMediaRes.getMediaId());
-      messages[3] = new Object[]{WxConsts.MASS_MSG_NEWS, massUploadResult.getMediaId()};
+      messages[3] = new Object[]{WxConsts.MassMsgType.MPNEWS, massUploadResult.getMediaId()};
     }
 
     return messages;

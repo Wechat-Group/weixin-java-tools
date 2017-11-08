@@ -28,7 +28,7 @@ public class XStreamTransformer {
   }
 
   /**
-   * 注册扩展消息的解析器
+   * 注册扩展消息的解析器.
    *
    * @param clz     类型
    * @param xStream xml解析器

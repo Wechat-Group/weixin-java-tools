@@ -6,7 +6,7 @@ import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
-import me.chanjar.weixin.common.util.http.MediaDownloadRequestExecutor;
+import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 
@@ -44,7 +44,7 @@ public class WxMaMediaServiceImpl implements WxMaMediaService {
   @Override
   public File getMedia(String mediaId) throws WxErrorException {
     try {
-      RequestExecutor<File, String> executor = MediaDownloadRequestExecutor
+      RequestExecutor<File, String> executor = BaseMediaDownloadRequestExecutor
         .create(this.wxMaService.getRequestHttp(), Files.createTempDirectory("wxma").toFile());
       return this.wxMaService.execute(executor, MEDIA_GET_URL, "media_id=" + mediaId);
     } catch (IOException e) {

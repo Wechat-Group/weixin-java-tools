@@ -17,7 +17,7 @@ public class WxMpXmlOutTransferKefuMessage extends WxMpXmlOutMessage {
   protected TransInfo transInfo;
 
   public WxMpXmlOutTransferKefuMessage() {
-    this.msgType = WxConsts.CUSTOM_MSG_TRANSFER_CUSTOMER_SERVICE;
+    this.msgType = WxConsts.KefuMsgType.TRANSFER_CUSTOMER_SERVICE;
   }
 
   @XStreamAlias("TransInfo")

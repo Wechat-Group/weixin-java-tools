@@ -15,7 +15,7 @@ public final class FileBuilder extends BaseBuilder<FileBuilder> {
   private String mediaId;
 
   public FileBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_FILE;
+    this.msgType = WxConsts.KefuMsgType.FILE;
   }
 
   public FileBuilder mediaId(String media_id) {
