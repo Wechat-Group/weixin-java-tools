@@ -13,6 +13,8 @@ import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenService;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
+import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
+import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
 import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
@@ -108,6 +110,33 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     return String.format(COMPONENT_LOGIN_PAGE_URL, getWxOpenConfigStorage().getComponentAppId(), jsonObject.get("pre_auth_code").getAsString(), URIUtil.encodeURIComponent(redirectURI));
   }
 
+  @Override
+  public String route(final WxOpenXmlMessage wxMessage) throws WxErrorException {
+    if (wxMessage == null) {
+      throw new NullPointerException("message is empty");
+    }
+    if (StringUtils.equalsIgnoreCase(wxMessage.getInfoType(), "component_verify_ticket")) {
+      getWxOpenConfigStorage().setComponentVerifyTicket(wxMessage.getComponentVerifyTicket());
+      return "success";
+    }
+    //新增、跟新授权
+    if (StringUtils.equalsAnyIgnoreCase(wxMessage.getInfoType(), "authorized", "updateauthorized")) {
+      WxOpenQueryAuthResult queryAuth = wxOpenService.getWxOpenComponentService().getQueryAuth(wxMessage.getAuthorizationCode());
+      if (queryAuth == null || queryAuth.getAuthorizationInfo() == null || queryAuth.getAuthorizationInfo().getAuthorizerAppid() == null) {
+        throw new NullPointerException("getQueryAuth");
+      }
+      WxOpenAuthorizationInfo authorizationInfo = queryAuth.getAuthorizationInfo();
+      if (authorizationInfo.getAuthorizerAccessToken() != null) {
+        getWxOpenConfigStorage().updateAuthorizerAccessToken(authorizationInfo.getAuthorizerAppid(),
+          authorizationInfo.getAuthorizerAccessToken(), authorizationInfo.getExpiresIn());
+      }
+      if (authorizationInfo.getAuthorizerRefreshToken() != null) {
+        getWxOpenConfigStorage().setAuthorizerRefreshToken(authorizationInfo.getAuthorizerAppid(), authorizationInfo.getAuthorizerRefreshToken());
+      }
+      return "success";
+    }
+    return null;
+  }
   @Override
   public WxOpenQueryAuthResult getQueryAuth(String authorizationCode) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();

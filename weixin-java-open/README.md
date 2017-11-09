@@ -19,39 +19,15 @@ public class NotifyController extends WechatThridBaseController {
             throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
         }
 
-        String out = "";
         // aes加密的消息
         WxOpenXmlMessage inMessage = WxOpenXmlMessage.fromEncryptedXml(requestBody, wxOpenService.getWxOpenConfigStorage(), timestamp, nonce, msgSignature);
         this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
-        if (StringUtils.equalsIgnoreCase(inMessage.getInfoType(), "component_verify_ticket")) {
-            wxOpenService.getWxOpenComponentService().getWxOpenConfigStorage().setComponentVerifyTicket(inMessage.getComponentVerifyTicket());
-            out = "success";
+        String out = null;
+        try {
+            out = wxOpenService.getWxOpenComponentService().route(inMessage);
+        } catch (WxErrorException e) {
+            throw new ResponseException(ErrorCodeEnum.ERROR, e);
         }
-        //新增、跟新授权
-        if (StringUtils.equalsAnyIgnoreCase(inMessage.getInfoType(), "authorized", "updateauthorized")) {
-            try {
-                WxOpenQueryAuthResult queryAuth = wxOpenService.getWxOpenComponentService().getQueryAuth(inMessage.getAuthorizationCode());
-                WxOpenAuthorizationInfo authorizationInfo = queryAuth.getAuthorizationInfo();
-                wxOpenService.getWxOpenConfigStorage().updateAuthorizerAccessToken(authorizationInfo.getAuthorizerAppid(),
-                                        authorizationInfo.getAuthorizerAccessToken(), authorizationInfo.getExpiresIn());
-                wxOpenService.getWxOpenConfigStorage().setAuthorizerRefreshToken(authorizationInfo.getAuthorizerAppid(), authorizationInfo.getAuthorizerRefreshToken());
-                out = "success";
-            } catch (WxErrorException e) {
-                throw new ResponseException(ErrorCodeEnum.ERROR, e);
-            }
-        }
-        //取消授权
-        if (StringUtils.equalsIgnoreCase(inMessage.getInfoType(), "unauthorized")) {
-
-        }
-
-//        WxMpXmlOutMessage outMessage = this.getWxService().route(inMessage);
-//        if (outMessage == null) {
-//            return "";
-//        }
-//
-//        out = outMessage.toEncryptedXml(wxOpenService.getWxOpenConfigStorage());
-
 
         this.logger.debug("\n组装回复信息：{}", out);
 

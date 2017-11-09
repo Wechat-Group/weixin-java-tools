@@ -4,6 +4,7 @@ import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
 import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
@@ -45,6 +46,8 @@ public interface WxOpenComponentService {
    * 获取用户授权页URL（来路URL和成功跳转URL 的域名都需要为三方平台设置的 登录授权的发起页域名）
    */
   String getPreAuthUrl(String redirectURI) throws WxErrorException;
+
+  String route(WxOpenXmlMessage wxMessage) throws WxErrorException;
 
   /**
    * 使用授权码换取公众号或小程序的接口调用凭据和授权信息
