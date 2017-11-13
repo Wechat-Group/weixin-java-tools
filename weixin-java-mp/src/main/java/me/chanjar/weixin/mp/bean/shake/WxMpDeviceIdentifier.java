@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class WxMpDeviceIdentifier implements Serializable {
   private Integer device_id;
   private String uuid;
+  private Integer page_id;
   private Integer major;
   private Integer minor;
   public JsonObject toJsonObject(){

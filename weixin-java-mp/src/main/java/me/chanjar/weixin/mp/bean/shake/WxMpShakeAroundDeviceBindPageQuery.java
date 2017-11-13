@@ -4,12 +4,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Collection;
 
 @Data
 public class WxMpShakeAroundDeviceBindPageQuery {
   private WxMpDeviceIdentifier deviceIdentifier;
-  private List<Integer> pageIds;
+  private Collection<Integer> pageIds;
   public String toJsonString(){
     JsonObject jsonObject = new JsonObject();
     jsonObject.add("device_identifier", deviceIdentifier.toJsonObject());
