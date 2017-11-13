@@ -1,13 +1,16 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpShakeService;
 import me.chanjar.weixin.mp.bean.WxMpShakeInfoResult;
 import me.chanjar.weixin.mp.bean.WxMpShakeQuery;
+import me.chanjar.weixin.mp.bean.shake.*;
 
 /**
  * Created by rememberber on 2017/6/5.
+ *
  * @author rememberber
  */
 public class WxMpShakeServiceImpl implements WxMpShakeService {
@@ -27,7 +30,7 @@ public class WxMpShakeServiceImpl implements WxMpShakeService {
    * 接口地址：https://api.weixin.qq.com/shakearound/user/getshakeinfo?access_token=ACCESS_TOKE
    * </pre>
    *
-   * @param wxMpShakeQuery  查询参数
+   * @param wxMpShakeQuery 查询参数
    */
   @Override
   public WxMpShakeInfoResult getShakeInfo(WxMpShakeQuery wxMpShakeQuery) throws WxErrorException {
@@ -35,5 +38,29 @@ public class WxMpShakeServiceImpl implements WxMpShakeService {
     String postData = wxMpShakeQuery.toJsonString();
     String responseContent = this.wxMpService.post(url, postData);
     return WxMpShakeInfoResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxMpShakeAroundPageAddResult pageAdd(WxMpShakeAroundPageAddQuery shakeAroundPageAddQuery) throws WxErrorException {
+    String url = "https://api.weixin.qq.com/shakearound/page/add";
+    String postData = shakeAroundPageAddQuery.toJsonString();
+    String responseContent = this.wxMpService.post(url, postData);
+    return WxMpShakeAroundPageAddResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxError deviceBindPageQuery(WxMpShakeAroundDeviceBindPageQuery shakeAroundDeviceBindPageQuery) throws WxErrorException {
+    String url = "https://api.weixin.qq.com/shakearound/device/bindpage";
+    String postData = shakeAroundDeviceBindPageQuery.toJsonString();
+    String responseContent = this.wxMpService.post(url, postData);
+    return WxError.fromJson(responseContent);
+  }
+
+  @Override
+  public WxMpShakeAroundRelationSearchResult relationSearch(WxMpShakeAroundRelationSearchQuery shakeAroundRelationSearchQuery) throws WxErrorException {
+    String url = "https://api.weixin.qq.com/shakearound/relation/search";
+    String postData = shakeAroundRelationSearchQuery.toJsonString();
+    String responseContent = this.wxMpService.post(url, postData);
+    return WxMpShakeAroundRelationSearchResult.fromJson(responseContent);
   }
 }
