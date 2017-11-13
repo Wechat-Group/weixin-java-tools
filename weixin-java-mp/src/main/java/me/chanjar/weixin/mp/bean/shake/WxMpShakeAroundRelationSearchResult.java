@@ -10,6 +10,7 @@ import java.util.List;
 public class WxMpShakeAroundRelationSearchResult implements Serializable {
   private Integer errcode;
   private String errmsg;
+  private WxMpShakeAcoundRelationSearch data;
   public static WxMpShakeAroundRelationSearchResult fromJson(String json) {
     return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpShakeAroundRelationSearchResult.class);
   }
