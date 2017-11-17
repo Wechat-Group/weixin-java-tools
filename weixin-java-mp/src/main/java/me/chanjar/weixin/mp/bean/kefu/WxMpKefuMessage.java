@@ -110,7 +110,9 @@ public class WxMpKefuMessage implements Serializable {
   }
 
   @Data
-  public static class WxArticle {
+  public static class WxArticle implements Serializable {
+    private static final long serialVersionUID = 5145137235440507379L;
+
     private String title;
     private String description;
     private String url;

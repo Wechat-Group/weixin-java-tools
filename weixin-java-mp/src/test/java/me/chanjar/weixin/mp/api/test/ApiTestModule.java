@@ -6,7 +6,6 @@ import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceApacheHttpClientImpl;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceOkHttpImpl;
 
 import java.io.IOException;
