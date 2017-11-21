@@ -18,6 +18,7 @@ public class WxOpenMpServiceImpl extends WxMpServiceImpl {
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMpConfigStorage = wxMpConfigStorage;
+    initHttp();
   }
 
   @Override

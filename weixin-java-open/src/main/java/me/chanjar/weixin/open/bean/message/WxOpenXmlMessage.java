@@ -46,7 +46,6 @@ public class WxOpenXmlMessage implements Serializable {
   private String authorizationCode;
 
   @XStreamAlias("AuthorizationCodeExpiredTime")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private Long authorizationCodeExpiredTime;
 
   @XStreamAlias("PreAuthCode")
