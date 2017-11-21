@@ -1,4 +1,6 @@
 消息机制未实现，下面为通知回调中设置的代码部分
+
+以下代码可通过腾讯全网发布测试用例
 ```
 @RestController
 @RequestMapping("notify")
@@ -55,7 +57,31 @@ public class NotifyController extends WechatThridBaseController {
         // aes加密的消息
         WxMpXmlMessage inMessage = WxOpenXmlMessage.fromEncryptedMpXml(requestBody, wxOpenService.getWxOpenConfigStorage(), timestamp, nonce, msgSignature);
         this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
-        //wxOpenService.getWxOpenComponentService().getWxMpServiceByAppid(appId);
+        // 全网发布测试用例
+        if (StringUtils.equalsAnyIgnoreCase(appId, "wxd101a85aa106f53e", "wx570bc396a51b8ff8")) {
+            try {
+                if (StringUtils.equals(inMessage.getMsgType(), "text")) {
+                    if (StringUtils.equals(inMessage.getContent(), "TESTCOMPONENT_MSG_TYPE_TEXT")) {
+                        out = new WxOpenCryptUtil(wxOpenService.getWxOpenConfigStorage()).encrypt(
+                                WxMpXmlOutMessage.TEXT().content("TESTCOMPONENT_MSG_TYPE_TEXT_callback")
+                                        .fromUser(inMessage.getToUser())
+                                        .toUser(inMessage.getFromUser())
+                                        .build()
+                                        .toXml()
+                        );
+                    } else if (StringUtils.startsWith(inMessage.getContent(), "QUERY_AUTH_CODE:")) {
+                        String msg = inMessage.getContent().replace("QUERY_AUTH_CODE:", "") + "_from_api";
+                        WxMpKefuMessage kefuMessage = WxMpKefuMessage.TEXT().content(msg).toUser(inMessage.getFromUser()).build();
+                        wxOpenService.getWxOpenComponentService().getWxMpServiceByAppid(appId).getKefuService().sendKefuMessage(kefuMessage);
+                    }
+                } else if (StringUtils.equals(inMessage.getMsgType(), "event")) {
+                    WxMpKefuMessage kefuMessage = WxMpKefuMessage.TEXT().content(inMessage.getEvent() + "from_callback").toUser(inMessage.getFromUser()).build();
+                    wxOpenService.getWxOpenComponentService().getWxMpServiceByAppid(appId).getKefuService().sendKefuMessage(kefuMessage);
+                }
+            } catch (WxErrorException e) {
+                logger.error("callback", e);
+            }
+        }
         return out;
     }
 }

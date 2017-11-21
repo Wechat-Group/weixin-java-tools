@@ -5,6 +5,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.util.WxOpenCryptUtil;
 import me.chanjar.weixin.open.util.xml.XStreamTransformer;
@@ -51,6 +52,12 @@ public class WxOpenXmlMessage implements Serializable {
   @XStreamAlias("PreAuthCode")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String preAuthCode;
+
+  public static String wxMpOutXmlMessageToEncryptedXml(WxMpXmlOutMessage message, WxOpenConfigStorage wxOpenConfigStorage){
+    String plainXml = message.toXml();
+    WxOpenCryptUtil pc = new WxOpenCryptUtil(wxOpenConfigStorage);
+    return pc.encrypt(plainXml);
+  }
 
   public static WxOpenXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析

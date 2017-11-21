@@ -329,7 +329,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
     @Override
     public String getToken() {
-      return null;
+      return wxOpenConfigStorage.getComponentToken();
     }
 
     @Override
@@ -340,7 +340,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
     @Override
     public String getAesKey() {
-      return null;
+      return wxOpenConfigStorage.getComponentAesKey();
     }
 
     @Override
