@@ -29,11 +29,11 @@ public interface WxOpenComponentService {
   /**
    * 用code换取oauth2的access token
    */
-  String OAUTH2_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&code=%s&grant_type=authorization_code&component_appid=%s";
+  String OAUTH2_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/component/access_token?appid=%s&code=%s&grant_type=authorization_code&component_appid=%s";
   /**
    * 刷新oauth2的access token
    */
-  String OAUTH2_REFRESH_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s&component_appid==%s";
+  String OAUTH2_REFRESH_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/component/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s&component_appid==%s";
 
   WxMpService getWxMpServiceByAppid(String appid);
 
