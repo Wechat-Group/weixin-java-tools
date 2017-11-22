@@ -163,7 +163,10 @@ public class WxMpMessageRouter {
           })
         );
       } else {
-        res = rule.service(wxMessage, context, this.wxMpService, this.sessionManager, this.exceptionHandler);
+        WxMpXmlOutMessage temp = rule.service(wxMessage, context, this.wxMpService, this.sessionManager, this.exceptionHandler);
+        if(temp != null){
+          res = temp;
+        }
         // 在同步操作结束，session访问结束
         this.log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUser());
         sessionEndAccess(wxMessage);
