@@ -2,9 +2,7 @@ package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.WxPayApiData;
 import com.github.binarywang.wxpay.bean.coupon.*;
-import com.github.binarywang.wxpay.bean.entpay.EntPayQueryResult;
 import com.github.binarywang.wxpay.bean.entpay.EntPayRequest;
-import com.github.binarywang.wxpay.bean.entpay.EntPayResult;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.notify.WxPayRefundNotifyResult;
 import com.github.binarywang.wxpay.bean.request.*;
@@ -54,12 +52,12 @@ public interface WxPayService {
   /**
    * 获取企业付款服务类
    */
-  EntPaySerivce getEntPaySerivce();
+  EntPayService getEntPayService();
 
   /**
    * 设置企业付款服务类，允许开发者自定义实现类
    */
-  void setEntPaySerivce(EntPaySerivce entPaySerivce);
+  void setEntPayService(EntPayService entPayService);
 
   /**
    * <pre>
@@ -211,13 +209,13 @@ public interface WxPayService {
   WxPayRedpackQueryResult queryRedpack(String mchBillNo) throws WxPayException;
 
   /**
-   * 请使用this.getEntPayService().entPay()方法{@link EntPaySerivce#entPay(EntPayRequest)}
+   * 请使用this.getEntPayService().entPay()方法{@link EntPayService#entPay(EntPayRequest)}
    */
   @Deprecated
   WxEntPayResult entPay(WxEntPayRequest request) throws WxPayException;
 
   /**
-   * 请使用this.getEntPayService().queryEntPay()方法 {@link EntPaySerivce#queryEntPay(String)}
+   * 请使用this.getEntPayService().queryEntPay()方法 {@link EntPayService#queryEntPay(String)}
    */
   @Deprecated
   WxEntPayQueryResult queryEntPay(String partnerTradeNo) throws WxPayException;

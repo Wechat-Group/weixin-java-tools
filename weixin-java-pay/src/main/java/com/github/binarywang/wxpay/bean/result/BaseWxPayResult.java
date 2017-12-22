@@ -2,7 +2,6 @@ package com.github.binarywang.wxpay.bean.result;
 
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
-import com.github.binarywang.wxpay.service.impl.BaseWxPayServiceImpl;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -26,20 +25,23 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 /**
  * <pre>
- * 微信支付结果共用属性类
+ * 微信支付结果共用属性类.
  * Created by Binary Wang on 2016-10-24.
  * </pre>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Data
-public abstract class BaseWxPayResult {
+public abstract class BaseWxPayResult implements Serializable {
+  private static final long serialVersionUID = 2416778827989487412L;
+
   /**
    * 返回状态码
    */

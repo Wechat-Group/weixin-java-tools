@@ -8,7 +8,7 @@ import me.chanjar.weixin.common.util.ToStringUtils;
 
 /**
  * <pre>
- * 企业付款请求对象
+ * 企业付款请求对象.
  * Created by Binary Wang on 2016/10/19.
  * </pre>
  *
@@ -21,6 +21,8 @@ import me.chanjar.weixin.common.util.ToStringUtils;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class EntPayQueryRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = 1972288742207813985L;
+
   /**
    * <pre>
    * 字段名：商户订单号.
