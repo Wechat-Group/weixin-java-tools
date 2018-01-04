@@ -11,7 +11,7 @@ import java.util.Map;
  * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
  */
-public class WxPayBaseResultTest {
+public class BaseWxPayResultTest {
 
   @Test
   public void testGetXmlValue() throws Exception {

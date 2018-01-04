@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayAuthcode2OpenidResult extends WxPayBaseResult {
+public class WxPayAuthcode2OpenidResult extends BaseWxPayResult {
   /**
    * <pre>
    *   用户标识

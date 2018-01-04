@@ -51,7 +51,7 @@ public class WxMpInRedisConfigStorage extends WxMpInMemoryConfigStorage {
   @Override
   public String getAccessToken() {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      return jedis.get(accessTokenKey);
+      return jedis.get(this.accessTokenKey);
     }
   }
 
@@ -65,70 +65,70 @@ public class WxMpInRedisConfigStorage extends WxMpInMemoryConfigStorage {
   @Override
   public synchronized void updateAccessToken(String accessToken, int expiresInSeconds) {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.setex(accessTokenKey, expiresInSeconds - 200, accessToken);
+      jedis.setex(this.accessTokenKey, expiresInSeconds - 200, accessToken);
     }
   }
 
   @Override
   public void expireAccessToken() {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.expire(accessTokenKey, 0);
+      jedis.expire(this.accessTokenKey, 0);
     }
   }
 
   @Override
   public String getJsapiTicket() {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      return jedis.get(jsapiTicketKey);
+      return jedis.get(this.jsapiTicketKey);
     }
   }
 
   @Override
   public boolean isJsapiTicketExpired() {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      return jedis.ttl(jsapiTicketKey) < 2;
+      return jedis.ttl(this.jsapiTicketKey) < 2;
     }
   }
 
   @Override
   public synchronized void updateJsapiTicket(String jsapiTicket, int expiresInSeconds) {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.setex(jsapiTicketKey, expiresInSeconds - 200, jsapiTicket);
+      jedis.setex(this.jsapiTicketKey, expiresInSeconds - 200, jsapiTicket);
     }
   }
 
   @Override
   public void expireJsapiTicket() {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.expire(jsapiTicketKey, 0);
+      jedis.expire(this.jsapiTicketKey, 0);
     }
   }
 
   @Override
   public String getCardApiTicket() {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      return jedis.get(cardapiTicketKey);
+      return jedis.get(this.cardapiTicketKey);
     }
   }
 
   @Override
   public boolean isCardApiTicketExpired() {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      return jedis.ttl(cardapiTicketKey) < 2;
+      return jedis.ttl(this.cardapiTicketKey) < 2;
     }
   }
 
   @Override
   public synchronized void updateCardApiTicket(String cardApiTicket, int expiresInSeconds) {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.setex(cardapiTicketKey, expiresInSeconds - 200, cardApiTicket);
+      jedis.setex(this.cardapiTicketKey, expiresInSeconds - 200, cardApiTicket);
     }
   }
 
   @Override
   public void expireCardApiTicket() {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.expire(cardapiTicketKey, 0);
+      jedis.expire(this.cardapiTicketKey, 0);
     }
   }
 }

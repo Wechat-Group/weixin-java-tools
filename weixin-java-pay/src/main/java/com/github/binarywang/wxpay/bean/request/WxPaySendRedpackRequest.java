@@ -15,7 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPaySendRedpackRequest extends WxPayBaseRequest {
+public class WxPaySendRedpackRequest extends BaseWxPayRequest {
   /**
    * mch_billno
    * 商户订单号（每个订单号必须唯一）  组成：mch_id+yyyymmdd+10位一天内不能重复的数字。  接口根据商户订单号支持重入，如出现超时可再调用。

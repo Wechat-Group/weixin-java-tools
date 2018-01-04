@@ -18,7 +18,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayRefundQueryResult extends WxPayBaseResult {
+public class WxPayRefundQueryResult extends BaseWxPayResult {
   /**
    * <pre>
    * 字段名：设备号.
@@ -141,7 +141,6 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
         refundRecord.setRefundChannel(this.getXmlValue("xml/refund_channel_" + i));
         refundRecord.setRefundFee(this.getXmlValueAsInt("xml/refund_fee_" + i));
         refundRecord.setSettlementRefundFee(this.getXmlValueAsInt("xml/settlement_refund_fee_" + i));
-        refundRecord.setCouponType(this.getXmlValue("xml/coupon_type_" + i));
         refundRecord.setCouponRefundFee(this.getXmlValueAsInt("xml/coupon_refund_fee_" + i));
         refundRecord.setCouponRefundCount(this.getXmlValueAsInt("xml/coupon_refund_count_" + i));
         refundRecord.setRefundStatus(this.getXmlValue("xml/refund_status_" + i));
@@ -157,7 +156,8 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
           coupons.add(
             new RefundRecord.RefundCoupon(
               this.getXmlValue("xml/coupon_refund_id_" + i + "_" + j),
-              this.getXmlValueAsInt("xml/coupon_refund_fee_" + i + "_" + j)
+              this.getXmlValueAsInt("xml/coupon_refund_fee_" + i + "_" + j),
+              this.getXmlValue("xml/coupon_type_" + i + "_" + j)
             )
           );
         }
@@ -253,19 +253,6 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
 
     /**
      * <pre>
-     * 字段名：代金券类型.
-     * 变量名：coupon_type_$n
-     * 是否必填：否
-     * 类型：Int
-     * 示例值：CASH
-     * 描述：CASH--充值代金券 , NO_CASH---非充值代金券。订单使用代金券时有返回（取值：CASH、NO_CASH）。$n为下标,从0开始编号，举例：coupon_type_$0
-     * </pre>
-     */
-    @XStreamAlias("coupon_type")
-    private String couponType;
-
-    /**
-     * <pre>
      * 字段名：代金券退款金额.
      * 变量名：coupon_refund_fee_$n
      * 是否必填：否
@@ -338,22 +325,8 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
 
     @Data
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class RefundCoupon {
-      /**
-       * <pre>
-       * 字段名：退款代金券批次ID.
-       * 变量名：coupon_refund_batch_id_$n_$m
-       * 是否必填：否
-       * 类型：String(20)
-       * 示例值：100
-       * 描述：退款代金券批次ID ,$n为下标，$m为下标，从0开始编号
-       * </pre>
-       *
-       * @deprecated 貌似是被去掉了，但不知是何时！
-       */
-      @XStreamAlias("coupon_refund_batch_id")
-      private String couponRefundBatchId;
-
       /**
        * <pre>
        * 字段名：退款代金券ID.
@@ -380,10 +353,21 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
       @XStreamAlias("coupon_refund_fee")
       private Integer couponRefundFee;
 
-      public RefundCoupon(String couponRefundId, Integer couponRefundFee) {
-        this.couponRefundId = couponRefundId;
-        this.couponRefundFee = couponRefundFee;
-      }
+      /**
+       * <pre>
+       * 字段名：代金券类型.
+       * 变量名：coupon_type_$n_$m
+       * 是否必填：否
+       * 类型：String(8)
+       * 示例值：CASH
+       * 描述：CASH--充值代金券 , NO_CASH---非充值代金券。
+       * 开通免充值券功能，并且订单使用了优惠券后有返回（取值：CASH、NO_CASH）。
+       * $n为下标,$m为下标,从0开始编号，举例：coupon_type_$0_$1
+       * </pre>
+       */
+      @XStreamAlias("coupon_type")
+      private String couponType;
+
 
     }
 

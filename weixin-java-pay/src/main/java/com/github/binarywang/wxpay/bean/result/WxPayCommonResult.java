@@ -12,5 +12,5 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  */
 
 @XStreamAlias("xml")
-public class WxPayCommonResult extends WxPayBaseResult {
+public class WxPayCommonResult extends BaseWxPayResult {
 }

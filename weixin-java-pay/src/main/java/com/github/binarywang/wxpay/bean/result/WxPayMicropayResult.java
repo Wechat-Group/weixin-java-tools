@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayMicropayResult extends WxPayBaseResult {
+public class WxPayMicropayResult extends BaseWxPayResult {
   /**
    * <pre>
    * 用户标识

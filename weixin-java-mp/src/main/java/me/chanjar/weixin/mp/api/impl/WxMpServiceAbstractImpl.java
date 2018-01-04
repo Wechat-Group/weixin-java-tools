@@ -227,6 +227,7 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   /**
    * 向微信端发送请求，在这里执行的策略是当发生access_token过期时才去刷新，然后重新执行请求，而不是全局定时请求
    */
+  @Override
   public <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
     int retryTimes = 0;
     do {

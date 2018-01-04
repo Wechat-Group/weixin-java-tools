@@ -2,6 +2,7 @@ package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.WxPayApiData;
 import com.github.binarywang.wxpay.bean.coupon.*;
+import com.github.binarywang.wxpay.bean.entpay.EntPayRequest;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.notify.WxPayRefundNotifyResult;
 import com.github.binarywang.wxpay.bean.request.*;
@@ -15,13 +16,48 @@ import java.util.Map;
 
 /**
  * <pre>
- * 微信支付相关接口
+ * 微信支付相关接口.
  * Created by Binary Wang on 2016/7/28.
  * </pre>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxPayService {
+
+  /**
+   * 获取微信支付请求url前缀，沙箱环境可能不一样
+   */
+  String getPayBaseUrl();
+
+  /**
+   * 发送post请求，得到响应字节数组
+   *
+   * @param url        请求地址
+   * @param requestStr 请求信息
+   * @param useKey     是否使用证书
+   * @return 返回请求结果字节数组
+   */
+  byte[] postForBytes(String url, String requestStr, boolean useKey) throws WxPayException;
+
+  /**
+   * 发送post请求，得到响应字符串
+   *
+   * @param url        请求地址
+   * @param requestStr 请求信息
+   * @param useKey     是否使用证书
+   * @return 返回请求结果字符串
+   */
+  String post(String url, String requestStr, boolean useKey) throws WxPayException;
+
+  /**
+   * 获取企业付款服务类
+   */
+  EntPayService getEntPayService();
+
+  /**
+   * 设置企业付款服务类，允许开发者自定义实现类
+   */
+  void setEntPayService(EntPayService entPayService);
 
   /**
    * <pre>
@@ -173,29 +209,15 @@ public interface WxPayService {
   WxPayRedpackQueryResult queryRedpack(String mchBillNo) throws WxPayException;
 
   /**
-   * <pre>
-   * 企业付款业务是基于微信支付商户平台的资金管理能力，为了协助商户方便地实现企业向个人付款，针对部分有开发能力的商户，提供通过API完成企业付款的功能。
-   * 比如目前的保险行业向客户退保、给付、理赔。
-   * 企业付款将使用商户的可用余额，需确保可用余额充足。查看可用余额、充值、提现请登录商户平台“资金管理”https://pay.weixin.qq.com/进行操作。
-   * 注意：与商户微信支付收款资金并非同一账户，需要单独充值。
-   * 文档详见:https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_2
-   * 接口链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers
-   * </pre>
-   *
-   * @param request 请求对象
+   * 请使用this.getEntPayService().entPay()方法{@link EntPayService#entPay(EntPayRequest)}
    */
+  @Deprecated
   WxEntPayResult entPay(WxEntPayRequest request) throws WxPayException;
 
   /**
-   * <pre>
-   * 查询企业付款API
-   * 用于商户的企业付款操作进行结果查询，返回付款操作详细结果。
-   * 文档详见:https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_3
-   * 接口链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo
-   * </pre>
-   *
-   * @param partnerTradeNo 商户订单号
+   * 请使用this.getEntPayService().queryEntPay()方法 {@link EntPayService#queryEntPay(String)}
    */
+  @Deprecated
   WxEntPayQueryResult queryEntPay(String partnerTradeNo) throws WxPayException;
 
   /**

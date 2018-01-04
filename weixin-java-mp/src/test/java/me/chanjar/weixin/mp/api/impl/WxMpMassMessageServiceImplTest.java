@@ -183,7 +183,7 @@ public class WxMpMassMessageServiceImplTest {
 
   @Test
   public void testMassDelete() throws Exception {
-    this.wxService.getMassMessageService().delete(1,2);
+    this.wxService.getMassMessageService().delete(1L,2);
   }
 
 }

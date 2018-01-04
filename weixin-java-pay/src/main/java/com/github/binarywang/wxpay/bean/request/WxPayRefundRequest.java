@@ -25,7 +25,7 @@ import java.util.Arrays;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayRefundRequest extends WxPayBaseRequest {
+public class WxPayRefundRequest extends BaseWxPayRequest {
   private static final String[] REFUND_ACCOUNT = new String[]{
     RefundAccountSource.RECHARGE_FUNDS, RefundAccountSource.UNSETTLED_FUNDS};
 
@@ -157,12 +157,12 @@ public class WxPayRefundRequest extends WxPayBaseRequest {
   private String refundDesc;
 
   @Override
-  public void checkAndSign(WxPayConfig config, boolean isIgnoreSignType) throws WxPayException {
+  public void checkAndSign(WxPayConfig config) throws WxPayException {
     if (StringUtils.isBlank(this.getOpUserId())) {
       this.setOpUserId(config.getMchId());
     }
 
-    super.checkAndSign(config, isIgnoreSignType);
+    super.checkAndSign(config);
   }
 
   @Override

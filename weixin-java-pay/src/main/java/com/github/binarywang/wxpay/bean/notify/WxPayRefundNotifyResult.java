@@ -1,6 +1,6 @@
 package com.github.binarywang.wxpay.bean.notify;
 
-import com.github.binarywang.wxpay.bean.result.WxPayBaseResult;
+import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -31,7 +31,7 @@ import java.security.MessageDigest;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayRefundNotifyResult extends WxPayBaseResult implements Serializable {
+public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = 4651725860079259186L;
 
   /**
@@ -41,7 +41,7 @@ public class WxPayRefundNotifyResult extends WxPayBaseResult implements Serializ
    * @param mchKey    商户密钥
    */
   public static WxPayRefundNotifyResult fromXML(String xmlString, String mchKey) throws WxPayException {
-    WxPayRefundNotifyResult result = WxPayBaseResult.fromXML(xmlString, WxPayRefundNotifyResult.class);
+    WxPayRefundNotifyResult result = BaseWxPayResult.fromXML(xmlString, WxPayRefundNotifyResult.class);
     String reqInfoString = result.getReqInfoString();
     try {
       Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");

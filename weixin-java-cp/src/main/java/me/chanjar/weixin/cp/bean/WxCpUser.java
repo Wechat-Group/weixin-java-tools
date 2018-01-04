@@ -16,8 +16,14 @@ import java.util.List;
 @Data
 public class WxCpUser implements Serializable {
   public enum Gender {
+    /**
+     * 男
+     */
     MALE("男", "1"),
-    FEMAIL("女", "2");
+    /**
+     * 女
+     */
+    FEMALE("女", "2");
 
     private String genderName;
     private String code;
@@ -40,7 +46,7 @@ public class WxCpUser implements Serializable {
         return Gender.MALE;
       }
       if ("2".equals(code)) {
-        return Gender.FEMAIL;
+        return Gender.FEMALE;
       }
 
       return null;

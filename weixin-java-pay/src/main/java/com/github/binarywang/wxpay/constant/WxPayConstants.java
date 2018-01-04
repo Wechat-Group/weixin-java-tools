@@ -1,7 +1,10 @@
 package com.github.binarywang.wxpay.constant;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.time.FastDateFormat;
 
+import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class WxPayConstants {
   /**
    * 拉取订单评价数据接口的参数中日期格式
    */
-  public static final SimpleDateFormat QUERY_COMMENT_DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+  public static final Format QUERY_COMMENT_DATE_FORMAT =  FastDateFormat.getInstance("yyyyMMddHHmmss");
 
   /**
    * 校验用户姓名选项，企业付款时使用
@@ -36,7 +39,17 @@ public class WxPayConstants {
   }
 
   /**
-   * 订单类型
+   * 压缩账单的类型
+   */
+  public static class TarType {
+    /**
+     * 固定值：GZIP，返回格式为.gzip的压缩包账单
+     */
+    public static final String GZIP = "GZIP";
+  }
+
+  /**
+   * 账单类型
    */
   public static class BillType {
     /**

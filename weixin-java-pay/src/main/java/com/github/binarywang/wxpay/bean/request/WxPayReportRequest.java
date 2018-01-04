@@ -24,7 +24,7 @@ import me.chanjar.weixin.common.annotation.Required;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayReportRequest extends WxPayBaseRequest {
+public class WxPayReportRequest extends BaseWxPayRequest {
   /**
    * <pre>
    * 设备号

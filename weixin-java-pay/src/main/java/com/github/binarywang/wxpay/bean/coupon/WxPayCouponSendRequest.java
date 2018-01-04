@@ -1,6 +1,6 @@
 package com.github.binarywang.wxpay.bean.coupon;
 
-import com.github.binarywang.wxpay.bean.request.WxPayBaseRequest;
+import com.github.binarywang.wxpay.bean.request.BaseWxPayRequest;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
@@ -20,7 +20,7 @@ import me.chanjar.weixin.common.annotation.Required;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayCouponSendRequest extends WxPayBaseRequest {
+public class WxPayCouponSendRequest extends BaseWxPayRequest {
   /**
    * <pre>
    * 字段名：代金券批次id

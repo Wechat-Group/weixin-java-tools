@@ -1,6 +1,6 @@
 package com.github.binarywang.wxpay.bean.coupon;
 
-import com.github.binarywang.wxpay.bean.result.WxPayBaseResult;
+import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayCouponStockQueryResult extends WxPayBaseResult {
+public class WxPayCouponStockQueryResult extends BaseWxPayResult {
   /**
    * <pre>
    * 字段名：设备号

@@ -12,20 +12,23 @@ import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import static com.github.binarywang.wxpay.constant.WxPayConstants.SignType.ALL_SIGN_TYPES;
 
 /**
  * <pre>
- * Created by Binary Wang on 2016-10-24.
  *  微信支付请求对象共用的参数存放类
+ * Created by Binary Wang on 2016-10-24.
  * </pre>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Data
-public abstract class WxPayBaseRequest {
+public abstract class BaseWxPayRequest implements Serializable {
+  private static final long serialVersionUID = -4766915659779847060L;
+
   /**
    * <pre>
    * 字段名：公众账号ID
@@ -117,7 +120,7 @@ public abstract class WxPayBaseRequest {
    *
    * @param yuan 将要转换的元的数值字符串
    */
-  public static Integer yuanToFee(String yuan) {
+  public static Integer yuanToFen(String yuan) {
     return new BigDecimal(yuan).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).intValue();
   }
 
@@ -183,6 +186,20 @@ public abstract class WxPayBaseRequest {
   }
 
   /**
+   * 签名时，是否忽略signType
+   */
+  protected boolean ignoreSignType() {
+    return false;
+  }
+
+  /**
+   * 签名时，是否忽略appid
+   */
+  protected boolean ignoreAppid() {
+    return false;
+  }
+
+  /**
    * <pre>
    * 检查参数，并设置签名
    * 1、检查参数（注意：子类实现需要检查参数的而外功能时，请在调用父类的方法前进行相应判断）
@@ -190,14 +207,15 @@ public abstract class WxPayBaseRequest {
    * 3、生成签名，并设置进去
    * </pre>
    *
-   * @param config           支付配置对象，用于读取相应系统配置信息
-   * @param isIgnoreSignType 签名时，是否忽略signType
+   * @param config 支付配置对象，用于读取相应系统配置信息
    */
-  public void checkAndSign(WxPayConfig config, boolean isIgnoreSignType) throws WxPayException {
+  public void checkAndSign(WxPayConfig config) throws WxPayException {
     this.checkFields();
 
-    if (StringUtils.isBlank(getAppid())) {
-      this.setAppid(config.getAppId());
+    if (!ignoreAppid()) {
+      if (StringUtils.isBlank(getAppid())) {
+        this.setAppid(config.getAppId());
+      }
     }
 
     if (StringUtils.isBlank(getMchId())) {
@@ -229,7 +247,6 @@ public abstract class WxPayBaseRequest {
 
     //设置签名字段的值
     this.setSign(SignUtils.createSign(this, this.getSignType(), config.getMchKey(),
-      isIgnoreSignType));
+      this.ignoreSignType()));
   }
-
 }

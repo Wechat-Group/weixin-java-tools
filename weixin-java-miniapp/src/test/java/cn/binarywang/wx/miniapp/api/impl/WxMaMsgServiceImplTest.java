@@ -66,7 +66,7 @@ public class WxMaMsgServiceImplTest {
       .templateId(config.getTemplateId())
       .emphasisKeyword("keyword1.DATA")
       .build();
-
+    //templateMessage.addData( new WxMaTemplateMessage.Data("keyword1", "339208499", "#173177"));
     this.wxService.getMsgService().sendTemplateMsg(templateMessage);
   }
 

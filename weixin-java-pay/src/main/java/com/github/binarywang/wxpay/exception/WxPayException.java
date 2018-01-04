@@ -1,6 +1,6 @@
 package com.github.binarywang.wxpay.exception;
 
-import com.github.binarywang.wxpay.bean.result.WxPayBaseResult;
+import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.google.common.base.Joiner;
 
 /**
@@ -60,7 +60,7 @@ public class WxPayException extends Exception {
     xmlString = builder.xmlString;
   }
 
-  public static WxPayException from(WxPayBaseResult payBaseResult) {
+  public static WxPayException from(BaseWxPayResult payBaseResult) {
     return WxPayException.newBuilder()
       .xmlString(payBaseResult.getXmlString())
       .returnMsg(payBaseResult.getReturnMsg())

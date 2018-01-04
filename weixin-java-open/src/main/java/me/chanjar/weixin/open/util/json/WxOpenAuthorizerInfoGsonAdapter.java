@@ -35,28 +35,15 @@ public class WxOpenAuthorizerInfoGsonAdapter implements JsonDeserializer<WxOpenA
     if (jsonObject.has("verify_type_info")) {
       authorizationInfo.setVerifyTypeInfo(GsonHelper.getInteger(jsonObject.getAsJsonObject("verify_type_info"), "id"));
     }
-    if(jsonObject.has("MiniProgramInfo")){
-      WxOpenMiniProgramInfo miniProgramInfo = new WxOpenMiniProgramInfo();
-      JsonObject miniProgramInfoJsonObject = jsonObject.get("MiniProgramInfo").getAsJsonObject();
-
-      Map<String, List<String>> network = WxOpenGsonBuilder.create().fromJson(miniProgramInfoJsonObject.get("network"),
-        new TypeToken<Map<String, List<String>>>() {
-        }.getType());
-      miniProgramInfo.setNetwork(network);
-      List<Pair<String, String>> categories = new ArrayList<>();
-      miniProgramInfo.setCategories(categories);
-      JsonArray categorieJsonArray = miniProgramInfoJsonObject.get("categories").getAsJsonArray();
-
-      for(JsonElement element : categorieJsonArray){
-        categories.add(Pair.of(element.getAsJsonObject().get("first").getAsString(), element.getAsJsonObject().get("second").getAsString()));
-      }
-      miniProgramInfo.setVisitStatus(GsonHelper.getInteger(miniProgramInfoJsonObject, "visit_status"));
-      authorizationInfo.setMiniProgramInfo(miniProgramInfo);
-    }
     Map<String, Integer> businessInfo = WxOpenGsonBuilder.create().fromJson(jsonObject.get("business_info"),
       new TypeToken<Map<String, Integer>>() {
       }.getType());
     authorizationInfo.setBusinessInfo(businessInfo);
+
+    WxOpenAuthorizerInfo.MiniProgramInfo miniProgramInfo = WxOpenGsonBuilder.create().fromJson(jsonObject.get("MiniProgramInfo"),
+      new TypeToken<WxOpenAuthorizerInfo.MiniProgramInfo>() {
+      }.getType());
+    authorizationInfo.setMiniProgramInfo(miniProgramInfo);
     return authorizationInfo;
   }
 }

@@ -28,10 +28,10 @@ import java.util.Random;
  */
 public class WxCryptUtil {
 
-  private static final Base64 base64 = new Base64();
+  private static final Base64 BASE64 = new Base64();
   private static final Charset CHARSET = StandardCharsets.UTF_8;
 
-  private static final ThreadLocal<DocumentBuilder> builderLocal = new ThreadLocal<DocumentBuilder>() {
+  private static final ThreadLocal<DocumentBuilder> BUILDER_LOCAL = new ThreadLocal<DocumentBuilder>() {
     @Override
     protected DocumentBuilder initialValue() {
       try {
@@ -65,7 +65,7 @@ public class WxCryptUtil {
 
   static String extractEncryptPart(String xml) {
     try {
-      DocumentBuilder db = builderLocal.get();
+      DocumentBuilder db = BUILDER_LOCAL.get();
       Document document = db.parse(new InputSource(new StringReader(xml)));
 
       Element root = document.getDocumentElement();
@@ -192,7 +192,7 @@ public class WxCryptUtil {
       byte[] encrypted = cipher.doFinal(unencrypted);
 
       // 使用BASE64对加密后的字符串进行编码
-      return base64.encodeToString(encrypted);
+      return BASE64.encodeToString(encrypted);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

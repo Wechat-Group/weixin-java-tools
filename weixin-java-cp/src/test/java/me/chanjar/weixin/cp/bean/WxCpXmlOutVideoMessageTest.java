@@ -11,7 +11,7 @@ public class WxCpXmlOutVideoMessageTest {
     m.setMediaId("media_id");
     m.setTitle("title");
     m.setDescription("ddfff");
-    m.setCreateTime(1122l);
+    m.setCreateTime(1122L);
     m.setFromUserName("fromUser");
     m.setToUserName("toUser");
 

@@ -18,7 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayRefundQueryRequest extends WxPayBaseRequest {
+public class WxPayRefundQueryRequest extends BaseWxPayRequest {
   /**
    * <pre>
    * 设备号

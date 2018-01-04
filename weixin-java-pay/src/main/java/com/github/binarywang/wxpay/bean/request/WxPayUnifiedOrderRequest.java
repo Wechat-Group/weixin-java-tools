@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
+public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
   /**
    * <pre>
    * 字段名：设备号
@@ -349,7 +349,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
   }
 
   @Override
-  public void checkAndSign(WxPayConfig config, boolean isIgnoreSignType) throws WxPayException {
+  public void checkAndSign(WxPayConfig config) throws WxPayException {
     if (StringUtils.isBlank(this.getNotifyURL())) {
       this.setNotifyURL(config.getNotifyUrl());
     }
@@ -358,7 +358,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
       this.setTradeType(config.getTradeType());
     }
 
-    super.checkAndSign(config, isIgnoreSignType);
+    super.checkAndSign(config);
   }
 
 }

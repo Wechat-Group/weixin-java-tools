@@ -26,6 +26,8 @@ import java.nio.file.Path;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.github.binarywang.wxpay.constant.WxPayConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.*;
 
 /**
@@ -36,7 +38,7 @@ import static org.testng.Assert.*;
  */
 @Test
 @Guice(modules = ApiTestModule.class)
-public class WxPayServiceAbstractImplTest {
+public class BaseWxPayServiceImplTest {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Inject
@@ -139,7 +141,13 @@ public class WxPayServiceAbstractImplTest {
   @DataProvider
   public Object[][] billingData() {
     return new Object[][]{
-//      {"20170831", BillType.ALL, null, "deviceInfo"},
+      {"20170831", BillType.ALL, TarType.GZIP, "deviceInfo"},
+      {"20170831", BillType.RECHARGE_REFUND, TarType.GZIP, "deviceInfo"},
+      {"20170831", BillType.REFUND, TarType.GZIP, "deviceInfo"},
+      {"20170831", BillType.SUCCESS, TarType.GZIP, "deviceInfo"},
+      {"20170831", BillType.ALL, null, "deviceInfo"},
+      {"20170831", BillType.RECHARGE_REFUND, null, "deviceInfo"},
+      {"20170831", BillType.REFUND, null, "deviceInfo"},
       {"20170831", BillType.SUCCESS, null, "deviceInfo"}
     };
   }
@@ -148,11 +156,11 @@ public class WxPayServiceAbstractImplTest {
   public void testDownloadBill(String billDate, String billType,
                                String tarType, String deviceInfo) throws Exception {
     WxPayBillResult billResult = this.payService.downloadBill(billDate, billType, tarType, deviceInfo);
-    assertNotNull(billResult);
+    assertThat(billResult).isNotNull();
     this.logger.info(billResult.toString());
   }
 
-  @Test
+  @Test(expectedExceptions = WxPayException.class)
   public void testDownloadBill_withNoParams() throws Exception {
     //必填字段为空时，抛出异常
     this.payService.downloadBill("", "", "", null);
@@ -235,31 +243,6 @@ public class WxPayServiceAbstractImplTest {
   public void testQueryRedpack() throws Exception {
     WxPayRedpackQueryResult redpackResult = this.payService.queryRedpack("aaaa");
     this.logger.info(redpackResult.toString());
-  }
-
-  /**
-   * Test method for {@link WxPayService#entPay(WxEntPayRequest)}.
-   */
-  @Test
-  public void testEntPay() throws WxPayException {
-    WxEntPayRequest request = WxEntPayRequest.newBuilder()
-      .partnerTradeNo("Eb6Aep7uVTdbkJqrP4")
-      .openid("ojOQA0y9o-Eb6Aep7uVTdbkJqrP4")
-      .amount(1)
-      .spbillCreateIp("10.10.10.10")
-      .checkName(WxPayConstants.CheckNameOption.NO_CHECK)
-      .description("描述信息")
-      .build();
-
-    this.logger.info(this.payService.entPay(request).toString());
-  }
-
-  /**
-   * Test method for {@link WxPayService#queryEntPay(String)}.
-   */
-  @Test
-  public void testQueryEntPay() throws WxPayException {
-    this.logger.info(this.payService.queryEntPay("11212121").toString());
   }
 
   @Test

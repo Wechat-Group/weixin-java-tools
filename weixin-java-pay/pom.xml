@@ -5,7 +5,7 @@
   <parent>
     <artifactId>weixin-java-parent</artifactId>
     <groupId>com.github.binarywang</groupId>
-    <version>2.9.1.BETA</version>
+    <version>2.9.3.BETA</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -27,12 +27,22 @@
     <dependency>
       <groupId>org.jodd</groupId>
       <artifactId>jodd-http</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.9.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk16</artifactId>
+      <version>1.46</version>
     </dependency>
 
     <dependency>
@@ -43,6 +53,11 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-guava</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

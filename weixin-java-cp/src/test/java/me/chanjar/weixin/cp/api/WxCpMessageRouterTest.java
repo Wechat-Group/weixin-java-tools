@@ -69,7 +69,7 @@ public class WxCpMessageRouterTest {
     WxCpMessageRouter router = new WxCpMessageRouter(null);
     prepare(true, sb, router);
     router.route(message);
-    Thread.sleep(500l);
+    Thread.sleep(500);
     Assert.assertEquals(sb.toString(), expected);
   }
 
@@ -89,7 +89,7 @@ public class WxCpMessageRouterTest {
       public void run() {
         router.route(m);
         try {
-          Thread.sleep(1000l);
+          Thread.sleep(1000);
         } catch (InterruptedException e) {
         }
       }
@@ -98,7 +98,7 @@ public class WxCpMessageRouterTest {
       new Thread(r).start();
     }
 
-    Thread.sleep(1000l * 2);
+    Thread.sleep(2000);
   }
 
   @DataProvider(name = "messages-1")
@@ -184,7 +184,7 @@ public class WxCpMessageRouterTest {
     msg.setFromUserName("abc");
     router.route(msg);
 
-    Thread.sleep(2000l);
+    Thread.sleep(2000);
     Assert.assertEquals(ism.getActiveSessions(), 0);
 
   }
@@ -204,7 +204,7 @@ public class WxCpMessageRouterTest {
       msg.setFromUserName("abc");
       router.route(msg);
 
-      Thread.sleep(2000l);
+      Thread.sleep(2000);
       Assert.assertEquals(ism.getActiveSessions(), 0);
     }
     {
@@ -218,7 +218,7 @@ public class WxCpMessageRouterTest {
       msg.setFromUserName("abc");
       router.route(msg);
 
-      Thread.sleep(2000l);
+      Thread.sleep(2000);
       Assert.assertEquals(ism.getActiveSessions(), 0);
     }
 
@@ -238,7 +238,7 @@ public class WxCpMessageRouterTest {
     msg.setFromUserName("abc");
     router.route(msg);
 
-    Thread.sleep(2000l);
+    Thread.sleep(2000);
     Assert.assertEquals(ism.getActiveSessions(), 0);
 
   }
@@ -257,7 +257,7 @@ public class WxCpMessageRouterTest {
       msg.setFromUserName("abc");
       router.route(msg);
 
-      Thread.sleep(2000l);
+      Thread.sleep(2000);
       Assert.assertEquals(ism.getActiveSessions(), 0);
     }
 
@@ -271,7 +271,7 @@ public class WxCpMessageRouterTest {
       msg.setFromUserName("abc");
       router.route(msg);
 
-      Thread.sleep(2000l);
+      Thread.sleep(2000);
       Assert.assertEquals(ism.getActiveSessions(), 0);
     }
   }

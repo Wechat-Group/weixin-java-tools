@@ -1,8 +1,8 @@
 package me.chanjar.weixin.mp.bean.template;
 
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
-import static org.testng.AssertJUnit.*;
+import static org.testng.AssertJUnit.assertEquals;
 
 /**
  * <pre>
@@ -13,7 +13,7 @@ import static org.testng.AssertJUnit.*;
  */
 public class WxMpTemplateMessageTest {
   @Test
-  public void testToJson() throws Exception {
+  public void testToJson() {
     WxMpTemplateMessage tm = WxMpTemplateMessage.builder()
       .toUser("OPENID")
       .templateId("ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY")
@@ -21,9 +21,9 @@ public class WxMpTemplateMessageTest {
       .url("http://weixin.qq.com/download")
       .build();
 
-    tm.addWxMpTemplateData(
+    tm.addData(
       new WxMpTemplateData("first", "haahah", "#FF00FF"));
-    tm.addWxMpTemplateData(
+    tm.addData(
       new WxMpTemplateData("remark", "heihei", "#FF00FF"));
 
     assertEquals(tm.toJson(), "{\"touser\":\"OPENID\",\"template_id\":\"ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY\",\"url\":\"http://weixin.qq.com/download\",\"miniprogram\":{\"appid\":\"xiaochengxuappid12345\",\"pagepath\":\"index?foo=bar\"},\"data\":{\"first\":{\"value\":\"haahah\",\"color\":\"#FF00FF\"},\"remark\":{\"value\":\"heihei\",\"color\":\"#FF00FF\"}}}");

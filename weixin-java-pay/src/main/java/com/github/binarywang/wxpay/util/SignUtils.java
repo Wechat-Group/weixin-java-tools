@@ -1,7 +1,11 @@
 package com.github.binarywang.wxpay.util;
 
+import com.github.binarywang.wxpay.bean.request.BaseWxPayRequest;
+import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import me.chanjar.weixin.common.util.BeanUtils;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -11,11 +15,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * <pre>
@@ -33,7 +37,7 @@ public class SignUtils {
    */
   @Deprecated
   public static String createSign(Object xmlBean, String signKey) {
-    return createSign(BeanUtils.xmlBean2Map(xmlBean), signKey);
+    return createSign(xmlBean2Map(xmlBean), signKey);
   }
 
   /**
@@ -54,7 +58,7 @@ public class SignUtils {
    * @return 签名字符串
    */
   public static String createSign(Object xmlBean, String signType, String signKey, boolean isIgnoreSignType) {
-    return createSign(BeanUtils.xmlBean2Map(xmlBean), signType, signKey, isIgnoreSignType);
+    return createSign(xmlBean2Map(xmlBean), signType, signKey, isIgnoreSignType);
   }
 
   /**
@@ -116,7 +120,7 @@ public class SignUtils {
    * @return true - 签名校验成功，false - 签名校验失败
    */
   public static boolean checkSign(Object xmlBean, String signType, String signKey) {
-    return checkSign(BeanUtils.xmlBean2Map(xmlBean), signType, signKey);
+    return checkSign(xmlBean2Map(xmlBean), signType, signKey);
   }
 
   /**
@@ -130,5 +134,49 @@ public class SignUtils {
   public static boolean checkSign(Map<String, String> params, String signType, String signKey) {
     String sign = createSign(params, signType, signKey, false);
     return sign.equals(params.get("sign"));
+  }
+
+  /**
+   * 将bean按照@XStreamAlias标识的字符串内容生成以之为key的map对象
+   *
+   * @param bean 包含@XStreamAlias的xml bean对象
+   * @return map对象
+   */
+  public static Map<String, String> xmlBean2Map(Object bean) {
+    Map<String, String> result = Maps.newHashMap();
+    List<Field> fields = new ArrayList<>(Arrays.asList(bean.getClass().getDeclaredFields()));
+    fields.addAll(Arrays.asList(bean.getClass().getSuperclass().getDeclaredFields()));
+    if(bean.getClass().getSuperclass().getSuperclass() == BaseWxPayRequest.class){
+      fields.addAll(Arrays.asList(BaseWxPayRequest.class.getDeclaredFields()));
+    }
+
+    if(bean.getClass().getSuperclass().getSuperclass() == BaseWxPayResult.class){
+      fields.addAll(Arrays.asList(BaseWxPayResult.class.getDeclaredFields()));
+    }
+
+    for (Field field : fields) {
+      try {
+        boolean isAccessible = field.isAccessible();
+        field.setAccessible(true);
+        if (field.get(bean) == null) {
+          field.setAccessible(isAccessible);
+          continue;
+        }
+
+        if (field.isAnnotationPresent(XStreamAlias.class)) {
+          result.put(field.getAnnotation(XStreamAlias.class).value(), field.get(bean).toString());
+        } else if (!Modifier.isStatic(field.getModifiers())) {
+          //忽略掉静态成员变量
+          result.put(field.getName(), field.get(bean).toString());
+        }
+
+        field.setAccessible(isAccessible);
+      } catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
+        log.error(e.getMessage(), e);
+      }
+
+    }
+
+    return result;
   }
 }

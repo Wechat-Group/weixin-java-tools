@@ -23,7 +23,7 @@ public class WxMpJsAPITest {
 
 
   public void test() {
-    long timestamp = 1419835025l;
+    long timestamp = 1419835025L;
     String url = "http://omstest.vmall.com:23568/thirdparty/wechat/vcode/gotoshare?quantity=1&batchName=MATE7";
     String noncestr = "82693e11-b9bc-448e-892f-f5289f46cd0f";
     String jsapiTicket = "bxLdikRXVbTPdHSM05e5u4RbEYQn7pNQMPrfzl8lJNb1foLDa3HIwI3BRMkQmSO_5F64VFa75uURcq6Uz7QHgA";

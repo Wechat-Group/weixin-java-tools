@@ -18,7 +18,7 @@ import me.chanjar.weixin.common.annotation.Required;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayMicropayRequest extends WxPayBaseRequest {
+public class WxPayMicropayRequest extends BaseWxPayRequest {
   /**
    * <pre>
    * 商品描述

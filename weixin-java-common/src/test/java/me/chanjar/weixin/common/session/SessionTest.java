@@ -80,7 +80,7 @@ public class SessionTest {
     InternalSession abc = ism.createSession("abc");
     abc.endAccess();
 
-    Thread.sleep(2000l);
+    Thread.sleep(2000);
     Assert.assertEquals(ism.getActiveSessions(), 0);
 
   }
@@ -99,7 +99,7 @@ public class SessionTest {
     abc.setMaxInactiveInterval(1);
     abc.endAccess();
 
-    Thread.sleep(2000l);
+    Thread.sleep(2000);
     Assert.assertEquals(ism.getActiveSessions(), 0);
 
   }

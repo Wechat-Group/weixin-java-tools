@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayRedpackQueryResult extends WxPayBaseResult {
+public class WxPayRedpackQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>

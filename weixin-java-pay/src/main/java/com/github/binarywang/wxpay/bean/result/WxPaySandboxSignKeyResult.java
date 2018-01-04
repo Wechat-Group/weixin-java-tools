@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPaySandboxSignKeyResult extends WxPayBaseResult {
+public class WxPaySandboxSignKeyResult extends BaseWxPayResult {
 
   /**
    * <pre>

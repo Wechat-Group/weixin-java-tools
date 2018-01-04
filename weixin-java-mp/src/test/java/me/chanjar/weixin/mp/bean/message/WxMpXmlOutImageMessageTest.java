@@ -9,7 +9,7 @@ public class WxMpXmlOutImageMessageTest {
   public void test() {
     WxMpXmlOutImageMessage m = new WxMpXmlOutImageMessage();
     m.setMediaId("ddfefesfsdfef");
-    m.setCreateTime(1122l);
+    m.setCreateTime(1122L);
     m.setFromUserName("from");
     m.setToUserName("to");
 

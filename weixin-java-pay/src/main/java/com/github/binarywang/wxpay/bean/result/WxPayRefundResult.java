@@ -19,7 +19,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayRefundResult extends WxPayBaseResult implements Serializable {
+public class WxPayRefundResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @XStreamAlias("device_info")

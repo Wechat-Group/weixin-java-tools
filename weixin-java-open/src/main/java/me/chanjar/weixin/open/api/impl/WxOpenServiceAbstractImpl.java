@@ -30,6 +30,7 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
     return wxOpenConfigStorage;
   }
 
+  @Override
   public void setWxOpenConfigStorage(WxOpenConfigStorage wxOpenConfigStorage) {
     this.wxOpenConfigStorage = wxOpenConfigStorage;
   }

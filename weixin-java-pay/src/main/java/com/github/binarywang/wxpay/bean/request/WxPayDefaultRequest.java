@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @XStreamAlias("xml")
-public class WxPayDefaultRequest extends WxPayBaseRequest {
+public class WxPayDefaultRequest extends BaseWxPayRequest {
   @Override
   protected void checkConstraints() {
     //do nothing

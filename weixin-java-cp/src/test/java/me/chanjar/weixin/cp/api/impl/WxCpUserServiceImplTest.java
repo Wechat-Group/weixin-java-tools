@@ -37,7 +37,7 @@ public class WxCpUserServiceImplTest {
     user.setName("Some Woman");
     user.setDepartIds(new Integer[]{2});
     user.setEmail("none@none.com");
-    user.setGender(WxCpUser.Gender.FEMAIL);
+    user.setGender(WxCpUser.Gender.FEMALE);
     user.setMobile("13560084979");
     user.setPosition("woman");
     user.setTelephone("3300393");

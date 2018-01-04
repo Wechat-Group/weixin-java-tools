@@ -17,7 +17,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayOrderCloseRequest extends WxPayBaseRequest {
+public class WxPayOrderCloseRequest extends BaseWxPayRequest {
 
   /**
    * <pre>

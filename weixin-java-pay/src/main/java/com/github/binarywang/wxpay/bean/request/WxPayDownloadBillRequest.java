@@ -24,7 +24,7 @@ import java.util.Arrays;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayDownloadBillRequest extends WxPayBaseRequest {
+public class WxPayDownloadBillRequest extends BaseWxPayRequest {
   private static final String[] BILL_TYPES = new String[]{BillType.ALL, BillType.SUCCESS, BillType.REFUND, BillType.RECHARGE_REFUND};
   private static final String TAR_TYPE_GZIP = "GZIP";
 

@@ -213,7 +213,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     WxMpCardResult cardResult = WxMpGsonBuilder.INSTANCE.create().fromJson(tmpJsonElement,
       new TypeToken<WxMpCardResult>() {
       }.getType());
-    if (!cardResult.getErrorCode().equals("0")) {
+    if (!"0".equals(cardResult.getErrorCode())) {
       this.log.warn("朋友的券mark失败：{}", cardResult.getErrorMsg());
     }
   }

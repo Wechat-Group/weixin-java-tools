@@ -19,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayOrderReverseRequest extends WxPayBaseRequest {
+public class WxPayOrderReverseRequest extends BaseWxPayRequest {
 
   /**
    * <pre>

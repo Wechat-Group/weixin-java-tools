@@ -23,7 +23,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayRedpackQueryRequest extends WxPayBaseRequest {
+public class WxPayRedpackQueryRequest extends BaseWxPayRequest {
   /**
    * 商户订单号
    * mch_billno

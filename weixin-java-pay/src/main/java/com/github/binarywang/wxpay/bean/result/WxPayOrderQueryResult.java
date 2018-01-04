@@ -25,7 +25,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayOrderQueryResult extends WxPayBaseResult {
+public class WxPayOrderQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>设备号

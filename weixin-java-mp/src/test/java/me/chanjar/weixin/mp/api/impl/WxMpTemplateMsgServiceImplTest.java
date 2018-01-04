@@ -10,8 +10,9 @@ import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateIndustry;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.testng.*;
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,12 +38,12 @@ public class WxMpTemplateMsgServiceImplTest {
       .getWxMpConfigStorage();
     WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder()
       .toUser(configStorage.getOpenid())
-      .templateId(configStorage.getTemplateId()).build();
-    templateMessage.addWxMpTemplateData(
-      new WxMpTemplateData("first", dateFormat.format(new Date()), "#FF00FF"));
-    templateMessage.addWxMpTemplateData(
-      new WxMpTemplateData("remark", RandomStringUtils.randomAlphanumeric(100), "#FF00FF"));
-    templateMessage.setUrl(" ");
+      .templateId(configStorage.getTemplateId())
+      .url(" ")
+      .build();
+
+    templateMessage.addData(new WxMpTemplateData("first", dateFormat.format(new Date()), "#FF00FF"))
+      .addData(new WxMpTemplateData("remark", RandomStringUtils.randomAlphanumeric(100), "#FF00FF"));
     String msgId = this.wxService.getTemplateMsgService().sendTemplateMsg(templateMessage);
     Assert.assertNotNull(msgId);
     System.out.println(msgId);

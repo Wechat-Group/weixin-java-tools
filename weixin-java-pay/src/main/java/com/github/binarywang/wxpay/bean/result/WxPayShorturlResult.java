@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayShorturlResult extends WxPayBaseResult {
+public class WxPayShorturlResult extends BaseWxPayResult {
   /**
    * <pre>
    * URL链接

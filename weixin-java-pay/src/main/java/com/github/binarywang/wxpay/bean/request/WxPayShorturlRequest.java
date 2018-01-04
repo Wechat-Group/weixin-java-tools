@@ -17,7 +17,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayShorturlRequest extends WxPayBaseRequest {
+public class WxPayShorturlRequest extends BaseWxPayRequest {
   /**
    * <pre>
    * URL链接

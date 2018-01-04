@@ -26,7 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayOrderQueryRequest extends WxPayBaseRequest {
+public class WxPayOrderQueryRequest extends BaseWxPayRequest {
 
   /**
    * <pre>

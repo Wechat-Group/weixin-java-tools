@@ -57,11 +57,11 @@ public class WxPayOrderNotifyResultConverter extends AbstractReflectionConverter
 
   @Override
   protected void marshallField(MarshallingContext context, Object newObj, Field field) {
-    if (field.getName().equals("couponList")) {
+    if ("couponList".equals(field.getName())) {
       return;
-    } else {
-      super.marshallField(context, newObj, field);
     }
+
+    super.marshallField(context, newObj, field);
   }
 
   @Override

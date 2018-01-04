@@ -9,7 +9,7 @@ public class WxCpXmlOutVoiceMessageTest {
   public void test() {
     WxCpXmlOutVoiceMessage m = new WxCpXmlOutVoiceMessage();
     m.setMediaId("ddfefesfsdfef");
-    m.setCreateTime(1122l);
+    m.setCreateTime(1122L);
     m.setFromUserName("from");
     m.setToUserName("to");
 

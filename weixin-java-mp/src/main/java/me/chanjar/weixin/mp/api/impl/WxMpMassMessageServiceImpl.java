@@ -57,7 +57,7 @@ public class WxMpMassMessageServiceImpl implements WxMpMassMessageService {
   }
 
   @Override
-  public void delete(Integer msgId, Integer articleIndex) throws WxErrorException {
+  public void delete(Long msgId, Integer articleIndex) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("msg_id", msgId);
     jsonObject.addProperty("article_idx", articleIndex);

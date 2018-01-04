@@ -57,10 +57,10 @@ public class WxCpXmlMessageTest {
     WxCpXmlMessage wxMessage = WxCpXmlMessage.fromXml(xml);
     assertEquals(wxMessage.getToUserName(), "toUser");
     assertEquals(wxMessage.getFromUserName(), "fromUser");
-    assertEquals(wxMessage.getCreateTime(), new Long(1348831860l));
+    assertEquals(wxMessage.getCreateTime(), new Long(1348831860));
     assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.TEXT);
     assertEquals(wxMessage.getContent(), "this is a test");
-    assertEquals(wxMessage.getMsgId(), new Long(1234567890123456l));
+    assertEquals(wxMessage.getMsgId(), new Long(1234567890123456L));
     assertEquals(wxMessage.getPicUrl(), "this is a url");
     assertEquals(wxMessage.getMediaId(), "media_id");
     assertEquals(wxMessage.getFormat(), "Format");
@@ -80,7 +80,7 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getPrecision(), 119.385040);
     assertEquals(wxMessage.getScanCodeInfo().getScanType(), "qrcode");
     assertEquals(wxMessage.getScanCodeInfo().getScanResult(), "1");
-    assertEquals(wxMessage.getSendPicsInfo().getCount(), new Long(1l));
+    assertEquals(wxMessage.getSendPicsInfo().getCount(), new Long(1));
     assertEquals(wxMessage.getSendPicsInfo().getPicList().get(0).getPicMd5Sum(), "1b5f7c23b5bf75682a53e7b6d163e185");
     assertEquals(wxMessage.getSendLocationInfo().getLocationX(), "23");
     assertEquals(wxMessage.getSendLocationInfo().getLocationY(), "113");

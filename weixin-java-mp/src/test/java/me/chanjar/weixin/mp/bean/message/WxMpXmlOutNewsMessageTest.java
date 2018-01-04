@@ -8,7 +8,7 @@ public class WxMpXmlOutNewsMessageTest {
 
   public void test() {
     WxMpXmlOutNewsMessage m = new WxMpXmlOutNewsMessage();
-    m.setCreateTime(1122l);
+    m.setCreateTime(1122L);
     m.setFromUserName("fromUser");
     m.setToUserName("toUser");
 
