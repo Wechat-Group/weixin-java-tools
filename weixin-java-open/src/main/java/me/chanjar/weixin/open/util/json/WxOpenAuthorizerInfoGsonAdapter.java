@@ -4,12 +4,8 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizerInfo;
-import me.chanjar.weixin.open.bean.auth.WxOpenMiniProgramInfo;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
