@@ -1,5 +1,6 @@
 package me.chanjar.weixin.open.api;
 
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
@@ -36,6 +37,7 @@ public interface WxOpenConfigStorage {
   void updateComponentAccessTokent(WxOpenComponentAccessToken componentAccessToken);
 
   WxMpConfigStorage getWxMpConfigStorage(String appId);
+  WxMaConfig getWxMaConfig(String appId);
 
   /**
    * 应该是线程安全的

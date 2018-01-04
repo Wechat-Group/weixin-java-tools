@@ -1,7 +1,8 @@
 package me.chanjar.weixin.open.api.impl;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.google.gson.JsonObject;
-import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.URIUtil;
@@ -31,6 +32,7 @@ import java.util.Map;
  */
 public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   private static final Map<String, WxMpService> wxOpenMpServiceMap = new Hashtable<>();
+  private static final Map<String, WxMaService> wxOpenMaServiceMap = new Hashtable<>();
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
   private WxOpenService wxOpenService;
 
@@ -54,6 +56,20 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     return wxMpService;
   }
 
+  @Override
+  public WxMaService getWxMaServiceByAppid(String appId) {
+    WxMaService wxMaService = wxOpenMaServiceMap.get(appId);
+    if (wxMaService == null) {
+      synchronized (wxOpenMaServiceMap) {
+        wxMaService = wxOpenMaServiceMap.get(appId);
+        if (wxMaService == null) {
+          wxMaService = new WxOpenMaServiceImpl(this, appId, getWxOpenConfigStorage().getWxMaConfig(appId));
+          wxOpenMaServiceMap.put(appId, wxMaService);
+        }
+      }
+    }
+    return wxMaService;
+  }
   public WxOpenService getWxOpenService() {
     return wxOpenService;
   }
@@ -137,7 +153,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       }
       return "success";
     }
-    return null;
+    return "";
   }
 
   @Override
@@ -169,14 +185,13 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public WxError setAuthorizerOption(String authorizerAppid, String optionName, String optionValue) throws WxErrorException {
+  public void setAuthorizerOption(String authorizerAppid, String optionName, String optionValue) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
     jsonObject.addProperty("authorizer_appid", authorizerAppid);
     jsonObject.addProperty("option_name", optionName);
     jsonObject.addProperty("option_value", optionValue);
-    String responseContent = post(API_SET_AUTHORIZER_OPTION_URL, jsonObject.toString());
-    return WxGsonBuilder.create().fromJson(responseContent, WxError.class);
+    post(API_SET_AUTHORIZER_OPTION_URL, jsonObject.toString());
   }
 
   @Override
@@ -218,6 +233,13 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   public String oauth2buildAuthorizationUrl(String appId, String redirectURI, String scope, String state) {
     return String.format(CONNECT_OAUTH2_AUTHORIZE_URL,
       appId, URIUtil.encodeURIComponent(redirectURI), scope, StringUtils.trimToEmpty(state), getWxOpenConfigStorage().getComponentAppId());
+  }
+
+  @Override
+  public WxMaJscode2SessionResult miniappJscode2Session(String appid, String jsCode, String appId) throws WxErrorException  {
+    String url = String.format(MINIAPP_JSCODE_2_SESSION, appId, jsCode, getWxOpenConfigStorage().getComponentAppId());
+    String responseContent = get(url);
+    return WxMaJscode2SessionResult.fromJson(responseContent);
   }
 
 }

@@ -4,8 +4,12 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizerInfo;
+import me.chanjar.weixin.open.bean.auth.WxOpenMiniProgramInfo;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,11 +27,31 @@ public class WxOpenAuthorizerInfoGsonAdapter implements JsonDeserializer<WxOpenA
     authorizationInfo.setPrincipalName(GsonHelper.getString(jsonObject, "principal_name"));
     authorizationInfo.setAlias(GsonHelper.getString(jsonObject, "alias"));
     authorizationInfo.setQrcodeUrl(GsonHelper.getString(jsonObject, "qrcode_url"));
+    authorizationInfo.setSignature(GsonHelper.getString(jsonObject, "signature"));
+
     if (jsonObject.has("service_type_info")) {
       authorizationInfo.setServiceTypeInfo(GsonHelper.getInteger(jsonObject.getAsJsonObject("service_type_info"), "id"));
     }
     if (jsonObject.has("verify_type_info")) {
       authorizationInfo.setVerifyTypeInfo(GsonHelper.getInteger(jsonObject.getAsJsonObject("verify_type_info"), "id"));
+    }
+    if(jsonObject.has("MiniProgramInfo")){
+      WxOpenMiniProgramInfo miniProgramInfo = new WxOpenMiniProgramInfo();
+      JsonObject miniProgramInfoJsonObject = jsonObject.get("MiniProgramInfo").getAsJsonObject();
+
+      Map<String, List<String>> network = WxOpenGsonBuilder.create().fromJson(miniProgramInfoJsonObject.get("network"),
+        new TypeToken<Map<String, List<String>>>() {
+        }.getType());
+      miniProgramInfo.setNetwork(network);
+      List<Pair<String, String>> categories = new ArrayList<>();
+      miniProgramInfo.setCategories(categories);
+      JsonArray categorieJsonArray = miniProgramInfoJsonObject.get("categories").getAsJsonArray();
+
+      for(JsonElement element : categorieJsonArray){
+        categories.add(Pair.of(element.getAsJsonObject().get("first").getAsString(), element.getAsJsonObject().get("second").getAsString()));
+      }
+      miniProgramInfo.setVisitStatus(GsonHelper.getInteger(miniProgramInfoJsonObject, "visit_status"));
+      authorizationInfo.setMiniProgramInfo(miniProgramInfo);
     }
     Map<String, Integer> businessInfo = WxOpenGsonBuilder.create().fromJson(jsonObject.get("business_info"),
       new TypeToken<Map<String, Integer>>() {
