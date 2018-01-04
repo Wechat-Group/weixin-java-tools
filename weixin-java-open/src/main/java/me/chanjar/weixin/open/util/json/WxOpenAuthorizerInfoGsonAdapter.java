@@ -35,11 +35,12 @@ public class WxOpenAuthorizerInfoGsonAdapter implements JsonDeserializer<WxOpenA
       new TypeToken<Map<String, Integer>>() {
       }.getType());
     authorizationInfo.setBusinessInfo(businessInfo);
-
-    WxOpenAuthorizerInfo.MiniProgramInfo miniProgramInfo = WxOpenGsonBuilder.create().fromJson(jsonObject.get("MiniProgramInfo"),
-      new TypeToken<WxOpenAuthorizerInfo.MiniProgramInfo>() {
-      }.getType());
-    authorizationInfo.setMiniProgramInfo(miniProgramInfo);
+    if (jsonObject.has("MiniProgramInfo")) {
+      WxOpenAuthorizerInfo.MiniProgramInfo miniProgramInfo = WxOpenGsonBuilder.create().fromJson(jsonObject.get("MiniProgramInfo"),
+        new TypeToken<WxOpenAuthorizerInfo.MiniProgramInfo>() {
+        }.getType());
+      authorizationInfo.setMiniProgramInfo(miniProgramInfo);
+    }
     return authorizationInfo;
   }
 }
