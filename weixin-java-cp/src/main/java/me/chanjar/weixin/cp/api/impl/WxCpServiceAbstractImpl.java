@@ -381,7 +381,7 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
     throw new RuntimeException("微信服务端异常，超出重试次数");
   }
 
-  protected synchronized <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
     if (uri.contains("access_token=")) {
       throw new IllegalArgumentException("uri参数中不允许有access_token: " + uri);
     }

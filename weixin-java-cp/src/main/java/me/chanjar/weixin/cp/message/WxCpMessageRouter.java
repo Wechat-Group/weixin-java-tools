@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.util.LogExceptionHandler;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -215,17 +216,19 @@ public class WxCpMessageRouter {
   }
 
   protected boolean isDuplicateMessage(WxCpXmlMessage wxMessage) {
-
-    String messageId = "";
+    String messageId;
     if (wxMessage.getMsgId() == null) {
       messageId = String.valueOf(wxMessage.getCreateTime())
-        + "-" + String.valueOf(wxMessage.getAgentId() == null ? "" : wxMessage.getAgentId())
+        + "-" + StringUtils.trimToEmpty(String.valueOf(wxMessage.getAgentId()))
         + "-" + wxMessage.getFromUserName()
-        + "-" + String.valueOf(wxMessage.getEventKey() == null ? "" : wxMessage.getEventKey())
-        + "-" + String.valueOf(wxMessage.getEvent() == null ? "" : wxMessage.getEvent())
+        + "-" + StringUtils.trimToEmpty(wxMessage.getEventKey())
+        + "-" + StringUtils.trimToEmpty(wxMessage.getEvent())
       ;
     } else {
-      messageId = String.valueOf(wxMessage.getMsgId());
+      messageId = new StringBuilder().append(wxMessage.getMsgId())
+        .append("-").append(wxMessage.getCreateTime())
+        .append("-").append(wxMessage.getFromUserName())
+        .toString();
     }
 
     return this.messageDuplicateChecker.isDuplicate(messageId);

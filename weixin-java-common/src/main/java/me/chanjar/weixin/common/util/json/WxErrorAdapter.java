@@ -14,23 +14,26 @@ import me.chanjar.weixin.common.bean.result.WxError;
 import java.lang.reflect.Type;
 
 /**
- * @author Daniel Qian
+ * @author Daniel Qian.
  */
 public class WxErrorAdapter implements JsonDeserializer<WxError> {
 
   @Override
-  public WxError deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-    WxError wxError = new WxError();
+  public WxError deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    throws JsonParseException {
+    WxError.WxErrorBuilder errorBuilder = WxError.builder();
     JsonObject wxErrorJsonObject = json.getAsJsonObject();
 
     if (wxErrorJsonObject.get("errcode") != null && !wxErrorJsonObject.get("errcode").isJsonNull()) {
-      wxError.setErrorCode(GsonHelper.getAsPrimitiveInt(wxErrorJsonObject.get("errcode")));
+      errorBuilder.errorCode(GsonHelper.getAsPrimitiveInt(wxErrorJsonObject.get("errcode")));
     }
     if (wxErrorJsonObject.get("errmsg") != null && !wxErrorJsonObject.get("errmsg").isJsonNull()) {
-      wxError.setErrorMsg(GsonHelper.getAsString(wxErrorJsonObject.get("errmsg")));
+      errorBuilder.errorMsg(GsonHelper.getAsString(wxErrorJsonObject.get("errmsg")));
     }
-    wxError.setJson(json.toString());
-    return wxError;
+
+    errorBuilder.json(json.toString());
+
+    return errorBuilder.build();
   }
 
 }

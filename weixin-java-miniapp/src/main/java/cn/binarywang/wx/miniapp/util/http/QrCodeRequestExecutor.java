@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.util.http;
 
-import cn.binarywang.wx.miniapp.bean.WxMaQrcodeWrapper;
+import cn.binarywang.wx.miniapp.bean.AbstractWxMaQrcodeWrapper;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
@@ -25,7 +25,7 @@ import java.util.UUID;
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class QrCodeRequestExecutor implements RequestExecutor<File, WxMaQrcodeWrapper> {
+public class QrCodeRequestExecutor implements RequestExecutor<File, AbstractWxMaQrcodeWrapper> {
   protected RequestHttp<CloseableHttpClient, HttpHost> requestHttp;
 
   public QrCodeRequestExecutor(RequestHttp requestHttp) {
@@ -33,14 +33,12 @@ public class QrCodeRequestExecutor implements RequestExecutor<File, WxMaQrcodeWr
   }
 
   @Override
-  public File execute(String uri, WxMaQrcodeWrapper ticket) throws WxErrorException, IOException {
+  public File execute(String uri, AbstractWxMaQrcodeWrapper ticket) throws WxErrorException, IOException {
     HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
-      httpPost
-        .setConfig(RequestConfig.custom()
-          .setProxy(requestHttp.getRequestHttpProxy())
-          .build()
-        );
+      httpPost.setConfig(
+          RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build()
+      );
     }
     httpPost.setEntity(new StringEntity(ticket.toString()));
 
@@ -48,7 +46,8 @@ public class QrCodeRequestExecutor implements RequestExecutor<File, WxMaQrcodeWr
          InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response);) {
       Header[] contentTypeHeader = response.getHeaders("Content-Type");
       if (contentTypeHeader != null && contentTypeHeader.length > 0
-        && ContentType.APPLICATION_JSON.getMimeType().equals(contentTypeHeader[0].getValue())) {
+          && ContentType.APPLICATION_JSON.getMimeType()
+          .equals(ContentType.parse(contentTypeHeader[0].getValue()).getMimeType())) {
         String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
         throw new WxErrorException(WxError.fromJson(responseContent));
       }

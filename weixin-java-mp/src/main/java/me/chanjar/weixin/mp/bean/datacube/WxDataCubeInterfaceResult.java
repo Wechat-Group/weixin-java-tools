@@ -1,18 +1,22 @@
 package me.chanjar.weixin.mp.bean.datacube;
 
-import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.util.List;
 
 /**
  * 接口分析数据接口返回结果对象
+ * <p>
+ * Created by Binary Wang on 2016/8/30.
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- *         Created by Binary Wang on 2016/8/30.
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class WxDataCubeInterfaceResult extends WxDataCubeBaseResult {
   private static final long serialVersionUID = 597734329161281398L;
 
@@ -56,46 +60,6 @@ public class WxDataCubeInterfaceResult extends WxDataCubeBaseResult {
       JSON_PARSER.parse(json).getAsJsonObject().get("list"),
       new TypeToken<List<WxDataCubeInterfaceResult>>() {
       }.getType());
-  }
-
-  public Integer getRefHour() {
-    return this.refHour;
-  }
-
-  public void setRefHour(Integer refHour) {
-    this.refHour = refHour;
-  }
-
-  public Integer getCallbackCount() {
-    return this.callbackCount;
-  }
-
-  public void setCallbackCount(Integer callbackCount) {
-    this.callbackCount = callbackCount;
-  }
-
-  public Integer getFailCount() {
-    return this.failCount;
-  }
-
-  public void setFailCount(Integer failCount) {
-    this.failCount = failCount;
-  }
-
-  public Integer getTotalTimeCost() {
-    return this.totalTimeCost;
-  }
-
-  public void setTotalTimeCost(Integer totalTimeCost) {
-    this.totalTimeCost = totalTimeCost;
-  }
-
-  public Integer getMaxTimeCost() {
-    return this.maxTimeCost;
-  }
-
-  public void setMaxTimeCost(Integer maxTimeCost) {
-    this.maxTimeCost = maxTimeCost;
   }
 
 }

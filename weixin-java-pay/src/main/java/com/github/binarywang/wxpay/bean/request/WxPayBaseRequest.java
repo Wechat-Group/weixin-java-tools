@@ -5,6 +5,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.BeanUtils;
 import me.chanjar.weixin.common.util.ToStringUtils;
@@ -13,14 +14,17 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 
+import static com.github.binarywang.wxpay.constant.WxPayConstants.SignType.ALL_SIGN_TYPES;
+
 /**
  * <pre>
  * Created by Binary Wang on 2016-10-24.
  *  微信支付请求对象共用的参数存放类
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
 public abstract class WxPayBaseRequest {
   /**
    * <pre>
@@ -120,7 +124,7 @@ public abstract class WxPayBaseRequest {
   /**
    * 检查请求参数内容，包括必填参数以及特殊约束
    */
-  protected void checkFields() throws WxPayException {
+  private void checkFields() throws WxPayException {
     //check required fields
     try {
       BeanUtils.checkRequiredFields(this);
@@ -137,10 +141,6 @@ public abstract class WxPayBaseRequest {
    */
   protected abstract void checkConstraints() throws WxPayException;
 
-  public String getAppid() {
-    return this.appid;
-  }
-
   /**
    * 如果配置中已经设置，可以不设置值
    *
@@ -148,10 +148,6 @@ public abstract class WxPayBaseRequest {
    */
   public void setAppid(String appid) {
     this.appid = appid;
-  }
-
-  public String getMchId() {
-    return this.mchId;
   }
 
   /**
@@ -163,10 +159,6 @@ public abstract class WxPayBaseRequest {
     this.mchId = mchId;
   }
 
-  public String getNonceStr() {
-    return this.nonceStr;
-  }
-
   /**
    * 默认采用时间戳为随机字符串，可以不设置
    *
@@ -176,38 +168,6 @@ public abstract class WxPayBaseRequest {
     this.nonceStr = nonceStr;
   }
 
-  public String getSign() {
-    return this.sign;
-  }
-
-  public void setSign(String sign) {
-    this.sign = sign;
-  }
-
-  public String getSubAppId() {
-    return subAppId;
-  }
-
-  public void setSubAppId(String subAppId) {
-    this.subAppId = subAppId;
-  }
-
-  public String getSubMchId() {
-    return subMchId;
-  }
-
-  public void setSubMchId(String subMchId) {
-    this.subMchId = subMchId;
-  }
-
-  public String getSignType() {
-    return signType;
-  }
-
-  public void setSignType(String signType) {
-    this.signType = signType;
-  }
-
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
@@ -215,6 +175,9 @@ public abstract class WxPayBaseRequest {
 
   public String toXML() {
     XStream xstream = XStreamInitializer.getInstance();
+    //涉及到服务商模式的两个参数，在为空值时置为null，以免在请求时将空值传给微信服务器
+    this.setSubAppId(StringUtils.trimToNull(this.getSubAppId()));
+    this.setSubMchId(StringUtils.trimToNull(this.getSubMchId()));
     xstream.processAnnotations(this.getClass());
     return xstream.toXML(this);
   }
@@ -227,9 +190,10 @@ public abstract class WxPayBaseRequest {
    * 3、生成签名，并设置进去
    * </pre>
    *
-   * @param config 支付配置对象，用于读取相应系统配置信息
+   * @param config           支付配置对象，用于读取相应系统配置信息
+   * @param isIgnoreSignType 签名时，是否忽略signType
    */
-  public void checkAndSign(WxPayConfig config) throws WxPayException {
+  public void checkAndSign(WxPayConfig config, boolean isIgnoreSignType) throws WxPayException {
     this.checkFields();
 
     if (StringUtils.isBlank(getAppid())) {
@@ -248,11 +212,24 @@ public abstract class WxPayBaseRequest {
       this.setSubMchId(config.getSubMchId());
     }
 
+    if (StringUtils.isBlank(getSignType())) {
+      if (config.getSignType() != null && !ALL_SIGN_TYPES.contains(config.getSignType())) {
+        throw new WxPayException("非法的signType配置：" + config.getSignType() + "，请检查配置！");
+      }
+      this.setSignType(StringUtils.trimToNull(config.getSignType()));
+    } else {
+      if (!ALL_SIGN_TYPES.contains(this.getSignType())) {
+        throw new WxPayException("非法的sign_type参数：" + this.getSignType());
+      }
+    }
+
     if (StringUtils.isBlank(getNonceStr())) {
       this.setNonceStr(String.valueOf(System.currentTimeMillis()));
     }
+
     //设置签名字段的值
-    this.setSign(SignUtils.createSign(this, config.getMchKey(), this.signType));
+    this.setSign(SignUtils.createSign(this, this.getSignType(), config.getMchKey(),
+      isIgnoreSignType));
   }
 
 }

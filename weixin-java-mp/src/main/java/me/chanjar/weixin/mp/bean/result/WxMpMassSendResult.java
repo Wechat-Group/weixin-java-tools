@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.bean.result;
 
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
  *
  * @author chanjarster
  */
+@Data
 public class WxMpMassSendResult implements Serializable {
   private static final long serialVersionUID = -4816336807575562818L;
 
@@ -26,38 +28,6 @@ public class WxMpMassSendResult implements Serializable {
 
   public static WxMpMassSendResult fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(json, WxMpMassSendResult.class);
-  }
-
-  public String getErrorCode() {
-    return this.errorCode;
-  }
-
-  public void setErrorCode(String errorCode) {
-    this.errorCode = errorCode;
-  }
-
-  public String getErrorMsg() {
-    return this.errorMsg;
-  }
-
-  public void setErrorMsg(String errorMsg) {
-    this.errorMsg = errorMsg;
-  }
-
-  public String getMsgId() {
-    return this.msgId;
-  }
-
-  public void setMsgId(String msgId) {
-    this.msgId = msgId;
-  }
-
-  public String getMsgDataId() {
-    return this.msgDataId;
-  }
-
-  public void setMsgDataId(String msgDataId) {
-    this.msgDataId = msgDataId;
   }
 
   @Override

@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaMsgService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
+import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.bean.result.WxError;
@@ -30,7 +31,7 @@ public class WxMaMsgServiceImpl implements WxMaMsgService {
   public void sendTemplateMsg(WxMaTemplateMessage templateMessage) throws WxErrorException {
     String responseContent = this.wxMaService.post(TEMPLATE_MSG_SEND_URL, templateMessage.toJson());
     JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
-    if (jsonObject.get("errcode").getAsInt() != 0) {
+    if (jsonObject.get(WxMaConstants.ERRCODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent));
     }
   }

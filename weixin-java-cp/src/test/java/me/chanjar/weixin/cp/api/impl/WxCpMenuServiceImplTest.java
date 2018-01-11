@@ -26,12 +26,12 @@ public class WxCpMenuServiceImplTest {
   public Object[][] menuData() {
     WxMenu menu = new WxMenu();
     WxMenuButton button1 = new WxMenuButton();
-    button1.setType(WxConsts.BUTTON_CLICK);
+    button1.setType(WxConsts.MenuButtonType.CLICK);
     button1.setName("今日歌曲");
     button1.setKey("V1001_TODAY_MUSIC");
 
     WxMenuButton button2 = new WxMenuButton();
-    button2.setType(WxConsts.BUTTON_CLICK);
+    button2.setType(WxConsts.MenuButtonType.CLICK);
     button2.setName("歌手简介");
     button2.setKey("V1001_TODAY_SINGER");
 
@@ -43,17 +43,17 @@ public class WxCpMenuServiceImplTest {
     menu.getButtons().add(button3);
 
     WxMenuButton button31 = new WxMenuButton();
-    button31.setType(WxConsts.BUTTON_VIEW);
+    button31.setType(WxConsts.MenuButtonType.VIEW);
     button31.setName("搜索");
     button31.setUrl("http://www.soso.com/");
 
     WxMenuButton button32 = new WxMenuButton();
-    button32.setType(WxConsts.BUTTON_VIEW);
+    button32.setType(WxConsts.MenuButtonType.VIEW);
     button32.setName("视频");
     button32.setUrl("http://v.qq.com/");
 
     WxMenuButton button33 = new WxMenuButton();
-    button33.setType(WxConsts.BUTTON_CLICK);
+    button33.setType(WxConsts.MenuButtonType.CLICK);
     button33.setName("赞一下我们");
     button33.setKey("V1001_GOOD");
 

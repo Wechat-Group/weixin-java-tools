@@ -2,21 +2,25 @@ package me.chanjar.weixin.cp.bean;
 
 import com.google.common.base.Splitter;
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * <pre>
- * 为标签添加或移除用户结果对象类
+ * 为标签添加或移除用户结果对象类.
  * Created by Binary Wang on 2017-6-22.
+ *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * </pre>
  */
-public class WxCpTagAddOrRemoveUsersResult {
+@Data
+public class WxCpTagAddOrRemoveUsersResult implements Serializable {
+  private static final long serialVersionUID = 1420065684270213578L;
+
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
@@ -38,44 +42,12 @@ public class WxCpTagAddOrRemoveUsersResult {
   @SerializedName("invalidparty")
   private String[] invalidParty;
 
-  public Integer getErrCode() {
-    return this.errCode;
-  }
-
-  public void setErrCode(Integer errCode) {
-    this.errCode = errCode;
-  }
-
-  public String getErrMsg() {
-    return this.errMsg;
-  }
-
-  public void setErrMsg(String errMsg) {
-    this.errMsg = errMsg;
-  }
-
-  public String getInvalidUser() {
-    return this.invalidUsers;
-  }
-
-  public void setInvalidUser(String invalidUser) {
-    this.invalidUsers = invalidUser;
-  }
-
-  public String[] getInvalidParty() {
-    return this.invalidParty;
-  }
-
-  public void setInvalidParty(String[] invalidParty) {
-    this.invalidParty = invalidParty;
-  }
-
   public List<String> getInvalidUserList() {
     return this.content2List(this.invalidUsers);
   }
 
   private List<String> content2List(String content) {
-    if(StringUtils.isBlank(content)){
+    if (StringUtils.isBlank(content)) {
       return Collections.emptyList();
     }
 

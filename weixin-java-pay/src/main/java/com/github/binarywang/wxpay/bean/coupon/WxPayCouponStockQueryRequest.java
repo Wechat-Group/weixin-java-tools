@@ -2,6 +2,7 @@ package com.github.binarywang.wxpay.bean.coupon;
 
 import com.github.binarywang.wxpay.bean.request.WxPayBaseRequest;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
 /**
@@ -12,6 +13,12 @@ import me.chanjar.weixin.common.annotation.Required;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayCouponStockQueryRequest extends WxPayBaseRequest {
   /**
@@ -80,142 +87,9 @@ public class WxPayCouponStockQueryRequest extends WxPayBaseRequest {
   @XStreamAlias("type")
   private String type;
 
-  private WxPayCouponStockQueryRequest(Builder builder) {
-    setAppid(builder.appid);
-    setMchId(builder.mchId);
-    setSubAppId(builder.subAppId);
-    setSubMchId(builder.subMchId);
-    setNonceStr(builder.nonceStr);
-    setSign(builder.sign);
-    setCouponStockId(builder.couponStockId);
-    setOpUserId(builder.opUserId);
-    setDeviceInfo(builder.deviceInfo);
-    setVersion(builder.version);
-    setType(builder.type);
-  }
-
-  public static Builder newBuilder() {
-    return new Builder();
-  }
-
-  public String getCouponStockId() {
-    return this.couponStockId;
-  }
-
-  public void setCouponStockId(String couponStockId) {
-    this.couponStockId = couponStockId;
-  }
-
-  public String getOpUserId() {
-    return this.opUserId;
-  }
-
-  public void setOpUserId(String opUserId) {
-    this.opUserId = opUserId;
-  }
-
-  public String getDeviceInfo() {
-    return this.deviceInfo;
-  }
-
-  public void setDeviceInfo(String deviceInfo) {
-    this.deviceInfo = deviceInfo;
-  }
-
-  public String getVersion() {
-    return this.version;
-  }
-
-  public void setVersion(String version) {
-    this.version = version;
-  }
-
-  public String getType() {
-    return this.type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
-  }
-
   @Override
   protected void checkConstraints() {
     //do nothing
   }
 
-  public static final class Builder {
-    private String appid;
-    private String mchId;
-    private String subAppId;
-    private String subMchId;
-    private String nonceStr;
-    private String sign;
-    private String couponStockId;
-    private String opUserId;
-    private String deviceInfo;
-    private String version;
-    private String type;
-
-    private Builder() {
-    }
-
-    public Builder appid(String appid) {
-      this.appid = appid;
-      return this;
-    }
-
-    public Builder mchId(String mchId) {
-      this.mchId = mchId;
-      return this;
-    }
-
-    public Builder subAppId(String subAppId) {
-      this.subAppId = subAppId;
-      return this;
-    }
-
-    public Builder subMchId(String subMchId) {
-      this.subMchId = subMchId;
-      return this;
-    }
-
-    public Builder nonceStr(String nonceStr) {
-      this.nonceStr = nonceStr;
-      return this;
-    }
-
-    public Builder sign(String sign) {
-      this.sign = sign;
-      return this;
-    }
-
-    public Builder couponStockId(String couponStockId) {
-      this.couponStockId = couponStockId;
-      return this;
-    }
-
-    public Builder opUserId(String opUserId) {
-      this.opUserId = opUserId;
-      return this;
-    }
-
-    public Builder deviceInfo(String deviceInfo) {
-      this.deviceInfo = deviceInfo;
-      return this;
-    }
-
-    public Builder version(String version) {
-      this.version = version;
-      return this;
-    }
-
-    public Builder type(String type) {
-      this.type = type;
-      return this;
-    }
-
-    public WxPayCouponStockQueryRequest build() {
-      return new WxPayCouponStockQueryRequest(this);
-    }
-  }
 }

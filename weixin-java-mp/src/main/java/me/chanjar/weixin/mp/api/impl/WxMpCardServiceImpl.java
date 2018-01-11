@@ -229,10 +229,9 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     String errcode = json.get("errcode").getAsString();
     if (!"0".equals(errcode)) {
       String errmsg = json.get("errmsg").getAsString();
-      WxError error = new WxError();
-      error.setErrorCode(Integer.valueOf(errcode));
-      error.setErrorMsg(errmsg);
-      throw new WxErrorException(error);
+      throw new WxErrorException(WxError.builder()
+        .errorCode(Integer.valueOf(errcode)).errorMsg(errmsg)
+        .build());
     }
 
     return responseContent;

@@ -58,7 +58,7 @@ public class WxMpXmlMessageTest {
     assertEquals(wxMessage.getToUser(), "toUser");
     assertEquals(wxMessage.getFromUser(), "fromUser");
     assertEquals(wxMessage.getCreateTime(), new Long(1348831860L));
-    assertEquals(wxMessage.getMsgType(), WxConsts.XML_MSG_TEXT);
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.TEXT);
     assertEquals(wxMessage.getContent(), "this is a test");
     assertEquals(wxMessage.getMsgId(), new Long(1234567890123456L));
     assertEquals(wxMessage.getPicUrl(), "this is a url");
@@ -86,7 +86,7 @@ public class WxMpXmlMessageTest {
     assertEquals(wxMessage.getSendLocationInfo().getLocationY(), "113");
     assertEquals(wxMessage.getSendLocationInfo().getScale(), "15");
     assertEquals(wxMessage.getSendLocationInfo().getLabel(), " 广州市海珠区客村艺苑路 106号");
-    assertEquals(wxMessage.getSendLocationInfo().getPoiname(), "wo de poi");
+    assertEquals(wxMessage.getSendLocationInfo().getPoiName(), "wo de poi");
   }
 
   public void testFromXml2() {
@@ -139,7 +139,7 @@ public class WxMpXmlMessageTest {
     assertEquals(wxMessage.getToUser(), "toUser");
     assertEquals(wxMessage.getFromUser(), "fromUser");
     assertEquals(wxMessage.getCreateTime(), new Long(1348831860L));
-    assertEquals(wxMessage.getMsgType(), WxConsts.XML_MSG_TEXT);
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.TEXT);
     assertEquals(wxMessage.getContent(), "this is a test");
     assertEquals(wxMessage.getMsgId(), new Long(1234567890123456L));
     assertEquals(wxMessage.getPicUrl(), "this is a url");
@@ -167,7 +167,7 @@ public class WxMpXmlMessageTest {
     assertEquals(wxMessage.getSendLocationInfo().getLocationY(), "113");
     assertEquals(wxMessage.getSendLocationInfo().getScale(), "15");
     assertEquals(wxMessage.getSendLocationInfo().getLabel(), " 广州市海珠区客村艺苑路 106号");
-    assertEquals(wxMessage.getSendLocationInfo().getPoiname(), "wo de poi");
+    assertEquals(wxMessage.getSendLocationInfo().getPoiName(), "wo de poi");
   }
 
 }

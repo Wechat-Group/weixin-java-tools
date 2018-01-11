@@ -7,14 +7,10 @@ import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import okhttp3.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class WxCpServiceOkHttpImpl extends WxCpServiceAbstractImpl<OkHttpClient, OkHttpProxyInfo> {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
   protected OkHttpClient httpClient;
   protected OkHttpProxyInfo httpProxy;
 
@@ -36,7 +32,7 @@ public class WxCpServiceOkHttpImpl extends WxCpServiceAbstractImpl<OkHttpClient,
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    logger.debug("WxCpServiceOkHttpImpl is running");
+    this.log.debug("WxCpServiceOkHttpImpl is running");
     if (this.configStorage.isAccessTokenExpired() || forceRefresh) {
       synchronized (this.globalAccessTokenRefreshLock) {
         if (this.configStorage.isAccessTokenExpired()) {
@@ -47,18 +43,14 @@ public class WxCpServiceOkHttpImpl extends WxCpServiceAbstractImpl<OkHttpClient,
           OkHttpClient client = getRequestHttpClient();
           //请求的request
           Request request = new Request.Builder().url(url).get().build();
-          Response response = null;
-          try {
-            response = client.newCall(request).execute();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
           String resultContent = null;
           try {
+            Response response = client.newCall(request).execute();
             resultContent = response.body().string();
           } catch (IOException e) {
-            e.printStackTrace();
+            this.log.error(e.getMessage(), e);
           }
+
           WxError error = WxError.fromJson(resultContent);
           if (error.getErrorCode() != 0) {
             throw new WxErrorException(error);
@@ -74,9 +66,16 @@ public class WxCpServiceOkHttpImpl extends WxCpServiceAbstractImpl<OkHttpClient,
 
   @Override
   public void initHttp() {
-    logger.debug("WxCpServiceOkHttpImpl initHttp");
-    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+    this.log.debug("WxCpServiceOkHttpImpl initHttp");
     //设置代理
+    if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
+      httpProxy = OkHttpProxyInfo.httpProxy(configStorage.getHttpProxyHost(),
+        configStorage.getHttpProxyPort(),
+        configStorage.getHttpProxyUsername(),
+        configStorage.getHttpProxyPassword());
+    }
+
+    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
     if (httpProxy != null) {
       clientBuilder.proxy(getRequestHttpProxy().getProxy());
 

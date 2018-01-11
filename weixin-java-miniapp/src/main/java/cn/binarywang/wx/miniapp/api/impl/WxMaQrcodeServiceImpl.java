@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaQrcodeService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaCodeLineColor;
 import cn.binarywang.wx.miniapp.bean.WxMaQrcode;
 import cn.binarywang.wx.miniapp.bean.WxMaWxcode;
 import cn.binarywang.wx.miniapp.bean.WxMaWxcodeLimit;
@@ -22,9 +23,8 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
 
   @Override
   public File createQrcode(String path, int width) throws WxErrorException {
-    String url = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode";
     return this.wxMaService.execute(new QrCodeRequestExecutor(this.wxMaService.getRequestHttp()),
-      url, new WxMaQrcode(path, width));
+      CREATE_QRCODE_URL, new WxMaQrcode(path, width));
   }
 
   @Override
@@ -33,15 +33,14 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
   }
 
   @Override
-  public File createWxCode(String path, int width, boolean autoColor, LineColor lineColor) throws WxErrorException {
-    String url = "https://api.weixin.qq.com/wxa/getwxacode";
+  public File createWxCode(String path, int width, boolean autoColor, WxMaCodeLineColor lineColor) throws WxErrorException {
     WxMaWxcode wxMaWxcode = new WxMaWxcode();
     wxMaWxcode.setPath(path);
     wxMaWxcode.setWidth(width);
     wxMaWxcode.setAutoColor(autoColor);
     wxMaWxcode.setLineColor(lineColor);
     return this.wxMaService.execute(new QrCodeRequestExecutor(this.wxMaService.getRequestHttp()),
-      url, wxMaWxcode);
+      GET_WXACODE_URL, wxMaWxcode);
   }
 
   @Override
@@ -55,8 +54,7 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
   }
 
   @Override
-  public File createWxCodeLimit(String scene, String page, int width, boolean autoColor, LineColor lineColor) throws WxErrorException {
-    String url = "http://api.weixin.qq.com/wxa/getwxacodeunlimit";
+  public File createWxCodeLimit(String scene, String page, int width, boolean autoColor, WxMaCodeLineColor lineColor) throws WxErrorException {
     WxMaWxcodeLimit wxMaWxcodeLimit = new WxMaWxcodeLimit();
     wxMaWxcodeLimit.setScene(scene);
     wxMaWxcodeLimit.setPage(page);
@@ -64,7 +62,7 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
     wxMaWxcodeLimit.setAutoColor(autoColor);
     wxMaWxcodeLimit.setLineColor(lineColor);
     return this.wxMaService.execute(new QrCodeRequestExecutor(this.wxMaService.getRequestHttp()),
-      url, wxMaWxcodeLimit);
+      GET_WXACODE_UNLIMIT_URL, wxMaWxcodeLimit);
   }
 
   @Override

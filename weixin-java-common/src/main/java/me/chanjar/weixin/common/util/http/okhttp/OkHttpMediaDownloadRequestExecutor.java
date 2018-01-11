@@ -2,8 +2,8 @@ package me.chanjar.weixin.common.util.http.okhttp;
 
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.HttpResponseProxy;
-import me.chanjar.weixin.common.util.http.MediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * Created by ecoolper on 2017/5/5.
  */
-public class OkHttpMediaDownloadRequestExecutor extends MediaDownloadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
+public class OkHttpMediaDownloadRequestExecutor extends BaseMediaDownloadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   public OkHttpMediaDownloadRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {

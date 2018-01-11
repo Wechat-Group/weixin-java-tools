@@ -20,8 +20,9 @@ import java.util.List;
 /**
  * <pre>
  * Created by Binary Wang on 2016-10-14.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Guice(modules = ApiTestModule.class)
 public class WxMpTemplateMsgServiceImplTest {

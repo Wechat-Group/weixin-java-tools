@@ -70,6 +70,7 @@ public class WxMenuGsonAdapter implements JsonSerializer<WxMenu>, JsonDeserializ
     return matchRule;
   }
 
+  @Deprecated
   private WxMenuRule convertToRule(JsonObject json) {
     WxMenuRule menuRule = new WxMenuRule();
     //变态的微信接口，这里居然反人类的使用和序列化时不一样的名字

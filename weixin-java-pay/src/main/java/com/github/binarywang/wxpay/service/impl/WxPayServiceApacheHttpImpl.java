@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
  * Created by Binary Wang on 2016/7/28.
  * </pre>
  *
- * @author binarywang (https://github.com/binarywang)
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxPayServiceApacheHttpImpl extends WxPayServiceAbstractImpl {
 

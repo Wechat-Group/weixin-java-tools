@@ -18,7 +18,7 @@ public class XStreamTransformer {
   }
 
   /**
-   * xml -> pojo
+   * xml -> pojo.
    */
   @SuppressWarnings("unchecked")
   public static <T> T fromXml(Class<T> clazz, String xml) {
@@ -33,14 +33,14 @@ public class XStreamTransformer {
   }
 
   /**
-   * pojo -> xml
+   * pojo -> xml.
    */
   public static <T> String toXml(Class<T> clazz, T object) {
     return CLASS_2_XSTREAM_INSTANCE.get(clazz).toXML(object);
   }
 
   /**
-   * 注册扩展消息的解析器
+   * 注册扩展消息的解析器.
    *
    * @param clz     类型
    * @param xStream xml解析器
@@ -50,12 +50,14 @@ public class XStreamTransformer {
   }
 
   /**
-   * 会自动注册该类及其子类
+   * 会自动注册该类及其子类.
    *
    * @param clz 要注册的类
    */
   private static void registerClass(Class<?> clz) {
     XStream xstream = XStreamInitializer.getInstance();
+    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
+
     xstream.processAnnotations(clz);
     xstream.processAnnotations(getInnerClasses(clz));
     if (clz.equals(WxMaMessage.class)) {

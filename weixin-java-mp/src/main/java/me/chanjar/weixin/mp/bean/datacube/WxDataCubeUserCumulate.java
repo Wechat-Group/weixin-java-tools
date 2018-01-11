@@ -2,6 +2,7 @@ package me.chanjar.weixin.mp.bean.datacube;
 
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * 详情查看文档：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141082&token=&lang=zh_CN">用户分析数据接口</a>
  * </pre>
  */
+@Data
 public class WxDataCubeUserCumulate implements Serializable {
   private static final JsonParser JSON_PARSER = new JsonParser();
 
@@ -29,22 +31,6 @@ public class WxDataCubeUserCumulate implements Serializable {
       JSON_PARSER.parse(json).getAsJsonObject().get("list"),
       new TypeToken<List<WxDataCubeUserCumulate>>() {
       }.getType());
-  }
-
-  public Date getRefDate() {
-    return this.refDate;
-  }
-
-  public void setRefDate(Date refDate) {
-    this.refDate = refDate;
-  }
-
-  public Integer getCumulateUser() {
-    return this.cumulateUser;
-  }
-
-  public void setCumulateUser(Integer cumulateUser) {
-    this.cumulateUser = cumulateUser;
   }
 
   @Override

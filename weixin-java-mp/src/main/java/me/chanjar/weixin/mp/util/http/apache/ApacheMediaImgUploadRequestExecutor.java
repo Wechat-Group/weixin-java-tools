@@ -30,7 +30,7 @@ public class ApacheMediaImgUploadRequestExecutor extends MediaImgUploadRequestEx
   @Override
   public WxMediaImgUploadResult execute(String uri, File data) throws WxErrorException, IOException {
     if (data == null) {
-      throw new WxErrorException(WxError.newBuilder().setErrorMsg("文件对象为空").build());
+      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("文件对象为空").build());
     }
 
     HttpPost httpPost = new HttpPost(uri);

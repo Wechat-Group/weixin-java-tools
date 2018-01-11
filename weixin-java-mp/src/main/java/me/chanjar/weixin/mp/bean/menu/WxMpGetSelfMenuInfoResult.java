@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean.menu;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
@@ -9,9 +10,11 @@ import java.io.Serializable;
 /**
  * <pre>
  * Created by Binary Wang on 2016-11-25.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
 public class WxMpGetSelfMenuInfoResult implements Serializable {
   private static final long serialVersionUID = -5612495636936835166L;
 
@@ -30,19 +33,4 @@ public class WxMpGetSelfMenuInfoResult implements Serializable {
     return ToStringUtils.toSimpleString(this);
   }
 
-  public WxMpSelfMenuInfo getSelfMenuInfo() {
-    return selfMenuInfo;
-  }
-
-  public void setSelfMenuInfo(WxMpSelfMenuInfo selfMenuInfo) {
-    this.selfMenuInfo = selfMenuInfo;
-  }
-
-  public Integer getIsMenuOpen() {
-    return isMenuOpen;
-  }
-
-  public void setIsMenuOpen(Integer isMenuOpen) {
-    this.isMenuOpen = isMenuOpen;
-  }
 }

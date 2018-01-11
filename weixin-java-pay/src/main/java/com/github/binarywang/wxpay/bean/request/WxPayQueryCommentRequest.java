@@ -2,6 +2,7 @@ package com.github.binarywang.wxpay.bean.request;
 
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
 /**
@@ -12,6 +13,11 @@ import me.chanjar.weixin.common.annotation.Required;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayQueryCommentRequest extends WxPayBaseRequest {
   /**
@@ -75,38 +81,6 @@ public class WxPayQueryCommentRequest extends WxPayBaseRequest {
   @Override
   protected void checkConstraints() throws WxPayException {
 
-  }
-
-  public String getBeginTime() {
-    return beginTime;
-  }
-
-  public void setBeginTime(String beginTime) {
-    this.beginTime = beginTime;
-  }
-
-  public String getEndTime() {
-    return endTime;
-  }
-
-  public void setEndTime(String endTime) {
-    this.endTime = endTime;
-  }
-
-  public Integer getOffset() {
-    return offset;
-  }
-
-  public void setOffset(Integer offset) {
-    this.offset = offset;
-  }
-
-  public Integer getLimit() {
-    return limit;
-  }
-
-  public void setLimit(Integer limit) {
-    this.limit = limit;
   }
 
 }

@@ -31,7 +31,7 @@ public class WxMaMsgServiceImplTest {
     TestConfig configStorage = (TestConfig) this.wxService
       .getWxMaConfig();
     WxMaKefuMessage message = new WxMaKefuMessage();
-    message.setMsgType(WxConsts.CUSTOM_MSG_MPNEWS);
+    message.setMsgType(WxConsts.KefuMsgType.MPNEWS);
     message.setToUser(configStorage.getOpenid());
 
     this.wxService.getMsgService().sendKefuMsg(message);
@@ -41,7 +41,7 @@ public class WxMaMsgServiceImplTest {
     TestConfig config = (TestConfig) this.wxService
       .getWxMaConfig();
     WxMaKefuMessage message = new WxMaKefuMessage();
-    message.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
+    message.setMsgType(WxConsts.KefuMsgType.TEXT);
     message.setToUser(config.getOpenid());
     message.setContent(
       "欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>");
@@ -54,7 +54,7 @@ public class WxMaMsgServiceImplTest {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     TestConfig config = (TestConfig) this.wxService.getWxMaConfig();
 
-    WxMaTemplateMessage templateMessage = WxMaTemplateMessage.newBuilder()
+    WxMaTemplateMessage templateMessage = WxMaTemplateMessage.builder()
       .toUser(config.getOpenid())
       .formId("FORMID")
       .page("index")

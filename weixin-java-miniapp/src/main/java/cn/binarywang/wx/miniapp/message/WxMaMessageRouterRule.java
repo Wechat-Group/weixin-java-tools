@@ -196,7 +196,7 @@ public class WxMaMessageRouterRule {
                          WxSessionManager sessionManager,
                          WxErrorExceptionHandler exceptionHandler) {
     if (context == null) {
-      context = new HashMap<>();
+      context = new HashMap<>(16);
     }
 
     try {

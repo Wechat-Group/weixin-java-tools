@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * @author Binary Wang
  */
+@Data
 public class WxMpKfOnlineList implements Serializable {
   private static final long serialVersionUID = -6154705288500854617L;
 
@@ -25,11 +27,4 @@ public class WxMpKfOnlineList implements Serializable {
     return ToStringUtils.toSimpleString(this);
   }
 
-  public List<WxMpKfInfo> getKfOnlineList() {
-    return this.kfOnlineList;
-  }
-
-  public void setKfOnlineList(List<WxMpKfInfo> kfOnlineList) {
-    this.kfOnlineList = kfOnlineList;
-  }
 }

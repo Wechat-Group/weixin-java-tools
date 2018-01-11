@@ -1,11 +1,13 @@
 package me.chanjar.weixin.mp.bean.kefu.request;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
 
+@Data
 public class WxMpKfSessionRequest implements Serializable {
   private static final long serialVersionUID = -5451863610674856927L;
 
@@ -33,14 +35,6 @@ public class WxMpKfSessionRequest implements Serializable {
 
   public String toJson() {
     return WxMpGsonBuilder.INSTANCE.create().toJson(this);
-  }
-
-  public String getKfAccount() {
-    return this.kfAccount;
-  }
-
-  public void setKfAccount(String kfAccount) {
-    this.kfAccount = kfAccount;
   }
 
 }

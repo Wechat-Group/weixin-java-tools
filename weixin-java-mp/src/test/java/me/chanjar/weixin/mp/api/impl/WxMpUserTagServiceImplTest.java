@@ -12,8 +12,9 @@ import org.testng.annotations.*;
 import java.util.List;
 
 /**
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- *         Created by Binary Wang on 2016/9/2.
+ * Created by Binary Wang on 2016/9/2.
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Test
 @Guice(modules = ApiTestModule.class)

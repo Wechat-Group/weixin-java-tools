@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
+import cn.binarywang.wx.miniapp.bean.WxMaCodeLineColor;
 import me.chanjar.weixin.common.exception.WxErrorException;
 
 import java.io.File;
@@ -16,6 +17,9 @@ import java.io.File;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMaQrcodeService {
+  String CREATE_QRCODE_URL = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode";
+  String GET_WXACODE_URL = "https://api.weixin.qq.com/wxa/getwxacode";
+  String GET_WXACODE_UNLIMIT_URL = "https://api.weixin.qq.com/wxa/getwxacodeunlimit";
 
   /**
    * 接口C
@@ -42,10 +46,8 @@ public interface WxMaQrcodeService {
    * @param width     默认430 二维码的宽度
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
    * @param lineColor auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
-   * @return
-   * @throws WxErrorException
    */
-  File createWxCode(String path, int width, boolean autoColor, LineColor lineColor) throws WxErrorException;
+  File createWxCode(String path, int width, boolean autoColor, WxMaCodeLineColor lineColor) throws WxErrorException;
 
   File createWxCode(String path, int width) throws WxErrorException;
 
@@ -65,49 +67,9 @@ public interface WxMaQrcodeService {
    * @param width     默认false 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
    * @param lineColor auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
-   * @return
-   * @throws WxErrorException
    */
-  File createWxCodeLimit(String scene, String page, int width, boolean autoColor, LineColor lineColor) throws WxErrorException;
+  File createWxCodeLimit(String scene, String page, int width, boolean autoColor, WxMaCodeLineColor lineColor) throws WxErrorException;
 
   File createWxCodeLimit(String scene, String page) throws WxErrorException;
 
-  /**
-   * lineColor 包装类
-   * 用于描述二维码（小程序码）颜色（RGB参数值），详情请查看文档
-   */
-  public static class LineColor {
-
-    private String r = "0", g = "0", b = "0";
-
-    public LineColor(String r, String g, String b) {
-      this.r = r;
-      this.g = g;
-      this.b = b;
-    }
-
-    public String getR() {
-      return r;
-    }
-
-    public void setR(String r) {
-      this.r = r;
-    }
-
-    public String getG() {
-      return g;
-    }
-
-    public void setG(String g) {
-      this.g = g;
-    }
-
-    public String getB() {
-      return b;
-    }
-
-    public void setB(String b) {
-      this.b = b;
-    }
-  }
 }

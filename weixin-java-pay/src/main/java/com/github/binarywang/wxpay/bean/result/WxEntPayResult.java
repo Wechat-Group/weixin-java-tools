@@ -1,13 +1,19 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * 企业付款返回结果
  * Created by Binary Wang on 2016/10/02.
  *
- * @author binarywang (https://github.com/binarywang)
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxEntPayResult extends WxPayBaseResult {
 
@@ -42,43 +48,4 @@ public class WxEntPayResult extends WxPayBaseResult {
   @XStreamAlias("payment_time")
   private String paymentTime;
 
-  public String getMchAppid() {
-    return this.mchAppid;
-  }
-
-  public void setMchAppid(String mchAppid) {
-    this.mchAppid = mchAppid;
-  }
-
-  public String getDeviceInfo() {
-    return this.deviceInfo;
-  }
-
-  public void setDeviceInfo(String deviceInfo) {
-    this.deviceInfo = deviceInfo;
-  }
-
-  public String getPartnerTradeNo() {
-    return this.partnerTradeNo;
-  }
-
-  public void setPartnerTradeNo(String partnerTradeNo) {
-    this.partnerTradeNo = partnerTradeNo;
-  }
-
-  public String getPaymentNo() {
-    return this.paymentNo;
-  }
-
-  public void setPaymentNo(String paymentNo) {
-    this.paymentNo = paymentNo;
-  }
-
-  public String getPaymentTime() {
-    return this.paymentTime;
-  }
-
-  public void setPaymentTime(String paymentTime) {
-    this.paymentTime = paymentTime;
-  }
 }

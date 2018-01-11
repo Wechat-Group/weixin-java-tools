@@ -7,8 +7,9 @@ import static org.testng.AssertJUnit.*;
 /**
  * <pre>
  * Created by Binary Wang on 2017-3-30.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMpTemplateMessageTest {
   @Test

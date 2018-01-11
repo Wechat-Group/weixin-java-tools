@@ -58,7 +58,7 @@ public class WxMpDemoServer {
 
       wxMpMessageRouter = new WxMpMessageRouter(wxMpService);
       wxMpMessageRouter.rule().handler(logHandler).next().rule()
-        .msgType(WxConsts.XML_MSG_TEXT).matcher(guessNumberHandler)
+        .msgType(WxConsts.XmlMsgType.TEXT).matcher(guessNumberHandler)
         .handler(guessNumberHandler).end().rule().async(false).content("哈哈")
         .handler(textHandler).end().rule().async(false).content("图片")
         .handler(imageHandler).end().rule().async(false).content("oauth")

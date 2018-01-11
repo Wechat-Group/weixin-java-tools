@@ -9,7 +9,8 @@ import me.chanjar.weixin.mp.util.http.okhttp.OkhttpMaterialVoiceAndImageDownload
 import java.io.File;
 import java.io.InputStream;
 
-public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> implements RequestExecutor<InputStream, String> {
+public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P>
+  implements RequestExecutor<InputStream, String> {
   protected RequestHttp<H, P> requestHttp;
   protected File tmpDirFile;
 

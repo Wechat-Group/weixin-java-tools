@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean.menu;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.bean.menu.WxMenuRule;
 import me.chanjar.weixin.common.util.ToStringUtils;
@@ -13,9 +14,11 @@ import java.util.List;
  * <pre>
  *   公众号专用的菜单类，可能包含个性化菜单
  * Created by Binary Wang on 2017-1-17.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
 public class WxMpMenu implements Serializable {
   private static final long serialVersionUID = -5794350513426702252L;
 
@@ -29,22 +32,6 @@ public class WxMpMenu implements Serializable {
     return WxGsonBuilder.create().fromJson(json, WxMpMenu.class);
   }
 
-  public WxMpConditionalMenu getMenu() {
-    return menu;
-  }
-
-  public void setMenu(WxMpConditionalMenu menu) {
-    this.menu = menu;
-  }
-
-  public List<WxMpConditionalMenu> getConditionalMenu() {
-    return conditionalMenu;
-  }
-
-  public void setConditionalMenu(List<WxMpConditionalMenu> conditionalMenu) {
-    this.conditionalMenu = conditionalMenu;
-  }
-
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
@@ -54,6 +41,7 @@ public class WxMpMenu implements Serializable {
     return WxGsonBuilder.create().toJson(this);
   }
 
+  @Data
   public static class WxMpConditionalMenu implements Serializable {
     private static final long serialVersionUID = -2279946921755382289L;
 
@@ -69,29 +57,6 @@ public class WxMpMenu implements Serializable {
       return ToStringUtils.toSimpleString(this);
     }
 
-    public List<WxMenuButton> getButtons() {
-      return buttons;
-    }
-
-    public void setButtons(List<WxMenuButton> buttons) {
-      this.buttons = buttons;
-    }
-
-    public WxMenuRule getRule() {
-      return rule;
-    }
-
-    public void setRule(WxMenuRule rule) {
-      this.rule = rule;
-    }
-
-    public String getMenuId() {
-      return menuId;
-    }
-
-    public void setMenuId(String menuId) {
-      this.menuId = menuId;
-    }
   }
 
 }

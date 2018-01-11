@@ -13,7 +13,7 @@ public class WxMpXmlOutMusicMessageTest {
     m.setHqMusicUrl("hQMusicUrl");
     m.setMusicUrl("musicUrl");
     m.setThumbMediaId("thumbMediaId");
-    m.setCreateTime(1122l);
+    m.setCreateTime(1122L);
     m.setFromUserName("fromUser");
     m.setToUserName("toUser");
 

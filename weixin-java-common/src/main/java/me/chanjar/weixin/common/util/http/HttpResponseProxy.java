@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class HttpResponseProxy {
+  private static final Pattern PATTERN = Pattern.compile(".*filename=\"(.*)\"");
+
   private CloseableHttpResponse apacheHttpResponse;
   private HttpResponse joddHttpResponse;
   private Response okHttpResponse;
@@ -56,7 +58,7 @@ public class HttpResponseProxy {
   private String getFileName(CloseableHttpResponse response) throws WxErrorException {
     Header[] contentDispositionHeader = response.getHeaders("Content-disposition");
     if (contentDispositionHeader == null || contentDispositionHeader.length == 0) {
-      throw new WxErrorException(WxError.newBuilder().setErrorMsg("无法获取到文件名").build());
+      throw new WxErrorException(WxError.builder().errorMsg("无法获取到文件名").build());
     }
 
     return this.extractFileNameFromContentString(contentDispositionHeader[0].getValue());
@@ -74,15 +76,15 @@ public class HttpResponseProxy {
 
   private String extractFileNameFromContentString(String content) throws WxErrorException {
     if (content == null || content.length() == 0) {
-      throw new WxErrorException(WxError.newBuilder().setErrorMsg("无法获取到文件名").build());
+      throw new WxErrorException(WxError.builder().errorMsg("无法获取到文件名").build());
     }
 
-    Pattern p = Pattern.compile(".*filename=\"(.*)\"");
-    Matcher m = p.matcher(content);
+    Matcher m = PATTERN.matcher(content);
     if (m.matches()) {
       return m.group(1);
     }
-    throw new WxErrorException(WxError.newBuilder().setErrorMsg("无法获取到文件名").build());
+
+    throw new WxErrorException(WxError.builder().errorMsg("无法获取到文件名").build());
   }
 
 }

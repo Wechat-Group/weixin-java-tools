@@ -18,7 +18,7 @@ public class TextCardBuilder extends BaseBuilder<TextCardBuilder> {
   private String url;
 
   public TextCardBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_TEXTCARD;
+    this.msgType = WxConsts.KefuMsgType.TEXTCARD;
   }
 
   public TextCardBuilder title(String title) {

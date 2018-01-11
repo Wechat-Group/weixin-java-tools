@@ -24,7 +24,7 @@ public final class MusicBuilder extends BaseBuilder<MusicBuilder> {
   private String hqMusicUrl;
 
   public MusicBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_MUSIC;
+    this.msgType = WxConsts.KefuMsgType.MUSIC;
   }
 
   public MusicBuilder musicUrl(String musicurl) {
@@ -47,8 +47,8 @@ public final class MusicBuilder extends BaseBuilder<MusicBuilder> {
     return this;
   }
 
-  public MusicBuilder thumbMediaId(String thumb_media_id) {
-    this.thumbMediaId = thumb_media_id;
+  public MusicBuilder thumbMediaId(String thumbMediaId) {
+    this.thumbMediaId = thumbMediaId;
     return this;
   }
 

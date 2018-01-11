@@ -44,7 +44,7 @@ public class BaseBuilder<T> {
     m.setToUser(this.toUser);
     m.setToParty(this.toParty);
     m.setToTag(this.toTag);
-    m.setSafe(StringUtils.defaultIfBlank(this.safe, WxConsts.CUSTOM_MSG_SAFE_NO));
+    m.setSafe(StringUtils.defaultIfBlank(this.safe, WxConsts.KefuMsgSafe.NO));
     return m;
   }
 
