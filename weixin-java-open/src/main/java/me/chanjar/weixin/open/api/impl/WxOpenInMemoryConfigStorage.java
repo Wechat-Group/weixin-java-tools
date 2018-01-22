@@ -343,6 +343,11 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     }
 
     @Override
+    public String getTemplateId() {
+      return null;
+    }
+
+    @Override
     public long getExpiresTime() {
       return 0;
     }
