@@ -28,7 +28,7 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
 
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
   protected WxSessionManager sessionManager = new StandardSessionManager();
-  private WxMpConfigStorage wxMpConfigStorage;
+  protected WxMpConfigStorage wxMpConfigStorage;
   private WxMpKefuService kefuService = new WxMpKefuServiceImpl(this);
   private WxMpMaterialService materialService = new WxMpMaterialServiceImpl(this);
   private WxMpMenuService menuService = new WxMpMenuServiceImpl(this);
@@ -67,7 +67,7 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
 
   @Override
   public String getJsapiTicket(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+    Lock lock = this.getWxMpConfigStorage().getJsapiTicketLock();
     try {
       lock.lock();
       if (forceRefresh) {
@@ -208,6 +208,13 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   }
 
   @Override
+  public void clearQuota(String appid) throws WxErrorException {
+    JsonObject o = new JsonObject();
+    o.addProperty("appid", appid);
+    this.post(CLEAR_QUOTA_URL, o.toString());
+  }
+
+  @Override
   public String get(String url, String queryParam) throws WxErrorException {
     return execute(SimpleGetRequestExecutor.create(this), url, queryParam);
   }
@@ -252,7 +259,7 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
     throw new RuntimeException("微信服务端异常，超出重试次数");
   }
 
-  public synchronized <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  public <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
     if (uri.contains("access_token=")) {
       throw new IllegalArgumentException("uri参数中不允许有access_token: " + uri);
     }

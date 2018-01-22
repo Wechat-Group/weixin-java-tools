@@ -12,11 +12,11 @@ import java.io.File;
  *
  * @author Daniel Qian
  */
-public abstract class MediaDownloadRequestExecutor<H, P> implements RequestExecutor<File, String> {
-
+public abstract class BaseMediaDownloadRequestExecutor<H, P> implements RequestExecutor<File, String> {
   protected RequestHttp<H, P> requestHttp;
   protected File tmpDirFile;
-  public MediaDownloadRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {
+
+  public BaseMediaDownloadRequestExecutor(RequestHttp<H, P> requestHttp, File tmpDirFile) {
     this.requestHttp = requestHttp;
     this.tmpDirFile = tmpDirFile;
   }

@@ -5,8 +5,11 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.mp.bean.*;
-import me.chanjar.weixin.mp.bean.result.*;
+import me.chanjar.weixin.mp.bean.WxMpSemanticQuery;
+import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
+import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 
 /**
  * 微信API的Service
@@ -61,6 +64,11 @@ public interface WxMpService {
    * 获取公众号的自动回复规则
    */
   String GET_CURRENT_AUTOREPLY_INFO_URL = "https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info";
+
+  /**
+   * 公众号调用或第三方平台帮公众号调用对公众号的所有api调用（包括第三方帮其调用）次数进行清零
+   */
+  String CLEAR_QUOTA_URL = "https://api.weixin.qq.com/cgi-bin/clear_quota";
 
   /**
    * <pre>
@@ -220,6 +228,18 @@ public interface WxMpService {
   WxMpCurrentAutoReplyInfo getCurrentAutoReplyInfo() throws WxErrorException;
 
   /**
+   * <pre>
+   *  公众号调用或第三方平台帮公众号调用对公众号的所有api调用（包括第三方帮其调用）次数进行清零：
+   *  HTTP调用：https://api.weixin.qq.com/cgi-bin/clear_quota?access_token=ACCESS_TOKEN
+   *  接口文档地址：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433744592
+   *
+   * </pre>
+   *
+   * @param appid 公众号的APPID
+   */
+  void clearQuota(String appid) throws WxErrorException;
+
+  /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求
    */
   String get(String url, String queryParam) throws WxErrorException;
@@ -376,6 +396,7 @@ public interface WxMpService {
 
   /**
    * 返回群发消息相关接口方法的实现类对象，以方便调用其各个接口
+   *
    * @return WxMpMassMessageService
    */
   WxMpMassMessageService getMassMessageService();

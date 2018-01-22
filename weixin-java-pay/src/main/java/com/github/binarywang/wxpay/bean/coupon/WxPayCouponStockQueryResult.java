@@ -2,6 +2,10 @@ package com.github.binarywang.wxpay.bean.coupon;
 
 import com.github.binarywang.wxpay.bean.result.WxPayBaseResult;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -11,6 +15,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayCouponStockQueryResult extends WxPayBaseResult {
   /**
@@ -182,107 +190,4 @@ public class WxPayCouponStockQueryResult extends WxPayBaseResult {
   @XStreamAlias("coupon_budget")
   private Integer couponBudget;
 
-  public String getDeviceInfo() {
-    return this.deviceInfo;
-  }
-
-  public void setDeviceInfo(String deviceInfo) {
-    this.deviceInfo = deviceInfo;
-  }
-
-  public String getCouponStockId() {
-    return this.couponStockId;
-  }
-
-  public void setCouponStockId(String couponStockId) {
-    this.couponStockId = couponStockId;
-  }
-
-  public String getCouponName() {
-    return this.couponName;
-  }
-
-  public void setCouponName(String couponName) {
-    this.couponName = couponName;
-  }
-
-  public Integer getCouponValue() {
-    return this.couponValue;
-  }
-
-  public void setCouponValue(Integer couponValue) {
-    this.couponValue = couponValue;
-  }
-
-  public Integer getCouponMininumn() {
-    return this.couponMininumn;
-  }
-
-  public void setCouponMininumn(Integer couponMininumn) {
-    this.couponMininumn = couponMininumn;
-  }
-
-  public Integer getCouponStockStatus() {
-    return this.couponStockStatus;
-  }
-
-  public void setCouponStockStatus(Integer couponStockStatus) {
-    this.couponStockStatus = couponStockStatus;
-  }
-
-  public Integer getCouponTotal() {
-    return this.couponTotal;
-  }
-
-  public void setCouponTotal(Integer couponTotal) {
-    this.couponTotal = couponTotal;
-  }
-
-  public Integer getMaxQuota() {
-    return this.maxQuota;
-  }
-
-  public void setMaxQuota(Integer maxQuota) {
-    this.maxQuota = maxQuota;
-  }
-
-  public Integer getIsSendNum() {
-    return this.isSendNum;
-  }
-
-  public void setIsSendNum(Integer isSendNum) {
-    this.isSendNum = isSendNum;
-  }
-
-  public String getBeginTime() {
-    return this.beginTime;
-  }
-
-  public void setBeginTime(String beginTime) {
-    this.beginTime = beginTime;
-  }
-
-  public String getEndTime() {
-    return this.endTime;
-  }
-
-  public void setEndTime(String endTime) {
-    this.endTime = endTime;
-  }
-
-  public String getCreateTime() {
-    return this.createTime;
-  }
-
-  public void setCreateTime(String createTime) {
-    this.createTime = createTime;
-  }
-
-  public Integer getCouponBudget() {
-    return this.couponBudget;
-  }
-
-  public void setCouponBudget(Integer couponBudget) {
-    this.couponBudget = couponBudget;
-  }
 }

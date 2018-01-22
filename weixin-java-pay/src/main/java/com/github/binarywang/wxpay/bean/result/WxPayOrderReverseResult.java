@@ -1,14 +1,21 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
  * 撤销订单响应结果类
  * Created by Binary Wang on 2017-3-23.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPayOrderReverseResult extends WxPayBaseResult {
 
@@ -25,11 +32,4 @@ public class WxPayOrderReverseResult extends WxPayBaseResult {
   @XStreamAlias("recall")
   private String isRecall;
 
-  public String getIsRecall() {
-    return this.isRecall;
-  }
-
-  public void setIsRecall(String isRecall) {
-    this.isRecall = isRecall;
-  }
 }

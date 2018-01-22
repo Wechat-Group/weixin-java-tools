@@ -3,7 +3,7 @@ package me.chanjar.weixin.cp.api.impl;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
-import me.chanjar.weixin.common.util.http.MediaDownloadRequestExecutor;
+import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.cp.api.WxCpMediaService;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -43,7 +43,7 @@ public class WxCpMediaServiceImpl implements WxCpMediaService {
   public File download(String mediaId) throws WxErrorException {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/media/get";
     return this.mainService.execute(
-      MediaDownloadRequestExecutor.create(this.mainService.getRequestHttp(),
+      BaseMediaDownloadRequestExecutor.create(this.mainService.getRequestHttp(),
         this.mainService.getWxCpConfigStorage().getTmpDirFile()),
       url, "media_id=" + mediaId);
   }

@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.bean.result;
 
+import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  *
  * @author Daniel Qian
  */
+@Data
 public class WxMpSemanticQueryResult implements Serializable {
   private static final long serialVersionUID = 4811088544804441365L;
 
@@ -23,54 +25,6 @@ public class WxMpSemanticQueryResult implements Serializable {
 
   public static WxMpSemanticQueryResult fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(json, WxMpSemanticQueryResult.class);
-  }
-
-  public String getQuery() {
-    return this.query;
-  }
-
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public String getType() {
-    return this.type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  public String getSemantic() {
-    return this.semantic;
-  }
-
-  public void setSemantic(String semantic) {
-    this.semantic = semantic;
-  }
-
-  public String getResult() {
-    return this.result;
-  }
-
-  public void setResult(String result) {
-    this.result = result;
-  }
-
-  public String getAnswer() {
-    return this.answer;
-  }
-
-  public void setAnswer(String answer) {
-    this.answer = answer;
-  }
-
-  public String getText() {
-    return this.text;
-  }
-
-  public void setText(String text) {
-    this.text = text;
   }
 
 }

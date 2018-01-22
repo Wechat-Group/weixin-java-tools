@@ -1,5 +1,8 @@
 package com.github.binarywang.wxpay.bean;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * <pre>
  * 微信支付接口请求数据封装对象
@@ -8,6 +11,8 @@ package com.github.binarywang.wxpay.bean;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@NoArgsConstructor
 public class WxPayApiData {
   /**
    * 接口请求地址
@@ -39,38 +44,6 @@ public class WxPayApiData {
     this.url = url;
     this.requestData = requestData;
     this.responseData = responseData;
-    this.exceptionMsg = exceptionMsg;
-  }
-
-  public String getUrl() {
-    return this.url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
-  public String getRequestData() {
-    return this.requestData;
-  }
-
-  public void setRequestData(String requestData) {
-    this.requestData = requestData;
-  }
-
-  public String getResponseData() {
-    return this.responseData;
-  }
-
-  public void setResponseData(String responseData) {
-    this.responseData = responseData;
-  }
-
-  public String getExceptionMsg() {
-    return this.exceptionMsg;
-  }
-
-  public void setExceptionMsg(String exceptionMsg) {
     this.exceptionMsg = exceptionMsg;
   }
 

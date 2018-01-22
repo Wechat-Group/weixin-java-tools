@@ -4,9 +4,11 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceAbstractImpl;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import org.apache.commons.lang3.StringUtils;
@@ -24,15 +26,18 @@ import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 /**
  * <pre>
  * 微信支付结果共用属性类
  * Created by Binary Wang on 2016-10-24.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
 public abstract class WxPayBaseResult {
   /**
    * 返回状态码
@@ -124,14 +129,6 @@ public abstract class WxPayBaseResult {
     return result;
   }
 
-  public String getXmlString() {
-    return this.xmlString;
-  }
-
-  public void setXmlString(String xmlString) {
-    this.xmlString = xmlString;
-  }
-
   protected Logger getLogger() {
     return LoggerFactory.getLogger(this.getClass());
   }
@@ -139,94 +136,6 @@ public abstract class WxPayBaseResult {
   @Override
   public String toString() {
     return ToStringUtils.toSimpleString(this);
-  }
-
-  public String getReturnCode() {
-    return this.returnCode;
-  }
-
-  public void setReturnCode(String returnCode) {
-    this.returnCode = returnCode;
-  }
-
-  public String getReturnMsg() {
-    return this.returnMsg;
-  }
-
-  public void setReturnMsg(String returnMsg) {
-    this.returnMsg = returnMsg;
-  }
-
-  public String getResultCode() {
-    return this.resultCode;
-  }
-
-  public void setResultCode(String resultCode) {
-    this.resultCode = resultCode;
-  }
-
-  public String getErrCode() {
-    return this.errCode;
-  }
-
-  public void setErrCode(String errCode) {
-    this.errCode = errCode;
-  }
-
-  public String getErrCodeDes() {
-    return this.errCodeDes;
-  }
-
-  public void setErrCodeDes(String errCodeDes) {
-    this.errCodeDes = errCodeDes;
-  }
-
-  public String getAppid() {
-    return this.appid;
-  }
-
-  public void setAppid(String appid) {
-    this.appid = appid;
-  }
-
-  public String getMchId() {
-    return this.mchId;
-  }
-
-  public void setMchId(String mchId) {
-    this.mchId = mchId;
-  }
-
-  public String getNonceStr() {
-    return this.nonceStr;
-  }
-
-  public void setNonceStr(String nonceStr) {
-    this.nonceStr = nonceStr;
-  }
-
-  public String getSign() {
-    return this.sign;
-  }
-
-  public void setSign(String sign) {
-    this.sign = sign;
-  }
-
-  public String getSubAppId() {
-    return subAppId;
-  }
-
-  public void setSubAppId(String subAppId) {
-    this.subAppId = subAppId;
-  }
-
-  public String getSubMchId() {
-    return subMchId;
-  }
-
-  public void setSubMchId(String subMchId) {
-    this.subMchId = subMchId;
   }
 
   /**
@@ -306,37 +215,43 @@ public abstract class WxPayBaseResult {
 
   /**
    * 校验返回结果签名
+   *
+   * @param signType     签名类型
+   * @param checkSuccess 是否同时检查结果是否成功
    */
-  public void checkResult(WxPayServiceAbstractImpl wxPayService) throws WxPayException {
+  public void checkResult(WxPayServiceAbstractImpl wxPayService, String signType, boolean checkSuccess) throws WxPayException {
     //校验返回结果签名
     Map<String, String> map = toMap();
-    if (getSign() != null && !SignUtils.checkSign(map, wxPayService.getConfig().getMchKey())) {
+    if (getSign() != null && !SignUtils.checkSign(map, signType, wxPayService.getConfig().getMchKey())) {
       this.getLogger().debug("校验结果签名失败，参数：{}", map);
       throw new WxPayException("参数格式校验错误！");
     }
 
     //校验结果是否成功
-    if (!StringUtils.equalsAny(StringUtils.trimToEmpty(getReturnCode()).toUpperCase(), "SUCCESS", "")
-      || !StringUtils.equalsAny(StringUtils.trimToEmpty(getResultCode()).toUpperCase(), "SUCCESS", "")) {
-      StringBuilder errorMsg = new StringBuilder();
-      if (getReturnCode() != null) {
-        errorMsg.append("返回代码：").append(getReturnCode());
-      }
-      if (getReturnMsg() != null) {
-        errorMsg.append("，返回信息：").append(getReturnMsg());
-      }
-      if (getResultCode() != null) {
-        errorMsg.append("，结果代码：").append(getResultCode());
-      }
-      if (getErrCode() != null) {
-        errorMsg.append("，错误代码：").append(getErrCode());
-      }
-      if (getErrCodeDes() != null) {
-        errorMsg.append("，错误详情：").append(getErrCodeDes());
-      }
+    if (checkSuccess) {
+      List<String> successStrings = Lists.newArrayList("SUCCESS", "");
+      if (!successStrings.contains(StringUtils.trimToEmpty(getReturnCode()).toUpperCase())
+        || !successStrings.contains(StringUtils.trimToEmpty(getResultCode()).toUpperCase())) {
+        StringBuilder errorMsg = new StringBuilder();
+        if (getReturnCode() != null) {
+          errorMsg.append("返回代码：").append(getReturnCode());
+        }
+        if (getReturnMsg() != null) {
+          errorMsg.append("，返回信息：").append(getReturnMsg());
+        }
+        if (getResultCode() != null) {
+          errorMsg.append("，结果代码：").append(getResultCode());
+        }
+        if (getErrCode() != null) {
+          errorMsg.append("，错误代码：").append(getErrCode());
+        }
+        if (getErrCodeDes() != null) {
+          errorMsg.append("，错误详情：").append(getErrCodeDes());
+        }
 
-      this.getLogger().error("\n结果业务代码异常，返回結果：{},\n{}", map, errorMsg.toString());
-      throw WxPayException.from(this);
+        this.getLogger().error("\n结果业务代码异常，返回结果：{},\n{}", map, errorMsg.toString());
+        throw WxPayException.from(this);
+      }
     }
   }
 }

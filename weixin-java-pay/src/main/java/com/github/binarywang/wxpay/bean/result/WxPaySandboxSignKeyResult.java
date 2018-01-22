@@ -1,6 +1,9 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -9,6 +12,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPaySandboxSignKeyResult extends WxPayBaseResult {
 
@@ -25,11 +31,4 @@ public class WxPaySandboxSignKeyResult extends WxPayBaseResult {
   @XStreamAlias("sandbox_signkey")
   private String sandboxSignKey;
 
-  public String getSandboxSignKey() {
-    return sandboxSignKey;
-  }
-
-  public void setSandboxSignKey(String sandboxSignKey) {
-    this.sandboxSignKey = sandboxSignKey;
-  }
 }

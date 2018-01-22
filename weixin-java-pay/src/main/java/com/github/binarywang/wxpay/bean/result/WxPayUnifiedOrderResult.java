@@ -1,6 +1,9 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -10,6 +13,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  * @author chanjarster
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPayUnifiedOrderResult extends WxPayBaseResult {
 
@@ -37,35 +43,4 @@ public class WxPayUnifiedOrderResult extends WxPayBaseResult {
   @XStreamAlias("code_url")
   private String codeURL;
 
-  public String getPrepayId() {
-    return this.prepayId;
-  }
-
-  public void setPrepayId(String prepayId) {
-    this.prepayId = prepayId;
-  }
-
-  public String getTradeType() {
-    return this.tradeType;
-  }
-
-  public void setTradeType(String tradeType) {
-    this.tradeType = tradeType;
-  }
-
-  public String getCodeURL() {
-    return this.codeURL;
-  }
-
-  public void setCodeURL(String codeURL) {
-    this.codeURL = codeURL;
-  }
-
-  public String getMwebUrl() {
-    return mwebUrl;
-  }
-
-  public void setMwebUrl(String mwebUrl) {
-    this.mwebUrl = mwebUrl;
-  }
 }

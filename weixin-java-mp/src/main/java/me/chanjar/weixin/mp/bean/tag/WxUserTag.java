@@ -2,6 +2,7 @@ package me.chanjar.weixin.mp.bean.tag;
 
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -14,8 +15,9 @@ import java.util.List;
  *  Created by Binary Wang on 2016/9/2.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
 public class WxUserTag implements Serializable {
   private static final long serialVersionUID = -7722428695667031252L;
 
@@ -45,30 +47,6 @@ public class WxUserTag implements Serializable {
       new JsonParser().parse(json).getAsJsonObject().get("tags"),
       new TypeToken<List<WxUserTag>>() {
       }.getType());
-  }
-
-  public String getName() {
-    return this.name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Integer getCount() {
-    return this.count;
-  }
-
-  public void setCount(Integer count) {
-    this.count = count;
-  }
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String toJson() {

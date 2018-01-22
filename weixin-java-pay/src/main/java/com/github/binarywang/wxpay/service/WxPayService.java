@@ -19,7 +19,7 @@ import java.util.Map;
  * Created by Binary Wang on 2016/7/28.
  * </pre>
  *
- * @author binarywang (https://github.com/binarywang)
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxPayService {
 
@@ -57,6 +57,15 @@ public interface WxPayService {
   WxPayOrderCloseResult closeOrder(String outTradeNo) throws WxPayException;
 
   /**
+   * 调用统一下单接口，并组装生成支付所需参数对象
+   *
+   * @param request 统一下单请求参数
+   * @param <T>     请使用{@link com.github.binarywang.wxpay.bean.order}包下的类
+   * @return 返回 {@link com.github.binarywang.wxpay.bean.order}包下的类对象
+   */
+  <T> T createOrder(WxPayUnifiedOrderRequest request) throws WxPayException;
+
+  /**
    * 统一下单(详见https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1)
    * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"
    * 接口地址：https://api.mch.weixin.qq.com/pay/unifiedorder
@@ -70,7 +79,9 @@ public interface WxPayService {
    * 详见https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_5
    *
    * @param request 请求对象，注意一些参数如appid、mchid等不用设置，方法内会自动从配置对象中获取到（前提是对应配置中已经设置）
+   * @deprecated 建议使用 {@link com.github.binarywang.wxpay.service.WxPayService#createOrder(WxPayUnifiedOrderRequest)}
    */
+  @Deprecated
   Map<String, String> getPayInfo(WxPayUnifiedOrderRequest request) throws WxPayException;
 
   /**
@@ -117,7 +128,7 @@ public interface WxPayService {
 
   /**
    * @see WxPayService#parseOrderNotifyResult(String)
-   * @deprecated use WxPayService#parseOrderNotifyResult(String) instead
+   * @deprecated use {@link WxPayService#parseOrderNotifyResult(String)} instead
    */
   @Deprecated
   WxPayOrderNotifyResult getOrderNotifyResult(String xmlData) throws WxPayException;
@@ -403,6 +414,7 @@ public interface WxPayService {
    * 是否需要证书：需要
    * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_17&index=10
    * </pre>
+   *
    * @param beginDate 开始时间
    * @param endDate   结束时间
    * @param offset    位移

@@ -2,15 +2,20 @@ package com.github.binarywang.wxpay.bean.result;
 
 import com.google.common.collect.Lists;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 
 import java.util.List;
 
 /**
  * <pre>
  * Created by Binary Wang on 2016-11-24.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPayRefundQueryResult extends WxPayBaseResult {
   /**
@@ -111,78 +116,6 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
 
   private List<RefundRecord> refundRecords;
 
-  public String getDeviceInfo() {
-    return deviceInfo;
-  }
-
-  public void setDeviceInfo(String deviceInfo) {
-    this.deviceInfo = deviceInfo;
-  }
-
-  public String getTransactionId() {
-    return transactionId;
-  }
-
-  public void setTransactionId(String transactionId) {
-    this.transactionId = transactionId;
-  }
-
-  public String getOutTradeNo() {
-    return outTradeNo;
-  }
-
-  public void setOutTradeNo(String outTradeNo) {
-    this.outTradeNo = outTradeNo;
-  }
-
-  public Integer getTotalFee() {
-    return totalFee;
-  }
-
-  public void setTotalFee(Integer totalFee) {
-    this.totalFee = totalFee;
-  }
-
-  public Integer getSettlementTotalFee() {
-    return settlementTotalFee;
-  }
-
-  public void setSettlementTotalFee(Integer settlementTotalFee) {
-    this.settlementTotalFee = settlementTotalFee;
-  }
-
-  public String getFeeType() {
-    return feeType;
-  }
-
-  public void setFeeType(String feeType) {
-    this.feeType = feeType;
-  }
-
-  public Integer getCashFee() {
-    return cashFee;
-  }
-
-  public void setCashFee(Integer cashFee) {
-    this.cashFee = cashFee;
-  }
-
-  public Integer getRefundCount() {
-    return refundCount;
-  }
-
-  public void setRefundCount(Integer refundCount) {
-    this.refundCount = refundCount;
-  }
-
-  public List<RefundRecord> getRefundRecords() {
-    return refundRecords;
-  }
-
-  public void setRefundRecords(List<RefundRecord> refundRecords) {
-    this.refundRecords = refundRecords;
-  }
-
   /**
    * 组装生成退款记录属性的内容
    */
@@ -203,7 +136,7 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
         refundRecord.setCouponRefundFee(this.getXmlValueAsInt("xml/coupon_refund_fee_" + i));
         refundRecord.setCouponRefundCount(this.getXmlValueAsInt("xml/coupon_refund_count_" + i));
         refundRecord.setRefundStatus(this.getXmlValue("xml/refund_status_" + i));
-        refundRecord.setRefundRecvAccout(this.getXmlValue("xml/refund_recv_accout_" + i));
+        refundRecord.setRefundRecvAccount(this.getXmlValue("xml/refund_recv_accout_" + i));
 
         if (refundRecord.getCouponRefundCount() == null || refundRecord.getCouponRefundCount() == 0) {
           continue;
@@ -223,6 +156,10 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
     }
   }
 
+  @Data
+  @Builder(builderMethodName = "newBuilder")
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class RefundRecord {
     /**
      * <pre>
@@ -371,104 +308,10 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
      * </pre>
      */
     @XStreamAlias("refund_recv_accout")
-    private String refundRecvAccout;
+    private String refundRecvAccount;
 
-    public String getOutRefundNo() {
-      return outRefundNo;
-    }
-
-    public void setOutRefundNo(String outRefundNo) {
-      this.outRefundNo = outRefundNo;
-    }
-
-    public String getRefundId() {
-      return refundId;
-    }
-
-    public void setRefundId(String refundId) {
-      this.refundId = refundId;
-    }
-
-    public String getRefundChannel() {
-      return refundChannel;
-    }
-
-    public void setRefundChannel(String refundChannel) {
-      this.refundChannel = refundChannel;
-    }
-
-    public Integer getRefundFee() {
-      return refundFee;
-    }
-
-    public void setRefundFee(Integer refundFee) {
-      this.refundFee = refundFee;
-    }
-
-    public Integer getSettlementRefundFee() {
-      return settlementRefundFee;
-    }
-
-    public void setSettlementRefundFee(Integer settlementRefundFee) {
-      this.settlementRefundFee = settlementRefundFee;
-    }
-
-    public String getRefundAccount() {
-      return refundAccount;
-    }
-
-    public void setRefundAccount(String refundAccount) {
-      this.refundAccount = refundAccount;
-    }
-
-    public String getCouponType() {
-      return couponType;
-    }
-
-    public void setCouponType(String couponType) {
-      this.couponType = couponType;
-    }
-
-    public Integer getCouponRefundFee() {
-      return couponRefundFee;
-    }
-
-    public void setCouponRefundFee(Integer couponRefundFee) {
-      this.couponRefundFee = couponRefundFee;
-    }
-
-    public Integer getCouponRefundCount() {
-      return couponRefundCount;
-    }
-
-    public void setCouponRefundCount(Integer couponRefundCount) {
-      this.couponRefundCount = couponRefundCount;
-    }
-
-    public List<RefundCoupon> getRefundCoupons() {
-      return refundCoupons;
-    }
-
-    public void setRefundCoupons(List<RefundCoupon> refundCoupons) {
-      this.refundCoupons = refundCoupons;
-    }
-
-    public String getRefundStatus() {
-      return refundStatus;
-    }
-
-    public void setRefundStatus(String refundStatus) {
-      this.refundStatus = refundStatus;
-    }
-
-    public String getRefundRecvAccout() {
-      return refundRecvAccout;
-    }
-
-    public void setRefundRecvAccout(String refundRecvAccout) {
-      this.refundRecvAccout = refundRecvAccout;
-    }
-
+    @Data
+    @NoArgsConstructor
     public static class RefundCoupon {
       /**
        * <pre>
@@ -516,12 +359,6 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
         this.couponRefundFee = couponRefundFee;
       }
 
-      @Deprecated
-      public RefundCoupon(String couponRefundBatchId, String couponRefundId, Integer couponRefundFee) {
-        this.couponRefundBatchId = couponRefundBatchId;
-        this.couponRefundId = couponRefundId;
-        this.couponRefundFee = couponRefundFee;
-      }
     }
 
   }

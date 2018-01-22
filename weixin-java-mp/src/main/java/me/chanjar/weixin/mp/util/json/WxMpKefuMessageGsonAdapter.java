@@ -23,25 +23,25 @@ public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMpKefuMessag
     messageJson.addProperty("touser", message.getToUser());
     messageJson.addProperty("msgtype", message.getMsgType());
 
-    if (WxConsts.CUSTOM_MSG_TEXT.equals(message.getMsgType())) {
+    if (WxConsts.KefuMsgType.TEXT.equals(message.getMsgType())) {
       JsonObject text = new JsonObject();
       text.addProperty("content", message.getContent());
       messageJson.add("text", text);
     }
 
-    if (WxConsts.CUSTOM_MSG_IMAGE.equals(message.getMsgType())) {
+    if (WxConsts.KefuMsgType.IMAGE.equals(message.getMsgType())) {
       JsonObject image = new JsonObject();
       image.addProperty("media_id", message.getMediaId());
       messageJson.add("image", image);
     }
 
-    if (WxConsts.CUSTOM_MSG_VOICE.equals(message.getMsgType())) {
+    if (WxConsts.KefuMsgType.VOICE.equals(message.getMsgType())) {
       JsonObject voice = new JsonObject();
       voice.addProperty("media_id", message.getMediaId());
       messageJson.add("voice", voice);
     }
 
-    if (WxConsts.CUSTOM_MSG_VIDEO.equals(message.getMsgType())) {
+    if (WxConsts.KefuMsgType.VIDEO.equals(message.getMsgType())) {
       JsonObject video = new JsonObject();
       video.addProperty("media_id", message.getMediaId());
       video.addProperty("thumb_media_id", message.getThumbMediaId());
@@ -50,7 +50,7 @@ public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMpKefuMessag
       messageJson.add("video", video);
     }
 
-    if (WxConsts.CUSTOM_MSG_MUSIC.equals(message.getMsgType())) {
+    if (WxConsts.KefuMsgType.MUSIC.equals(message.getMsgType())) {
       JsonObject music = new JsonObject();
       music.addProperty("title", message.getTitle());
       music.addProperty("description", message.getDescription());
@@ -60,7 +60,7 @@ public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMpKefuMessag
       messageJson.add("music", music);
     }
 
-    if (WxConsts.CUSTOM_MSG_NEWS.equals(message.getMsgType())) {
+    if (WxConsts.KefuMsgType.NEWS.equals(message.getMsgType())) {
       JsonObject newsJsonObject = new JsonObject();
       JsonArray articleJsonArray = new JsonArray();
       for (WxMpKefuMessage.WxArticle article : message.getArticles()) {
@@ -75,13 +75,13 @@ public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMpKefuMessag
       messageJson.add("news", newsJsonObject);
     }
 
-    if (WxConsts.CUSTOM_MSG_MPNEWS.equals(message.getMsgType())) {
+    if (WxConsts.KefuMsgType.MPNEWS.equals(message.getMsgType())) {
       JsonObject json = new JsonObject();
       json.addProperty("media_id", message.getMpNewsMediaId());
       messageJson.add("mpnews", json);
     }
 
-    if (WxConsts.CUSTOM_MSG_WXCARD.equals(message.getMsgType())) {
+    if (WxConsts.KefuMsgType.WXCARD.equals(message.getMsgType())) {
       JsonObject wxcard = new JsonObject();
       wxcard.addProperty("card_id", message.getCardId());
       messageJson.add("wxcard", wxcard);

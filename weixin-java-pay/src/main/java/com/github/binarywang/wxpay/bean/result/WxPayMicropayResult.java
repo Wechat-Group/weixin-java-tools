@@ -1,14 +1,21 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
  * 提交刷卡支付接口响应结果对象类
  * Created by Binary Wang on 2017-3-23.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPayMicropayResult extends WxPayBaseResult {
   /**
@@ -206,123 +213,4 @@ public class WxPayMicropayResult extends WxPayBaseResult {
   @XStreamAlias("promotion_detail")
   private String promotionDetail;
 
-  public String getOpenid() {
-    return this.openid;
-  }
-
-  public void setOpenid(String openid) {
-    this.openid = openid;
-  }
-
-  public String getIsSubscribe() {
-    return this.isSubscribe;
-  }
-
-  public void setIsSubscribe(String isSubscribe) {
-    this.isSubscribe = isSubscribe;
-  }
-
-  public String getTradeType() {
-    return this.tradeType;
-  }
-
-  public void setTradeType(String tradeType) {
-    this.tradeType = tradeType;
-  }
-
-  public String getBankType() {
-    return this.bankType;
-  }
-
-  public void setBankType(String bankType) {
-    this.bankType = bankType;
-  }
-
-  public String getFeeType() {
-    return this.feeType;
-  }
-
-  public void setFeeType(String feeType) {
-    this.feeType = feeType;
-  }
-
-  public String getTotalFee() {
-    return this.totalFee;
-  }
-
-  public void setTotalFee(String totalFee) {
-    this.totalFee = totalFee;
-  }
-
-  public Integer getSettlementTotalFee() {
-    return this.settlementTotalFee;
-  }
-
-  public void setSettlementTotalFee(Integer settlementTotalFee) {
-    this.settlementTotalFee = settlementTotalFee;
-  }
-
-  public Integer getCouponFee() {
-    return this.couponFee;
-  }
-
-  public void setCouponFee(Integer couponFee) {
-    this.couponFee = couponFee;
-  }
-
-  public String getCashFeeType() {
-    return this.cashFeeType;
-  }
-
-  public void setCashFeeType(String cashFeeType) {
-    this.cashFeeType = cashFeeType;
-  }
-
-  public Integer getCashFee() {
-    return this.cashFee;
-  }
-
-  public void setCashFee(Integer cashFee) {
-    this.cashFee = cashFee;
-  }
-
-  public String getTransactionId() {
-    return this.transactionId;
-  }
-
-  public void setTransactionId(String transactionId) {
-    this.transactionId = transactionId;
-  }
-
-  public String getOutTradeNo() {
-    return this.outTradeNo;
-  }
-
-  public void setOutTradeNo(String outTradeNo) {
-    this.outTradeNo = outTradeNo;
-  }
-
-  public String getAttach() {
-    return this.attach;
-  }
-
-  public void setAttach(String attach) {
-    this.attach = attach;
-  }
-
-  public String getTimeEnd() {
-    return this.timeEnd;
-  }
-
-  public void setTimeEnd(String timeEnd) {
-    this.timeEnd = timeEnd;
-  }
-
-  public String getPromotionDetail() {
-    return this.promotionDetail;
-  }
-
-  public void setPromotionDetail(String promotionDetail) {
-    this.promotionDetail = promotionDetail;
-  }
 }

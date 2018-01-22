@@ -28,7 +28,7 @@ public class WxQrCodeTicketAdapter implements JsonDeserializer<WxMpQrCodeTicket>
       ticket.setTicket(GsonHelper.getAsString(ticketJsonObject.get("ticket")));
     }
     if (ticketJsonObject.get("expire_seconds") != null && !ticketJsonObject.get("expire_seconds").isJsonNull()) {
-      ticket.setExpire_seconds(GsonHelper.getAsPrimitiveInt(ticketJsonObject.get("expire_seconds")));
+      ticket.setExpireSeconds(GsonHelper.getAsPrimitiveInt(ticketJsonObject.get("expire_seconds")));
     }
     if (ticketJsonObject.get("url") != null && !ticketJsonObject.get("url").isJsonNull()) {
       ticket.setUrl(GsonHelper.getAsString(ticketJsonObject.get("url")));

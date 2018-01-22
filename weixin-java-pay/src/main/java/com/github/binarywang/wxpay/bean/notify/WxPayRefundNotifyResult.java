@@ -4,6 +4,10 @@ import com.github.binarywang.wxpay.bean.result.WxPayBaseResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import org.apache.commons.codec.binary.Base64;
@@ -22,6 +26,10 @@ import java.security.MessageDigest;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayRefundNotifyResult extends WxPayBaseResult implements Serializable {
   private static final long serialVersionUID = 4651725860079259186L;
@@ -68,6 +76,8 @@ public class WxPayRefundNotifyResult extends WxPayBaseResult implements Serializ
   /**
    * 加密信息字段解密后的内容
    */
+  @Data
+  @NoArgsConstructor
   @XStreamAlias("root")
   public static class ReqInfo {
     @Override
@@ -243,110 +253,6 @@ public class WxPayRefundNotifyResult extends WxPayBaseResult implements Serializ
     @XStreamAlias("refund_request_source")
     private String refundRequestSource;
 
-    public String getTransactionId() {
-      return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-      this.transactionId = transactionId;
-    }
-
-    public String getOutTradeNo() {
-      return outTradeNo;
-    }
-
-    public void setOutTradeNo(String outTradeNo) {
-      this.outTradeNo = outTradeNo;
-    }
-
-    public String getRefundId() {
-      return refundId;
-    }
-
-    public void setRefundId(String refundId) {
-      this.refundId = refundId;
-    }
-
-    public String getOutRefundNo() {
-      return outRefundNo;
-    }
-
-    public void setOutRefundNo(String outRefundNo) {
-      this.outRefundNo = outRefundNo;
-    }
-
-    public Integer getTotalFee() {
-      return totalFee;
-    }
-
-    public void setTotalFee(Integer totalFee) {
-      this.totalFee = totalFee;
-    }
-
-    public Integer getSettlementTotalFee() {
-      return settlementTotalFee;
-    }
-
-    public void setSettlementTotalFee(Integer settlementTotalFee) {
-      this.settlementTotalFee = settlementTotalFee;
-    }
-
-    public Integer getRefundFee() {
-      return refundFee;
-    }
-
-    public void setRefundFee(Integer refundFee) {
-      this.refundFee = refundFee;
-    }
-
-    public Integer getSettlementRefundFee() {
-      return settlementRefundFee;
-    }
-
-    public void setSettlementRefundFee(Integer settlementRefundFee) {
-      this.settlementRefundFee = settlementRefundFee;
-    }
-
-    public String getRefundStatus() {
-      return refundStatus;
-    }
-
-    public void setRefundStatus(String refundStatus) {
-      this.refundStatus = refundStatus;
-    }
-
-    public String getSuccessTime() {
-      return successTime;
-    }
-
-    public void setSuccessTime(String successTime) {
-      this.successTime = successTime;
-    }
-
-    public String getRefundRecvAccout() {
-      return refundRecvAccout;
-    }
-
-    public void setRefundRecvAccout(String refundRecvAccout) {
-      this.refundRecvAccout = refundRecvAccout;
-    }
-
-    public String getRefundAccount() {
-      return refundAccount;
-    }
-
-    public void setRefundAccount(String refundAccount) {
-      this.refundAccount = refundAccount;
-    }
-
-    public String getRefundRequestSource() {
-      return refundRequestSource;
-    }
-
-    public void setRefundRequestSource(String refundRequestSource) {
-      this.refundRequestSource = refundRequestSource;
-    }
-
     public static ReqInfo fromXML(String xmlString) {
       XStream xstream = XStreamInitializer.getInstance();
       xstream.processAnnotations(ReqInfo.class);
@@ -354,19 +260,4 @@ public class WxPayRefundNotifyResult extends WxPayBaseResult implements Serializ
     }
   }
 
-  public String getReqInfoString() {
-    return reqInfoString;
-  }
-
-  public void setReqInfoString(String reqInfoString) {
-    this.reqInfoString = reqInfoString;
-  }
-
-  public ReqInfo getReqInfo() {
-    return reqInfo;
-  }
-
-  public void setReqInfo(ReqInfo reqInfo) {
-    this.reqInfo = reqInfo;
-  }
 }

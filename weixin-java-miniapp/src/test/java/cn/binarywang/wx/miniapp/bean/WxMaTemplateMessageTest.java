@@ -11,7 +11,7 @@ import static org.testng.AssertJUnit.assertEquals;
 public class WxMaTemplateMessageTest {
   @Test
   public void testToJson() throws Exception {
-    WxMaTemplateMessage tm = WxMaTemplateMessage.newBuilder()
+    WxMaTemplateMessage tm = WxMaTemplateMessage.builder()
       .toUser("OPENID")
       //.color("aaaaa")
       .formId("FORMID")

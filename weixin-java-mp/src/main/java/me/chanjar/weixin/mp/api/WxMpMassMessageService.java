@@ -94,7 +94,7 @@ public interface WxMpMassMessageService {
    *
    * @return wxMpMassSendResult
    */
-  WxMpMassSendResult massMessagePreview(WxMpMassPreviewMessage wxMpMassPreviewMessage) throws Exception;
+  WxMpMassSendResult massMessagePreview(WxMpMassPreviewMessage wxMpMassPreviewMessage) throws WxErrorException;
 
   /**
    * <pre>
@@ -114,6 +114,6 @@ public interface WxMpMassMessageService {
    * @param msgId        发送出去的消息ID
    * @param articleIndex 要删除的文章在图文消息中的位置，第一篇编号为1，该字段不填或填0会删除全部文章
    */
-  void delete(Integer msgId, Integer articleIndex) throws Exception;
+  void delete(Integer msgId, Integer articleIndex) throws WxErrorException;
 
 }

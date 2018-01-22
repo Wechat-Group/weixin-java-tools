@@ -2,6 +2,9 @@ package me.chanjar.weixin.cp.bean;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import lombok.Data;
+import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
@@ -26,6 +29,7 @@ import java.util.List;
  * @author Daniel Qian
  */
 @XStreamAlias("xml")
+@Data
 public class WxCpXmlMessage implements Serializable {
   private static final long serialVersionUID = -1042994982179476410L;
 
@@ -128,28 +132,29 @@ public class WxCpXmlMessage implements Serializable {
   // 群发消息返回的结果
   ///////////////////////////////////////
   /**
-   * 群发的结果
+   * 群发的结果.
    */
   @XStreamAlias("Status")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String status;
   /**
-   * group_id下粉丝数；或者openid_list中的粉丝数
+   * group_id下粉丝数；或者openid_list中的粉丝数.
    */
   @XStreamAlias("TotalCount")
   private Integer totalCount;
   /**
-   * 过滤（过滤是指特定地区、性别的过滤、用户设置拒收的过滤，用户接收已超4条的过滤）后，准备发送的粉丝数，原则上，filterCount = sentCount + errorCount
+   * 过滤.
+   * （过滤是指特定地区、性别的过滤、用户设置拒收的过滤，用户接收已超4条的过滤）后，准备发送的粉丝数，原则上，filterCount = sentCount + errorCount
    */
   @XStreamAlias("FilterCount")
   private Integer filterCount;
   /**
-   * 发送成功的粉丝数
+   * 发送成功的粉丝数.
    */
   @XStreamAlias("SentCount")
   private Integer sentCount;
   /**
-   * 发送失败的粉丝数
+   * 发送失败的粉丝数.
    */
   @XStreamAlias("ErrorCount")
   private Integer errorCount;
@@ -174,13 +179,7 @@ public class WxCpXmlMessage implements Serializable {
   }
 
   /**
-   * 从加密字符串转换
-   *
-   * @param encryptedXml
-   * @param wxCpConfigStorage
-   * @param timestamp
-   * @param nonce
-   * @param msgSignature
+   * 从加密字符串转换.
    */
   public static WxCpXmlMessage fromEncryptedXml(
     String encryptedXml,
@@ -202,40 +201,16 @@ public class WxCpXmlMessage implements Serializable {
     }
   }
 
-  public Integer getAgentId() {
-    return this.agentId;
-  }
-
-  public void setAgentId(Integer agentId) {
-    this.agentId = agentId;
-  }
-
-  public String getToUserName() {
-    return this.toUserName;
-  }
-
-  public void setToUserName(String toUserName) {
-    this.toUserName = toUserName;
-  }
-
-  public Long getCreateTime() {
-    return this.createTime;
-  }
-
-  public void setCreateTime(Long createTime) {
-    this.createTime = createTime;
-  }
-
   /**
    * <pre>
    * 当接受用户消息时，可能会获得以下值：
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_TEXT}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_IMAGE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VOICE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VIDEO}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_LOCATION}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_LINK}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_EVENT}
+   * {@link WxConsts.XmlMsgType#TEXT}
+   * {@link WxConsts.XmlMsgType#IMAGE}
+   * {@link WxConsts.XmlMsgType#VOICE}
+   * {@link WxConsts.XmlMsgType#VIDEO}
+   * {@link WxConsts.XmlMsgType#LOCATION}
+   * {@link WxConsts.XmlMsgType#LINK}
+   * {@link WxConsts.XmlMsgType#EVENT}
    * </pre>
    */
   public String getMsgType() {
@@ -245,363 +220,60 @@ public class WxCpXmlMessage implements Serializable {
   /**
    * <pre>
    * 当发送消息的时候使用：
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_TEXT}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_IMAGE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VOICE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VIDEO}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_NEWS}
+   * {@link WxConsts.XmlMsgType#TEXT}
+   * {@link WxConsts.XmlMsgType#IMAGE}
+   * {@link WxConsts.XmlMsgType#VOICE}
+   * {@link WxConsts.XmlMsgType#VIDEO}
+   * {@link WxConsts.XmlMsgType#NEWS}
    * </pre>
-   *
-   * @param msgType
    */
   public void setMsgType(String msgType) {
     this.msgType = msgType;
   }
 
-  public String getContent() {
-    return this.content;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
-  }
-
-  public Long getMsgId() {
-    return this.msgId;
-  }
-
-  public void setMsgId(Long msgId) {
-    this.msgId = msgId;
-  }
-
-  public String getPicUrl() {
-    return this.picUrl;
-  }
-
-  public void setPicUrl(String picUrl) {
-    this.picUrl = picUrl;
-  }
-
-  public String getMediaId() {
-    return this.mediaId;
-  }
-
-  public void setMediaId(String mediaId) {
-    this.mediaId = mediaId;
-  }
-
-  public String getFormat() {
-    return this.format;
-  }
-
-  public void setFormat(String format) {
-    this.format = format;
-  }
-
-  public String getThumbMediaId() {
-    return this.thumbMediaId;
-  }
-
-  public void setThumbMediaId(String thumbMediaId) {
-    this.thumbMediaId = thumbMediaId;
-  }
-
-  public Double getLocationX() {
-    return this.locationX;
-  }
-
-  public void setLocationX(Double locationX) {
-    this.locationX = locationX;
-  }
-
-  public Double getLocationY() {
-    return this.locationY;
-  }
-
-  public void setLocationY(Double locationY) {
-    this.locationY = locationY;
-  }
-
-  public Double getScale() {
-    return this.scale;
-  }
-
-  public void setScale(Double scale) {
-    this.scale = scale;
-  }
-
-  public String getLabel() {
-    return this.label;
-  }
-
-  public void setLabel(String label) {
-    this.label = label;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getDescription() {
-    return this.description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getUrl() {
-    return this.url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
-  public String getEvent() {
-    return this.event;
-  }
-
-  public void setEvent(String event) {
-    this.event = event;
-  }
-
-  public String getEventKey() {
-    return this.eventKey;
-  }
-
-  public void setEventKey(String eventKey) {
-    this.eventKey = eventKey;
-  }
-
-  public String getTicket() {
-    return this.ticket;
-  }
-
-  public void setTicket(String ticket) {
-    this.ticket = ticket;
-  }
-
-  public Double getLatitude() {
-    return this.latitude;
-  }
-
-  public void setLatitude(Double latitude) {
-    this.latitude = latitude;
-  }
-
-  public Double getLongitude() {
-    return this.longitude;
-  }
-
-  public void setLongitude(Double longitude) {
-    this.longitude = longitude;
-  }
-
-  public Double getPrecision() {
-    return this.precision;
-  }
-
-  public void setPrecision(Double precision) {
-    this.precision = precision;
-  }
-
-  public String getRecognition() {
-    return this.recognition;
-  }
-
-  public void setRecognition(String recognition) {
-    this.recognition = recognition;
-  }
-
-  public String getFromUserName() {
-    return this.fromUserName;
-  }
-
-  public void setFromUserName(String fromUserName) {
-    this.fromUserName = fromUserName;
-  }
-
-  public String getStatus() {
-    return this.status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-  public Integer getTotalCount() {
-    return this.totalCount;
-  }
-
-  public void setTotalCount(Integer totalCount) {
-    this.totalCount = totalCount;
-  }
-
-  public Integer getFilterCount() {
-    return this.filterCount;
-  }
-
-  public void setFilterCount(Integer filterCount) {
-    this.filterCount = filterCount;
-  }
-
-  public Integer getSentCount() {
-    return this.sentCount;
-  }
-
-  public void setSentCount(Integer sentCount) {
-    this.sentCount = sentCount;
-  }
-
-  public Integer getErrorCount() {
-    return this.errorCount;
-  }
-
-  public void setErrorCount(Integer errorCount) {
-    this.errorCount = errorCount;
-  }
-
-  public WxCpXmlMessage.ScanCodeInfo getScanCodeInfo() {
-    return this.scanCodeInfo;
-  }
-
-  public void setScanCodeInfo(WxCpXmlMessage.ScanCodeInfo scanCodeInfo) {
-    this.scanCodeInfo = scanCodeInfo;
-  }
-
-  public WxCpXmlMessage.SendPicsInfo getSendPicsInfo() {
-    return this.sendPicsInfo;
-  }
-
-  public void setSendPicsInfo(WxCpXmlMessage.SendPicsInfo sendPicsInfo) {
-    this.sendPicsInfo = sendPicsInfo;
-  }
-
-  public WxCpXmlMessage.SendLocationInfo getSendLocationInfo() {
-    return this.sendLocationInfo;
-  }
-
-  public void setSendLocationInfo(WxCpXmlMessage.SendLocationInfo sendLocationInfo) {
-    this.sendLocationInfo = sendLocationInfo;
-  }
-
   @Override
   public String toString() {
-    return "WxCpXmlMessage{" +
-      "agentId=" + this.agentId +
-      ", toUserName='" + this.toUserName + '\'' +
-      ", fromUserName='" + this.fromUserName + '\'' +
-      ", createTime=" + this.createTime +
-      ", msgType='" + this.msgType + '\'' +
-      ", content='" + this.content + '\'' +
-      ", msgId=" + this.msgId +
-      ", picUrl='" + this.picUrl + '\'' +
-      ", mediaId='" + this.mediaId + '\'' +
-      ", format='" + this.format + '\'' +
-      ", thumbMediaId='" + this.thumbMediaId + '\'' +
-      ", locationX=" + this.locationX +
-      ", locationY=" + this.locationY +
-      ", scale=" + this.scale +
-      ", label='" + this.label + '\'' +
-      ", title='" + this.title + '\'' +
-      ", description='" + this.description + '\'' +
-      ", url='" + this.url + '\'' +
-      ", event='" + this.event + '\'' +
-      ", eventKey='" + this.eventKey + '\'' +
-      ", ticket='" + this.ticket + '\'' +
-      ", latitude=" + this.latitude +
-      ", longitude=" + this.longitude +
-      ", precision=" + this.precision +
-      ", recognition='" + this.recognition + '\'' +
-      ", status='" + this.status + '\'' +
-      ", totalCount=" + this.totalCount +
-      ", filterCount=" + this.filterCount +
-      ", sentCount=" + this.sentCount +
-      ", errorCount=" + this.errorCount +
-      ", scanCodeInfo=" + this.scanCodeInfo +
-      ", sendPicsInfo=" + this.sendPicsInfo +
-      ", sendLocationInfo=" + this.sendLocationInfo +
-      '}';
+    return ToStringUtils.toSimpleString(this);
   }
 
+  @Data
   @XStreamAlias("ScanCodeInfo")
   public static class ScanCodeInfo {
 
+    /**
+     * 扫描类型，一般是qrcode.
+     */
     @XStreamAlias("ScanType")
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String scanType;
 
+    /**
+     * 扫描结果，即二维码对应的字符串信息.
+     */
     @XStreamAlias("ScanResult")
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String scanResult;
-
-    /**
-     * 扫描类型，一般是qrcode
-     */
-    public String getScanType() {
-
-      return this.scanType;
-    }
-
-    public void setScanType(String scanType) {
-      this.scanType = scanType;
-    }
-
-    /**
-     * 扫描结果，即二维码对应的字符串信息
-     */
-    public String getScanResult() {
-      return this.scanResult;
-    }
-
-    public void setScanResult(String scanResult) {
-      this.scanResult = scanResult;
-    }
-
   }
 
+  @Data
   @XStreamAlias("SendPicsInfo")
   public static class SendPicsInfo {
-
     @XStreamAlias("PicList")
     protected final List<Item> picList = new ArrayList<>();
+
     @XStreamAlias("Count")
     private Long count;
 
-    public Long getCount() {
-      return this.count;
-    }
-
-    public void setCount(Long count) {
-      this.count = count;
-    }
-
-    public List<Item> getPicList() {
-      return this.picList;
-    }
-
     @XStreamAlias("item")
+    @Data
     public static class Item {
-
       @XStreamAlias("PicMd5Sum")
       @XStreamConverter(value = XStreamCDataConverter.class)
-      private String PicMd5Sum;
-
-      public String getPicMd5Sum() {
-        return this.PicMd5Sum;
-      }
-
-      public void setPicMd5Sum(String picMd5Sum) {
-        this.PicMd5Sum = picMd5Sum;
-      }
+      private String picMd5Sum;
     }
   }
 
+  @Data
   @XStreamAlias("SendLocationInfo")
   public static class SendLocationInfo {
 
@@ -623,47 +295,8 @@ public class WxCpXmlMessage implements Serializable {
 
     @XStreamAlias("Poiname")
     @XStreamConverter(value = XStreamCDataConverter.class)
-    private String poiname;
+    private String poiName;
 
-    public String getLocationX() {
-      return this.locationX;
-    }
-
-    public void setLocationX(String locationX) {
-      this.locationX = locationX;
-    }
-
-    public String getLocationY() {
-      return this.locationY;
-    }
-
-    public void setLocationY(String locationY) {
-      this.locationY = locationY;
-    }
-
-    public String getScale() {
-      return this.scale;
-    }
-
-    public void setScale(String scale) {
-      this.scale = scale;
-    }
-
-    public String getLabel() {
-      return this.label;
-    }
-
-    public void setLabel(String label) {
-      this.label = label;
-    }
-
-    public String getPoiname() {
-      return this.poiname;
-    }
-
-    public void setPoiname(String poiname) {
-      this.poiname = poiname;
-    }
   }
 
 }

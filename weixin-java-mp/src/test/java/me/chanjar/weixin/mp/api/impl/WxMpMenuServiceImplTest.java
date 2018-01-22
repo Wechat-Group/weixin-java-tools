@@ -9,8 +9,9 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
-import org.testng.*;
 import org.testng.annotations.*;
+
+import static org.testng.Assert.*;
 
 /**
  * 测试菜单
@@ -88,6 +89,14 @@ public class WxMpMenuServiceImplTest {
   }
 
   @Test(dependsOnMethods = {"testCreateConditionalMenu"})
+  public void testMenuGet_AfterCreateConditionalMenu() throws WxErrorException {
+    WxMpMenu wxMenu = this.wxService.getMenuService().menuGet();
+    assertNotNull(wxMenu);
+    System.out.println(wxMenu.toJson());
+    assertNotNull(wxMenu.getConditionalMenu().get(0).getRule().getTagId());
+  }
+
+  @Test(dependsOnMethods = {"testCreateConditionalMenu"})
   public void testDeleteConditionalMenu() throws WxErrorException {
     this.wxService.getMenuService().menuDelete(menuId);
   }
@@ -134,7 +143,7 @@ public class WxMpMenuServiceImplTest {
   @Test(dependsOnMethods = {"testMenuCreate"})
   public void testMenuGet() throws WxErrorException {
     WxMpMenu wxMenu = this.wxService.getMenuService().menuGet();
-    Assert.assertNotNull(wxMenu);
+    assertNotNull(wxMenu);
     System.out.println(wxMenu.toJson());
   }
 
@@ -147,12 +156,12 @@ public class WxMpMenuServiceImplTest {
   public Object[][] getMenu() {
     WxMenu menu = new WxMenu();
     WxMenuButton button1 = new WxMenuButton();
-    button1.setType(WxConsts.BUTTON_CLICK);
+    button1.setType(WxConsts.MenuButtonType.CLICK);
     button1.setName("今日歌曲");
     button1.setKey("V1001_TODAY_MUSIC");
 
 //    WxMenuButton button2 = new WxMenuButton();
-//    button2.setType(WxConsts.BUTTON_MINIPROGRAM);
+//    button2.setType(WxConsts.MenuButtonType.MINIPROGRAM);
 //    button2.setName("小程序");
 //    button2.setAppId("wx286b93c14bbf93aa");
 //    button2.setPagePath("pages/lunar/index.html");
@@ -166,17 +175,17 @@ public class WxMpMenuServiceImplTest {
     menu.getButtons().add(button3);
 
     WxMenuButton button31 = new WxMenuButton();
-    button31.setType(WxConsts.BUTTON_VIEW);
+    button31.setType(WxConsts.MenuButtonType.VIEW);
     button31.setName("搜索");
     button31.setUrl("http://www.soso.com/");
 
     WxMenuButton button32 = new WxMenuButton();
-    button32.setType(WxConsts.BUTTON_VIEW);
+    button32.setType(WxConsts.MenuButtonType.VIEW);
     button32.setName("视频");
     button32.setUrl("http://v.qq.com/");
 
     WxMenuButton button33 = new WxMenuButton();
-    button33.setType(WxConsts.BUTTON_CLICK);
+    button33.setType(WxConsts.MenuButtonType.CLICK);
     button33.setName("赞一下我们");
     button33.setKey("V1001_GOOD");
 

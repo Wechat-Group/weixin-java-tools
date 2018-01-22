@@ -5,11 +5,13 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.*;
 import org.testng.annotations.*;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * 测试用户相关的接口
@@ -37,7 +39,7 @@ public class WxMpQrcodeServiceImplTest {
     WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateTmpTicket(sceneId, null);
     Assert.assertNotNull(ticket.getUrl());
     Assert.assertNotNull(ticket.getTicket());
-    Assert.assertTrue(ticket.getExpire_seconds() != -1);
+    Assert.assertTrue(ticket.getExpireSeconds() != -1);
     System.out.println(ticket);
   }
 
@@ -47,7 +49,7 @@ public class WxMpQrcodeServiceImplTest {
     WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateTmpTicket(sceneStr, null);
     Assert.assertNotNull(ticket.getUrl());
     Assert.assertNotNull(ticket.getTicket());
-    Assert.assertTrue(ticket.getExpire_seconds() != -1);
+    Assert.assertTrue(ticket.getExpireSeconds() != -1);
     System.out.println(ticket);
   }
 
@@ -56,7 +58,7 @@ public class WxMpQrcodeServiceImplTest {
     WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateLastTicket(sceneId);
     Assert.assertNotNull(ticket.getUrl());
     Assert.assertNotNull(ticket.getTicket());
-    Assert.assertTrue(ticket.getExpire_seconds() == -1);
+    Assert.assertTrue(ticket.getExpireSeconds() == -1);
     System.out.println(ticket);
   }
 
@@ -65,6 +67,12 @@ public class WxMpQrcodeServiceImplTest {
     File file = this.wxService.getQrcodeService().qrCodePicture(ticket);
     Assert.assertNotNull(file);
     System.out.println(file.getAbsolutePath());
+
+    try {
+      FileUtils.copyFile(file,new File("d:\\t.jpg"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public void testQrCodePictureUrl() throws WxErrorException {

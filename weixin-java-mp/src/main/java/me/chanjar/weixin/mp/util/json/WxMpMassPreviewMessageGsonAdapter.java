@@ -18,30 +18,30 @@ public class WxMpMassPreviewMessageGsonAdapter implements JsonSerializer<WxMpMas
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("towxname", wxMpMassPreviewMessage.getToWxUserName());
     jsonObject.addProperty("touser", wxMpMassPreviewMessage.getToWxUserOpenid());
-    if (WxConsts.MASS_MSG_NEWS.equals(wxMpMassPreviewMessage.getMsgType())) {
+    if (WxConsts.MassMsgType.MPNEWS.equals(wxMpMassPreviewMessage.getMsgType())) {
       JsonObject news = new JsonObject();
       news.addProperty("media_id", wxMpMassPreviewMessage.getMediaId());
-      jsonObject.add(WxConsts.MASS_MSG_NEWS, news);
+      jsonObject.add(WxConsts.MassMsgType.MPNEWS, news);
     }
-    if (WxConsts.MASS_MSG_TEXT.equals(wxMpMassPreviewMessage.getMsgType())) {
+    if (WxConsts.MassMsgType.TEXT.equals(wxMpMassPreviewMessage.getMsgType())) {
       JsonObject sub = new JsonObject();
       sub.addProperty("content", wxMpMassPreviewMessage.getContent());
-      jsonObject.add(WxConsts.MASS_MSG_TEXT, sub);
+      jsonObject.add(WxConsts.MassMsgType.TEXT, sub);
     }
-    if (WxConsts.MASS_MSG_VOICE.equals(wxMpMassPreviewMessage.getMsgType())) {
+    if (WxConsts.MassMsgType.VOICE.equals(wxMpMassPreviewMessage.getMsgType())) {
       JsonObject sub = new JsonObject();
       sub.addProperty("media_id", wxMpMassPreviewMessage.getMediaId());
-      jsonObject.add(WxConsts.MASS_MSG_VOICE, sub);
+      jsonObject.add(WxConsts.MassMsgType.VOICE, sub);
     }
-    if (WxConsts.MASS_MSG_IMAGE.equals(wxMpMassPreviewMessage.getMsgType())) {
+    if (WxConsts.MassMsgType.IMAGE.equals(wxMpMassPreviewMessage.getMsgType())) {
       JsonObject sub = new JsonObject();
       sub.addProperty("media_id", wxMpMassPreviewMessage.getMediaId());
-      jsonObject.add(WxConsts.MASS_MSG_IMAGE, sub);
+      jsonObject.add(WxConsts.MassMsgType.IMAGE, sub);
     }
-    if (WxConsts.MASS_MSG_VIDEO.equals(wxMpMassPreviewMessage.getMsgType())) {
+    if (WxConsts.MassMsgType.MPVIDEO.equals(wxMpMassPreviewMessage.getMsgType())) {
       JsonObject sub = new JsonObject();
       sub.addProperty("media_id", wxMpMassPreviewMessage.getMediaId());
-      jsonObject.add(WxConsts.MASS_MSG_VIDEO, sub);
+      jsonObject.add(WxConsts.MassMsgType.MPVIDEO, sub);
     }
     jsonObject.addProperty("msgtype", wxMpMassPreviewMessage.getMsgType());
     return jsonObject;

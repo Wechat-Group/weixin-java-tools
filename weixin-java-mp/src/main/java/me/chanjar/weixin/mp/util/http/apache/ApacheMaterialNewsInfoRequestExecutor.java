@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.util.http.apache;
 
+import com.google.common.collect.ImmutableMap;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
@@ -22,9 +23,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by ecoolper on 2017/5/5.
+ * httpclient 实现的素材请求执行器.
+ *
+ * @author ecoolper
+ * @date 2017/5/5
  */
-public class ApacheMaterialNewsInfoRequestExecutor extends MaterialNewsInfoRequestExecutor<CloseableHttpClient, HttpHost> {
+public class ApacheMaterialNewsInfoRequestExecutor
+    extends MaterialNewsInfoRequestExecutor<CloseableHttpClient, HttpHost> {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   public ApacheMaterialNewsInfoRequestExecutor(RequestHttp requestHttp) {
@@ -39,9 +44,7 @@ public class ApacheMaterialNewsInfoRequestExecutor extends MaterialNewsInfoReque
       httpPost.setConfig(config);
     }
 
-    Map<String, String> params = new HashMap<>();
-    params.put("media_id", materialId);
-    httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
+    httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(ImmutableMap.of("media_id", materialId))));
     try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
       String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
       this.logger.debug("响应原始数据：{}", responseContent);

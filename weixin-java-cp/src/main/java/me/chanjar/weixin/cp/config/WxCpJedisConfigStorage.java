@@ -9,7 +9,11 @@ import redis.clients.jedis.JedisPoolConfig;
 import java.io.File;
 
 /**
- * Jedis client implementor for wechat config storage
+ * Jedis client implementor for wechat config storage.
+ * <pre>
+ *    使用说明：本实现仅供参考，并不完整，
+ *    比如为减少项目依赖，未加入redis分布式锁的实现，如有需要请自行实现。
+ * </pre>
  *
  * @author gaigeshen
  */

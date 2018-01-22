@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.bean.request;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
@@ -17,8 +18,13 @@ import me.chanjar.weixin.common.util.ToStringUtils;
  * </pre>
  * Created by Binary Wang on 2016/10/19.
  *
- * @author binarywang (https://github.com/binarywang)
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxEntPayQueryRequest extends WxPayBaseRequest {
   /**
@@ -34,14 +40,6 @@ public class WxEntPayQueryRequest extends WxPayBaseRequest {
   @Required
   @XStreamAlias("partner_trade_no")
   private String partnerTradeNo;
-
-  public String getPartnerTradeNo() {
-    return this.partnerTradeNo;
-  }
-
-  public void setPartnerTradeNo(String partnerTradeNo) {
-    this.partnerTradeNo = partnerTradeNo;
-  }
 
   @Override
   protected void checkConstraints() {

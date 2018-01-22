@@ -28,13 +28,13 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
   @Override
   public WxMpQrCodeTicket qrCodeCreateTmpTicket(int sceneId, Integer expireSeconds) throws WxErrorException {
     if (sceneId == 0) {
-      throw new WxErrorException(WxError.newBuilder().setErrorCode(-1).setErrorMsg("临时二维码场景值不能为0！").build());
+      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("临时二维码场景值不能为0！").build());
     }
 
     //expireSeconds 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
     if (expireSeconds != null && expireSeconds > 2592000) {
-      throw new WxErrorException(WxError.newBuilder().setErrorCode(-1)
-        .setErrorMsg("临时二维码有效时间最大不能超过2592000（即30天）！").build());
+      throw new WxErrorException(WxError.builder().errorCode(-1)
+        .errorMsg("临时二维码有效时间最大不能超过2592000（即30天）！").build());
     }
 
     if (expireSeconds == null) {
@@ -59,13 +59,13 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
   @Override
   public WxMpQrCodeTicket qrCodeCreateTmpTicket(String sceneStr, Integer expireSeconds) throws WxErrorException {
     if (StringUtils.isBlank(sceneStr)) {
-      throw new WxErrorException(WxError.newBuilder().setErrorCode(-1).setErrorMsg("临时二维码场景值不能为空！").build());
+      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("临时二维码场景值不能为空！").build());
     }
 
     //expireSeconds 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
     if (expireSeconds != null && expireSeconds > 2592000) {
-      throw new WxErrorException(WxError.newBuilder().setErrorCode(-1)
-        .setErrorMsg("临时二维码有效时间最大不能超过2592000（即30天）！").build());
+      throw new WxErrorException(WxError.builder().errorCode(-1)
+        .errorMsg("临时二维码有效时间最大不能超过2592000（即30天）！").build());
     }
 
     if (expireSeconds == null) {
@@ -90,7 +90,9 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
   @Override
   public WxMpQrCodeTicket qrCodeCreateLastTicket(int sceneId) throws WxErrorException {
     if (sceneId < 1 || sceneId > 100000) {
-      throw new WxErrorException(WxError.newBuilder().setErrorCode(-1).setErrorMsg("永久二维码的场景值目前只支持1--100000！").build());
+      throw new WxErrorException(WxError.builder().errorCode(-1)
+        .errorMsg("永久二维码的场景值目前只支持1--100000！")
+        .build());
     }
 
     String url = API_URL_PREFIX + "/create";
@@ -137,9 +139,7 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
 
       return resultUrl;
     } catch (UnsupportedEncodingException e) {
-      WxError error = WxError.newBuilder().setErrorCode(-1)
-        .setErrorMsg(e.getMessage()).build();
-      throw new WxErrorException(error);
+      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg(e.getMessage()).build());
     }
   }
 

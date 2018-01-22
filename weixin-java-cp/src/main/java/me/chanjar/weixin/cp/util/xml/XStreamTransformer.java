@@ -28,7 +28,7 @@ public class XStreamTransformer {
   }
 
   /**
-   * 注册扩展消息的解析器
+   * 注册扩展消息的解析器.
    *
    * @param clz     类型
    * @param xStream xml解析器
@@ -46,17 +46,19 @@ public class XStreamTransformer {
 
   private static Map<Class, XStream> configXStreamInstance() {
     Map<Class, XStream> map = new HashMap<>();
-    map.put(WxCpXmlMessage.class, config_WxCpXmlMessage());
-    map.put(WxCpXmlOutNewsMessage.class, config_WxCpXmlOutNewsMessage());
-    map.put(WxCpXmlOutTextMessage.class, config_WxCpXmlOutTextMessage());
-    map.put(WxCpXmlOutImageMessage.class, config_WxCpXmlOutImageMessage());
-    map.put(WxCpXmlOutVideoMessage.class, config_WxCpXmlOutVideoMessage());
-    map.put(WxCpXmlOutVoiceMessage.class, config_WxCpXmlOutVoiceMessage());
+    map.put(WxCpXmlMessage.class, configWxCpXmlMessage());
+    map.put(WxCpXmlOutNewsMessage.class, configWxCpXmlOutNewsMessage());
+    map.put(WxCpXmlOutTextMessage.class, configWxCpXmlOutTextMessage());
+    map.put(WxCpXmlOutImageMessage.class, configWxCpXmlOutImageMessage());
+    map.put(WxCpXmlOutVideoMessage.class, configWxCpXmlOutVideoMessage());
+    map.put(WxCpXmlOutVoiceMessage.class, configWxCpXmlOutVoiceMessage());
     return map;
   }
 
-  private static XStream config_WxCpXmlMessage() {
+  private static XStream configWxCpXmlMessage() {
     XStream xstream = XStreamInitializer.getInstance();
+    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
+
     xstream.processAnnotations(WxCpXmlMessage.class);
     xstream.processAnnotations(WxCpXmlMessage.ScanCodeInfo.class);
     xstream.processAnnotations(WxCpXmlMessage.SendPicsInfo.class);
@@ -65,38 +67,48 @@ public class XStreamTransformer {
     return xstream;
   }
 
-  private static XStream config_WxCpXmlOutImageMessage() {
+  private static XStream configWxCpXmlOutImageMessage() {
     XStream xstream = XStreamInitializer.getInstance();
+    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
+
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutImageMessage.class);
     return xstream;
   }
 
-  private static XStream config_WxCpXmlOutNewsMessage() {
+  private static XStream configWxCpXmlOutNewsMessage() {
     XStream xstream = XStreamInitializer.getInstance();
+    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
+
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutNewsMessage.class);
     xstream.processAnnotations(WxCpXmlOutNewsMessage.Item.class);
     return xstream;
   }
 
-  private static XStream config_WxCpXmlOutTextMessage() {
+  private static XStream configWxCpXmlOutTextMessage() {
     XStream xstream = XStreamInitializer.getInstance();
+    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
+
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutTextMessage.class);
     return xstream;
   }
 
-  private static XStream config_WxCpXmlOutVideoMessage() {
+  private static XStream configWxCpXmlOutVideoMessage() {
     XStream xstream = XStreamInitializer.getInstance();
+    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
+
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutVideoMessage.class);
     xstream.processAnnotations(WxCpXmlOutVideoMessage.Video.class);
     return xstream;
   }
 
-  private static XStream config_WxCpXmlOutVoiceMessage() {
+  private static XStream configWxCpXmlOutVoiceMessage() {
     XStream xstream = XStreamInitializer.getInstance();
+    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
+
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutVoiceMessage.class);
     return xstream;

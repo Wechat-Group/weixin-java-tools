@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean.membercard;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
  * @author YuJian(mgcnrx11@gmail.com)
  * @version 2017/7/15
  */
+@Data
 public class WxMpMemberCardUpdateMessage implements Serializable {
   private static final long serialVersionUID = 4953923160718911058L;
 
@@ -75,107 +77,4 @@ public class WxMpMemberCardUpdateMessage implements Serializable {
   @SerializedName("notify_optional")
   private NotifyOptional notifyOptional;
 
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public String getCardId() {
-    return cardId;
-  }
-
-  public void setCardId(String cardId) {
-    this.cardId = cardId;
-  }
-
-  public String getBackgroundPicUrl() {
-    return backgroundPicUrl;
-  }
-
-  public void setBackgroundPicUrl(String backgroundPicUrl) {
-    this.backgroundPicUrl = backgroundPicUrl;
-  }
-
-  public Integer getBonus() {
-    return bonus;
-  }
-
-  public void setBonus(Integer bonus) {
-    this.bonus = bonus;
-  }
-
-  public Integer getAddBounus() {
-    return addBounus;
-  }
-
-  public void setAddBounus(Integer addBounus) {
-    this.addBounus = addBounus;
-  }
-
-  public String getRecordBonus() {
-    return recordBonus;
-  }
-
-  public void setRecordBonus(String recordBonus) {
-    this.recordBonus = recordBonus;
-  }
-
-  public Integer getBalance() {
-    return balance;
-  }
-
-  public void setBalance(Integer balance) {
-    this.balance = balance;
-  }
-
-  public Integer getAddBalance() {
-    return addBalance;
-  }
-
-  public void setAddBalance(Integer addBalance) {
-    this.addBalance = addBalance;
-  }
-
-  public String getRecordBalance() {
-    return recordBalance;
-  }
-
-  public void setRecordBalance(String recordBalance) {
-    this.recordBalance = recordBalance;
-  }
-
-  public String getCustomFieldValue1() {
-    return customFieldValue1;
-  }
-
-  public void setCustomFieldValue1(String customFieldValue1) {
-    this.customFieldValue1 = customFieldValue1;
-  }
-
-  public String getCustomFieldValue2() {
-    return customFieldValue2;
-  }
-
-  public void setCustomFieldValue2(String customFieldValue2) {
-    this.customFieldValue2 = customFieldValue2;
-  }
-
-  public String getCustomFieldValue3() {
-    return customFieldValue3;
-  }
-
-  public void setCustomFieldValue3(String customFieldValue3) {
-    this.customFieldValue3 = customFieldValue3;
-  }
-
-  public NotifyOptional getNotifyOptional() {
-    return notifyOptional;
-  }
-
-  public void setNotifyOptional(NotifyOptional notifyOptional) {
-    this.notifyOptional = notifyOptional;
-  }
 }
