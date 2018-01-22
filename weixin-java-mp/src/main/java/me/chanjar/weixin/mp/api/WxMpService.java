@@ -364,6 +364,13 @@ public interface WxMpService {
   WxMpTemplateMsgService getTemplateMsgService();
 
   /**
+   * 返回一次性订阅消息相关接口方法的实现类对象，以方便调用其各个接口
+   *
+   * @return WxMpSubscribeMsgService
+   */
+  WxMpSubscribeMsgService getSubscribeMsgService();
+
+  /**
    * 返回硬件平台相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpDeviceService

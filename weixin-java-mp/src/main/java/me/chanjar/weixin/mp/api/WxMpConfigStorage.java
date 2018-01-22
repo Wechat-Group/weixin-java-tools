@@ -85,6 +85,8 @@ public interface WxMpConfigStorage {
 
   String getAesKey();
 
+  String getTemplateId();
+
   long getExpiresTime();
 
   String getOauth2redirectUri();

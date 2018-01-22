@@ -40,6 +40,7 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   private WxMpDataCubeService dataCubeService = new WxMpDataCubeServiceImpl(this);
   private WxMpUserBlacklistService blackListService = new WxMpUserBlacklistServiceImpl(this);
   private WxMpTemplateMsgService templateMsgService = new WxMpTemplateMsgServiceImpl(this);
+  private WxMpSubscribeMsgService subscribeMsgService = new WxMpSubscribeMsgServiceImpl(this);
   private WxMpDeviceService deviceService = new WxMpDeviceServiceImpl(this);
   private WxMpShakeService shakeService = new WxMpShakeServiceImpl(this);
   private WxMpMemberCardService memberCardService = new WxMpMemberCardServiceImpl(this);
@@ -373,6 +374,11 @@ public abstract class WxMpServiceAbstractImpl<H, P> implements WxMpService, Requ
   @Override
   public WxMpTemplateMsgService getTemplateMsgService() {
     return this.templateMsgService;
+  }
+
+  @Override
+  public WxMpSubscribeMsgService getSubscribeMsgService() {
+    return this.subscribeMsgService;
   }
 
   @Override
