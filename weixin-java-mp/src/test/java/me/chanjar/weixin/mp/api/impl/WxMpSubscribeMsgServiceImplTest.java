@@ -28,14 +28,21 @@ public class WxMpSubscribeMsgServiceImplTest {
     WxMpSubscribeMessage message = WxMpSubscribeMessage.builder()
       .title("weixin test")
       .toUser(configStorage.getOpenid())
-      .templateId(configStorage.getTemplateId())
       .scene("1000")
       .contentColor("#FF0000")
       .contentValue("Send subscribe message test")
       .build();
 
-    boolean send = this.wxService.getSubscribeMsgService().sendSubscribeMessage(message);
-    Assert.assertTrue(send);
+    try {
+      boolean send = this.wxService.getSubscribeMsgService().sendSubscribeMessage(message);
+      Assert.assertTrue(send);
+    } catch (WxErrorException e) {
+      // 当用户没有授权，获取之前的授权已使用。微信会返回错误代码 {"errcode":43101,"errmsg":"user refuse to accept the msg hint: [xxxxxxxxxxx]"}
+      if (e.getError().getErrorCode() != 43101) {
+        throw e;
+      }
+    }
+
   }
 
 }

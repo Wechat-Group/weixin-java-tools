@@ -32,7 +32,7 @@ public class WxMpSubscribeMsgServiceImpl implements WxMpSubscribeMsgService {
 
   @Override
   public boolean sendSubscribeMessage(WxMpSubscribeMessage message) throws WxErrorException {
-    if (message.getTemplateId() == null && message.getTemplateId().trim().length() == 0) {
+    if (message.getTemplateId() == null) {
       message.setTemplateId(this.wxMpService.getWxMpConfigStorage().getTemplateId());
     }
 
