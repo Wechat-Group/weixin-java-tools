@@ -50,3 +50,5 @@ Temporary Items
 .apdisk
 /.sonar/
 sonar-project.properties
+
+!/.mvn/wrapper/maven-wrapper.jar
