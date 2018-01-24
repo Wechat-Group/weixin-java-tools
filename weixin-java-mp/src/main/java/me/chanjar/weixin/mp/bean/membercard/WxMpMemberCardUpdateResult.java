@@ -28,7 +28,7 @@ public class WxMpMemberCardUpdateResult implements Serializable {
 
   private Integer resultBonus;
 
-  private Integer resultBalance;
+  private Double resultBalance;
 
   @Override
   public String toString() {

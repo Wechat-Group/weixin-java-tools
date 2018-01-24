@@ -52,12 +52,12 @@ public class WxMpMemberCardUpdateMessage implements Serializable {
   /**
    * 需要设置的余额全量值，传入的数值会直接显示在卡面
    */
-  private Integer balance;
+  private Double balance;
   /**
    * 本次余额变动值，传负数代表减少
    */
   @SerializedName("add_balance")
-  private Integer addBalance;
+  private Double addBalance;
   /**
    * 商家自定义金额消耗记录，不超过14个汉字。
    */

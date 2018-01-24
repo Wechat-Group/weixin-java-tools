@@ -58,7 +58,7 @@ public class WxMpMemberCardActivatedMessage implements Serializable {
    * 初始余额，不填为0。
    */
   @SerializedName("init_balance")
-  private Integer initBalance;
+  private Double initBalance;
   /**
    * 创建时字段custom_field1定义类型的初始值，限制为4个汉字，12字节。
    */

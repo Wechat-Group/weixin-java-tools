@@ -33,6 +33,8 @@ public class WxMpMemberCardUserInfoResult implements Serializable {
 
   private Integer bonus;
 
+  private Double balance;
+
   private String sex;
 
   private MemberCardUserInfo userInfo;
