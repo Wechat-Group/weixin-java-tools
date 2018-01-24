@@ -28,6 +28,7 @@ public class WxMpMemberCardUserInfoResultGsonAdapter implements JsonDeserializer
     result.setNickname(GsonHelper.getString(jsonObject, "nickname"));
     result.setMembershipNumber(GsonHelper.getString(jsonObject, "membership_number"));
     result.setBonus(GsonHelper.getInteger(jsonObject, "bonus"));
+    result.setBalance(GsonHelper.getDouble(jsonObject, "balance"));
     result.setSex(GsonHelper.getString(jsonObject, "sex"));
     result.setUserCardStatus(GsonHelper.getString(jsonObject, "user_card_status"));
     result.setHasActive(GsonHelper.getBoolean(jsonObject, "has_active"));

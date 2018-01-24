@@ -29,7 +29,7 @@ public class WxMpMemberCardUpdateResultGsonAdapter implements JsonDeserializer<W
     result.setOpenId(GsonHelper.getString(jsonObject, "openid"));
     result.setErrorCode(GsonHelper.getString(jsonObject, "errcode"));
     result.setErrorMsg(GsonHelper.getString(jsonObject, "errmsg"));
-    result.setResultBalance(GsonHelper.getInteger(jsonObject, "result_balance"));
+    result.setResultBalance(GsonHelper.getDouble(jsonObject, "result_balance"));
     result.setResultBonus(GsonHelper.getInteger(jsonObject, "result_bonus"));
 
     return result;
