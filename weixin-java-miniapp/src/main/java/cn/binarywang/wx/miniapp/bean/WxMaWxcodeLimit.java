@@ -32,4 +32,8 @@ public class WxMaWxcodeLimit extends AbstractWxMaQrcodeWrapper implements Serial
     return WxMaGsonBuilder.create().fromJson(json, WxMaWxcodeLimit.class);
   }
 
+  @Override
+  public String toString() {
+    return super.toString();
+  }
 }
