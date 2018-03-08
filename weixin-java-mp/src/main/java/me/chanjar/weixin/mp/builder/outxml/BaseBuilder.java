@@ -25,7 +25,7 @@ public abstract class BaseBuilder<BuilderType, ValueType> {
   public void setCommon(WxMpXmlOutMessage m) {
     m.setToUserName(this.toUserName);
     m.setFromUserName(this.fromUserName);
-    m.setCreateTime(System.currentTimeMillis() / 1000l);
+    m.setCreateTime(System.currentTimeMillis() / 1000L);
   }
 
 }
