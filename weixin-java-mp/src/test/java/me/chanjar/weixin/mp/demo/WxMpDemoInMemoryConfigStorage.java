@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 
 import java.io.InputStream;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Daniel Qian
@@ -16,7 +17,11 @@ class WxMpDemoInMemoryConfigStorage extends WxMpInMemoryConfigStorage {
   public static WxMpDemoInMemoryConfigStorage fromXml(InputStream is) {
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(WxMpDemoInMemoryConfigStorage.class);
-    return (WxMpDemoInMemoryConfigStorage) xstream.fromXML(is);
+    WxMpDemoInMemoryConfigStorage wxMpDemoInMemoryConfigStorage = (WxMpDemoInMemoryConfigStorage) xstream.fromXML(is);
+    wxMpDemoInMemoryConfigStorage.accessTokenLock = new ReentrantLock();
+    wxMpDemoInMemoryConfigStorage.cardApiTicketLock = new ReentrantLock();
+    wxMpDemoInMemoryConfigStorage.jsapiTicketLock = new ReentrantLock();
+    return wxMpDemoInMemoryConfigStorage;
   }
 
   @Override
