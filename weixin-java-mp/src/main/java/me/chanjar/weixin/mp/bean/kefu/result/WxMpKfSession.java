@@ -1,12 +1,18 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
+
+import java.io.Serializable;
 
 /**
  * @author Binary Wang
  */
-public class WxMpKfSession {
+@Data
+public class WxMpKfSession implements Serializable {
+  private static final long serialVersionUID = 7804332813164994062L;
+
   /**
    * kf_account 正在接待的客服，为空表示没有人在接待
    */
@@ -38,35 +44,4 @@ public class WxMpKfSession {
     return ToStringUtils.toSimpleString(this);
   }
 
-  public String getKfAccount() {
-    return this.kfAccount;
-  }
-
-  public void setKfAccount(String kfAccount) {
-    this.kfAccount = kfAccount;
-  }
-
-  public long getCreateTime() {
-    return this.createTime;
-  }
-
-  public void setCreateTime(long createTime) {
-    this.createTime = createTime;
-  }
-
-  public String getOpenid() {
-    return this.openid;
-  }
-
-  public void setOpenid(String openid) {
-    this.openid = openid;
-  }
-
-  public long getLatestTime() {
-    return this.latestTime;
-  }
-
-  public void setLatestTime(long latestTime) {
-    this.latestTime = latestTime;
-  }
 }

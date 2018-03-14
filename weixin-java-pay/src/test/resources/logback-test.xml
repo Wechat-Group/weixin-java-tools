@@ -12,5 +12,4 @@
     <appender-ref ref="STDOUT"/>
   </root>
 
-  <logger name="com.github.binarywang.wxpay" level="debug"/>
 </configuration>

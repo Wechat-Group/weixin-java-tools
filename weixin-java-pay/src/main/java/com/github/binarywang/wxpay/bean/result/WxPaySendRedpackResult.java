@@ -1,6 +1,9 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -10,6 +13,9 @@ import java.io.Serializable;
  *
  * @author kane
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPaySendRedpackResult extends WxPayBaseResult implements Serializable {
   private static final long serialVersionUID = -4837415036337132073L;
@@ -32,51 +38,4 @@ public class WxPaySendRedpackResult extends WxPayBaseResult implements Serializa
   @XStreamAlias("send_listid")
   private String sendListid;
 
-  public String getMchBillno() {
-    return this.mchBillno;
-  }
-
-  public void setMchBillno(String mchBillno) {
-    this.mchBillno = mchBillno;
-  }
-
-  public String getWxappid() {
-    return this.wxappid;
-  }
-
-  public void setWxappid(String wxappid) {
-    this.wxappid = wxappid;
-  }
-
-  public String getReOpenid() {
-    return this.reOpenid;
-  }
-
-  public void setReOpenid(String reOpenid) {
-    this.reOpenid = reOpenid;
-  }
-
-  public int getTotalAmount() {
-    return this.totalAmount;
-  }
-
-  public void setTotalAmount(int totalAmount) {
-    this.totalAmount = totalAmount;
-  }
-
-  public String getSendTime() {
-    return this.sendTime;
-  }
-
-  public void setSendTime(String sendTime) {
-    this.sendTime = sendTime;
-  }
-
-  public String getSendListid() {
-    return this.sendListid;
-  }
-
-  public void setSendListid(String sendListid) {
-    this.sendListid = sendListid;
-  }
 }

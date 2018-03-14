@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.bean;
 
+import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
@@ -10,19 +11,23 @@ import java.io.Serializable;
  *
  * @author rememberber
  */
+@Data
 public class WxMpShakeInfoResult implements Serializable {
+  private static final long serialVersionUID = -1604561297395395468L;
 
   private Integer errcode;
 
   private String errmsg;
 
-  private Data data;
+  private ShakeInfoData data;
 
   public static WxMpShakeInfoResult fromJson(String json) {
     return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpShakeInfoResult.class);
   }
 
-  public class Data {
+  @Data
+  public class ShakeInfoData implements Serializable {
+    private static final long serialVersionUID = -4828142206067489488L;
 
     private String page_id;
 
@@ -34,7 +39,9 @@ public class WxMpShakeInfoResult implements Serializable {
 
     private BeaconInfo beacon_info;
 
-    public class BeaconInfo {
+    @Data
+    public class BeaconInfo implements Serializable {
+      private static final long serialVersionUID = -8995733049982933362L;
 
       private double distance;
 
@@ -47,118 +54,7 @@ public class WxMpShakeInfoResult implements Serializable {
       private Integer rssi;
 
       private String uuid;
-
-      public double getDistance() {
-        return distance;
-      }
-
-      public void setDistance(double distance) {
-        this.distance = distance;
-      }
-
-      public Integer getMajor() {
-        return major;
-      }
-
-      public void setMajor(Integer major) {
-        this.major = major;
-      }
-
-      public Integer getMeasure_power() {
-        return measure_power;
-      }
-
-      public void setMeasure_power(Integer measure_power) {
-        this.measure_power = measure_power;
-      }
-
-      public Integer getMinor() {
-        return minor;
-      }
-
-      public void setMinor(Integer minor) {
-        this.minor = minor;
-      }
-
-      public Integer getRssi() {
-        return rssi;
-      }
-
-      public void setRssi(Integer rssi) {
-        this.rssi = rssi;
-      }
-
-      public String getUuid() {
-        return uuid;
-      }
-
-      public void setUuid(String uuid) {
-        this.uuid = uuid;
-      }
-    }
-
-    public String getPage_id() {
-      return page_id;
-    }
-
-    public void setPage_id(String page_id) {
-      this.page_id = page_id;
-    }
-
-    public String getOpenid() {
-      return openid;
-    }
-
-    public void setOpenid(String openid) {
-      this.openid = openid;
-    }
-
-    public String getPoi_id() {
-      return poi_id;
-    }
-
-    public void setPoi_id(String poi_id) {
-      this.poi_id = poi_id;
-    }
-
-    public BeaconInfo getBeacon_info() {
-      return beacon_info;
-    }
-
-    public void setBeacon_info(BeaconInfo beacon_info) {
-      this.beacon_info = beacon_info;
-    }
-
-    public String getBrand_userame() {
-      return brand_userame;
-    }
-
-    public void setBrand_userame(String brand_userame) {
-      this.brand_userame = brand_userame;
     }
   }
 
-  public Integer getErrcode() {
-    return errcode;
-  }
-
-  public void setErrcode(Integer errcode) {
-    this.errcode = errcode;
-  }
-
-  public String getErrmsg() {
-    return errmsg;
-  }
-
-  public void setErrmsg(String errmsg) {
-    this.errmsg = errmsg;
-  }
-
-  public Data getData() {
-    return data;
-  }
-
-  public void setData(Data data) {
-    this.data = data;
-  }
 }

@@ -10,13 +10,13 @@ import okhttp3.*;
 
 import java.io.IOException;
 
-public class WxCpServiceOkHttpImpl extends AbstractWxCpServiceImpl<ConnectionPool, OkHttpProxyInfo> {
-  protected ConnectionPool httpClient;
+public class WxCpServiceOkHttpImpl extends WxCpServiceAbstractImpl<OkHttpClient, OkHttpProxyInfo> {
+  protected OkHttpClient httpClient;
   protected OkHttpProxyInfo httpProxy;
 
 
   @Override
-  public ConnectionPool getRequestHttpClient() {
+  public OkHttpClient getRequestHttpClient() {
     return httpClient;
   }
 
@@ -32,47 +32,25 @@ public class WxCpServiceOkHttpImpl extends AbstractWxCpServiceImpl<ConnectionPoo
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    if (forceRefresh) {
-      this.configStorage.expireAccessToken();
-    }
-    if (this.configStorage.isAccessTokenExpired()) {
+    this.log.debug("WxCpServiceOkHttpImpl is running");
+    if (this.configStorage.isAccessTokenExpired() || forceRefresh) {
       synchronized (this.globalAccessTokenRefreshLock) {
         if (this.configStorage.isAccessTokenExpired()) {
           String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"
             + "&corpid=" + this.configStorage.getCorpId()
             + "&corpsecret=" + this.configStorage.getCorpSecret();
-
-          OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().connectionPool(httpClient);
-          //设置代理
-          if (httpProxy != null) {
-            clientBuilder.proxy(getRequestHttpProxy().getProxy());
-          }
-          //设置授权
-          clientBuilder.authenticator(new Authenticator() {
-            @Override
-            public Request authenticate(Route route, Response response) throws IOException {
-              String credential = Credentials.basic(httpProxy.getProxyUsername(), httpProxy.getProxyPassword());
-              return response.request().newBuilder()
-                .header("Authorization", credential)
-                .build();
-            }
-          });
           //得到httpClient
-          OkHttpClient client = clientBuilder.build();
+          OkHttpClient client = getRequestHttpClient();
           //请求的request
           Request request = new Request.Builder().url(url).get().build();
-          Response response = null;
-          try {
-            response = client.newCall(request).execute();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
           String resultContent = null;
           try {
+            Response response = client.newCall(request).execute();
             resultContent = response.body().string();
           } catch (IOException e) {
-            e.printStackTrace();
+            this.log.error(e.getMessage(), e);
           }
+
           WxError error = WxError.fromJson(resultContent);
           if (error.getErrorCode() != 0) {
             throw new WxErrorException(error);
@@ -88,13 +66,31 @@ public class WxCpServiceOkHttpImpl extends AbstractWxCpServiceImpl<ConnectionPoo
 
   @Override
   public void initHttp() {
-    WxCpConfigStorage configStorage = this.configStorage;
-
+    this.log.debug("WxCpServiceOkHttpImpl initHttp");
+    //设置代理
     if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
-      httpProxy = new OkHttpProxyInfo(OkHttpProxyInfo.ProxyType.SOCKS5, configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort(), configStorage.getHttpProxyUsername(), configStorage.getHttpProxyPassword());
+      httpProxy = OkHttpProxyInfo.httpProxy(configStorage.getHttpProxyHost(),
+        configStorage.getHttpProxyPort(),
+        configStorage.getHttpProxyUsername(),
+        configStorage.getHttpProxyPassword());
     }
 
-    httpClient = new ConnectionPool();
+    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+    if (httpProxy != null) {
+      clientBuilder.proxy(getRequestHttpProxy().getProxy());
+
+      //设置授权
+      clientBuilder.authenticator(new Authenticator() {
+        @Override
+        public Request authenticate(Route route, Response response) throws IOException {
+          String credential = Credentials.basic(httpProxy.getProxyUsername(), httpProxy.getProxyPassword());
+          return response.request().newBuilder()
+            .header("Authorization", credential)
+            .build();
+        }
+      });
+    }
+    httpClient = clientBuilder.build();
   }
 
   @Override

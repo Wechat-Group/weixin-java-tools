@@ -39,9 +39,7 @@ public class ApacheSimplePostRequestExecutor extends SimplePostRequestExecutor<C
     try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
       String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
       if (responseContent.isEmpty()) {
-        throw new WxErrorException(
-          WxError.newBuilder().setErrorCode(9999).setErrorMsg("无响应内容")
-            .build());
+        throw new WxErrorException(WxError.builder().errorCode(9999).errorMsg("无响应内容").build());
       }
 
       if (responseContent.startsWith("<xml>")) {

@@ -458,4 +458,16 @@ public interface WxCpService {
    * http请求对象
    */
   RequestHttp getRequestHttp();
+
+  void setUserService(WxCpUserService userService);
+
+  void setDepartmentService(WxCpDepartmentService departmentService);
+
+  void setMediaService(WxCpMediaService mediaService);
+
+  void setMenuService(WxCpMenuService menuService);
+
+  void setOauth2Service(WxCpOAuth2Service oauth2Service);
+
+  void setTagService(WxCpTagService tagService);
 }

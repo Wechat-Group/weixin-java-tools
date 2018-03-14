@@ -8,7 +8,6 @@ import org.testng.annotations.*;
 public class WxErrorTest {
 
   public void testFromJson() {
-
     String json = "{ \"errcode\": 40003, \"errmsg\": \"invalid openid\" }";
     WxError wxError = WxError.fromJson(json);
     Assert.assertTrue(wxError.getErrorCode() == 40003);

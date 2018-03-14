@@ -32,7 +32,7 @@ public class WxMpKefuServiceImplTest {
     TestConfigStorage configStorage = (TestConfigStorage) this.wxService
       .getWxMpConfigStorage();
     WxMpKefuMessage message = new WxMpKefuMessage();
-    message.setMsgType(WxConsts.CUSTOM_MSG_MPNEWS);
+    message.setMsgType(WxConsts.KefuMsgType.MPNEWS);
     message.setToUser(configStorage.getOpenid());
     message.setMpNewsMediaId("52R6dL2FxDpM9N1rCY3sYBqHwq-L7K_lz1sPI71idMg");
 
@@ -43,7 +43,7 @@ public class WxMpKefuServiceImplTest {
     TestConfigStorage configStorage = (TestConfigStorage) this.wxService
       .getWxMpConfigStorage();
     WxMpKefuMessage message = new WxMpKefuMessage();
-    message.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
+    message.setMsgType(WxConsts.KefuMsgType.TEXT);
     message.setToUser(configStorage.getOpenid());
     message.setContent(
       "欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>");
@@ -55,7 +55,7 @@ public class WxMpKefuServiceImplTest {
     TestConfigStorage configStorage = (TestConfigStorage) this.wxService
       .getWxMpConfigStorage();
     WxMpKefuMessage message = new WxMpKefuMessage();
-    message.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
+    message.setMsgType(WxConsts.KefuMsgType.TEXT);
     message.setToUser(configStorage.getOpenid());
     message.setKfAccount(configStorage.getKfAccount());
     message.setContent(

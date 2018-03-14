@@ -17,7 +17,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
 
-public class WxCpServiceApacheHttpClientImpl extends AbstractWxCpServiceImpl<CloseableHttpClient, HttpHost> {
+public class WxCpServiceApacheHttpClientImpl extends WxCpServiceAbstractImpl<CloseableHttpClient, HttpHost> {
   protected CloseableHttpClient httpClient;
   protected HttpHost httpProxy;
 
@@ -38,10 +38,7 @@ public class WxCpServiceApacheHttpClientImpl extends AbstractWxCpServiceImpl<Clo
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    if (forceRefresh) {
-      this.configStorage.expireAccessToken();
-    }
-    if (this.configStorage.isAccessTokenExpired()) {
+    if (this.configStorage.isAccessTokenExpired() || forceRefresh) {
       synchronized (this.globalAccessTokenRefreshLock) {
         if (this.configStorage.isAccessTokenExpired()) {
           String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"

@@ -6,9 +6,8 @@
     </encoder>
   </appender>
 
-  <root level="info">
+  <root level="debug">
     <appender-ref ref="STDOUT"/>
   </root>
 
-  <logger name="cn.binarywang.wx.miniapp" level="debug"/>
 </configuration>

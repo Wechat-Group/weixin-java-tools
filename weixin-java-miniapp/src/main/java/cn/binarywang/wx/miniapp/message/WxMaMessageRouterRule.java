@@ -189,8 +189,6 @@ public class WxMaMessageRouterRule {
 
   /**
    * 处理微信推送过来的消息
-   *
-   * @return true 代表继续执行别的router，false 代表停止执行别的router
    */
   protected void service(WxMaMessage wxMessage,
                          Map<String, Object> context,
@@ -198,7 +196,7 @@ public class WxMaMessageRouterRule {
                          WxSessionManager sessionManager,
                          WxErrorExceptionHandler exceptionHandler) {
     if (context == null) {
-      context = new HashMap<>();
+      context = new HashMap<>(16);
     }
 
     try {

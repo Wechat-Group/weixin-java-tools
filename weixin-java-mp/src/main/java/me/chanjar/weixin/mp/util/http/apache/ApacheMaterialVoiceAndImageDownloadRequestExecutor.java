@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,10 +42,10 @@ public class ApacheMaterialVoiceAndImageDownloadRequestExecutor extends Material
     params.put("media_id", materialId);
     httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
     try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost);
-         InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response);) {
+         InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response)) {
       // 下载媒体文件出错
       byte[] responseContent = IOUtils.toByteArray(inputStream);
-      String responseContentString = new String(responseContent, "UTF-8");
+      String responseContentString = new String(responseContent, StandardCharsets.UTF_8);
       if (responseContentString.length() < 100) {
         try {
           WxError wxError = WxGsonBuilder.create().fromJson(responseContentString, WxError.class);

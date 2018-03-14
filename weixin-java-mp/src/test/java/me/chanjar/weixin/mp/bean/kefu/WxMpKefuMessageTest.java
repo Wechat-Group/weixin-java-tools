@@ -11,7 +11,7 @@ public class WxMpKefuMessageTest {
   public void testTextReply() {
     WxMpKefuMessage reply = new WxMpKefuMessage();
     reply.setToUser("OPENID");
-    reply.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
+    reply.setMsgType(WxConsts.KefuMsgType.TEXT);
     reply.setContent("sfsfdsdf");
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"text\",\"text\":{\"content\":\"sfsfdsdf\"}}");
   }
@@ -24,7 +24,7 @@ public class WxMpKefuMessageTest {
   public void testImageReply() {
     WxMpKefuMessage reply = new WxMpKefuMessage();
     reply.setToUser("OPENID");
-    reply.setMsgType(WxConsts.CUSTOM_MSG_IMAGE);
+    reply.setMsgType(WxConsts.KefuMsgType.IMAGE);
     reply.setMediaId("MEDIA_ID");
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"image\",\"image\":{\"media_id\":\"MEDIA_ID\"}}");
   }
@@ -37,7 +37,7 @@ public class WxMpKefuMessageTest {
   public void testVoiceReply() {
     WxMpKefuMessage reply = new WxMpKefuMessage();
     reply.setToUser("OPENID");
-    reply.setMsgType(WxConsts.CUSTOM_MSG_VOICE);
+    reply.setMsgType(WxConsts.KefuMsgType.VOICE);
     reply.setMediaId("MEDIA_ID");
     Assert.assertEquals(reply.toJson(), "{\"touser\":\"OPENID\",\"msgtype\":\"voice\",\"voice\":{\"media_id\":\"MEDIA_ID\"}}");
   }
@@ -50,7 +50,7 @@ public class WxMpKefuMessageTest {
   public void testVideoReply() {
     WxMpKefuMessage reply = new WxMpKefuMessage();
     reply.setToUser("OPENID");
-    reply.setMsgType(WxConsts.CUSTOM_MSG_VIDEO);
+    reply.setMsgType(WxConsts.KefuMsgType.VIDEO);
     reply.setMediaId("MEDIA_ID");
     reply.setThumbMediaId("MEDIA_ID");
     reply.setTitle("TITLE");
@@ -66,7 +66,7 @@ public class WxMpKefuMessageTest {
   public void testMusicReply() {
     WxMpKefuMessage reply = new WxMpKefuMessage();
     reply.setToUser("OPENID");
-    reply.setMsgType(WxConsts.CUSTOM_MSG_MUSIC);
+    reply.setMsgType(WxConsts.KefuMsgType.MUSIC);
     reply.setThumbMediaId("MEDIA_ID");
     reply.setDescription("DESCRIPTION");
     reply.setTitle("TITLE");
@@ -90,7 +90,7 @@ public class WxMpKefuMessageTest {
   public void testNewsReply() {
     WxMpKefuMessage reply = new WxMpKefuMessage();
     reply.setToUser("OPENID");
-    reply.setMsgType(WxConsts.CUSTOM_MSG_NEWS);
+    reply.setMsgType(WxConsts.KefuMsgType.NEWS);
 
     WxArticle article1 = new WxArticle();
     article1.setUrl("URL");

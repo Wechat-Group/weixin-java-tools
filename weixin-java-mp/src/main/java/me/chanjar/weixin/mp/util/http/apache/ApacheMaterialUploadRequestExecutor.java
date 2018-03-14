@@ -8,6 +8,7 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 import me.chanjar.weixin.mp.util.http.MaterialUploadRequestExecutor;
+import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -15,6 +16,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.File;
@@ -39,7 +41,7 @@ public class ApacheMaterialUploadRequestExecutor extends MaterialUploadRequestEx
     }
 
     if (material == null) {
-      throw new WxErrorException(WxError.newBuilder().setErrorMsg("非法请求，material参数为空").build());
+      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("非法请求，material参数为空").build());
     }
 
     File file = material.getFile();
@@ -53,7 +55,8 @@ public class ApacheMaterialUploadRequestExecutor extends MaterialUploadRequestEx
       .setMode(HttpMultipartMode.RFC6532);
     Map<String, String> form = material.getForm();
     if (material.getForm() != null) {
-      multipartEntityBuilder.addTextBody("description", WxGsonBuilder.create().toJson(form));
+      multipartEntityBuilder.addPart("description",
+        new StringBody(WxGsonBuilder.create().toJson(form), ContentType.create("text/plain", Consts.UTF_8)));
     }
 
     httpPost.setEntity(multipartEntityBuilder.build());

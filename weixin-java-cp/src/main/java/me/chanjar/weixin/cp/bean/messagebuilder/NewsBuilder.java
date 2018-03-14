@@ -5,6 +5,7 @@ import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,11 +22,16 @@ public final class NewsBuilder extends BaseBuilder<NewsBuilder> {
   private List<NewArticle> articles = new ArrayList<>();
 
   public NewsBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_NEWS;
+    this.msgType = WxConsts.KefuMsgType.NEWS;
   }
 
-  public NewsBuilder addArticle(NewArticle article) {
-    this.articles.add(article);
+  public NewsBuilder addArticle(NewArticle... articles) {
+    Collections.addAll(this.articles, articles);
+    return this;
+  }
+
+  public NewsBuilder articles(List<NewArticle> articles) {
+    this.articles = articles;
     return this;
   }
 

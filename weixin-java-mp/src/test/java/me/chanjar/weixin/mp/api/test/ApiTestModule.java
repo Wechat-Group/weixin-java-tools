@@ -6,7 +6,7 @@ import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceApacheHttpClientImpl;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceOkHttpImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +19,7 @@ public class ApiTestModule implements Module {
     try (InputStream is1 = ClassLoader.getSystemResourceAsStream("test-config.xml")) {
       TestConfigStorage config = this.fromXml(TestConfigStorage.class, is1);
       config.setAccessTokenLock(new ReentrantLock());
-      WxMpService wxService = new WxMpServiceApacheHttpClientImpl();
+      WxMpService wxService = new WxMpServiceOkHttpImpl();
       wxService.setWxMpConfigStorage(config);
 
       binder.bind(WxMpService.class).toInstance(wxService);

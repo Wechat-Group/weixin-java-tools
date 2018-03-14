@@ -1,5 +1,7 @@
 package me.chanjar.weixin.mp.util.http;
 
+import me.chanjar.weixin.common.bean.result.WxError;
+import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
@@ -21,7 +23,7 @@ public abstract class QrCodeRequestExecutor<H, P> implements RequestExecutor<Fil
     this.requestHttp = requestHttp;
   }
 
-  public static RequestExecutor<File, WxMpQrCodeTicket> create(RequestHttp requestHttp) {
+  public static RequestExecutor<File, WxMpQrCodeTicket> create(RequestHttp requestHttp) throws WxErrorException {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
         return new ApacheQrCodeRequestExecutor(requestHttp);
@@ -30,8 +32,7 @@ public abstract class QrCodeRequestExecutor<H, P> implements RequestExecutor<Fil
       case OK_HTTP:
         return new OkhttpQrCodeRequestExecutor(requestHttp);
       default:
-        //TODO 需要优化，最好抛出异常
-        return null;
+        throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("不支持的http框架").build());
     }
   }
 

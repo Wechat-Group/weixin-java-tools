@@ -1,8 +1,10 @@
 package com.github.binarywang.wxpay.bean.request;
 
 import com.github.binarywang.wxpay.config.WxPayConfig;
+import com.github.binarywang.wxpay.constant.WxPayConstants.RefundAccountSource;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,12 +24,19 @@ import java.util.Arrays;
  * Created by Binary Wang on 2016-10-08.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayRefundRequest extends WxPayBaseRequest {
-  private static final String[] REFUND_ACCOUNT = new String[]{"REFUND_SOURCE_RECHARGE_FUNDS",
-    "REFUND_SOURCE_UNSETTLED_FUNDS"};
+  private static final String[] REFUND_ACCOUNT = new String[]{
+    RefundAccountSource.RECHARGE_FUNDS,
+    RefundAccountSource.UNSETTLED_FUNDS
+  };
   /**
    * <pre>
    * 设备号
@@ -142,224 +151,40 @@ public class WxPayRefundRequest extends WxPayBaseRequest {
    */
   @XStreamAlias("refund_account")
   private String refundAccount;
-
-  public WxPayRefundRequest() {
-  }
-
-  private WxPayRefundRequest(Builder builder) {
-    setDeviceInfo(builder.deviceInfo);
-    setAppid(builder.appid);
-    setTransactionId(builder.transactionId);
-    setMchId(builder.mchId);
-    setOutTradeNo(builder.outTradeNo);
-    setSubAppId(builder.subAppId);
-    setSubMchId(builder.subMchId);
-    setOutRefundNo(builder.outRefundNo);
-    setNonceStr(builder.nonceStr);
-    setTotalFee(builder.totalFee);
-    setSign(builder.sign);
-    setRefundFee(builder.refundFee);
-    setRefundFeeType(builder.refundFeeType);
-    setOpUserId(builder.opUserId);
-    setRefundAccount(builder.refundAccount);
-  }
-
-  public static Builder newBuilder() {
-    return new Builder();
-  }
+  /**
+   * <pre>
+   * 退款原因
+   * refund_account
+   * 否
+   * String(80)
+   * 商品已售完
+   * 若商户传入，会在下发给用户的退款消息中体现退款原因
+   * </pre>
+   */
+  @XStreamAlias("refund_desc")
+  private String refundDesc;
 
   @Override
-  public void checkAndSign(WxPayConfig config) throws WxPayException {
+  public void checkAndSign(WxPayConfig config, boolean isIgnoreSignType) throws WxPayException {
     if (StringUtils.isBlank(this.getOpUserId())) {
       this.setOpUserId(config.getMchId());
     }
 
-    super.checkAndSign(config);
-  }
-
-  public String getDeviceInfo() {
-    return this.deviceInfo;
-  }
-
-  public void setDeviceInfo(String deviceInfo) {
-    this.deviceInfo = deviceInfo;
-  }
-
-  public String getTransactionId() {
-    return this.transactionId;
-  }
-
-  public void setTransactionId(String transactionId) {
-    this.transactionId = transactionId;
-  }
-
-  public String getOutTradeNo() {
-    return this.outTradeNo;
-  }
-
-  public void setOutTradeNo(String outTradeNo) {
-    this.outTradeNo = outTradeNo;
-  }
-
-  public String getOutRefundNo() {
-    return this.outRefundNo;
-  }
-
-  public void setOutRefundNo(String outRefundNo) {
-    this.outRefundNo = outRefundNo;
-  }
-
-  public Integer getTotalFee() {
-    return this.totalFee;
-  }
-
-  public void setTotalFee(Integer totalFee) {
-    this.totalFee = totalFee;
-  }
-
-  public Integer getRefundFee() {
-    return this.refundFee;
-  }
-
-  public void setRefundFee(Integer refundFee) {
-    this.refundFee = refundFee;
-  }
-
-  public String getRefundFeeType() {
-    return this.refundFeeType;
-  }
-
-  public void setRefundFeeType(String refundFeeType) {
-    this.refundFeeType = refundFeeType;
-  }
-
-  public String getOpUserId() {
-    return this.opUserId;
-  }
-
-  public void setOpUserId(String opUserId) {
-    this.opUserId = opUserId;
-  }
-
-  public String getRefundAccount() {
-    return this.refundAccount;
-  }
-
-  public void setRefundAccount(String refundAccount) {
-    this.refundAccount = refundAccount;
+    super.checkAndSign(config, isIgnoreSignType);
   }
 
   @Override
-  protected void checkConstraints() {
+  protected void checkConstraints() throws WxPayException {
     if (StringUtils.isNotBlank(this.getRefundAccount())) {
       if (!ArrayUtils.contains(REFUND_ACCOUNT, this.getRefundAccount())) {
-        throw new IllegalArgumentException(String.format("refund_account目前必须为%s其中之一,实际值：%s",
+        throw new WxPayException(String.format("refund_account目前必须为%s其中之一,实际值：%s",
           Arrays.toString(REFUND_ACCOUNT), this.getRefundAccount()));
       }
     }
 
     if (StringUtils.isBlank(this.getOutTradeNo()) && StringUtils.isBlank(this.getTransactionId())) {
-      throw new IllegalArgumentException("transaction_id 和 out_trade_no 不能同时为空，必须提供一个");
+      throw new WxPayException("transaction_id 和 out_trade_no 不能同时为空，必须提供一个");
     }
   }
 
-  public static final class Builder {
-    private String deviceInfo;
-    private String appid;
-    private String transactionId;
-    private String mchId;
-    private String outTradeNo;
-    private String subAppId;
-    private String subMchId;
-    private String outRefundNo;
-    private String nonceStr;
-    private Integer totalFee;
-    private String sign;
-    private Integer refundFee;
-    private String refundFeeType;
-    private String opUserId;
-    private String refundAccount;
-
-    private Builder() {
-    }
-
-    public Builder deviceInfo(String deviceInfo) {
-      this.deviceInfo = deviceInfo;
-      return this;
-    }
-
-    public Builder appid(String appid) {
-      this.appid = appid;
-      return this;
-    }
-
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
-
-    public Builder mchId(String mchId) {
-      this.mchId = mchId;
-      return this;
-    }
-
-    public Builder outTradeNo(String outTradeNo) {
-      this.outTradeNo = outTradeNo;
-      return this;
-    }
-
-    public Builder subAppId(String subAppId) {
-      this.subAppId = subAppId;
-      return this;
-    }
-
-    public Builder subMchId(String subMchId) {
-      this.subMchId = subMchId;
-      return this;
-    }
-
-    public Builder outRefundNo(String outRefundNo) {
-      this.outRefundNo = outRefundNo;
-      return this;
-    }
-
-    public Builder nonceStr(String nonceStr) {
-      this.nonceStr = nonceStr;
-      return this;
-    }
-
-    public Builder totalFee(Integer totalFee) {
-      this.totalFee = totalFee;
-      return this;
-    }
-
-    public Builder sign(String sign) {
-      this.sign = sign;
-      return this;
-    }
-
-    public Builder refundFee(Integer refundFee) {
-      this.refundFee = refundFee;
-      return this;
-    }
-
-    public Builder refundFeeType(String refundFeeType) {
-      this.refundFeeType = refundFeeType;
-      return this;
-    }
-
-    public Builder opUserId(String opUserId) {
-      this.opUserId = opUserId;
-      return this;
-    }
-
-    public Builder refundAccount(String refundAccount) {
-      this.refundAccount = refundAccount;
-      return this;
-    }
-
-    public WxPayRefundRequest build() {
-      return new WxPayRefundRequest(this);
-    }
-  }
 }

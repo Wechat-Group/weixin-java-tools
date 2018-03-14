@@ -13,6 +13,7 @@ public class OkHttpProxyInfo {
   private final String proxyUsername;
   private final String proxyPassword;
   private final ProxyType proxyType;
+
   public OkHttpProxyInfo(ProxyType proxyType, String proxyHost, int proxyPort, String proxyUser, String proxyPassword) {
     this.proxyType = proxyType;
     this.proxyAddress = proxyHost;
@@ -91,8 +92,6 @@ public class OkHttpProxyInfo {
 
   /**
    * 返回 java.net.Proxy
-   *
-   * @return
    */
   public Proxy getProxy() {
     Proxy proxy = null;

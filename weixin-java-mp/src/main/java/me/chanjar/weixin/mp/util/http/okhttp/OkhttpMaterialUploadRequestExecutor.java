@@ -9,6 +9,8 @@ import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 import me.chanjar.weixin.mp.util.http.MaterialUploadRequestExecutor;
 import okhttp3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,48 +20,39 @@ import java.util.Map;
 /**
  * Created by ecoolper on 2017/5/5.
  */
-public class OkhttpMaterialUploadRequestExecutor extends MaterialUploadRequestExecutor<ConnectionPool, OkHttpProxyInfo> {
+public class OkhttpMaterialUploadRequestExecutor extends MaterialUploadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
   public OkhttpMaterialUploadRequestExecutor(RequestHttp requestHttp) {
     super(requestHttp);
   }
 
   @Override
   public WxMpMaterialUploadResult execute(String uri, WxMpMaterial material) throws WxErrorException, IOException {
-    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().connectionPool(requestHttp.getRequestHttpClient());
-    //设置代理
-    if (requestHttp.getRequestHttpProxy() != null) {
-      clientBuilder.proxy(requestHttp.getRequestHttpProxy().getProxy());
-    }
-    //设置授权
-    clientBuilder.authenticator(new Authenticator() {
-      @Override
-      public Request authenticate(Route route, Response response) throws IOException {
-        String credential = Credentials.basic(requestHttp.getRequestHttpProxy().getProxyUsername(), requestHttp.getRequestHttpProxy().getProxyPassword());
-        return response.request().newBuilder()
-          .header("Authorization", credential)
-          .build();
-      }
-    });
-    //得到httpClient
-    OkHttpClient client = clientBuilder.build();
-
-
+    logger.debug("OkhttpMaterialUploadRequestExecutor is running");
     if (material == null) {
-      throw new WxErrorException(WxError.newBuilder().setErrorMsg("非法请求，material参数为空").build());
+      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("非法请求，material参数为空").build());
     }
-
     File file = material.getFile();
     if (file == null || !file.exists()) {
       throw new FileNotFoundException();
     }
-    RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-    MultipartBody.Builder bodyBuilder = new MultipartBody.Builder().addFormDataPart("media", null, fileBody);
+
+    //得到httpClient
+
+    OkHttpClient client = requestHttp.getRequestHttpClient();
+
+    MultipartBody.Builder bodyBuilder = new MultipartBody.Builder()
+      .setType(MediaType.parse("multipart/form-data"))
+      .addFormDataPart("media",
+        file.getName(),
+        RequestBody.create(MediaType.parse("application/octet-stream"), file));
     Map<String, String> form = material.getForm();
-    if (material.getForm() != null) {
+    if (form != null) {
       bodyBuilder.addFormDataPart("description", WxGsonBuilder.create().toJson(form));
     }
-    RequestBody body = bodyBuilder.build();
-    Request request = new Request.Builder().url(uri).post(body).build();
+
+    Request request = new Request.Builder().url(uri).post(bodyBuilder.build()).build();
     Response response = client.newCall(request).execute();
     String responseContent = response.body().string();
     WxError error = WxError.fromJson(responseContent);
@@ -69,4 +62,5 @@ public class OkhttpMaterialUploadRequestExecutor extends MaterialUploadRequestEx
       return WxMpMaterialUploadResult.fromJson(responseContent);
     }
   }
+
 }

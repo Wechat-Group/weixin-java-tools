@@ -5,7 +5,7 @@
     <classes>
       <class name="me.chanjar.weixin.mp.api.WxMpBusyRetryTest"/>
       <class name="me.chanjar.weixin.mp.api.WxMpBaseAPITest"/>
-      <class name="me.chanjar.weixin.mp.api.WxMpMassMessageAPITest"/>
+      <class name="me.chanjar.weixin.mp.api.impl.WxMpMassMessageServiceImplTest"/>
       <class name="me.chanjar.weixin.mp.api.impl.WxMpUserServiceImplTest"/>
       <class name="me.chanjar.weixin.mp.api.impl.WxMpQrcodeServiceImplTest"/>
       <class name="me.chanjar.weixin.mp.api.WxMpShortUrlAPITest"/>

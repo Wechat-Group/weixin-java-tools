@@ -1,7 +1,9 @@
 package me.chanjar.weixin.mp.bean;
 
 import com.google.gson.Gson;
+import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +12,9 @@ import java.util.Map;
  *
  * @author rememberber
  */
-public class WxMpShakeQuery {
+@Data
+public class WxMpShakeQuery implements Serializable {
+  private static final long serialVersionUID = 4316527352035275412L;
 
   private String ticket;
 
@@ -23,19 +27,4 @@ public class WxMpShakeQuery {
     return new Gson().toJson(map);
   }
 
-  public String getTicket() {
-    return ticket;
-  }
-
-  public void setTicket(String ticket) {
-    this.ticket = ticket;
-  }
-
-  public int getNeedPoi() {
-    return needPoi;
-  }
-
-  public void setNeedPoi(int needPoi) {
-    this.needPoi = needPoi;
-  }
 }

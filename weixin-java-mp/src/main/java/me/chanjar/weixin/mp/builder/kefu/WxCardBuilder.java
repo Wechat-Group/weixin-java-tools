@@ -15,7 +15,7 @@ public final class WxCardBuilder extends BaseBuilder<WxCardBuilder> {
   private String cardId;
 
   public WxCardBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_WXCARD;
+    this.msgType = WxConsts.KefuMsgType.WXCARD;
   }
 
   public WxCardBuilder cardId(String cardId) {

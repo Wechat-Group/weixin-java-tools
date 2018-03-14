@@ -1,12 +1,10 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.inject.Inject;
-import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpDepart;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class WxCpDepartmentServiceImplTest {
     WxCpDepart cpDepart = new WxCpDepart();
     cpDepart.setName("子部门" + System.currentTimeMillis());
     cpDepart.setParentId(1);
-    cpDepart.setOrder(1);
+    cpDepart.setOrder(1L);
     Integer departId = this.wxCpService.getDepartmentService().create(cpDepart);
     System.out.println(departId);
   }

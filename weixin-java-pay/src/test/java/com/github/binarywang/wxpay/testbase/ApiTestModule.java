@@ -12,11 +12,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ApiTestModule implements Module {
+  private static final String TEST_CONFIG_XML = "test-config.xml";
 
   @Override
   public void configure(Binder binder) {
-    try (InputStream is1 = ClassLoader.getSystemResourceAsStream("test-config.xml")) {
-      XmlWxPayConfig config = this.fromXml(XmlWxPayConfig.class, is1);
+    try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(TEST_CONFIG_XML)) {
+      if (inputStream == null) {
+        throw new RuntimeException("测试配置文件【" + TEST_CONFIG_XML + "】未找到");
+      }
+
+      XmlWxPayConfig config = this.fromXml(XmlWxPayConfig.class, inputStream);
       WxPayService wxService = new WxPayServiceImpl();
       wxService.setConfig(config);
 

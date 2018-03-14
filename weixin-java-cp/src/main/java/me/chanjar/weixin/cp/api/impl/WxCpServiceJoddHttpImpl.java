@@ -7,7 +7,7 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 
-public class WxCpServiceJoddHttpImpl extends AbstractWxCpServiceImpl<HttpConnectionProvider, ProxyInfo> {
+public class WxCpServiceJoddHttpImpl extends WxCpServiceAbstractImpl<HttpConnectionProvider, ProxyInfo> {
   protected HttpConnectionProvider httpClient;
   protected ProxyInfo httpProxy;
 
@@ -29,10 +29,7 @@ public class WxCpServiceJoddHttpImpl extends AbstractWxCpServiceImpl<HttpConnect
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    if (forceRefresh) {
-      this.configStorage.expireAccessToken();
-    }
-    if (this.configStorage.isAccessTokenExpired()) {
+    if (this.configStorage.isAccessTokenExpired() || forceRefresh) {
       synchronized (this.globalAccessTokenRefreshLock) {
         if (this.configStorage.isAccessTokenExpired()) {
           String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"

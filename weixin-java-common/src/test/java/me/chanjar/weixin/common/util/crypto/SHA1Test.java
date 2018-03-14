@@ -10,7 +10,7 @@ import static org.testng.Assert.assertNotNull;
  *  Created by BinaryWang on 2017/6/10.
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class SHA1Test {
   @Test

@@ -16,7 +16,7 @@ public final class MpNewsBuilder extends BaseBuilder<MpNewsBuilder> {
   private String mediaId;
 
   public MpNewsBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_MPNEWS;
+    this.msgType = WxConsts.KefuMsgType.MPNEWS;
   }
 
   public MpNewsBuilder mediaId(String mediaId) {

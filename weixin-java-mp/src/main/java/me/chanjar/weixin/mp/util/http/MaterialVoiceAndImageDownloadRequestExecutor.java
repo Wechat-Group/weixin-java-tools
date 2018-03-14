@@ -9,16 +9,15 @@ import me.chanjar.weixin.mp.util.http.okhttp.OkhttpMaterialVoiceAndImageDownload
 import java.io.File;
 import java.io.InputStream;
 
-public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> implements RequestExecutor<InputStream, String> {
+public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P>
+  implements RequestExecutor<InputStream, String> {
   protected RequestHttp<H, P> requestHttp;
   protected File tmpDirFile;
-
 
   public MaterialVoiceAndImageDownloadRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {
     this.requestHttp = requestHttp;
     this.tmpDirFile = tmpDirFile;
   }
-
 
   public static RequestExecutor<InputStream, String> create(RequestHttp requestHttp, File tmpDirFile) {
     switch (requestHttp.getRequestType()) {

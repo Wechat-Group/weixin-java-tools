@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.message;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaMessage;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.api.WxMessageDuplicateChecker;
 import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
@@ -17,10 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -42,7 +40,9 @@ public class WxMaMessageRouter {
 
   public WxMaMessageRouter(WxMaService wxMaService) {
     this.wxMaService = wxMaService;
-    this.executorService = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
+    ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxMaMessageRouter-pool-%d").build();
+    this.executorService = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE,
+      0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), namedThreadFactory);
     this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
@@ -159,7 +159,7 @@ public class WxMaMessageRouter {
   }
 
   public void route(final WxMaMessage wxMessage) {
-    this.route(wxMessage, new HashMap<String, Object>());
+    this.route(wxMessage, new HashMap<String, Object>(2));
   }
 
   /**

@@ -7,43 +7,44 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import me.chanjar.weixin.mp.util.http.QrCodeRequestExecutor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import okhttp3.*;
-
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.UUID;
 
 /**
- * Created by ecoolper on 2017/5/5.
+ *
+ * @author ecoolper
+ * @date 2017/5/5
  */
-public class OkhttpQrCodeRequestExecutor extends QrCodeRequestExecutor<ConnectionPool, OkHttpProxyInfo> {
+public class OkhttpQrCodeRequestExecutor extends QrCodeRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
   public OkhttpQrCodeRequestExecutor(RequestHttp requestHttp) {
     super(requestHttp);
   }
 
   @Override
-  public File execute(String uri, WxMpQrCodeTicket data) throws WxErrorException, IOException {
-    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().connectionPool(requestHttp.getRequestHttpClient());
-    //设置代理
-    if (requestHttp.getRequestHttpProxy() != null) {
-      clientBuilder.proxy(requestHttp.getRequestHttpProxy().getProxy());
-    }
-    //设置授权
-    clientBuilder.authenticator(new Authenticator() {
-      @Override
-      public Request authenticate(Route route, Response response) throws IOException {
-        String credential = Credentials.basic(requestHttp.getRequestHttpProxy().getProxyUsername(), requestHttp.getRequestHttpProxy().getProxyPassword());
-        return response.request().newBuilder()
-          .header("Authorization", credential)
-          .build();
-      }
-    });
-    //得到httpClient
-    OkHttpClient client = clientBuilder.build();
+  public File execute(String uri, WxMpQrCodeTicket ticket) throws WxErrorException, IOException {
+    logger.debug("OkhttpQrCodeRequestExecutor is running");
 
+    if (ticket != null) {
+      if (uri.indexOf('?') == -1) {
+        uri += '?';
+      }
+      uri += uri.endsWith("?")
+        ? "ticket=" + URLEncoder.encode(ticket.getTicket(), "UTF-8")
+        : "&ticket=" + URLEncoder.encode(ticket.getTicket(), "UTF-8");
+    }
+
+    OkHttpClient client = requestHttp.getRequestHttpClient();
     Request request = new Request.Builder().url(uri).get().build();
     Response response = client.newCall(request).execute();
     String contentTypeHeader = response.header("Content-Type");
@@ -51,8 +52,10 @@ public class OkhttpQrCodeRequestExecutor extends QrCodeRequestExecutor<Connectio
       String responseContent = response.body().string();
       throw new WxErrorException(WxError.fromJson(responseContent));
     }
-    try (InputStream inputStream = new ByteArrayInputStream(response.body().bytes())) {
+
+    try (InputStream inputStream = response.body().byteStream()) {
       return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
     }
+
   }
 }

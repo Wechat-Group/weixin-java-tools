@@ -1,6 +1,8 @@
 package com.github.binarywang.wxpay.bean.request;
 
+import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -16,8 +18,13 @@ import org.apache.commons.lang3.StringUtils;
  * <li>描述
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayOrderQueryRequest extends WxPayBaseRequest {
 
@@ -47,27 +54,11 @@ public class WxPayOrderQueryRequest extends WxPayBaseRequest {
   @XStreamAlias("out_trade_no")
   private String outTradeNo;
 
-  public String getTransactionId() {
-    return this.transactionId;
-  }
-
-  public void setTransactionId(String transactionId) {
-    this.transactionId = transactionId;
-  }
-
-  public String getOutTradeNo() {
-    return this.outTradeNo;
-  }
-
-  public void setOutTradeNo(String outTradeNo) {
-    this.outTradeNo = outTradeNo;
-  }
-
   @Override
-  protected void checkConstraints() {
+  protected void checkConstraints() throws WxPayException {
     if ((StringUtils.isBlank(transactionId) && StringUtils.isBlank(outTradeNo)) ||
       (StringUtils.isNotBlank(transactionId) && StringUtils.isNotBlank(outTradeNo))) {
-      throw new IllegalArgumentException("transaction_id 和 out_trade_no 不能同时存在或同时为空，必须二选一");
+      throw new WxPayException("transaction_id 和 out_trade_no 不能同时存在或同时为空，必须二选一");
     }
   }
 }

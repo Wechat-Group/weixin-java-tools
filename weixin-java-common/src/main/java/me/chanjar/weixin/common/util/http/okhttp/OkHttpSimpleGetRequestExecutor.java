@@ -5,13 +5,16 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import okhttp3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 /**
  * Created by ecoolper on 2017/5/4.
  */
-public class OkHttpSimpleGetRequestExecutor extends SimpleGetRequestExecutor<ConnectionPool, OkHttpProxyInfo> {
+public class OkHttpSimpleGetRequestExecutor extends SimpleGetRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   public OkHttpSimpleGetRequestExecutor(RequestHttp requestHttp) {
     super(requestHttp);
@@ -19,6 +22,7 @@ public class OkHttpSimpleGetRequestExecutor extends SimpleGetRequestExecutor<Con
 
   @Override
   public String execute(String uri, String queryParam) throws WxErrorException, IOException {
+    logger.debug("OkHttpSimpleGetRequestExecutor is running");
     if (queryParam != null) {
       if (uri.indexOf('?') == -1) {
         uri += '?';
@@ -26,26 +30,9 @@ public class OkHttpSimpleGetRequestExecutor extends SimpleGetRequestExecutor<Con
       uri += uri.endsWith("?") ? queryParam : '&' + queryParam;
     }
 
-    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().connectionPool(requestHttp.getRequestHttpClient());
-    //设置代理
-    if (requestHttp.getRequestHttpProxy() != null) {
-      clientBuilder.proxy(requestHttp.getRequestHttpProxy().getProxy());
-    }
-    //设置授权
-    clientBuilder.authenticator(new Authenticator() {
-      @Override
-      public Request authenticate(Route route, Response response) throws IOException {
-        String credential = Credentials.basic(requestHttp.getRequestHttpProxy().getProxyUsername(), requestHttp.getRequestHttpProxy().getProxyPassword());
-        return response.request().newBuilder()
-          .header("Authorization", credential)
-          .build();
-      }
-    });
     //得到httpClient
-    OkHttpClient client = clientBuilder.build();
-
+    OkHttpClient client = requestHttp.getRequestHttpClient();
     Request request = new Request.Builder().url(uri).build();
-
     Response response = client.newCall(request).execute();
     String responseContent = response.body().string();
     WxError error = WxError.fromJson(responseContent);

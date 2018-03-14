@@ -29,4 +29,10 @@ public class WxMpBaseAPITest {
     Assert.assertTrue(StringUtils.isNotBlank(after));
   }
 
+  public void testJsapiTicket() throws WxErrorException {
+    String jsapiTicket = this.wxService.getJsapiTicket(false);
+    System.out.println(jsapiTicket);
+    Assert.assertNotNull(jsapiTicket);
+  }
+
 }

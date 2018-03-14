@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.*;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.result.WxError;
@@ -87,11 +88,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
     try {
       lock.lock();
 
-      if (forceRefresh) {
-        this.getWxMaConfig().expireAccessToken();
-      }
-
-      if (this.getWxMaConfig().isAccessTokenExpired()) {
+      if (this.getWxMaConfig().isAccessTokenExpired() || forceRefresh) {
         String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMaConfig().getAppid(),
           this.getWxMaConfig().getSecret());
         try {
@@ -151,6 +148,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   /**
    * 向微信端发送请求，在这里执行的策略是当发生access_token过期时才去刷新，然后重新执行请求，而不是全局定时请求
    */
+  @Override
   public <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
     int retryTimes = 0;
     do {
@@ -183,7 +181,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
     throw new RuntimeException("微信服务端异常，超出重试次数");
   }
 
-  public synchronized <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  public <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
     if (uri.contains("access_token=")) {
       throw new IllegalArgumentException("uri参数中不允许有access_token: " + uri);
     }
@@ -193,17 +191,16 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
 
     try {
       T result = executor.execute(uriWithAccessToken, data);
-      this.log.debug("\n[URL]:  {}\n[PARAMS]: {}\n[RESPONSE]: {}", uriWithAccessToken, data, result);
+      this.log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, data, result);
       return result;
     } catch (WxErrorException e) {
       WxError error = e.getError();
       /*
        * 发生以下情况时尝试刷新access_token
-       * 40001 获取access_token时AppSecret错误，或者access_token无效
-       * 42001 access_token超时
-       * 40014 不合法的access_token，请开发者认真比对access_token的有效性（如是否过期）
        */
-      if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001 || error.getErrorCode() == 40014) {
+      if (error.getErrorCode() == WxMaConstants.ErrorCode.ERR_40001
+        || error.getErrorCode() == WxMaConstants.ErrorCode.ERR_42001
+        || error.getErrorCode() == WxMaConstants.ErrorCode.ERR_40014) {
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
         this.getWxMaConfig().expireAccessToken();
         if (this.getWxMaConfig().autoRefreshToken()) {
@@ -212,12 +209,12 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
       }
 
       if (error.getErrorCode() != 0) {
-        this.log.error("\n[URL]:  {}\n[PARAMS]: {}\n[RESPONSE]: {}", uriWithAccessToken, data, error);
-        throw new WxErrorException(error);
+        this.log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, data, error);
+        throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      this.log.error("\n[URL]:  {}\n[PARAMS]: {}\n[EXCEPTION]: {}", uriWithAccessToken, data, e.getMessage());
+      this.log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, data, e.getMessage());
       throw new RuntimeException(e);
     }
   }

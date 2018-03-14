@@ -29,9 +29,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * httpclient 连接管理器 自带DNS解析
- * <p>
- * 大部分代码拷贝自：DefaultApacheHttpClientBuilder
+ * httpclient 连接管理器 自带DNS解析.
+ * <p>大部分代码拷贝自：DefaultApacheHttpClientBuilder</p>
  *
  * @author Andy.Huo
  */
@@ -64,7 +63,7 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
   private String httpProxyPassword;
 
   /**
-   * 闲置连接监控线程
+   * 闲置连接监控线程.
    */
   private IdleConnectionMonitorThread idleConnectionMonitorThread;
   private HttpClientBuilder httpClientBuilder;
@@ -162,7 +161,7 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
   }
 
   /**
-   * 每路的最大链接数,默认10
+   * 每路的最大链接数,默认10.
    *
    * @param maxConnPerHost 每路的最大链接数,默认10
    */
@@ -171,7 +170,7 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
   }
 
   /**
-   * 最大总连接数,默认50
+   * 最大总连接数,默认50.
    *
    * @param maxTotalConn 最大总连接数,默认50
    */
@@ -180,7 +179,7 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
   }
 
   /**
-   * 自定义httpclient的User Agent
+   * 自定义httpclient的User Agent.
    *
    * @param userAgent User Agent
    */
@@ -196,9 +195,12 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
     if (prepared.get()) {
       return;
     }
-    Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
-      .register("http", this.plainConnectionSocketFactory).register("https", this.sslConnectionSocketFactory)
-      .build();
+
+    Registry<ConnectionSocketFactory> registry =
+      RegistryBuilder.<ConnectionSocketFactory>create()
+        .register("http", this.plainConnectionSocketFactory)
+        .register("https", this.sslConnectionSocketFactory)
+        .build();
 
     @SuppressWarnings("resource")
     PoolingHttpClientConnectionManager connectionManager;
@@ -219,8 +221,8 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
     connectionManager
       .setDefaultSocketConfig(SocketConfig.copy(SocketConfig.DEFAULT).setSoTimeout(this.soTimeout).build());
 
-    this.idleConnectionMonitorThread = new IdleConnectionMonitorThread(connectionManager, this.idleConnTimeout,
-      this.checkWaitTime);
+    this.idleConnectionMonitorThread = new IdleConnectionMonitorThread(
+      connectionManager, this.idleConnTimeout, this.checkWaitTime);
     this.idleConnectionMonitorThread.setDaemon(true);
     this.idleConnectionMonitorThread.start();
 
@@ -234,8 +236,8 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
     if (StringUtils.isNotBlank(this.httpProxyHost) && StringUtils.isNotBlank(this.httpProxyUsername)) {
       // 使用代理服务器 需要用户认证的代理服务器
       CredentialsProvider provider = new BasicCredentialsProvider();
-      provider.setCredentials(new AuthScope(this.httpProxyHost, this.httpProxyPort),
-        new UsernamePasswordCredentials(this.httpProxyUsername, this.httpProxyPassword));
+      provider.setCredentials(new AuthScope(this.httpProxyHost, this.httpProxyPort)
+        , new UsernamePasswordCredentials(this.httpProxyUsername, this.httpProxyPassword));
       this.httpClientBuilder.setDefaultCredentialsProvider(provider);
     }
 
@@ -267,8 +269,10 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
     private final int checkWaitTime;
     private volatile boolean shutdown;
 
-    public IdleConnectionMonitorThread(HttpClientConnectionManager connMgr, int idleConnTimeout,
-                                       int checkWaitTime) {
+    /**
+     * 构造方法.
+     */
+    public IdleConnectionMonitorThread(HttpClientConnectionManager connMgr, int idleConnTimeout, int checkWaitTime) {
       super("IdleConnectionMonitorThread");
       this.connMgr = connMgr;
       this.idleConnTimeout = idleConnTimeout;
@@ -289,12 +293,18 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
       }
     }
 
+    /**
+     * 触发.
+     */
     public void trigger() {
       synchronized (this) {
         notifyAll();
       }
     }
 
+    /**
+     * 关闭.
+     */
     public void shutdown() {
       this.shutdown = true;
       synchronized (this) {

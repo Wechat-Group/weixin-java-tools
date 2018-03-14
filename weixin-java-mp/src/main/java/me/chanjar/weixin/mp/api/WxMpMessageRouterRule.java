@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ public class WxMpMessageRouterRule {
   private String event;
 
   private String eventKey;
+
+  private String eventKeyRegex;
 
   private String content;
 
@@ -71,6 +74,14 @@ public class WxMpMessageRouterRule {
    */
   public WxMpMessageRouterRule eventKey(String eventKey) {
     this.eventKey = eventKey;
+    return this;
+  }
+
+  /**
+   * 如果eventKey匹配该正则表达式
+   */
+  public WxMpMessageRouterRule eventKeyRegex(String regex) {
+    this.eventKeyRegex = regex;
     return this;
   }
 
@@ -170,17 +181,17 @@ public class WxMpMessageRouterRule {
     return
       (this.fromUser == null || this.fromUser.equals(wxMessage.getFromUser()))
         &&
-        (this.msgType == null || this.msgType.toLowerCase().equals((wxMessage.getMsgType() == null ? null : wxMessage.getMsgType().toLowerCase())))
+        (this.msgType == null || this.msgType.equalsIgnoreCase(wxMessage.getMsgType()))
         &&
-        (this.event == null || this.event.toLowerCase().equals((wxMessage.getEvent() == null ? null : wxMessage.getEvent().toLowerCase())))
+        (this.event == null || this.event.equalsIgnoreCase(wxMessage.getEvent()))
         &&
-        (this.eventKey == null || this.eventKey.toLowerCase().equals((wxMessage.getEventKey() == null ? null : wxMessage.getEventKey().toLowerCase())))
+        (this.eventKey == null || this.eventKey.equalsIgnoreCase(wxMessage.getEventKey()))
         &&
-        (this.content == null || this.content
-          .equals(wxMessage.getContent() == null ? null : wxMessage.getContent().trim()))
+        (this.eventKeyRegex == null || Pattern.matches(this.eventKeyRegex, StringUtils.trimToEmpty(wxMessage.getEventKey())))
         &&
-        (this.rContent == null || Pattern
-          .matches(this.rContent, wxMessage.getContent() == null ? "" : wxMessage.getContent().trim()))
+        (this.content == null || this.content.equals(StringUtils.trimToNull(wxMessage.getContent())))
+        &&
+        (this.rContent == null || Pattern.matches(this.rContent, StringUtils.trimToEmpty(wxMessage.getContent())))
         &&
         (this.matcher == null || this.matcher.match(wxMessage))
       ;

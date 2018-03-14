@@ -16,6 +16,16 @@ import java.io.InputStream;
  * </pre>
  */
 public interface WxMpMaterialService {
+  String MEDIA_GET_URL = "https://api.weixin.qq.com/cgi-bin/media/get";
+  String MEDIA_UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?type=%s";
+  String IMG_UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/uploadimg";
+  String MATERIAL_ADD_URL = "https://api.weixin.qq.com/cgi-bin/material/add_material?type=%s";
+  String NEWS_ADD_URL = "https://api.weixin.qq.com/cgi-bin/material/add_news";
+  String MATERIAL_GET_URL = "https://api.weixin.qq.com/cgi-bin/material/get_material";
+  String NEWS_UPDATE_URL = "https://api.weixin.qq.com/cgi-bin/material/update_news";
+  String MATERIAL_DEL_URL = "https://api.weixin.qq.com/cgi-bin/material/del_material";
+  String MATERIAL_GET_COUNT_URL = "https://api.weixin.qq.com/cgi-bin/material/get_materialcount";
+  String MATERIAL_BATCHGET_URL = "https://api.weixin.qq.com/cgi-bin/material/batchget_material";
 
   /**
    * <pre>
@@ -73,11 +83,11 @@ public interface WxMpMaterialService {
    * 接口url格式：https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
    * </pre>
    *
-   * @param media_id
+   * @param mediaId 媒体文件Id
    * @return 保存到本地的临时文件
    * @throws WxErrorException
    */
-  File mediaDownload(String media_id) throws WxErrorException;
+  File mediaDownload(String mediaId) throws WxErrorException;
 
   /**
    * <pre>

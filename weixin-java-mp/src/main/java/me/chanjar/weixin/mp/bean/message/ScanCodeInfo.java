@@ -2,8 +2,11 @@ package me.chanjar.weixin.mp.bean.message;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+
+import java.io.Serializable;
 
 /**
  * <pre>
@@ -13,7 +16,10 @@ import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
  * @author Binary Wang
  */
 @XStreamAlias("ScanCodeInfo")
-public class ScanCodeInfo {
+@Data
+public class ScanCodeInfo implements Serializable {
+  private static final long serialVersionUID = 4745181270645050122L;
+
   @XStreamAlias("ScanType")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String scanType;
@@ -30,12 +36,7 @@ public class ScanCodeInfo {
    * 扫描类型，一般是qrcode
    */
   public String getScanType() {
-
     return this.scanType;
-  }
-
-  public void setScanType(String scanType) {
-    this.scanType = scanType;
   }
 
   /**
@@ -45,8 +46,5 @@ public class ScanCodeInfo {
     return this.scanResult;
   }
 
-  public void setScanResult(String scanResult) {
-    this.scanResult = scanResult;
-  }
 
 }

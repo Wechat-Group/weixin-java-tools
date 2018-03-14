@@ -1,13 +1,17 @@
 package cn.binarywang.wx.miniapp.bean;
 
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class WxMaQrcode implements Serializable {
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class WxMaQrcode extends AbstractWxMaQrcodeWrapper implements Serializable {
   private static final long serialVersionUID = 5777119669111011584L;
   private String path;
   private int width = 430;
@@ -19,22 +23,6 @@ public class WxMaQrcode implements Serializable {
 
   public static WxMaQrcode fromJson(String json) {
     return WxMaGsonBuilder.create().fromJson(json, WxMaQrcode.class);
-  }
-
-  public String getPath() {
-    return path;
-  }
-
-  public void setPath(String path) {
-    this.path = path;
-  }
-
-  public int getWidth() {
-    return width;
-  }
-
-  public void setWidth(int width) {
-    this.width = width;
   }
 
   @Override

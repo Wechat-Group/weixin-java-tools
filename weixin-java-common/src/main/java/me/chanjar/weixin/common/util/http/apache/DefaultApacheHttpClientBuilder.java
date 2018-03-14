@@ -68,13 +68,16 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
    * 闲置连接监控线程
    */
   private IdleConnectionMonitorThread idleConnectionMonitorThread;
-  private HttpClientBuilder httpClientBuilder;
+  /**
+   * 持有client对象,仅初始化一次,避免多service实例的时候造成重复初始化的问题
+   */
+  private CloseableHttpClient closeableHttpClient;
 
   private DefaultApacheHttpClientBuilder() {
   }
 
   public static DefaultApacheHttpClientBuilder get() {
-    return new DefaultApacheHttpClientBuilder();
+    return DefaultApacheHttpClientBuilder.SingletonHolder.INSTANCE;
   }
 
   @Override
@@ -219,7 +222,7 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     this.idleConnectionMonitorThread.setDaemon(true);
     this.idleConnectionMonitorThread.start();
 
-    this.httpClientBuilder = HttpClients.custom()
+    HttpClientBuilder httpClientBuilder = HttpClients.custom()
       .setConnectionManager(connectionManager)
       .setConnectionManagerShared(true)
       .setSSLSocketFactory(this.buildSSLConnectionSocketFactory())
@@ -240,12 +243,13 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
         new AuthScope(this.httpProxyHost, this.httpProxyPort),
         new UsernamePasswordCredentials(this.httpProxyUsername,
           this.httpProxyPassword));
-      this.httpClientBuilder.setDefaultCredentialsProvider(provider);
+      httpClientBuilder.setDefaultCredentialsProvider(provider);
     }
 
     if (StringUtils.isNotBlank(this.userAgent)) {
-      this.httpClientBuilder.setUserAgent(this.userAgent);
+      httpClientBuilder.setUserAgent(this.userAgent);
     }
+    this.closeableHttpClient = httpClientBuilder.build();
     prepared.set(true);
   }
 
@@ -277,7 +281,14 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     if (!prepared.get()) {
       prepare();
     }
-    return this.httpClientBuilder.build();
+    return this.closeableHttpClient;
+  }
+
+  /**
+   * DefaultApacheHttpClientBuilder 改为单例模式,并持有唯一的CloseableHttpClient(仅首次调用创建)
+   */
+  private static class SingletonHolder {
+    private static final DefaultApacheHttpClientBuilder INSTANCE = new DefaultApacheHttpClientBuilder();
   }
 
   public static class IdleConnectionMonitorThread extends Thread {

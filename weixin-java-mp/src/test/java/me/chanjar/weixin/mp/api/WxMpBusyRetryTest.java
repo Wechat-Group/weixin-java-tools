@@ -23,9 +23,7 @@ public class WxMpBusyRetryTest {
         RequestExecutor<T, E> executor, String uri, E data)
         throws WxErrorException {
         this.log.info("Executed");
-        WxError error = new WxError();
-        error.setErrorCode(-1);
-        throw new WxErrorException(error);
+        throw new WxErrorException(WxError.builder().errorCode(-1).build());
       }
     };
 

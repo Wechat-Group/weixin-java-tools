@@ -1,6 +1,9 @@
 package com.github.binarywang.wxpay.bean.request;
 
+import com.github.binarywang.wxpay.constant.WxPayConstants.BillType;
+import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -11,12 +14,19 @@ import java.util.Arrays;
  * <pre>
  *   微信支付下载对账单请求参数类
  * Created by Binary Wang on 2017-01-11.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder(builderMethodName = "newBuilder")
+@NoArgsConstructor
+@AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayDownloadBillRequest extends WxPayBaseRequest {
-  private static final String[] BILL_TYPE = new String[]{"ALL", "REFUND", "SUCCESS"};
+  private static final String[] BILL_TYPES = new String[]{BillType.ALL, BillType.SUCCESS, BillType.REFUND, BillType.RECHARGE_REFUND};
+  private static final String TAR_TYPE_GZIP = "GZIP";
 
   /**
    * <pre>
@@ -30,19 +40,6 @@ public class WxPayDownloadBillRequest extends WxPayBaseRequest {
    */
   @XStreamAlias("device_info")
   private String deviceInfo;
-
-  /**
-   * <pre>
-   * 签名类型
-   * sign_type
-   * 否
-   * String(32)
-   * HMAC-SHA256
-   * 签名类型，目前支持HMAC-SHA256和MD5，默认为MD5
-   * </pre>
-   */
-  @XStreamAlias("sign_type")
-  private String signType;
 
   /**
    * <pre>
@@ -87,55 +84,15 @@ public class WxPayDownloadBillRequest extends WxPayBaseRequest {
   @XStreamAlias("tar_type")
   private String tarType;
 
-  public String getDeviceInfo() {
-    return deviceInfo;
-  }
-
-  public void setDeviceInfo(String deviceInfo) {
-    this.deviceInfo = deviceInfo;
-  }
-
-  public String getSignType() {
-    return signType;
-  }
-
-  public void setSignType(String signType) {
-    this.signType = signType;
-  }
-
-  public String getBillType() {
-    return billType;
-  }
-
-  public void setBillType(String billType) {
-    this.billType = billType;
-  }
-
-  public String getBillDate() {
-    return billDate;
-  }
-
-  public void setBillDate(String billDate) {
-    this.billDate = billDate;
-  }
-
-  public String getTarType() {
-    return tarType;
-  }
-
-  public void setTarType(String tarType) {
-    this.tarType = tarType;
-  }
-
   @Override
-  protected void checkConstraints() {
-    if (StringUtils.isNotBlank(this.getTarType()) && !"GZIP".equals(this.getTarType())) {
-      throw new IllegalArgumentException("tar_type值如果存在，只能为GZIP");
+  protected void checkConstraints() throws WxPayException {
+    if (StringUtils.isNotBlank(this.getTarType()) && !TAR_TYPE_GZIP.equals(this.getTarType())) {
+      throw new WxPayException("tar_type值如果存在，只能为GZIP");
     }
 
-    if (!ArrayUtils.contains(BILL_TYPE, this.getBillType())) {
-      throw new IllegalArgumentException(String.format("bill_tpye目前必须为%s其中之一,实际值：%s",
-        Arrays.toString(BILL_TYPE), this.getBillType()));
+    if (!ArrayUtils.contains(BILL_TYPES, this.getBillType())) {
+      throw new WxPayException(String.format("bill_type目前必须为%s其中之一,实际值：%s",
+        Arrays.toString(BILL_TYPES), this.getBillType()));
     }
   }
 }

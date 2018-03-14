@@ -1,14 +1,21 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
  *  授权码查询openid接口请求结果类
  * Created by Binary Wang on 2017-3-27.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPayAuthcode2OpenidResult extends WxPayBaseResult {
   /**
@@ -23,18 +30,4 @@ public class WxPayAuthcode2OpenidResult extends WxPayBaseResult {
   @XStreamAlias("openid")
   private String openid;
 
-  public WxPayAuthcode2OpenidResult() {
-  }
-
-  public WxPayAuthcode2OpenidResult(String openid) {
-    this.openid = openid;
-  }
-
-  public String getOpenid() {
-    return this.openid;
-  }
-
-  public void setOpenid(String openid) {
-    this.openid = openid;
-  }
 }

@@ -1,14 +1,21 @@
 package me.chanjar.weixin.mp.bean.device;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.util.List;
 
 /**
- * Created by keungtung on 16/12/2016.
+ * @author keungtung.
+ * @date 16/12/2016
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class WxDeviceOpenIdResult extends AbstractDeviceBean {
+  private static final long serialVersionUID = 4980885167833836220L;
+
   @SerializedName("errcode")
   private Integer errCode;
   @SerializedName("errmsg")
@@ -22,35 +29,4 @@ public class WxDeviceOpenIdResult extends AbstractDeviceBean {
     return WxMpGsonBuilder.create().fromJson(json, WxDeviceOpenIdResult.class);
   }
 
-  public Integer getErrCode() {
-    return errCode;
-  }
-
-  public void setErrCode(Integer errCode) {
-    this.errCode = errCode;
-  }
-
-  public String getErrMsg() {
-    return errMsg;
-  }
-
-  public void setErrMsg(String errMsg) {
-    this.errMsg = errMsg;
-  }
-
-  public List<String> getOpenIds() {
-    return openIds;
-  }
-
-  public void setOpenIds(List<String> openIds) {
-    this.openIds = openIds;
-  }
-
-  public RespMsg getRespMsg() {
-    return respMsg;
-  }
-
-  public void setRespMsg(RespMsg respMsg) {
-    this.respMsg = respMsg;
-  }
 }

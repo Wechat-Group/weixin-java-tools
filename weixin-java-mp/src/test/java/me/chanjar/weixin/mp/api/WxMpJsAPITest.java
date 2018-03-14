@@ -20,11 +20,7 @@ public class WxMpJsAPITest {
   protected WxMpService wxService;
 
 
-  public void testJsapiTicket() throws WxErrorException {
-    String jsapiTicket = this.wxService.getJsapiTicket(false);
-    System.out.println(jsapiTicket);
-    Assert.assertNotNull(jsapiTicket);
-  }
+
 
   public void test() {
     long timestamp = 1419835025l;

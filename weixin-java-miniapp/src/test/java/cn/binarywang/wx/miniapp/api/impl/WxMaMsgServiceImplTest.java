@@ -9,7 +9,6 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import org.testng.Assert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
@@ -32,7 +31,7 @@ public class WxMaMsgServiceImplTest {
     TestConfig configStorage = (TestConfig) this.wxService
       .getWxMaConfig();
     WxMaKefuMessage message = new WxMaKefuMessage();
-    message.setMsgType(WxConsts.CUSTOM_MSG_MPNEWS);
+    message.setMsgType(WxConsts.KefuMsgType.MPNEWS);
     message.setToUser(configStorage.getOpenid());
 
     this.wxService.getMsgService().sendKefuMsg(message);
@@ -42,7 +41,7 @@ public class WxMaMsgServiceImplTest {
     TestConfig config = (TestConfig) this.wxService
       .getWxMaConfig();
     WxMaKefuMessage message = new WxMaKefuMessage();
-    message.setMsgType(WxConsts.CUSTOM_MSG_TEXT);
+    message.setMsgType(WxConsts.KefuMsgType.TEXT);
     message.setToUser(config.getOpenid());
     message.setContent(
       "欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>");
@@ -55,7 +54,7 @@ public class WxMaMsgServiceImplTest {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     TestConfig config = (TestConfig) this.wxService.getWxMaConfig();
 
-    WxMaTemplateMessage templateMessage = WxMaTemplateMessage.newBuilder()
+    WxMaTemplateMessage templateMessage = WxMaTemplateMessage.builder()
       .toUser(config.getOpenid())
       .formId("FORMID")
       .page("index")
@@ -68,9 +67,7 @@ public class WxMaMsgServiceImplTest {
       .emphasisKeyword("keyword1.DATA")
       .build();
 
-    String msgId = this.wxService.getMsgService().sendTemplateMsg(templateMessage);
-    Assert.assertNotNull(msgId);
-    System.out.println(msgId);
+    this.wxService.getMsgService().sendTemplateMsg(templateMessage);
   }
 
 }

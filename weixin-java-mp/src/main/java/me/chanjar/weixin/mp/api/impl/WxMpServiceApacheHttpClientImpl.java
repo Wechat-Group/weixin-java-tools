@@ -21,7 +21,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * apache-http方式实现
  */
-public class WxMpServiceApacheHttpClientImpl extends AbstractWxMpServiceImpl<CloseableHttpClient, HttpHost> {
+public class WxMpServiceApacheHttpClientImpl extends WxMpServiceAbstractImpl<CloseableHttpClient, HttpHost> {
   private CloseableHttpClient httpClient;
   private HttpHost httpProxy;
 
@@ -65,12 +65,7 @@ public class WxMpServiceApacheHttpClientImpl extends AbstractWxMpServiceImpl<Clo
     Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
     try {
       lock.lock();
-
-      if (forceRefresh) {
-        this.getWxMpConfigStorage().expireAccessToken();
-      }
-
-      if (this.getWxMpConfigStorage().isAccessTokenExpired()) {
+      if (this.getWxMpConfigStorage().isAccessTokenExpired() || forceRefresh) {
         String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
           this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
         try {
