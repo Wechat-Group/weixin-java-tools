@@ -10,7 +10,6 @@ import me.chanjar.weixin.common.exception.WxErrorException;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMaUserService {
-  String JSCODE_TO_SESSION_URL = "https://api.weixin.qq.com/sns/jscode2session";
 
   /**
    * 获取登录后的session信息

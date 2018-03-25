@@ -1,8 +1,10 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.*;
+import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
+import com.google.common.base.Joiner;
 import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.result.WxError;
@@ -21,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -121,6 +125,18 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
     return this.getWxMaConfig().getAccessToken();
   }
 
+  @Override
+  public WxMaJscode2SessionResult jsCode2SessionInfo(String jsCode) throws WxErrorException {
+    final WxMaConfig config = getWxMaConfig();
+    Map<String, String> params = new HashMap<>(8);
+    params.put("appid", config.getAppid());
+    params.put("secret", config.getSecret());
+    params.put("js_code", jsCode);
+    params.put("grant_type", "authorization_code");
+
+    String result = get(JSCODE_TO_SESSION_URL, Joiner.on("&").withKeyValueSeparator("=").join(params));
+    return WxMaJscode2SessionResult.fromJson(result);
+  }
   @Override
   public boolean checkSignature(String timestamp, String nonce, String signature) {
     try {

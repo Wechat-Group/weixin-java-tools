@@ -239,7 +239,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public WxMaJscode2SessionResult miniappJscode2Session(String appid, String jsCode, String appId) throws WxErrorException {
+  public WxMaJscode2SessionResult miniappJscode2Session(String appId, String jsCode) throws WxErrorException {
     String url = String.format(MINIAPP_JSCODE_2_SESSION, appId, jsCode, getWxOpenConfigStorage().getComponentAppId());
     String responseContent = get(url);
     return WxMaJscode2SessionResult.fromJson(responseContent);

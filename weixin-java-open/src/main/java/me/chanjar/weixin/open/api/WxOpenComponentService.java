@@ -85,6 +85,6 @@ public interface WxOpenComponentService {
 
   String oauth2buildAuthorizationUrl(String appid, String redirectURI, String scope, String state);
 
-  WxMaJscode2SessionResult miniappJscode2Session(String appid, String jsCode, String appId) throws WxErrorException;
+  WxMaJscode2SessionResult miniappJscode2Session(String appId, String jsCode) throws WxErrorException;
 
 }

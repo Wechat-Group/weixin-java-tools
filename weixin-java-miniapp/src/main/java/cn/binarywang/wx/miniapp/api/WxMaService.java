@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
+import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
@@ -15,6 +16,13 @@ public interface WxMaService {
    */
   String GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
+  String JSCODE_TO_SESSION_URL = "https://api.weixin.qq.com/sns/jscode2session";
+  /**
+   * 获取登录后的session信息
+   *
+   * @param jsCode 登录时获取的 code
+   */
+  WxMaJscode2SessionResult jsCode2SessionInfo(String jsCode) throws WxErrorException;
   /**
    * <pre>
    * 验证消息的确来自微信服务器
