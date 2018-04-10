@@ -1,52 +1,31 @@
 package me.chanjar.weixin.mp.util.http;
 
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
-import me.chanjar.weixin.common.util.http.Utf8ResponseHandler;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
+import me.chanjar.weixin.mp.util.http.apache.ApacheMaterialNewsInfoRequestExecutor;
+import me.chanjar.weixin.mp.util.http.jodd.JoddMaterialNewsInfoRequestExecutor;
+import me.chanjar.weixin.mp.util.http.okhttp.OkhttpMaterialNewsInfoRequestExecutor;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+public abstract class MaterialNewsInfoRequestExecutor<H, P> implements RequestExecutor<WxMpMaterialNews, String> {
+  protected RequestHttp<H, P> requestHttp;
 
-public class MaterialNewsInfoRequestExecutor implements RequestExecutor<WxMpMaterialNews, String> {
-
-  public MaterialNewsInfoRequestExecutor() {
-    super();
+  public MaterialNewsInfoRequestExecutor(RequestHttp requestHttp) {
+    this.requestHttp = requestHttp;
   }
 
-  @Override
-  public WxMpMaterialNews execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, String materialId) throws WxErrorException, IOException {
-    HttpPost httpPost = new HttpPost(uri);
-    if (httpProxy != null) {
-      RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
-      httpPost.setConfig(config);
+  public static RequestExecutor<WxMpMaterialNews, String> create(RequestHttp requestHttp) {
+    switch (requestHttp.getRequestType()) {
+      case APACHE_HTTP:
+        return new ApacheMaterialNewsInfoRequestExecutor(requestHttp);
+      case JODD_HTTP:
+        return new JoddMaterialNewsInfoRequestExecutor(requestHttp);
+      case OK_HTTP:
+        return new OkhttpMaterialNewsInfoRequestExecutor(requestHttp);
+      default:
+        //TODO 需要优化抛出异常
+        return null;
     }
-
-    Map<String, String> params = new HashMap<>();
-    params.put("media_id", materialId);
-    httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
-    try(CloseableHttpResponse response = httpclient.execute(httpPost)){
-      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      WxError error = WxError.fromJson(responseContent);
-      if (error.getErrorCode() != 0) {
-        throw new WxErrorException(error);
-      } else {
-        return WxMpGsonBuilder.create().fromJson(responseContent, WxMpMaterialNews.class);
-      }
-    }finally {
-      httpPost.releaseConnection();
-    }
-
   }
 
 }

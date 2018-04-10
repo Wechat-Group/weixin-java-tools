@@ -8,14 +8,14 @@ import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
  * <pre>
  * 用法: WxMpKefuMessage m = WxMpKefuMessage.IMAGE().mediaId(...).toUser(...).build();
  * </pre>
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public final class ImageBuilder extends BaseBuilder<ImageBuilder> {
   private String mediaId;
 
   public ImageBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_IMAGE;
+    this.msgType = WxConsts.KefuMsgType.IMAGE;
   }
 
   public ImageBuilder mediaId(String media_id) {

@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.bean;
 
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -12,17 +13,11 @@ import java.util.List;
  *
  * @author chanjarster
  */
+@Data
 public class WxMpMassNews implements Serializable {
-
-  /**
-   *
-   */
   private static final long serialVersionUID = 565937155013581016L;
-  private List<WxMpMassNewsArticle> articles = new ArrayList<>();
 
-  public List<WxMpMassNewsArticle> getArticles() {
-    return this.articles;
-  }
+  private List<WxMpMassNewsArticle> articles = new ArrayList<>();
 
   public void addArticle(WxMpMassNewsArticle article) {
     this.articles.add(article);
@@ -34,6 +29,11 @@ public class WxMpMassNews implements Serializable {
 
   public boolean isEmpty() {
     return this.articles == null || this.articles.isEmpty();
+  }
+
+  @Override
+  public String toString() {
+    return ToStringUtils.toSimpleString(this);
   }
 
   /**
@@ -50,6 +50,7 @@ public class WxMpMassNews implements Serializable {
    *
    * @author chanjarster
    */
+  @Data
   public static class WxMpMassNewsArticle {
     /**
      * (必填) 图文消息缩略图的media_id，可以在基础支持-上传多媒体文件接口中获得
@@ -80,70 +81,9 @@ public class WxMpMassNews implements Serializable {
      */
     private boolean showCoverPic;
 
-    public String getThumbMediaId() {
-      return this.thumbMediaId;
-    }
-
-    public void setThumbMediaId(String thumbMediaId) {
-      this.thumbMediaId = thumbMediaId;
-    }
-
-    public String getAuthor() {
-      return this.author;
-    }
-
-    public void setAuthor(String author) {
-      this.author = author;
-    }
-
-    public String getTitle() {
-      return this.title;
-    }
-
-    public void setTitle(String title) {
-      this.title = title;
-    }
-
-    public String getContentSourceUrl() {
-      return this.contentSourceUrl;
-    }
-
-    public void setContentSourceUrl(String contentSourceUrl) {
-      this.contentSourceUrl = contentSourceUrl;
-    }
-
-    public String getContent() {
-      return this.content;
-    }
-
-    public void setContent(String content) {
-      this.content = content;
-    }
-
-    public String getDigest() {
-      return this.digest;
-    }
-
-    public void setDigest(String digest) {
-      this.digest = digest;
-    }
-
-    public boolean isShowCoverPic() {
-      return this.showCoverPic;
-    }
-
-    public void setShowCoverPic(boolean showCoverPic) {
-      this.showCoverPic = showCoverPic;
-    }
-
     @Override
     public String toString() {
       return ToStringUtils.toSimpleString(this);
     }
-  }
-
-  @Override
-  public String toString() {
-    return ToStringUtils.toSimpleString(this);
   }
 }

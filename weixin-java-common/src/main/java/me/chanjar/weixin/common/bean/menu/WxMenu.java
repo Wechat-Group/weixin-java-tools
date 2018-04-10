@@ -1,5 +1,6 @@
 package me.chanjar.weixin.common.bean.menu;
 
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 菜单（公众号和企业号共用的）
+ * 菜单（公众号和企业号共用的）.
  *
  * @author Daniel Qian
  */
+@Data
 public class WxMenu implements Serializable {
-
   private static final long serialVersionUID = -7083914585539687746L;
 
   private List<WxMenuButton> buttons = new ArrayList<>();
@@ -36,23 +37,8 @@ public class WxMenu implements Serializable {
    * 相比 http://mp.weixin.qq.com/wiki/13/43de8269be54a0a6f64413e4dfa94f39.html 的格式，外层多套了一个menu
    */
   public static WxMenu fromJson(InputStream is) {
-    return WxGsonBuilder.create().fromJson(new InputStreamReader(is, StandardCharsets.UTF_8), WxMenu.class);
-  }
-
-  public List<WxMenuButton> getButtons() {
-    return this.buttons;
-  }
-
-  public void setButtons(List<WxMenuButton> buttons) {
-    this.buttons = buttons;
-  }
-
-  public WxMenuRule getMatchRule() {
-    return this.matchRule;
-  }
-
-  public void setMatchRule(WxMenuRule matchRule) {
-    this.matchRule = matchRule;
+    return WxGsonBuilder.create()
+      .fromJson(new InputStreamReader(is, StandardCharsets.UTF_8), WxMenu.class);
   }
 
   public String toJson() {

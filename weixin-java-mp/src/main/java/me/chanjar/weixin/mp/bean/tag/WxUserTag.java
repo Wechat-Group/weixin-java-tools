@@ -2,17 +2,25 @@ package me.chanjar.weixin.mp.bean.tag;
 
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * 用户标签对象
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- *         Created by Binary Wang on 2016/9/2.
+ * <pre>
+ *  用户标签对象
+ *  Created by Binary Wang on 2016/9/2.
+ * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class WxUserTag {
+@Data
+public class WxUserTag implements Serializable {
+  private static final long serialVersionUID = -7722428695667031252L;
+
   /**
    * id	标签id，由微信分配
    */
@@ -28,40 +36,17 @@ public class WxUserTag {
    */
   private Integer count;
 
-  public String getName() {
-    return this.name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Integer getCount() {
-    return this.count;
-  }
-
-  public void setCount(Integer count) {
-    this.count = count;
-  }
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
   public static WxUserTag fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(
-        new JsonParser().parse(json).getAsJsonObject().get("tag"),
-        WxUserTag.class);
+      new JsonParser().parse(json).getAsJsonObject().get("tag"),
+      WxUserTag.class);
   }
 
   public static List<WxUserTag> listFromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(
-        new JsonParser().parse(json).getAsJsonObject().get("tags"),
-        new TypeToken<List<WxUserTag>>(){}.getType());
+      new JsonParser().parse(json).getAsJsonObject().get("tags"),
+      new TypeToken<List<WxUserTag>>() {
+      }.getType());
   }
 
   public String toJson() {

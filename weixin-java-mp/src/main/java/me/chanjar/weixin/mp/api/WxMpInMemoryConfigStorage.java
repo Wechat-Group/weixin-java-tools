@@ -2,25 +2,23 @@ package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.common.util.http.ApacheHttpClientBuilder;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 
-import javax.net.ssl.SSLContext;
 import java.io.File;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 基于内存的微信配置provider，在实际生产环境中应该将这些配置持久化
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
 
   protected volatile String appId;
   protected volatile String secret;
-  protected volatile String partnerId;
-  protected volatile String partnerKey;
   protected volatile String token;
+  protected volatile String templateId;
   protected volatile String accessToken;
   protected volatile String aesKey;
   protected volatile long expiresTime;
@@ -47,13 +45,15 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
    */
   protected volatile File tmpDirFile;
 
-  protected volatile SSLContext sslContext;
-
   protected volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
 
   @Override
   public String getAccessToken() {
     return this.accessToken;
+  }
+
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
   }
 
   @Override
@@ -87,21 +87,13 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
     return this.jsapiTicket;
   }
 
-  @Override
-  public Lock getJsapiTicketLock() {
-    return this.jsapiTicketLock;
-  }
-
   public void setJsapiTicket(String jsapiTicket) {
     this.jsapiTicket = jsapiTicket;
   }
 
-  public long getJsapiTicketExpiresTime() {
-    return this.jsapiTicketExpiresTime;
-  }
-
-  public void setJsapiTicketExpiresTime(long jsapiTicketExpiresTime) {
-    this.jsapiTicketExpiresTime = jsapiTicketExpiresTime;
+  @Override
+  public Lock getJsapiTicketLock() {
+    return this.jsapiTicketLock;
   }
 
   @Override
@@ -127,6 +119,10 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   @Override
   public String getCardApiTicket() {
     return this.cardApiTicket;
+  }
+
+  public void setCardApiTicket(String cardApiTicket) {
+    this.cardApiTicket = cardApiTicket;
   }
 
   @Override
@@ -156,9 +152,17 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
     return this.appId;
   }
 
+  public void setAppId(String appId) {
+    this.appId = appId;
+  }
+
   @Override
   public String getSecret() {
     return this.secret;
+  }
+
+  public void setSecret(String secret) {
+    this.secret = secret;
   }
 
   @Override
@@ -166,21 +170,26 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
     return this.token;
   }
 
+  public void setToken(String token) {
+    this.token = token;
+  }
+
+  @Override
+  public String getTemplateId() {
+    return this.templateId;
+  }
+
+  public void setTemplateId(String templateId) {
+    this.templateId = templateId;
+  }
+
   @Override
   public long getExpiresTime() {
     return this.expiresTime;
   }
 
-  public void setAppId(String appId) {
-    this.appId = appId;
-  }
-
-  public void setSecret(String secret) {
-    this.secret = secret;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
+  public void setExpiresTime(long expiresTime) {
+    this.expiresTime = expiresTime;
   }
 
   @Override
@@ -190,14 +199,6 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
 
   public void setAesKey(String aesKey) {
     this.aesKey = aesKey;
-  }
-
-  public void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
-  }
-
-  public void setExpiresTime(long expiresTime) {
-    this.expiresTime = expiresTime;
   }
 
   @Override
@@ -251,24 +252,6 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   }
 
   @Override
-  public String getPartnerId() {
-      return this.partnerId;
-  }
-
-  public void setPartnerId(String partnerId) {
-      this.partnerId = partnerId;
-  }
-
-  @Override
-  public String getPartnerKey() {
-      return this.partnerKey;
-  }
-
-  public void setPartnerKey(String partnerKey) {
-      this.partnerKey = partnerKey;
-  }
-
-  @Override
   public File getTmpDirFile() {
     return this.tmpDirFile;
   }
@@ -278,17 +261,28 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   }
 
   @Override
-  public SSLContext getSSLContext() {
-    return this.sslContext;
-  }
-
-  public void setSSLContext(SSLContext context) {
-    this.sslContext = context;
-  }
-
-  @Override
   public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
     return this.apacheHttpClientBuilder;
+  }
+
+  public void setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
+    this.apacheHttpClientBuilder = apacheHttpClientBuilder;
+  }
+
+  public long getJsapiTicketExpiresTime() {
+    return this.jsapiTicketExpiresTime;
+  }
+
+  public void setJsapiTicketExpiresTime(long jsapiTicketExpiresTime) {
+    this.jsapiTicketExpiresTime = jsapiTicketExpiresTime;
+  }
+
+  public long getCardApiTicketExpiresTime() {
+    return this.cardApiTicketExpiresTime;
+  }
+
+  public void setCardApiTicketExpiresTime(long cardApiTicketExpiresTime) {
+    this.cardApiTicketExpiresTime = cardApiTicketExpiresTime;
   }
 
   @Override
@@ -296,7 +290,4 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
     return true;
   }
 
-  public void setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
-    this.apacheHttpClientBuilder = apacheHttpClientBuilder;
-  }
 }

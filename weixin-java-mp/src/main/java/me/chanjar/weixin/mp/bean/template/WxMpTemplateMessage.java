@@ -1,108 +1,82 @@
 package me.chanjar.weixin.mp.bean.template;
 
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
 /**
+ * 模板消息.
  * 参考 http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277&token=&lang=zh_CN 发送模板消息接口部分
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class WxMpTemplateMessage implements Serializable {
   private static final long serialVersionUID = 5063374783759519418L;
 
+  /**
+   * 接收者openid.
+   */
   private String toUser;
+
+  /**
+   * 模板ID.
+   */
   private String templateId;
+
+  /**
+   * 模板跳转链接.
+   * <pre>
+   * url和miniprogram都是非必填字段，若都不传则模板无跳转；若都传，会优先跳转至小程序。
+   * 开发者可根据实际需要选择其中一种跳转方式即可。当用户的微信客户端版本不支持跳小程序时，将会跳转至url。
+   * </pre>
+   */
   private String url;
-  private List<WxMpTemplateData> data = new ArrayList<>();
 
-  public String getToUser() {
-    return this.toUser;
-  }
+  /**
+   * 跳小程序所需数据，不需跳小程序可不用传该数据.
+   *
+   * @see #url
+   */
+  private MiniProgram miniProgram;
 
-  public void setToUser(String toUser) {
-    this.toUser = toUser;
-  }
+  /**
+   * 模板数据.
+   */
+  private List<WxMpTemplateData> data;
 
-  public String getTemplateId() {
-    return this.templateId;
-  }
-
-  public void setTemplateId(String templateId) {
-    this.templateId = templateId;
-  }
-
-  public String getUrl() {
-    return this.url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
-  public List<WxMpTemplateData> getData() {
-    return this.data;
-  }
-
-  public void setData(List<WxMpTemplateData> data) {
-    this.data = data;
-  }
-
-  public void addWxMpTemplateData(WxMpTemplateData datum) {
+  public WxMpTemplateMessage addData(WxMpTemplateData datum) {
+    if (this.data == null) {
+      this.data = new ArrayList<>();
+    }
     this.data.add(datum);
+    return this;
   }
 
   public String toJson() {
     return WxMpGsonBuilder.INSTANCE.create().toJson(this);
   }
 
-  public static WxMpTemplateMessageBuilder builder() {
-    return new WxMpTemplateMessageBuilder();
-  }
+  @Data
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class MiniProgram implements Serializable {
+    private static final long serialVersionUID = -7945254706501974849L;
 
-  public static class WxMpTemplateMessageBuilder {
-    private String toUser;
-    private String templateId;
-    private String url;
-    private List<WxMpTemplateData> data = new ArrayList<>();
-
-    public WxMpTemplateMessageBuilder toUser(String toUser) {
-      this.toUser = toUser;
-      return this;
-    }
-
-    public WxMpTemplateMessageBuilder templateId(String templateId) {
-      this.templateId = templateId;
-      return this;
-    }
-
-    public WxMpTemplateMessageBuilder url(String url) {
-      this.url = url;
-      return this;
-    }
-
-    public WxMpTemplateMessageBuilder data(List<WxMpTemplateData> data) {
-      this.data = data;
-      return this;
-    }
-
-    public WxMpTemplateMessageBuilder from(WxMpTemplateMessage origin) {
-      this.toUser(origin.toUser);
-      this.templateId(origin.templateId);
-      this.url(origin.url);
-      this.data(origin.data);
-      return this;
-    }
-
-    public WxMpTemplateMessage build() {
-      WxMpTemplateMessage m = new WxMpTemplateMessage();
-      m.toUser = this.toUser;
-      m.templateId = this.templateId;
-      m.url = this.url;
-      m.data = this.data;
-      return m;
-    }
+    private String appid;
+    private String path;
   }
 
 }

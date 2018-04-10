@@ -1,18 +1,24 @@
 package me.chanjar.weixin.mp.bean.menu;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.common.util.ToStringUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * <pre>
  * Created by Binary Wang on 2016-11-25.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class WxMpSelfMenuInfo {
+@Data
+public class WxMpSelfMenuInfo implements Serializable {
+  private static final long serialVersionUID = -81203094124202901L;
+
   /**
    * 菜单按钮
    */
@@ -24,11 +30,9 @@ public class WxMpSelfMenuInfo {
     return ToStringUtils.toSimpleString(this);
   }
 
-  public static class WxMpSelfMenuButton {
-    @Override
-    public String toString() {
-      return ToStringUtils.toSimpleString(this);
-    }
+  @Data
+  public static class WxMpSelfMenuButton implements Serializable {
+    private static final long serialVersionUID = -4426602953309048341L;
 
     /**
      * <pre>
@@ -38,13 +42,11 @@ public class WxMpSelfMenuInfo {
      */
     @SerializedName("type")
     private String type;
-
     /**
      * 菜单名称
      */
     @SerializedName("name")
     private String name;
-
     /**
      * <pre>
      * 对于不同的菜单类型，value的值意义不同。
@@ -62,226 +64,103 @@ public class WxMpSelfMenuInfo {
      */
     @SerializedName("key")
     private String key;
-
     /**
      * @see #key
      */
     @SerializedName("url")
     private String url;
-
     /**
      * @see #key
      */
     @SerializedName("value")
     private String value;
-
     /**
      * 子菜单信息
      */
     @SerializedName("sub_button")
     private SubButtons subButtons;
-
-    public SubButtons getSubButtons() {
-      return subButtons;
-    }
-
-    public void setSubButtons(SubButtons subButtons) {
-      this.subButtons = subButtons;
-    }
-
-    public static class SubButtons {
-      @Override
-      public String toString() {
-        return ToStringUtils.toSimpleString(this);
-      }
-
-      @SerializedName("list")
-      private List<WxMpSelfMenuButton> subButtons = new ArrayList<>();
-
-      public List<WxMpSelfMenuButton> getSubButtons() {
-        return subButtons;
-      }
-
-      public void setSubButtons(List<WxMpSelfMenuButton> subButtons) {
-        this.subButtons = subButtons;
-      }
-    }
-
     /**
      * 图文消息的信息
      */
     @SerializedName("news_info")
     private NewsInfo newsInfo;
 
-    public String getType() {
-      return type;
+    @Override
+    public String toString() {
+      return ToStringUtils.toSimpleString(this);
     }
 
-    public void setType(String type) {
-      this.type = type;
+    @Data
+    public static class SubButtons implements Serializable {
+      private static final long serialVersionUID = 1763350658575521079L;
+
+      @SerializedName("list")
+      private List<WxMpSelfMenuButton> subButtons = new ArrayList<>();
+
+      @Override
+      public String toString() {
+        return ToStringUtils.toSimpleString(this);
+      }
     }
 
-    public String getName() {
-      return name;
-    }
+    @Data
+    public static class NewsInfo implements Serializable {
+      private static final long serialVersionUID = 3449813746347818457L;
 
-    public void setName(String name) {
-      this.name = name;
-    }
+      @SerializedName("list")
+      private List<NewsInButton> news = new ArrayList<>();
 
-    public String getKey() {
-      return key;
-    }
-
-    public void setKey(String key) {
-      this.key = key;
-    }
-
-    public String getUrl() {
-      return url;
-    }
-
-    public void setUrl(String url) {
-      this.url = url;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    public void setValue(String value) {
-      this.value = value;
-    }
-
-    public NewsInfo getNewsInfo() {
-      return newsInfo;
-    }
-
-    public void setNewsInfo(NewsInfo newsInfo) {
-      this.newsInfo = newsInfo;
-    }
-
-    public static class NewsInfo {
       @Override
       public String toString() {
         return ToStringUtils.toSimpleString(this);
       }
 
-      @SerializedName("list")
-      private List<NewsInButton> news = new ArrayList<>();
-
-      public List<NewsInButton> getNews() {
-        return news;
-      }
-
-      public void setNews(List<NewsInButton> news) {
-        this.news = news;
-      }
-
-      public static class NewsInButton {
-        @Override
-        public String toString() {
-          return ToStringUtils.toSimpleString(this);
-        }
+      @Data
+      public static class NewsInButton  implements Serializable {
+        private static final long serialVersionUID = 8701455967664912972L;
 
         /**
          * 图文消息的标题
          */
         @SerializedName("title")
         private String title;
-
         /**
          * 摘要
          */
         @SerializedName("digest")
         private String digest;
-
         /**
          * 作者
          */
         @SerializedName("author")
         private String author;
-
         /**
          * show_cover
          * 是否显示封面，0为不显示，1为显示
          */
         @SerializedName("show_cover")
         private Integer showCover;
-
         /**
          * 封面图片的URL
          */
         @SerializedName("cover_url")
         private String coverUrl;
-
         /**
          * 正文的URL
          */
         @SerializedName("content_url")
         private String contentUrl;
-
         /**
          * 原文的URL，若置空则无查看原文入口
          */
         @SerializedName("source_url")
         private String sourceUrl;
 
-        public String getTitle() {
-          return title;
+        @Override
+        public String toString() {
+          return ToStringUtils.toSimpleString(this);
         }
 
-        public void setTitle(String title) {
-          this.title = title;
-        }
-
-        public String getDigest() {
-          return digest;
-        }
-
-        public void setDigest(String digest) {
-          this.digest = digest;
-        }
-
-        public String getAuthor() {
-          return author;
-        }
-
-        public void setAuthor(String author) {
-          this.author = author;
-        }
-
-        public Integer getShowCover() {
-          return showCover;
-        }
-
-        public void setShowCover(Integer showCover) {
-          this.showCover = showCover;
-        }
-
-        public String getCoverUrl() {
-          return coverUrl;
-        }
-
-        public void setCoverUrl(String coverUrl) {
-          this.coverUrl = coverUrl;
-        }
-
-        public String getContentUrl() {
-          return contentUrl;
-        }
-
-        public void setContentUrl(String contentUrl) {
-          this.contentUrl = contentUrl;
-        }
-
-        public String getSourceUrl() {
-          return sourceUrl;
-        }
-
-        public void setSourceUrl(String sourceUrl) {
-          this.sourceUrl = sourceUrl;
-        }
       }
     }
   }

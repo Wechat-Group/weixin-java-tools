@@ -9,14 +9,14 @@ import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
  * 用法:
  * WxMpKefuMessage m = WxMpKefuMessage.NEWS().mediaId("xxxxx").toUser(...).build();
  * </pre>
- * @author Binary Wang
  *
+ * @author Binary Wang
  */
 public final class MpNewsBuilder extends BaseBuilder<MpNewsBuilder> {
   private String mediaId;
 
   public MpNewsBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_MPNEWS;
+    this.msgType = WxConsts.KefuMsgType.MPNEWS;
   }
 
   public MpNewsBuilder mediaId(String mediaId) {

@@ -3,11 +3,11 @@ package me.chanjar.weixin.mp.api.impl;
 import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.mp.api.WxMpQrcodeService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import me.chanjar.weixin.mp.util.http.QrCodeRequestExecutor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -26,54 +26,105 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
   }
 
   @Override
-  public WxMpQrCodeTicket qrCodeCreateTmpTicket(int scene_id, Integer expire_seconds) throws WxErrorException {
+  public WxMpQrCodeTicket qrCodeCreateTmpTicket(int sceneId, Integer expireSeconds) throws WxErrorException {
+    if (sceneId == 0) {
+      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("临时二维码场景值不能为0！").build());
+    }
+
+    //expireSeconds 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
+    if (expireSeconds != null && expireSeconds > 2592000) {
+      throw new WxErrorException(WxError.builder().errorCode(-1)
+        .errorMsg("临时二维码有效时间最大不能超过2592000（即30天）！").build());
+    }
+
+    if (expireSeconds == null) {
+      expireSeconds = 30;
+    }
+
     String url = API_URL_PREFIX + "/create";
     JsonObject json = new JsonObject();
     json.addProperty("action_name", "QR_SCENE");
-    if (expire_seconds != null) {
-      json.addProperty("expire_seconds", expire_seconds);
-    }
+    json.addProperty("expire_seconds", expireSeconds);
+
     JsonObject actionInfo = new JsonObject();
     JsonObject scene = new JsonObject();
-    scene.addProperty("scene_id", scene_id);
+    scene.addProperty("scene_id", sceneId);
     actionInfo.add("scene", scene);
     json.add("action_info", actionInfo);
-    String responseContent = this.wxMpService.execute(new SimplePostRequestExecutor(), url, json.toString());
+    String responseContent = this.wxMpService.post(url, json.toString());
     return WxMpQrCodeTicket.fromJson(responseContent);
   }
 
+
   @Override
-  public WxMpQrCodeTicket qrCodeCreateLastTicket(int scene_id) throws WxErrorException {
+  public WxMpQrCodeTicket qrCodeCreateTmpTicket(String sceneStr, Integer expireSeconds) throws WxErrorException {
+    if (StringUtils.isBlank(sceneStr)) {
+      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("临时二维码场景值不能为空！").build());
+    }
+
+    //expireSeconds 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
+    if (expireSeconds != null && expireSeconds > 2592000) {
+      throw new WxErrorException(WxError.builder().errorCode(-1)
+        .errorMsg("临时二维码有效时间最大不能超过2592000（即30天）！").build());
+    }
+
+    if (expireSeconds == null) {
+      expireSeconds = 30;
+    }
+
+    String url = API_URL_PREFIX + "/create";
+    JsonObject json = new JsonObject();
+    json.addProperty("action_name", "QR_STR_SCENE");
+    json.addProperty("expire_seconds", expireSeconds);
+
+    JsonObject actionInfo = new JsonObject();
+    JsonObject scene = new JsonObject();
+    scene.addProperty("scene_str", sceneStr);
+    actionInfo.add("scene", scene);
+    json.add("action_info", actionInfo);
+    String responseContent = this.wxMpService.post(url, json.toString());
+    return WxMpQrCodeTicket.fromJson(responseContent);
+  }
+
+
+  @Override
+  public WxMpQrCodeTicket qrCodeCreateLastTicket(int sceneId) throws WxErrorException {
+    if (sceneId < 1 || sceneId > 100000) {
+      throw new WxErrorException(WxError.builder().errorCode(-1)
+        .errorMsg("永久二维码的场景值目前只支持1--100000！")
+        .build());
+    }
+
     String url = API_URL_PREFIX + "/create";
     JsonObject json = new JsonObject();
     json.addProperty("action_name", "QR_LIMIT_SCENE");
     JsonObject actionInfo = new JsonObject();
     JsonObject scene = new JsonObject();
-    scene.addProperty("scene_id", scene_id);
+    scene.addProperty("scene_id", sceneId);
     actionInfo.add("scene", scene);
     json.add("action_info", actionInfo);
-    String responseContent = this.wxMpService.execute(new SimplePostRequestExecutor(), url, json.toString());
+    String responseContent = this.wxMpService.post(url, json.toString());
     return WxMpQrCodeTicket.fromJson(responseContent);
   }
 
   @Override
-  public WxMpQrCodeTicket qrCodeCreateLastTicket(String scene_str) throws WxErrorException {
+  public WxMpQrCodeTicket qrCodeCreateLastTicket(String sceneStr) throws WxErrorException {
     String url = API_URL_PREFIX + "/create";
     JsonObject json = new JsonObject();
     json.addProperty("action_name", "QR_LIMIT_STR_SCENE");
     JsonObject actionInfo = new JsonObject();
     JsonObject scene = new JsonObject();
-    scene.addProperty("scene_str", scene_str);
+    scene.addProperty("scene_str", sceneStr);
     actionInfo.add("scene", scene);
     json.add("action_info", actionInfo);
-    String responseContent = this.wxMpService.execute(new SimplePostRequestExecutor(), url, json.toString());
+    String responseContent = this.wxMpService.post(url, json.toString());
     return WxMpQrCodeTicket.fromJson(responseContent);
   }
 
   @Override
   public File qrCodePicture(WxMpQrCodeTicket ticket) throws WxErrorException {
     String url = "https://mp.weixin.qq.com/cgi-bin/showqrcode";
-    return this.wxMpService.execute(new QrCodeRequestExecutor(), url, ticket);
+    return this.wxMpService.execute(QrCodeRequestExecutor.create(this.wxMpService.getRequestHttp()), url, ticket);
   }
 
   @Override
@@ -81,16 +132,14 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
     String url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s";
     try {
       String resultUrl = String.format(url,
-              URLEncoder.encode(ticket, StandardCharsets.UTF_8.name()));
+        URLEncoder.encode(ticket, StandardCharsets.UTF_8.name()));
       if (needShortUrl) {
         return this.wxMpService.shortUrl(resultUrl);
       }
 
       return resultUrl;
     } catch (UnsupportedEncodingException e) {
-      WxError error = WxError.newBuilder().setErrorCode(-1)
-              .setErrorMsg(e.getMessage()).build();
-      throw new WxErrorException(error);
+      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg(e.getMessage()).build());
     }
   }
 

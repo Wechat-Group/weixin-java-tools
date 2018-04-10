@@ -4,4 +4,4 @@ engines:
 ratings:
   paths: []
 exclude_paths:
-- "README.md"
+- "readme.md"

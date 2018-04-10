@@ -6,15 +6,26 @@ import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
 
 /**
  * 卡券相关接口
- * @author YuJian(mgcnrx11@hotmail.com) on 01/11/2016  
+ *
+ * @author YuJian(mgcnrx11@hotmail.com) on 01/11/2016
  */
 public interface WxMpCardService {
+  String CARD_GET = "https://api.weixin.qq.com/card/get";
+  String CARD_GET_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=wx_card";
+  String CARD_CODE_DECRYPT = "https://api.weixin.qq.com/card/code/decrypt";
+  String CARD_CODE_GET = "https://api.weixin.qq.com/card/code/get";
+  String CARD_CODE_CONSUME = "https://api.weixin.qq.com/card/code/consume";
+  String CARD_CODE_MARK = "https://api.weixin.qq.com/card/code/mark";
+
+  /**
+   * 得到WxMpService
+   */
+  WxMpService getWxMpService();
 
   /**
    * 获得卡券api_ticket，不强制刷新卡券api_ticket
    *
    * @return 卡券api_ticket
-   * @throws WxErrorException
    * @see #getCardApiTicket(boolean)
    */
   String getCardApiTicket() throws WxErrorException;
@@ -48,7 +59,7 @@ public interface WxMpCardService {
    * @return 卡券Api签名对象
    */
   WxCardApiSignature createCardApiSignature(String... optionalSignParam) throws
-          WxErrorException;
+    WxErrorException;
 
   /**
    * 卡券Code解码
@@ -67,7 +78,7 @@ public interface WxMpCardService {
    * @return WxMpCardResult对象
    */
   WxMpCardResult queryCardCode(String cardId, String code, boolean checkConsume)
-          throws WxErrorException;
+    throws WxErrorException;
 
   /**
    * 卡券Code核销。核销失败会抛出异常
@@ -99,7 +110,7 @@ public interface WxMpCardService {
    * @param isMark 是否要mark（占用）这个code，填写true或者false，表示占用或解除占用
    */
   void markCardCode(String code, String cardId, String openId, boolean isMark) throws
-          WxErrorException;
+    WxErrorException;
 
   /**
    * 查看卡券详情接口

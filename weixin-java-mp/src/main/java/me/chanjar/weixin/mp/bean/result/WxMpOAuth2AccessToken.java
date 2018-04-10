@@ -1,14 +1,16 @@
 package me.chanjar.weixin.mp.bean.result;
 
-import java.io.Serializable;
-
+import lombok.Data;
+import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
-public class WxMpOAuth2AccessToken implements Serializable {
+import java.io.Serializable;
 
-  /**
-   * 
-   */
+/**
+ * https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
+ */
+@Data
+public class WxMpOAuth2AccessToken implements Serializable {
   private static final long serialVersionUID = -1345910558078620805L;
 
   private String accessToken;
@@ -21,55 +23,11 @@ public class WxMpOAuth2AccessToken implements Serializable {
 
   private String scope;
 
+  /**
+   * https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&announce_id=11513156443eZYea&version=&lang=zh_CN.
+   * 本接口在scope参数为snsapi_base时不再提供unionID字段。
+   */
   private String unionId;
-
-  public String getRefreshToken() {
-    return this.refreshToken;
-  }
-
-  public void setRefreshToken(String refreshToken) {
-    this.refreshToken = refreshToken;
-  }
-
-  public String getOpenId() {
-    return this.openId;
-  }
-
-  public void setOpenId(String openId) {
-    this.openId = openId;
-  }
-
-  public String getScope() {
-    return this.scope;
-  }
-
-  public void setScope(String scope) {
-    this.scope = scope;
-  }
-
-  public String getAccessToken() {
-    return this.accessToken;
-  }
-
-  public void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
-  }
-
-  public int getExpiresIn() {
-    return this.expiresIn;
-  }
-
-  public void setExpiresIn(int expiresIn) {
-    this.expiresIn = expiresIn;
-  }
-
-  public String getUnionId() {
-    return this.unionId;
-  }
-
-  public void setUnionId(String unionId) {
-    this.unionId = unionId;
-  }
 
   public static WxMpOAuth2AccessToken fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(json, WxMpOAuth2AccessToken.class);
@@ -77,13 +35,6 @@ public class WxMpOAuth2AccessToken implements Serializable {
 
   @Override
   public String toString() {
-    return "WxMpOAuth2AccessToken{" +
-        "accessToken='" + this.accessToken + '\'' +
-        ", expiresTime=" + this.expiresIn +
-        ", refreshToken='" + this.refreshToken + '\'' +
-        ", openId='" + this.openId + '\'' +
-        ", scope='" + this.scope + '\'' +
-        ", unionId='" + this.unionId + '\'' +
-        '}';
+    return ToStringUtils.toSimpleString(this);
   }
 }

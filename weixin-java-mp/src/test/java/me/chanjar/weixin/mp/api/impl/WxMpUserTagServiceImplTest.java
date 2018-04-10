@@ -1,23 +1,20 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import java.util.List;
-
-import me.chanjar.weixin.mp.api.WxMpService;
-import org.testng.Assert;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
-
 import com.google.inject.Inject;
-
-import me.chanjar.weixin.mp.api.ApiTestModule;
-import me.chanjar.weixin.mp.api.WxXmlMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.test.ApiTestModule;
+import me.chanjar.weixin.mp.api.test.TestConfigStorage;
 import me.chanjar.weixin.mp.bean.tag.WxTagListUser;
 import me.chanjar.weixin.mp.bean.tag.WxUserTag;
+import org.testng.*;
+import org.testng.annotations.*;
+
+import java.util.List;
 
 /**
+ * Created by Binary Wang on 2016/9/2.
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- *         Created by Binary Wang on 2016/9/2.
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Test
 @Guice(modules = ApiTestModule.class)
@@ -43,7 +40,7 @@ public class WxMpUserTagServiceImplTest {
     Assert.assertNotNull(res);
   }
 
-  @Test(dependsOnMethods = { "testTagCreate" })
+  @Test(dependsOnMethods = {"testTagCreate"})
   public void testTagUpdate() throws Exception {
     String tagName = "修改标签" + System.currentTimeMillis();
     Boolean res = this.wxService.getUserTagService().tagUpdate(this.tagId, tagName);
@@ -51,7 +48,7 @@ public class WxMpUserTagServiceImplTest {
     Assert.assertTrue(res);
   }
 
-  @Test(dependsOnMethods = { "testTagCreate" })
+  @Test(dependsOnMethods = {"testTagCreate"})
   public void testTagDelete() throws Exception {
     Boolean res = this.wxService.getUserTagService().tagDelete(this.tagId);
     System.out.println(res);
@@ -67,7 +64,7 @@ public class WxMpUserTagServiceImplTest {
 
   @Test
   public void testBatchTagging() throws Exception {
-    String[] openids = new String[]{((WxXmlMpInMemoryConfigStorage) this.wxService.getWxMpConfigStorage()).getOpenid()};
+    String[] openids = new String[]{((TestConfigStorage) this.wxService.getWxMpConfigStorage()).getOpenid()};
     boolean res = this.wxService.getUserTagService().batchTagging(this.tagId, openids);
     System.out.println(res);
     Assert.assertTrue(res);
@@ -75,7 +72,7 @@ public class WxMpUserTagServiceImplTest {
 
   @Test
   public void testBatchUntagging() throws Exception {
-    String[] openids = new String[]{((WxXmlMpInMemoryConfigStorage) this.wxService.getWxMpConfigStorage()).getOpenid()};
+    String[] openids = new String[]{((TestConfigStorage) this.wxService.getWxMpConfigStorage()).getOpenid()};
     boolean res = this.wxService.getUserTagService().batchUntagging(this.tagId, openids);
     System.out.println(res);
     Assert.assertTrue(res);
@@ -84,7 +81,7 @@ public class WxMpUserTagServiceImplTest {
   @Test
   public void testUserTagList() throws Exception {
     List<Long> res = this.wxService.getUserTagService().userTagList(
-        ((WxXmlMpInMemoryConfigStorage) this.wxService.getWxMpConfigStorage()).getOpenid());
+      ((TestConfigStorage) this.wxService.getWxMpConfigStorage()).getOpenid());
     System.out.println(res);
     Assert.assertNotNull(res);
   }

@@ -4,8 +4,8 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTextMessage;
 
 /**
  * 文本消息builder
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public final class TextBuilder extends BaseBuilder<TextBuilder, WxMpXmlOutTextMessage> {
   private String content;

@@ -1,14 +1,16 @@
 package me.chanjar.weixin.cp.api;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
+import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import me.chanjar.weixin.cp.config.WxCpInMemoryConfigStorage;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ApiTestModule implements Module {
 
@@ -22,14 +24,14 @@ public class ApiTestModule implements Module {
   @Override
   public void configure(Binder binder) {
     try (InputStream is1 = ClassLoader
-        .getSystemResourceAsStream("test-config.xml")) {
+      .getSystemResourceAsStream("test-config.xml")) {
       WxXmlCpInMemoryConfigStorage config = fromXml(
-          WxXmlCpInMemoryConfigStorage.class, is1);
-      WxCpServiceImpl wxService = new WxCpServiceImpl();
+        WxXmlCpInMemoryConfigStorage.class, is1);
+      WxCpService wxService = new WxCpServiceImpl();
       wxService.setWxCpConfigStorage(config);
 
-      binder.bind(WxCpServiceImpl.class).toInstance(wxService);
-      binder.bind(WxCpConfigStorage.class).toInstance(config);
+      binder.bind(WxCpService.class).toInstance(wxService);
+      binder.bind(WxXmlCpInMemoryConfigStorage.class).toInstance(config);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -71,10 +73,10 @@ public class ApiTestModule implements Module {
     @Override
     public String toString() {
       return super.toString() + " > WxXmlCpConfigStorage{" +
-              "userId='" + this.userId + '\'' +
-              ", departmentId='" + this.departmentId + '\'' +
-              ", tagId='" + this.tagId + '\'' +
-              '}';
+        "userId='" + this.userId + '\'' +
+        ", departmentId='" + this.departmentId + '\'' +
+        ", tagId='" + this.tagId + '\'' +
+        '}';
     }
   }
 

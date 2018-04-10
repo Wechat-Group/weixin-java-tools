@@ -1,14 +1,13 @@
 package me.chanjar.weixin.common.bean;
 
 import me.chanjar.weixin.common.bean.result.WxError;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.*;
+import org.testng.annotations.*;
 
 @Test
 public class WxErrorTest {
 
   public void testFromJson() {
-
     String json = "{ \"errcode\": 40003, \"errmsg\": \"invalid openid\" }";
     WxError wxError = WxError.fromJson(json);
     Assert.assertTrue(wxError.getErrorCode() == 40003);

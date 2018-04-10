@@ -2,6 +2,8 @@ package me.chanjar.weixin.mp.bean.message;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import lombok.Data;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
@@ -12,8 +14,6 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <pre>
@@ -26,8 +26,8 @@ import java.util.List;
  * @author chanjarster
  */
 @XStreamAlias("xml")
+@Data
 public class WxMpXmlMessage implements Serializable {
-
   private static final long serialVersionUID = -3586245291677274914L;
 
   ///////////////////////
@@ -199,6 +199,129 @@ public class WxMpXmlMessage implements Serializable {
   @XStreamAlias("OuterId")
   private Integer outerId;
 
+  /**
+   * 用户删除会员卡后可重新找回，当用户本次操作为找回时，该值为1，否则为0
+   */
+  @XStreamAlias("IsRestoreMemberCard")
+  private String isRestoreMemberCard;
+
+  /**
+   * <pre>
+   * 领取场景值，用于领取渠道数据统计。可在生成二维码接口及添加Addcard接口中自定义该字段的字符串值。
+   * 核销卡券时：开发者发起核销时传入的自定义参数，用于进行核销渠道统计
+   * 另外：
+   * 官网文档中，微信卡券>>卡券事件推送>>2.7 进入会员卡事件推送 user_view_card
+   * OuterStr：商户自定义二维码渠道参数，用于标识本次扫码打开会员卡来源来自于某个渠道值的二维码
+   * </pre>
+   */
+  @XStreamAlias("OuterStr")
+  private String outerStr;
+
+  /**
+   * 是否转赠退回，0代表不是，1代表是。
+   */
+  @XStreamAlias("IsReturnBack")
+  private String isReturnBack;
+
+  /**
+   * 是否是群转赠，0代表不是，1代表是。
+   */
+  @XStreamAlias("IsChatRoom")
+  private String isChatRoom;
+
+  /**
+   * 核销来源。支持开发者统计API核销（FROM_API）、公众平台核销（FROM_MP）、卡券商户助手核销（FROM_MOBILE_HELPER）（核销员微信号）
+   */
+  @XStreamAlias("ConsumeSource")
+  private String consumeSource;
+
+  /**
+   * 门店名称，当前卡券核销的门店名称（只有通过自助核销和买单核销时才会出现该字段）
+   */
+  @XStreamAlias("LocationName")
+  private String locationName;
+
+  /**
+   * 核销该卡券核销员的openid（只有通过卡券商户助手核销时才会出现）
+   */
+  @XStreamAlias("StaffOpenId")
+  private String staffOpenId;
+
+  /**
+   * 自助核销时，用户输入的验证码
+   */
+  @XStreamAlias("VerifyCode")
+  private String verifyCode;
+
+  /**
+   * 自助核销时，用户输入的备注金额
+   */
+  @XStreamAlias("RemarkAmount")
+  private String remarkAmount;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.10 库存报警事件card_sku_remind
+   * Detail：报警详细信息
+   * </pre>
+   */
+  @XStreamAlias("Detail")
+  private String detail;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.9 会员卡内容更新事件 update_member_card
+   * ModifyBonus：变动的积分值
+   * </pre>
+   */
+  @XStreamAlias("ModifyBonus")
+  private String modifyBonus;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.9 会员卡内容更新事件 update_member_card
+   * ModifyBalance：变动的余额值
+   * </pre>
+   */
+  @XStreamAlias("ModifyBalance")
+  private String modifyBalance;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.6 买单事件推送 User_pay_from_pay_cell
+   * TransId：微信支付交易订单号（只有使用买单功能核销的卡券才会出现）
+   * </pre>
+   */
+  @XStreamAlias("TransId")
+  private String transId;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.6 买单事件推送 User_pay_from_pay_cell
+   * LocationId：门店ID，当前卡券核销的门店ID（只有通过卡券商户助手和买单核销时才会出现）
+   * </pre>
+   */
+  @XStreamAlias("LocationId")
+  private String locationId;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.6 买单事件推送 User_pay_from_pay_cell
+   * Fee：实付金额，单位为分
+   * </pre>
+   */
+  @XStreamAlias("Fee")
+  private String fee;
+
+  /**
+   * <pre>
+   * 官网文档中，微信卡券>>卡券事件推送>>2.6 买单事件推送 User_pay_from_pay_cell
+   * OriginalFee：应付金额，单位为分
+   * </pre>
+   */
+  @XStreamAlias("OriginalFee")
+  private String originalFee;
+
   @XStreamAlias("ScanCodeInfo")
   private ScanCodeInfo scanCodeInfo = new ScanCodeInfo();
 
@@ -281,6 +404,12 @@ public class WxMpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String deviceId;
 
+  /**
+   * 微信用户账号的OpenID
+   */
+  @XStreamAlias("OpenID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String openId;
 
   @XStreamAlias("HardWare")
   private HardWare hardWare = new HardWare();
@@ -298,6 +427,8 @@ public class WxMpXmlMessage implements Serializable {
   private Integer deviceStatus;
 
   public static WxMpXmlMessage fromXml(String xml) {
+    //修改微信变态的消息内容格式，方便解析
+    xml = xml.replace("</PicList><PicList>", "");
     return XStreamTransformer.fromXml(WxMpXmlMessage.class, xml);
   }
 
@@ -308,11 +439,11 @@ public class WxMpXmlMessage implements Serializable {
   /**
    * 从加密字符串转换
    *
-   * @param encryptedXml
-   * @param wxMpConfigStorage
-   * @param timestamp
-   * @param nonce
-   * @param msgSignature
+   * @param encryptedXml      密文
+   * @param wxMpConfigStorage 配置存储器对象
+   * @param timestamp         时间戳
+   * @param nonce             随机串
+   * @param msgSignature      签名串
    */
   public static WxMpXmlMessage fromEncryptedXml(String encryptedXml,
                                                 WxMpConfigStorage wxMpConfigStorage, String timestamp, String nonce,
@@ -334,129 +465,16 @@ public class WxMpXmlMessage implements Serializable {
     }
   }
 
-  public Integer getOpType() {
-    return opType;
-  }
-
-  public void setOpType(Integer opType) {
-    this.opType = opType;
-  }
-
-  public Integer getDeviceStatus() {
-
-    return deviceStatus;
-  }
-
-  public void setDeviceStatus(Integer deviceStatus) {
-    this.deviceStatus = deviceStatus;
-  }
-
-  public HardWare getHardWare() {
-    return hardWare;
-  }
-
-  public void setHardWare(HardWare hardWare) {
-    this.hardWare = hardWare;
-  }
-
-  public String getDeviceType() {
-    return deviceType;
-  }
-
-  public void setDeviceType(String deviceType) {
-    this.deviceType = deviceType;
-  }
-
-  public String getDeviceId() {
-    return deviceId;
-  }
-
-  public void setDeviceId(String deviceId) {
-    this.deviceId = deviceId;
-  }
-
-  public Long getExpiredTime() {
-    return this.expiredTime;
-  }
-
-  public void setExpiredTime(Long expiredTime) {
-    this.expiredTime = expiredTime;
-  }
-
-  public Long getFailTime() {
-    return this.failTime;
-  }
-
-  public void setFailTime(Long failTime) {
-    this.failTime = failTime;
-  }
-
-  public String getFailReason() {
-    return this.failReason;
-  }
-
-  public void setFailReason(String failReason) {
-    this.failReason = failReason;
-  }
-
-  public String getStoreUniqId() {
-    return this.storeUniqId;
-  }
-
-  public void setStoreUniqId(String storeUniqId) {
-    this.storeUniqId = storeUniqId;
-  }
-
-  public String getPoiId() {
-    return this.poiId;
-  }
-
-  public void setPoiId(String poiId) {
-    this.poiId = poiId;
-  }
-
-  public String getResult() {
-    return this.result;
-  }
-
-  public void setResult(String result) {
-    this.result = result;
-  }
-
-  public String getMsg() {
-    return this.msg;
-  }
-
-  public void setMsg(String msg) {
-    this.msg = msg;
-  }
-
-  public String getToUser() {
-    return this.toUser;
-  }
-
-  public void setToUser(String toUser) {
-    this.toUser = toUser;
-  }
-
-  public Long getCreateTime() {
-    return this.createTime;
-  }
-
-  public void setCreateTime(Long createTime) {
-    this.createTime = createTime;
-  }
-
   /**
    * <pre>
    * 当接受用户消息时，可能会获得以下值：
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_TEXT}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_IMAGE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VOICE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VIDEO}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_LOCATION}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_LINK}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_EVENT}
+   * {@link WxConsts.XmlMsgType#TEXT}
+   * {@link WxConsts.XmlMsgType#IMAGE}
+   * {@link WxConsts.XmlMsgType#VOICE}
+   * {@link WxConsts.XmlMsgType#VIDEO}
+   * {@link WxConsts.XmlMsgType#LOCATION}
+   * {@link WxConsts.XmlMsgType#LINK}
+   * {@link WxConsts.XmlMsgType#EVENT}
    * </pre>
    */
   public String getMsgType() {
@@ -466,331 +484,17 @@ public class WxMpXmlMessage implements Serializable {
   /**
    * <pre>
    * 当发送消息的时候使用：
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_TEXT}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_IMAGE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VOICE}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_VIDEO}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_NEWS}
-   * {@link me.chanjar.weixin.common.api.WxConsts#XML_MSG_MUSIC}
+   * {@link WxConsts.XmlMsgType#TEXT}
+   * {@link WxConsts.XmlMsgType#IMAGE}
+   * {@link WxConsts.XmlMsgType#VOICE}
+   * {@link WxConsts.XmlMsgType#VIDEO}
+   * {@link WxConsts.XmlMsgType#NEWS}
+   * {@link WxConsts.XmlMsgType#MUSIC}
    * </pre>
    *
-   * @param msgType
    */
   public void setMsgType(String msgType) {
     this.msgType = msgType;
-  }
-
-  public String getContent() {
-    return this.content;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
-  }
-
-  public Long getMsgId() {
-    return this.msgId;
-  }
-
-  public void setMsgId(Long msgId) {
-    this.msgId = msgId;
-  }
-
-  public String getPicUrl() {
-    return this.picUrl;
-  }
-
-  public void setPicUrl(String picUrl) {
-    this.picUrl = picUrl;
-  }
-
-  public String getMediaId() {
-    return this.mediaId;
-  }
-
-  public void setMediaId(String mediaId) {
-    this.mediaId = mediaId;
-  }
-
-  public String getFormat() {
-    return this.format;
-  }
-
-  public void setFormat(String format) {
-    this.format = format;
-  }
-
-  public String getThumbMediaId() {
-    return this.thumbMediaId;
-  }
-
-  public void setThumbMediaId(String thumbMediaId) {
-    this.thumbMediaId = thumbMediaId;
-  }
-
-  public Double getLocationX() {
-    return this.locationX;
-  }
-
-  public void setLocationX(Double locationX) {
-    this.locationX = locationX;
-  }
-
-  public Double getLocationY() {
-    return this.locationY;
-  }
-
-  public void setLocationY(Double locationY) {
-    this.locationY = locationY;
-  }
-
-  public Double getScale() {
-    return this.scale;
-  }
-
-  public void setScale(Double scale) {
-    this.scale = scale;
-  }
-
-  public String getLabel() {
-    return this.label;
-  }
-
-  public void setLabel(String label) {
-    this.label = label;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getDescription() {
-    return this.description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getUrl() {
-    return this.url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
-  public String getEvent() {
-    return this.event;
-  }
-
-  public void setEvent(String event) {
-    this.event = event;
-  }
-
-  public String getEventKey() {
-    return this.eventKey;
-  }
-
-  public void setEventKey(String eventKey) {
-    this.eventKey = eventKey;
-  }
-
-  public String getTicket() {
-    return this.ticket;
-  }
-
-  public void setTicket(String ticket) {
-    this.ticket = ticket;
-  }
-
-  public Double getLatitude() {
-    return this.latitude;
-  }
-
-  public void setLatitude(Double latitude) {
-    this.latitude = latitude;
-  }
-
-  public Double getLongitude() {
-    return this.longitude;
-  }
-
-  public void setLongitude(Double longitude) {
-    this.longitude = longitude;
-  }
-
-  public Double getPrecision() {
-    return this.precision;
-  }
-
-  public void setPrecision(Double precision) {
-    this.precision = precision;
-  }
-
-  public String getRecognition() {
-    return this.recognition;
-  }
-
-  public void setRecognition(String recognition) {
-    this.recognition = recognition;
-  }
-
-  public String getFromUser() {
-    return this.fromUser;
-  }
-
-  public void setFromUser(String fromUser) {
-    this.fromUser = fromUser;
-  }
-
-  public String getStatus() {
-    return this.status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-  public Integer getTotalCount() {
-    return this.totalCount;
-  }
-
-  public void setTotalCount(Integer totalCount) {
-    this.totalCount = totalCount;
-  }
-
-  public Integer getFilterCount() {
-    return this.filterCount;
-  }
-
-  public void setFilterCount(Integer filterCount) {
-    this.filterCount = filterCount;
-  }
-
-  public Integer getSentCount() {
-    return this.sentCount;
-  }
-
-  public void setSentCount(Integer sentCount) {
-    this.sentCount = sentCount;
-  }
-
-  public Integer getErrorCount() {
-    return this.errorCount;
-  }
-
-  public void setErrorCount(Integer errorCount) {
-    this.errorCount = errorCount;
-  }
-
-  public String getCardId() {
-    return this.cardId;
-  }
-
-  public void setCardId(String cardId) {
-    this.cardId = cardId;
-  }
-
-  public String getFriendUserName() {
-    return this.friendUserName;
-  }
-
-  public void setFriendUserName(String friendUserName) {
-    this.friendUserName = friendUserName;
-  }
-
-  public Integer getIsGiveByFriend() {
-    return this.isGiveByFriend;
-  }
-
-  public void setIsGiveByFriend(Integer isGiveByFriend) {
-    this.isGiveByFriend = isGiveByFriend;
-  }
-
-  public String getUserCardCode() {
-    return this.userCardCode;
-  }
-
-  public void setUserCardCode(String userCardCode) {
-    this.userCardCode = userCardCode;
-  }
-
-  public String getOldUserCardCode() {
-    return this.oldUserCardCode;
-  }
-
-  public void setOldUserCardCode(String oldUserCardCode) {
-    this.oldUserCardCode = oldUserCardCode;
-  }
-
-  public Integer getOuterId() {
-    return this.outerId;
-  }
-
-  public void setOuterId(Integer outerId) {
-    this.outerId = outerId;
-  }
-
-  public WxMpXmlMessage.ScanCodeInfo getScanCodeInfo() {
-    return this.scanCodeInfo;
-  }
-
-  public void setScanCodeInfo(WxMpXmlMessage.ScanCodeInfo scanCodeInfo) {
-    this.scanCodeInfo = scanCodeInfo;
-  }
-
-  public WxMpXmlMessage.SendPicsInfo getSendPicsInfo() {
-    return this.sendPicsInfo;
-  }
-
-  public void setSendPicsInfo(WxMpXmlMessage.SendPicsInfo sendPicsInfo) {
-    this.sendPicsInfo = sendPicsInfo;
-  }
-
-  public WxMpXmlMessage.SendLocationInfo getSendLocationInfo() {
-    return this.sendLocationInfo;
-  }
-
-  public void setSendLocationInfo(
-    WxMpXmlMessage.SendLocationInfo sendLocationInfo) {
-    this.sendLocationInfo = sendLocationInfo;
-  }
-
-  public Long getMenuId() {
-    return this.menuId;
-  }
-
-  public void setMenuId(Long menuId) {
-    this.menuId = menuId;
-  }
-
-  public String getKfAccount() {
-    return this.kfAccount;
-  }
-
-  public void setKfAccount(String kfAccount) {
-    this.kfAccount = kfAccount;
-  }
-
-  public String getToKfAccount() {
-    return this.toKfAccount;
-  }
-
-  public void setToKfAccount(String toKfAccount) {
-    this.toKfAccount = toKfAccount;
-  }
-
-  public String getFromKfAccount() {
-    return this.fromKfAccount;
-  }
-
-  public void setFromKfAccount(String fromKfAccount) {
-    this.fromKfAccount = fromKfAccount;
   }
 
   @Override
@@ -798,193 +502,4 @@ public class WxMpXmlMessage implements Serializable {
     return ToStringUtils.toSimpleString(this);
   }
 
-  @XStreamAlias("HardWare")
-  public static class HardWare {
-    /**
-     * 消息展示，目前支持myrank(排行榜)
-     */
-    @XStreamAlias("MessageView")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String messageView;
-    /**
-     * 消息点击动作，目前支持ranklist(点击跳转排行榜)
-     */
-    @XStreamAlias("MessageAction")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String messageAction;
-
-    @Override
-    public String toString() {
-      return ToStringUtils.toSimpleString(this);
-    }
-
-    public String getMessageView() {
-      return messageView;
-    }
-
-    public void setMessageView(String messageView) {
-      this.messageView = messageView;
-    }
-
-    public String getMessageAction() {
-      return messageAction;
-    }
-
-    public void setMessageAction(String messageAction) {
-      this.messageAction = messageAction;
-    }
-  }
-
-  @XStreamAlias("ScanCodeInfo")
-  public static class ScanCodeInfo {
-    @XStreamAlias("ScanType")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String scanType;
-    @XStreamAlias("ScanResult")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String scanResult;
-
-    @Override
-    public String toString() {
-      return ToStringUtils.toSimpleString(this);
-    }
-
-    /**
-     * 扫描类型，一般是qrcode
-     */
-    public String getScanType() {
-
-      return this.scanType;
-    }
-
-    public void setScanType(String scanType) {
-      this.scanType = scanType;
-    }
-
-    /**
-     * 扫描结果，即二维码对应的字符串信息
-     */
-    public String getScanResult() {
-      return this.scanResult;
-    }
-
-    public void setScanResult(String scanResult) {
-      this.scanResult = scanResult;
-    }
-
-  }
-
-  @XStreamAlias("SendPicsInfo")
-  public static class SendPicsInfo {
-    @XStreamAlias("PicList")
-    protected final List<Item> picList = new ArrayList<>();
-    @XStreamAlias("Count")
-    private Long count;
-
-    @Override
-    public String toString() {
-      return ToStringUtils.toSimpleString(this);
-    }
-
-    public Long getCount() {
-      return this.count;
-    }
-
-    public void setCount(Long count) {
-      this.count = count;
-    }
-
-    public List<Item> getPicList() {
-      return this.picList;
-    }
-
-    @XStreamAlias("item")
-    public static class Item {
-      @XStreamAlias("PicMd5Sum")
-      @XStreamConverter(value = XStreamCDataConverter.class)
-      private String picMd5Sum;
-
-      @Override
-      public String toString() {
-        return ToStringUtils.toSimpleString(this);
-      }
-
-      public String getPicMd5Sum() {
-        return this.picMd5Sum;
-      }
-
-      public void setPicMd5Sum(String picMd5Sum) {
-        this.picMd5Sum = picMd5Sum;
-      }
-    }
-  }
-
-  @XStreamAlias("SendLocationInfo")
-  public static class SendLocationInfo {
-
-    @XStreamAlias("Location_X")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String locationX;
-
-    @XStreamAlias("Location_Y")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String locationY;
-
-    @XStreamAlias("Scale")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String scale;
-
-    @XStreamAlias("Label")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String label;
-
-    @XStreamAlias("Poiname")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String poiname;
-
-    @Override
-    public String toString() {
-      return ToStringUtils.toSimpleString(this);
-    }
-
-    public String getLocationX() {
-      return this.locationX;
-    }
-
-    public void setLocationX(String locationX) {
-      this.locationX = locationX;
-    }
-
-    public String getLocationY() {
-      return this.locationY;
-    }
-
-    public void setLocationY(String locationY) {
-      this.locationY = locationY;
-    }
-
-    public String getScale() {
-      return this.scale;
-    }
-
-    public void setScale(String scale) {
-      this.scale = scale;
-    }
-
-    public String getLabel() {
-      return this.label;
-    }
-
-    public void setLabel(String label) {
-      this.label = label;
-    }
-
-    public String getPoiname() {
-      return this.poiname;
-    }
-
-    public void setPoiname(String poiname) {
-      this.poiname = poiname;
-    }
-  }
 }

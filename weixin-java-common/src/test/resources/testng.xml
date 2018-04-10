@@ -7,8 +7,8 @@
       <class name="me.chanjar.weixin.common.bean.WxErrorTest"/>
       <class name="me.chanjar.weixin.common.bean.WxMenuTest"/>
       <class name="me.chanjar.weixin.common.util.crypto.WxCryptUtilTest"/>
-      <class name="me.chanjar.weixin.common.util.WxMessageInMemoryDuplicateCheckerTest"/>
-      <class name="me.chanjar.weixin.common.session.SessionTest" />
+      <class name="me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateCheckerTest"/>
+      <class name="me.chanjar.weixin.common.session.SessionTest"/>
     </classes>
   </test>
 </suite>

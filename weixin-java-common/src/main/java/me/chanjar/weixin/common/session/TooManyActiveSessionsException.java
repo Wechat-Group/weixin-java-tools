@@ -21,7 +21,7 @@ package me.chanjar.weixin.common.session;
  * reached and the server is refusing to create any new sessions.
  */
 public class TooManyActiveSessionsException
-        extends IllegalStateException {
+  extends IllegalStateException {
   private static final long serialVersionUID = 1L;
 
   /**

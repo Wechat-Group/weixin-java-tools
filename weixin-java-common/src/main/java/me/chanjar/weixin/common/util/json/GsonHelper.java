@@ -1,21 +1,11 @@
-/*
- * KINGSTAR MEDIA SOLUTIONS Co.,LTD. Copyright c 2005-2013. All rights reserved.
- *
- * This source code is the property of KINGSTAR MEDIA SOLUTIONS LTD. It is intended
- * only for the use of KINGSTAR MEDIA application development. Reengineering, reproduction
- * arose from modification of the original source, or other redistribution of this source
- * is not permitted without written permission of the KINGSTAR MEDIA SOLUTIONS LTD.
- */
 package me.chanjar.weixin.common.util.json;
-
-
-import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.List;
 
 public class GsonHelper {
 
@@ -77,7 +67,7 @@ public class GsonHelper {
 
   public static long getAsPrimitiveLong(JsonElement element) {
     Long r = getAsLong(element);
-    return r == null ? 0l : r;
+    return r == null ? 0L : r;
   }
 
   public static Integer getAsInteger(JsonElement element) {
@@ -95,7 +85,7 @@ public class GsonHelper {
 
   public static boolean getAsPrimitiveBool(JsonElement element) {
     Boolean r = getAsBoolean(element);
-    return r != null && r.booleanValue();
+    return r != null && r;
   }
 
   public static Double getAsDouble(JsonElement element) {
@@ -128,6 +118,34 @@ public class GsonHelper {
     }
 
     return result.toArray(new Integer[0]);
+  }
+
+  public static String[] getStringArray(JsonObject o, String string) {
+    JsonArray jsonArray = getAsJsonArray(o.getAsJsonArray(string));
+    if (jsonArray == null) {
+      return null;
+    }
+
+    List<String> result = Lists.newArrayList();
+    for (int i = 0; i < jsonArray.size(); i++) {
+      result.add(jsonArray.get(i).getAsString());
+    }
+
+    return result.toArray(new String[0]);
+  }
+
+  public static Long[] getLongArray(JsonObject o, String string) {
+    JsonArray jsonArray = getAsJsonArray(o.getAsJsonArray(string));
+    if (jsonArray == null) {
+      return null;
+    }
+
+    List<Long> result = Lists.newArrayList();
+    for (int i = 0; i < jsonArray.size(); i++) {
+      result.add(jsonArray.get(i).getAsLong());
+    }
+
+    return result.toArray(new Long[0]);
   }
 
   public static JsonArray getAsJsonArray(JsonElement element) {

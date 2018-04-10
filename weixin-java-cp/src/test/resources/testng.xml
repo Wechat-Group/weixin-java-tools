@@ -6,12 +6,7 @@
       <class name="me.chanjar.weixin.cp.api.WxCpBusyRetryTest"/>
       <class name="me.chanjar.weixin.cp.api.WxCpBaseAPITest"/>
       <class name="me.chanjar.weixin.cp.api.WxCpMessageAPITest"/>
-      <class name="me.chanjar.weixin.cp.api.WxMenuAPITest"/>
-      <class name="me.chanjar.weixin.cp.api.WxCpDepartAPITest"/>
-      <class name="me.chanjar.weixin.cp.api.WxCpMediaAPITest"/>
       <class name="me.chanjar.weixin.cp.api.WxCpMessageRouterTest"/>
-      <class name="me.chanjar.weixin.cp.api.WxCpTagAPITest"/>
-      <class name="me.chanjar.weixin.cp.api.WxCpUserAPITest"/>
     </classes>
   </test>
 
