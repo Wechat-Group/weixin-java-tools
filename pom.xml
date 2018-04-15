@@ -244,7 +244,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
+<!--
   <distributionManagement>
     <snapshotRepository>
       <id>ossrh</id>
@@ -253,6 +253,18 @@
     <repository>
       <id>ossrh</id>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+  -->
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://repo.infoship.cn/content/repositories/snapshots/</url>
+      <uniqueVersion>true</uniqueVersion>
+    </snapshotRepository>
+    <repository>
+      <id>nexus-releases</id>
+      <url>http://repo.infoship.cn/content/repositories/releases/</url>
     </repository>
   </distributionManagement>
 
@@ -336,6 +348,7 @@
     </pluginManagement>
 
     <plugins>
+      <!--
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -347,6 +360,7 @@
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
