@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>weixin-java-parent</artifactId>
-  <version>3.0.1.BETA</version>
+  <version>3.0.1.01</version>
   <packaging>pom</packaging>
   <name>Weixin Java Tools - Parent</name>
   <description>微信公众号、企业号上级POM</description>
