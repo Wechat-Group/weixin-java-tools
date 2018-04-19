@@ -34,6 +34,8 @@ public interface WxOpenConfigStorage {
 
   boolean isComponentAccessTokenExpired();
 
+  void expireComponentAccessToken();
+
   void updateComponentAccessTokent(WxOpenComponentAccessToken componentAccessToken);
 
   WxMpConfigStorage getWxMpConfigStorage(String appId);

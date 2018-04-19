@@ -3,6 +3,7 @@ package me.chanjar.weixin.open.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.google.gson.JsonObject;
+import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.URIUtil;
@@ -112,13 +113,55 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   private String post(String uri, String postData) throws WxErrorException {
     String componentAccessToken = getComponentAccessToken(false);
     String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + "component_access_token=" + componentAccessToken;
-    return getWxOpenService().post(uriWithComponentAccessToken, postData);
+    try {
+      return getWxOpenService().post(uriWithComponentAccessToken, postData);
+    }catch (WxErrorException e){
+      WxError error = e.getError();
+      /*
+       * 发生以下情况时尝试刷新access_token
+       * 40001 获取access_token时AppSecret错误，或者access_token无效
+       * 42001 access_token超时
+       * 40014 不合法的access_token，请开发者认真比对access_token的有效性（如是否过期），或查看是否正在为恰当的公众号调用接口
+       */
+      if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001 || error.getErrorCode() == 40014) {
+        // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
+        this.getWxOpenConfigStorage().expireComponentAccessToken();
+        if (this.getWxOpenConfigStorage().autoRefreshToken()) {
+          return this.post(uri, postData);
+        }
+      }
+      if (error.getErrorCode() != 0) {
+        throw new WxErrorException(error, e);
+      }
+      return null;
+    }
   }
 
   private String get(String uri) throws WxErrorException {
     String componentAccessToken = getComponentAccessToken(false);
     String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + "component_access_token=" + componentAccessToken;
-    return getWxOpenService().get(uriWithComponentAccessToken, null);
+    try {
+      return getWxOpenService().get(uriWithComponentAccessToken, null);
+    }catch (WxErrorException e){
+      WxError error = e.getError();
+      /*
+       * 发生以下情况时尝试刷新access_token
+       * 40001 获取access_token时AppSecret错误，或者access_token无效
+       * 42001 access_token超时
+       * 40014 不合法的access_token，请开发者认真比对access_token的有效性（如是否过期），或查看是否正在为恰当的公众号调用接口
+       */
+      if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001 || error.getErrorCode() == 40014) {
+        // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
+        this.getWxOpenConfigStorage().expireComponentAccessToken();
+        if (this.getWxOpenConfigStorage().autoRefreshToken()) {
+          return this.get(uri);
+        }
+      }
+      if (error.getErrorCode() != 0) {
+        throw new WxErrorException(error, e);
+      }
+      return null;
+    }
   }
 
   @Override

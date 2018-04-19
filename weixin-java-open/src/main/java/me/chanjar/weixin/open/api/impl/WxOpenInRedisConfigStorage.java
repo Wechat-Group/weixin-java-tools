@@ -67,6 +67,13 @@ public class WxOpenInRedisConfigStorage extends WxOpenInMemoryConfigStorage {
   }
 
   @Override
+  public void expireComponentAccessToken(){
+    try (Jedis jedis = this.jedisPool.getResource()) {
+      jedis.expire(this.componentAccessTokenKey, 0);
+    }
+  }
+
+  @Override
   public void updateComponentAccessTokent(String componentAccessToken, int expiresInSeconds) {
     try (Jedis jedis = this.jedisPool.getResource()) {
       jedis.setex(this.componentAccessTokenKey, expiresInSeconds - 200, componentAccessToken);
