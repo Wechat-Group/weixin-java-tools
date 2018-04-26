@@ -3,6 +3,8 @@ package me.chanjar.weixin.open.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.crypto.SHA1;
@@ -15,6 +17,7 @@ import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenService;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
+import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
@@ -26,13 +29,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
  */
 public class WxOpenComponentServiceImpl implements WxOpenComponentService {
-
+  private static final JsonParser JSON_PARSER = new JsonParser();
   private static final Map<String, WxMaService> WX_OPEN_MA_SERVICE_MAP = new Hashtable<>();
   private static final Map<String, WxMpService> WX_OPEN_MP_SERVICE_MAP = new Hashtable<>();
 
@@ -288,4 +292,45 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     return WxMaJscode2SessionResult.fromJson(responseContent);
   }
 
+  @Override
+  public List<WxOpenMaCodeTemplate> getTemplateDraftList() throws WxErrorException {
+    String responseContent = get(GET_TEMPLATE_DRAFT_LIST_URL);
+    JsonObject response = JSON_PARSER.parse(StringUtils.defaultString(responseContent, "{}")).getAsJsonObject();
+    boolean hasDraftList = response.has("draft_list");
+    if (hasDraftList) {
+      return WxOpenGsonBuilder.create().fromJson(response.getAsJsonArray("draft_list"),
+        new TypeToken<List<WxOpenMaCodeTemplate>>() {
+        }.getType());
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public List<WxOpenMaCodeTemplate> getTemplateList() throws WxErrorException {
+    String responseContent = get(GET_TEMPLATE_LIST_URL);
+    JsonObject response = JSON_PARSER.parse(StringUtils.defaultString(responseContent, "{}")).getAsJsonObject();
+    boolean hasDraftList = response.has("template_list");
+    if (hasDraftList) {
+      return WxOpenGsonBuilder.create().fromJson(response.getAsJsonArray("template_list"),
+        new TypeToken<List<WxOpenMaCodeTemplate>>() {
+        }.getType());
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public void addToTemplate(long draftId) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("draft_id", draftId);
+    post(ADD_TO_TEMPLATE_URL, param.toString());
+  }
+
+  @Override
+  public void deleteTemplate(long templateId) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("template_id", templateId);
+    post(DELETE_TEMPLATE_URL, param.toString());
+  }
 }
