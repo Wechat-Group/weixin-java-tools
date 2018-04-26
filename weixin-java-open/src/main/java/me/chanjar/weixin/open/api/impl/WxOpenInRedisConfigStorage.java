@@ -1,7 +1,9 @@
 package me.chanjar.weixin.open.api.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.util.Pool;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
@@ -15,13 +17,26 @@ public class WxOpenInRedisConfigStorage extends WxOpenInMemoryConfigStorage {
   private final static String JSAPI_TICKET_KEY = "wechat_jsapi_ticket:";
   private final static String CARD_API_TICKET_KEY = "wechat_card_api_ticket:";
 
-  protected final JedisPool jedisPool;
+  protected final Pool<Jedis> jedisPool;
+  /**
+   * redis 存储的 key 的前缀，可为空
+   */
+  private String keyPrefix;
   private String componentVerifyTicketKey;
   private String componentAccessTokenKey;
   private String authorizerRefreshTokenKey;
   private String authorizerAccessTokenKey;
   private String jsapiTicketKey;
   private String cardApiTicket;
+
+  public WxOpenInRedisConfigStorage(Pool<Jedis> jedisPool) {
+    this.jedisPool = jedisPool;
+  }
+
+  public WxOpenInRedisConfigStorage(Pool<Jedis> jedisPool, String keyPrefix) {
+    this.jedisPool = jedisPool;
+    this.keyPrefix = keyPrefix;
+  }
 
   public WxOpenInRedisConfigStorage(JedisPool jedisPool) {
     this.jedisPool = jedisPool;
@@ -30,10 +45,12 @@ public class WxOpenInRedisConfigStorage extends WxOpenInMemoryConfigStorage {
   @Override
   public void setComponentAppId(String componentAppId) {
     super.setComponentAppId(componentAppId);
-    this.componentVerifyTicketKey = COMPONENT_VERIFY_TICKET_KEY.concat(componentAppId);
-    this.componentAccessTokenKey = COMPONENT_ACCESS_TOKEN_KEY.concat(componentAppId);
-    this.authorizerRefreshTokenKey = AUTHORIZER_REFRESH_TOKEN_KEY.concat(componentAppId);
-    this.authorizerAccessTokenKey = AUTHORIZER_ACCESS_TOKEN_KEY.concat(componentAppId);
+    String prefix = StringUtils.isBlank(keyPrefix) ? "" :
+      (StringUtils.endsWith(keyPrefix, ":") ? keyPrefix : (keyPrefix + ":"));
+    componentVerifyTicketKey = prefix + COMPONENT_VERIFY_TICKET_KEY.concat(componentAppId);
+    componentAccessTokenKey = prefix + COMPONENT_ACCESS_TOKEN_KEY.concat(componentAppId);
+    authorizerRefreshTokenKey = prefix + AUTHORIZER_REFRESH_TOKEN_KEY.concat(componentAppId);
+    authorizerAccessTokenKey = prefix + AUTHORIZER_ACCESS_TOKEN_KEY.concat(componentAppId);
     this.jsapiTicketKey = JSAPI_TICKET_KEY.concat(componentAppId);
     this.cardApiTicket = CARD_API_TICKET_KEY.concat(componentAppId);
   }
