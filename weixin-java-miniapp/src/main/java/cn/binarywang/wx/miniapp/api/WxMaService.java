@@ -136,6 +136,13 @@ public interface WxMaService {
   WxMaTemplateService getTemplateService();
 
   /**
+   * 返回代码操作相关的 API
+   *
+   * @return WxMaCodeService
+   */
+  WxMaCodeService getCodeService();
+
+  /**
    * 初始化http请求对象.
    */
   void initHttp();

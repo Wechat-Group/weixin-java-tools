@@ -1,19 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
-
-import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import cn.binarywang.wx.miniapp.api.WxMaCodeService;
 import cn.binarywang.wx.miniapp.api.WxMaMediaService;
 import cn.binarywang.wx.miniapp.api.WxMaMsgService;
 import cn.binarywang.wx.miniapp.api.WxMaQrcodeService;
@@ -35,6 +22,19 @@ import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
+import org.apache.http.HttpHost;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -51,6 +51,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   private WxMaUserService userService = new WxMaUserServiceImpl(this);
   private WxMaQrcodeService qrCodeService = new WxMaQrcodeServiceImpl(this);
   private WxMaTemplateService templateService = new WxMaTemplateServiceImpl(this);
+  private WxMaCodeService codeService = new WxMaCodeServiceImpl(this);
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -289,5 +290,10 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   @Override
   public WxMaTemplateService getTemplateService() {
     return this.templateService;
+  }
+
+  @Override
+  public WxMaCodeService getCodeService() {
+    return this.codeService;
   }
 }
