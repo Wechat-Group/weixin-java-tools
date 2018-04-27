@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.api.WxMaMediaService;
 import cn.binarywang.wx.miniapp.api.WxMaMsgService;
 import cn.binarywang.wx.miniapp.api.WxMaQrcodeService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.WxMaSettingService;
 import cn.binarywang.wx.miniapp.api.WxMaTemplateService;
 import cn.binarywang.wx.miniapp.api.WxMaUserService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
@@ -52,6 +53,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   private WxMaQrcodeService qrCodeService = new WxMaQrcodeServiceImpl(this);
   private WxMaTemplateService templateService = new WxMaTemplateServiceImpl(this);
   private WxMaCodeService codeService = new WxMaCodeServiceImpl(this);
+  private WxMaSettingService settingService = new WxMaSettingServiceImpl(this);
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -295,5 +297,10 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   @Override
   public WxMaCodeService getCodeService() {
     return this.codeService;
+  }
+
+  @Override
+  public WxMaSettingService getSettingService() {
+    return this.settingService;
   }
 }

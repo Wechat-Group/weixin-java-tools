@@ -143,6 +143,13 @@ public interface WxMaService {
   WxMaCodeService getCodeService();
 
   /**
+   * 小程序修改服务器地址、成员管理 API
+   *
+   * @return WxMaSettingService
+   */
+  WxMaSettingService getSettingService();
+
+  /**
    * 初始化http请求对象.
    */
   void initHttp();
