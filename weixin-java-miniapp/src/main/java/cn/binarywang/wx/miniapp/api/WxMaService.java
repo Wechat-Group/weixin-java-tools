@@ -136,6 +136,13 @@ public interface WxMaService {
   WxMaTemplateService getTemplateService();
 
   /**
+   * 数据分析相关查询服务
+   *
+   * @return WxMaAnalysisService
+   */
+  WxMaAnalysisService getAnalysisService();
+
+  /**
    * 返回代码操作相关的 API
    *
    * @return WxMaCodeService

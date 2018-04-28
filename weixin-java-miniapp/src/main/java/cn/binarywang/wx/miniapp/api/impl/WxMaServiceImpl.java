@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
+import cn.binarywang.wx.miniapp.api.WxMaAnalysisService;
 import cn.binarywang.wx.miniapp.api.WxMaCodeService;
 import cn.binarywang.wx.miniapp.api.WxMaMediaService;
 import cn.binarywang.wx.miniapp.api.WxMaMsgService;
@@ -52,6 +53,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   private WxMaUserService userService = new WxMaUserServiceImpl(this);
   private WxMaQrcodeService qrCodeService = new WxMaQrcodeServiceImpl(this);
   private WxMaTemplateService templateService = new WxMaTemplateServiceImpl(this);
+  private WxMaAnalysisService analysisService = new WxMaAnalysisServiceImpl(this);
   private WxMaCodeService codeService = new WxMaCodeServiceImpl(this);
   private WxMaSettingService settingService = new WxMaSettingServiceImpl(this);
 
@@ -292,6 +294,11 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   @Override
   public WxMaTemplateService getTemplateService() {
     return this.templateService;
+  }
+
+  @Override
+  public WxMaAnalysisService getAnalysisService() {
+    return this.analysisService;
   }
 
   @Override
