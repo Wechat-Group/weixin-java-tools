@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
+import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import org.apache.http.HttpHost;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -14,8 +15,21 @@ import org.apache.http.impl.client.CloseableHttpClient;
  * @author <a href="https://github.com/007gzs">007</a>
  */
 public class WxOpenServiceApacheHttpClientImpl extends WxOpenServiceAbstractImpl<CloseableHttpClient, HttpHost> {
-  private CloseableHttpClient httpClient = DefaultApacheHttpClientBuilder.get().build();
-  private HttpHost httpProxy = null;
+  private CloseableHttpClient httpClient;
+  private HttpHost httpProxy;
+
+  @Override
+  public void initHttp() {
+    WxOpenConfigStorage configStorage = this.getWxOpenConfigStorage();
+    if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
+      this.httpProxy = new HttpHost(configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort());
+    }
+    this.httpClient = DefaultApacheHttpClientBuilder.get()
+      .httpProxyHost(configStorage.getHttpProxyHost())
+      .httpProxyPort(configStorage.getHttpProxyPort())
+      .httpProxyUsername(configStorage.getHttpProxyUsername())
+      .httpProxyPassword(configStorage.getHttpProxyPassword()).build();
+  }
 
   @Override
   public CloseableHttpClient getRequestHttpClient() {
@@ -41,5 +55,4 @@ public class WxOpenServiceApacheHttpClientImpl extends WxOpenServiceAbstractImpl
   public String post(String url, String postData) throws WxErrorException {
     return execute(SimplePostRequestExecutor.create(this), url, postData);
   }
-
 }

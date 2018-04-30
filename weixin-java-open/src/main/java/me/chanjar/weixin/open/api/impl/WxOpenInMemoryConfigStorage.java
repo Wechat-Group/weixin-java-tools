@@ -30,6 +30,11 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private String componentAccessToken;
   private long componentExpiresTime;
 
+  private String httpProxyHost;
+  private int httpProxyPort;
+  private String httpProxyUsername;
+  private String httpProxyPassword;
+
   private Map<String, Token> authorizerRefreshTokens = new Hashtable<>();
   private Map<String, Token> authorizerAccessTokens = new Hashtable<>();
   private Map<String, Token> jsapiTickets = new Hashtable<>();
@@ -103,6 +108,42 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   @Override
   public void updateComponentAccessTokent(WxOpenComponentAccessToken componentAccessToken) {
     updateComponentAccessTokent(componentAccessToken.getComponentAccessToken(), componentAccessToken.getExpiresIn());
+  }
+
+  @Override
+  public String getHttpProxyHost() {
+    return httpProxyHost;
+  }
+
+  public void setHttpProxyHost(String httpProxyHost) {
+    this.httpProxyHost = httpProxyHost;
+  }
+
+  @Override
+  public int getHttpProxyPort() {
+    return httpProxyPort;
+  }
+
+  public void setHttpProxyPort(int httpProxyPort) {
+    this.httpProxyPort = httpProxyPort;
+  }
+
+  @Override
+  public String getHttpProxyUsername() {
+    return httpProxyUsername;
+  }
+
+  public void setHttpProxyUsername(String httpProxyUsername) {
+    this.httpProxyUsername = httpProxyUsername;
+  }
+
+  @Override
+  public String getHttpProxyPassword() {
+    return httpProxyPassword;
+  }
+
+  public void setHttpProxyPassword(String httpProxyPassword) {
+    this.httpProxyPassword = httpProxyPassword;
   }
 
   @Override
@@ -377,22 +418,22 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
     @Override
     public String getHttpProxyHost() {
-      return null;
+      return this.wxOpenConfigStorage.getHttpProxyHost();
     }
 
     @Override
     public int getHttpProxyPort() {
-      return 0;
+      return this.wxOpenConfigStorage.getHttpProxyPort();
     }
 
     @Override
     public String getHttpProxyUsername() {
-      return null;
+      return this.wxOpenConfigStorage.getHttpProxyUsername();
     }
 
     @Override
     public String getHttpProxyPassword() {
-      return null;
+      return this.wxOpenConfigStorage.getHttpProxyPassword();
     }
 
     @Override

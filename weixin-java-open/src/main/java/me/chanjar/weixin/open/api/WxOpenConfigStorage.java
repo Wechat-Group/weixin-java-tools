@@ -38,6 +38,14 @@ public interface WxOpenConfigStorage {
 
   void updateComponentAccessTokent(WxOpenComponentAccessToken componentAccessToken);
 
+  String getHttpProxyHost();
+
+  int getHttpProxyPort();
+
+  String getHttpProxyUsername();
+
+  String getHttpProxyPassword();
+
   WxMpConfigStorage getWxMpConfigStorage(String appId);
 
   WxMaConfig getWxMaConfig(String appId);
@@ -117,5 +125,4 @@ public interface WxOpenConfigStorage {
    * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateCardApiTicket(String appId, String cardApiTicket, int expiresInSeconds);
-
 }
