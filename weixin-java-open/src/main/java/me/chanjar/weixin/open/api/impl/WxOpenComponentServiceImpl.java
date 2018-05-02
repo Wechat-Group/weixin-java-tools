@@ -205,7 +205,9 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("authorization_code", authorizationCode);
     String responseContent = post(API_QUERY_AUTH_URL, jsonObject.toString());
     WxOpenQueryAuthResult queryAuth = WxOpenGsonBuilder.create().fromJson(responseContent, WxOpenQueryAuthResult.class);
-
+    if (queryAuth == null || queryAuth.getAuthorizationInfo() == null) {
+      return queryAuth;
+    }
     WxOpenAuthorizationInfo authorizationInfo = queryAuth.getAuthorizationInfo();
     if (authorizationInfo.getAuthorizerAccessToken() != null) {
       getWxOpenConfigStorage().updateAuthorizerAccessToken(authorizationInfo.getAuthorizerAppid(),
