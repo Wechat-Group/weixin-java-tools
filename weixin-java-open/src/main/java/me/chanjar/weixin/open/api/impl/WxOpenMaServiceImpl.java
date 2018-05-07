@@ -1,14 +1,11 @@
 package me.chanjar.weixin.open.api.impl;
 
+import cn.binarywang.wx.miniapp.api.WxMaUserService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
-import com.google.common.base.Joiner;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
@@ -17,12 +14,19 @@ import java.util.Map;
   private WxOpenComponentService wxOpenComponentService;
   private WxMaConfig wxMaConfig;
   private String appId;
+  private WxMaUserService wxMaUserService;
 
   public WxOpenMaServiceImpl(WxOpenComponentService wxOpenComponentService, String appId, WxMaConfig wxMaConfig) {
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMaConfig = wxMaConfig;
     initHttp();
+    this.wxMaUserService = new WxOpenMaUserServiceImpl(wxOpenComponentService, this);
+  }
+
+  @Override
+  public WxMaUserService getUserService() {
+    return this.wxMaUserService;
   }
 
   @Override
@@ -38,5 +42,4 @@ import java.util.Map;
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
     return wxOpenComponentService.getAuthorizerAccessToken(appId, forceRefresh);
   }
-
 }
