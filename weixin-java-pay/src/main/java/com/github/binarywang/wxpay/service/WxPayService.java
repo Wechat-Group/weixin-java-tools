@@ -1,39 +1,18 @@
 package com.github.binarywang.wxpay.service;
 
-import java.io.File;
-import java.util.Date;
-import java.util.Map;
-
 import com.github.binarywang.wxpay.bean.WxPayApiData;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponInfoQueryRequest;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponInfoQueryResult;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponSendRequest;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponSendResult;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponStockQueryRequest;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponStockQueryResult;
+import com.github.binarywang.wxpay.bean.coupon.*;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.notify.WxPayRefundNotifyResult;
 import com.github.binarywang.wxpay.bean.notify.WxScanPayNotifyResult;
-import com.github.binarywang.wxpay.bean.request.WxPayAuthcode2OpenidRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayMicropayRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayOrderReverseRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayReportRequest;
-import com.github.binarywang.wxpay.bean.request.WxPaySendRedpackRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayShorturlRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
-import com.github.binarywang.wxpay.bean.result.WxPayBillResult;
-import com.github.binarywang.wxpay.bean.result.WxPayMicropayResult;
-import com.github.binarywang.wxpay.bean.result.WxPayOrderCloseResult;
-import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult;
-import com.github.binarywang.wxpay.bean.result.WxPayOrderReverseResult;
-import com.github.binarywang.wxpay.bean.result.WxPayRedpackQueryResult;
-import com.github.binarywang.wxpay.bean.result.WxPayRefundQueryResult;
-import com.github.binarywang.wxpay.bean.result.WxPayRefundResult;
-import com.github.binarywang.wxpay.bean.result.WxPaySendRedpackResult;
-import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
+import com.github.binarywang.wxpay.bean.request.*;
+import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
+
+import java.io.File;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * <pre>
@@ -100,6 +79,23 @@ public interface WxPayService {
 
   /**
    * <pre>
+   * 查询订单（适合于需要自定义子商户号和子商户appid的情形）.
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2
+   * 该接口提供所有微信支付订单的查询，商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。
+   * 需要调用查询接口的情况：
+   * ◆ 当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知；
+   * ◆ 调用支付接口后，返回系统错误或未知交易状态情况；
+   * ◆ 调用被扫支付API，返回USERPAYING的状态；
+   * ◆ 调用关单或撤销接口API之前，需确认支付状态；
+   * 接口地址：https://api.mch.weixin.qq.com/pay/orderquery
+   * </pre>
+   *
+   * @param request 查询订单请求对象
+   */
+  WxPayOrderQueryResult queryOrder(WxPayOrderQueryRequest request) throws WxPayException;
+
+  /**
+   * <pre>
    * 关闭订单.
    * 应用场景
    * 以下情况需要调用关单接口：
@@ -113,6 +109,22 @@ public interface WxPayService {
    * @param outTradeNo 商户系统内部的订单号
    */
   WxPayOrderCloseResult closeOrder(String outTradeNo) throws WxPayException;
+
+  /**
+   * <pre>
+   * 关闭订单（适合于需要自定义子商户号和子商户appid的情形）.
+   * 应用场景
+   * 以下情况需要调用关单接口：
+   * 1. 商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；
+   * 2. 系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
+   * 注意：订单生成后不能马上调用关单接口，最短调用时间间隔为5分钟。
+   * 接口地址：https://api.mch.weixin.qq.com/pay/closeorder
+   * 是否需要证书：   不需要。
+   * </pre>
+   *
+   * @param request 关闭订单请求对象
+   */
+  WxPayOrderCloseResult closeOrder(WxPayOrderCloseRequest request) throws WxPayException;
 
   /**
    * 调用统一下单接口，并组装生成支付所需参数对象.
@@ -185,11 +197,19 @@ public interface WxPayService {
     throws WxPayException;
 
   /**
-   * @see WxPayService#parseOrderNotifyResult(String).
-   * @deprecated use {@link WxPayService#parseOrderNotifyResult(String)} instead
+   * <pre>
+   * 微信支付-查询退款（适合于需要自定义子商户号和子商户appid的情形）.
+   * 应用场景：
+   *  提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，
+   *  银行卡支付的退款3个工作日后重新查询退款状态。
+   * 详见 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5
+   * 接口链接：https://api.mch.weixin.qq.com/pay/refundquery
+   * </pre>
+   *
+   * @param request 微信退款单号
+   * @return 退款信息
    */
-  @Deprecated
-  WxPayOrderNotifyResult getOrderNotifyResult(String xmlData) throws WxPayException;
+  WxPayRefundQueryResult refundQuery(WxPayRefundQueryRequest request) throws WxPayException;
 
   /**
    * 解析支付结果通知.
@@ -314,6 +334,24 @@ public interface WxPayService {
    * @return 保存到本地的临时文件
    */
   WxPayBillResult downloadBill(String billDate, String billType, String tarType, String deviceInfo) throws WxPayException;
+
+  /**
+   * <pre>
+   * 下载对账单（适合于需要自定义子商户号和子商户appid的情形）.
+   * 商户可以通过该接口下载历史交易清单。比如掉单、系统错误等导致商户侧和微信侧数据不一致，通过对账单核对后可校正支付状态。
+   * 注意：
+   * 1、微信侧未成功下单的交易不会出现在对账单中。支付成功后撤销的交易会出现在对账单中，跟原支付单订单号一致，bill_type为REVOKED；
+   * 2、微信在次日9点启动生成前一天的对账单，建议商户10点后再获取；
+   * 3、对账单中涉及金额的字段单位为“元”。
+   * 4、对账单接口只能下载三个月以内的账单。
+   * 接口链接：https://api.mch.weixin.qq.com/pay/downloadbill
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_6">下载对账单</a>
+   * </pre>
+   *
+   * @param request 下载对账单请求
+   * @return 保存到本地的临时文件
+   */
+  WxPayBillResult downloadBill(WxPayDownloadBillRequest request) throws WxPayException;
 
   /**
    * <pre>

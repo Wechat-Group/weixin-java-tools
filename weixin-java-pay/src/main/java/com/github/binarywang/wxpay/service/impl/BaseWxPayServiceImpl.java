@@ -1,69 +1,19 @@
 package com.github.binarywang.wxpay.service.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.ZipException;
-
-import com.github.binarywang.wxpay.bean.order.WxPayMwebOrderResult;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.github.binarywang.utils.qrcode.QrcodeUtils;
 import com.github.binarywang.wxpay.bean.WxPayApiData;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponInfoQueryRequest;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponInfoQueryResult;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponSendRequest;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponSendResult;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponStockQueryRequest;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponStockQueryResult;
+import com.github.binarywang.wxpay.bean.coupon.*;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.notify.WxPayRefundNotifyResult;
 import com.github.binarywang.wxpay.bean.notify.WxScanPayNotifyResult;
 import com.github.binarywang.wxpay.bean.order.WxPayAppOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayMpOrderResult;
+import com.github.binarywang.wxpay.bean.order.WxPayMwebOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
-import com.github.binarywang.wxpay.bean.request.WxPayAuthcode2OpenidRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayDefaultRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayDownloadBillRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayMicropayRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayOrderCloseRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayOrderQueryRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayOrderReverseRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayQueryCommentRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayRedpackQueryRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayRefundQueryRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayReportRequest;
-import com.github.binarywang.wxpay.bean.request.WxPaySendRedpackRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayShorturlRequest;
-import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
-import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
-import com.github.binarywang.wxpay.bean.result.WxPayAuthcode2OpenidResult;
-import com.github.binarywang.wxpay.bean.result.WxPayBillBaseResult;
-import com.github.binarywang.wxpay.bean.result.WxPayBillResult;
-import com.github.binarywang.wxpay.bean.result.WxPayCommonResult;
-import com.github.binarywang.wxpay.bean.result.WxPayMicropayResult;
-import com.github.binarywang.wxpay.bean.result.WxPayOrderCloseResult;
-import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult;
-import com.github.binarywang.wxpay.bean.result.WxPayOrderReverseResult;
-import com.github.binarywang.wxpay.bean.result.WxPayRedpackQueryResult;
-import com.github.binarywang.wxpay.bean.result.WxPayRefundQueryResult;
-import com.github.binarywang.wxpay.bean.result.WxPayRefundResult;
-import com.github.binarywang.wxpay.bean.result.WxPaySandboxSignKeyResult;
-import com.github.binarywang.wxpay.bean.result.WxPaySendRedpackResult;
-import com.github.binarywang.wxpay.bean.result.WxPayShorturlResult;
-import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
+import com.github.binarywang.wxpay.bean.request.*;
+import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
+import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.constant.WxPayConstants.BillType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
@@ -74,6 +24,18 @@ import com.github.binarywang.wxpay.util.SignUtils;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import jodd.io.ZipUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.zip.ZipException;
 
 import static com.github.binarywang.wxpay.constant.WxPayConstants.QUERY_COMMENT_DATE_FORMAT;
 import static com.github.binarywang.wxpay.constant.WxPayConstants.TarType;
@@ -145,6 +107,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     request.setOutRefundNo(StringUtils.trimToNull(outRefundNo));
     request.setRefundId(StringUtils.trimToNull(refundId));
 
+    return this.refundQuery(request);
+  }
+
+  @Override
+  public WxPayRefundQueryResult refundQuery(WxPayRefundQueryRequest request) throws WxPayException {
     request.checkAndSign(this.getConfig());
 
     String url = this.getPayBaseUrl() + "/pay/refundquery";
@@ -153,12 +120,6 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     result.composeRefundRecords();
     result.checkResult(this, request.getSignType(), true);
     return result;
-  }
-
-  @Override
-  @Deprecated
-  public WxPayOrderNotifyResult getOrderNotifyResult(String xmlData) throws WxPayException {
-    return this.parseOrderNotifyResult(xmlData);
   }
 
   @Override
@@ -195,7 +156,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   public WxScanPayNotifyResult parseScanPayNotifyResult(String xmlData) throws WxPayException {
     try {
       log.debug("扫码支付回调通知请求参数：{}", xmlData);
-      WxScanPayNotifyResult result = BaseWxPayResult.fromXML(xmlData,WxScanPayNotifyResult.class);
+      WxScanPayNotifyResult result = BaseWxPayResult.fromXML(xmlData, WxScanPayNotifyResult.class);
       log.debug("扫码支付回调通知解析后的对象：{}", result);
       result.checkResult(this, this.getConfig().getSignType(), false);
       return result;
@@ -243,6 +204,12 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     WxPayOrderQueryRequest request = new WxPayOrderQueryRequest();
     request.setOutTradeNo(StringUtils.trimToNull(outTradeNo));
     request.setTransactionId(StringUtils.trimToNull(transactionId));
+
+    return this.queryOrder(request);
+  }
+
+  @Override
+  public WxPayOrderQueryResult queryOrder(WxPayOrderQueryRequest request) throws WxPayException {
     request.checkAndSign(this.getConfig());
 
     String url = this.getPayBaseUrl() + "/pay/orderquery";
@@ -265,6 +232,12 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
     WxPayOrderCloseRequest request = new WxPayOrderCloseRequest();
     request.setOutTradeNo(StringUtils.trimToNull(outTradeNo));
+
+    return this.closeOrder(request);
+  }
+
+  @Override
+  public WxPayOrderCloseResult closeOrder(WxPayOrderCloseRequest request) throws WxPayException {
     request.checkAndSign(this.getConfig());
 
     String url = this.getPayBaseUrl() + "/pay/closeorder";
@@ -425,14 +398,15 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     params.put("appid", this.getConfig().getAppId());
     params.put("mch_id", this.getConfig().getMchId());
     params.put("product_id", productId);
-    params.put("time_stamp", String.valueOf(System.currentTimeMillis() / 1000));//这里需要秒，10位数字
+    //这里需要秒，10位数字
+    params.put("time_stamp", String.valueOf(System.currentTimeMillis() / 1000));
     params.put("nonce_str", String.valueOf(System.currentTimeMillis()));
 
     String sign = SignUtils.createSign(params, null, this.getConfig().getMchKey(), false);
     params.put("sign", sign);
 
     for (String key : params.keySet()) {
-      codeUrl.append(key + "=" + params.get(key) + "&");
+      codeUrl.append(key).append("=").append(params.get(key)).append("&");
     }
 
     String content = codeUrl.toString().substring(0, codeUrl.length() - 1);
@@ -475,12 +449,17 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     request.setTarType(tarType);
     request.setDeviceInfo(deviceInfo);
 
+    return this.downloadBill(request);
+  }
+
+  @Override
+  public WxPayBillResult downloadBill(WxPayDownloadBillRequest request) throws WxPayException {
     request.checkAndSign(this.getConfig());
 
     String url = this.getPayBaseUrl() + "/pay/downloadbill";
 
     String responseContent;
-    if (TarType.GZIP.equals(tarType)) {
+    if (TarType.GZIP.equals(request.getTarType())) {
       responseContent = this.handleGzipBill(url, request.toXML());
     } else {
       responseContent = this.post(url, request.toXML(), false);
@@ -489,7 +468,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       }
     }
 
-    return this.handleBill(billType, responseContent);
+    return this.handleBill(request.getBillType(), responseContent);
   }
 
   private WxPayBillResult handleBill(String billType, String responseContent) {
@@ -517,9 +496,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
           this.log.error("解压zip文件出错", e);
         }
       }
-    }   catch (IOException e) {
-      e.printStackTrace();
+    } catch (Exception e) {
+      this.log.error("解析对账单文件时出错",e);
     }
+
     return null;
   }
 

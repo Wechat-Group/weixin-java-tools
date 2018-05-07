@@ -193,14 +193,6 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       if (queryAuth == null || queryAuth.getAuthorizationInfo() == null || queryAuth.getAuthorizationInfo().getAuthorizerAppid() == null) {
         throw new NullPointerException("getQueryAuth");
       }
-      WxOpenAuthorizationInfo authorizationInfo = queryAuth.getAuthorizationInfo();
-      if (authorizationInfo.getAuthorizerAccessToken() != null) {
-        getWxOpenConfigStorage().updateAuthorizerAccessToken(authorizationInfo.getAuthorizerAppid(),
-          authorizationInfo.getAuthorizerAccessToken(), authorizationInfo.getExpiresIn());
-      }
-      if (authorizationInfo.getAuthorizerRefreshToken() != null) {
-        getWxOpenConfigStorage().setAuthorizerRefreshToken(authorizationInfo.getAuthorizerAppid(), authorizationInfo.getAuthorizerRefreshToken());
-      }
       return "success";
     }
     return "";
@@ -212,7 +204,19 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
     jsonObject.addProperty("authorization_code", authorizationCode);
     String responseContent = post(API_QUERY_AUTH_URL, jsonObject.toString());
-    return WxOpenGsonBuilder.create().fromJson(responseContent, WxOpenQueryAuthResult.class);
+    WxOpenQueryAuthResult queryAuth = WxOpenGsonBuilder.create().fromJson(responseContent, WxOpenQueryAuthResult.class);
+    if (queryAuth == null || queryAuth.getAuthorizationInfo() == null) {
+      return queryAuth;
+    }
+    WxOpenAuthorizationInfo authorizationInfo = queryAuth.getAuthorizationInfo();
+    if (authorizationInfo.getAuthorizerAccessToken() != null) {
+      getWxOpenConfigStorage().updateAuthorizerAccessToken(authorizationInfo.getAuthorizerAppid(),
+        authorizationInfo.getAuthorizerAccessToken(), authorizationInfo.getExpiresIn());
+    }
+    if (authorizationInfo.getAuthorizerRefreshToken() != null) {
+      getWxOpenConfigStorage().setAuthorizerRefreshToken(authorizationInfo.getAuthorizerAppid(), authorizationInfo.getAuthorizerRefreshToken());
+    }
+    return queryAuth;
   }
 
   @Override
