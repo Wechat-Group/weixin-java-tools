@@ -23,6 +23,9 @@ public class WxMaWxcode extends AbstractWxMaQrcodeWrapper implements Serializabl
   @SerializedName("auto_color")
   private boolean autoColor = true;
 
+  @SerializedName("is_hyaline")
+  private boolean isHyaline = false;
+
   @SerializedName("line_color")
   private WxMaCodeLineColor lineColor = new WxMaCodeLineColor("0", "0", "0");
 
