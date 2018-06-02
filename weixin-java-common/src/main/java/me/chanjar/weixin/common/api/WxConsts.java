@@ -78,6 +78,11 @@ public class WxConsts {
      * 转发到客服的消息.
      */
     public static final String TRANSFER_CUSTOMER_SERVICE = "transfer_customer_service";
+
+    /**
+     * 小程序卡片(要求小程序与公众号已关联)
+     */
+    public static final String MINIPROGRAMPAGE="miniprogrampage";
   }
 
   /**
