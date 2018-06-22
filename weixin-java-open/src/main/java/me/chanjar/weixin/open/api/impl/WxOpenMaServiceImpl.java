@@ -14,19 +14,12 @@ import me.chanjar.weixin.open.api.WxOpenComponentService;
   private WxOpenComponentService wxOpenComponentService;
   private WxMaConfig wxMaConfig;
   private String appId;
-  private WxMaUserService wxMaUserService;
 
   public WxOpenMaServiceImpl(WxOpenComponentService wxOpenComponentService, String appId, WxMaConfig wxMaConfig) {
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMaConfig = wxMaConfig;
     initHttp();
-    this.wxMaUserService = new WxOpenMaUserServiceImpl(wxOpenComponentService, this);
-  }
-
-  @Override
-  public WxMaUserService getUserService() {
-    return this.wxMaUserService;
   }
 
   @Override

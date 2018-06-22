@@ -115,11 +115,15 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   private String post(String uri, String postData) throws WxErrorException {
+    return post(uri, postData, "component_access_token");
+  }
+
+  private String post(String uri, String postData, String accessTokenKey) throws WxErrorException {
     String componentAccessToken = getComponentAccessToken(false);
-    String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + "component_access_token=" + componentAccessToken;
+    String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + accessTokenKey + "=" + componentAccessToken;
     try {
       return getWxOpenService().post(uriWithComponentAccessToken, postData);
-    }catch (WxErrorException e){
+    } catch (WxErrorException e) {
       WxError error = e.getError();
       /*
        * 发生以下情况时尝试刷新access_token
@@ -131,7 +135,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
         this.getWxOpenConfigStorage().expireComponentAccessToken();
         if (this.getWxOpenConfigStorage().autoRefreshToken()) {
-          return this.post(uri, postData);
+          return this.post(uri, postData, accessTokenKey);
         }
       }
       if (error.getErrorCode() != 0) {
@@ -142,11 +146,14 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   private String get(String uri) throws WxErrorException {
+    return get(uri, "component_access_token");
+  }
+  private String get(String uri, String accessTokenKey) throws WxErrorException {
     String componentAccessToken = getComponentAccessToken(false);
-    String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + "component_access_token=" + componentAccessToken;
+    String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + accessTokenKey + "=" + componentAccessToken;
     try {
       return getWxOpenService().get(uriWithComponentAccessToken, null);
-    }catch (WxErrorException e){
+    } catch (WxErrorException e) {
       WxError error = e.getError();
       /*
        * 发生以下情况时尝试刷新access_token
@@ -158,7 +165,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
         this.getWxOpenConfigStorage().expireComponentAccessToken();
         if (this.getWxOpenConfigStorage().autoRefreshToken()) {
-          return this.get(uri);
+          return this.get(uri, accessTokenKey);
         }
       }
       if (error.getErrorCode() != 0) {
@@ -298,7 +305,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public List<WxOpenMaCodeTemplate> getTemplateDraftList() throws WxErrorException {
-    String responseContent = get(GET_TEMPLATE_DRAFT_LIST_URL);
+    String responseContent = get(GET_TEMPLATE_DRAFT_LIST_URL, "access_token");
     JsonObject response = JSON_PARSER.parse(StringUtils.defaultString(responseContent, "{}")).getAsJsonObject();
     boolean hasDraftList = response.has("draft_list");
     if (hasDraftList) {
@@ -312,7 +319,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public List<WxOpenMaCodeTemplate> getTemplateList() throws WxErrorException {
-    String responseContent = get(GET_TEMPLATE_LIST_URL);
+    String responseContent = get(GET_TEMPLATE_LIST_URL, "access_token");
     JsonObject response = JSON_PARSER.parse(StringUtils.defaultString(responseContent, "{}")).getAsJsonObject();
     boolean hasDraftList = response.has("template_list");
     if (hasDraftList) {
@@ -328,13 +335,13 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   public void addToTemplate(long draftId) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("draft_id", draftId);
-    post(ADD_TO_TEMPLATE_URL, param.toString());
+    post(ADD_TO_TEMPLATE_URL, param.toString(), "access_token");
   }
 
   @Override
   public void deleteTemplate(long templateId) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("template_id", templateId);
-    post(DELETE_TEMPLATE_URL, param.toString());
+    post(DELETE_TEMPLATE_URL, param.toString(), "access_token");
   }
 }
