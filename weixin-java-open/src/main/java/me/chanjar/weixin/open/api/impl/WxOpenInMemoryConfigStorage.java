@@ -34,6 +34,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private int httpProxyPort;
   private String httpProxyUsername;
   private String httpProxyPassword;
+  private ApacheHttpClientBuilder apacheHttpClientBuilder;
 
   private Map<String, Token> authorizerRefreshTokens = new Hashtable<>();
   private Map<String, Token> authorizerAccessTokens = new Hashtable<>();
@@ -144,6 +145,15 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
   public void setHttpProxyPassword(String httpProxyPassword) {
     this.httpProxyPassword = httpProxyPassword;
+  }
+
+  @Override
+  public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
+    return apacheHttpClientBuilder;
+  }
+
+  public ApacheHttpClientBuilder setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
+    return this.apacheHttpClientBuilder = apacheHttpClientBuilder;
   }
 
   @Override
@@ -448,7 +458,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
     @Override
     public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
-      return null;
+      return wxOpenConfigStorage.getApacheHttpClientBuilder();
     }
 
 
