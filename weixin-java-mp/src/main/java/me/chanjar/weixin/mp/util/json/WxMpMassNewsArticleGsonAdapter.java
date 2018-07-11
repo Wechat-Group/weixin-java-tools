@@ -3,6 +3,7 @@ package me.chanjar.weixin.mp.util.json;
 import com.google.gson.*;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.mp.bean.WxMpMassNews;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.lang.reflect.Type;
 
@@ -59,7 +60,7 @@ public class WxMpMassNewsArticleGsonAdapter implements JsonSerializer<WxMpMassNe
     }
     JsonElement showCoverPic = articleInfo.get("show_cover_pic");
     if (showCoverPic != null && !showCoverPic.isJsonNull()) {
-      article.setShowCoverPic(GsonHelper.getAsBoolean(showCoverPic));
+      article.setShowCoverPic(BooleanUtils.toBoolean(showCoverPic.getAsInt()));
     }
     return article;
   }

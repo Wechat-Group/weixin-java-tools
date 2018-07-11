@@ -78,7 +78,7 @@ public class WxMpMaterialNewsArticleGsonAdapter implements JsonSerializer<WxMpMa
     }
     JsonElement showCoverPic = articleInfo.get("show_cover_pic");
     if (showCoverPic != null && !showCoverPic.isJsonNull()) {
-      article.setShowCoverPic(GsonHelper.getAsBoolean(showCoverPic));
+      article.setShowCoverPic(BooleanUtils.toBoolean(showCoverPic.getAsInt()));
     }
     JsonElement url = articleInfo.get("url");
     if (url != null && !url.isJsonNull()) {
@@ -87,12 +87,12 @@ public class WxMpMaterialNewsArticleGsonAdapter implements JsonSerializer<WxMpMa
 
     JsonElement needOpenComment = articleInfo.get("need_open_comment");
     if (needOpenComment != null && !needOpenComment.isJsonNull()) {
-      article.setNeedOpenComment(GsonHelper.getAsBoolean(needOpenComment));
+      article.setNeedOpenComment(BooleanUtils.toBoolean(needOpenComment.getAsInt()));
     }
 
     JsonElement onlyFansCanComment = articleInfo.get("only_fans_can_comment");
     if (onlyFansCanComment != null && !onlyFansCanComment.isJsonNull()) {
-      article.setOnlyFansCanComment(GsonHelper.getAsBoolean(onlyFansCanComment));
+      article.setOnlyFansCanComment(BooleanUtils.toBoolean(onlyFansCanComment.getAsInt()));
     }
     return article;
   }
