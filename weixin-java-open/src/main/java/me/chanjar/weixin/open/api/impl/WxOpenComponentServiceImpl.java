@@ -104,13 +104,25 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public String getPreAuthUrl(String redirectURI) throws WxErrorException {
+     return getPreAuthUrl(redirectURI,null, null);
+  }
+  @Override
+  public String getPreAuthUrl(String redirectURI,String authType, String bizAppid) throws WxErrorException {
 
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
     String responseContent = post(API_CREATE_PREAUTHCODE_URL, jsonObject.toString());
     jsonObject = WxGsonBuilder.create().fromJson(responseContent, JsonObject.class);
-    return String.format(COMPONENT_LOGIN_PAGE_URL, getWxOpenConfigStorage().getComponentAppId(), jsonObject.get("pre_auth_code").getAsString(), URIUtil.encodeURIComponent(redirectURI));
+    String preAuthUrl = String.format(COMPONENT_LOGIN_PAGE_URL, getWxOpenConfigStorage().getComponentAppId(), jsonObject.get("pre_auth_code").getAsString(), URIUtil.encodeURIComponent(redirectURI));
+    if(StringUtils.isNotEmpty(authType)){
+      preAuthUrl = preAuthUrl + "&auth_type=" + authType;
+    }
+    if(StringUtils.isNotEmpty(bizAppid)){
+      preAuthUrl = preAuthUrl + "&biz_appid=" + bizAppid;
+    }
+    return preAuthUrl;
   }
+
 
   @Override
   public String route(final WxOpenXmlMessage wxMessage) throws WxErrorException {
