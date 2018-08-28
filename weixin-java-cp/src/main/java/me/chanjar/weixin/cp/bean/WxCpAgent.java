@@ -17,15 +17,16 @@ import java.util.List;
  */
 @Data
 public class WxCpAgent implements Serializable {
+  private static final long serialVersionUID = 5002894979081127234L;
 
   @SerializedName("errcode")
-  private Integer errcode;
+  private Integer errCode;
 
   @SerializedName("errmsg")
-  private String errmsg;
+  private String errMsg;
 
   @SerializedName("agentid")
-  private Integer agentid;
+  private Integer agentId;
 
   @SerializedName("name")
   private String name;
@@ -37,10 +38,10 @@ public class WxCpAgent implements Serializable {
   private String description;
 
   @SerializedName("allow_userinfos")
-  private Users allowUserinfos;
+  private Users allowUserInfos;
 
   @SerializedName("allow_partys")
-  private Partys allowPartys;
+  private Partys allowParties;
 
   @SerializedName("allow_tags")
   private Tags allowTags;
@@ -55,7 +56,7 @@ public class WxCpAgent implements Serializable {
   private Integer reportLocationFlag;
 
   @SerializedName("isreportenter")
-  private Integer isreportenter;
+  private Integer isReportEnter;
 
   @SerializedName("home_url")
   private String homeUrl;
@@ -71,26 +72,25 @@ public class WxCpAgent implements Serializable {
   @Data
   public static class Users implements Serializable {
     @SerializedName("user")
-    private List<User> user;
+    private List<User> users;
   }
-
 
   @Data
   public class User implements Serializable {
     @SerializedName("userid")
-    private String userid;
+    private String userId;
   }
 
   @Data
   public class Partys {
     @SerializedName("partyid")
-    private List<Integer> partyids = null;
+    private List<Integer> partyIds = null;
   }
 
   @Data
   public class Tags {
     @SerializedName("tagid")
-    private List<Integer> tagids = null;
+    private List<Integer> tagIds = null;
   }
 
 }

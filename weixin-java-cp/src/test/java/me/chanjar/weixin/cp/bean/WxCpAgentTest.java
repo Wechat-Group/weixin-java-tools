@@ -14,11 +14,11 @@ public class WxCpAgentTest {
 
     WxCpAgent wxCpAgent = WxCpAgent.fromJson(json);
 
-    Assert.assertEquals(9, wxCpAgent.getAgentid().intValue());
+    Assert.assertEquals(9, wxCpAgent.getAgentId().intValue());
 
-    Assert.assertEquals(new Integer[]{42762742}, wxCpAgent.getAllowPartys().getPartyids().toArray());
+    Assert.assertEquals(new Integer[]{42762742}, wxCpAgent.getAllowParties().getPartyIds().toArray());
 
-    Assert.assertEquals(new Integer[]{23, 22, 35, 19, 32, 125, 133, 46, 150, 38, 183, 9, 7}, wxCpAgent.getAllowTags().getTagids().toArray());
+    Assert.assertEquals(new Integer[]{23, 22, 35, 19, 32, 125, 133, 46, 150, 38, 183, 9, 7}, wxCpAgent.getAllowTags().getTagIds().toArray());
 
   }
 

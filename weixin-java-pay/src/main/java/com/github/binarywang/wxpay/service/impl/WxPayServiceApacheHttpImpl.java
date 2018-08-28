@@ -1,10 +1,10 @@
 package com.github.binarywang.wxpay.service.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import javax.net.ssl.SSLContext;
-
+import com.github.binarywang.wxpay.bean.WxPayApiData;
+import com.github.binarywang.wxpay.exception.WxPayException;
+import jodd.util.Base64;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -20,9 +20,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import com.github.binarywang.wxpay.bean.WxPayApiData;
-import com.github.binarywang.wxpay.exception.WxPayException;
-import jodd.util.Base64;
+import javax.net.ssl.SSLContext;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <pre>
@@ -83,7 +83,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       return new StringEntity(new String(requestStr.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
     } catch (UnsupportedEncodingException e) {
       //cannot happen
-      this.log.error(e.getMessage(),e);
+      this.log.error(e.getMessage(), e);
       return null;
     }
   }
@@ -94,14 +94,13 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       this.initSSLContext(httpClientBuilder);
     }
 
-    if (StringUtils.isNotBlank(this.getConfig().getHttpProxyHost())
-      && this.getConfig().getHttpProxyPort() > 0) {
+    if (StringUtils.isNotBlank(this.getConfig().getHttpProxyHost()) && this.getConfig().getHttpProxyPort() > 0) {
       // 使用代理服务器 需要用户认证的代理服务器
       CredentialsProvider provider = new BasicCredentialsProvider();
-      provider.setCredentials(
-        new AuthScope(this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort()),
+      provider.setCredentials(new AuthScope(this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort()),
         new UsernamePasswordCredentials(this.getConfig().getHttpProxyUsername(), this.getConfig().getHttpProxyPassword()));
       httpClientBuilder.setDefaultCredentialsProvider(provider);
+      httpClientBuilder.setProxy(new HttpHost(this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort()));
     }
     return httpClientBuilder;
   }

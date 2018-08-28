@@ -1,23 +1,13 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import com.google.inject.Inject;
-import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.common.bean.menu.WxMenuButton;
-import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpAgentService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpAgent;
-import me.chanjar.weixin.cp.config.WxCpInMemoryConfigStorage;
-import org.mockito.Mock;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -41,11 +31,11 @@ public class WxCpAgentServiceImplTest {
     WxCpAgentService wxAgentService = this.wxService.getAgentService();
     WxCpAgent wxCpAgent = wxAgentService.get(9);
 
-    Assert.assertEquals(9, wxCpAgent.getAgentid().intValue());
+    Assert.assertEquals(9, wxCpAgent.getAgentId().intValue());
 
-    Assert.assertEquals(new Integer[]{42762742}, wxCpAgent.getAllowPartys().getPartyids().toArray());
+    Assert.assertEquals(new Integer[]{42762742}, wxCpAgent.getAllowParties().getPartyIds().toArray());
 
-    Assert.assertEquals(new Integer[]{23, 22, 35, 19, 32, 125, 133, 46, 150, 38, 183, 9, 7}, wxCpAgent.getAllowTags().getTagids().toArray());
+    Assert.assertEquals(new Integer[]{23, 22, 35, 19, 32, 125, 133, 46, 150, 38, 183, 9, 7}, wxCpAgent.getAllowTags().getTagIds().toArray());
 
   }
 

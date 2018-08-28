@@ -23,13 +23,11 @@ public class WxCpAgentServiceImpl implements WxCpAgentService {
 
   @Override
   public WxCpAgent get(Integer agentId) throws WxErrorException {
-
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/agent/get";
-    if (agentId != null) {
-      url += "?agentid=" + agentId;
-    } else {
+    if (agentId == null) {
       throw new IllegalArgumentException("缺少agentid参数");
     }
+
+    String url = "https://qyapi.weixin.qq.com/cgi-bin/agent/get?agentid=" + agentId;
     String responseContent = this.mainService.get(url, null);
     return WxCpAgent.fromJson(responseContent);
   }
