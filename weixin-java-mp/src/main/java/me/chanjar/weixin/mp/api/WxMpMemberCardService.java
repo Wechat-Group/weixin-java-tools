@@ -1,10 +1,7 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardActivatedMessage;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateMessage;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateResult;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUserInfoResult;
+import me.chanjar.weixin.mp.bean.membercard.*;
 
 /**
  * 会员卡相关接口
@@ -18,6 +15,14 @@ public interface WxMpMemberCardService {
    * 得到WxMpService
    */
   WxMpService getWxMpService();
+
+  /**
+   * 会员卡创建接口
+   * @param createMessageMessage
+   * @return
+   * @throws WxErrorException
+   */
+  String createMemberCard(WxMpMemberCardCreateMessage createMessageMessage) throws WxErrorException;
 
   /**
    * 会员卡激活接口

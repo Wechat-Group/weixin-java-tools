@@ -8,10 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMemberCardService;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardActivatedMessage;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateMessage;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateResult;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUserInfoResult;
+import me.chanjar.weixin.mp.bean.membercard.*;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +23,7 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
 
   private final Logger log = LoggerFactory.getLogger(WxMpMemberCardServiceImpl.class);
 
+  private static final String MEMBER_CARD_CREAET = "https://api.weixin.qq.com/card/create";
   private static final String MEMBER_CARD_ACTIVATE = "https://api.weixin.qq.com/card/membercard/activate";
   private static final String MEMBER_CARD_USER_INFO_GET = "https://api.weixin.qq.com/card/membercard/userinfo/get";
   private static final String MEMBER_CARD_UPDATE_USER = "https://api.weixin.qq.com/card/membercard/updateuser";
@@ -44,6 +42,24 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
   @Override
   public WxMpService getWxMpService() {
     return this.wxMpService;
+  }
+
+  /**
+   * 会员卡创建接口
+   *
+   * @param createMessageMessage 创建所需参数
+   * @return 调用返回的JSON字符串。
+   * @throws WxErrorException 接口调用失败抛出的异常
+   */
+  @Override
+  public String createMemberCard(WxMpMemberCardCreateMessage createMessageMessage) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    JsonObject cardJson = new JsonObject();
+    jsonObject.add("card", cardJson);
+    cardJson.addProperty("card_type","MEMBER_CARD");
+    cardJson.addProperty("member_card",createMessageMessage.toString());
+
+    return this.wxMpService.post(MEMBER_CARD_CREAET, GSON.toJson(jsonObject));
   }
 
   /**
