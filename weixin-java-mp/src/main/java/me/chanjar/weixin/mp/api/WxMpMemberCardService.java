@@ -18,6 +18,14 @@ public interface WxMpMemberCardService {
 
   /**
    * 会员卡创建接口
+   * @param createJson
+   * @return
+   * @throws WxErrorException
+   */
+  String createMemberCard(String createJson) throws WxErrorException;
+
+  /**
+   * 会员卡创建接口
    * @param createMessageMessage
    * @return
    * @throws WxErrorException

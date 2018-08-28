@@ -47,6 +47,18 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
   /**
    * 会员卡创建接口
    *
+   * @param createJson 创建json
+   * @return 调用返回的JSON字符串。
+   * @throws WxErrorException 接口调用失败抛出的异常
+   */
+  @Override
+  public String createMemberCard(String createJson) throws WxErrorException {
+    return this.wxMpService.post(MEMBER_CARD_CREAET, createJson);
+  }
+
+  /**
+   * 会员卡创建接口
+   *
    * @param createMessageMessage 创建所需参数
    * @return 调用返回的JSON字符串。
    * @throws WxErrorException 接口调用失败抛出的异常
@@ -57,9 +69,9 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
     JsonObject cardJson = new JsonObject();
     jsonObject.add("card", cardJson);
     cardJson.addProperty("card_type","MEMBER_CARD");
-    cardJson.addProperty("member_card",createMessageMessage.toString());
+    cardJson.addProperty("member_card",GSON.toJson(createMessageMessage));
 
-    return this.wxMpService.post(MEMBER_CARD_CREAET, GSON.toJson(jsonObject));
+    return createMemberCard(GSON.toJson(jsonObject));
   }
 
   /**
