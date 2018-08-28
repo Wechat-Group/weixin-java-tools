@@ -1,9 +1,9 @@
 package me.chanjar.weixin.mp.bean.membercard;
 
 import com.google.gson.annotations.SerializedName;
-import com.sun.istack.internal.NotNull;
 import lombok.Data;
 import me.chanjar.weixin.mp.bean.card.*;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -27,7 +27,7 @@ public class WxMpMemberCardCreateMessage implements Serializable {
   /**
    * 特权说明
    */
-  @NotNull
+  @SerializedName("prerogative")
   private String prerogative;
 
   /**
@@ -57,7 +57,6 @@ public class WxMpMemberCardCreateMessage implements Serializable {
   /**
    * 支持储值
    */
-  @NotNull
   @SerializedName("supply_balance")
   private boolean supplyBalance;
 
@@ -144,196 +143,11 @@ public class WxMpMemberCardCreateMessage implements Serializable {
   @SerializedName("advanced_info")
   private AdvancedInfo advancedInfo;
 
-  public String getBackgroundPicUrl() {
-    return backgroundPicUrl;
-  }
-
-  public void setBackgroundPicUrl(String backgroundPicUrl) {
-    this.backgroundPicUrl = backgroundPicUrl;
-  }
-
-  public BaseInfo getBaseInfo() {
-    return baseInfo;
-  }
-
-  public String getPrerogative() {
-    return prerogative;
-  }
-
-  public void setPrerogative(String prerogative) {
-    this.prerogative = prerogative;
-  }
-
-
-  public boolean getAutoActivate() {
-    return autoActivate;
-  }
-
-  public void setAutoActivate(boolean autoActivate) {
-    this.autoActivate = autoActivate;
-  }
-
-
-  public boolean getWxActivate() {
-    return wxActivate;
-  }
-
-  public void setWxActivate(boolean wxActivate) {
-    this.wxActivate = wxActivate;
-  }
-
-
-  public boolean getSupplyBonus() {
-    return supplyBonus;
-  }
-
-  public void setSupplyBonus(boolean supplyBonus) {
-    this.supplyBonus = supplyBonus;
-  }
-
-
-  public String getBonusUrl() {
-    return bonusUrl;
-  }
-
-  public void setBonusUrl(String bonusUrl) {
-    this.bonusUrl = bonusUrl;
-  }
-
-
-  public boolean getSupplyBalance() {
-    return supplyBalance;
-  }
-
-  public void setSupplyBalance(boolean supplyBalance) {
-    this.supplyBalance = supplyBalance;
-  }
-
-
-  public String getBalanceUrl() {
-    return balanceUrl;
-  }
-
-  public void setBalanceUrl(String balanceUrl) {
-    this.balanceUrl = balanceUrl;
-  }
-
-
-  public String getBonusCleared() {
-    return bonusCleared;
-  }
-
-  public void setBonusCleared(String bonusCleared) {
-    this.bonusCleared = bonusCleared;
-  }
-
-
-  public String getBonusRules() {
-    return bonusRules;
-  }
-
-  public void setBonusRules(String bonusRules) {
-    this.bonusRules = bonusRules;
-  }
-
-
-  public String getBalanceRules() {
-    return balanceRules;
-  }
-
-  public void setBalanceRules(String balanceRules) {
-    this.balanceRules = balanceRules;
-  }
-
-
-  public String getActivateUrl() {
-    return activateUrl;
-  }
-
-  public void setActivateUrl(String activateUrl) {
-    this.activateUrl = activateUrl;
-  }
-
-
-  public String getActivateAppBrandUserName() {
-    return activateAppBrandUserName;
-  }
-
-  public void setActivateAppBrandUserName(String activateAppBrandUserName) {
-    this.activateAppBrandUserName = activateAppBrandUserName;
-  }
-
-
-  public String getActivateAppBrandPass() {
-    return activateAppBrandPass;
-  }
-
-  public void setActivateAppBrandPass(String activateAppBrandPass) {
-    this.activateAppBrandPass = activateAppBrandPass;
-  }
-
-  public Integer getDiscount() {
-    return discount;
-  }
-
-  public void setDiscount(Integer discount) {
-    this.discount = discount;
-  }
-
-  public void setBaseInfo(BaseInfo baseInfo) {
-    this.baseInfo = baseInfo;
-  }
-
-  public CustomField getCustomField1() {
-    return customField1;
-  }
-
-  public void setCustomField1(CustomField customField1) {
-    this.customField1 = customField1;
-  }
-
-  public CustomField getCustomField2() {
-    return customField2;
-  }
-
-  public void setCustomField2(CustomField customField2) {
-    this.customField2 = customField2;
-  }
-
-  public CustomField getCustomField3() {
-    return customField3;
-  }
-
-  public void setCustomField3(CustomField customField3) {
-    this.customField3 = customField3;
-  }
-
-  public CustomCell1 getCustomCell1() {
-    return customCell1;
-  }
-
-  public void setCustomCell1(CustomCell1 customCell1) {
-    this.customCell1 = customCell1;
-  }
-
-  public BonusRule getBonusRule() {
-    return bonusRule;
-  }
-
-  public void setBonusRule(BonusRule bonusRule) {
-    this.bonusRule = bonusRule;
-  }
-
-  public AdvancedInfo getAdvancedInfo() {
-    return advancedInfo;
-  }
-
-  public void setAdvancedInfo(AdvancedInfo advancedInfo) {
-    this.advancedInfo = advancedInfo;
-  }
-
   public String toString() {
     return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 
+  public static WxMpMemberCardCreateMessage fromJson(String json) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpMemberCardCreateMessage.class);
+  }
 }
