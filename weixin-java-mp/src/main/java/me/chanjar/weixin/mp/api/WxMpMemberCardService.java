@@ -1,6 +1,8 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.bean.card.WxMpCardCreateResult;
+import me.chanjar.weixin.mp.bean.card.WxMpCardQrcodeCreateResult;
 import me.chanjar.weixin.mp.bean.membercard.*;
 
 /**
@@ -22,21 +24,21 @@ public interface WxMpMemberCardService {
    * @return
    * @throws WxErrorException
    */
-  String createMemberCard(String createJson) throws WxErrorException;
+  WxMpCardCreateResult createMemberCard(String createJson) throws WxErrorException;
 
   /**
    * 会员卡创建接口
    * @param createMessageMessage
-   * @return
+   * @return WxMpCardCreateResult
    * @throws WxErrorException
    */
-  String createMemberCard(WxMpMemberCardCreateMessage createMessageMessage) throws WxErrorException;
+  WxMpCardCreateResult createMemberCard(WxMpMemberCardCreateMessage createMessageMessage) throws WxErrorException;
 
   /**
    * 会员卡激活接口
    *
    * @param activatedMessage 激活所需参数
-   * @return 调用返回的JSON字符串。
+   * @return 返回json字符串
    * @throws WxErrorException 接口调用失败抛出的异常
    */
   String activateMemberCard(WxMpMemberCardActivatedMessage activatedMessage) throws WxErrorException;
@@ -63,4 +65,5 @@ public interface WxMpMemberCardService {
    * @throws WxErrorException 接口调用失败抛出的异常
    */
   WxMpMemberCardUpdateResult updateUserMemberCard(WxMpMemberCardUpdateMessage updateUserMessage) throws WxErrorException;
+
 }

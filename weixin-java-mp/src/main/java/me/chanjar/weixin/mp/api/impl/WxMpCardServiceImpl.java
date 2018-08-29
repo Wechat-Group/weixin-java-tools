@@ -1,9 +1,6 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
 import me.chanjar.weixin.common.error.WxError;
@@ -13,6 +10,9 @@ import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.mp.api.WxMpCardService;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.card.WxMpCardLandingPageCreateRequest;
+import me.chanjar.weixin.mp.bean.card.WxMpCardLandingPageCreateResult;
+import me.chanjar.weixin.mp.bean.card.WxMpCardQrcodeCreateResult;
 import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 import org.slf4j.Logger;
@@ -29,6 +29,8 @@ public class WxMpCardServiceImpl implements WxMpCardService {
   private final Logger log = LoggerFactory.getLogger(WxMpCardServiceImpl.class);
 
   private WxMpService wxMpService;
+
+  private static final Gson GSON = new Gson();
 
   public WxMpCardServiceImpl(WxMpService wxMpService) {
     this.wxMpService = wxMpService;
@@ -235,5 +237,52 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     }
 
     return responseContent;
+  }
+
+  /**
+   * 添加测试白名单
+   *
+   * @param openid 用户的openid
+   * @return
+   */
+  public String addTestWhiteList(String openid) throws WxErrorException {
+    JsonArray array = new JsonArray();
+    array.add(openid);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.add("openid", array);
+    String respone = this.wxMpService.post(CARD_TEST_WHITELIST, GSON.toJson(jsonObject));
+    return respone;
+  }
+
+  /**
+   * 创建卡券二维码
+   * @param cardId
+   * @param outerStr
+   * @return
+   */
+  public WxMpCardQrcodeCreateResult createQrcodeMemberCard(String cardId, String outerStr) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("action_name", "QR_CARD");
+    jsonObject.addProperty("expire_seconds", 1800);
+    JsonObject actionInfoJson = new JsonObject();
+    JsonObject cardJson = new JsonObject();
+    cardJson.addProperty("card_id", cardId);
+    cardJson.addProperty("outer_str", outerStr);
+    actionInfoJson.add("card", cardJson);
+    jsonObject.add("action_info", actionInfoJson);
+    String response = this.wxMpService.post(CARD_QRCODE_CREAET, GSON.toJson(jsonObject));
+    return WxMpCardQrcodeCreateResult.fromJson(response);
+  }
+
+  /**
+   * 创建卡券货架接口
+   * @param request
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxMpCardLandingPageCreateResult createLandingPage(WxMpCardLandingPageCreateRequest request) throws WxErrorException {
+    String response = this.wxMpService.post(CARD_LANDING_PAGE_CREAET,GSON.toJson(request));
+    return WxMpCardLandingPageCreateResult.fromJson(response);
   }
 }

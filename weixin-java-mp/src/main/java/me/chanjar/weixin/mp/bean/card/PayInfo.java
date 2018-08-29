@@ -15,10 +15,6 @@ import java.io.Serializable;
 @Data
 public class PayInfo implements Serializable {
 
-    public PayInfo(){
-        swipeCard = new SwipeCard();
-    }
-
     /**
      * 刷卡功能
      */
