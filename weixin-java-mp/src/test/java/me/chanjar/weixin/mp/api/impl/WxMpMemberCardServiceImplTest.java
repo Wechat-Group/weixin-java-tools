@@ -2,7 +2,6 @@ package me.chanjar.weixin.mp.api.impl;
 
 import com.google.inject.Inject;
 import me.chanjar.weixin.mp.api.WxMpCardService;
-import me.chanjar.weixin.mp.api.WxMpMemberCardService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.card.*;
@@ -121,7 +120,7 @@ public class WxMpMemberCardServiceImplTest {
   @Test
   public void testCreateQrcodeMemberCard()throws Exception{
     WxMpCardService cardService = this.wxService.getCardService();
-    WxMpCardQrcodeCreateResult response = cardService.createQrcodeMemberCard(cardId,"test");
+    WxMpCardQrcodeCreateResult response = cardService.createQrcodeCard(cardId,"test");
     System.out.println(response);
   }
 

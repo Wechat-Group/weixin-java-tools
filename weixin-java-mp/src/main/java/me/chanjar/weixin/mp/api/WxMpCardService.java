@@ -21,12 +21,8 @@ public interface WxMpCardService {
   String CARD_CODE_CONSUME = "https://api.weixin.qq.com/card/code/consume";
   String CARD_CODE_MARK = "https://api.weixin.qq.com/card/code/mark";
   String CARD_TEST_WHITELIST = "https://api.weixin.qq.com/card/testwhitelist/set";
-  //创建卡券二维码
   String CARD_QRCODE_CREAET = "https://api.weixin.qq.com/card/qrcode/create";
-  //创建货架接口
   String CARD_LANDING_PAGE_CREAET = "https://api.weixin.qq.com/card/landingpage/create";
-
-
 
   /**
    * 得到WxMpService
@@ -143,17 +139,17 @@ public interface WxMpCardService {
 
   /**
    * 创建卡券二维码
-   * @param cardId
-   * @param outerStr
-   * @return
+   * @param cardId 卡券编号
+   * @param outerStr 二维码标识
+   * @return WxMpCardQrcodeCreateResult
    */
-  WxMpCardQrcodeCreateResult createQrcodeMemberCard(String cardId, String outerStr) throws WxErrorException;
+  WxMpCardQrcodeCreateResult createQrcodeCard(String cardId, String outerStr) throws WxErrorException;
 
   /**
-   *
-   * @param request
+   * 创建卡券货架
+   * @param createRequest 货架创建参数
    * @return
    * @throws WxErrorException
    */
-  WxMpCardLandingPageCreateResult createLandingPage(WxMpCardLandingPageCreateRequest request) throws WxErrorException;
+  WxMpCardLandingPageCreateResult createLandingPage(WxMpCardLandingPageCreateRequest createRequest) throws WxErrorException;
 }

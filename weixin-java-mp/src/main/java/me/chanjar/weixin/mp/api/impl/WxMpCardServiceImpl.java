@@ -260,7 +260,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
    * @param outerStr
    * @return
    */
-  public WxMpCardQrcodeCreateResult createQrcodeMemberCard(String cardId, String outerStr) throws WxErrorException {
+  public WxMpCardQrcodeCreateResult createQrcodeCard(String cardId, String outerStr) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("action_name", "QR_CARD");
     jsonObject.addProperty("expire_seconds", 1800);
