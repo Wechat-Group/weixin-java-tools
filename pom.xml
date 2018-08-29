@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>weixin-java-parent</artifactId>
-  <version>3.1.7-SNAPSHOT</version>
+  <version>3.1.6.BETA</version>
   <packaging>pom</packaging>
   <name>Weixin Java Tools - Parent</name>
   <description>微信开发Java SDK</description>
@@ -247,13 +247,12 @@
 
   <distributionManagement>
     <snapshotRepository>
-      <id>nexus-snapshots</id>
-      <url>http://repo.infoship.cn/content/repositories/snapshots/</url>
-      <uniqueVersion>true</uniqueVersion>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
     <repository>
-      <id>nexus-releases</id>
-      <url>http://repo.infoship.cn/content/repositories/releases/</url>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
 
