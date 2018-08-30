@@ -146,6 +146,15 @@ public interface WxMpCardService {
   WxMpCardQrcodeCreateResult createQrcodeCard(String cardId, String outerStr) throws WxErrorException;
 
   /**
+   * 创建卡券二维码
+   * @param cardId 卡券编号
+   * @param outerStr 二维码标识
+   * @param expiresIn 失效时间，单位秒，不填默认365天
+   * @return WxMpCardQrcodeCreateResult
+   */
+  WxMpCardQrcodeCreateResult createQrcodeCard(String cardId, String outerStr,int expiresIn) throws WxErrorException;
+
+  /**
    * 创建卡券货架
    * @param createRequest 货架创建参数
    * @return

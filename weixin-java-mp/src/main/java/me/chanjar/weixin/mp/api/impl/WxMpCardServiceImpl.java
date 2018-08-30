@@ -256,14 +256,29 @@ public class WxMpCardServiceImpl implements WxMpCardService {
 
   /**
    * 创建卡券二维码
+   *
    * @param cardId
    * @param outerStr
    * @return
    */
   public WxMpCardQrcodeCreateResult createQrcodeCard(String cardId, String outerStr) throws WxErrorException {
+    return createQrcodeCard(cardId, outerStr, 0);
+  }
+
+  /**
+   * 创建卡券二维码
+   * @param cardId 卡券编号
+   * @param outerStr 二维码标识
+   * @param expiresIn 失效时间，单位秒，不填默认365天
+   * @return
+   * @throws WxErrorException
+   */
+  public WxMpCardQrcodeCreateResult createQrcodeCard(String cardId, String outerStr, int expiresIn) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("action_name", "QR_CARD");
-    jsonObject.addProperty("expire_seconds", 1800);
+    if (expiresIn > 0) {
+      jsonObject.addProperty("expire_seconds", expiresIn);
+    }
     JsonObject actionInfoJson = new JsonObject();
     JsonObject cardJson = new JsonObject();
     cardJson.addProperty("card_id", cardId);
@@ -276,13 +291,14 @@ public class WxMpCardServiceImpl implements WxMpCardService {
 
   /**
    * 创建卡券货架接口
+   *
    * @param request
    * @return
    * @throws WxErrorException
    */
   @Override
   public WxMpCardLandingPageCreateResult createLandingPage(WxMpCardLandingPageCreateRequest request) throws WxErrorException {
-    String response = this.wxMpService.post(CARD_LANDING_PAGE_CREAET,GSON.toJson(request));
+    String response = this.wxMpService.post(CARD_LANDING_PAGE_CREAET, GSON.toJson(request));
     return WxMpCardLandingPageCreateResult.fromJson(response);
   }
 }
