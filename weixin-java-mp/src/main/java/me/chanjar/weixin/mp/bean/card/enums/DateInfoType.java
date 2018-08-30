@@ -1,4 +1,4 @@
-package me.chanjar.weixin.mp.bean.card;
+package me.chanjar.weixin.mp.bean.card.enums;
 
 public enum DateInfoType {
   DATE_TYPE_PERMANENT("永久有效类型"),

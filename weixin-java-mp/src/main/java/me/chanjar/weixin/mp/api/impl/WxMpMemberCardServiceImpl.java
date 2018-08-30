@@ -1,12 +1,18 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpMemberCardService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.card.*;
+import me.chanjar.weixin.mp.bean.card.enums.BusinessServiceType;
+import me.chanjar.weixin.mp.bean.card.enums.CardColor;
+import me.chanjar.weixin.mp.bean.card.enums.DateInfoType;
 import me.chanjar.weixin.mp.bean.membercard.*;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -22,11 +28,6 @@ import org.slf4j.LoggerFactory;
 public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
 
   private final Logger log = LoggerFactory.getLogger(WxMpMemberCardServiceImpl.class);
-
-  private static final String MEMBER_CARD_CREAET = "https://api.weixin.qq.com/card/create";
-  private static final String MEMBER_CARD_ACTIVATE = "https://api.weixin.qq.com/card/membercard/activate";
-  private static final String MEMBER_CARD_USER_INFO_GET = "https://api.weixin.qq.com/card/membercard/userinfo/get";
-  private static final String MEMBER_CARD_UPDATE_USER = "https://api.weixin.qq.com/card/membercard/updateuser";
 
   private WxMpService wxMpService;
 
@@ -263,6 +264,19 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
     return WxMpGsonBuilder.INSTANCE.create().fromJson(tmpJsonElement,
       new TypeToken<WxMpMemberCardUpdateResult>() {
       }.getType());
+  }
+
+  /**
+   * 设置会员卡激活的字段（会员卡设置：wx_activate=true 时需要）
+   *
+   * @param userFormRequest
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public String setActivateUserForm(MemberCardActivateUserFormRequest userFormRequest) throws WxErrorException {
+    String responseContent = this.getWxMpService().post(MEMBER_CARD_ACTIVATEUSERFORM, GSON.toJson(userFormRequest));
+    return responseContent;
   }
 
 }

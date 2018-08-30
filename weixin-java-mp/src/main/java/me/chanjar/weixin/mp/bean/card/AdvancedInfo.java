@@ -2,6 +2,7 @@ package me.chanjar.weixin.mp.bean.card;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import me.chanjar.weixin.mp.bean.card.enums.BusinessServiceType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
