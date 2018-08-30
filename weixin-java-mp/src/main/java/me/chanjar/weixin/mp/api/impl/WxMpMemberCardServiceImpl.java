@@ -191,8 +191,20 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
       return WxMpCardCreateResult.failure("会员卡基本信息的门店使用范围选择指定门店,门店列表:locationIdList不能为空");
     }
 
-    //TODO 高级信息
-
+    //校验高级信息
+    AdvancedInfo advancedInfo = memberCard.getAdvancedInfo();
+    if(advancedInfo != null){
+      if(advancedInfo.getBusinessServiceList() != null){
+        for(String bs:advancedInfo.getBusinessServiceList()){
+          BusinessServiceType businessServiceType = null;
+          try {
+            businessServiceType = BusinessServiceType.valueOf(bs);
+          } catch (IllegalArgumentException ex) {
+            WxMpCardCreateResult.failure("会员卡高级信息的商户服务:"+bs+" 不合法");
+          }
+        }
+      }
+    }
 
     return WxMpCardCreateResult.success();
   }

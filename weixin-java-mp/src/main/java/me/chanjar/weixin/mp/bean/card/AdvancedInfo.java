@@ -47,13 +47,21 @@ public class AdvancedInfo implements Serializable {
      * 商家服务类型,数组类型:BIZ_SERVICE_DELIVER 外卖服务； BIZ_SERVICE_FREE_PARK 停车位； BIZ_SERVICE_WITH_PET 可带宠物； BIZ_SERVICE_FREE_WIFI 免费wifi， 可多选
      */
     @SerializedName( "business_service")
-    private String businessService;
+    private List<String> businessServiceList;
 
     /**
      * 使用时段限制
      */
     @SerializedName( "time_limit")
     private TimeLimit timeLimit;
+
+    public void addBusinessService(BusinessServiceType businessServiceType){
+      if(businessServiceType != null){
+        if(businessServiceList == null)
+          businessServiceList = new ArrayList<String>();
+        businessServiceList.add(businessServiceType.name());
+      }
+    }
 
     public String toString(){
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
