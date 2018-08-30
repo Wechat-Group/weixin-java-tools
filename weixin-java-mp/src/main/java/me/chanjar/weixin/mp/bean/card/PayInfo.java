@@ -15,13 +15,13 @@ import java.io.Serializable;
 @Data
 public class PayInfo implements Serializable {
 
-    /**
-     * 刷卡功能
-     */
-    @SerializedName( "swipe_card")
-    private SwipeCard swipeCard;
+  /**
+   * 刷卡功能
+   */
+  @SerializedName("swipe_card")
+  private SwipeCard swipeCard;
 
-    public String toString(){
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+  }
 }

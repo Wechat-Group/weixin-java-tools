@@ -15,19 +15,19 @@ import java.io.Serializable;
 @Data
 public class TextImageList implements Serializable {
 
-    /**
-     * 图片链接,必须调用 上传图片接口 上传图片获得链接，并在此填入， 否则报错
-     */
-    @SerializedName( "image_url")
-    private String imageUrl;
+  /**
+   * 图片链接,必须调用 上传图片接口 上传图片获得链接，并在此填入， 否则报错
+   */
+  @SerializedName("image_url")
+  private String imageUrl;
 
-    /**
-     * 图文描述
-     */
-    @SerializedName("text")
-    private String text;
+  /**
+   * 图文描述
+   */
+  @SerializedName("text")
+  private String text;
 
-    public String toString(){
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+  }
 }

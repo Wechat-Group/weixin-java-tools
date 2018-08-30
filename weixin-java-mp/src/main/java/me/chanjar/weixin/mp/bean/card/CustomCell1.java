@@ -15,25 +15,25 @@ import java.io.Serializable;
 @Data
 public class CustomCell1 implements Serializable {
 
-    /**
-     * 入口名称
-     */
-    @SerializedName("name")
-    private String name;
+  /**
+   * 入口名称
+   */
+  @SerializedName("name")
+  private String name;
 
-    /**
-     * 入口右侧提示语,6个汉字内。
-     */
-    @SerializedName("tips")
-    private String tips;
+  /**
+   * 入口右侧提示语,6个汉字内。
+   */
+  @SerializedName("tips")
+  private String tips;
 
-    /**
-     * 入口跳转链接。
-     */
-    @SerializedName("url")
-    private String url;
+  /**
+   * 入口跳转链接。
+   */
+  @SerializedName("url")
+  private String url;
 
-    public String toString(){
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+  }
 }
