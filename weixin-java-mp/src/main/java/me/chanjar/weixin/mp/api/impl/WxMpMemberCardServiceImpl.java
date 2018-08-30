@@ -193,14 +193,14 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
 
     //校验高级信息
     AdvancedInfo advancedInfo = memberCard.getAdvancedInfo();
-    if(advancedInfo != null){
-      if(advancedInfo.getBusinessServiceList() != null){
-        for(String bs:advancedInfo.getBusinessServiceList()){
+    if (advancedInfo != null) {
+      if (advancedInfo.getBusinessServiceList() != null) {
+        for (String bs : advancedInfo.getBusinessServiceList()) {
           BusinessServiceType businessServiceType = null;
           try {
             businessServiceType = BusinessServiceType.valueOf(bs);
           } catch (IllegalArgumentException ex) {
-            return WxMpCardCreateResult.failure("会员卡高级信息的商户服务:"+bs+" 不合法");
+            return WxMpCardCreateResult.failure("会员卡高级信息的商户服务:" + bs + " 不合法");
           }
         }
       }

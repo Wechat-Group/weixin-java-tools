@@ -164,7 +164,7 @@ public class BaseInfo implements Serializable {
    * 每人可领券的数量限制,建议会员卡每人限领一张
    */
   @SerializedName("get_limit")
-  private Integer getLimit=1;
+  private Integer getLimit = 1;
 
   /**
    * 卡券领取页面是否可分享,默认为true
