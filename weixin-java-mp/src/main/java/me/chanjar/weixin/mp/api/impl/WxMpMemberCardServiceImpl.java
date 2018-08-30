@@ -200,7 +200,7 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
           try {
             businessServiceType = BusinessServiceType.valueOf(bs);
           } catch (IllegalArgumentException ex) {
-            WxMpCardCreateResult.failure("会员卡高级信息的商户服务:"+bs+" 不合法");
+            return WxMpCardCreateResult.failure("会员卡高级信息的商户服务:"+bs+" 不合法");
           }
         }
       }
