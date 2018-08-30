@@ -82,7 +82,7 @@ public class WxConsts {
     /**
      * 小程序卡片(要求小程序与公众号已关联)
      */
-    public static final String MINIPROGRAMPAGE="miniprogrampage";
+    public static final String MINIPROGRAMPAGE = "miniprogrampage";
   }
 
   /**
@@ -181,6 +181,76 @@ public class WxConsts {
      * 微信小店 订单付款通知.
      */
     public static final String MERCHANT_ORDER = "merchant_order";
+
+    /**
+     * 卡券事件：卡券通过审核
+     */
+    public static final String CARD_PASS_CHECK = "card_pass_check";
+
+    /**
+     * 卡券事件：卡券未通过审核
+     */
+    public static final String CARD_NOT_PASS_CHECK = "card_not_pass_check";
+
+    /**
+     * 卡券事件：用户领取卡券
+     */
+    public static final String CARD_USER_GET_CARD = "user_get_card";
+
+    /**
+     * 卡券事件：用户转赠卡券
+     */
+    public static final String CARD_USER_GIFTING_CARD = "user_gifting_card";
+
+
+    /**
+     * 卡券事件：用户核销卡券
+     */
+    public static final String CARD_USER_CONSUME_CARD = "user_consume_card";
+
+
+    /**
+     * 卡券事件：用户通过卡券的微信买单完成时推送
+     */
+    public static final String CARD_USER_PAY_FROM_PAY_CELL = "user_pay_from_pay_cell";
+
+
+    /**
+     * 卡券事件：用户提交会员卡开卡信息
+     */
+    public static final String CARD_SUBMIT_MEMBERCARD_USER_INFO = "submit_membercard_user_info";
+
+    /**
+     * 卡券事件：用户打开查看卡券
+     */
+    public static final String CARD_USER_VIEW_CARD = "user_view_card";
+
+    /**
+     * 卡券事件：用户删除卡券
+     */
+    public static final String CARD_USER_DEL_CARD = "user_del_card";
+
+    /**
+     * 卡券事件：用户在卡券里点击查看公众号进入会话时（需要用户已经关注公众号）
+     */
+    public static final String CARD_USER_ENTER_SESSION_FROM_CARD = "user_enter_session_from_card";
+
+    /**
+     * 卡券事件：当用户的会员卡积分余额发生变动时
+     */
+    public static final String CARD_UPDATE_MEMBER_CARD = "update_member_card";
+
+    /**
+     * 卡券事件：当某个card_id的初始库存数大于200且当前库存小于等于100时，用户尝试领券会触发发送事件给商户，事件每隔12h发送一次
+     */
+    public static final String CARD_SKU_REMIND = "card_sku_remind";
+
+    /**
+     * 卡券事件：当商户朋友的券券点发生变动时
+     */
+    public static final String CARD_PAY_ORDER = "card_pay_order";
+
+
   }
 
   /**
@@ -280,4 +350,5 @@ public class WxConsts {
     public static final String IMAGE = "image";
     public static final String VIDEO = "video";
   }
+
 }

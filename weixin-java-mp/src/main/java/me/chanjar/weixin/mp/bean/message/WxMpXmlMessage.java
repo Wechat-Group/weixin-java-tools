@@ -342,6 +342,82 @@ public class WxMpXmlMessage implements Serializable {
   @XStreamAlias("SendLocationInfo")
   private SendLocationInfo sendLocationInfo = new SendLocationInfo();
 
+  /**
+   * 审核不通过原因
+   */
+  @XStreamAlias("RefuseReason")
+  private String refuseReason;
+
+  /**
+   * 是否为朋友推荐，0代表否，1代表是
+   */
+  @XStreamAlias("IsRecommendByFriend")
+  private String isRecommendByFriend;
+
+  /**
+   * 购买券点时，实际支付成功的时间
+   */
+  @XStreamAlias("PayFinishTime")
+  private String payFinishTime;
+
+  /**
+   * 购买券点时，支付二维码的生成时间
+   */
+  @XStreamAlias("CreateOrderTime")
+  private String createOrderTime;
+
+  /**
+   * 购买券点时，支付二维码的生成时间
+   */
+  @XStreamAlias("Desc")
+  private String desc;
+
+  /**
+   * 剩余免费券点数量
+   */
+  @XStreamAlias("FreeCoinCount")
+  private String freeCoinCount;
+
+  /**
+   * 剩余付费券点数量
+   */
+  @XStreamAlias("PayCoinCount")
+  private String payCoinCount;
+
+  /**
+   * 本次变动的免费券点数量
+   */
+  @XStreamAlias("RefundFreeCoinCount")
+  private String refundFreeCoinCount;
+
+  /**
+   * 本次变动的付费券点数量
+   */
+  @XStreamAlias("RefundPayCoinCount")
+  private String refundPayCoinCount;
+
+  /**
+   * <pre>
+   *    所要拉取的订单类型 ORDER_TYPE_SYS_ADD 平台赠送券点 ORDER_TYPE_WXPAY 充值券点 ORDER_TYPE_REFUND 库存未使用回退券点
+   *    ORDER_TYPE_REDUCE 券点兑换库存 ORDER_TYPE_SYS_REDUCE 平台扣减
+   * </pre>
+   */
+  @XStreamAlias("OrderType")
+  private String orderType;
+
+  /**
+   * 系统备注，说明此次变动的缘由，如开通账户奖励、门店奖励、核销奖励以及充值、扣减。
+   */
+  @XStreamAlias("Memo")
+  private String memo;
+
+  /**
+   * 所开发票的详情
+   */
+  @XStreamAlias("ReceiptInfo")
+  private String receiptInfo;
+
+
   ///////////////////////////////////////
   // 门店审核事件推送
   ///////////////////////////////////////
