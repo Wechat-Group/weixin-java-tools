@@ -2,8 +2,8 @@ package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.card.MemberCardActivateUserFormRequest;
+import me.chanjar.weixin.mp.bean.card.MemberCardActivateUserFormResult;
 import me.chanjar.weixin.mp.bean.card.WxMpCardCreateResult;
-import me.chanjar.weixin.mp.bean.card.WxMpCardQrcodeCreateResult;
 import me.chanjar.weixin.mp.bean.membercard.*;
 
 /**
@@ -86,6 +86,6 @@ public interface WxMpMemberCardService {
    * @return
    * @throws WxErrorException
    */
-  String setActivateUserForm(MemberCardActivateUserFormRequest userFormRequest) throws WxErrorException;
+  MemberCardActivateUserFormResult setActivateUserForm(MemberCardActivateUserFormRequest userFormRequest) throws WxErrorException;
 
 }

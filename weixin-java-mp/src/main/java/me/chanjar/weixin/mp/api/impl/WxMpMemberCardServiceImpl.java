@@ -274,9 +274,9 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
    * @throws WxErrorException
    */
   @Override
-  public String setActivateUserForm(MemberCardActivateUserFormRequest userFormRequest) throws WxErrorException {
+  public MemberCardActivateUserFormResult setActivateUserForm(MemberCardActivateUserFormRequest userFormRequest) throws WxErrorException {
     String responseContent = this.getWxMpService().post(MEMBER_CARD_ACTIVATEUSERFORM, GSON.toJson(userFormRequest));
-    return responseContent;
+    return MemberCardActivateUserFormResult.fromJson(responseContent);
   }
 
 }
