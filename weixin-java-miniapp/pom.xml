@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>weixin-java-parent</artifactId>
-    <version>3.1.6.BETA</version>
+    <version>3.1.7.BETA</version>
   </parent>
   <artifactId>weixin-java-miniapp</artifactId>
   <name>Weixin Java Tools - MiniApp</name>
