@@ -91,4 +91,13 @@ public class WxMpCardServiceImplTest {
     System.out.println(result);
   }
 
+  @Test
+  public void testUnavailableCardCode() throws Exception {
+    String cardId = "p2iQk1luzj50RHue6yeTPQpAx_Z4";
+    String code = "134905347310";
+    String reason = "换成新卡了";
+    String result = this.wxService.getCardService().unavailableCardCode(cardId, code, reason);
+    assertNotNull(result);
+    System.out.println(result);
+  }
 }

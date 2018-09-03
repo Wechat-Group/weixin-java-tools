@@ -15,6 +15,7 @@ import me.chanjar.weixin.mp.bean.card.WxMpCardLandingPageCreateResult;
 import me.chanjar.weixin.mp.bean.card.WxMpCardQrcodeCreateResult;
 import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -267,8 +268,9 @@ public class WxMpCardServiceImpl implements WxMpCardService {
 
   /**
    * 创建卡券二维码
-   * @param cardId 卡券编号
-   * @param outerStr 二维码标识
+   *
+   * @param cardId    卡券编号
+   * @param outerStr  二维码标识
    * @param expiresIn 失效时间，单位秒，不填默认365天
    * @return
    * @throws WxErrorException
@@ -300,5 +302,27 @@ public class WxMpCardServiceImpl implements WxMpCardService {
   public WxMpCardLandingPageCreateResult createLandingPage(WxMpCardLandingPageCreateRequest request) throws WxErrorException {
     String response = this.wxMpService.post(CARD_LANDING_PAGE_CREAET, GSON.toJson(request));
     return WxMpCardLandingPageCreateResult.fromJson(response);
+  }
+
+  /**
+   * 将用户的卡券设置为失效状态
+   * 详见:https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272&anchor=9
+   *
+   * @param cardId 卡券编号
+   * @param code   用户会员卡号
+   * @param reason 设置为失效的原因
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public String unavailableCardCode(String cardId, String code, String reason) throws WxErrorException {
+    if (StringUtils.isAnyBlank(cardId, code, reason))
+      throw new WxErrorException(WxError.builder().errorCode(41012).errorMsg("参数不完整").build());
+    JsonObject jsonRequest = new JsonObject();
+    jsonRequest.addProperty("card_id", cardId);
+    jsonRequest.addProperty("code", code);
+    jsonRequest.addProperty("reason", reason);
+    String response = this.wxMpService.post(CARD_CODE_UNAVAILABLE, GSON.toJson(jsonRequest));
+    return response;
   }
 }

@@ -56,6 +56,12 @@ public class AdvancedInfo implements Serializable {
   @SerializedName("time_limit")
   private TimeLimit timeLimit;
 
+  /**
+   * 是否可以分享朋友
+   */
+  @SerializedName("share_friends")
+  private Boolean shareFriends;
+
   public void addBusinessService(BusinessServiceType businessServiceType) {
     if (businessServiceType != null) {
       if (businessServiceList == null)

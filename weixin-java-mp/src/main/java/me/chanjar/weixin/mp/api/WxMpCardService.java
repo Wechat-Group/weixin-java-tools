@@ -10,7 +10,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
 /**
  * 卡券相关接口
  *
- * @author YuJian(mgcnrx11@hotmail.com) on 01/11/2016
+ * @author YuJian(mgcnrx11 @ hotmail.com) on 01/11/2016
  * @author yuanqixun 2018-08-29
  */
 public interface WxMpCardService {
@@ -23,6 +23,10 @@ public interface WxMpCardService {
   String CARD_TEST_WHITELIST = "https://api.weixin.qq.com/card/testwhitelist/set";
   String CARD_QRCODE_CREAET = "https://api.weixin.qq.com/card/qrcode/create";
   String CARD_LANDING_PAGE_CREAET = "https://api.weixin.qq.com/card/landingpage/create";
+  /**
+   * 将用户的卡券设置为失效状态
+   */
+  String CARD_CODE_UNAVAILABLE = "https://api.weixin.qq.com/card/code/unavailable";
 
   /**
    * 得到WxMpService
@@ -132,6 +136,7 @@ public interface WxMpCardService {
 
   /**
    * 添加测试白名单
+   *
    * @param openid 用户的openid
    * @return
    */
@@ -139,7 +144,8 @@ public interface WxMpCardService {
 
   /**
    * 创建卡券二维码
-   * @param cardId 卡券编号
+   *
+   * @param cardId   卡券编号
    * @param outerStr 二维码标识
    * @return WxMpCardQrcodeCreateResult
    */
@@ -147,18 +153,33 @@ public interface WxMpCardService {
 
   /**
    * 创建卡券二维码
-   * @param cardId 卡券编号
-   * @param outerStr 二维码标识
+   *
+   * @param cardId    卡券编号
+   * @param outerStr  二维码标识
    * @param expiresIn 失效时间，单位秒，不填默认365天
    * @return WxMpCardQrcodeCreateResult
    */
-  WxMpCardQrcodeCreateResult createQrcodeCard(String cardId, String outerStr,int expiresIn) throws WxErrorException;
+  WxMpCardQrcodeCreateResult createQrcodeCard(String cardId, String outerStr, int expiresIn) throws WxErrorException;
 
   /**
    * 创建卡券货架
+   *
    * @param createRequest 货架创建参数
    * @return
    * @throws WxErrorException
    */
   WxMpCardLandingPageCreateResult createLandingPage(WxMpCardLandingPageCreateRequest createRequest) throws WxErrorException;
+
+  /**
+   * 将用户的卡券设置为失效状态
+   * 详见:https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272&anchor=9
+   *
+   * @param cardId 卡券编号
+   * @param code   用户会员卡号
+   * @param reason 设置为失效的原因
+   * @return
+   * @throws WxErrorException
+   */
+  String unavailableCardCode(String cardId, String code, String reason) throws WxErrorException;
+
 }

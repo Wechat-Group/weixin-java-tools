@@ -35,6 +35,12 @@ public class BaseInfo implements Serializable {
   private PayInfo payInfo;
 
   /**
+   * 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
+   */
+  @SerializedName("is_pay_and_qrcode")
+  private boolean isPayAndQrcode;
+
+  /**
    * 商户名字,字数上限为12个汉字
    */
   @SerializedName("brand_name")
