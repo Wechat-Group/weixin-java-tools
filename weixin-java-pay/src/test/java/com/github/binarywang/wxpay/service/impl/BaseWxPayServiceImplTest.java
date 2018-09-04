@@ -11,6 +11,7 @@ import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.constant.WxPayConstants.BillType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
+import com.github.binarywang.wxpay.constant.WxPayConstants.AccountType;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
@@ -163,6 +164,31 @@ public class BaseWxPayServiceImplTest {
   public void testDownloadBill_withNoParams() throws Exception {
     //必填字段为空时，抛出异常
     this.payService.downloadBill("", "", "", null);
+  }
+
+  @DataProvider
+  public Object[][] fundFlowData() {
+    return new Object[][]{
+      {"20180819", AccountType.BASIC, TarType.GZIP},
+      {"20180819", AccountType.OPERATION, TarType.GZIP},
+      {"20180819", AccountType.FEES, TarType.GZIP},
+      {"20180819", AccountType.BASIC, null},
+      {"20180819", AccountType.OPERATION, null},
+      {"20180819", AccountType.FEES, null}
+    };
+  }
+
+  @Test(dataProvider = "fundFlowData")
+  public void testDownloadFundFlow(String billDate, String accountType, String tarType) throws Exception {
+    WxPayFundFlowResult fundFlowResult = this.payService.downloadFundFlow(billDate, accountType, tarType);
+    assertThat(fundFlowResult).isNotNull();
+    this.logger.info(fundFlowResult.toString());
+  }
+
+  @Test(expectedExceptions = WxPayException.class)
+  public void testDownloadFundFlow_withNoParams() throws Exception {
+    //必填字段为空时，抛出异常
+    this.payService.downloadFundFlow("", "", null);
   }
 
   @Test

@@ -582,6 +582,125 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public WxPayFundFlowResult downloadFundFlow(String billDate, String accountType, String tarType) throws WxPayException {
+
+    WxPayDownloadFundFlowRequest request = new WxPayDownloadFundFlowRequest();
+    request.setBillDate(billDate);
+    request.setAccountType(accountType);
+    request.setTarType(tarType);
+
+    return this.downloadFundFlow(request);
+  }
+
+  @Override
+  public WxPayFundFlowResult downloadFundFlow(WxPayDownloadFundFlowRequest request) throws WxPayException {
+    request.checkAndSign(this.getConfig());
+
+    String url = this.getPayBaseUrl() + "/pay/downloadfundflow";
+
+    String responseContent;
+    if (TarType.GZIP.equals(request.getTarType())) {
+      responseContent = this.handleGzipFundFlow(url, request.toXML());
+    } else {
+      responseContent = this.post(url, request.toXML(), true);
+      if (responseContent.startsWith("<")) {
+        throw WxPayException.from(BaseWxPayResult.fromXML(responseContent, WxPayCommonResult.class));
+      }
+    }
+
+    return this.handleFundFlow(responseContent);
+  }
+
+  private String handleGzipFundFlow(String url, String requestStr) throws WxPayException {
+    try {
+      byte[] responseBytes = this.postForBytes(url, requestStr, true);
+      Path tempDirectory = Files.createTempDirectory("fundFlow");
+      Path path = Paths.get(tempDirectory.toString(), System.currentTimeMillis() + ".gzip");
+      Files.write(path, responseBytes);
+
+      try {
+        List<String> allLines = Files.readAllLines(ZipUtil.ungzip(path.toFile()).toPath(), StandardCharsets.UTF_8);
+        return Joiner.on("\n").join(allLines);
+      } catch (ZipException e) {
+        if (e.getMessage().contains("Not in GZIP format")) {
+          throw WxPayException.from(BaseWxPayResult.fromXML(new String(responseBytes, StandardCharsets.UTF_8),
+            WxPayCommonResult.class));
+        } else {
+          this.log.error("解压zip文件出错", e);
+          throw new WxPayException("解压zip文件出错");
+        }
+      }
+    } catch (WxPayException wxPayException) {
+      throw wxPayException;
+    } catch (Exception e){
+      this.log.error("解析对账单文件时出错", e);
+      throw new WxPayException("解压zip文件出错");
+    }
+  }
+
+  private WxPayFundFlowResult handleFundFlow(String responseContent) {
+    WxPayFundFlowResult wxPayFundFlowResult = new WxPayFundFlowResult();
+
+    String listStr = "";
+    String objStr = "";
+
+    if (StringUtils.isNotBlank(responseContent) && responseContent.contains("资金流水总笔数")) {
+      listStr = responseContent.substring(0, responseContent.indexOf("资金流水总笔数"));
+      objStr = responseContent.substring(responseContent.indexOf("资金流水总笔数"));
+    }
+    /*
+     * 记账时间:2018-02-01 04:21:23 微信支付业务单号:50000305742018020103387128253 资金流水单号:1900009231201802015884652186 业务名称:退款
+     * 业务类型:退款 收支类型:支出 收支金额（元）:0.02 账户结余（元）:0.17 资金变更提交申请人:system 备注:缺货 业务凭证号:REF4200000068201801293084726067
+     * 参考以上格式进行取值
+     */
+    List<WxPayFundFlowBaseResult> wxPayFundFlowBaseResultList = new LinkedList<>();
+    // 去空格
+    String newStr = listStr.replaceAll(",", " ");
+    // 数据分组
+    String[] tempStr = newStr.split("`");
+    // 分组标题
+    String[] t = tempStr[0].split(" ");
+    // 计算循环次数
+    int j = tempStr.length / t.length;
+    // 纪录数组下标
+    int k = 1;
+    for (int i = 0; i < j; i++) {
+      WxPayFundFlowBaseResult wxPayFundFlowBaseResult = new WxPayFundFlowBaseResult();
+
+      wxPayFundFlowBaseResult.setBillingTime(tempStr[k].trim());
+      wxPayFundFlowBaseResult.setBizTransactionId(tempStr[k + 1].trim());
+      wxPayFundFlowBaseResult.setFundFlowId(tempStr[k + 2].trim());
+      wxPayFundFlowBaseResult.setBizName(tempStr[k + 3].trim());
+      wxPayFundFlowBaseResult.setBizType(tempStr[k + 4].trim());
+      wxPayFundFlowBaseResult.setFinancialType(tempStr[k + 5].trim());
+      wxPayFundFlowBaseResult.setFinancialFee(tempStr[k + 6].trim());
+      wxPayFundFlowBaseResult.setAccountBalance(tempStr[k + 7].trim());
+      wxPayFundFlowBaseResult.setFundApplicant(tempStr[k + 8].trim());
+      wxPayFundFlowBaseResult.setMemo(tempStr[k + 9].trim());
+      wxPayFundFlowBaseResult.setBizVoucherId(tempStr[k + 10].trim());
+
+      wxPayFundFlowBaseResultList.add(wxPayFundFlowBaseResult);
+      k += t.length;
+    }
+    wxPayFundFlowResult.setWxPayFundFlowBaseResultList(wxPayFundFlowBaseResultList);
+
+    /*
+     * 资金流水总笔数,收入笔数,收入金额,支出笔数,支出金额 `20.0,`17.0,`0.35,`3.0,`0.18
+     * 参考以上格式进行取值
+     */
+    String totalStr = objStr.replaceAll(",", " ");
+    String[] totalTempStr = totalStr.split("`");
+    wxPayFundFlowResult.setTotalRecord(totalTempStr[1]);
+    wxPayFundFlowResult.setIncomeRecord(totalTempStr[2]);
+    wxPayFundFlowResult.setIncomeAmount(totalTempStr[3]);
+    wxPayFundFlowResult.setExpenditureRecord(totalTempStr[4]);
+    wxPayFundFlowResult.setExpenditureAmount(totalTempStr[5]);
+
+    return wxPayFundFlowResult;
+
+  }
+
+  @Override
   public WxPayMicropayResult micropay(WxPayMicropayRequest request) throws WxPayException {
     request.checkAndSign(this.getConfig());
 

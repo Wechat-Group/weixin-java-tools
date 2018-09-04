@@ -1,11 +1,10 @@
 package com.github.binarywang.wxpay.constant;
 
-import java.text.Format;
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.time.FastDateFormat;
 
-import com.google.common.collect.Lists;
+import java.text.Format;
+import java.util.List;
 
 /**
  * <pre>
@@ -104,6 +103,24 @@ public class WxPayConstants {
      * 刷卡支付有单独的支付接口，不调用统一下单接口
      */
     public static final String MICROPAY = "MICROPAY";
+  }
+
+  /**
+   * 账户类型
+   */
+  public static class AccountType{
+    /**
+     * 基本账户
+     */
+    public static final String BASIC = "Basic";
+    /**
+     * 运营账户
+     */
+    public static final String OPERATION = "Operation";
+    /**
+     * Fees
+     */
+    public static final String FEES = "Fees";
   }
 
   /**
