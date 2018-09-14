@@ -1,14 +1,5 @@
 package me.chanjar.weixin.open.api.impl;
 
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,6 +13,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
+import me.chanjar.weixin.open.api.WxOpenMaService;
 import me.chanjar.weixin.open.api.WxOpenService;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
@@ -32,13 +24,20 @@ import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
 import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
  */
 public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   private static final JsonParser JSON_PARSER = new JsonParser();
-  private static final Map<String, WxMaService> WX_OPEN_MA_SERVICE_MAP = new Hashtable<>();
+  private static final Map<String, WxOpenMaService> WX_OPEN_MA_SERVICE_MAP = new Hashtable<>();
   private static final Map<String, WxMpService> WX_OPEN_MP_SERVICE_MAP = new Hashtable<>();
 
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -65,18 +64,18 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public WxMaService getWxMaServiceByAppid(String appId) {
-    WxMaService wxMaService = WX_OPEN_MA_SERVICE_MAP.get(appId);
-    if (wxMaService == null) {
+  public WxOpenMaService getWxMaServiceByAppid(String appId) {
+    WxOpenMaService wxOpenMaService = WX_OPEN_MA_SERVICE_MAP.get(appId);
+    if (wxOpenMaService == null) {
       synchronized (WX_OPEN_MA_SERVICE_MAP) {
-        wxMaService = WX_OPEN_MA_SERVICE_MAP.get(appId);
-        if (wxMaService == null) {
-          wxMaService = new WxOpenMaServiceImpl(this, appId, getWxOpenConfigStorage().getWxMaConfig(appId));
-          WX_OPEN_MA_SERVICE_MAP.put(appId, wxMaService);
+        wxOpenMaService = WX_OPEN_MA_SERVICE_MAP.get(appId);
+        if (wxOpenMaService == null) {
+          wxOpenMaService = new WxOpenMaServiceImpl(this, appId, getWxOpenConfigStorage().getWxMaConfig(appId));
+          WX_OPEN_MA_SERVICE_MAP.put(appId, wxOpenMaService);
         }
       }
     }
-    return wxMaService;
+    return wxOpenMaService;
   }
 
   public WxOpenService getWxOpenService() {

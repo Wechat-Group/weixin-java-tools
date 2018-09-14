@@ -1,8 +1,5 @@
 package me.chanjar.weixin.open.api;
 
-import java.util.List;
-
-import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -12,6 +9,8 @@ import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
 import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
+
+import java.util.List;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
@@ -41,7 +40,13 @@ public interface WxOpenComponentService {
 
   WxMpService getWxMpServiceByAppid(String appid);
 
-  WxMaService getWxMaServiceByAppid(String appid);
+  /**
+   * 获取指定appid的开放平台小程序服务（继承一般小程序服务能力）
+   *
+   * @param appid
+   * @return
+   */
+  WxOpenMaService getWxMaServiceByAppid(String appid);
 
   WxOpenConfigStorage getWxOpenConfigStorage();
 

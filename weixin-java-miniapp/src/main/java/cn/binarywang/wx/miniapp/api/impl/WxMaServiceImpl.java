@@ -4,16 +4,13 @@ import cn.binarywang.wx.miniapp.api.*;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import com.google.common.base.Joiner;
+import com.google.gson.Gson;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.DataUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
-import me.chanjar.weixin.common.util.http.HttpType;
-import me.chanjar.weixin.common.util.http.RequestExecutor;
-import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
-import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
+import me.chanjar.weixin.common.util.http.*;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
 import org.apache.http.HttpHost;
@@ -54,6 +51,8 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
+
+  protected static final Gson GSON = new Gson();
 
   @Override
   public CloseableHttpClient getRequestHttpClient() {

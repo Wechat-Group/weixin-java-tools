@@ -237,6 +237,7 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
     jsonObject.addProperty("code", code);
 
     String responseContent = this.getWxMpService().post(MEMBER_CARD_USER_INFO_GET, jsonObject.toString());
+    log.debug("{}",responseContent);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return WxMpGsonBuilder.INSTANCE.create().fromJson(tmpJsonElement,
       new TypeToken<WxMpMemberCardUserInfoResult>() {

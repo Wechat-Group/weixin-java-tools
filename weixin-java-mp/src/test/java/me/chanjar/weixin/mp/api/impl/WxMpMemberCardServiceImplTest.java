@@ -22,8 +22,8 @@ public class WxMpMemberCardServiceImplTest {
 
   @Inject
   protected WxMpService wxService;
-  private String cardId = "p2iQk1kUixiypVJ1lJYIT-_fMdUg";
-  private String code = "201808290001";
+  private String cardId = "p2iQk1g2d03JXhVRDY5fZRVr236A";
+  private String code = "435223630779";
   private String openId = "o2iQk1u5X-XIJkatmAK1Q8VVuS90";
 
   @Test
