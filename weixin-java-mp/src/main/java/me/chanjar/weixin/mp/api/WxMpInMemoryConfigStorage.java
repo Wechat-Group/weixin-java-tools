@@ -1,16 +1,14 @@
 package me.chanjar.weixin.mp.api;
 
-import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.common.util.http.ApacheHttpClientBuilder;
-import org.apache.http.ssl.SSLContexts;
-
-import javax.net.ssl.SSLContext;
 import java.io.File;
-import java.io.FileInputStream;
-import java.security.KeyStore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 
 /**
  * 基于内存的微信配置provider，在实际生产环境中应该将这些配置持久化
@@ -21,11 +19,8 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
 
   protected volatile String appId;
   protected volatile String secret;
-  protected volatile String partnerId;
-  protected volatile String partnerKey;
-  protected volatile String notifyURL;
-  protected volatile String tradeType;
   protected volatile String token;
+  protected volatile String templateId;
   protected volatile String accessToken;
   protected volatile String aesKey;
   protected volatile long expiresTime;
@@ -51,8 +46,6 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
    * 临时文件目录
    */
   protected volatile File tmpDirFile;
-
-  protected volatile SSLContext sslContext;
 
   protected volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
 
@@ -105,14 +98,6 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
     return this.jsapiTicketLock;
   }
 
-  public long getJsapiTicketExpiresTime() {
-    return this.jsapiTicketExpiresTime;
-  }
-
-  public void setJsapiTicketExpiresTime(long jsapiTicketExpiresTime) {
-    this.jsapiTicketExpiresTime = jsapiTicketExpiresTime;
-  }
-
   @Override
   public boolean isJsapiTicketExpired() {
     return System.currentTimeMillis() > this.jsapiTicketExpiresTime;
@@ -136,6 +121,10 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   @Override
   public String getCardApiTicket() {
     return this.cardApiTicket;
+  }
+
+  public void setCardApiTicket(String cardApiTicket) {
+    this.cardApiTicket = cardApiTicket;
   }
 
   @Override
@@ -185,6 +174,15 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
 
   public void setToken(String token) {
     this.token = token;
+  }
+
+  @Override
+  public String getTemplateId() {
+    return this.templateId;
+  }
+
+  public void setTemplateId(String templateId) {
+    this.templateId = templateId;
   }
 
   @Override
@@ -252,42 +250,7 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
-  }
-
-  @Override
-  public String getPartnerId() {
-    return this.partnerId;
-  }
-
-  public void setPartnerId(String partnerId) {
-    this.partnerId = partnerId;
-  }
-
-  @Override
-  public String getPartnerKey() {
-    return this.partnerKey;
-  }
-
-  public void setPartnerKey(String partnerKey) {
-    this.partnerKey = partnerKey;
-  }
-
-
-  public String getNotifyURL() {
-    return notifyURL;
-  }
-
-  public void setNotifyURL(String notifyURL) {
-    this.notifyURL = notifyURL;
-  }
-
-  public String getTradeType() {
-    return tradeType;
-  }
-
-  public void setTradeType(String tradeType) {
-    this.tradeType = tradeType;
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 
   @Override
@@ -300,38 +263,6 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
   }
 
   @Override
-  public SSLContext getSslContext() {
-    return this.sslContext;
-  }
-
-  @Override
-  public void setSslContext(SSLContext context) {
-    this.sslContext = context;
-  }
-
-  @Override
-  public void setSslContextFilePath(String filePath) {
-    if (null == partnerId) {
-      throw new IllegalArgumentException("请设置partnerId的值");
-    }
-
-    File file = new File(filePath);
-    if (!file.exists()) {
-      throw new RuntimeException("证书文件：【" + file.getPath() + "】不存在！");
-    }
-
-    try {
-      FileInputStream inputStream = new FileInputStream(file);
-      KeyStore keystore = KeyStore.getInstance("PKCS12");
-      char[] partnerId2charArray = partnerId.toCharArray();
-      keystore.load(inputStream, partnerId2charArray);
-      this.sslContext = SSLContexts.custom().loadKeyMaterial(keystore, partnerId2charArray).build();
-    } catch (Exception e) {
-      throw new RuntimeException("证书文件有问题，请核实！", e);
-    }
-  }
-
-  @Override
   public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
     return this.apacheHttpClientBuilder;
   }
@@ -340,13 +271,25 @@ public class WxMpInMemoryConfigStorage implements WxMpConfigStorage {
     this.apacheHttpClientBuilder = apacheHttpClientBuilder;
   }
 
+  public long getJsapiTicketExpiresTime() {
+    return this.jsapiTicketExpiresTime;
+  }
+
+  public void setJsapiTicketExpiresTime(long jsapiTicketExpiresTime) {
+    this.jsapiTicketExpiresTime = jsapiTicketExpiresTime;
+  }
+
+  public long getCardApiTicketExpiresTime() {
+    return this.cardApiTicketExpiresTime;
+  }
+
+  public void setCardApiTicketExpiresTime(long cardApiTicketExpiresTime) {
+    this.cardApiTicketExpiresTime = cardApiTicketExpiresTime;
+  }
+
   @Override
   public boolean autoRefreshToken() {
     return true;
   }
 
-  @Override
-  public boolean useSandboxForWxPay() {
-    return false;
-  }
 }

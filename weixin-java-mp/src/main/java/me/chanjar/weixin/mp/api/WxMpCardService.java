@@ -1,20 +1,42 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.bean.card.WxMpCardLandingPageCreateRequest;
+import me.chanjar.weixin.mp.bean.card.WxMpCardLandingPageCreateResult;
+import me.chanjar.weixin.mp.bean.card.WxMpCardQrcodeCreateResult;
 import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
 
 /**
  * 卡券相关接口
- * @author YuJian(mgcnrx11@hotmail.com) on 01/11/2016  
+ *
+ * @author YuJian(mgcnrx11 @ hotmail.com) on 01/11/2016
+ * @author yuanqixun 2018-08-29
  */
 public interface WxMpCardService {
+  String CARD_GET = "https://api.weixin.qq.com/card/get";
+  String CARD_GET_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=wx_card";
+  String CARD_CODE_DECRYPT = "https://api.weixin.qq.com/card/code/decrypt";
+  String CARD_CODE_GET = "https://api.weixin.qq.com/card/code/get";
+  String CARD_CODE_CONSUME = "https://api.weixin.qq.com/card/code/consume";
+  String CARD_CODE_MARK = "https://api.weixin.qq.com/card/code/mark";
+  String CARD_TEST_WHITELIST = "https://api.weixin.qq.com/card/testwhitelist/set";
+  String CARD_QRCODE_CREAET = "https://api.weixin.qq.com/card/qrcode/create";
+  String CARD_LANDING_PAGE_CREAET = "https://api.weixin.qq.com/card/landingpage/create";
+  /**
+   * 将用户的卡券设置为失效状态
+   */
+  String CARD_CODE_UNAVAILABLE = "https://api.weixin.qq.com/card/code/unavailable";
+
+  /**
+   * 得到WxMpService
+   */
+  WxMpService getWxMpService();
 
   /**
    * 获得卡券api_ticket，不强制刷新卡券api_ticket
    *
    * @return 卡券api_ticket
-   * @throws WxErrorException
    * @see #getCardApiTicket(boolean)
    */
   String getCardApiTicket() throws WxErrorException;
@@ -48,7 +70,7 @@ public interface WxMpCardService {
    * @return 卡券Api签名对象
    */
   WxCardApiSignature createCardApiSignature(String... optionalSignParam) throws
-          WxErrorException;
+    WxErrorException;
 
   /**
    * 卡券Code解码
@@ -67,7 +89,7 @@ public interface WxMpCardService {
    * @return WxMpCardResult对象
    */
   WxMpCardResult queryCardCode(String cardId, String code, boolean checkConsume)
-          throws WxErrorException;
+    throws WxErrorException;
 
   /**
    * 卡券Code核销。核销失败会抛出异常
@@ -99,7 +121,7 @@ public interface WxMpCardService {
    * @param isMark 是否要mark（占用）这个code，填写true或者false，表示占用或解除占用
    */
   void markCardCode(String code, String cardId, String openId, boolean isMark) throws
-          WxErrorException;
+    WxErrorException;
 
   /**
    * 查看卡券详情接口
@@ -111,4 +133,53 @@ public interface WxMpCardService {
    * <br> 可由 com.google.gson.JsonParser#parse 等方法直接取JSON串中的某个字段。
    */
   String getCardDetail(String cardId) throws WxErrorException;
+
+  /**
+   * 添加测试白名单
+   *
+   * @param openid 用户的openid
+   * @return
+   */
+  String addTestWhiteList(String openid) throws WxErrorException;
+
+  /**
+   * 创建卡券二维码
+   *
+   * @param cardId   卡券编号
+   * @param outerStr 二维码标识
+   * @return WxMpCardQrcodeCreateResult
+   */
+  WxMpCardQrcodeCreateResult createQrcodeCard(String cardId, String outerStr) throws WxErrorException;
+
+  /**
+   * 创建卡券二维码
+   *
+   * @param cardId    卡券编号
+   * @param outerStr  二维码标识
+   * @param expiresIn 失效时间，单位秒，不填默认365天
+   * @return WxMpCardQrcodeCreateResult
+   */
+  WxMpCardQrcodeCreateResult createQrcodeCard(String cardId, String outerStr, int expiresIn) throws WxErrorException;
+
+  /**
+   * 创建卡券货架
+   *
+   * @param createRequest 货架创建参数
+   * @return
+   * @throws WxErrorException
+   */
+  WxMpCardLandingPageCreateResult createLandingPage(WxMpCardLandingPageCreateRequest createRequest) throws WxErrorException;
+
+  /**
+   * 将用户的卡券设置为失效状态
+   * 详见:https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272&anchor=9
+   *
+   * @param cardId 卡券编号
+   * @param code   用户会员卡号
+   * @param reason 设置为失效的原因
+   * @return
+   * @throws WxErrorException
+   */
+  String unavailableCardCode(String cardId, String code, String reason) throws WxErrorException;
+
 }

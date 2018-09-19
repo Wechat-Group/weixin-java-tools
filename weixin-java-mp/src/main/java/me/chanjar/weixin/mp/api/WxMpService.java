@@ -1,16 +1,74 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
-import me.chanjar.weixin.mp.bean.*;
-import me.chanjar.weixin.mp.bean.result.*;
-import org.apache.http.HttpHost;
+import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.mp.bean.WxMpSemanticQuery;
+import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
+import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 
 /**
  * 微信API的Service
  */
 public interface WxMpService {
+  /**
+   * 获取access_token
+   */
+  String GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
+  /**
+   * 获得jsapi_ticket
+   */
+  String GET_JSAPI_TICKET_URL = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi";
+  /**
+   * 长链接转短链接接口
+   */
+  String SHORTURL_API_URL = "https://api.weixin.qq.com/cgi-bin/shorturl";
+  /**
+   * 语义查询接口
+   */
+  String SEMANTIC_SEMPROXY_SEARCH_URL = "https://api.weixin.qq.com/semantic/semproxy/search";
+  /**
+   * 用code换取oauth2的access token
+   */
+  String OAUTH2_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
+  /**
+   * 刷新oauth2的access token
+   */
+  String OAUTH2_REFRESH_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s";
+  /**
+   * 用oauth2获取用户信息
+   */
+  String OAUTH2_USERINFO_URL = "https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=%s";
+  /**
+   * 验证oauth2的access token是否有效
+   */
+  String OAUTH2_VALIDATE_TOKEN_URL = "https://api.weixin.qq.com/sns/auth?access_token=%s&openid=%s";
+  /**
+   * 获取微信服务器IP地址
+   */
+  String GET_CALLBACK_IP_URL = "https://api.weixin.qq.com/cgi-bin/getcallbackip";
+  /**
+   * 第三方使用网站应用授权登录的url
+   */
+  String QRCONNECT_URL = "https://open.weixin.qq.com/connect/qrconnect?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect";
+  /**
+   * oauth2授权的url连接
+   */
+  String CONNECT_OAUTH2_AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s&connect_redirect=1#wechat_redirect";
+
+  /**
+   * 获取公众号的自动回复规则
+   */
+  String GET_CURRENT_AUTOREPLY_INFO_URL = "https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info";
+
+  /**
+   * 公众号调用或第三方平台帮公众号调用对公众号的所有api调用（包括第三方帮其调用）次数进行清零
+   */
+  String CLEAR_QUOTA_URL = "https://api.weixin.qq.com/cgi-bin/clear_quota";
 
   /**
    * <pre>
@@ -32,7 +90,7 @@ public interface WxMpService {
    * 获取access_token，本方法线程安全
    * 且在多线程同时刷新时只刷新一次，避免超出2000次/日的调用次数上限
    *
-   * 另：本service的所有方法都会在access_token过期是调用此方法
+   * 另：本service的所有方法都会在access_token过期时调用此方法
    *
    * 程序员在非必要情况下尽量不要主动调用此方法
    *
@@ -73,67 +131,9 @@ public interface WxMpService {
 
   /**
    * <pre>
-   * 上传群发用的图文消息，上传后才能群发图文消息
-   *
-   * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140549&token=&lang=zh_CN
-   * </pre>
-   *
-   * @see #massGroupMessageSend(me.chanjar.weixin.mp.bean.WxMpMassTagMessage)
-   * @see #massOpenIdsMessageSend(me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage)
-   */
-  WxMpMassUploadResult massNewsUpload(WxMpMassNews news) throws WxErrorException;
-
-  /**
-   * <pre>
-   * 上传群发用的视频，上传后才能群发视频消息
-   * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140549&token=&lang=zh_CN
-   * </pre>
-   *
-   * @see #massGroupMessageSend(me.chanjar.weixin.mp.bean.WxMpMassTagMessage)
-   * @see #massOpenIdsMessageSend(me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage)
-   */
-  WxMpMassUploadResult massVideoUpload(WxMpMassVideo video) throws WxErrorException;
-
-  /**
-   * <pre>
-   * 分组群发消息
-   * 如果发送图文消息，必须先使用 {@link #massNewsUpload(me.chanjar.weixin.mp.bean.WxMpMassNews)} 获得media_id，然后再发送
-   * 如果发送视频消息，必须先使用 {@link #massVideoUpload(me.chanjar.weixin.mp.bean.WxMpMassVideo)} 获得media_id，然后再发送
-   * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140549&token=&lang=zh_CN
-   * </pre>
-   */
-  WxMpMassSendResult massGroupMessageSend(WxMpMassTagMessage message) throws WxErrorException;
-
-  /**
-   * <pre>
-   * 按openId列表群发消息
-   * 如果发送图文消息，必须先使用 {@link #massNewsUpload(me.chanjar.weixin.mp.bean.WxMpMassNews)} 获得media_id，然后再发送
-   * 如果发送视频消息，必须先使用 {@link #massVideoUpload(me.chanjar.weixin.mp.bean.WxMpMassVideo)} 获得media_id，然后再发送
-   * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140549&token=&lang=zh_CN
-   * </pre>
-   */
-  WxMpMassSendResult massOpenIdsMessageSend(WxMpMassOpenIdsMessage message) throws WxErrorException;
-
-  /**
-   * <pre>
-   * 群发消息预览接口
-   * 开发者可通过该接口发送消息给指定用户，在手机端查看消息的样式和排版。为了满足第三方平台开发者的需求，在保留对openID预览能力的同时，增加了对指定微信号发送预览的能力，但该能力每日调用次数有限制（100次），请勿滥用。
-   * 接口调用请求说明
-   *  http请求方式: POST
-   *  https://api.weixin.qq.com/cgi-bin/message/mass/preview?access_token=ACCESS_TOKEN
-   * 详情请见：http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140549&token=&lang=zh_CN
-   * </pre>
-   *
-   * @return wxMpMassSendResult
-   */
-  WxMpMassSendResult massMessagePreview(WxMpMassPreviewMessage wxMpMassPreviewMessage) throws Exception;
-
-  /**
-   * <pre>
    * 长链接转短链接接口
    * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=长链接转短链接接口
    * </pre>
-   *
    */
   String shortUrl(String long_url) throws WxErrorException;
 
@@ -153,8 +153,8 @@ public interface WxMpService {
    * </pre>
    *
    * @param redirectURI 用户授权完成后的重定向链接，无需urlencode, 方法内会进行encode
-   * @param scope 应用授权作用域，拥有多个作用域用逗号（,）分隔，网页应用目前仅填写snsapi_login即可
-   * @param state 非必填，用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加session进行校验
+   * @param scope       应用授权作用域，拥有多个作用域用逗号（,）分隔，网页应用目前仅填写snsapi_login即可
+   * @param state       非必填，用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加session进行校验
    * @return url
    */
   String buildQrConnectUrl(String redirectURI, String scope, String state);
@@ -190,7 +190,7 @@ public interface WxMpService {
    * 用oauth2获取用户信息, 当前面引导授权时的scope是snsapi_userinfo的时候才可以
    * </pre>
    *
-   * @param lang              zh_CN, zh_TW, en
+   * @param lang zh_CN, zh_TW, en
    */
   WxMpUser oauth2getUserInfo(WxMpOAuth2AccessToken oAuth2AccessToken, String lang) throws WxErrorException;
 
@@ -198,7 +198,6 @@ public interface WxMpService {
    * <pre>
    * 验证oauth2的access token是否有效
    * </pre>
-   *
    */
   boolean oauth2validateAccessToken(WxMpOAuth2AccessToken oAuth2AccessToken);
 
@@ -209,6 +208,36 @@ public interface WxMpService {
    * </pre>
    */
   String[] getCallbackIP() throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取公众号的自动回复规则
+   * http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751299&token=&lang=zh_CN
+   * 开发者可以通过该接口，获取公众号当前使用的自动回复规则，包括关注后自动回复、消息自动回复（60分钟内触发一次）、关键词自动回复。
+   * 请注意：
+   * 1、第三方平台开发者可以通过本接口，在旗下公众号将业务授权给你后，立即通过本接口检测公众号的自动回复配置，并通过接口再次给公众号设置好自动回复规则，以提升公众号运营者的业务体验。
+   * 2、本接口仅能获取公众号在公众平台官网的自动回复功能中设置的自动回复规则，若公众号自行开发实现自动回复，或通过第三方平台开发者来实现，则无法获取。
+   * 3、认证/未认证的服务号/订阅号，以及接口测试号，均拥有该接口权限。
+   * 4、从第三方平台的公众号登录授权机制上来说，该接口从属于消息与菜单权限集。
+   * 5、本接口中返回的图片/语音/视频为临时素材（临时素材每次获取都不同，3天内有效，通过素材管理-获取临时素材接口来获取这些素材），本接口返回的图文消息为永久素材素材（通过素材管理-获取永久素材接口来获取这些素材）。
+   * 接口调用请求说明
+   * http请求方式: GET（请使用https协议）
+   * https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=ACCESS_TOKEN
+   * </pre>
+   */
+  WxMpCurrentAutoReplyInfo getCurrentAutoReplyInfo() throws WxErrorException;
+
+  /**
+   * <pre>
+   *  公众号调用或第三方平台帮公众号调用对公众号的所有api调用（包括第三方帮其调用）次数进行清零：
+   *  HTTP调用：https://api.weixin.qq.com/cgi-bin/clear_quota?access_token=ACCESS_TOKEN
+   *  接口文档地址：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433744592
+   *
+   * </pre>
+   *
+   * @param appid 公众号的APPID
+   */
+  void clearQuota(String appid) throws WxErrorException;
 
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求
@@ -224,25 +253,15 @@ public interface WxMpService {
    * <pre>
    * Service没有实现某个API的时候，可以用这个，
    * 比{@link #get}和{@link #post}方法更灵活，可以自己构造RequestExecutor用来处理不同的参数和不同的返回类型。
-   * 可以参考，{@link me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor}的实现方法
+   * 可以参考，{@link MediaUploadRequestExecutor}的实现方法
    * </pre>
    */
   <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException;
 
   /**
-   * 获取代理对象
-   */
-  HttpHost getHttpProxy();
-
-  /**
-   * 注入 {@link WxMpConfigStorage} 的实现
-   */
-  void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider);
-
-  /**
    * <pre>
    * 设置当微信系统响应系统繁忙时，要等待多少 retrySleepMillis(ms) * 2^(重试次数 - 1) 再发起重试
-   * 默认：1000ms
+   * @param retrySleepMillis 默认：1000ms
    * </pre>
    */
   void setRetrySleepMillis(int retrySleepMillis);
@@ -261,6 +280,11 @@ public interface WxMpService {
    * @return WxMpConfigStorage
    */
   WxMpConfigStorage getWxMpConfigStorage();
+
+  /**
+   * 注入 {@link WxMpConfigStorage} 的实现
+   */
+  void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider);
 
   /**
    * 返回客服接口方法实现类，以方便调用其各个接口
@@ -312,13 +336,6 @@ public interface WxMpService {
   WxMpCardService getCardService();
 
   /**
-   * 返回微信支付相关接口方法的实现类对象，以方便调用其各个接口
-   *
-   * @return WxMpPayService
-   */
-  WxMpPayService getPayService();
-
-  /**
    * 返回数据分析统计相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpDataCubeService
@@ -347,9 +364,93 @@ public interface WxMpService {
   WxMpTemplateMsgService getTemplateMsgService();
 
   /**
+   * 返回一次性订阅消息相关接口方法的实现类对象，以方便调用其各个接口
+   *
+   * @return WxMpSubscribeMsgService
+   */
+  WxMpSubscribeMsgService getSubscribeMsgService();
+
+  /**
    * 返回硬件平台相关接口方法的实现类对象，以方便调用其各个接口
    *
    * @return WxMpDeviceService
    */
   WxMpDeviceService getDeviceService();
+
+  /**
+   * 返回摇一摇周边相关接口方法的实现类对象，以方便调用其各个接口
+   *
+   * @return WxMpShakeService
+   */
+  WxMpShakeService getShakeService();
+
+  /**
+   * 返回会员卡相关接口方法的实现类对象，以方便调用其各个接口
+   *
+   * @return WxMpMemberCardService
+   */
+  WxMpMemberCardService getMemberCardService();
+
+  /**
+   * 初始化http请求对象
+   */
+  void initHttp();
+
+  /**
+   * @return RequestHttp对象
+   */
+  RequestHttp getRequestHttp();
+
+  /**
+   * 返回群发消息相关接口方法的实现类对象，以方便调用其各个接口
+   *
+   * @return WxMpMassMessageService
+   */
+  WxMpMassMessageService getMassMessageService();
+
+  /**
+   * 返回AI开放接口方法的实现类对象，以方便调用其各个接口
+   *
+   * @return WxMpAiOpenService
+   */
+  WxMpAiOpenService getAiOpenService();
+
+  /**
+   * 返回WIFI接口方法的实现类对象，以方便调用其各个接口
+   *
+   * @return WxMpWifiService
+   */
+  WxMpWifiService getWifiService();
+
+  void setKefuService(WxMpKefuService kefuService);
+
+  void setMaterialService(WxMpMaterialService materialService);
+
+  void setMenuService(WxMpMenuService menuService);
+
+  void setUserService(WxMpUserService userService);
+
+  void setTagService(WxMpUserTagService tagService);
+
+  void setQrCodeService(WxMpQrcodeService qrCodeService);
+
+  void setCardService(WxMpCardService cardService);
+
+  void setStoreService(WxMpStoreService storeService);
+
+  void setDataCubeService(WxMpDataCubeService dataCubeService);
+
+  void setBlackListService(WxMpUserBlacklistService blackListService);
+
+  void setTemplateMsgService(WxMpTemplateMsgService templateMsgService);
+
+  void setDeviceService(WxMpDeviceService deviceService);
+
+  void setShakeService(WxMpShakeService shakeService);
+
+  void setMemberCardService(WxMpMemberCardService memberCardService);
+
+  void setMassMessageService(WxMpMassMessageService massMessageService);
+
+  void setAiOpenService(WxMpAiOpenService aiOpenService);
 }

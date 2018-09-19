@@ -1,15 +1,21 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
+import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.google.gson.annotations.SerializedName;
-import me.chanjar.weixin.common.util.ToStringUtils;
+import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
- *
  * @author Binary Wang
- *
  */
-public class WxMpKfSessionGetResult {
+@Data
+public class WxMpKfSessionGetResult implements Serializable {
+  private static final long serialVersionUID = 8474846575200033152L;
+
   /**
    * kf_account 正在接待的客服，为空表示没有人在接待
    */
@@ -22,29 +28,13 @@ public class WxMpKfSessionGetResult {
   @SerializedName("createtime")
   private long createTime;
 
-  @Override
-  public String toString() {
-    return ToStringUtils.toSimpleString(this);
-  }
-
   public static WxMpKfSessionGetResult fromJson(String json) {
     return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpKfSessionGetResult.class);
   }
 
-  public String getKfAccount() {
-    return this.kfAccount;
-  }
-
-  public void setKfAccount(String kfAccount) {
-    this.kfAccount = kfAccount;
-  }
-
-  public long getCreateTime() {
-    return this.createTime;
-  }
-
-  public void setCreateTime(long createTime) {
-    this.createTime = createTime;
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 
 }

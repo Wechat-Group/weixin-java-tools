@@ -1,15 +1,24 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
-import com.google.gson.annotations.SerializedName;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
+import java.io.Serializable;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
 /**
- * Created by Binary Wang on 2016/7/15.
+ *
+ * @author Binary Wang
+ * @date 2016/7/15
  */
-public class WxMpKfMsgList {
+@Data
+public class WxMpKfMsgList implements Serializable {
+  private static final long serialVersionUID = 4524296707435188202L;
+
   @SerializedName("recordlist")
   private List<WxMpKfMsgRecord> records;
 
@@ -19,36 +28,12 @@ public class WxMpKfMsgList {
   @SerializedName("msgid")
   private Long msgId;
 
-  public List<WxMpKfMsgRecord> getRecords() {
-    return this.records;
-  }
-
-  public void setRecords(List<WxMpKfMsgRecord> records) {
-    this.records = records;
-  }
-
-  public Integer getNumber() {
-    return this.number;
-  }
-
-  public void setNumber(Integer number) {
-    this.number = number;
-  }
-
-  public Long getMsgId() {
-    return this.msgId;
-  }
-
-  public void setMsgId(Long msgId) {
-    this.msgId = msgId;
+  public static WxMpKfMsgList fromJson(String responseContent) {
+    return WxMpGsonBuilder.INSTANCE.create().fromJson(responseContent, WxMpKfMsgList.class);
   }
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
-  }
-
-  public static WxMpKfMsgList fromJson(String responseContent) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(responseContent, WxMpKfMsgList.class);
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 }

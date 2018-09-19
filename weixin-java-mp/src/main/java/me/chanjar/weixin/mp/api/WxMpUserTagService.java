@@ -1,16 +1,16 @@
 package me.chanjar.weixin.mp.api;
 
-import java.util.List;
-
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.tag.WxTagListUser;
 import me.chanjar.weixin.mp.bean.tag.WxUserTag;
+
+import java.util.List;
 
 /**
  * 用户标签管理相关接口
  * Created by Binary Wang on 2016/9/2.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMpUserTagService {
 
@@ -32,7 +32,6 @@ public interface WxMpUserTagService {
    * 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837&token=&lang=zh_CN">用户标签管理</a>
    * 接口url格式： https://api.weixin.qq.com/cgi-bin/tags/get?access_token=ACCESS_TOKEN
    * </pre>
-   *
    */
   List<WxUserTag> tagGet() throws WxErrorException;
 
@@ -42,7 +41,6 @@ public interface WxMpUserTagService {
    * 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837&token=&lang=zh_CN">用户标签管理</a>
    * 接口url格式： https://api.weixin.qq.com/cgi-bin/tags/update?access_token=ACCESS_TOKEN
    * </pre>
-   *
    */
   Boolean tagUpdate(Long tagId, String name) throws WxErrorException;
 
@@ -52,7 +50,6 @@ public interface WxMpUserTagService {
    * 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837&token=&lang=zh_CN">用户标签管理</a>
    * 接口url格式： https://api.weixin.qq.com/cgi-bin/tags/delete?access_token=ACCESS_TOKEN
    * </pre>
-   *
    */
   Boolean tagDelete(Long tagId) throws WxErrorException;
 
@@ -62,10 +59,9 @@ public interface WxMpUserTagService {
    * 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837&token=&lang=zh_CN">用户标签管理</a>
    * 接口url格式： https://api.weixin.qq.com/cgi-bin/user/tag/get?access_token=ACCESS_TOKEN
    * </pre>
-   *
    */
   WxTagListUser tagListUser(Long tagId, String nextOpenid)
-      throws WxErrorException;
+    throws WxErrorException;
 
   /**
    * <pre>
@@ -73,7 +69,6 @@ public interface WxMpUserTagService {
    * 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837&token=&lang=zh_CN">用户标签管理</a>
    * 接口url格式： https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=ACCESS_TOKEN
    * </pre>
-   *
    */
   boolean batchTagging(Long tagId, String[] openids) throws WxErrorException;
 
@@ -81,9 +76,8 @@ public interface WxMpUserTagService {
    * <pre>
    * 批量为用户取消标签
    * 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837&token=&lang=zh_CN">用户标签管理</a>
-   * 接口url格式： https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=ACCESS_TOKEN
+   * 接口url格式： https://api.weixin.qq.com/cgi-bin/tags/members/batchuntagging?access_token=ACCESS_TOKEN
    * </pre>
-   *
    */
   boolean batchUntagging(Long tagId, String[] openids) throws WxErrorException;
 
@@ -94,7 +88,8 @@ public interface WxMpUserTagService {
    * 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837&token=&lang=zh_CN">用户标签管理</a>
    * 接口url格式： https://api.weixin.qq.com/cgi-bin/tags/getidlist?access_token=ACCESS_TOKEN
    * </pre>
-   * @return 标签Id的列表 
+   *
+   * @return 标签Id的列表
    */
   List<Long> userTagList(String openid) throws WxErrorException;
 

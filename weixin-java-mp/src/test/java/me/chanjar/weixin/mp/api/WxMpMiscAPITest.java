@@ -1,17 +1,15 @@
 package me.chanjar.weixin.mp.api;
 
 import com.google.inject.Inject;
-import me.chanjar.weixin.common.exception.WxErrorException;
-import org.testng.Assert;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.test.ApiTestModule;
+import org.testng.*;
+import org.testng.annotations.*;
 
 import java.util.Arrays;
 
 /**
- *
  * @author chanjarster
- *
  */
 @Test(groups = "miscAPI")
 @Guice(modules = ApiTestModule.class)

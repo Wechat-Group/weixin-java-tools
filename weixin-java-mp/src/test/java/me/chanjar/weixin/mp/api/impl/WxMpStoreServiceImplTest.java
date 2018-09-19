@@ -1,24 +1,23 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.inject.Inject;
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.ApiTestModule;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreInfo;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreListResult;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
+import static org.testng.AssertJUnit.*;
 
 /**
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- *         Created by Binary Wang on 2016-09-23.
+ * Created by Binary Wang on 2016-09-23.
  *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Test
 @Guice(modules = ApiTestModule.class)
@@ -27,24 +26,36 @@ public class WxMpStoreServiceImplTest {
   private WxMpService wxMpService;
 
   /**
-   * Test method for {@link me.chanjar.weixin.mp.api.impl.WxMpStoreServiceImpl#add(me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo)}.
-   * @throws WxErrorException
+   * Test method for {@link WxMpStoreServiceImpl#add(WxMpStoreBaseInfo)}.
    */
   public void testAdd() throws WxErrorException {
-    this.wxMpService.getStoreService().add(WxMpStoreBaseInfo.builder().build());
     this.wxMpService.getStoreService()
-        .add(WxMpStoreBaseInfo.builder().businessName("haha").branchName("abc")
-            .province("aaa").district("aaa").telephone("122").address("abc").categories(new String[] { "美食,江浙菜" })
-            .longitude(new BigDecimal("115.32375"))
-            .latitude(new BigDecimal("25.097486")).city("aaa").offsetType(1)
-            .build());
+      .add(WxMpStoreBaseInfo.builder()
+        .businessName("haha")
+        .branchName("abc")
+        .province("aaa")
+        .district("aaa")
+        .telephone("122")
+        .address("abc")
+        .categories(new String[]{"美食,江浙菜"})
+        .longitude(new BigDecimal("115.32375"))
+        .latitude(new BigDecimal("25.097486"))
+        .city("aaa")
+        .build());
+    // 以下运行会抛异常
+    this.wxMpService.getStoreService().add(WxMpStoreBaseInfo.builder().build());
   }
 
   public void testUpdate() throws WxErrorException {
     this.wxMpService.getStoreService()
-      .update(WxMpStoreBaseInfo.builder().poiId("291503654").telephone("020-12345678")
-        .sid("aaa").avgPrice(35).openTime("8:00-20:00").special("免费wifi，外卖服务")
-        .introduction("麦当劳是全球大型跨国连锁餐厅，1940 年创立于美国，在世界上大约拥有3 万间分店。主要售卖汉堡包，以及薯条、炸鸡、汽水、冰品、沙拉、水果等快餐食品").offsetType(1)
+      .update(WxMpStoreBaseInfo.builder()
+        .poiId("291503654")
+        .telephone("020-12345678")
+        .sid("aaa")
+        .avgPrice(35)
+        .openTime("8:00-20:00")
+        .special("免费wifi，外卖服务")
+        .introduction("麦当劳是全球大型跨国连锁餐厅，1940 年创立于美国，在世界上大约拥有3 万间分店。主要售卖汉堡包，以及薯条、炸鸡、汽水、冰品、沙拉、水果等快餐食品")
         .build());
   }
 

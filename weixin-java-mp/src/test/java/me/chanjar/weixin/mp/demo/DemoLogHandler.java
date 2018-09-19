@@ -14,7 +14,7 @@ import java.util.Map;
 public class DemoLogHandler implements WxMpMessageHandler {
   @Override
   public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
-      WxSessionManager sessionManager) {
+                                  WxSessionManager sessionManager) {
     System.out.println(wxMessage.toString());
     return null;
   }

@@ -1,19 +1,15 @@
-/*
- * KINGSTAR MEDIA SOLUTIONS Co.,LTD. Copyright c 2005-2013. All rights reserved.
- *
- * This source code is the property of KINGSTAR MEDIA SOLUTIONS LTD. It is intended
- * only for the use of KINGSTAR MEDIA application development. Reengineering, reproduction
- * arose from modification of the original source, or other redistribution of this source
- * is not permitted without written permission of the KINGSTAR MEDIA SOLUTIONS LTD.
- */
 package me.chanjar.weixin.mp.util.json;
 
 import com.google.gson.*;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.mp.bean.WxMpMassNews;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.lang.reflect.Type;
 
+/**
+ * @author codepiano
+ */
 public class WxMpMassNewsArticleGsonAdapter implements JsonSerializer<WxMpMassNews.WxMpMassNewsArticle>, JsonDeserializer<WxMpMassNews.WxMpMassNewsArticle> {
 
   @Override
@@ -67,7 +63,7 @@ public class WxMpMassNewsArticleGsonAdapter implements JsonSerializer<WxMpMassNe
     }
     JsonElement showCoverPic = articleInfo.get("show_cover_pic");
     if (showCoverPic != null && !showCoverPic.isJsonNull()) {
-      article.setShowCoverPic(GsonHelper.getAsBoolean(showCoverPic));
+      article.setShowCoverPic(BooleanUtils.toBoolean(showCoverPic.getAsInt()));
     }
     return article;
   }

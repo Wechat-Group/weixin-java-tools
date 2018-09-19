@@ -1,26 +1,25 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.WxType;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserTagService;
 import me.chanjar.weixin.mp.bean.tag.WxTagListUser;
 import me.chanjar.weixin.mp.bean.tag.WxUserTag;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 /**
+ * Created by Binary Wang on 2016/9/2.
  *
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- *         Created by Binary Wang on 2016/9/2.
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMpUserTagServiceImpl implements WxMpUserTagService {
   private static final String API_URL_PREFIX = "https://api.weixin.qq.com/cgi-bin/tags";
@@ -62,7 +61,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
     json.add("tag", tagJson);
 
     String responseContent = this.wxMpService.post(url, json.toString());
-    WxError wxError = WxError.fromJson(responseContent);
+    WxError wxError = WxError.fromJson(responseContent, WxType.MP);
     if (wxError.getErrorCode() == 0) {
       return true;
     }
@@ -80,7 +79,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
     json.add("tag", tagJson);
 
     String responseContent = this.wxMpService.post(url, json.toString());
-    WxError wxError = WxError.fromJson(responseContent);
+    WxError wxError = WxError.fromJson(responseContent, WxType.MP);
     if (wxError.getErrorCode() == 0) {
       return true;
     }
@@ -90,7 +89,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
 
   @Override
   public WxTagListUser tagListUser(Long tagId, String nextOpenid)
-      throws WxErrorException {
+    throws WxErrorException {
     String url = "https://api.weixin.qq.com/cgi-bin/user/tag/get";
 
     JsonObject json = new JsonObject();
@@ -103,7 +102,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
 
   @Override
   public boolean batchTagging(Long tagId, String[] openids)
-      throws WxErrorException {
+    throws WxErrorException {
     String url = API_URL_PREFIX + "/members/batchtagging";
 
     JsonObject json = new JsonObject();
@@ -115,7 +114,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
     json.add("openid_list", openidArrayJson);
 
     String responseContent = this.wxMpService.post(url, json.toString());
-    WxError wxError = WxError.fromJson(responseContent);
+    WxError wxError = WxError.fromJson(responseContent, WxType.MP);
     if (wxError.getErrorCode() == 0) {
       return true;
     }
@@ -125,7 +124,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
 
   @Override
   public boolean batchUntagging(Long tagId, String[] openids)
-      throws WxErrorException {
+    throws WxErrorException {
     String url = API_URL_PREFIX + "/members/batchuntagging";
 
     JsonObject json = new JsonObject();
@@ -137,7 +136,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
     json.add("openid_list", openidArrayJson);
 
     String responseContent = this.wxMpService.post(url, json.toString());
-    WxError wxError = WxError.fromJson(responseContent);
+    WxError wxError = WxError.fromJson(responseContent, WxType.MP);
     if (wxError.getErrorCode() == 0) {
       return true;
     }
@@ -155,8 +154,8 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
     String responseContent = this.wxMpService.post(url, json.toString());
 
     return WxMpGsonBuilder.create().fromJson(
-        new JsonParser().parse(responseContent).getAsJsonObject().get("tagid_list"),
-        new TypeToken<List<Long>>() {
-    }.getType());
+      new JsonParser().parse(responseContent).getAsJsonObject().get("tagid_list"),
+      new TypeToken<List<Long>>() {
+      }.getType());
   }
 }

@@ -15,10 +15,10 @@ import java.util.Map;
 public class DemoTextHandler implements WxMpMessageHandler {
   @Override
   public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context,
-      WxMpService wxMpService, WxSessionManager sessionManager) {
+                                  WxMpService wxMpService, WxSessionManager sessionManager) {
     WxMpXmlOutTextMessage m
-        = WxMpXmlOutMessage.TEXT().content("测试加密消息").fromUser(wxMessage.getToUser())
-        .toUser(wxMessage.getFromUser()).build();
+      = WxMpXmlOutMessage.TEXT().content("测试加密消息").fromUser(wxMessage.getToUser())
+      .toUser(wxMessage.getFromUser()).build();
     return m;
   }
 

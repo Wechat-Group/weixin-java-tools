@@ -1,12 +1,6 @@
-/*
- * KINGSTAR MEDIA SOLUTIONS Co.,LTD. Copyright c 2005-2013. All rights reserved.
- *
- * This source code is the property of KINGSTAR MEDIA SOLUTIONS LTD. It is intended
- * only for the use of KINGSTAR MEDIA application development. Reengineering, reproduction
- * arose from modification of the original source, or other redistribution of this source
- * is not permitted without written permission of the KINGSTAR MEDIA SOLUTIONS LTD.
- */
 package me.chanjar.weixin.mp.util.json;
+
+import java.lang.reflect.Type;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,8 +9,9 @@ import com.google.gson.JsonSerializer;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 
-import java.lang.reflect.Type;
-
+/**
+ * @author chanjarster
+ */
 public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTemplateMessage> {
 
   @Override
@@ -26,6 +21,18 @@ public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTempla
     messageJson.addProperty("template_id", message.getTemplateId());
     if (message.getUrl() != null) {
       messageJson.addProperty("url", message.getUrl());
+    }
+
+    final WxMpTemplateMessage.MiniProgram miniProgram = message.getMiniProgram();
+    if (miniProgram != null) {
+      JsonObject miniProgramJson = new JsonObject();
+      miniProgramJson.addProperty("appid", miniProgram.getAppid());
+      if (miniProgram.isUsePath()) {
+        miniProgramJson.addProperty("path", miniProgram.getPagePath());
+      } else {
+        miniProgramJson.addProperty("pagepath", miniProgram.getPagePath());
+      }
+      messageJson.add("miniprogram", miniProgramJson);
     }
 
     JsonObject data = new JsonObject();

@@ -1,20 +1,22 @@
 package me.chanjar.weixin.common.session;
 
-import me.chanjar.weixin.common.util.res.StringManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import me.chanjar.weixin.common.util.res.StringManager;
+
 /**
- * 基于内存的session manager
+ * 基于内存的session manager.
+ *
+ * @author Daniel Qian
  */
 public class StandardSessionManager implements WxSessionManager, InternalSessionManager {
 
-  protected static final StringManager sm =
-          StringManager.getManager(Constants.Package);
+  protected static final StringManager SM = StringManager.getManager(Constants.PACKAGE);
   /**
    * The descriptive name of this Manager implementation (for logging).
    */
@@ -82,7 +84,7 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
   public WxSession getSession(String sessionId, boolean create) {
     if (sessionId == null) {
       throw new IllegalStateException
-              (sm.getString("sessionManagerImpl.getSession.ise"));
+        (SM.getString("sessionManagerImpl.getSession.ise"));
     }
 
     InternalSession session = findSession(sessionId);
@@ -124,26 +126,25 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
 
   @Override
   public InternalSession findSession(String id) {
-
-    if (id == null)
+    if (id == null) {
       return (null);
+    }
     return this.sessions.get(id);
-
   }
 
   @Override
   public InternalSession createSession(String sessionId) {
     if (sessionId == null) {
       throw new IllegalStateException
-              (sm.getString("sessionManagerImpl.createSession.ise"));
+        (SM.getString("sessionManagerImpl.createSession.ise"));
     }
 
     if ((this.maxActiveSessions >= 0) &&
-            (getActiveSessions() >= this.maxActiveSessions)) {
+      (getActiveSessions() >= this.maxActiveSessions)) {
       this.rejectedSessions++;
       throw new TooManyActiveSessionsException(
-              sm.getString("sessionManagerImpl.createSession.tmase"),
-              this.maxActiveSessions);
+        SM.getString("sessionManagerImpl.createSession.tmase"),
+        this.maxActiveSessions);
     }
 
     // Recycle or create a Session instance
@@ -192,7 +193,7 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
           while (true) {
             try {
               // 每秒清理一次
-              Thread.sleep(StandardSessionManager.this.backgroundProcessorDelay * 1000l);
+              Thread.sleep(StandardSessionManager.this.backgroundProcessorDelay * 1000L);
               backgroundProcess();
             } catch (InterruptedException e) {
               StandardSessionManager.this.log.error("SessionManagerImpl.backgroundProcess error", e);
@@ -230,8 +231,9 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
   @Override
   public void backgroundProcess() {
     this.count = (this.count + 1) % this.processExpiresFrequency;
-    if (this.count == 0)
+    if (this.count == 0) {
       processExpires();
+    }
   }
 
   /**
@@ -243,16 +245,18 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
     InternalSession sessions[] = findSessions();
     int expireHere = 0;
 
-    if (this.log.isDebugEnabled())
+    if (this.log.isDebugEnabled()) {
       this.log.debug("Start expire sessions {} at {} sessioncount {}", getName(), timeNow, sessions.length);
-    for (int i = 0; i < sessions.length; i++) {
-      if (sessions[i] != null && !sessions[i].isValid()) {
+    }
+    for (InternalSession session : sessions) {
+      if (session != null && !session.isValid()) {
         expireHere++;
       }
     }
     long timeEnd = System.currentTimeMillis();
-    if (this.log.isDebugEnabled())
+    if (this.log.isDebugEnabled()) {
       this.log.debug("End expire sessions {} processingTime {} expired sessions: {}", getName(), timeEnd - timeNow, expireHere);
+    }
     this.processingTime += (timeEnd - timeNow);
 
   }

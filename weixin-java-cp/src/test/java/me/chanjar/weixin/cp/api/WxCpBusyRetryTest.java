@@ -1,8 +1,9 @@
 package me.chanjar.weixin.cp.api;
 
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
+import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -19,20 +20,18 @@ public class WxCpBusyRetryTest {
     WxCpService service = new WxCpServiceImpl() {
 
       @Override
-      protected synchronized <T, E> T executeInternal(
-          RequestExecutor<T, E> executor, String uri, E data)
-          throws WxErrorException {
+      public synchronized <T, E> T executeInternal(
+        RequestExecutor<T, E> executor, String uri, E data)
+        throws WxErrorException {
         this.log.info("Executed");
-        WxError error = new WxError();
-        error.setErrorCode(-1);
-        throw new WxErrorException(error);
+        throw new WxErrorException(WxError.builder().errorCode(-1).build());
       }
     };
 
     service.setMaxRetryTimes(3);
     service.setRetrySleepMillis(500);
     return new Object[][]{
-            new Object[]{service}
+      new Object[]{service}
     };
   }
 

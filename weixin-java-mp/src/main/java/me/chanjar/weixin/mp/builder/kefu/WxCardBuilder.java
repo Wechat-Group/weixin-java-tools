@@ -8,14 +8,14 @@ import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
  * <pre>
  * 用法: WxMpKefuMessage m = WxMpKefuMessage.WXCARD().cardId(...).toUser(...).build();
  * </pre>
- * @author mgcnrx11
  *
+ * @author mgcnrx11
  */
 public final class WxCardBuilder extends BaseBuilder<WxCardBuilder> {
   private String cardId;
 
   public WxCardBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_WXCARD;
+    this.msgType = WxConsts.KefuMsgType.WXCARD;
   }
 
   public WxCardBuilder cardId(String cardId) {

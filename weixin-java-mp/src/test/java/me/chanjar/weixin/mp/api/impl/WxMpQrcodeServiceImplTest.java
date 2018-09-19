@@ -1,16 +1,17 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.inject.Inject;
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.ApiTestModule;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.*;
+import org.testng.annotations.*;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * 测试用户相关的接口
@@ -28,12 +29,27 @@ public class WxMpQrcodeServiceImplTest {
     return new Object[][]{{-1}, {0}, {1}, {200000}};
   }
 
+  @DataProvider
+  public Object[][] sceneStrs() {
+    return new Object[][]{{null}, {""}, {"test"}, {RandomStringUtils.randomAlphanumeric(100)}};
+  }
+
   @Test(dataProvider = "sceneIds")
   public void testQrCodeCreateTmpTicket(int sceneId) throws WxErrorException {
     WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateTmpTicket(sceneId, null);
     Assert.assertNotNull(ticket.getUrl());
     Assert.assertNotNull(ticket.getTicket());
-    Assert.assertTrue(ticket.getExpire_seconds() != -1);
+    Assert.assertTrue(ticket.getExpireSeconds() != -1);
+    System.out.println(ticket);
+  }
+
+
+  @Test(dataProvider = "sceneStrs")
+  public void testQrCodeCreateTmpTicketWithSceneStr(String sceneStr) throws WxErrorException {
+    WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateTmpTicket(sceneStr, null);
+    Assert.assertNotNull(ticket.getUrl());
+    Assert.assertNotNull(ticket.getTicket());
+    Assert.assertTrue(ticket.getExpireSeconds() != -1);
     System.out.println(ticket);
   }
 
@@ -42,7 +58,7 @@ public class WxMpQrcodeServiceImplTest {
     WxMpQrCodeTicket ticket = this.wxService.getQrcodeService().qrCodeCreateLastTicket(sceneId);
     Assert.assertNotNull(ticket.getUrl());
     Assert.assertNotNull(ticket.getTicket());
-    Assert.assertTrue(ticket.getExpire_seconds() == -1);
+    Assert.assertTrue(ticket.getExpireSeconds() == -1);
     System.out.println(ticket);
   }
 
@@ -51,6 +67,12 @@ public class WxMpQrcodeServiceImplTest {
     File file = this.wxService.getQrcodeService().qrCodePicture(ticket);
     Assert.assertNotNull(file);
     System.out.println(file.getAbsolutePath());
+
+    try {
+      FileUtils.copyFile(file,new File("d:\\t.jpg"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public void testQrCodePictureUrl() throws WxErrorException {

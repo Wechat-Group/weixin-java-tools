@@ -1,7 +1,7 @@
 package me.chanjar.weixin.cp.demo;
 
-import me.chanjar.weixin.cp.api.WxCpConfigStorage;
-import me.chanjar.weixin.cp.api.WxCpMessageRouter;
+import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import me.chanjar.weixin.cp.message.WxCpMessageRouter;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
@@ -31,7 +31,7 @@ public class WxCpEndpointServlet extends HttpServlet {
 
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
+    throws IOException {
 
     response.setContentType("text/html;charset=utf-8");
     response.setStatus(HttpServletResponse.SC_OK);
@@ -55,7 +55,7 @@ public class WxCpEndpointServlet extends HttpServlet {
     }
 
     WxCpXmlMessage inMessage = WxCpXmlMessage
-            .fromEncryptedXml(request.getInputStream(), this.wxCpConfigStorage, timestamp, nonce, msgSignature);
+      .fromEncryptedXml(request.getInputStream(), this.wxCpConfigStorage, timestamp, nonce, msgSignature);
     WxCpXmlOutMessage outMessage = this.wxCpMessageRouter.route(inMessage);
     if (outMessage != null) {
       response.getWriter().write(outMessage.toEncryptedXml(this.wxCpConfigStorage));

@@ -1,12 +1,10 @@
 package me.chanjar.weixin.common.bean;
 
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.bean.menu.WxMenuRule;
+import org.testng.*;
+import org.testng.annotations.*;
 
 @Test
 public class WxMenuTest {
@@ -87,75 +85,75 @@ public class WxMenuTest {
     Object[][] res = menuJson();
     String json = "{ \"menu\" : " + res[0][0] + " }";
     return new Object[][]{
-            new Object[]{json}
+      new Object[]{json}
     };
   }
 
   @DataProvider(name = "wxPushMenu")
   public Object[][] menuJson() {
     String json =
-            "{"
-                    + "\"button\":["
-                    + "{"
-                    + "\"type\":\"click\","
-                    + "\"name\":\"今日歌曲\","
-                    + "\"key\":\"V1001_TODAY_MUSIC\""
-                    + "},"
-                    + "{"
-                    + "\"type\":\"click\","
-                    + "\"name\":\"歌手简介\","
-                    + "\"key\":\"V1001_TODAY_SINGER\""
-                    + "},"
-                    + "{"
-                    + "\"name\":\"菜单\","
-                    + "\"sub_button\":["
-                    + "{"
-                    + "\"type\":\"view\","
-                    + "\"name\":\"搜索\","
-                    + "\"url\":\"http://www.soso.com/\""
-                    + "},"
-                    + "{"
-                    + "\"type\":\"view\","
-                    + "\"name\":\"视频\","
-                    + "\"url\":\"http://v.qq.com/\""
-                    + "},"
-                    + "{"
-                    + "\"type\":\"click\","
-                    + "\"name\":\"赞一下我们\","
-                    + "\"key\":\"V1001_GOOD\""
-                    + "}"
-                    + "]"
-                    + "}"
-                    + "]"
-                    + "}";
+      "{"
+        + "\"button\":["
+        + "{"
+        + "\"type\":\"click\","
+        + "\"name\":\"今日歌曲\","
+        + "\"key\":\"V1001_TODAY_MUSIC\""
+        + "},"
+        + "{"
+        + "\"type\":\"click\","
+        + "\"name\":\"歌手简介\","
+        + "\"key\":\"V1001_TODAY_SINGER\""
+        + "},"
+        + "{"
+        + "\"name\":\"菜单\","
+        + "\"sub_button\":["
+        + "{"
+        + "\"type\":\"view\","
+        + "\"name\":\"搜索\","
+        + "\"url\":\"http://www.soso.com/\""
+        + "},"
+        + "{"
+        + "\"type\":\"view\","
+        + "\"name\":\"视频\","
+        + "\"url\":\"http://v.qq.com/\""
+        + "},"
+        + "{"
+        + "\"type\":\"click\","
+        + "\"name\":\"赞一下我们\","
+        + "\"key\":\"V1001_GOOD\""
+        + "}"
+        + "]"
+        + "}"
+        + "]"
+        + "}";
     return new Object[][]{
-            new Object[]{json}
+      new Object[]{json}
     };
   }
 
   @DataProvider(name = "wxAddConditionalMenu")
   public Object[][] addConditionalMenuJson() {
     String json =
-            "{"
-                    + "\"button\":["
-                    + "{"
-                    + "\"type\":\"click\","
-                    + "\"name\":\"今日歌曲\","
-                    + "\"key\":\"V1001_TODAY_MUSIC\""
-                    + "}"
-                    + "],"
-                    + "\"matchrule\":{"
-                    + "\"group_id\":\"2\","
-                    + "\"sex\":\"1\","
-                    + "\"country\":\"中国\","
-                    + "\"province\":\"广东\","
-                    + "\"city\":\"广州\","
-                    + "\"client_platform_type\":\"2\","
-                    + "\"language\":\"zh_CN\""
-                    + "}"
-                    + "}";
+      "{"
+        + "\"button\":["
+        + "{"
+        + "\"type\":\"click\","
+        + "\"name\":\"今日歌曲\","
+        + "\"key\":\"V1001_TODAY_MUSIC\""
+        + "}"
+        + "],"
+        + "\"matchrule\":{"
+        + "\"group_id\":\"2\","
+        + "\"sex\":\"1\","
+        + "\"country\":\"中国\","
+        + "\"province\":\"广东\","
+        + "\"city\":\"广州\","
+        + "\"client_platform_type\":\"2\","
+        + "\"language\":\"zh_CN\""
+        + "}"
+        + "}";
     return new Object[][]{
-            new Object[]{json}
+      new Object[]{json}
     };
   }
 

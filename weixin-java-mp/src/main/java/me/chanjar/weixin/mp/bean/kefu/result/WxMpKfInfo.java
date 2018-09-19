@@ -1,16 +1,20 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
+import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import me.chanjar.weixin.common.util.ToStringUtils;
-
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  * 客服基本信息以及客服在线状态信息
- * @author Binary Wang
  *
+ * @author Binary Wang
  */
+@Data
 public class WxMpKfInfo implements Serializable {
   private static final long serialVersionUID = -5877300750666022290L;
 
@@ -63,7 +67,7 @@ public class WxMpKfInfo implements Serializable {
   private String inviteStatus;
 
   /**
-   *  status 客服在线状态，目前为：1、web 在线
+   * status 客服在线状态，目前为：1、web 在线
    */
   @SerializedName("status")
   private Integer status;
@@ -75,88 +79,9 @@ public class WxMpKfInfo implements Serializable {
   @SerializedName("accepted_case")
   private Integer acceptedCase;
 
-  public Integer getStatus() {
-    return this.status;
-  }
-
-  public void setStatus(Integer status) {
-    this.status = status;
-  }
-
-  public Integer getAcceptedCase() {
-    return this.acceptedCase;
-  }
-
-  public void setAcceptedCase(Integer acceptedCase) {
-    this.acceptedCase = acceptedCase;
-  }
-
-  public String getAccount() {
-    return this.account;
-  }
-
-  public void setAccount(String account) {
-    this.account = account;
-  }
-
-  public String getHeadImgUrl() {
-    return this.headImgUrl;
-  }
-
-  public void setHeadImgUrl(String headImgUrl) {
-    this.headImgUrl = headImgUrl;
-  }
-
-  public String getId() {
-    return this.id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getNick() {
-    return this.nick;
-  }
-
-  public void setNick(String nick) {
-    this.nick = nick;
-  }
-
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 
-  public String getWxAccount() {
-    return this.wxAccount;
-  }
-
-  public void setWxAccount(String wxAccount) {
-    this.wxAccount = wxAccount;
-  }
-
-  public String getInviteWx() {
-    return this.inviteWx;
-  }
-
-  public void setInviteWx(String inviteWx) {
-    this.inviteWx = inviteWx;
-  }
-
-  public Long getInviteExpireTime() {
-    return this.inviteExpireTime;
-  }
-
-  public void setInviteExpireTime(Long inviteExpireTime) {
-    this.inviteExpireTime = inviteExpireTime;
-  }
-
-  public String getInviteStatus() {
-    return this.inviteStatus;
-  }
-
-  public void setInviteStatus(String inviteStatus) {
-    this.inviteStatus = inviteStatus;
-  }
 }

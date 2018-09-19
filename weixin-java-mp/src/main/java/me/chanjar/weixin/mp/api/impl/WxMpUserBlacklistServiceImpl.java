@@ -2,7 +2,7 @@ package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserBlacklistService;
@@ -28,7 +28,7 @@ public class WxMpUserBlacklistServiceImpl implements WxMpUserBlacklistService {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("begin_openid", nextOpenid);
     String url = API_BLACKLIST_PREFIX + "/getblacklist";
-    String responseContent = this.wxMpService.execute(new SimplePostRequestExecutor(), url, jsonObject.toString());
+    String responseContent = this.wxMpService.execute(SimplePostRequestExecutor.create(this.wxMpService.getRequestHttp()), url, jsonObject.toString());
     return WxMpUserBlacklistGetResult.fromJson(responseContent);
   }
 
@@ -37,7 +37,7 @@ public class WxMpUserBlacklistServiceImpl implements WxMpUserBlacklistService {
     Map<String, Object> map = new HashMap<>();
     map.put("openid_list", openidList);
     String url = API_BLACKLIST_PREFIX + "/batchblacklist";
-    this.wxMpService.execute(new SimplePostRequestExecutor(), url, new Gson().toJson(map));
+    this.wxMpService.execute(SimplePostRequestExecutor.create(this.wxMpService.getRequestHttp()), url, new Gson().toJson(map));
   }
 
   @Override
@@ -45,6 +45,6 @@ public class WxMpUserBlacklistServiceImpl implements WxMpUserBlacklistService {
     Map<String, Object> map = new HashMap<>();
     map.put("openid_list", openidList);
     String url = API_BLACKLIST_PREFIX + "/batchunblacklist";
-    this.wxMpService.execute(new SimplePostRequestExecutor(), url, new Gson().toJson(map));
+    this.wxMpService.execute(SimplePostRequestExecutor.create(this.wxMpService.getRequestHttp()), url, new Gson().toJson(map));
   }
 }

@@ -1,17 +1,20 @@
 package me.chanjar.weixin.common.bean;
 
-import me.chanjar.weixin.common.util.ToStringUtils;
-
 import java.io.Serializable;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import lombok.Data;
+
 /**
- * 卡券Api签名
+ * 卡券Api签名.
  *
  * @author YuJian
  * @version 15/11/8
  */
+@Data
 public class WxCardApiSignature implements Serializable {
-
   private static final long serialVersionUID = 158176707226975979L;
 
   private String appId;
@@ -34,78 +37,6 @@ public class WxCardApiSignature implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
-  }
-
-  public String getAppId() {
-    return this.appId;
-  }
-
-  public void setAppId(String appId) {
-    this.appId = appId;
-  }
-
-  public String getCardId() {
-    return this.cardId;
-  }
-
-  public void setCardId(String cardId) {
-    this.cardId = cardId;
-  }
-
-  public String getCardType() {
-    return this.cardType;
-  }
-
-  public void setCardType(String cardType) {
-    this.cardType = cardType;
-  }
-
-  public String getLocationId() {
-    return this.locationId;
-  }
-
-  public void setLocationId(String locationId) {
-    this.locationId = locationId;
-  }
-
-  public String getCode() {
-    return this.code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public String getOpenId() {
-    return this.openId;
-  }
-
-  public void setOpenId(String openId) {
-    this.openId = openId;
-  }
-
-  public Long getTimestamp() {
-    return this.timestamp;
-  }
-
-  public void setTimestamp(Long timestamp) {
-    this.timestamp = timestamp;
-  }
-
-  public String getNonceStr() {
-    return this.nonceStr;
-  }
-
-  public void setNonceStr(String nonceStr) {
-    this.nonceStr = nonceStr;
-  }
-
-  public String getSignature() {
-    return this.signature;
-  }
-
-  public void setSignature(String signature) {
-    this.signature = signature;
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 }

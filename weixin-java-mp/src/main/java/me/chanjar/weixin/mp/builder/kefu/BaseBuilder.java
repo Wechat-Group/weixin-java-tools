@@ -7,7 +7,7 @@ public class BaseBuilder<T> {
   protected String toUser;
 
   @SuppressWarnings("unchecked")
-	public T toUser(String toUser) {
+  public T toUser(String toUser) {
     this.toUser = toUser;
     return (T) this;
   }

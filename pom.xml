@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <project
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>weixin-java-parent</artifactId>
-  <version>2.4.8.BETA</version>
+  <version>3.1.8.B</version>
   <packaging>pom</packaging>
-  <name>WeiXin Java Tools - Parent</name>
-  <description>微信公众号、企业号上级POM</description>
+  <name>Weixin Java Tools - Parent</name>
+  <description>微信开发Java SDK</description>
   <url>https://github.com/wechat-group/weixin-java-tools</url>
 
   <licenses>
@@ -74,6 +75,16 @@
       <email>aimilin@yeah.net</email>
       <url>https://github.com/aimilin6688</url>
     </developer>
+    <developer>
+      <name>ecoolper</name>
+      <email>crskyp@gmail.com</email>
+      <url>https://github.com/crskyp</url>
+    </developer>
+    <developer>
+      <name>007</name>
+      <email>007gzs@gmail.com</email>
+      <url>https://github.com/007gzs</url>
+    </developer>
   </developers>
 
   <scm>
@@ -86,7 +97,10 @@
     <module>weixin-java-common</module>
     <module>weixin-java-cp</module>
     <module>weixin-java-mp</module>
-    <module>weixin-java-osgi</module>
+    <module>weixin-java-pay</module>
+    <module>weixin-java-miniapp</module>
+    <module>weixin-java-open</module>
+    <!--module>weixin-java-osgi</module-->
   </modules>
 
   <properties>
@@ -94,73 +108,89 @@
     <maven.compiler.target>1.7</maven.compiler.target>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <downloadJavadocs>true</downloadJavadocs>
-    <downloadSources>true</downloadSources>
     <httpclient.version>4.5</httpclient.version>
-    <slf4j.version>1.7.10</slf4j.version>
-    <logback.version>1.1.2</logback.version>
-    <gson.version>2.7</gson.version>
-    <guava.version>19.0</guava.version>
-    <commons-lang3.version>3.5</commons-lang3.version>
-    <commons-io.version>2.5</commons-io.version>
-    <commons-codec.version>1.10</commons-codec.version>
     <jetty.version>9.3.0.RC0</jetty.version>
   </properties>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>${logback.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>${httpclient.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpmime</artifactId>
-      <version>${httpclient.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>${gson.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>${commons-codec.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>${commons-io.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>${commons-lang3.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-    </dependency>
-  </dependencies>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.11</version>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>qrcode-utils</artifactId>
+        <version>1.1</version>
+      </dependency>
+      <!-- 由于jodd-http较新的3.8版本需要jdk8，故而此处采用较低版本 -->
+      <dependency>
+        <groupId>org.jodd</groupId>
+        <artifactId>jodd-http</artifactId>
+        <version>3.7.1</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp</artifactId>
+        <version>3.7.0</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${httpclient.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpmime</artifactId>
+        <version>${httpclient.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>1.10</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.5</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.5</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.24</version>
+      </dependency>
+      <dependency>
+        <groupId>com.thoughtworks.xstream</groupId>
+        <artifactId>xstream</artifactId>
+        <version>1.4.9</version>
+      </dependency>
+      <!-- 由于guava较新的21.0版本需要jdk8，故而此处采用较低版本 -->
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>20.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.8.0</version>
+      </dependency>
+
+      <!-- 测试所用依赖 -->
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>2.9.7</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.1.11</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -172,7 +202,7 @@
       <dependency>
         <groupId>org.testng</groupId>
         <artifactId>testng</artifactId>
-        <version>6.8.7</version>
+        <version>6.10</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -194,9 +224,23 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>${guava.version}</version>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-guava</artifactId>
+        <version>3.0.0</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>2.9.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.16.18</version>
+        <scope>provided</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -261,7 +305,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -316,11 +360,22 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.6.0</version>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.17</version>
         <configuration>
-          <encoding>UTF-8</encoding>
+          <configLocation>quality-checks/google_checks.xml</configLocation>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <consoleOutput>true</consoleOutput>
+          <failsOnError>true</failsOnError>
         </configuration>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

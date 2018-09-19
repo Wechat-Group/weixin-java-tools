@@ -24,7 +24,7 @@ public final class VideoBuilder extends BaseBuilder<VideoBuilder> {
   private String thumbMediaId;
 
   public VideoBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_VIDEO;
+    this.msgType = WxConsts.KefuMsgType.VIDEO;
   }
 
   public VideoBuilder mediaId(String mediaId) {

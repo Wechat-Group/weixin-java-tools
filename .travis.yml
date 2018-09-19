@@ -1,27 +1,27 @@
 language: java
-sudo: false
-install: true
-addons:
-  sonarqube:
-    token:
-      secure: "834110c7191f97ecb226970c46dcaff8e681da5a"
+#sudo: false
+#install: true
+#addons:
+#  sonarcloud:
+#    token:
+#      secure: "834110c7191f97ecb226970c46dcaff8e681da5a"
 
 jdk:
   - oraclejdk8
-#script: "mvn clean package -Dmaven.test.skip=true"
-    
-script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
-  
+script: "./mvnw clean package -DskipTests=true"
+
+#script:
+#  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+
 branches:
   only:
     - develop
-  
+
 cache:
   directories:
     - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
+#    - '$HOME/.sonar/cache'
 
 notifications:
   email:
-    - binaryw@qq.com
+    - binarywang@vip.qq.com

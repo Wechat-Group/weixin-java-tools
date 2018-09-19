@@ -1,22 +1,36 @@
 package me.chanjar.weixin.mp.api;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.bean.datacube.WxDataCubeArticleResult;
-import me.chanjar.weixin.mp.bean.datacube.WxDataCubeArticleTotal;
-import me.chanjar.weixin.mp.bean.datacube.WxDataCubeInterfaceResult;
-import me.chanjar.weixin.mp.bean.datacube.WxDataCubeMsgResult;
-import me.chanjar.weixin.mp.bean.datacube.WxDataCubeUserCumulate;
-import me.chanjar.weixin.mp.bean.datacube.WxDataCubeUserSummary;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.bean.datacube.*;
 
 import java.util.Date;
 import java.util.List;
 
 /**
  * 统计分析相关接口
- *  Created by Binary Wang on 2016/8/23.
+ * Created by Binary Wang on 2016/8/23.
+ *
  * @author binarywang (https://github.com/binarywang)
  */
 public interface WxMpDataCubeService {
+  String GET_USER_SUMMARY = "https://api.weixin.qq.com/datacube/getusersummary";
+  String GET_USER_CUMULATE = "https://api.weixin.qq.com/datacube/getusercumulate";
+  String GET_ARTICLE_SUMMARY = "https://api.weixin.qq.com/datacube/getarticlesummary";
+  String GET_ARTICLE_TOTAL = "https://api.weixin.qq.com/datacube/getarticletotal";
+  String GET_USER_READ = "https://api.weixin.qq.com/datacube/getuserread";
+  String GET_USER_READ_HOUR = "https://api.weixin.qq.com/datacube/getuserreadhour";
+  String GET_USER_SHARE = "https://api.weixin.qq.com/datacube/getusershare";
+  String GET_USER_SHARE_HOUR = "https://api.weixin.qq.com/datacube/getusersharehour";
+  String GET_UPSTREAM_MSG = "https://api.weixin.qq.com/datacube/getupstreammsg";
+  String GET_UPSTREAM_MSG_HOUR = "https://api.weixin.qq.com/datacube/getupstreammsghour";
+  String GET_UPSTREAM_MSG_WEEK = "https://api.weixin.qq.com/datacube/getupstreammsgweek";
+  String GET_UPSTREAM_MSG_MONTH = "https://api.weixin.qq.com/datacube/getupstreammsgmonth";
+  String GET_UPSTREAM_MSG_DIST = "https://api.weixin.qq.com/datacube/getupstreammsgdist";
+  String GET_UPSTREAM_MSG_DIST_WEEK = "https://api.weixin.qq.com/datacube/getupstreammsgdistweek";
+  String GET_UPSTREAM_MSG_DIST_MONTH = "https://api.weixin.qq.com/datacube/getupstreammsgdistmonth";
+  String GET_INTERFACE_SUMMARY = "https://api.weixin.qq.com/datacube/getinterfacesummary";
+  String GET_INTERFACE_SUMMARY_HOUR = "https://api.weixin.qq.com/datacube/getinterfacesummaryhour";
+
   //*******************用户分析数据接口***********************//
 
   /**
@@ -192,6 +206,7 @@ public interface WxMpDataCubeService {
   List<WxDataCubeMsgResult> getUpstreamMsgDistMonth(Date beginDate, Date endDate) throws WxErrorException;
 
   //*******************接口分析数据接口***********************//
+
   /**
    * <pre>
    * 获取接口分析数据（getinterfacesummary）

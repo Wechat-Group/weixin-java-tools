@@ -1,10 +1,15 @@
 package me.chanjar.weixin.mp.bean.material;
 
+import lombok.Data;
+
 import java.io.File;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WxMpMaterial {
+@Data
+public class WxMpMaterial implements Serializable {
+  private static final long serialVersionUID = -1651816949780969485L;
 
   private String name;
   private File file;
@@ -26,42 +31,5 @@ public class WxMpMaterial {
     form.put("title", this.videoTitle);
     form.put("introduction", this.videoIntroduction);
     return form;
-  }
-
-  public String getVideoTitle() {
-    return this.videoTitle;
-  }
-
-  public void setVideoTitle(String videoTitle) {
-    this.videoTitle = videoTitle;
-  }
-
-  public String getVideoIntroduction() {
-    return this.videoIntroduction;
-  }
-
-  public void setVideoIntroduction(String videoIntroduction) {
-    this.videoIntroduction = videoIntroduction;
-  }
-
-  public String getName() {
-    return this.name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public File getFile() {
-    return this.file;
-  }
-
-  public void setFile(File file) {
-    this.file = file;
-  }
-
-  @Override
-  public String toString() {
-    return "WxMpMaterial [" + "name=" + this.name + ", file=" + this.file + ", videoTitle=" + this.videoTitle + ", videoIntroduction=" + this.videoIntroduction + "]";
   }
 }

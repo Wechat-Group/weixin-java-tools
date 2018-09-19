@@ -1,8 +1,9 @@
 package me.chanjar.weixin.mp.bean.message;
 
 import me.chanjar.weixin.common.api.WxConsts;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
+import static org.testng.Assert.*;
 
 @Test
 public class WxMpXmlMessageTest {
@@ -54,38 +55,38 @@ public class WxMpXmlMessageTest {
       + "</SendLocationInfo>"
       + "</xml>";
     WxMpXmlMessage wxMessage = WxMpXmlMessage.fromXml(xml);
-    Assert.assertEquals(wxMessage.getToUser(), "toUser");
-    Assert.assertEquals(wxMessage.getFromUser(), "fromUser");
-    Assert.assertEquals(wxMessage.getCreateTime(), new Long(1348831860L));
-    Assert.assertEquals(wxMessage.getMsgType(), WxConsts.XML_MSG_TEXT);
-    Assert.assertEquals(wxMessage.getContent(), "this is a test");
-    Assert.assertEquals(wxMessage.getMsgId(), new Long(1234567890123456L));
-    Assert.assertEquals(wxMessage.getPicUrl(), "this is a url");
-    Assert.assertEquals(wxMessage.getMediaId(), "media_id");
-    Assert.assertEquals(wxMessage.getFormat(), "Format");
-    Assert.assertEquals(wxMessage.getThumbMediaId(), "thumb_media_id");
-    Assert.assertEquals(wxMessage.getLocationX(), 23.134521d);
-    Assert.assertEquals(wxMessage.getLocationY(), 113.358803d);
-    Assert.assertEquals(wxMessage.getScale(), 20d);
-    Assert.assertEquals(wxMessage.getLabel(), "位置信息");
-    Assert.assertEquals(wxMessage.getDescription(), "公众平台官网链接");
-    Assert.assertEquals(wxMessage.getUrl(), "url");
-    Assert.assertEquals(wxMessage.getTitle(), "公众平台官网链接");
-    Assert.assertEquals(wxMessage.getEvent(), "subscribe");
-    Assert.assertEquals(wxMessage.getEventKey(), "qrscene_123123");
-    Assert.assertEquals(wxMessage.getTicket(), "TICKET");
-    Assert.assertEquals(wxMessage.getLatitude(), 23.137466);
-    Assert.assertEquals(wxMessage.getLongitude(), 113.352425);
-    Assert.assertEquals(wxMessage.getPrecision(), 119.385040);
-    Assert.assertEquals(wxMessage.getScanCodeInfo().getScanType(), "qrcode");
-    Assert.assertEquals(wxMessage.getScanCodeInfo().getScanResult(), "1");
-    Assert.assertEquals(wxMessage.getSendPicsInfo().getCount(), new Long(1L));
-    Assert.assertEquals(wxMessage.getSendPicsInfo().getPicList().get(0).getPicMd5Sum(), "1b5f7c23b5bf75682a53e7b6d163e185");
-    Assert.assertEquals(wxMessage.getSendLocationInfo().getLocationX(), "23");
-    Assert.assertEquals(wxMessage.getSendLocationInfo().getLocationY(), "113");
-    Assert.assertEquals(wxMessage.getSendLocationInfo().getScale(), "15");
-    Assert.assertEquals(wxMessage.getSendLocationInfo().getLabel(), " 广州市海珠区客村艺苑路 106号");
-    Assert.assertEquals(wxMessage.getSendLocationInfo().getPoiname(), "wo de poi");
+    assertEquals(wxMessage.getToUser(), "toUser");
+    assertEquals(wxMessage.getFromUser(), "fromUser");
+    assertEquals(wxMessage.getCreateTime(), new Long(1348831860L));
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.TEXT);
+    assertEquals(wxMessage.getContent(), "this is a test");
+    assertEquals(wxMessage.getMsgId(), new Long(1234567890123456L));
+    assertEquals(wxMessage.getPicUrl(), "this is a url");
+    assertEquals(wxMessage.getMediaId(), "media_id");
+    assertEquals(wxMessage.getFormat(), "Format");
+    assertEquals(wxMessage.getThumbMediaId(), "thumb_media_id");
+    assertEquals(wxMessage.getLocationX(), 23.134521d);
+    assertEquals(wxMessage.getLocationY(), 113.358803d);
+    assertEquals(wxMessage.getScale(), 20d);
+    assertEquals(wxMessage.getLabel(), "位置信息");
+    assertEquals(wxMessage.getDescription(), "公众平台官网链接");
+    assertEquals(wxMessage.getUrl(), "url");
+    assertEquals(wxMessage.getTitle(), "公众平台官网链接");
+    assertEquals(wxMessage.getEvent(), "subscribe");
+    assertEquals(wxMessage.getEventKey(), "qrscene_123123");
+    assertEquals(wxMessage.getTicket(), "TICKET");
+    assertEquals(wxMessage.getLatitude(), 23.137466);
+    assertEquals(wxMessage.getLongitude(), 113.352425);
+    assertEquals(wxMessage.getPrecision(), 119.385040);
+    assertEquals(wxMessage.getScanCodeInfo().getScanType(), "qrcode");
+    assertEquals(wxMessage.getScanCodeInfo().getScanResult(), "1");
+    assertEquals(wxMessage.getSendPicsInfo().getCount(), new Long(1L));
+    assertEquals(wxMessage.getSendPicsInfo().getPicList().get(0).getPicMd5Sum(), "1b5f7c23b5bf75682a53e7b6d163e185");
+    assertEquals(wxMessage.getSendLocationInfo().getLocationX(), "23");
+    assertEquals(wxMessage.getSendLocationInfo().getLocationY(), "113");
+    assertEquals(wxMessage.getSendLocationInfo().getScale(), "15");
+    assertEquals(wxMessage.getSendLocationInfo().getLabel(), " 广州市海珠区客村艺苑路 106号");
+    assertEquals(wxMessage.getSendLocationInfo().getPoiName(), "wo de poi");
   }
 
   public void testFromXml2() {
@@ -135,38 +136,38 @@ public class WxMpXmlMessageTest {
       + "</SendLocationInfo>"
       + "</xml>";
     WxMpXmlMessage wxMessage = WxMpXmlMessage.fromXml(xml);
-    Assert.assertEquals(wxMessage.getToUser(), "toUser");
-    Assert.assertEquals(wxMessage.getFromUser(), "fromUser");
-    Assert.assertEquals(wxMessage.getCreateTime(), new Long(1348831860L));
-    Assert.assertEquals(wxMessage.getMsgType(), WxConsts.XML_MSG_TEXT);
-    Assert.assertEquals(wxMessage.getContent(), "this is a test");
-    Assert.assertEquals(wxMessage.getMsgId(), new Long(1234567890123456L));
-    Assert.assertEquals(wxMessage.getPicUrl(), "this is a url");
-    Assert.assertEquals(wxMessage.getMediaId(), "media_id");
-    Assert.assertEquals(wxMessage.getFormat(), "Format");
-    Assert.assertEquals(wxMessage.getThumbMediaId(), "thumb_media_id");
-    Assert.assertEquals(wxMessage.getLocationX(), 23.134521d);
-    Assert.assertEquals(wxMessage.getLocationY(), 113.358803d);
-    Assert.assertEquals(wxMessage.getScale(), 20d);
-    Assert.assertEquals(wxMessage.getLabel(), "位置信息");
-    Assert.assertEquals(wxMessage.getDescription(), "公众平台官网链接");
-    Assert.assertEquals(wxMessage.getUrl(), "url");
-    Assert.assertEquals(wxMessage.getTitle(), "公众平台官网链接");
-    Assert.assertEquals(wxMessage.getEvent(), "subscribe");
-    Assert.assertEquals(wxMessage.getEventKey(), "qrscene_123123");
-    Assert.assertEquals(wxMessage.getTicket(), "TICKET");
-    Assert.assertEquals(wxMessage.getLatitude(), 23.137466);
-    Assert.assertEquals(wxMessage.getLongitude(), 113.352425);
-    Assert.assertEquals(wxMessage.getPrecision(), 119.385040);
-    Assert.assertEquals(wxMessage.getScanCodeInfo().getScanType(), "qrcode");
-    Assert.assertEquals(wxMessage.getScanCodeInfo().getScanResult(), "1");
-    Assert.assertEquals(wxMessage.getSendPicsInfo().getCount(), new Long(1L));
-    Assert.assertEquals(wxMessage.getSendPicsInfo().getPicList().get(0).getPicMd5Sum(), "1b5f7c23b5bf75682a53e7b6d163e185");
-    Assert.assertEquals(wxMessage.getSendLocationInfo().getLocationX(), "23");
-    Assert.assertEquals(wxMessage.getSendLocationInfo().getLocationY(), "113");
-    Assert.assertEquals(wxMessage.getSendLocationInfo().getScale(), "15");
-    Assert.assertEquals(wxMessage.getSendLocationInfo().getLabel(), " 广州市海珠区客村艺苑路 106号");
-    Assert.assertEquals(wxMessage.getSendLocationInfo().getPoiname(), "wo de poi");
+    assertEquals(wxMessage.getToUser(), "toUser");
+    assertEquals(wxMessage.getFromUser(), "fromUser");
+    assertEquals(wxMessage.getCreateTime(), new Long(1348831860L));
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.TEXT);
+    assertEquals(wxMessage.getContent(), "this is a test");
+    assertEquals(wxMessage.getMsgId(), new Long(1234567890123456L));
+    assertEquals(wxMessage.getPicUrl(), "this is a url");
+    assertEquals(wxMessage.getMediaId(), "media_id");
+    assertEquals(wxMessage.getFormat(), "Format");
+    assertEquals(wxMessage.getThumbMediaId(), "thumb_media_id");
+    assertEquals(wxMessage.getLocationX(), 23.134521d);
+    assertEquals(wxMessage.getLocationY(), 113.358803d);
+    assertEquals(wxMessage.getScale(), 20d);
+    assertEquals(wxMessage.getLabel(), "位置信息");
+    assertEquals(wxMessage.getDescription(), "公众平台官网链接");
+    assertEquals(wxMessage.getUrl(), "url");
+    assertEquals(wxMessage.getTitle(), "公众平台官网链接");
+    assertEquals(wxMessage.getEvent(), "subscribe");
+    assertEquals(wxMessage.getEventKey(), "qrscene_123123");
+    assertEquals(wxMessage.getTicket(), "TICKET");
+    assertEquals(wxMessage.getLatitude(), 23.137466);
+    assertEquals(wxMessage.getLongitude(), 113.352425);
+    assertEquals(wxMessage.getPrecision(), 119.385040);
+    assertEquals(wxMessage.getScanCodeInfo().getScanType(), "qrcode");
+    assertEquals(wxMessage.getScanCodeInfo().getScanResult(), "1");
+    assertEquals(wxMessage.getSendPicsInfo().getCount(), new Long(1L));
+    assertEquals(wxMessage.getSendPicsInfo().getPicList().get(0).getPicMd5Sum(), "1b5f7c23b5bf75682a53e7b6d163e185");
+    assertEquals(wxMessage.getSendLocationInfo().getLocationX(), "23");
+    assertEquals(wxMessage.getSendLocationInfo().getLocationY(), "113");
+    assertEquals(wxMessage.getSendLocationInfo().getScale(), "15");
+    assertEquals(wxMessage.getSendLocationInfo().getLabel(), " 广州市海珠区客村艺苑路 106号");
+    assertEquals(wxMessage.getSendLocationInfo().getPoiName(), "wo de poi");
   }
 
 }

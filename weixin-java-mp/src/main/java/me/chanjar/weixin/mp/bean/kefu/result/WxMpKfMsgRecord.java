@@ -1,12 +1,22 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
+import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.google.gson.annotations.SerializedName;
-import me.chanjar.weixin.common.util.ToStringUtils;
+import lombok.Data;
 
 /**
- * Created by Binary Wang on 2016/7/18.
+ *
+ * @author Binary Wang
+ * @date 2016/7/18
  */
-public class WxMpKfMsgRecord {
+@Data
+public class WxMpKfMsgRecord implements Serializable {
+  private static final long serialVersionUID = -280692188908528688L;
+
   /**
    * worker	完整客服帐号，格式为：帐号前缀@公众号微信号
    */
@@ -31,7 +41,7 @@ public class WxMpKfMsgRecord {
   @SerializedName("text")
   private String text;
 
-   /**
+  /**
    * time	操作时间，unix时间戳
    */
   @SerializedName("time")
@@ -39,7 +49,7 @@ public class WxMpKfMsgRecord {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 
   public String getWorker() {

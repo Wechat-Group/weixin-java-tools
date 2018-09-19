@@ -2,8 +2,9 @@ package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.WxType;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpTemplateMsgService;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
@@ -15,8 +16,9 @@ import java.util.List;
 /**
  * <pre>
  * Created by Binary Wang on 2016-10-14.
- * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
   public static final String API_URL_PREFIX = "https://api.weixin.qq.com/cgi-bin/template";
@@ -36,7 +38,7 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
     if (jsonObject.get("errcode").getAsInt() == 0) {
       return jsonObject.get("msgid").getAsString();
     }
-    throw new WxErrorException(WxError.fromJson(responseContent));
+    throw new WxErrorException(WxError.fromJson(responseContent, WxType.MP));
   }
 
   @Override
@@ -69,7 +71,7 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
       return result.get("template_id").getAsString();
     }
 
-    throw new WxErrorException(WxError.fromJson(responseContent));
+    throw new WxErrorException(WxError.fromJson(responseContent, WxType.MP));
   }
 
   @Override
@@ -84,7 +86,7 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("template_id", templateId);
     String responseContent = this.wxMpService.post(url, jsonObject.toString());
-    WxError error = WxError.fromJson(responseContent);
+    WxError error = WxError.fromJson(responseContent, WxType.MP);
     if (error.getErrorCode() == 0) {
       return true;
     }

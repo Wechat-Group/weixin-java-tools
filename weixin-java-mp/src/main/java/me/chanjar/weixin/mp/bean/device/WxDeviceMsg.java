@@ -1,12 +1,21 @@
 package me.chanjar.weixin.mp.bean.device;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.google.gson.annotations.SerializedName;
-import me.chanjar.weixin.common.util.ToStringUtils;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
- * Created by keungtung on 10/12/2016.
+ * @author keungtung.
+ * @date 10/12/2016
  */
-public class WxDeviceMsg extends AbstractDeviceBean{
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class WxDeviceMsg extends AbstractDeviceBean {
+  private static final long serialVersionUID = -5567110858455277963L;
+
   @SerializedName("device_type")
   private String deviceType;
   @SerializedName("device_id")
@@ -17,38 +26,6 @@ public class WxDeviceMsg extends AbstractDeviceBean{
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
-  }
-
-  public String getDeviceType() {
-    return deviceType;
-  }
-
-  public void setDeviceType(String deviceType) {
-    this.deviceType = deviceType;
-  }
-
-  public String getDeviceId() {
-    return deviceId;
-  }
-
-  public void setDeviceId(String deviceId) {
-    this.deviceId = deviceId;
-  }
-
-  public String getOpenId() {
-    return openId;
-  }
-
-  public void setOpenId(String openId) {
-    this.openId = openId;
-  }
-
-  public String getContent() {
-    return content;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 }

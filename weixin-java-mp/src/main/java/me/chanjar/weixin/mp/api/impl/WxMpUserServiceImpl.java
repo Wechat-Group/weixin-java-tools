@@ -1,7 +1,7 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonObject;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
 import me.chanjar.weixin.mp.bean.WxMpUserQuery;
@@ -40,7 +40,7 @@ public class WxMpUserServiceImpl implements WxMpUserService {
     String url = API_URL_PREFIX + "/info";
     lang = lang == null ? "zh_CN" : lang;
     String responseContent = this.wxMpService.get(url,
-        "openid=" + openid + "&lang=" + lang);
+      "openid=" + openid + "&lang=" + lang);
     return WxMpUser.fromJson(responseContent);
   }
 
@@ -48,13 +48,13 @@ public class WxMpUserServiceImpl implements WxMpUserService {
   public WxMpUserList userList(String next_openid) throws WxErrorException {
     String url = API_URL_PREFIX + "/get";
     String responseContent = this.wxMpService.get(url,
-        next_openid == null ? null : "next_openid=" + next_openid);
+      next_openid == null ? null : "next_openid=" + next_openid);
     return WxMpUserList.fromJson(responseContent);
   }
 
   @Override
   public List<WxMpUser> userInfoList(List<String> openids)
-      throws WxErrorException {
+    throws WxErrorException {
     return this.userInfoList(new WxMpUserQuery(openids));
   }
 
@@ -62,7 +62,7 @@ public class WxMpUserServiceImpl implements WxMpUserService {
   public List<WxMpUser> userInfoList(WxMpUserQuery userQuery) throws WxErrorException {
     String url = API_URL_PREFIX + "/info/batchget";
     String responseContent = this.wxMpService.post(url,
-        userQuery.toJsonString());
+      userQuery.toJsonString());
     return WxMpUser.fromJsonList(responseContent);
   }
 
