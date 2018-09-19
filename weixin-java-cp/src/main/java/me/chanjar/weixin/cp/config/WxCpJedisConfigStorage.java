@@ -43,17 +43,24 @@ public class WxCpJedisConfigStorage implements WxCpConfigStorage {
   private volatile File tmpDirFile;
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
 
-  public WxCpJedisConfigStorage(String host, int port) {
-    this.jedisPool = new JedisPool(host, port);
+  public WxCpJedisConfigStorage(JedisPool jedisPool) {
+    this.jedisPool = jedisPool;
   }
-
+  
+  public WxCpJedisConfigStorage(String host, int port) {
+    jedisPool = new JedisPool(host, port);
+  }
 
   public WxCpJedisConfigStorage(JedisPoolConfig poolConfig, String host, int port) {
-    this.jedisPool = new JedisPool(poolConfig, host, port);
+    jedisPool = new JedisPool(poolConfig, host, port);
   }
 
-  public WxCpJedisConfigStorage(JedisPoolConfig poolConfig, String host, int port, int timeout, final String password) {
-    this.jedisPool = new JedisPool(poolConfig, host, port, timeout, password);
+  public WxCpJedisConfigStorage(JedisPoolConfig poolConfig, String host, int port, int timeout, String password) {
+    jedisPool = new JedisPool(poolConfig, host, port, timeout, password);
+  }
+
+  public WxCpJedisConfigStorage(JedisPoolConfig poolConfig, String host, int port, int timeout, String password, int database) {
+    jedisPool = new JedisPool(poolConfig, host, port, timeout, password, database);
   }
 
   /**
