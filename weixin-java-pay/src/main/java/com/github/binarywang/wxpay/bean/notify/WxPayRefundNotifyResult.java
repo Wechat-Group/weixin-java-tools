@@ -45,6 +45,10 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
    */
   public static WxPayRefundNotifyResult fromXML(String xmlString, String mchKey) throws WxPayException {
     WxPayRefundNotifyResult result = BaseWxPayResult.fromXML(xmlString, WxPayRefundNotifyResult.class);
+    if ("FAIL".equals(result.getResultCode())) {
+      return result;
+    }
+    
     String reqInfoString = result.getReqInfoString();
     try {
       final String keyMd5String = DigestUtils.md5Hex(mchKey).toLowerCase();
