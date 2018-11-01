@@ -284,7 +284,25 @@ public class WxPayOrderNotifyResult extends BaseWxPayResult {
    */
   @XStreamAlias("version")
   private String version;
-
+  
+  /**
+   * 校验返回结果签名.
+   *
+   * @param wxPayService the wx pay service
+   * @param signType     签名类型
+   * @param checkSuccess 是否同时检查结果是否成功
+   * @throws WxPayException the wx pay exception
+   */
+  @Override
+  public void checkResult(WxPayService wxPayService, String signType, boolean checkSuccess) throws WxPayException {
+    //防止伪造成功通知
+    if ("SUCCESS".equals(getReturnCode()) && getSign() == null) {
+      throw new WxPayException("伪造的通知！");
+    }
+    
+    super.checkResult(wxPayService, signType, checkSuccess);
+  }
+  
   /**
    * From xml wx pay order notify result.
    *
