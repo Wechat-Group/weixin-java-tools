@@ -53,3 +53,6 @@ sonar-project.properties
 
 !/.mvn/wrapper/maven-wrapper.jar
 *.versionsBackup
+
+# STS
+.factorypath
