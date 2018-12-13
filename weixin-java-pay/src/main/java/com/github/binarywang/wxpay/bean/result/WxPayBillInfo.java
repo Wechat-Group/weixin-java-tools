@@ -131,5 +131,12 @@ public class WxPayBillInfo implements Serializable {
    * 费率备注.
    */
   private String feeRemark;
-
+  /**
+   * 退款申请时间
+   */
+  private String refundTime;
+  /**
+   * 退款成功时间
+   */
+  private String refundSuccessTime;
 }

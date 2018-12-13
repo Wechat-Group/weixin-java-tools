@@ -505,11 +505,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   private WxPayDownloadBillRequest buildDownloadBillRequest(String billDate, String billType, String tarType,
-                                                            String deviceInfo) throws WxPayException {
-    if (!BillType.ALL.equals(billType)) {
-      throw new WxPayException("目前仅支持ALL类型的对账单下载");
-    }
-
+                                                            String deviceInfo) {
     WxPayDownloadBillRequest request = new WxPayDownloadBillRequest();
     request.setBillType(billType);
     request.setBillDate(billDate);
@@ -548,11 +544,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   private WxPayBillResult handleBill(String billType, String responseContent) {
-    if (!BillType.ALL.equals(billType)) {
-      return null;
-    }
-
-    return WxPayBillResult.fromRawBillResultString(responseContent);
+    return WxPayBillResult.fromRawBillResultString(responseContent, billType);
   }
 
   private String handleGzipBill(String url, String requestStr) {
