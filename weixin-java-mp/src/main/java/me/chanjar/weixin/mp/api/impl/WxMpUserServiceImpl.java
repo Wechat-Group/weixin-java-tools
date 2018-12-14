@@ -1,14 +1,19 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
 import me.chanjar.weixin.mp.bean.WxMpUserQuery;
+import me.chanjar.weixin.mp.bean.result.WxMpChangeOpenid;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUserList;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * Created by Binary Wang on 2016/7/21.
@@ -48,6 +53,16 @@ public class WxMpUserServiceImpl implements WxMpUserService {
     String responseContent = this.wxMpService.get(USER_GET_URL,
       nextOpenid == null ? null : "next_openid=" + nextOpenid);
     return WxMpUserList.fromJson(responseContent);
+  }
+
+  @Override
+  public List<WxMpChangeOpenid> changeOpenid(String fromAppid, List<String> openidList) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>();
+    map.put("from_appid", fromAppid);
+    map.put("openid_list", openidList);
+    String responseContent = this.wxMpService.post(USER_CHANGE_OPENID_URL, WxMpGsonBuilder.create().toJson(map));
+
+    return WxMpChangeOpenid.fromJsonList(responseContent);
   }
 
   @Override

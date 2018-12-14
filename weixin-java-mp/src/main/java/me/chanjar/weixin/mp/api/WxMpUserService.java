@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.WxMpUserQuery;
+import me.chanjar.weixin.mp.bean.result.WxMpChangeOpenid;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUserList;
 
@@ -17,6 +18,7 @@ public interface WxMpUserService {
   String USER_GET_URL = "https://api.weixin.qq.com/cgi-bin/user/get";
   String USER_INFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info";
   String USER_INFO_UPDATE_REMARK_URL = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark";
+  String USER_CHANGE_OPENID_URL = "http://api.weixin.qq.com/cgi-bin/changeopenid";
 
   /**
    * <pre>
@@ -94,4 +96,17 @@ public interface WxMpUserService {
    * @param nextOpenid 可选，第一个拉取的OPENID，null为从头开始拉取
    */
   WxMpUserList userList(String nextOpenid) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 微信公众号主体变更迁移用户 openid
+   * 详情请见: http://kf.qq.com/faq/170221aUnmmU170221eUZJNf.html
+   * http请求方式: POST
+   * 接口地址：https://api.weixin.qq.com/cgi-bin/changeopenid?access_token=ACCESS_TOKEN
+   * </pre>
+   *
+   * @param fromAppid 原公众号的 appid
+   * @param openidList 需要转换的openid，这些必须是旧账号目前关注的才行，否则会出错；一次最多100个
+   */
+  List<WxMpChangeOpenid> changeOpenid(String fromAppid, List<String> openidList) throws WxErrorException;
 }
