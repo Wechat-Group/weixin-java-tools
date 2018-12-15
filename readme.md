@@ -146,3 +146,4 @@
 1. [qsjia (QSJia)](http://github.com/qsjia)
 1. [webcreazy (webcreazy)](http://github.com/webcreazy)
 1. [cwivan (鱼丸Cwivan)](http://github.com/cwivan)
+1. [howardliu-cn (看山)](https://github.com/howardliu-cn)

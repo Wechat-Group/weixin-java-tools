@@ -1,14 +1,13 @@
 package me.chanjar.weixin.mp.bean.message;
 
+import me.chanjar.weixin.common.api.WxConsts;
+import org.testng.annotations.Test;
+
 import java.util.List;
 import java.util.Map;
 
-import org.testng.annotations.*;
-
-import me.chanjar.weixin.common.api.WxConsts;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 @Test
 public class WxMpXmlMessageTest {
@@ -44,7 +43,7 @@ public class WxMpXmlMessageTest {
       + " <ScanResult><![CDATA[1]]></ScanResult>"
       + "</ScanCodeInfo>"
       + "<SendPicsInfo>"
-      + " <Count>1</Count>\n"
+      + " <Count>1</Count>"
       + " <PicList>"
       + "  <item>"
       + "   <PicMd5Sum><![CDATA[1b5f7c23b5bf75682a53e7b6d163e185]]></PicMd5Sum>"
@@ -52,12 +51,22 @@ public class WxMpXmlMessageTest {
       + " </PicList>"
       + "</SendPicsInfo>"
       + "<SendLocationInfo>"
-      + "  <Location_X><![CDATA[23]]></Location_X>\n"
-      + "  <Location_Y><![CDATA[113]]></Location_Y>\n"
-      + "  <Scale><![CDATA[15]]></Scale>\n"
-      + "  <Label><![CDATA[ 广州市海珠区客村艺苑路 106号]]></Label>\n"
-      + "  <Poiname><![CDATA[wo de poi]]></Poiname>\n"
+      + "  <Location_X><![CDATA[23]]></Location_X>"
+      + "  <Location_Y><![CDATA[113]]></Location_Y>"
+      + "  <Scale><![CDATA[15]]></Scale>"
+      + "  <Label><![CDATA[ 广州市海珠区客村艺苑路 106号]]></Label>"
+      + "  <Poiname><![CDATA[wo de poi]]></Poiname>"
       + "</SendLocationInfo>"
+      + "<KeyStandard><![CDATA[ean13]]></KeyStandard>"
+      + "<KeyStr><![CDATA[6901481811083]]></KeyStr>"
+      + "<Country><![CDATA[中国]]></Country>"
+      + "<Province><![CDATA[广东]]></Province>"
+      + "<City><![CDATA[揭阳]]></City>"
+      + "<Sex>1</Sex>"
+      + "<Scene>2</Scene>"
+      + "<ExtInfo><![CDATA[123]]></ExtInfo>"
+      + "<RegionCode><![CDATA[440105]]></RegionCode>"
+      + "<ReasonMsg><![CDATA[]]></ReasonMsg>"
       + "</xml>";
     WxMpXmlMessage wxMessage = WxMpXmlMessage.fromXml(xml);
     assertEquals(wxMessage.getToUser(), "toUser");
@@ -92,6 +101,16 @@ public class WxMpXmlMessageTest {
     assertEquals(wxMessage.getSendLocationInfo().getScale(), "15");
     assertEquals(wxMessage.getSendLocationInfo().getLabel(), " 广州市海珠区客村艺苑路 106号");
     assertEquals(wxMessage.getSendLocationInfo().getPoiName(), "wo de poi");
+    assertEquals(wxMessage.getKeyStandard(), "ean13");
+    assertEquals(wxMessage.getKeyStr(), "6901481811083");
+    assertEquals(wxMessage.getCountry(), "中国");
+    assertEquals(wxMessage.getProvince(), "广东");
+    assertEquals(wxMessage.getCity(), "揭阳");
+    assertEquals(wxMessage.getSex(), "1");
+    assertEquals(wxMessage.getScene(), "2");
+    assertEquals(wxMessage.getExtInfo(), "123");
+    assertEquals(wxMessage.getRegionCode(), "440105");
+    assertEquals(wxMessage.getReasonMsg(), "");
   }
 
   public void testFromXml2() {
@@ -232,7 +251,8 @@ public class WxMpXmlMessageTest {
     final Map<String, Object> allFields = wxMessage.getAllFieldsMap();
     assertThat(allFields).isNotNull();
     final Map<String, Object> copyrightCheckResult = (Map<String, Object>) allFields.get("CopyrightCheckResult");
-    List<Map<String, Object>> resultList = (List<Map<String, Object>>) ((Map<String, Object>) copyrightCheckResult.get("ResultList")).get("item");
+    List<Map<String, Object>> resultList = (List<Map<String, Object>>) ((Map<String, Object>) copyrightCheckResult
+      .get("ResultList")).get("item");
     assertThat(copyrightCheckResult).isNotNull();
 
     assertThat(copyrightCheckResult.get("Count")).isEqualTo("2");

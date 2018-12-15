@@ -445,6 +445,8 @@ public class WxMpXmlMessage implements Serializable {
 
   /**
    * 审核结果，成功succ 或失败fail.
+   *
+   * 在商品审核结果推送时，verify_ok表示审核通过，verify_not_pass表示审核未通过。
    */
   @XStreamAlias("Result")
   private String result;
@@ -565,6 +567,68 @@ public class WxMpXmlMessage implements Serializable {
    */
   @XStreamAlias("Reason")
   private String reason;
+
+  ///////////////////////////////////////
+  // 扫一扫事件推送
+  ///////////////////////////////////////
+  /**
+   * 商品编码标准
+   */
+  @XStreamAlias("KeyStandard")
+  private String keyStandard;
+  /**
+   * 商品编码内容
+   */
+  @XStreamAlias("KeyStr")
+  private String keyStr;
+
+  /**
+   * 用户在微信内设置的国家
+   */
+  @XStreamAlias("Country")
+  private String country;
+
+  /**
+   * 用户在微信内设置的省份
+   */
+  @XStreamAlias("Province")
+  private String province;
+
+  /**
+   * 用户在微信内设置的城市
+   */
+  @XStreamAlias("City")
+  private String city;
+
+  /**
+   * 用户的性别，1为男性，2为女性，0代表未知
+   */
+  @XStreamAlias("Sex")
+  private String sex;
+
+  /**
+   * 打开商品主页的场景，1为扫码，2为其他打开场景（如会话、收藏或朋友圈）
+   */
+  @XStreamAlias("Scene")
+  private String scene;
+
+  /**
+   * 调用“获取商品二维码接口”时传入的extinfo，为标识参数
+   */
+  @XStreamAlias("ExtInfo")
+  private String extInfo;
+
+  /**
+   * 用户的实时地理位置信息（目前只精确到省一级），可在国家统计局网站查到对应明细： http://www.stats.gov.cn/tjsj/tjbz/xzqhdm/201504/t20150415_712722.html
+   */
+  @XStreamAlias("RegionCode")
+  private String regionCode;
+
+  /**
+   * 审核未通过的原因。
+   */
+  @XStreamAlias("ReasonMsg")
+  private String reasonMsg;
 
   public static WxMpXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
