@@ -2,15 +2,17 @@ package me.chanjar.weixin.cp.api.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import com.google.gson.*;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.cp.api.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -35,7 +37,6 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
   private WxCpDepartmentService departmentService = new WxCpDepartmentServiceImpl(this);
   private WxCpMediaService mediaService = new WxCpMediaServiceImpl(this);
   private WxCpMenuService menuService = new WxCpMenuServiceImpl(this);
-  private WxCpMessageService messageService = new WxCpMessageServiceImpl(this);
   private WxCpOAuth2Service oauth2Service = new WxCpOAuth2ServiceImpl(this);
   private WxCpTagService tagService = new WxCpTagServiceImpl(this);
   private WxCpAgentService agentService = new WxCpAgentServiceImpl(this);
@@ -136,6 +137,26 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
       message.setAgentId(this.getWxCpConfigStorage().getAgentId());
     }
     return WxCpMessageSendResult.fromJson(this.post(url, message.toJson()));
+  }
+
+  @Override
+  public String chatCreate(String name, String owner, List<String> users, String chatId) throws WxErrorException {
+    Map<String, Object> data = new HashMap<>(4);
+    if (StringUtils.isNotBlank(name)) {
+      data.put("name", name);
+    }
+    if (StringUtils.isNotBlank(owner)) {
+      data.put("owner", owner);
+    }
+    if (users != null) {
+      data.put("userlist", users);
+    }
+    if (StringUtils.isNotBlank(chatId)) {
+      data.put("chatid", chatId);
+    }
+
+    String result = post("https://qyapi.weixin.qq.com/cgi-bin/appchat/create", WxGsonBuilder.create().toJson(data));
+    return new JsonParser().parse(result).getAsJsonObject().get("chatid").getAsString();
   }
 
   @Override
@@ -319,11 +340,6 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
   @Override
   public WxCpMenuService getMenuService() {
     return menuService;
-  }
-
-  @Override
-  public WxCpMessageService getMessageService() {
-    return messageService;
   }
 
   @Override

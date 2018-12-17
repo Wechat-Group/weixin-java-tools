@@ -10,6 +10,8 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.cp.bean.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 
+import java.util.List;
+
 /**
  * 微信API的Service
  * @author chanjaster
@@ -87,6 +89,18 @@ public interface WxCpService {
    * @param message 要发送的消息对象
    */
   WxCpMessageSendResult messageSend(WxCpMessage message) throws WxErrorException;
+
+  /**
+   * 创建群聊会话，注意：刚创建的群，如果没有下发消息，在企业微信不会出现该群。
+   *
+   * @param name 群聊名，最多50个utf8字符，超过将截断
+   * @param owner 指定群主的id。如果不指定，系统会随机从userlist中选一人作为群主
+   * @param users 群成员id列表。至少2人，至多500人
+   * @param chatId 群聊的唯一标志，不能与已有的群重复；字符串类型，最长32个字符。只允许字符0-9及字母a-zA-Z。如果不填，系统会随机生成群id
+   * @return 创建群聊会话的结果，群聊的唯一标志
+   * @throws WxErrorException 发生异常
+   */
+  String chatCreate(String name, String owner, List<String> users, String chatId) throws WxErrorException;
 
   /**
    * <pre>
@@ -226,13 +240,6 @@ public interface WxCpService {
    * 获取菜单相关接口的服务类对象
    */
   WxCpMenuService getMenuService();
-
-  /**
-   * 获取消息推送服务
-   *
-   * @return 消息推送服务
-   */
-  WxCpMessageService getMessageService();
 
   /**
    * 获取Oauth2相关接口的服务类对象
