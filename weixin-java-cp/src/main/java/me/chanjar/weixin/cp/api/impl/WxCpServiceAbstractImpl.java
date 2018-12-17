@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.*;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
-import me.chanjar.weixin.cp.api.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.error.WxError;
@@ -26,9 +28,20 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+import me.chanjar.weixin.cp.api.WxCpAgentService;
+import me.chanjar.weixin.cp.api.WxCpDepartmentService;
+import me.chanjar.weixin.cp.api.WxCpMediaService;
+import me.chanjar.weixin.cp.api.WxCpMenuService;
+import me.chanjar.weixin.cp.api.WxCpOAuth2Service;
+import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.api.WxCpTagService;
+import me.chanjar.weixin.cp.api.WxCpUserService;
+import me.chanjar.weixin.cp.bean.WxCpChat;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, RequestHttp<H, P> {
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -154,9 +167,36 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
     if (StringUtils.isNotBlank(chatId)) {
       data.put("chatid", chatId);
     }
-
     String result = post("https://qyapi.weixin.qq.com/cgi-bin/appchat/create", WxGsonBuilder.create().toJson(data));
     return new JsonParser().parse(result).getAsJsonObject().get("chatid").getAsString();
+  }
+
+  @Override
+  public void chatUpdate(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete) throws WxErrorException {
+    Map<String, Object> data = new HashMap<>(5);
+    if (StringUtils.isNotBlank(chatId)) {
+      data.put("chatid", chatId);
+    }
+    if (StringUtils.isNotBlank(name)) {
+      data.put("name", name);
+    }
+    if (StringUtils.isNotBlank(owner)) {
+      data.put("owner", owner);
+    }
+    if (usersToAdd != null) {
+      data.put("add_user_list", usersToAdd);
+    }
+    if (usersToDelete != null) {
+      data.put("del_user_list", usersToDelete);
+    }
+    post("https://qyapi.weixin.qq.com/cgi-bin/appchat/update", WxGsonBuilder.create().toJson(data));
+  }
+
+  @Override
+  public WxCpChat chatGet(String chatId) throws WxErrorException {
+    String result = get("https://qyapi.weixin.qq.com/cgi-bin/appchat/get?chatid=" + chatId, null);
+    return WxCpGsonBuilder.create().fromJson(
+        new JsonParser().parse(result).getAsJsonObject().getAsJsonObject("chat_info").toString(), WxCpChat.class);
   }
 
   @Override
@@ -358,7 +398,7 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
   }
 
   @Override
-  public RequestHttp getRequestHttp() {
+  public RequestHttp<?, ?> getRequestHttp() {
     return this;
   }
 

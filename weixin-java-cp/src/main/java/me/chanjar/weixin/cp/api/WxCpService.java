@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.api;
 
+import java.util.List;
+
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSession;
@@ -7,10 +9,10 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.cp.bean.*;
+import me.chanjar.weixin.cp.bean.WxCpChat;
+import me.chanjar.weixin.cp.bean.WxCpMessage;
+import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
-
-import java.util.List;
 
 /**
  * 微信API的Service
@@ -101,7 +103,28 @@ public interface WxCpService {
    * @throws WxErrorException 发生异常
    */
   String chatCreate(String name, String owner, List<String> users, String chatId) throws WxErrorException;
+  
+  /**
+   * 修改群聊会话
+   * 
+   * @param chatId 群聊id
+   * @param name 新的群聊名。若不需更新，请忽略此参数。最多50个utf8字符，超过将截断
+   * @param owner 新群主的id。若不需更新，请忽略此参数
+   * @param usersToAdd 添加成员的id列表
+   * @param usersToDelete 踢出成员的id列表
+   * @throws WxErrorException 发生异常
+   */
+  void chatUpdate(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete) throws WxErrorException;
 
+  /**
+   * 获取群聊会话
+   * 
+   * @param chatId 群聊编号
+   * @return 群聊会话
+   * @throws WxErrorException 发生异常
+   */
+  WxCpChat chatGet(String chatId) throws WxErrorException;
+  
   /**
    * <pre>
    * 获取微信服务器的ip段
@@ -261,7 +284,7 @@ public interface WxCpService {
   /**
    * http请求对象
    */
-  RequestHttp getRequestHttp();
+  RequestHttp<?, ?> getRequestHttp();
 
   void setUserService(WxCpUserService userService);
 
