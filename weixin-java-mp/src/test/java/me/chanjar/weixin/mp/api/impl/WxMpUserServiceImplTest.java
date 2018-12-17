@@ -1,8 +1,13 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import me.chanjar.weixin.mp.api.WxMpUserService;
+import me.chanjar.weixin.mp.bean.result.WxMpChangeOpenid;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 import org.testng.*;
 import org.testng.annotations.*;
 
@@ -14,6 +19,9 @@ import me.chanjar.weixin.mp.api.test.TestConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpUserQuery;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUserList;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * 测试用户相关的接口
@@ -73,6 +81,52 @@ public class WxMpUserServiceImplTest {
     Assert.assertNotEquals(-1, wxMpUserList.getTotal());
     Assert.assertNotEquals(-1, wxMpUserList.getOpenids().size());
     System.out.println(wxMpUserList);
+  }
+
+  public void testChangeOpenid() throws WxErrorException {
+    List<String> openids = new ArrayList<>();
+    openids.add(this.configProvider.getOpenid());
+    List<WxMpChangeOpenid> wxMpChangeOpenidList = this.wxService.getUserService()
+      .changeOpenid("原公众号appid", openids);
+    Assert.assertNotNull(wxMpChangeOpenidList);
+    Assert.assertEquals(1, wxMpChangeOpenidList.size());
+    WxMpChangeOpenid wxMpChangeOpenid = wxMpChangeOpenidList.get(0);
+    Assert.assertNotNull(wxMpChangeOpenid);
+    Assert.assertEquals(this.configProvider.getOpenid(), wxMpChangeOpenid.getOriOpenid());
+    System.out.println(wxMpChangeOpenid);
+  }
+
+  public static class MockTest {
+    private WxMpService wxService = mock(WxMpService.class);
+    @Test
+    public void testMockChangeOpenid() throws WxErrorException {
+      List<String> openids = new ArrayList<>();
+      openids.add("oEmYbwN-n24jxvk4Sox81qedINkQ");
+      openids.add("oEmYbwH9uVd4RKJk7ZZg6SzL6tTo");
+      String fromAppid = "old_appid";
+      Map<String, Object> map = new HashMap<>();
+      map.put("from_appid", fromAppid);
+      map.put("openid_list", openids);
+
+      String returnJson = "{\"errcode\": 0,\"errmsg\": \"ok\",\"result_list\": [{\"ori_openid\": \"oEmYbwN-n24jxvk4Sox81qedINkQ\",\"new_openid\": \"o2FwqwI9xCsVadFah_HtpPfaR-X4\",\"err_msg\": \"ok\"},{\"ori_openid\": \"oEmYbwH9uVd4RKJk7ZZg6SzL6tTo\",\"err_msg\": \"ori_openid error\"}]}";
+      when(wxService.post(WxMpUserService.USER_CHANGE_OPENID_URL, WxMpGsonBuilder.create().toJson(map))).thenReturn(returnJson);
+      List<WxMpChangeOpenid> wxMpChangeOpenidList = this.wxService.getUserService()
+        .changeOpenid(fromAppid, openids);
+      Assert.assertNotNull(wxMpChangeOpenidList);
+      Assert.assertEquals(2, wxMpChangeOpenidList.size());
+      WxMpChangeOpenid wxMpChangeOpenid = wxMpChangeOpenidList.get(0);
+      Assert.assertNotNull(wxMpChangeOpenid);
+      Assert.assertEquals("oEmYbwN-n24jxvk4Sox81qedINkQ", wxMpChangeOpenid.getOriOpenid());
+      Assert.assertEquals("o2FwqwI9xCsVadFah_HtpPfaR-X4", wxMpChangeOpenid.getNewOpenid());
+      Assert.assertEquals("ok", wxMpChangeOpenid.getErrMsg());
+      wxMpChangeOpenid = wxMpChangeOpenidList.get(1);
+      Assert.assertNotNull(wxMpChangeOpenid);
+      Assert.assertEquals("oEmYbwH9uVd4RKJk7ZZg6SzL6tTo", wxMpChangeOpenid.getOriOpenid());
+      Assert.assertNull(wxMpChangeOpenid.getNewOpenid());
+      Assert.assertEquals("ori_openid error", wxMpChangeOpenid.getErrMsg());
+      System.out.println(wxMpChangeOpenid);
+    }
+
   }
 
 }
