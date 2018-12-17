@@ -228,6 +228,13 @@ public interface WxCpService {
   WxCpMenuService getMenuService();
 
   /**
+   * 获取消息推送服务
+   *
+   * @return 消息推送服务
+   */
+  WxCpMessageService getMessageService();
+
+  /**
    * 获取Oauth2相关接口的服务类对象
    */
   WxCpOAuth2Service getOauth2Service();

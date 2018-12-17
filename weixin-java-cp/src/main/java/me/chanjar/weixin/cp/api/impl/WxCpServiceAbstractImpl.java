@@ -3,6 +3,7 @@ package me.chanjar.weixin.cp.api.impl;
 import java.io.File;
 import java.io.IOException;
 
+import me.chanjar.weixin.cp.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,14 +24,6 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
-import me.chanjar.weixin.cp.api.WxCpAgentService;
-import me.chanjar.weixin.cp.api.WxCpDepartmentService;
-import me.chanjar.weixin.cp.api.WxCpMediaService;
-import me.chanjar.weixin.cp.api.WxCpMenuService;
-import me.chanjar.weixin.cp.api.WxCpOAuth2Service;
-import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.api.WxCpTagService;
-import me.chanjar.weixin.cp.api.WxCpUserService;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -42,6 +35,7 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
   private WxCpDepartmentService departmentService = new WxCpDepartmentServiceImpl(this);
   private WxCpMediaService mediaService = new WxCpMediaServiceImpl(this);
   private WxCpMenuService menuService = new WxCpMenuServiceImpl(this);
+  private WxCpMessageService messageService = new WxCpMessageServiceImpl(this);
   private WxCpOAuth2Service oauth2Service = new WxCpOAuth2ServiceImpl(this);
   private WxCpTagService tagService = new WxCpTagServiceImpl(this);
   private WxCpAgentService agentService = new WxCpAgentServiceImpl(this);
@@ -325,6 +319,11 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
   @Override
   public WxCpMenuService getMenuService() {
     return menuService;
+  }
+
+  @Override
+  public WxCpMessageService getMessageService() {
+    return messageService;
   }
 
   @Override
