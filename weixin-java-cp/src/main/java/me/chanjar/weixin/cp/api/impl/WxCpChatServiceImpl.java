@@ -64,10 +64,10 @@ public class WxCpChatServiceImpl implements WxCpChatService {
     if (StringUtils.isNotBlank(owner)) {
       data.put("owner", owner);
     }
-    if (usersToAdd != null) {
+    if (usersToAdd != null && !usersToAdd.isEmpty()) {
       data.put("add_user_list", usersToAdd);
     }
-    if (usersToDelete != null) {
+    if (usersToDelete != null && !usersToDelete.isEmpty()) {
       data.put("del_user_list", usersToDelete);
     }
     internalService.post("https://qyapi.weixin.qq.com/cgi-bin/appchat/update", WxGsonBuilder.create().toJson(data));

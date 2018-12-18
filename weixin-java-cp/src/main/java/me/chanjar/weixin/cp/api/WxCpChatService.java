@@ -28,10 +28,10 @@ public interface WxCpChatService {
    * 修改群聊会话
    * 
    * @param chatId 群聊id
-   * @param name 新的群聊名。若不需更新，请忽略此参数。最多50个utf8字符，超过将截断
-   * @param owner 新群主的id。若不需更新，请忽略此参数
-   * @param usersToAdd 添加成员的id列表
-   * @param usersToDelete 踢出成员的id列表
+   * @param name 新的群聊名。若不需更新，请忽略此参数（null or empty）。最多50个utf8字符，超过将截断
+   * @param owner 新群主的id。若不需更新，请忽略此参数（null or empty）
+   * @param usersToAdd 添加成员的id列表，若不需要更新，则传递空对象或者空集合
+   * @param usersToDelete 踢出成员的id列表，若不需要更新，则传递空对象或者空集合
    * @throws WxErrorException 发生异常
    */
   void chatUpdate(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete) throws WxErrorException;
