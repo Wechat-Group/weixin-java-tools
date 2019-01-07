@@ -37,12 +37,19 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
 
     if (o.get("department") != null) {
       JsonArray departJsonArray = o.get("department").getAsJsonArray();
+      JsonArray orderJsonArray = o.get("order").getAsJsonArray();
       Integer[] departIds = new Integer[departJsonArray.size()];
+      Integer[] order = new Integer[orderJsonArray.size()];
       int i = 0;
       for (JsonElement jsonElement : departJsonArray) {
         departIds[i++] = jsonElement.getAsInt();
       }
+      i = 0;
+      for (JsonElement jsonElement : orderJsonArray) {
+        order[i++] = jsonElement.getAsInt();
+      }
       user.setDepartIds(departIds);
+      user.setOrder(order);
     }
 
     user.setUserId(GsonHelper.getString(o, "userid"));
