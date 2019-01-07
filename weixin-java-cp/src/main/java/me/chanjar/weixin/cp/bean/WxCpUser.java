@@ -21,6 +21,7 @@ public class WxCpUser implements Serializable {
   private String userId;
   private String name;
   private Integer[] departIds;
+  private Integer[] order;
   private String position;
   private String mobile;
   private Gender gender;
