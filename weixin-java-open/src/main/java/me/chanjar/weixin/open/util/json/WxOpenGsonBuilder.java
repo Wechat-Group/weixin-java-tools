@@ -26,6 +26,7 @@ public class WxOpenGsonBuilder {
     INSTANCE.registerTypeAdapter(WxOpenQueryAuthResult.class, new WxOpenQueryAuthResultGsonAdapter());
     INSTANCE.registerTypeAdapter(WxOpenAuthorizerInfoResult.class, new WxOpenAuthorizerInfoResultGsonAdapter());
     INSTANCE.registerTypeAdapter(WxOpenAuthorizerOptionResult.class, new WxOpenAuthorizerOptionResultGsonAdapter());
+    INSTANCE.registerTypeAdapter(WxOpenAuthorizerOptionResult.class, new WxAccountBasicInfoGsonAdapter());
 
   }
 
