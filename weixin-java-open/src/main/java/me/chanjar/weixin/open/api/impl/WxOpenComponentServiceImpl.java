@@ -21,6 +21,7 @@ import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
 import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
+import me.chanjar.weixin.open.bean.result.WxOpenResult;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -421,7 +422,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public boolean fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException{
+  public WxOpenResult fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException{
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("name",name);
     jsonObject.addProperty("code", code);
@@ -429,17 +430,17 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("legal_persona_wechat", legalPersonaWechat);
     jsonObject.addProperty("legal_persona_name", legalPersonaName);
     jsonObject.addProperty("component_phone", componentPhone);
-    post(FAST_REGISTER_WEAPP_URL, jsonObject.toString (), "component_access_token");
-    return true;
+    String response = post(FAST_REGISTER_WEAPP_URL, jsonObject.toString (), "component_access_token");
+    return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
   }
 
   @Override
-  public boolean fastRegisterWeappSearch(String name, String legalPersonaWechat, String legalPersonaName) throws WxErrorException{
+  public WxOpenResult fastRegisterWeappSearch(String name, String legalPersonaWechat, String legalPersonaName) throws WxErrorException{
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("name",name);
     jsonObject.addProperty("legal_persona_wechat", legalPersonaWechat);
     jsonObject.addProperty("legal_persona_name", legalPersonaName);
-    post(FAST_REGISTER_WEAPP_SEARCH_URL, jsonObject.toString (), "component_access_token");
-    return true;
+    String response = post(FAST_REGISTER_WEAPP_SEARCH_URL, jsonObject.toString (), "component_access_token");
+    return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
   }
 }

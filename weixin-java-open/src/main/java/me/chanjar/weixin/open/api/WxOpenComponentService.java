@@ -10,6 +10,7 @@ import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
 import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
+import me.chanjar.weixin.open.bean.result.WxOpenResult;
 
 import java.util.List;
 
@@ -213,7 +214,7 @@ public interface WxOpenComponentService {
    * @return
    * @throws WxErrorException
    */
-  boolean fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException;
+  WxOpenResult fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException;
 
   /**
    *  https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21538208049W8uwq&token=&lang=zh_CN
@@ -229,5 +230,5 @@ public interface WxOpenComponentService {
    * @param legalPersonaName 法人姓名（绑定银行卡）
    * @throws WxErrorException
    */
-  boolean fastRegisterWeappSearch(String name, String legalPersonaWechat, String legalPersonaName) throws WxErrorException;
+  WxOpenResult fastRegisterWeappSearch(String name, String legalPersonaWechat, String legalPersonaName) throws WxErrorException;
 }
