@@ -41,10 +41,10 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
 
     if (o.get("department") != null) {
       JsonArray departJsonArray = o.get("department").getAsJsonArray();
-      Integer[] departIds = new Integer[departJsonArray.size()];
+      Long[] departIds = new Long[departJsonArray.size()];
       int i = 0;
       for (JsonElement jsonElement : departJsonArray) {
-        departIds[i++] = jsonElement.getAsInt();
+        departIds[i++] = jsonElement.getAsLong();
       }
       user.setDepartIds(departIds);
     }
@@ -156,7 +156,7 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     }
     if (user.getDepartIds() != null) {
       JsonArray jsonArray = new JsonArray();
-      for (Integer departId : user.getDepartIds()) {
+      for (Long departId : user.getDepartIds()) {
         jsonArray.add(new JsonPrimitive(departId));
       }
       o.add("department", jsonArray);
