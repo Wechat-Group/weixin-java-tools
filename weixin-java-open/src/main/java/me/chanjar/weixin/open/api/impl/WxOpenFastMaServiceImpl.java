@@ -4,15 +4,18 @@ import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenFastMaService;
-import me.chanjar.weixin.open.bean.fastma.WxAccountBasicInfo;
+import me.chanjar.weixin.open.bean.fastma.WxFastMaCategory;
+import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Hipple
@@ -20,6 +23,8 @@ import java.util.List;
  * @since 2019/1/23 15:27
  */
 public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFastMaService {
+
+  protected final Logger log = LoggerFactory.getLogger (this.getClass ());
 
   private WxOpenComponentService wxOpenComponentService;
   private WxMaConfig wxMaConfig;
@@ -52,14 +57,14 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
    * @throws WxErrorException
    */
   @Override
-  public WxAccountBasicInfo getAccountBasicInfo () throws WxErrorException {
+  public WxFastMaAccountBasicInfoResult getAccountBasicInfo () throws WxErrorException {
     String response = get (OPEN_GET_ACCOUNT_BASIC_INFO, "");
-    return WxOpenGsonBuilder.create ().fromJson (response, WxAccountBasicInfo.class);
+    return WxOpenGsonBuilder.create ().fromJson (response, WxFastMaAccountBasicInfoResult.class);
   }
 
   /**
    * 2.小程序名称设置及改名
-   *  TODO
+   *
    * @param nickname          昵称
    * @param idCard            身份证照片–临时素材mediaid(个人号必填)
    * @param license           组织机构代码证或营业执照–临时素材mediaid(组织号必填)
@@ -68,7 +73,7 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
    * @throws WxErrorException
    */
   @Override
-  public void setNickname (String nickname, String idCard, String license, String namingOtherStuff1, String namingOtherStuff2) throws WxErrorException {
+  public WxFastMaSetNickameResult setNickname (String nickname, String idCard, String license, String namingOtherStuff1, String namingOtherStuff2) throws WxErrorException {
     JsonObject params = new JsonObject ();
     params.addProperty ("nick_name", nickname);
     params.addProperty ("id_card", idCard);
@@ -76,23 +81,39 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
     params.addProperty ("naming_other_stuff_1", namingOtherStuff1);
     params.addProperty ("naming_other_stuff_2", namingOtherStuff2);
     String response = post (OPEN_SET_NICKNAME, GSON.toJson (params));
+    return WxOpenGsonBuilder.create ().fromJson (response, WxFastMaSetNickameResult.class);
+  }
+
+  /**
+   * 3 小程序改名审核状态查询
+   *
+   * @param auditId 审核单id
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxFastMaQueryNicknameStatusResult querySetNicknameStatus (String auditId) throws WxErrorException {
+    JsonObject params = new JsonObject ();
+    params.addProperty ("audit_id", auditId);
+    String response = post (OPEN_API_WXA_QUERYNICKNAME, GSON.toJson (params));
+    return WxOpenGsonBuilder.create ().fromJson (response, WxFastMaQueryNicknameStatusResult.class);
   }
 
   /**
    * 4. 微信认证名称检测
-   *  <pre>
+   * <pre>
    *      命中关键字策略时返回命中关键字的说明描述
    *  </pre>
+   *
    * @param nickname 名称
    * @throws WxErrorException
    */
   @Override
-  public String checkWxVerifyNickname (String nickname) throws WxErrorException {
+  public WxFastMaCheckNickameResult checkWxVerifyNickname (String nickname) throws WxErrorException {
     JsonObject params = new JsonObject ();
     params.addProperty ("nick_name", nickname);
     String response = post (OPEN_CHECK_WX_VERIFY_NICKNAME, GSON.toJson (params));
-    JsonObject resObj = new JsonParser ().parse(response).getAsJsonObject();
-    return GsonHelper.getString (resObj, "wording");
+    return WxOpenGsonBuilder.create ().fromJson (response, WxFastMaCheckNickameResult.class);
   }
 
   /**
@@ -110,14 +131,15 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
    * @throws WxErrorException
    */
   @Override
-  public void modifyHeadImage (String headImgMediaId, float x1, float y1, float x2, float y2) throws WxErrorException {
+  public WxOpenResult modifyHeadImage (String headImgMediaId, float x1, float y1, float x2, float y2) throws WxErrorException {
     JsonObject params = new JsonObject ();
     params.addProperty ("head_img_media_id", headImgMediaId);
     params.addProperty ("x1", x1);
     params.addProperty ("y1", y1);
     params.addProperty ("x2", x2);
     params.addProperty ("y2", y2);
-    post (OPEN_MODIFY_HEADIMAGE, GSON.toJson (params));
+    String response = post (OPEN_MODIFY_HEADIMAGE, GSON.toJson (params));
+    return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
   }
 
   /**
@@ -127,10 +149,94 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
    * @throws WxErrorException
    */
   @Override
-  public void modifySignature (String signature) throws WxErrorException {
+  public WxOpenResult modifySignature (String signature) throws WxErrorException {
     JsonObject params = new JsonObject ();
     params.addProperty ("signature", signature);
-    post (OPEN_MODIFY_SIGNATURE, GSON.toJson (params));
+    String response = post (OPEN_MODIFY_SIGNATURE, GSON.toJson (params));
+    return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
+  }
+
+  /**
+   * 7.3 管理员换绑
+   *
+   * @param taskid 换绑管理员任务序列号(公众平台最终点击提交回跳到第三方平台时携带)
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult componentRebindAdmin (String taskid) throws WxErrorException {
+    JsonObject params = new JsonObject ();
+    params.addProperty ("taskid", taskid);
+    String response = post (OPEN_COMPONENT_REBIND_ADMIN, GSON.toJson (params));
+    return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
+  }
+
+  /**
+   * 8.1 获取账号可以设置的所有类目
+   *
+   * @return
+   */
+  @Override
+  public WxFastMaCanSetCategoryResult getAllCategories () throws WxErrorException {
+    String response = get (OPEN_GET_ALL_CATEGORIES, "");
+    return WxOpenGsonBuilder.create ().fromJson (response, WxFastMaCanSetCategoryResult.class);
+  }
+
+  /**
+   * 8.2添加类目
+   *
+   * @param categoryList
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult addCategory (List<WxFastMaCategory> categoryList) throws WxErrorException {
+    Map<String, Object> map = new HashMap<> ();
+    map.put ("categories", categoryList);
+    String response = post (OPEN_ADD_CATEGORY, WxOpenGsonBuilder.create ().toJson (map));
+    return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
+  }
+
+  /**
+   * 8.3删除类目
+   *
+   * @param first  一级类目ID
+   * @param second 二级类目ID
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult deleteCategory (int first, int second) throws WxErrorException {
+    JsonObject params = new JsonObject ();
+    params.addProperty ("first", first);
+    params.addProperty ("Second", second);
+    String response = post (OPEN_DELETE_CATEGORY, GSON.toJson (params));
+    return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
+  }
+
+  /**
+   * 8.4获取账号已经设置的所有类目
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxFastMaBeenSetCategoryResult getCategory () throws WxErrorException {
+    String response = get (OPEN_GET_CATEGORY, "");
+    return WxOpenGsonBuilder.create ().fromJson (response, WxFastMaBeenSetCategoryResult.class);
+  }
+
+  /**
+   * 8.5修改类目
+   *
+   * @param category 实体
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult modifyCategory (WxFastMaCategory category) throws WxErrorException {
+    String response = post (OPEN_MODIFY_CATEGORY, GSON.toJson (category));
+    return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
   }
 
   /**

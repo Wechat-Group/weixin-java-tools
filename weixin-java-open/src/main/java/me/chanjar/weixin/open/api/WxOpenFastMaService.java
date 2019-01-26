@@ -2,7 +2,10 @@ package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.open.bean.fastma.WxAccountBasicInfo;
+import me.chanjar.weixin.open.bean.fastma.WxFastMaCategory;
+import me.chanjar.weixin.open.bean.result.*;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -10,6 +13,7 @@ import me.chanjar.weixin.open.bean.fastma.WxAccountBasicInfo;
  *     https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21528465979XX32V&token=&lang=zh_CN
  *    注意：该类的接口仅限通过快速创建小程序接口的小程序使用
  * </pre>
+ *  TODO 完善相应API的respons实体
  *
  * @author Hipple
  * @date 2019/01/23
@@ -48,10 +52,9 @@ public interface WxOpenFastMaService extends WxMaService {
 
   /**
    * 7 换绑小程序管理员接口
-   * <pre>
-   *     TODO 暂不实现
-   * </pre>
    */
+  String OPEN_COMPONENT_REBIND_ADMIN = "https://api.weixin.qq.com/cgi- bin/account/componentrebindadmin";
+
   /**
    * 8.1 获取账号可以设置的所有类目
    */
@@ -80,10 +83,13 @@ public interface WxOpenFastMaService extends WxMaService {
    * @return
    * @throws WxErrorException
    */
-  WxAccountBasicInfo getAccountBasicInfo() throws WxErrorException;
+  WxFastMaAccountBasicInfoResult getAccountBasicInfo() throws WxErrorException;
 
   /**
    * 2.小程序名称设置及改名
+   *  <pre>
+   *      若接口未返回audit_id，说明名称已直接设置成功，无需审核；若返回audit_id则名称正在审核中。
+   *  </pre>
    * @param nickname 昵称
    * @param idCard 身份证照片–临时素材mediaid(个人号必填)
    * @param license 组织机构代码证或营业执照–临时素材mediaid(组织号必填)
@@ -91,14 +97,22 @@ public interface WxOpenFastMaService extends WxMaService {
    * @param namingOtherStuff2 其他证明材料---临时素材 mediaid
    * @throws WxErrorException
    */
-  void setNickname(String nickname, String idCard, String license, String namingOtherStuff1, String namingOtherStuff2) throws WxErrorException;
+  WxFastMaSetNickameResult setNickname(String nickname, String idCard, String license, String namingOtherStuff1, String namingOtherStuff2) throws WxErrorException;
+
+  /**
+   * 3 小程序改名审核状态查询
+   * @param auditId 审核单id
+   * @return
+   * @throws WxErrorException
+   */
+  WxFastMaQueryNicknameStatusResult querySetNicknameStatus(String auditId) throws WxErrorException;
 
   /**
    * 4. 微信认证名称检测
    * @param nickname 名称
    * @throws WxErrorException
    */
-  String checkWxVerifyNickname(String nickname) throws WxErrorException;
+  WxFastMaCheckNickameResult checkWxVerifyNickname(String nickname) throws WxErrorException;
 
   /**
    * 5.修改头像
@@ -113,12 +127,57 @@ public interface WxOpenFastMaService extends WxMaService {
    * @param y2 裁剪框右下角y坐标（取值范围：[0, 1]）
    * @throws WxErrorException
    */
-  void modifyHeadImage(String headImgMediaId, float x1, float y1, float x2, float y2) throws WxErrorException;
+  WxOpenResult modifyHeadImage(String headImgMediaId, float x1, float y1, float x2, float y2) throws WxErrorException;
 
   /**
    * 6.修改功能介绍
    * @param signature 简介：4-120字
    * @throws WxErrorException
    */
-  void modifySignature(String signature) throws WxErrorException;
+  WxOpenResult modifySignature(String signature) throws WxErrorException;
+
+  /**
+   * 7.3 管理员换绑
+   * @param taskid 换绑管理员任务序列号(公众平台最终点击提交回跳到第三方平台时携带)
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult componentRebindAdmin(String taskid) throws WxErrorException;
+
+  /**
+   * 8.1 获取账号可以设置的所有类目
+   * @return
+   */
+  WxFastMaCanSetCategoryResult getAllCategories() throws WxErrorException;
+
+  /**
+   *8.2添加类目
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult addCategory(List<WxFastMaCategory> categoryList) throws WxErrorException;
+
+  /**
+   * 8.3删除类目
+   * @param first 一级类目ID
+   * @param second 二级类目ID
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult deleteCategory(int first, int second) throws WxErrorException;
+
+  /**
+   * 8.4获取账号已经设置的所有类目
+   * @return
+   * @throws WxErrorException
+   */
+  WxFastMaBeenSetCategoryResult getCategory() throws WxErrorException;
+
+  /**
+   * 8.5修改类目
+   * @param category 实体
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult modifyCategory(WxFastMaCategory category) throws WxErrorException;
 }
