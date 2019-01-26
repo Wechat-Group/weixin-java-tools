@@ -177,9 +177,8 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
    * @return
    */
   @Override
-  public WxFastMaCanSetCategoryResult getAllCategories () throws WxErrorException {
-    String response = get (OPEN_GET_ALL_CATEGORIES, "");
-    return WxOpenGsonBuilder.create ().fromJson (response, WxFastMaCanSetCategoryResult.class);
+  public String getAllCategories () throws WxErrorException {
+    return get (OPEN_GET_ALL_CATEGORIES, "");
   }
 
   /**

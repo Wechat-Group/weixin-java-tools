@@ -20,7 +20,7 @@ public class WxFastMaBeenSetCategoryResultTest {
       "            \"second\": 39,\n" +
       "            \"second_name\": \"出国移民\",\n" +
       "            \"audit_status\": 1,\n" +
-      "            \"audit_reason\": \"\"\n" +
+      "            \"audit_reason\": \"不通过啊啊\"\n" +
       "        }\n" +
       "    ],\n" +
       "\t\"limit\": 5,\n" +

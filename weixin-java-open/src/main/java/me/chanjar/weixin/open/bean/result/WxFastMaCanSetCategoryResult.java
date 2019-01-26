@@ -13,43 +13,46 @@ import java.util.List;
 @Data
 public class WxFastMaCanSetCategoryResult extends WxOpenResult {
   private static final long serialVersionUID = - 2469386233538980102L;
-
-  @SerializedName ("category_list")
-  private CategoryListBean categoryList;
+  @SerializedName ("errcode")
+  private int errcodeX;
+  @SerializedName ("categories_list")
+  private CategoriesListBean categoriesList;
 
   @Data
-  public static class CategoryListBean {
+  public static class CategoriesListBean {
     private List<CategoriesBean> categories;
-
     @Data
     public static class CategoriesBean {
-
-      private int father;
       private int id;
-      private int level;
-      private String name;
       private QualifyBean qualify;
+      private String name;
+      private int level;
+      private int father;
       @SerializedName ("sensitive_type")
       private int sensitiveType;
+      @SerializedName ("available_for_plugin")
+      private boolean availableForPlugin;
+      @SerializedName ("is_hidden")
+      private boolean isHidden;
+      private String type;
+      @SerializedName ("need_report")
+      private int needReport;
+      @SerializedName ("can_use_cityserivce")
+      private int canUseCityserivce;
       private List<Integer> children;
+      @SerializedName ("type_list")
+      private List<?> typeList;
+      @SerializedName ("available_api_list")
+      private List<?> availableApiList;
+      private List<?> apis;
 
       @Data
       public static class QualifyBean {
+        private String remark;
         @SerializedName ("exter_list")
-        private List<ExterListBean> exterList;
-
-        @Data
-        public static class ExterListBean {
-          @SerializedName ("inner_list")
-          private List<InnerListBean> innerList;
-
-          @Data
-          public static class InnerListBean {
-            private String name;
-            private String url;
-          }
-        }
+        private List<?> exterList;
       }
+
     }
   }
 }

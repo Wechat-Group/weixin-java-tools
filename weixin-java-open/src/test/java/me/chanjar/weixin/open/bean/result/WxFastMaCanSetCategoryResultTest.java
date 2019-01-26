@@ -4,54 +4,75 @@ import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 
 
 public class WxFastMaCanSetCategoryResultTest {
   @Test
   public void testFromJson() throws Exception {
     String json = "{\n" +
-      "    \"errcode\": 0,\n" +
-      "    \"errmsg\": \"ok\",\n" +
-      "    \"category_list\": {\n" +
-      "\t\t\"categories\": [{\n" +
-      "            \"children\": [\n" +
-      "                874\n" +
-      "            ],\n" +
-      "            \"father\": 0,\n" +
-      "            \"id\": 868,\n" +
-      "            \"level\": 1,\n" +
-      "            \"name\": \"时政信息\",\n" +
-      "            \"qualify\": {\n" +
-      "                \"exter_list\": [{\n" +
-      "                        \"inner_list\": [{\n" +
-      "                            \"name\": \"有资质证件《互联网新闻信息服务许可证》\",\n" +
-      "                            \"url\": \"\"\n" +
-      "                        }]\n" +
-      "                    },\n" +
-      "                    {\n" +
-      "                        \"inner_list\": [{\n" +
-      "                            \"name\": \"无资质ICP备案和《组织机构代码证》\",\n" +
-      "                            \"url\": \"\"\n" +
-      "                        }]\n" +
-      "                    }\n" +
-      "                ]\n" +
-      "            },\n" +
-      "            \"sensitive_type\": 1\n" +
-      "        }]\n" +
+      "    \"errcode\": 0, \n" +
+      "    \"errmsg\": \"ok\", \n" +
+      "    \"categories_list\": {\n" +
+      "        \"categories\": [\n" +
+      "            {\n" +
+      "                \"id\": 1, \n" +
+      "                \"name\": \"快递业与邮政\", \n" +
+      "                \"level\": 1, \n" +
+      "                \"father\": 0, \n" +
+      "                \"children\": [\n" +
+      "                    2, \n" +
+      "                    5, \n" +
+      "                    556, \n" +
+      "                    558, \n" +
+      "                    1033\n" +
+      "                ], \n" +
+      "                \"sensitive_type\": 0, \n" +
+      "                \"type_list\": [ ], \n" +
+      "                \"qualify\": {\n" +
+      "                    \"exter_list\": [ ], \n" +
+      "                    \"remark\": \"\"\n" +
+      "                }, \n" +
+      "                \"available_api_list\": [ ], \n" +
+      "                \"apis\": [ ], \n" +
+      "                \"available_for_plugin\": true\n" +
+      "            }, \n" +
+      "            {\n" +
+      "                \"id\": 8, \n" +
+      "                \"name\": \"教育\", \n" +
+      "                \"level\": 1, \n" +
+      "                \"father\": 0, \n" +
+      "                \"children\": [\n" +
+      "                    9, \n" +
+      "                    590, \n" +
+      "                    592, \n" +
+      "                    27, \n" +
+      "                    32, \n" +
+      "                    37, \n" +
+      "                    39, \n" +
+      "                    578, \n" +
+      "                    580, \n" +
+      "                    582, \n" +
+      "                    1043\n" +
+      "                ], \n" +
+      "                \"sensitive_type\": 0, \n" +
+      "                \"type_list\": [ ], \n" +
+      "                \"qualify\": {\n" +
+      "                    \"exter_list\": [ ], \n" +
+      "                    \"remark\": \"\"\n" +
+      "                }, \n" +
+      "                \"is_hidden\": false, \n" +
+      "                \"available_api_list\": [ ], \n" +
+      "                \"type\": \"NORMAL\", \n" +
+      "                \"apis\": [ ], \n" +
+      "                \"available_for_plugin\": true\n" +
+      "            }\n" +
+      "        ]\n" +
       "    }\n" +
       "}";
-
     WxFastMaCanSetCategoryResult res = WxOpenGsonBuilder.create ().fromJson (json, WxFastMaCanSetCategoryResult.class);
 
     assertNotNull(res);
-    assertTrue(res.getCategoryList ().getCategories ().size ()> 0);
-    assertNotNull(res.getCategoryList ().getCategories ().get (0));
-    assertTrue(res.getCategoryList ().getCategories ().get (0).getChildren ().size () > 0);
-    assertNotNull(res.getCategoryList ().getCategories ().get (0).getName ());
-    assertTrue(res.getCategoryList ().getCategories ().get (0).getQualify ().getExterList ().size ()>0);
-    assertTrue(res.getCategoryList ().getCategories ().get (0).getQualify ().getExterList ().get (0).getInnerList ().size ()> 0);
-    assertNotNull(res.getCategoryList ().getCategories ().get (0).getQualify ().getExterList ().get (0).getInnerList ().get (0).getUrl ());
+    assertNotNull(res.getCategoriesList ());
     System.out.println(res);
   }
 

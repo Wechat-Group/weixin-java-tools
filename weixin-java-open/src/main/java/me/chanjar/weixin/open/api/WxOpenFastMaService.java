@@ -146,9 +146,14 @@ public interface WxOpenFastMaService extends WxMaService {
 
   /**
    * 8.1 获取账号可以设置的所有类目
+   * <pre>
+   *     因为不同类目含有特定字段
+   *     目前没有完整的类目信息数据
+   *     为保证兼容性，放弃将response转换为实体
+   * </pre>
    * @return
    */
-  WxFastMaCanSetCategoryResult getAllCategories() throws WxErrorException;
+  String getAllCategories() throws WxErrorException;
 
   /**
    *8.2添加类目
