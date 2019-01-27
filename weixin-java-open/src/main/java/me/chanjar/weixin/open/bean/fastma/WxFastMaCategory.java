@@ -29,7 +29,7 @@ public class WxFastMaCategory implements Serializable {
   private List<certicaty> certicates;
 
   @Data
-  public class certicaty {
+  public static class certicaty {
     private String key;
     private String value;
   }
