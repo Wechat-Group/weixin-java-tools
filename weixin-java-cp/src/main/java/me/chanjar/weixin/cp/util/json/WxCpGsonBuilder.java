@@ -7,7 +7,6 @@ import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.util.json.WxErrorAdapter;
 import me.chanjar.weixin.cp.bean.WxCpChat;
 import me.chanjar.weixin.cp.bean.WxCpDepart;
-import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpTag;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 
@@ -20,7 +19,6 @@ public class WxCpGsonBuilder {
 
   static {
     INSTANCE.disableHtmlEscaping();
-    INSTANCE.registerTypeAdapter(WxCpMessage.class, new WxCpMessageGsonAdapter());
     INSTANCE.registerTypeAdapter(WxCpChat.class, new WxCpChatGsonAdapter());
     INSTANCE.registerTypeAdapter(WxCpDepart.class, new WxCpDepartGsonAdapter());
     INSTANCE.registerTypeAdapter(WxCpUser.class, new WxCpUserGsonAdapter());

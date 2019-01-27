@@ -1,11 +1,11 @@
 package me.chanjar.weixin.cp.bean;
 
+import org.testng.annotations.*;
+
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
-import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.assertEquals;
 
 @Test
 public class WxCpMessageTest {
@@ -19,12 +19,16 @@ public class WxCpMessageTest {
   public void testTextCardBuild() {
     WxCpMessage reply = WxCpMessage.TEXTCARD().toUser("OPENID")
       .title("领奖通知")
-      .description("<div class=\"gray\">2016年9月26日</div> <div class=\"normal\">恭喜你抽中iPhone 7一台，领奖码：xxxx</div><div class=\"highlight\">请于2016年10月10日前联系行政同事领取</div>")
+      .description("<div class=\"gray\">2016年9月26日</div> <div class=\"normal\">恭喜你抽中iPhone 7一台，" +
+        "领奖码：xxxx</div><div class=\"highlight\">请于2016年10月10日前联系行政同事领取</div>")
       .url("http://www.qq.com")
       .btnTxt("更多")
       .build();
     assertThat(reply.toJson())
-      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"textcard\",\"textcard\":{\"title\":\"领奖通知\",\"description\":\"<div class=\\\"gray\\\">2016年9月26日</div> <div class=\\\"normal\\\">恭喜你抽中iPhone 7一台，领奖码：xxxx</div><div class=\\\"highlight\\\">请于2016年10月10日前联系行政同事领取</div>\",\"url\":\"http://www.qq.com\",\"btntxt\":\"更多\"},\"safe\":\"0\"}");
+      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"textcard\",\"textcard\":{\"title\":\"领奖通知\"," +
+        "\"description\":\"<div class=\\\"gray\\\">2016年9月26日</div> <div class=\\\"normal\\\">" +
+        "恭喜你抽中iPhone 7一台，领奖码：xxxx</div><div class=\\\"highlight\\\">请于2016年10月10日前联系行政同事领取</div>\"," +
+        "\"url\":\"http://www.qq.com\",\"btntxt\":\"更多\"},\"safe\":\"0\"}");
   }
 
   public void testImageBuild() {
@@ -40,9 +44,11 @@ public class WxCpMessageTest {
   }
 
   public void testVideoBuild() {
-    WxCpMessage reply = WxCpMessage.VIDEO().toUser("OPENID").title("TITLE").mediaId("MEDIA_ID").thumbMediaId("MEDIA_ID").description("DESCRIPTION").build();
+    WxCpMessage reply = WxCpMessage.VIDEO().toUser("OPENID").title("TITLE").mediaId("MEDIA_ID").thumbMediaId("MEDIA_ID")
+      .description("DESCRIPTION").build();
     assertThat(reply.toJson())
-      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"video\",\"safe\":\"0\",\"video\":{\"media_id\":\"MEDIA_ID\",\"thumb_media_id\":\"MEDIA_ID\",\"title\":\"TITLE\",\"description\":\"DESCRIPTION\"}}");
+      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"video\",\"video\":{\"media_id\":\"MEDIA_ID\"," +
+        "\"thumb_media_id\":\"MEDIA_ID\",\"title\":\"TITLE\",\"description\":\"DESCRIPTION\"},\"safe\":\"0\"}");
   }
 
   public void testNewsBuild() {
@@ -61,7 +67,10 @@ public class WxCpMessageTest {
     WxCpMessage reply = WxCpMessage.NEWS().toUser("OPENID").addArticle(article1).addArticle(article2).build();
 
     assertThat(reply.toJson())
-      .isEqualTo( "{\"touser\":\"OPENID\",\"msgtype\":\"news\",\"safe\":\"0\",\"news\":{\"articles\":[{\"title\":\"Happy Day\",\"description\":\"Is Really A Happy Day\",\"url\":\"URL\",\"picurl\":\"PIC_URL\"},{\"title\":\"Happy Day\",\"description\":\"Is Really A Happy Day\",\"url\":\"URL\",\"picurl\":\"PIC_URL\"}]}}");
+      .isEqualTo( "{\"touser\":\"OPENID\",\"msgtype\":\"news\",\"news\":{\"articles\":" +
+        "[{\"title\":\"Happy Day\",\"description\":\"Is Really A Happy Day\",\"url\":\"URL\",\"picurl\":\"PIC_URL\"}," +
+        "{\"title\":\"Happy Day\",\"description\":\"Is Really A Happy Day\",\"url\":\"URL\",\"picurl\":\"PIC_URL\"}]}," +
+        "\"safe\":\"0\"}");
   }
 
   public void testMpnewsBuild_with_articles() {
@@ -88,14 +97,19 @@ public class WxCpMessageTest {
     WxCpMessage reply = WxCpMessage.MPNEWS().toUser("OPENID").addArticle(article1, article2).build();
 
     assertThat(reply.toJson())
-      .isEqualTo( "{\"touser\":\"OPENID\",\"msgtype\":\"mpnews\",\"safe\":\"0\",\"mpnews\":{\"articles\":[{\"title\":\"Happy Day\",\"thumb_media_id\":\"thumb\",\"author\":\"aaaaaa\",\"content_source_url\":\"nice url\",\"content\":\"hahaha\",\"digest\":\"digest\",\"show_cover_pic\":\"heihei\"},{\"title\":\"Happy Day\",\"thumb_media_id\":\"thumb\",\"author\":\"aaaaaa\",\"content_source_url\":\"nice url\",\"content\":\"hahaha\",\"digest\":\"digest\",\"show_cover_pic\":\"heihei\"}]}}");
+      .isEqualTo( "{\"touser\":\"OPENID\",\"msgtype\":\"mpnews\",\"mpnews\":{\"articles\":" +
+        "[{\"title\":\"Happy Day\",\"thumb_media_id\":\"thumb\",\"author\":\"aaaaaa\"," +
+        "\"content_source_url\":\"nice url\",\"content\":\"hahaha\",\"digest\":\"digest\",\"show_cover_pic\":\"heihei\"}" +
+        ",{\"title\":\"Happy Day\",\"thumb_media_id\":\"thumb\",\"author\":\"aaaaaa\"," +
+        "\"content_source_url\":\"nice url\",\"content\":\"hahaha\",\"digest\":\"digest\",\"show_cover_pic\":\"heihei\"}]}," +
+        "\"safe\":\"0\"}");
   }
 
   public void testMpnewsBuild_with_media_id() {
     WxCpMessage reply = WxCpMessage.MPNEWS().toUser("OPENID").mediaId("mmm").build();
 
     assertThat(reply.toJson())
-      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"mpnews\",\"safe\":\"0\",\"mpnews\":{\"media_id\":\"mmm\"}}");
+      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"mpnews\",\"mpnews\":{\"media_id\":\"mmm\"},\"safe\":\"0\"}");
   }
 
 }
