@@ -13,7 +13,6 @@ import java.util.List;
  *     https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21528465979XX32V&token=&lang=zh_CN
  *    注意：该类的接口仅限通过快速创建小程序接口的小程序使用
  * </pre>
- *  TODO 完善相应API的respons实体
  *
  * @author Hipple
  * @date 2019/01/23
