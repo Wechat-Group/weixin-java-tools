@@ -286,6 +286,11 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   }
 
   @Override
+  public WxSessionManager getSessionManager() {
+    return this.sessionManager;
+  }
+
+  @Override
   public String replaceParty(String mediaId) throws WxErrorException {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/batch/replaceparty";
     JsonObject jsonObject = new JsonObject();

@@ -176,6 +176,13 @@ public interface WxCpService {
   void setSessionManager(WxSessionManager sessionManager);
 
   /**
+   * 获取WxSessionManager.
+   * WxCpService默认使用的是{@link me.chanjar.weixin.common.session.StandardSessionManager}
+   *
+   */
+  WxSessionManager getSessionManager();
+  
+  /**
    * 上传部门列表覆盖企业号上的部门信息
    *
    * @param mediaId 媒体id
