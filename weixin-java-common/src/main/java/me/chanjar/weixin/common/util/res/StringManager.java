@@ -19,6 +19,7 @@ package me.chanjar.weixin.common.util.res;
 
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An internationalization / localization helper class which reduces
