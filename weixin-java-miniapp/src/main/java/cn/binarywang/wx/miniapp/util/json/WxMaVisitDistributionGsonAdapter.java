@@ -10,9 +10,9 @@ import com.google.gson.JsonParseException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 
 import java.lang.reflect.Type;
-import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author <a href="https://github.com/charmingoh">Charming</a>
@@ -36,7 +36,7 @@ public class WxMaVisitDistributionGsonAdapter implements JsonDeserializer<WxMaVi
     }
 
     JsonArray listArray = object.getAsJsonArray("list");
-    Map<String, Map<Integer, Integer>> list = new Hashtable<>(listArray.size());
+    Map<String, Map<Integer, Integer>> list = new ConcurrentHashMap<>(listArray.size());
     for (JsonElement indexElement : listArray) {
       JsonObject indexObject = indexElement.getAsJsonObject();
       String index = GsonHelper.getString(indexObject, "index");

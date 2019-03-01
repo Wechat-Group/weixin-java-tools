@@ -2,8 +2,8 @@ package me.chanjar.weixin.open.api.impl;
 
 
 import java.io.File;
-import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -37,10 +37,10 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private String httpProxyPassword;
   private ApacheHttpClientBuilder apacheHttpClientBuilder;
 
-  private Map<String, Token> authorizerRefreshTokens = new Hashtable<>();
-  private Map<String, Token> authorizerAccessTokens = new Hashtable<>();
-  private Map<String, Token> jsapiTickets = new Hashtable<>();
-  private Map<String, Token> cardApiTickets = new Hashtable<>();
+  private Map<String, Token> authorizerRefreshTokens = new ConcurrentHashMap<>();
+  private Map<String, Token> authorizerAccessTokens = new ConcurrentHashMap<>();
+  private Map<String, Token> jsapiTickets = new ConcurrentHashMap<>();
+  private Map<String, Token> cardApiTickets = new ConcurrentHashMap<>();
 
   @Override
   public String getComponentAppId() {
