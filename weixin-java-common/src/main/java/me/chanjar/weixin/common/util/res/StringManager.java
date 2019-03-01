@@ -19,6 +19,7 @@ package me.chanjar.weixin.common.util.res;
 
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An internationalization / localization helper class which reduces
@@ -46,7 +47,7 @@ import java.util.*;
  */
 public class StringManager {
 
-  private static final Map<String, Map<Locale, StringManager>> MANAGERS = new Hashtable<>();
+  private static final Map<String, Map<Locale, StringManager>> MANAGERS = new ConcurrentHashMap<>();
   private static int LOCALE_CACHE_SIZE = 10;
   /**
    * The ResourceBundle for this StringManager.
