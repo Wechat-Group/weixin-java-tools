@@ -412,6 +412,13 @@ public interface WxMpService {
   WxMpMemberCardService getMemberCardService();
 
   /**
+   * 返回营销相关接口方法的实现类对象，以方便调用其各个接口.
+   *
+   * @return WxMpMarketingService
+   */
+  WxMpMarketingService getMarketingService();
+
+  /**
    * 初始化http请求对象.
    */
   void initHttp();
@@ -473,4 +480,6 @@ public interface WxMpService {
   void setMassMessageService(WxMpMassMessageService massMessageService);
 
   void setAiOpenService(WxMpAiOpenService aiOpenService);
+
+  void setMarketingService(WxMpMarketingService marketingService);
 }

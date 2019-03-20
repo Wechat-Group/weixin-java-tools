@@ -141,6 +141,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     request.checkAndSign(this.getConfig());
 
     String url = this.getPayBaseUrl() + "/secapi/pay/refund";
+    if (this.getConfig().isUseSandboxEnv()) {
+      url =  PAY_BASE_URL + "/sandboxnew/pay/refund";
+    }
+
     String responseContent = this.post(url, request.toXML(), true);
     WxPayRefundResult result = WxPayRefundResult.fromXML(responseContent);
     result.checkResult(this, request.getSignType(), true);

@@ -166,6 +166,13 @@ public interface WxCpService {
   WxSession getSession(String id, boolean create);
 
   /**
+   * 获取WxSessionManager 对象
+   *
+   * @return WxSessionManager
+   */
+  WxSessionManager getSessionManager();
+  
+  /**
    * <pre>
    * 设置WxSessionManager，只有当需要使用个性化的WxSessionManager的时候才需要调用此方法，
    * WxCpService默认使用的是{@link me.chanjar.weixin.common.session.StandardSessionManager}

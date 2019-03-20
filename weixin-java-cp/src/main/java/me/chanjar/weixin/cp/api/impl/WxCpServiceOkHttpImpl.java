@@ -33,34 +33,33 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    this.log.debug("WxCpServiceOkHttpImpl is running");
-    if (this.configStorage.isAccessTokenExpired() || forceRefresh) {
-      synchronized (this.globalAccessTokenRefreshLock) {
-        if (this.configStorage.isAccessTokenExpired()) {
-          String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"
-            + "&corpid=" + this.configStorage.getCorpId()
-            + "&corpsecret=" + this.configStorage.getCorpSecret();
-          //得到httpClient
-          OkHttpClient client = getRequestHttpClient();
-          //请求的request
-          Request request = new Request.Builder().url(url).get().build();
-          String resultContent = null;
-          try {
-            Response response = client.newCall(request).execute();
-            resultContent = response.body().string();
-          } catch (IOException e) {
-            this.log.error(e.getMessage(), e);
-          }
+    if (!this.configStorage.isAccessTokenExpired() && !forceRefresh) {
+      return this.configStorage.getAccessToken();
+    }
 
-          WxError error = WxError.fromJson(resultContent, WxType.CP);
-          if (error.getErrorCode() != 0) {
-            throw new WxErrorException(error);
-          }
-          WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-          this.configStorage.updateAccessToken(accessToken.getAccessToken(),
-            accessToken.getExpiresIn());
+    synchronized (this.globalAccessTokenRefreshLock) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"
+          + "&corpid=" + this.configStorage.getCorpId()
+          + "&corpsecret=" + this.configStorage.getCorpSecret();
+        //得到httpClient
+        OkHttpClient client = getRequestHttpClient();
+        //请求的request
+        Request request = new Request.Builder().url(url).get().build();
+        String resultContent = null;
+        try {
+          Response response = client.newCall(request).execute();
+          resultContent = response.body().string();
+        } catch (IOException e) {
+          this.log.error(e.getMessage(), e);
         }
-      }
+
+        WxError error = WxError.fromJson(resultContent, WxType.CP);
+        if (error.getErrorCode() != 0) {
+          throw new WxErrorException(error);
+        }
+        WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+        this.configStorage.updateAccessToken(accessToken.getAccessToken(),
+          accessToken.getExpiresIn());
     }
     return this.configStorage.getAccessToken();
   }

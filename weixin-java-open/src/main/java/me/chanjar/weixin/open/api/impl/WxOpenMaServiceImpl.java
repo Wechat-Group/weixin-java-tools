@@ -76,6 +76,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @return
    * @throws WxErrorException
    */
+  @Override
   public WxOpenMaDomainResult modifyDomain(String action, List<String> requestdomainList, List<String> wsrequestdomainList, List<String> uploaddomainList, List<String> downloaddomainList) throws WxErrorException {
 
 //    if (!"get".equals(action) && (requestdomainList == null || wsrequestdomainList == null || uploaddomainList == null || downloaddomainList == null)) {
@@ -252,6 +253,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @return
    * @throws WxErrorException
    */
+  @Override
   public WxOpenMaSubmitAuditResult submitAudit(WxOpenMaSubmitAuditMessage submitAuditMessage) throws WxErrorException {
     String response = post(API_SUBMIT_AUDIT, GSON.toJson(submitAuditMessage));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaSubmitAuditResult.class);
