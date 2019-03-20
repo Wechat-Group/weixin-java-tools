@@ -12,6 +12,8 @@ import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.enums.TicketType;
 
+import java.util.HashMap;
+
 /**
  * 微信公众号API的Service.
  *
@@ -305,6 +307,19 @@ public interface WxMpService {
    * 注入 {@link WxMpConfigStorage} 的实现.
    */
   void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider);
+
+  /**
+   * 注入多个 {@link WxMpConfigStorage} 的实现. 并为每个 {@link WxMpConfigStorage} 赋予不同的 {@link String label} 值
+   * @return
+   */
+  void setMultiWxMpConfigStorage(HashMap<String, WxMpConfigStorage> configStorages);
+
+  /**
+   * 进行相应的 WxApp 切换
+   * @param label
+   * @return
+   */
+  boolean switchover(String label);
 
   /**
    * 返回客服接口方法实现类，以方便调用其各个接口.

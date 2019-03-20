@@ -1,9 +1,11 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.locks.Lock;
 
 import me.chanjar.weixin.mp.api.*;
+import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +65,9 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpAiOpenService aiOpenService = new WxMpAiOpenServiceImpl(this);
   private WxMpWifiService wifiService = new WxMpWifiServiceImpl(this);
   private WxMpMarketingService marketingService = new WxMpMarketingServiceImpl(this);
+
+  private HashMap<String, WxMpConfigStorage> wxMpConfigStoragePool;
+  private boolean isMultiWxApp = false;
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -334,6 +339,10 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public WxMpConfigStorage getWxMpConfigStorage() {
+    if (isMultiWxApp) {
+      String label = WxMpConfigStorageHolder.get();
+      return wxMpConfigStoragePool.get(label);
+    }
     return this.wxMpConfigStorage;
   }
 
@@ -341,6 +350,22 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   public void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider) {
     this.wxMpConfigStorage = wxConfigProvider;
     this.initHttp();
+  }
+
+  @Override
+  public void setMultiWxMpConfigStorage(HashMap<String, WxMpConfigStorage> configStorages) {
+    wxMpConfigStoragePool = configStorages;
+    isMultiWxApp = true;
+    this.initHttp();
+  }
+
+  @Override
+  public boolean switchover(String label) {
+    if (wxMpConfigStoragePool.containsKey(label)) {
+      WxMpConfigStorageHolder.set(label);
+      return true;
+    }
+    return false;
   }
 
   @Override
