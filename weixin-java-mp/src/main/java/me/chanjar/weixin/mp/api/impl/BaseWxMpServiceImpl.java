@@ -341,7 +341,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   public WxMpConfigStorage getWxMpConfigStorage() {
     if (isMultiWxApp) {
       String label = WxMpConfigStorageHolder.get();
-      return wxMpConfigStoragePool.get(label);
+      return wxMpConfigStoragePool.getOrDefault(label, null);
     }
     return this.wxMpConfigStorage;
   }
