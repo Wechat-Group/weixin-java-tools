@@ -360,6 +360,13 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   }
 
   @Override
+  public void addWxMpConfigStorage(String label, WxMpConfigStorage configStorages) {
+    synchronized (this) {
+      wxMpConfigStoragePool.put(label, wxMpConfigStorage);
+    }
+  }
+
+  @Override
   public boolean switchover(String label) {
     if (wxMpConfigStoragePool.containsKey(label)) {
       WxMpConfigStorageHolder.set(label);

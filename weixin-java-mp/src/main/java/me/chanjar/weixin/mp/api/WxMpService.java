@@ -315,6 +315,12 @@ public interface WxMpService {
   void setMultiWxMpConfigStorage(HashMap<String, WxMpConfigStorage> configStorages);
 
   /**
+   * {@link HashMap<String, WxMpConfigStorage>} 加入新的 {@link WxMpConfigStorage}，适用于动态添加新的微信应用
+   * @param configStorages
+   */
+  void addWxMpConfigStorage(String label, WxMpConfigStorage configStorages);
+
+  /**
    * 进行相应的 WxApp 切换
    * @param label
    * @return
