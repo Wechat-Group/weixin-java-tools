@@ -12,7 +12,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.enums.TicketType;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 微信公众号API的Service.
@@ -309,16 +309,24 @@ public interface WxMpService {
   void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider);
 
   /**
-   * 注入多个 {@link WxMpConfigStorage} 的实现. 并为每个 {@link WxMpConfigStorage} 赋予不同的 {@link String label} 值
-   * @return
-   */
-  void setMultiWxMpConfigStorage(HashMap<String, WxMpConfigStorage> configStorages);
-
-  /**
-   * {@link HashMap<String, WxMpConfigStorage>} 加入新的 {@link WxMpConfigStorage}，适用于动态添加新的微信应用
+   * {@link Map<String, WxMpConfigStorage>} 加入新的 {@link WxMpConfigStorage}，适用于动态添加新的微信应用
    * @param configStorages
    */
   void addWxMpConfigStorage(String label, WxMpConfigStorage configStorages);
+
+  /**
+   * 注入多个 {@link WxMpConfigStorage} 的实现. 并为每个 {@link WxMpConfigStorage} 赋予不同的 {@link String label} 值
+   * 随机采用一个{@link String lable}进行Http初始化操作
+   * @param configStorages
+   */
+  void setMultiWxMpConfigStorage(Map<String, WxMpConfigStorage> configStorages);
+
+  /**
+   * 注入多个 {@link WxMpConfigStorage} 的实现. 并为每个 {@link WxMpConfigStorage} 赋予不同的 {@link String label} 值
+   * @param configStorages
+   * @param defaultInitLabel 设置一个{@link WxMpConfigStorage} 所对应的{@link String label}进行Http初始化
+   */
+  void setMultiWxMpConfigStorage(Map<String, WxMpConfigStorage> configStorages, String defaultInitLabel);
 
   /**
    * 进行相应的 WxApp 切换

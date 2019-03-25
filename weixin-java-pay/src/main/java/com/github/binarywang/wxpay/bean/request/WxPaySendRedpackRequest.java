@@ -1,11 +1,7 @@
 package com.github.binarywang.wxpay.bean.request;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 发送红包请求参数对象.
@@ -20,9 +16,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPaySendRedpackRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = -2035425086824987567L;
+
   @Override
   protected String[] getIgnoredParamsForSign() {
-    return new String[]{"sign_type"};
+    return new String[]{"sign_type", "sub_appid"};
   }
 
   /**

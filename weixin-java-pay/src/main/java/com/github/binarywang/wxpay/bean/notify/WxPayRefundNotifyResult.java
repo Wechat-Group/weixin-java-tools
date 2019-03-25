@@ -215,7 +215,8 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
      * 变量名：success_time
      * 是否必填：否
      * 类型： String(20)
-     * 示例值：20160725152626
+     * 示例值：2017-12-15 09:46:01
+     * 资金退款至用户帐号的时间，格式2017-12-15 09:46:01
      * </pre>
      */
     @XStreamAlias("success_time")

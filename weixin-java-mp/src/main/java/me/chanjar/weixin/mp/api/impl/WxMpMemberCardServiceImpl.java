@@ -51,7 +51,7 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
 
   private static final Gson GSON = WxMpGsonBuilder.create();
 
-  WxMpMemberCardServiceImpl(WxMpService wxMpService) {
+  public WxMpMemberCardServiceImpl(WxMpService wxMpService) {
     this.wxMpService = wxMpService;
   }
 
