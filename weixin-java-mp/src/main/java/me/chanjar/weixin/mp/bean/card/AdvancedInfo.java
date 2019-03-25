@@ -56,7 +56,7 @@ public class AdvancedInfo implements Serializable {
    * 使用时段限制.
    */
   @SerializedName("time_limit")
-  private TimeLimit timeLimit;
+  private List<TimeLimit> timeLimit;
 
   /**
    * 是否可以分享朋友.

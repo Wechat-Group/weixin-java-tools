@@ -7,6 +7,8 @@ import me.chanjar.weixin.mp.bean.card.WxMpCardLandingPageCreateResult;
 import me.chanjar.weixin.mp.bean.card.WxMpCardQrcodeCreateResult;
 import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
 
+import java.util.List;
+
 /**
  * 卡券相关接口
  *
@@ -141,6 +143,14 @@ public interface WxMpCardService {
    * @return
    */
   String addTestWhiteList(String openid) throws WxErrorException;
+
+  /**
+   * 添加测试白名单.
+   *
+   * @param openIdList 用户的openid
+   * @param usernameList 用户名
+   */
+  String addTestWhiteList(List<String> openIdList, List<String> usernameList) throws WxErrorException;
 
   /**
    * 创建卡券二维码

@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 
 import org.apache.commons.lang3.StringUtils;
@@ -263,6 +264,32 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     jsonObject.add("openid", array);
     String respone = this.wxMpService.post(CARD_TEST_WHITELIST, GSON.toJson(jsonObject));
     return respone;
+  }
+
+  /**
+   * 添加测试白名单.
+   *
+   * @param openIdList 用户的openid
+   * @param usernameList 用户名
+   */
+  @Override
+  public String addTestWhiteList(List<String> openIdList, List<String> usernameList) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    JsonArray openidArray = new JsonArray();
+    if(openIdList != null){
+      for (String openid : openIdList) {
+        openidArray.add(openid);
+      }
+    }
+    jsonObject.add("openid", openidArray);
+    JsonArray usernameArray = new JsonArray();
+    if(usernameList != null){
+      for (String username : usernameList) {
+        usernameArray.add(username);
+      }
+    }
+    jsonObject.add("username",usernameArray);
+    return this.wxMpService.post(CARD_TEST_WHITELIST, GSON.toJson(jsonObject));
   }
 
   /**
