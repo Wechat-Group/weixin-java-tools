@@ -315,6 +315,12 @@ public interface WxMpService {
   void addWxMpConfigStorage(String label, WxMpConfigStorage configStorages);
 
   /**
+   * 从{@link Map<String, WxMpConfigStorage>} 移除 {@link String label} 所对应的 {@link WxMpConfigStorage}，适用于动态移除的微信应用
+   * @param label
+   */
+  void removeWxMpConfigStorage(String label);
+
+  /**
    * 注入多个 {@link WxMpConfigStorage} 的实现. 并为每个 {@link WxMpConfigStorage} 赋予不同的 {@link String label} 值
    * 随机采用一个{@link String lable}进行Http初始化操作
    * @param configStorages

@@ -365,7 +365,17 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void addWxMpConfigStorage(String label, WxMpConfigStorage configStorages) {
     synchronized (this) {
+      if (wxMpConfigStoragePool.containsKey(label)) {
+        throw new RuntimeException("该label已存在，请重新设置一个label");
+      }
       wxMpConfigStoragePool.put(label, configStorages);
+    }
+  }
+
+  @Override
+  public void removeWxMpConfigStorage(String label) {
+    synchronized (this) {
+      wxMpConfigStoragePool.remove(label);
     }
   }
 
