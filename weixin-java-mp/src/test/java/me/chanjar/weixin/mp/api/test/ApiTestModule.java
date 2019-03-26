@@ -31,15 +31,12 @@ public class ApiTestModule implements Module {
 
       TestConfigStorage config = this.fromXml(TestConfigStorage.class, inputStream);
       config.setAccessTokenLock(new ReentrantLock());
-      WxMpService wxService = new WxMpServiceHttpClientImpl();
-      wxService.setWxMpConfigStorage(config);
-
       WxMpService wxMpServiceMulti = new WxMpServiceHttpClientImpl();
-      Map<String, WxMpConfigStorage> configStorags = new HashMap<>();
-      configStorags.put("default", config);
-      wxMpServiceMulti.setMultiWxMpConfigStorage(configStorags, "default");
 
-      binder.bind(WxMpService.class).toInstance(wxService);
+      // TODO 多WxAppId
+      wxMpServiceMulti.setWxMpConfigStorage(config);
+      wxMpServiceMulti.addWxMpConfigStorage("test-1", config);
+
       binder.bind(WxMpConfigStorage.class).toInstance(config);
       binder.bind(WxMpService.class).toInstance(wxMpServiceMulti);
     } catch (IOException e) {

@@ -85,6 +85,53 @@ public class WxMpMenuServiceImplTest {
       "}";
 
     this.menuId = this.wxService.getMenuService().menuCreate(json);
+    if (this.wxService.switchover("test-1")) {
+      this.menuId = this.wxService.getMenuService().menuCreate(json);
+    }
+    System.out.println(this.menuId);
+  }
+
+  @Test
+  public void testMultiCreateConditionalMenu() throws WxErrorException {
+    String json = "{\n" +
+      " 	\"button\":[\n" +
+      " 	{	\n" +
+      "    	\"type\":\"click\",\n" +
+      "    	\"name\":\"今日歌曲\",\n" +
+      "     	\"key\":\"V1001_TODAY_MUSIC\" \n" +
+      "	},\n" +
+      "	{ \n" +
+      "		\"name\":\"菜单\",\n" +
+      "		\"sub_button\":[\n" +
+      "		{	\n" +
+      "			\"type\":\"view\",\n" +
+      "			\"name\":\"搜索\",\n" +
+      "			\"url\":\"http://www.soso.com/\"\n" +
+      "		},\n" +
+      "		{\n" +
+      "			\"type\":\"view\",\n" +
+      "			\"name\":\"视频\",\n" +
+      "			\"url\":\"http://v.qq.com/\"\n" +
+      "		},\n" +
+      "		{\n" +
+      "			\"type\":\"click\",\n" +
+      "			\"name\":\"赞一下我们\",\n" +
+      "			\"key\":\"V1001_GOOD\"\n" +
+      "		}]\n" +
+      " }],\n" +
+      "\"matchrule\":{\n" +
+      "  \"tag_id\":\"2\",\n" +
+      "  \"sex\":\"1\",\n" +
+      "  \"country\":\"中国\",\n" +
+      "  \"province\":\"广东\",\n" +
+      "  \"city\":\"广州\",\n" +
+      "  \"client_platform_type\":\"2\",\n" +
+      "  \"language\":\"zh_CN\"\n" +
+      "  }\n" +
+      "}";
+    if (this.wxService.switchover("test-1")) {
+      this.menuId = this.wxService.getMenuService().menuCreate(json);
+    }
     System.out.println(this.menuId);
   }
 

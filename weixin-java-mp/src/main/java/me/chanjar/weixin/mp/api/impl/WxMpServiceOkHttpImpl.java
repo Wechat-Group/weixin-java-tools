@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import okhttp3.*;
 
@@ -66,6 +67,7 @@ public class WxMpServiceOkHttpImpl extends BaseWxMpServiceImpl<OkHttpClient, OkH
 
   @Override
   public void initHttp() {
+    WxMpConfigStorage wxMpConfigStorage = getWxMpConfigStorage();
     //设置代理
     if (wxMpConfigStorage.getHttpProxyHost() != null && wxMpConfigStorage.getHttpProxyPort() > 0) {
       httpProxy = OkHttpProxyInfo.httpProxy(wxMpConfigStorage.getHttpProxyHost(),

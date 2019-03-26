@@ -340,7 +340,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider) {
-    Map<String, WxMpConfigStorage> map = new HashMap<>();
+    Map<String, WxMpConfigStorage> map = new HashMap<>(1);
     map.put(WxMpConfigStorageHolder.get(), wxConfigProvider);
     setMultiWxMpConfigStorage(map, WxMpConfigStorageHolder.get());
   }
