@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.locks.Lock;
 
 import me.chanjar.weixin.mp.api.*;
@@ -42,7 +43,6 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
   protected WxSessionManager sessionManager = new StandardSessionManager();
-  protected WxMpConfigStorage wxMpConfigStorage;
   private WxMpKefuService kefuService = new WxMpKefuServiceImpl(this);
   private WxMpMaterialService materialService = new WxMpMaterialServiceImpl(this);
   private WxMpMenuService menuService = new WxMpMenuServiceImpl(this);
@@ -64,7 +64,6 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpMarketingService marketingService = new WxMpMarketingServiceImpl(this);
 
   private Map<String, WxMpConfigStorage> wxMpConfigStoragePool;
-  private boolean isMultiWxApp = false;
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -336,16 +335,14 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public WxMpConfigStorage getWxMpConfigStorage() {
-    if (isMultiWxApp) {
-      return wxMpConfigStoragePool.get(WxMpConfigStorageHolder.get());
-    }
-    return this.wxMpConfigStorage;
+    return wxMpConfigStoragePool.get(WxMpConfigStorageHolder.get());
   }
 
   @Override
   public void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider) {
-    this.wxMpConfigStorage = wxConfigProvider;
-    this.initHttp();
+    Map<String, WxMpConfigStorage> map = new HashMap<>();
+    map.put(WxMpConfigStorageHolder.get(), wxConfigProvider);
+    setMultiWxMpConfigStorage(map, WxMpConfigStorageHolder.get());
   }
 
   @Override
@@ -357,7 +354,6 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void setMultiWxMpConfigStorage(Map<String, WxMpConfigStorage> configStorages, String defaultInitLabel) {
     wxMpConfigStoragePool = configStorages;
-    isMultiWxApp = true;
     WxMpConfigStorageHolder.set(defaultInitLabel);
     this.initHttp();
   }
