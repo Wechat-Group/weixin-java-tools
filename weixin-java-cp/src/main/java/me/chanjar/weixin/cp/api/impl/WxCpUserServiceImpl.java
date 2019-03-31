@@ -76,7 +76,7 @@ public class WxCpUserServiceImpl implements WxCpUserService {
   }
 
   @Override
-  public List<WxCpUser> listByDepartment(Integer departId, Boolean fetchChild, Integer status) throws WxErrorException {
+  public List<WxCpUser> listByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/user/list?department_id=" + departId;
     String params = "";
     if (fetchChild != null) {
@@ -90,7 +90,7 @@ public class WxCpUserServiceImpl implements WxCpUserService {
 
     String responseContent = this.mainService.get(url, params);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
-    return WxCpGsonBuilder.INSTANCE.create()
+    return WxCpGsonBuilder.create()
       .fromJson(tmpJsonElement.getAsJsonObject().get("userlist"),
         new TypeToken<List<WxCpUser>>() {
         }.getType()
@@ -98,7 +98,7 @@ public class WxCpUserServiceImpl implements WxCpUserService {
   }
 
   @Override
-  public List<WxCpUser> listSimpleByDepartment(Integer departId, Boolean fetchChild, Integer status) throws WxErrorException {
+  public List<WxCpUser> listSimpleByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?department_id=" + departId;
     String params = "";
     if (fetchChild != null) {
@@ -112,7 +112,7 @@ public class WxCpUserServiceImpl implements WxCpUserService {
 
     String responseContent = this.mainService.get(url, params);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
-    return WxCpGsonBuilder.INSTANCE.create()
+    return WxCpGsonBuilder.create()
       .fromJson(
         tmpJsonElement.getAsJsonObject().get("userlist"),
         new TypeToken<List<WxCpUser>>() {

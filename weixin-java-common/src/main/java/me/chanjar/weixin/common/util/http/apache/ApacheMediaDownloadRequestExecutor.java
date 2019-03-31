@@ -25,7 +25,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
  * Created by ecoolper on 2017/5/5.
  */
 public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequestExecutor<CloseableHttpClient, HttpHost> {
-
   public ApacheMediaDownloadRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {
     super(requestHttp, tmpDirFile);
   }
@@ -58,7 +57,7 @@ public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
 
       String fileName = new HttpResponseProxy(response).getFileName();
       if (StringUtils.isBlank(fileName)) {
-        return null;
+        fileName = String.valueOf(System.currentTimeMillis());
       }
 
       return FileUtils.createTmpFile(inputStream, FilenameUtils.getBaseName(fileName), FilenameUtils.getExtension(fileName),

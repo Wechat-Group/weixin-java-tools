@@ -64,6 +64,11 @@ public class WxError implements Serializable {
       if (msg != null) {
         wxError.setErrorMsg(msg);
       }
+    } else if (type == WxType.MiniApp) {
+        final String msg = WxMaErrorMsgEnum.findMsgByCode(wxError.getErrorCode());
+        if (msg != null) {
+          wxError.setErrorMsg(msg);
+        }
     }
 
     return wxError;

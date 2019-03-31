@@ -1,9 +1,9 @@
 package me.chanjar.weixin.common.util.http;
 
 
-import org.apache.commons.lang3.StringUtils;
+import java.nio.charset.StandardCharsets;
 
-import java.io.UnsupportedEncodingException;
+import org.apache.commons.lang3.StringUtils;
 
 public class URIUtil {
 
@@ -16,27 +16,22 @@ public class URIUtil {
 
     int l = input.length();
     StringBuilder o = new StringBuilder(l * 3);
-    try {
-      for (int i = 0; i < l; i++) {
-        String e = input.substring(i, i + 1);
-        if (ALLOWED_CHARS.indexOf(e) == -1) {
-          byte[] b = e.getBytes("utf-8");
-          o.append(getHex(b));
-          continue;
-        }
-        o.append(e);
+    for (int i = 0; i < l; i++) {
+      String e = input.substring(i, i + 1);
+      if (!ALLOWED_CHARS.contains(e)) {
+        byte[] b = e.getBytes(StandardCharsets.UTF_8);
+        o.append(getHex(b));
+        continue;
       }
-      return o.toString();
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
+      o.append(e);
     }
-    return input;
+    return o.toString();
   }
 
-  private static String getHex(byte buf[]) {
+  private static String getHex(byte[] buf) {
     StringBuilder o = new StringBuilder(buf.length * 3);
-    for (int i = 0; i < buf.length; i++) {
-      int n = buf[i] & 0xff;
+    for (byte aBuf : buf) {
+      int n = aBuf & 0xff;
       o.append("%");
       if (n < 0x10) {
         o.append("0");

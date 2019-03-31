@@ -88,6 +88,13 @@ public class WxPayConfig {
    * 默认不使用
    */
   private boolean useSandboxEnv = false;
+
+  /**
+   * 是否将接口请求日志信息保存到threadLocal中.
+   * 默认不保存
+   */
+  private boolean ifSaveApiData = false;
+
   private String httpProxyHost;
   private Integer httpProxyPort;
   private String httpProxyUsername;

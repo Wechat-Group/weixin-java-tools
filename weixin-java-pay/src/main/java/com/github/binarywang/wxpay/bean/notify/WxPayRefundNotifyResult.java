@@ -1,15 +1,15 @@
 package com.github.binarywang.wxpay.bean.notify;
 
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
+import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -17,11 +17,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 
 /**
  * <pre>
- *  退款结果通知对象
+ *  退款结果通知对象.
  *  Created by BinaryWang on 2017/8/27.
  * </pre>
  *
@@ -36,7 +37,7 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
   private static final long serialVersionUID = 4651725860079259186L;
 
   /**
-   * 从xml字符串创建bean对象
+   * 从xml字符串创建bean对象.
    *
    * @param xmlString xml字符串
    * @param mchKey    商户密钥
@@ -45,14 +46,19 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
    */
   public static WxPayRefundNotifyResult fromXML(String xmlString, String mchKey) throws WxPayException {
     WxPayRefundNotifyResult result = BaseWxPayResult.fromXML(xmlString, WxPayRefundNotifyResult.class);
+    if (WxPayConstants.ResultCode.FAIL.equals(result.getReturnCode())) {
+      return result;
+    }
+
     String reqInfoString = result.getReqInfoString();
     try {
       final String keyMd5String = DigestUtils.md5Hex(mchKey).toLowerCase();
-      SecretKeySpec key = new SecretKeySpec(keyMd5String.getBytes(), "AES");
+      SecretKeySpec key = new SecretKeySpec(keyMd5String.getBytes(StandardCharsets.UTF_8), "AES");
 
       Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
       cipher.init(Cipher.DECRYPT_MODE, key);
-      result.setReqInfo(ReqInfo.fromXML(new String(cipher.doFinal(Base64.decodeBase64(reqInfoString)))));
+      result.setReqInfo(ReqInfo.fromXML(new String(cipher.doFinal(Base64.decodeBase64(reqInfoString)),
+        StandardCharsets.UTF_8)));
     } catch (Exception e) {
       throw new WxPayException("解密退款通知加密信息时出错", e);
     }
@@ -62,7 +68,7 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
 
   /**
    * <pre>
-   * 字段名：加密信息
+   * 字段名：加密信息.
    * 变量名：req_info
    * 是否必填：是
    * 类型：String(1024)
@@ -83,7 +89,7 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
   public static class ReqInfo {
     @Override
     public String toString() {
-      return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+      return WxGsonBuilder.create().toJson(this);
     }
 
     /**
@@ -209,8 +215,9 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
      * 变量名：success_time
      * 是否必填：否
      * 类型： String(20)
-     * 示例值：20160725152626
-     * 描述：-
+     * 示例值：2017-12-15 09:46:01
+     * 资金退款至用户帐号的时间，格式2017-12-15 09:46:01
+     * </pre>
      */
     @XStreamAlias("success_time")
     private String successTime;
@@ -255,10 +262,10 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
     private String refundRequestSource;
 
     /**
-     * From xml req info.
+     * 从xml字符串构造ReqInfo对象.
      *
-     * @param xmlString the xml string
-     * @return the req info
+     * @param xmlString xml字符串
+     * @return ReqInfo对象
      */
     public static ReqInfo fromXML(String xmlString) {
       XStream xstream = XStreamInitializer.getInstance();

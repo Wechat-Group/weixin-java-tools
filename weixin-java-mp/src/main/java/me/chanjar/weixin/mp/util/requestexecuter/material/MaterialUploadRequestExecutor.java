@@ -1,7 +1,11 @@
 package me.chanjar.weixin.mp.util.requestexecuter.material;
 
+import java.io.IOException;
+
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 
@@ -13,6 +17,11 @@ public abstract class MaterialUploadRequestExecutor<H, P> implements RequestExec
 
   public MaterialUploadRequestExecutor(RequestHttp requestHttp) {
     this.requestHttp = requestHttp;
+  }
+
+  @Override
+  public void execute(String uri, WxMpMaterial data, ResponseHandler<WxMpMaterialUploadResult> handler) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data));
   }
 
   public static RequestExecutor<WxMpMaterialUploadResult, WxMpMaterial> create(RequestHttp requestHttp) {

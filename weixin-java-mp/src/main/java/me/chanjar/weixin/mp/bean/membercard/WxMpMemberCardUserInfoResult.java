@@ -2,9 +2,6 @@ package me.chanjar.weixin.mp.bean.membercard;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -47,11 +44,11 @@ public class WxMpMemberCardUserInfoResult implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   public static WxMpMemberCardUserInfoResult fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpMemberCardUserInfoResult.class);
+    return WxMpGsonBuilder.create().fromJson(json, WxMpMemberCardUserInfoResult.class);
   }
 }
 

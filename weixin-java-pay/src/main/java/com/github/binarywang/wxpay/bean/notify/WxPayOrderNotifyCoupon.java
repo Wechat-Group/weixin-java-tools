@@ -4,11 +4,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
  * 支付异步通知代金券详细.
@@ -40,6 +38,6 @@ public class WxPayOrderNotifyCoupon implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxGsonBuilder.create().toJson(this);
   }
 }

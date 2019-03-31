@@ -90,10 +90,10 @@ public class WxPayRefundResult extends BaseWxPayResult implements Serializable {
   private String cashFeeType;
 
   /**
-   * 现金退款金额.
+   * 现金退款金额，单位为分，只能为整数，详见支付金额.
    */
   @XStreamAlias("cash_refund_fee")
-  private String cashRefundFee;
+  private Integer cashRefundFee;
 
   /**
    * 退款代金券使用数量.
@@ -119,7 +119,7 @@ public class WxPayRefundResult extends BaseWxPayResult implements Serializable {
   /**
    * 组装生成退款代金券信息.
    */
-  public void composeRefundCoupons() {
+  private void composeRefundCoupons() {
     List<WxPayRefundCouponInfo> coupons = Lists.newArrayList();
     Integer refundCount = this.getCouponRefundCount();
     if (refundCount == null) {
@@ -138,5 +138,11 @@ public class WxPayRefundResult extends BaseWxPayResult implements Serializable {
     }
 
     this.setRefundCoupons(coupons);
+  }
+
+  public static WxPayRefundResult fromXML(String xml) {
+    WxPayRefundResult result = BaseWxPayResult.fromXML(xml, WxPayRefundResult.class);
+    result.composeRefundCoupons();
+    return result;
   }
 }

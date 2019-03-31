@@ -1,10 +1,15 @@
 package com.github.binarywang.wxpay.bean.result;
 
+import java.io.Serializable;
+import java.util.List;
+
 import com.google.common.collect.Lists;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import lombok.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -26,7 +31,8 @@ import java.util.List;
 @NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPayOrderQueryResult extends BaseWxPayResult {
-
+  private static final long serialVersionUID = 8241891654782412789L;
+  
   /**
    * <pre>
    * 字段名：营销详情.
@@ -41,7 +47,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private String promotionDetail;
 
   /**
-   * <pre>设备号
+   * <pre>
+   * 设备号.
    * device_info
    * 否
    * String(32)
@@ -53,7 +60,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private String deviceInfo;
 
   /**
-   * <pre>用户标识
+   * <pre>
+   * 用户标识.
    * openid
    * 是
    * String(128)
@@ -65,7 +73,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private String openid;
 
   /**
-   * <pre>是否关注公众账号
+   * <pre>
+   * 是否关注公众账号.
    * is_subscribe
    * 否
    * String(1)
@@ -77,7 +86,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private String isSubscribe;
 
   /**
-   * <pre>交易类型
+   * <pre>
+   * 交易类型.
    * trade_type
    * 是
    * String(16)
@@ -89,7 +99,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private String tradeType;
 
   /**
-   * <pre>交易状态
+   * <pre>
+   * 交易状态.
    * trade_state
    * 是
    * String(32)
@@ -101,7 +112,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private String tradeState;
 
   /**
-   * <pre>付款银行
+   * <pre>
+   * 付款银行.
    * bank_type
    * 是
    * String(16)
@@ -113,7 +125,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private String bankType;
 
   /**
-   * <pre>订单金额
+   * <pre>
+   * 订单金额.
    * total_fee
    * 是
    * Int
@@ -125,7 +138,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private Integer totalFee;
 
   /**
-   * <pre>应结订单金额
+   * <pre>
+   * 应结订单金额.
    * settlement_total_fee
    * 否
    * Int
@@ -137,7 +151,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private Integer settlementTotalFee;
 
   /**
-   * <pre>货币种类
+   * <pre>
+   * 货币种类.
    * fee_type
    * 否
    * String(8)
@@ -149,7 +164,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private String feeType;
 
   /**
-   * <pre>现金支付金额
+   * <pre>
+   * 现金支付金额.
    * cash_fee
    * 是
    * Int
@@ -161,7 +177,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private Integer cashFee;
 
   /**
-   * <pre>现金支付货币类型
+   * <pre>
+   * 现金支付货币类型.
    * cash_fee_type
    * 否
    * String(16)
@@ -173,7 +190,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private String cashFeeType;
 
   /**
-   * <pre>代金券金额
+   * <pre>
+   * 代金券金额.
    * coupon_fee
    * 否
    * Int
@@ -185,7 +203,7 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private Integer couponFee;
 
   /**
-   * <pre>代金券使用数量
+   * <pre>代金券使用数量.
    * coupon_count
    * 否
    * Int
@@ -198,7 +216,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
 
   private List<Coupon> coupons;
   /**
-   * <pre>微信支付订单号
+   * <pre>
+   * 微信支付订单号.
    * transaction_id
    * 是
    * String(32)
@@ -209,7 +228,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   @XStreamAlias("transaction_id")
   private String transactionId;
   /**
-   * <pre>商户订单号
+   * <pre>
+   * 商户订单号.
    * out_trade_no
    * 是
    * String(32)
@@ -220,7 +240,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   @XStreamAlias("out_trade_no")
   private String outTradeNo;
   /**
-   * <pre>附加数据
+   * <pre>
+   * 附加数据.
    * attach
    * 否
    * String(128)
@@ -231,7 +252,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   @XStreamAlias("attach")
   private String attach;
   /**
-   * <pre>支付完成时间
+   * <pre>
+   * 支付完成时间.
    * time_end
    * 是
    * String(14)
@@ -242,7 +264,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   @XStreamAlias("time_end")
   private String timeEnd;
   /**
-   * <pre>交易状态描述
+   * <pre>
+   * 交易状态描述.
    * trade_state_desc
    * 是
    * String(256)
@@ -254,7 +277,7 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   private String tradeStateDesc;
 
   /**
-   * 通过xml组装coupons属性内容
+   * 通过xml组装coupons属性内容.
    */
   public void composeCoupons() {
     if (this.couponCount != null && this.couponCount > 0) {
@@ -273,9 +296,12 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   @Data
   @Builder(builderMethodName = "newBuilder")
   @AllArgsConstructor
-  public static class Coupon {
+  public static class Coupon implements Serializable {
+    private static final long serialVersionUID = -954000582332155081L;
+
     /**
-     * <pre>代金券类型
+     * <pre>
+     * 代金券类型.
      * coupon_type_$n
      * 否
      * String
@@ -288,7 +314,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
     private String couponType;
 
     /**
-     * <pre>代金券ID
+     * <pre>
+     * 代金券ID.
      * coupon_id_$n
      * 否
      * String(20)
@@ -299,7 +326,8 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
     private String couponId;
 
     /**
-     * <pre>单个代金券支付金额
+     * <pre>
+     * 单个代金券支付金额.
      * coupon_fee_$n
      * 否
      * Int

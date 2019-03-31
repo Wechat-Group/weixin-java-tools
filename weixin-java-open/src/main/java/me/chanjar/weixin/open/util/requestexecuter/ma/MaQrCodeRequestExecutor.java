@@ -1,15 +1,17 @@
 package me.chanjar.weixin.open.util.requestexecuter.ma;
 
+import java.io.File;
+import java.io.IOException;
+
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.open.bean.ma.WxMaQrcodeParam;
 
-import java.io.File;
-
 /**
- * 获得小程序体验QrCode图片 请求执行器
+ * 获得小程序体验QrCode图片 请求执行器.
  *
  * @author yqx
  * @date 2018-09-13
@@ -19,6 +21,11 @@ public abstract class MaQrCodeRequestExecutor<H, P> implements RequestExecutor<F
 
   public MaQrCodeRequestExecutor(RequestHttp requestHttp) {
     this.requestHttp = requestHttp;
+  }
+
+  @Override
+  public void execute(String uri, WxMaQrcodeParam data, ResponseHandler<File> handler) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data));
   }
 
   public static RequestExecutor<File, WxMaQrcodeParam> create(RequestHttp requestHttp) throws WxErrorException {

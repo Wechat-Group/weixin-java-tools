@@ -43,6 +43,12 @@ public class WxMaOpenCommitExtInfo implements Serializable {
   @SerializedName("pages")
   private List<String> pageList;
 
+  /**
+   * 分包结构配置
+   */
+  @SerializedName("subpackages")
+  private List<WxMaOpenSubpackage> subpackageList;
+
   @SerializedName("window")
   private WxMaOpenWindow window;
 

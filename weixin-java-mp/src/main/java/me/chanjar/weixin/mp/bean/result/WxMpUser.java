@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -76,20 +73,20 @@ public class WxMpUser implements Serializable {
 
 
   public static WxMpUser fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpUser.class);
+    return WxMpGsonBuilder.create().fromJson(json, WxMpUser.class);
   }
 
   public static List<WxMpUser> fromJsonList(String json) {
     Type collectionType = new TypeToken<List<WxMpUser>>() {
     }.getType();
-    Gson gson = WxMpGsonBuilder.INSTANCE.create();
+    Gson gson = WxMpGsonBuilder.create();
     JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
     return gson.fromJson(jsonObject.get("user_info_list"), collectionType);
   }
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

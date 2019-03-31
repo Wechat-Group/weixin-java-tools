@@ -126,4 +126,46 @@ public class WxCpConsts {
     public static final String UPDATE_TAG = "update_tag";
 
   }
+
+  /**
+   * 应用推送消息的消息类型.
+   */
+  public static class AppChatMsgType {
+    /**
+     * 文本消息.
+     */
+    public static final String TEXT = "text";
+    /**
+     * 图片消息.
+     */
+    public static final String IMAGE = "image";
+    /**
+     * 语音消息.
+     */
+    public static final String VOICE = "voice";
+    /**
+     * 视频消息.
+     */
+    public static final String VIDEO = "video";
+    /**
+     * 发送文件（CP专用）.
+     */
+    public static final String FILE = "file";
+    /**
+     * 文本卡片消息（CP专用）.
+     */
+    public static final String TEXTCARD = "textcard";
+    /**
+     * 图文消息（点击跳转到外链）.
+     */
+    public static final String NEWS = "news";
+    /**
+     * 图文消息（点击跳转到图文消息页面）.
+     */
+    public static final String MPNEWS = "mpnews";
+    /**
+     * markdown消息.
+     */
+    public static final String MARKDOWN = "markdown";
+  }
 }

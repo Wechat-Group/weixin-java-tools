@@ -42,7 +42,7 @@ public class WxCpUserServiceImplTest {
     WxCpUser user = new WxCpUser();
     user.setUserId(userId);
     user.setName("Some Woman");
-    user.setDepartIds(new Integer[]{2});
+    user.setDepartIds(new Long[]{2L});
     user.setEmail("none@none.com");
     user.setGender(Gender.FEMALE);
     user.setMobile("13560084979");
@@ -74,7 +74,7 @@ public class WxCpUserServiceImplTest {
 
   @Test
   public void testListByDepartment() throws Exception {
-    List<WxCpUser> users = this.wxCpService.getUserService().listByDepartment(1, true, 0);
+    List<WxCpUser> users = this.wxCpService.getUserService().listByDepartment(1L, true, 0);
     assertNotEquals(users.size(), 0);
     for (WxCpUser user : users) {
       System.out.println(ToStringBuilder.reflectionToString(user, ToStringStyle.MULTI_LINE_STYLE));
@@ -83,7 +83,7 @@ public class WxCpUserServiceImplTest {
 
   @Test
   public void testListSimpleByDepartment() throws Exception {
-    List<WxCpUser> users = this.wxCpService.getUserService().listSimpleByDepartment(1, true, 0);
+    List<WxCpUser> users = this.wxCpService.getUserService().listSimpleByDepartment(1L, true, 0);
     assertNotEquals(users.size(), 0);
     for (WxCpUser user : users) {
       System.out.println(ToStringBuilder.reflectionToString(user, ToStringStyle.MULTI_LINE_STYLE));

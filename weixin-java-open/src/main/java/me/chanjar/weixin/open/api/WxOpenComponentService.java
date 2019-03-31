@@ -4,11 +4,13 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.open.bean.WxOpenCreateResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
 import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
+import me.chanjar.weixin.open.bean.result.WxOpenResult;
 
 import java.util.List;
 
@@ -24,11 +26,12 @@ public interface WxOpenComponentService {
   String API_GET_AUTHORIZER_OPTION_URL = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_option";
   String API_SET_AUTHORIZER_OPTION_URL = "https://api.weixin.qq.com/cgi-bin/component/api_set_authorizer_option";
 
-  String COMPONENT_LOGIN_PAGE_URL = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=%s&pre_auth_code=%s&redirect_uri=%s";
+  String COMPONENT_LOGIN_PAGE_URL = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=xxx&biz_appid=xxx";
+
   /**
    * 手机端打开授权链接
    */
-  String COMPONENT_MOBILE_LOGIN_PAGE_URL = "https://mp.weixin.qq.com/safe/bindcomponent?action=bindcomponent&no_scan=1&auth_type=3&component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=xxx&biz_appid=xxx$#wechat_redirect";
+  String COMPONENT_MOBILE_LOGIN_PAGE_URL = "https://mp.weixin.qq.com/safe/bindcomponent?action=bindcomponent&no_scan=1&auth_type=3&component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=xxx&biz_appid=xxx#wechat_redirect";
   String CONNECT_OAUTH2_AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s&component_appid=%s#wechat_redirect";
 
   /**
@@ -42,6 +45,15 @@ public interface WxOpenComponentService {
 
   String MINIAPP_JSCODE_2_SESSION = "https://api.weixin.qq.com/sns/component/jscode2session?appid=%s&js_code=%s&grant_type=authorization_code&component_appid=%s";
 
+  String CREATE_OPEN_URL= "https://api.weixin.qq.com/cgi-bin/open/create";
+
+  /**
+   * 快速创建小程序接口
+   */
+  String FAST_REGISTER_WEAPP_URL = "https://api.weixin.qq.com/cgi-bin/component/fastregisterweapp?action=create";
+  String FAST_REGISTER_WEAPP_SEARCH_URL = "https://api.weixin.qq.com/cgi-bin/component/fastregisterweapp?action=search";
+
+
   WxMpService getWxMpServiceByAppid(String appid);
 
   /**
@@ -51,6 +63,13 @@ public interface WxOpenComponentService {
    * @return
    */
   WxOpenMaService getWxMaServiceByAppid(String appid);
+
+  /**
+   * 获取指定appid的快速创建的小程序服务
+   * @param appid
+   * @return
+   */
+  WxOpenFastMaService getWxFastMaServiceByAppid(String appid);
 
   WxOpenConfigStorage getWxOpenConfigStorage();
 
@@ -168,4 +187,48 @@ public interface WxOpenComponentService {
    * @see #getTemplateList
    */
   void deleteTemplate(long templateId) throws WxErrorException;
+
+  /**
+   * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704199_1bcax&token=6df5e3650041eff2cd3ec3662425ad8d7beec8d9&lang=zh_CN
+   * 创建 开放平台帐号并绑定公众号/小程序
+   *
+   * https://api.weixin.qq.com/cgi-bin/open/create
+   *
+   * @param appId 公众号/小程序的appId
+   * @return
+   */
+  WxOpenCreateResult createOpenAccount(String appId) throws WxErrorException;
+
+  /**
+   *  https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21538208049W8uwq&token=&lang=zh_CN
+   *  第三方平台快速创建小程序
+   *  <pre>
+   *      注意：创建任务逻辑串行，单次任务结束后才可以使用相同信息下发第二次任务，请注意规避任务阻塞
+   *  </pre>
+   * @param name 企业名（需与工商部门登记信息一致）
+   * @param code 企业代码
+   * @param codeType 企业代码类型 1：统一社会信用代码（18位） 2：组织机构代码（9位xxxxxxxx-x） 3：营业执照注册号(15位)
+   * @param legalPersonaWechat 法人微信号
+   * @param legalPersonaName 法人姓名（绑定银行卡）
+   * @param componentPhone 第三方联系电话（方便法人与第三方联系）
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException;
+
+  /**
+   *  https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21538208049W8uwq&token=&lang=zh_CN
+   *  查询第三方平台快速创建小程序的任务状态
+   *  <pre>
+   *      注意：该接口只提供当下任务结果查询，不建议过分依赖该接口查询所创建小程序。
+   *            小程序的成功状态可在第三方服务器中自行对账、查询。
+   *            不要频繁调用search接口，消息接收需通过服务器查看。调用search接口会消耗接口整体调用quato
+   *  </pre>
+   *
+   * @param name 企业名（需与工商部门登记信息一致）
+   * @param legalPersonaWechat 法人微信号
+   * @param legalPersonaName 法人姓名（绑定银行卡）
+   * @throws WxErrorException
+   */
+  WxOpenResult fastRegisterWeappSearch(String name, String legalPersonaWechat, String legalPersonaName) throws WxErrorException;
 }

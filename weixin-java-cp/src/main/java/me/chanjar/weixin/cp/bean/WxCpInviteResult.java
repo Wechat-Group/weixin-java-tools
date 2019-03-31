@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.google.common.base.Splitter;
 import com.google.gson.annotations.SerializedName;
@@ -25,11 +23,11 @@ public class WxCpInviteResult implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxCpGsonBuilder.create().toJson(this);
   }
 
   public static WxCpInviteResult fromJson(String json) {
-    return WxCpGsonBuilder.INSTANCE.create().fromJson(json, WxCpInviteResult.class);
+    return WxCpGsonBuilder.create().fromJson(json, WxCpInviteResult.class);
   }
 
   @SerializedName("errcode")

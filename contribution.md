@@ -8,10 +8,10 @@
   - （***暂停此种方式，请使用第一种***）另外一种贡献代码的方式就是加入SDK Developers开发组，前提是对自己的代码足够自信就可以申请加入，加入之后可以随时直接提交代码，但要注意对所做的修改或新增的代码进行单元测试，保证提交代码没有明显问题。
 
 ### PR方式贡献代码步骤
-* 在 GitHub 上 `fork` 到自己的仓库，如 `my_user/weixin-java-tools`，然后 `clone` 到本地，并设置用户信息。
+* 在 GitHub 上 `fork` 到自己的仓库，如 `my_user/WxJava`，然后 `clone` 到本地，并设置用户信息。
 
 ```bash
-$ git clone git@github.com:my_user/weixin-java-tools.git
+$ git clone git@github.com:my_user/WxJava.git
 $ cd weixin-java-tools
 $ git config user.name "yourname"
 $ git config user.email "your email"
@@ -27,7 +27,7 @@ $ git push
 * 定期使用项目仓库内容更新自己仓库内容。
 
 ```bash
-$ git remote add upstream https://github.com/wechat-group/weixin-java-tools
+$ git remote add upstream https://github.com/Wechat-Group/WxJava
 $ git fetch upstream
 $ git checkout develop
 $ git rebase upstream/develop

@@ -1,20 +1,20 @@
 package me.chanjar.weixin.open.bean.ma;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import java.io.Serializable;
 
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
+
 /**
- * 微信小程序分类目录
+ * 微信小程序分类目录.
  *
  * @author yqx
  * @date 2018/9/13
  */
 @Data
 public class WxOpenMaCategory implements Serializable {
+  private static final long serialVersionUID = -700005096619889630L;
 
   @SerializedName("first_class")
   private String firstClass;
@@ -34,7 +34,8 @@ public class WxOpenMaCategory implements Serializable {
   @SerializedName("third_id")
   private Integer thirdId;
 
+  @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxOpenGsonBuilder.create().toJson(this);
   }
 }

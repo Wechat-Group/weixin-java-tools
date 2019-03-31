@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * <pre>
- * 查询代金券批次响应结果类
+ * 查询代金券批次响应结果类.
  * Created by Binary Wang on 2017-7-15.
  * </pre>
  *
@@ -21,9 +21,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayCouponStockQueryResult extends BaseWxPayResult {
+  private static final long serialVersionUID = 4644274730788451926L;
   /**
    * <pre>
-   * 字段名：设备号
+   * 字段名：设备号.
    * 变量名：device_info
    * 是否必填：否
    * 示例值：123456sb
@@ -36,7 +37,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：代金券批次ID
+   * 字段名：代金券批次ID.
    * 变量名：coupon_stock_id
    * 是否必填：是
    * 示例值：1757
@@ -49,7 +50,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：代金券名称
+   * 字段名：代金券名称.
    * 变量名：coupon_name
    * 是否必填：否
    * 示例值：测试代金券
@@ -62,7 +63,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：代金券面额
+   * 字段名：代金券面额.
    * 变量名：coupon_value
    * 是否必填：是
    * 示例值：5
@@ -75,7 +76,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：代金券使用最低限额
+   * 字段名：代金券使用最低限额.
    * 变量名：coupon_mininumn
    * 是否必填：否
    * 示例值：10
@@ -84,11 +85,11 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
    * </pre>
    */
   @XStreamAlias("coupon_mininumn")
-  private Integer couponMininumn;
+  private Integer couponMinimum;
 
   /**
    * <pre>
-   * 字段名：代金券批次状态
+   * 字段名：代金券批次状态.
    * 变量名：coupon_stock_status
    * 是否必填：是
    * 示例值：4
@@ -101,7 +102,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：代金券数量
+   * 字段名：代金券数量.
    * 变量名：coupon_total
    * 是否必填：是
    * 示例值：100
@@ -114,7 +115,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：代金券最大领取数量
+   * 字段名：代金券最大领取数量.
    * 变量名：max_quota
    * 是否必填：否
    * 示例值：1
@@ -127,7 +128,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：代金券已经发送的数量
+   * 字段名：代金券已经发送的数量.
    * 变量名：is_send_num
    * 是否必填：否
    * 示例值：0
@@ -140,7 +141,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：生效开始时间
+   * 字段名：生效开始时间.
    * 变量名：begin_time
    * 是否必填：是
    * 示例值：1943787483
@@ -153,7 +154,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：生效结束时间
+   * 字段名：生效结束时间.
    * 变量名：end_time
    * 是否必填：是
    * 示例值：1943787490
@@ -166,7 +167,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：创建时间
+   * 字段名：创建时间.
    * 变量名：create_time
    * 是否必填：是
    * 示例值：1943787420
@@ -179,7 +180,7 @@ public class WxPayCouponStockQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 字段名：代金券预算额度
+   * 字段名：代金券预算额度.
    * 变量名：coupon_budget
    * 是否必填：否
    * 示例值：500

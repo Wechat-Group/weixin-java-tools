@@ -7,7 +7,8 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.cp.bean.*;
+import me.chanjar.weixin.cp.bean.WxCpMessage;
+import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 
 /**
@@ -165,6 +166,13 @@ public interface WxCpService {
   WxSession getSession(String id, boolean create);
 
   /**
+   * 获取WxSessionManager 对象
+   *
+   * @return WxSessionManager
+   */
+  WxSessionManager getSessionManager();
+  
+  /**
    * <pre>
    * 设置WxSessionManager，只有当需要使用个性化的WxSessionManager的时候才需要调用此方法，
    * WxCpService默认使用的是{@link me.chanjar.weixin.common.session.StandardSessionManager}
@@ -241,13 +249,20 @@ public interface WxCpService {
    * 获取用户相关接口的服务类对象
    */
   WxCpUserService getUserService();
+  
+  /**
+   * 获取群聊服务
+   * 
+   * @return 群聊服务
+   */
+  WxCpChatService getChatService();
 
   WxCpAgentService getAgentService();
 
   /**
    * http请求对象
    */
-  RequestHttp getRequestHttp();
+  RequestHttp<?, ?> getRequestHttp();
 
   void setUserService(WxCpUserService userService);
 

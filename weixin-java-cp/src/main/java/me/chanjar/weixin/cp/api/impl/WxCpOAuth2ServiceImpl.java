@@ -1,6 +1,5 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -11,6 +10,7 @@ import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.cp.api.WxCpOAuth2Service;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpUserDetail;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
  * <pre>
@@ -87,6 +87,6 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
     JsonObject param = new JsonObject();
     param.addProperty("user_ticket", userTicket);
     String responseText = this.mainService.post(url, param.toString());
-    return new GsonBuilder().create().fromJson(responseText, WxCpUserDetail.class);
+    return WxCpGsonBuilder.create().fromJson(responseText, WxCpUserDetail.class);
   }
 }

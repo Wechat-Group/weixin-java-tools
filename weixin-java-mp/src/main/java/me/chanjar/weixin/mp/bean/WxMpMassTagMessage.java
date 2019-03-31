@@ -54,7 +54,7 @@ public class WxMpMassTagMessage implements Serializable {
   }
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   public void setSendAll(boolean sendAll) {

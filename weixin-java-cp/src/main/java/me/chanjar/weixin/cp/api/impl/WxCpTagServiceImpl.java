@@ -1,6 +1,12 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import com.google.gson.*;
+import java.util.List;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -10,8 +16,6 @@ import me.chanjar.weixin.cp.bean.WxCpTagAddOrRemoveUsersResult;
 import me.chanjar.weixin.cp.bean.WxCpTagGetResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
-
-import java.util.List;
 
 /**
  * <pre>
@@ -57,7 +61,7 @@ public class WxCpTagServiceImpl implements WxCpTagService {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/tag/list";
     String responseContent = this.mainService.get(url, null);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
-    return WxCpGsonBuilder.INSTANCE.create()
+    return WxCpGsonBuilder.create()
       .fromJson(
         tmpJsonElement.getAsJsonObject().get("taglist"),
         new TypeToken<List<WxCpTag>>() {
@@ -70,7 +74,7 @@ public class WxCpTagServiceImpl implements WxCpTagService {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/tag/get?tagid=" + tagId;
     String responseContent = this.mainService.get(url, null);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
-    return WxCpGsonBuilder.INSTANCE.create()
+    return WxCpGsonBuilder.create()
       .fromJson(
         tmpJsonElement.getAsJsonObject().get("userlist"),
         new TypeToken<List<WxCpUser>>() {

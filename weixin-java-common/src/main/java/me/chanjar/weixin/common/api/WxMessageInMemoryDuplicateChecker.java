@@ -76,7 +76,7 @@ public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChec
             }
           }
         } catch (InterruptedException e) {
-          e.printStackTrace();
+          Thread.currentThread().interrupt();
         }
       }
     });

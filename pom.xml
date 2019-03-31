@@ -5,12 +5,12 @@
   xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
-  <artifactId>weixin-java-parent</artifactId>
-  <version>3.2.0</version>
+  <artifactId>wx-java</artifactId>
+  <version>3.3.6.B</version>
   <packaging>pom</packaging>
-  <name>Weixin Java Tools - Parent</name>
+  <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
-  <url>https://github.com/wechat-group/weixin-java-tools</url>
+  <url>https://github.com/Wechat-Group/WxJava</url>
 
   <licenses>
     <license>
@@ -85,6 +85,11 @@
       <email>007gzs@gmail.com</email>
       <url>https://github.com/007gzs</url>
     </developer>
+    <developer>
+      <name>Howard Liu</name>
+      <email>liuxinghao1988@gmail.com</email>
+      <url>https://github.com/howardliu-cn</url>
+    </developer>
   </developers>
 
   <scm>
@@ -109,7 +114,7 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <httpclient.version>4.5</httpclient.version>
-    <jetty.version>9.3.0.RC0</jetty.version>
+    <jetty.version>9.4.12.v20180830</jetty.version>
   </properties>
 
   <dependencyManagement>
@@ -166,7 +171,7 @@
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
-        <version>1.4.9</version>
+        <version>1.4.10</version>
       </dependency>
       <!-- 由于guava较新的21.0版本需要jdk8，故而此处采用较低版本 -->
       <dependency>

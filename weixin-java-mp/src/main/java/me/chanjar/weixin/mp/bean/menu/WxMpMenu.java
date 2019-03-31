@@ -3,14 +3,12 @@ package me.chanjar.weixin.mp.bean.menu;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.bean.menu.WxMenuRule;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * <pre>
@@ -36,7 +34,7 @@ public class WxMpMenu implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return this.toJson();
   }
 
   public String toJson() {
@@ -56,7 +54,7 @@ public class WxMpMenu implements Serializable {
 
     @Override
     public String toString() {
-      return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+      return WxMpGsonBuilder.create().toJson(this);
     }
 
   }

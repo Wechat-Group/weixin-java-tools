@@ -2,11 +2,9 @@ package me.chanjar.weixin.mp.bean.kefu.result;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * @author Binary Wang
@@ -43,7 +41,7 @@ public class WxMpKfSession implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

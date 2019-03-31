@@ -21,14 +21,14 @@ public class WxMpMaterialNewsGsonAdapter implements JsonSerializer<WxMpMaterialN
     }
     newsJson.add("articles", articleJsonArray);
 
-    if (wxMpMaterialNews.getCreatedTime() != null) {
+    if (wxMpMaterialNews.getCreateTime() != null) {
       newsJson.addProperty("create_time",
-        SimpleDateFormat.getDateTimeInstance().format(wxMpMaterialNews.getCreatedTime()));
+        SimpleDateFormat.getDateTimeInstance().format(wxMpMaterialNews.getCreateTime()));
     }
 
-    if (wxMpMaterialNews.getUpdatedTime() != null) {
+    if (wxMpMaterialNews.getUpdateTime() != null) {
       newsJson.addProperty("update_time",
-        SimpleDateFormat.getDateTimeInstance().format(wxMpMaterialNews.getUpdatedTime()));
+        SimpleDateFormat.getDateTimeInstance().format(wxMpMaterialNews.getUpdateTime()));
     }
 
     return newsJson;
@@ -49,12 +49,12 @@ public class WxMpMaterialNewsGsonAdapter implements JsonSerializer<WxMpMaterialN
 
     if (json.get("create_time") != null && !json.get("create_time").isJsonNull()) {
       Date createTime = new Date(GsonHelper.getAsLong(json.get("create_time"))* 1000);
-      wxMpMaterialNews.setCreatedTime(createTime);
+      wxMpMaterialNews.setCreateTime(createTime);
     }
 
     if (json.get("update_time") != null && !json.get("update_time").isJsonNull()) {
       Date updateTime = new Date(GsonHelper.getAsLong(json.get("update_time"))* 1000);
-      wxMpMaterialNews.setUpdatedTime(updateTime);
+      wxMpMaterialNews.setUpdateTime(updateTime);
     }
 
     return wxMpMaterialNews;

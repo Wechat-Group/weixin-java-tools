@@ -20,7 +20,8 @@ public class WxCpUser implements Serializable {
   private static final long serialVersionUID = -5696099236344075582L;
   private String userId;
   private String name;
-  private Integer[] departIds;
+  private Long[] departIds;
+  private Integer[] orders;
   private String position;
   private String mobile;
   private Gender gender;
@@ -50,11 +51,11 @@ public class WxCpUser implements Serializable {
   }
 
   public static WxCpUser fromJson(String json) {
-    return WxCpGsonBuilder.INSTANCE.create().fromJson(json, WxCpUser.class);
+    return WxCpGsonBuilder.create().fromJson(json, WxCpUser.class);
   }
 
   public String toJson() {
-    return WxCpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxCpGsonBuilder.create().toJson(this);
   }
 
   @Data

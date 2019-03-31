@@ -1,5 +1,9 @@
 package me.chanjar.weixin.common.util.http.apache;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.annotation.NotThreadSafe;
@@ -24,10 +28,6 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * httpclient 连接管理器 自带DNS解析.
@@ -292,6 +292,7 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
           }
         }
       } catch (InterruptedException ignore) {
+        Thread.currentThread().interrupt();
       }
     }
 

@@ -1,5 +1,18 @@
 package me.chanjar.weixin.cp.message;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.api.WxMessageDuplicateChecker;
 import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
@@ -11,18 +24,6 @@ import me.chanjar.weixin.common.util.LogExceptionHandler;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * <pre>
@@ -72,7 +73,7 @@ public class WxCpMessageRouter {
     this.wxCpService = wxCpService;
     this.executorService = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
     this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
-    this.sessionManager = new StandardSessionManager();
+    this.sessionManager = wxCpService.getSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
   }
 
@@ -195,6 +196,7 @@ public class WxCpMessageRouter {
               sessionEndAccess(wxMessage);
             } catch (InterruptedException e) {
               WxCpMessageRouter.this.log.error("Error happened when wait task finish", e);
+              Thread.currentThread().interrupt();
             } catch (ExecutionException e) {
               WxCpMessageRouter.this.log.error("Error happened when wait task finish", e);
             }
@@ -207,12 +209,11 @@ public class WxCpMessageRouter {
 
 
   /**
-   * 处理微信消息
+   * 处理微信消息.
    *
-   * @param wxMessage
    */
   public WxCpXmlOutMessage route(final WxCpXmlMessage wxMessage) {
-    return this.route(wxMessage, new HashMap<String, Object>());
+    return this.route(wxMessage, new HashMap<String, Object>(2));
   }
 
   protected boolean isDuplicateMessage(WxCpXmlMessage wxMessage) {

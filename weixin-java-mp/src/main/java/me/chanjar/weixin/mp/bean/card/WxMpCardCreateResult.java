@@ -1,13 +1,15 @@
 package me.chanjar.weixin.mp.bean.card;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.io.Serializable;
-
+/**
+ * .
+ * @author yuanqixun
+ */
 @Data
 public class WxMpCardCreateResult implements Serializable {
   private static final long serialVersionUID = -128818731449449537L;
@@ -40,7 +42,7 @@ public class WxMpCardCreateResult implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

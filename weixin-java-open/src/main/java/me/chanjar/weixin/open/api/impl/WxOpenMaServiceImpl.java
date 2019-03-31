@@ -76,6 +76,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @return
    * @throws WxErrorException
    */
+  @Override
   public WxOpenMaDomainResult modifyDomain(String action, List<String> requestdomainList, List<String> wsrequestdomainList, List<String> uploaddomainList, List<String> downloaddomainList) throws WxErrorException {
 
 //    if (!"get".equals(action) && (requestdomainList == null || wsrequestdomainList == null || uploaddomainList == null || downloaddomainList == null)) {
@@ -146,11 +147,11 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @throws WxErrorException
    */
   @Override
-  public String bindTester(String wechatid) throws WxErrorException {
+  public WxOpenResult bindTester(String wechatid) throws WxErrorException {
     JsonObject paramJson = new JsonObject();
     paramJson.addProperty("wechatid", wechatid);
     String response = post(API_BIND_TESTER, GSON.toJson(paramJson));
-    return response;
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
   /**
@@ -161,11 +162,11 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @throws WxErrorException
    */
   @Override
-  public String unbindTester(String wechatid) throws WxErrorException {
+  public WxOpenResult unbindTester(String wechatid) throws WxErrorException {
     JsonObject paramJson = new JsonObject();
     paramJson.addProperty("wechatid", wechatid);
     String response = post(API_UNBIND_TESTER, GSON.toJson(paramJson));
-    return response;
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
   /**
@@ -193,7 +194,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @throws WxErrorException
    */
   @Override
-  public String codeCommit(Long templateId, String userVersion, String userDesc, WxMaOpenCommitExtInfo extInfo) throws WxErrorException {
+  public WxOpenResult codeCommit(Long templateId, String userVersion, String userDesc, WxMaOpenCommitExtInfo extInfo) throws WxErrorException {
     JsonObject params = new JsonObject();
     params.addProperty("template_id", templateId);
     params.addProperty("user_version", userVersion);
@@ -201,7 +202,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     //注意：ext_json必须是字符串类型
     params.addProperty("ext_json", GSON.toJson(extInfo));
     String response = post(API_CODE_COMMIT, GSON.toJson(params));
-    return response;
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
   /**
@@ -252,6 +253,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @return
    * @throws WxErrorException
    */
+  @Override
   public WxOpenMaSubmitAuditResult submitAudit(WxOpenMaSubmitAuditMessage submitAuditMessage) throws WxErrorException {
     String response = post(API_SUBMIT_AUDIT, GSON.toJson(submitAuditMessage));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaSubmitAuditResult.class);
@@ -265,11 +267,11 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @throws WxErrorException
    */
   @Override
-  public String getAuditStatus(Long auditid) throws WxErrorException {
+  public WxOpenMaQueryAuditResult getAuditStatus(Long auditid) throws WxErrorException {
     JsonObject params = new JsonObject();
     params.addProperty("auditid", auditid);
     String response = post(API_GET_AUDIT_STATUS, GSON.toJson(params));
-    return response;
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaQueryAuditResult.class);
   }
 
   /**
@@ -279,9 +281,9 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @throws WxErrorException
    */
   @Override
-  public String getLatestAuditStatus() throws WxErrorException {
+  public WxOpenMaQueryAuditResult getLatestAuditStatus() throws WxErrorException {
     String response = get(API_GET_LATEST_AUDIT_STATUS, null);
-    return response;
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaQueryAuditResult.class);
   }
 
   /**
@@ -294,10 +296,10 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @throws WxErrorException
    */
   @Override
-  public String releaesAudited() throws WxErrorException {
+  public WxOpenResult releaesAudited() throws WxErrorException {
     JsonObject params = new JsonObject();
     String response = post(API_RELEASE, GSON.toJson(params));
-    return response;
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
   /**
@@ -307,9 +309,9 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @throws WxErrorException
    */
   @Override
-  public String revertCodeReleaes() throws WxErrorException {
+  public WxOpenResult revertCodeReleaes() throws WxErrorException {
     String response = get(API_REVERT_CODE_RELEASE, null);
-    return response;
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
   /**
@@ -322,8 +324,36 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @throws WxErrorException
    */
   @Override
-  public String undoCodeAudit() throws WxErrorException {
+  public WxOpenResult undoCodeAudit() throws WxErrorException {
     String response = get(API_UNDO_CODE_AUDIT, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  /**
+   * 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public String getSupportVersion() throws WxErrorException {
+    JsonObject params = new JsonObject();
+    String response = post(API_GET_WEAPP_SUPPORT_VERSION, GSON.toJson(params));
+    return response;
+  }
+
+  /**
+   * 设置最低基础库版本（仅供第三方代小程序调用）
+   *
+   * @param version
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public String setSupportVersion(String version) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("version", version);
+    String response = post(API_SET_WEAPP_SUPPORT_VERSION, GSON.toJson(params));
     return response;
   }
 

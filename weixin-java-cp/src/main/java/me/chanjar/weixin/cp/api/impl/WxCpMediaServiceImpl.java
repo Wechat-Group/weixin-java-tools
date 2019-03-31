@@ -49,6 +49,14 @@ public class WxCpMediaServiceImpl implements WxCpMediaService {
   }
 
   @Override
+  public File getJssdkFile(String mediaId) throws WxErrorException {
+    return this.mainService.execute(
+      BaseMediaDownloadRequestExecutor.create(this.mainService.getRequestHttp(),
+        this.mainService.getWxCpConfigStorage().getTmpDirFile()),
+      JSSDK_MEDIA_GET_URL, "media_id=" + mediaId);
+  }
+
+  @Override
   public String uploadImg(File file) throws WxErrorException {
     final WxMediaUploadResult result = this.mainService
       .execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()), IMG_UPLOAD_URL, file);

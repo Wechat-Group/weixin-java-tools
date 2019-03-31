@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
@@ -31,7 +29,7 @@ public class WxDataCubeUserCumulate implements Serializable {
   private Integer cumulateUser;
 
   public static List<WxDataCubeUserCumulate> fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(
+    return WxMpGsonBuilder.create().fromJson(
       JSON_PARSER.parse(json).getAsJsonObject().get("list"),
       new TypeToken<List<WxDataCubeUserCumulate>>() {
       }.getType());
@@ -39,6 +37,6 @@ public class WxDataCubeUserCumulate implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 }

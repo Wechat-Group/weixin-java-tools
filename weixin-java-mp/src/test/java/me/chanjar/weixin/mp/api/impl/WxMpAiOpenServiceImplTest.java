@@ -1,14 +1,16 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import java.io.File;
+
+import org.testng.annotations.*;
+
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.AiLangType;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
+import me.chanjar.weixin.mp.enums.AiLangType;
 
-import java.io.File;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <pre>
@@ -35,13 +37,12 @@ public class WxMpAiOpenServiceImplTest {
     String voiceId = System.currentTimeMillis() + "a";
     AiLangType lang = AiLangType.zh_CN;
     final String result = this.wxService.getAiOpenService().recogniseVoice(voiceId, lang, new File("d:\\t.mp3"));
-    System.out.println(result);
+    assertThat(result).isNotEmpty();
   }
 
   @Test
   public void testTranslate() throws WxErrorException {
-    final String responseContent = this.wxService.getAiOpenService()
-      .translate(AiLangType.zh_CN, AiLangType.en_US, "微信文档很坑爹");
-    System.out.println(responseContent);
+    final String result = this.wxService.getAiOpenService().translate(AiLangType.zh_CN, AiLangType.en_US, "微信文档很坑爹");
+    assertThat(result).isNotEmpty();
   }
 }

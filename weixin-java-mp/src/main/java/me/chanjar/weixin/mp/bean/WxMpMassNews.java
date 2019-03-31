@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -26,7 +23,7 @@ public class WxMpMassNews implements Serializable {
   }
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   public boolean isEmpty() {
@@ -35,7 +32,7 @@ public class WxMpMassNews implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   /**
@@ -85,7 +82,7 @@ public class WxMpMassNews implements Serializable {
 
     @Override
     public String toString() {
-      return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+      return WxMpGsonBuilder.create().toJson(this);
     }
   }
 }

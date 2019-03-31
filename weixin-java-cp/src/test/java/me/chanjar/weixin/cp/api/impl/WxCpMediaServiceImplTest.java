@@ -36,7 +36,8 @@ public class WxCpMediaServiceImplTest {
   public Object[][] mediaData() {
     return new Object[][]{
       new Object[]{WxConsts.MediaFileType.IMAGE, TestConstants.FILE_JPG, "mm.jpeg"},
-      new Object[]{WxConsts.MediaFileType.VOICE, TestConstants.FILE_MP3, "mm.mp3"},//{"errcode":301017,"errmsg":"voice file only support amr like myvoice.amr"}
+      //new Object[]{WxConsts.MediaFileType.VOICE, TestConstants.FILE_MP3, "mm.mp3"},
+      // {"errcode":301017,"errmsg":"voice file only support amr like myvoice.amr"}
       new Object[]{WxConsts.MediaFileType.VOICE, TestConstants.FILE_AMR, "mm.amr"},
       new Object[]{WxConsts.MediaFileType.VIDEO, TestConstants.FILE_MP4, "mm.mp4"},
       new Object[]{WxConsts.MediaFileType.FILE, TestConstants.FILE_JPG, "mm.jpeg"}
@@ -47,8 +48,9 @@ public class WxCpMediaServiceImplTest {
   public void testUploadMedia(String mediaType, String fileType, String fileName) throws WxErrorException, IOException {
     try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(fileName)) {
       WxMediaUploadResult res = this.wxService.getMediaService().upload(mediaType, fileType, inputStream);
-      assertNotNull(res.getType());
-      assertNotNull(res.getCreatedAt());
+      assertThat(res).isNotNull();
+      assertThat(res.getType()).isNotEmpty();
+      assertThat(res.getCreatedAt()).isGreaterThan(0);
       assertTrue(res.getMediaId() != null || res.getThumbMediaId() != null);
 
       if (res.getMediaId() != null) {
@@ -70,9 +72,9 @@ public class WxCpMediaServiceImplTest {
   }
 
   @Test(dependsOnMethods = {"testUploadMedia"}, dataProvider = "downloadMedia")
-  public void testDownloadMedia(String media_id) throws WxErrorException {
-    File file = this.wxService.getMediaService().download(media_id);
-    assertNotNull(file);
+  public void testDownload(String mediaId) throws WxErrorException {
+    File file = this.wxService.getMediaService().download(mediaId);
+    assertThat(file).isNotNull();
     System.out.println(file);
   }
 
@@ -81,5 +83,12 @@ public class WxCpMediaServiceImplTest {
     URL url = ClassLoader.getSystemResource("mm.jpeg");
     String res = this.wxService.getMediaService().uploadImg(new File(url.getFile()));
     assertThat(res).isNotEmpty();
+  }
+
+  @Test
+  public void testGetJssdkFile() throws WxErrorException {
+    File file = this.wxService.getMediaService().getJssdkFile("....");
+    assertThat(file).isNotNull();
+    System.out.println(file);
   }
 }

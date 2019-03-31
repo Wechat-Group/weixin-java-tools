@@ -1,19 +1,20 @@
 package com.github.binarywang.wxpay.bean.notify;
 
-import com.github.binarywang.wxpay.config.WxPayConfig;
-import com.github.binarywang.wxpay.exception.WxPayException;
-import com.github.binarywang.wxpay.testbase.ApiTestModule;
-import org.apache.commons.codec.binary.Base64;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
-
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 
-import static org.testng.Assert.assertNotNull;
+import org.apache.commons.codec.binary.Base64;
+import org.testng.annotations.*;
+
+import com.github.binarywang.wxpay.config.WxPayConfig;
+import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.testbase.ApiTestModule;
+
+import static org.testng.Assert.*;
 
 /**
  * <pre>
@@ -71,10 +72,10 @@ public class WxPayRefundNotifyResultTest {
 
     Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
     final MessageDigest md5 = MessageDigest.getInstance("MD5");
-    md5.update(this.wxPayConfig.getMchKey().getBytes());
+    md5.update(this.wxPayConfig.getMchKey().getBytes(StandardCharsets.UTF_8));
     final String keyMd5String = new BigInteger(1, md5.digest()).toString(16).toLowerCase();
-    SecretKeySpec key = new SecretKeySpec(keyMd5String.getBytes(), "AES");
+    SecretKeySpec key = new SecretKeySpec(keyMd5String.getBytes(StandardCharsets.UTF_8), "AES");
     cipher.init(Cipher.ENCRYPT_MODE, key);
-    System.out.println(Base64.encodeBase64String(cipher.doFinal(xml.getBytes())));
+    System.out.println(Base64.encodeBase64String(cipher.doFinal(xml.getBytes(StandardCharsets.UTF_8))));
   }
 }

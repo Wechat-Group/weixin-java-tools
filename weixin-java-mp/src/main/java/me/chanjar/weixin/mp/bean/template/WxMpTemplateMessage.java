@@ -55,6 +55,7 @@ public class WxMpTemplateMessage implements Serializable {
   /**
    * 模板数据.
    */
+  @Builder.Default
   private List<WxMpTemplateData> data = new ArrayList<>();
 
   public WxMpTemplateMessage addData(WxMpTemplateData datum) {
@@ -66,7 +67,7 @@ public class WxMpTemplateMessage implements Serializable {
   }
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   @Data

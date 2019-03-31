@@ -1,13 +1,11 @@
 package me.chanjar.weixin.mp.bean.membercard;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.mp.bean.card.MemberCardCreateRequest;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.io.Serializable;
 
 @Data
 public final class WxMpMemberCardCreateMessage implements Serializable {
@@ -15,11 +13,12 @@ public final class WxMpMemberCardCreateMessage implements Serializable {
   @SerializedName("card")
   private MemberCardCreateRequest cardCreateRequest;
 
+  @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   public static WxMpMemberCardCreateMessage fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpMemberCardCreateMessage.class);
+    return WxMpGsonBuilder.create().fromJson(json, WxMpMemberCardCreateMessage.class);
   }
 }

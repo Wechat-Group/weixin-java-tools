@@ -219,7 +219,7 @@ public interface WxOpenMaService extends WxMaService {
    * @return
    * @throws WxErrorException
    */
-  String bindTester(String wechatid) throws WxErrorException;
+  WxOpenResult bindTester(String wechatid) throws WxErrorException;
 
   /**
    * 解除绑定小程序体验者
@@ -228,7 +228,7 @@ public interface WxOpenMaService extends WxMaService {
    * @return
    * @throws WxErrorException
    */
-  String unbindTester(String wechatid) throws WxErrorException;
+  WxOpenResult unbindTester(String wechatid) throws WxErrorException;
 
   /**
    * 获得体验者列表
@@ -248,7 +248,7 @@ public interface WxOpenMaService extends WxMaService {
    * @return
    * @throws WxErrorException
    */
-  String codeCommit(Long templateId, String userVersion, String userDesc, WxMaOpenCommitExtInfo extInfo) throws WxErrorException;
+  WxOpenResult codeCommit(Long templateId, String userVersion, String userDesc, WxMaOpenCommitExtInfo extInfo) throws WxErrorException;
 
   /**
    * 获取体验小程序的体验二维码
@@ -294,7 +294,7 @@ public interface WxOpenMaService extends WxMaService {
    * @return
    * @throws WxErrorException
    */
-  String getAuditStatus(Long auditid) throws WxErrorException;
+  WxOpenMaQueryAuditResult getAuditStatus(Long auditid) throws WxErrorException;
 
   /**
    * 查询最新一次提交的审核状态（仅供第三方代小程序调用）
@@ -302,7 +302,7 @@ public interface WxOpenMaService extends WxMaService {
    * @return
    * @throws WxErrorException
    */
-  String getLatestAuditStatus() throws WxErrorException;
+  WxOpenMaQueryAuditResult getLatestAuditStatus() throws WxErrorException;
 
   /**
    * 发布已通过审核的小程序（仅供第三方代小程序调用）
@@ -310,7 +310,7 @@ public interface WxOpenMaService extends WxMaService {
    * @return
    * @throws WxErrorException
    */
-  String releaesAudited() throws WxErrorException;
+  WxOpenResult releaesAudited() throws WxErrorException;
 
   /**
    * 11. 小程序版本回退（仅供第三方代小程序调用）
@@ -318,7 +318,7 @@ public interface WxOpenMaService extends WxMaService {
    * @return
    * @throws WxErrorException
    */
-  String revertCodeReleaes() throws WxErrorException;
+  WxOpenResult revertCodeReleaes() throws WxErrorException;
 
   /**
    * 15. 小程序审核撤回
@@ -329,6 +329,21 @@ public interface WxOpenMaService extends WxMaService {
    * @return
    * @throws WxErrorException
    */
-  String undoCodeAudit() throws WxErrorException;
+  WxOpenResult undoCodeAudit() throws WxErrorException;
+
+  /**
+   * 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
+   * @return
+   * @throws WxErrorException
+   */
+  String getSupportVersion() throws WxErrorException;
+
+  /**
+   * 设置最低基础库版本（仅供第三方代小程序调用）
+   * @param version
+   * @return
+   * @throws WxErrorException
+   */
+  String setSupportVersion(String version) throws WxErrorException;
 
 }

@@ -1,11 +1,5 @@
 package me.chanjar.weixin.open.bean.message;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-
-import org.apache.commons.io.IOUtils;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
@@ -16,6 +10,12 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.util.WxOpenCryptUtil;
 import me.chanjar.weixin.open.util.xml.XStreamTransformer;
+import org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
@@ -55,6 +55,53 @@ public class WxOpenXmlMessage implements Serializable {
   @XStreamAlias("PreAuthCode")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String preAuthCode;
+
+  // 以下为快速创建小程序接口推送的的信息
+
+  @XStreamAlias ("appid")
+  private String registAppId;
+
+  @XStreamAlias ("status")
+  private int status;
+
+  @XStreamAlias ("auth_code")
+  private String authCode;
+
+  @XStreamAlias ("msg")
+  @XStreamConverter (value = XStreamCDataConverter.class)
+  private String msg;
+
+  @XStreamAlias ("info")
+  private Info info = new Info();
+
+  @XStreamAlias ("info")
+  @Data
+  public static class Info implements Serializable {
+    private static final long serialVersionUID = 7706235740094081194L;
+
+    @XStreamAlias ("name")
+    @XStreamConverter (value = XStreamCDataConverter.class)
+    private String name;
+
+    @XStreamAlias ("code")
+    @XStreamConverter (value = XStreamCDataConverter.class)
+    private String code;
+
+    @XStreamAlias ("code_type")
+    private int codeType;
+
+    @XStreamAlias ("legal_persona_wechat")
+    @XStreamConverter (value = XStreamCDataConverter.class)
+    private String legalPersonaWechat;
+
+    @XStreamAlias ("legal_persona_name")
+    @XStreamConverter (value = XStreamCDataConverter.class)
+    private String legalPersonaName;
+
+    @XStreamAlias ("component_phone")
+    @XStreamConverter (value = XStreamCDataConverter.class)
+    private String componentPhone;
+  }
 
   public static String wxMpOutXmlMessageToEncryptedXml(WxMpXmlOutMessage message, WxOpenConfigStorage wxOpenConfigStorage) {
     String plainXml = message.toXml();
@@ -99,7 +146,7 @@ public class WxOpenXmlMessage implements Serializable {
   public static WxOpenXmlMessage fromEncryptedXml(InputStream is, WxOpenConfigStorage wxOpenConfigStorage,
                                                   String timestamp, String nonce, String msgSignature) {
     try {
-      return fromEncryptedXml(IOUtils.toString(is, "UTF-8"),
+      return fromEncryptedXml(IOUtils.toString(is, StandardCharsets.UTF_8),
         wxOpenConfigStorage, timestamp, nonce, msgSignature);
     } catch (IOException e) {
       throw new RuntimeException(e);

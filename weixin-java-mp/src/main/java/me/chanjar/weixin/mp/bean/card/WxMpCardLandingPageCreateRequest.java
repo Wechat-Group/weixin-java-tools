@@ -1,15 +1,14 @@
 package me.chanjar.weixin.mp.bean.card;
 
+import java.io.Serializable;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.io.Serializable;
 
 @Data
 public class WxMpCardLandingPageCreateRequest implements Serializable {
@@ -45,8 +44,9 @@ public class WxMpCardLandingPageCreateRequest implements Serializable {
 
   public void addCard(String cardId, String thumbUrl) {
     if (StringUtils.isNoneBlank(cardId, thumbUrl)) {
-      if (cardList == null)
+      if (cardList == null) {
         cardList = new JsonArray();
+      }
       JsonObject cardJson = new JsonObject();
       cardJson.addProperty("card_id", cardId);
       cardJson.addProperty("thumb_url", thumbUrl);
@@ -60,7 +60,7 @@ public class WxMpCardLandingPageCreateRequest implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

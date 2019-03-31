@@ -1,8 +1,5 @@
 package com.github.binarywang.wxpay.bean.entpay;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.github.binarywang.wxpay.bean.request.BaseWxPayRequest;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.AllArgsConstructor;
@@ -11,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.annotation.Required;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
  * <pre>
@@ -50,7 +48,7 @@ public class EntPayQueryRequest extends BaseWxPayRequest {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxGsonBuilder.create().toJson(this);
   }
 
   @Override

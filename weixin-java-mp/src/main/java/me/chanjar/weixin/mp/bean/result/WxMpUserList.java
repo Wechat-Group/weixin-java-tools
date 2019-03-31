@@ -22,11 +22,11 @@ public class WxMpUserList implements Serializable {
   protected String nextOpenid;
 
   public static WxMpUserList fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpUserList.class);
+    return WxMpGsonBuilder.create().fromJson(json, WxMpUserList.class);
   }
 
   @Override
   public String toString() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 }

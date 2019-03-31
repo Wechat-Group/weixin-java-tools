@@ -52,7 +52,7 @@ public class SignUtils {
    */
   @Deprecated
   public static String createSign(Map<String, String> params, String signKey) {
-    return createSign(params, null, signKey, new String[0]);
+    return createSign(params, SignType.MD5, signKey, new String[0]);
   }
 
   /**

@@ -3,21 +3,23 @@ package me.chanjar.weixin.cp.bean;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 
 /**
@@ -35,6 +37,11 @@ import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 @XStreamAlias("xml")
 public class WxCpXmlMessage implements Serializable {
   private static final long serialVersionUID = -1042994982179476410L;
+
+  /**
+   * 使用dom4j解析的存放所有xml属性和值的map.
+   */
+  private Map<String, Object> allFieldsMap;
 
   ///////////////////////
   // 以下都是微信推送过来的消息的xml的element所对应的属性
@@ -349,7 +356,9 @@ public class WxCpXmlMessage implements Serializable {
   protected static WxCpXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
     xml = xml.replace("</PicList><PicList>", "");
-    return XStreamTransformer.fromXml(WxCpXmlMessage.class, xml);
+    final WxCpXmlMessage xmlMessage = XStreamTransformer.fromXml(WxCpXmlMessage.class, xml);
+    xmlMessage.setAllFieldsMap(XmlUtils.xml2Map(xml));
+    return xmlMessage;
   }
 
   protected static WxCpXmlMessage fromXml(InputStream is) {
@@ -370,7 +379,7 @@ public class WxCpXmlMessage implements Serializable {
   public static WxCpXmlMessage fromEncryptedXml(InputStream is, WxCpConfigStorage wxCpConfigStorage,
                                                 String timestamp, String nonce, String msgSignature) {
     try {
-      return fromEncryptedXml(IOUtils.toString(is, "UTF-8"), wxCpConfigStorage, timestamp, nonce, msgSignature);
+      return fromEncryptedXml(IOUtils.toString(is, StandardCharsets.UTF_8), wxCpConfigStorage, timestamp, nonce, msgSignature);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -378,7 +387,7 @@ public class WxCpXmlMessage implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxCpGsonBuilder.create().toJson(this);
   }
 
   @Data

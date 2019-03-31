@@ -1,11 +1,7 @@
 package com.github.binarywang.wxpay.bean.request;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 发送红包请求参数对象.
@@ -20,9 +16,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPaySendRedpackRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = -2035425086824987567L;
+
   @Override
   protected String[] getIgnoredParamsForSign() {
-    return new String[]{"sign_type"};
+    return new String[]{"sign_type", "sub_appid"};
   }
 
   /**
@@ -102,10 +100,25 @@ public class WxPaySendRedpackRequest extends BaseWxPayRequest {
 
   /**
    * wxappid.
-   * 微信分配的公众账号ID（企业号corpid即为此appId）。接口传入的所有appid应该为公众号的appid（在mp.weixin.qq.com申请的），不能为APP的appid（在open.weixin.qq.com申请的）
+   * 微信分配的公众账号ID（企业号corpid即为此appId）。
+   * 接口传入的所有appid应该为公众号的appid（在mp.weixin.qq.com申请的），
+   * 不能为APP的appid（在open.weixin.qq.com申请的）
    */
   @XStreamAlias("wxappid")
   private String wxAppid;
+
+  /**
+   * 触达用户appid.
+   * <pre>
+   * msgappid
+   * wx28b16568a629bb33
+   * String(32)
+   * 服务商模式下触达用户时的appid(可填服务商自己的appid或子商户的appid)，
+   * 服务商模式下必填，服务商模式下填入的子商户appid必须在微信支付商户平台中先录入，否则会校验不过。
+   * </pre>
+   */
+  @XStreamAlias("msgappid")
+  private String msgAppid;
 
   /**
    * <pre>
@@ -152,7 +165,6 @@ public class WxPaySendRedpackRequest extends BaseWxPayRequest {
    */
   @XStreamAlias("consume_mch_id")
   private String consumeMchId;
-
 
   @Override
   protected void checkConstraints() {

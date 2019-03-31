@@ -1,11 +1,10 @@
 package com.github.binarywang.wxpay.bean.result;
 
+import java.io.Serializable;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.io.Serializable;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
  * 记账时间:2018-02-01 04:21:23 微信支付业务单号:50000305742018020103387128253 资金流水单号:1900009231201802015884652186 业务名称:退款
@@ -20,19 +19,19 @@ public class WxPayFundFlowBaseResult implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxGsonBuilder.create().toJson(this);
   }
 
   /**
-   * 记账时间
+   * 记账时间.
    */
   private String BillingTime;
   /**
-   * 微信支付业务单号
+   * 微信支付业务单号.
    */
   private String bizTransactionId;
   /**
-   * 资金流水单号
+   * 资金流水单号.
    */
   private String fundFlowId;
   /**
@@ -40,31 +39,31 @@ public class WxPayFundFlowBaseResult implements Serializable {
    */
   private String bizName;
   /**
-   * 业务类型
+   * 业务类型.
    */
   private String bizType;
   /**
-   * 收支类型
+   * 收支类型.
    */
   private String financialType;
   /**
-   * 收支金额（元）
+   * 收支金额（元）.
    */
   private String financialFee;
   /**
-   * 账户结余（元）
+   * 账户结余（元）.
    */
   private String AccountBalance;
   /**
-   * 资金变更提交申请人
+   * 资金变更提交申请人.
    */
   private String fundApplicant;
   /**
-   * 备注
+   * 备注.
    */
   private String memo;
   /**
-   * 业务凭证号
+   * 业务凭证号.
    */
   private String bizVoucherId;
 

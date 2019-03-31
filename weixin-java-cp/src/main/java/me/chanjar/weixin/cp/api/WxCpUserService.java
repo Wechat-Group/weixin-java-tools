@@ -38,7 +38,7 @@ public interface WxCpUserService {
    * @param fetchChild 非必填。1/0：是否递归获取子部门下面的成员
    * @param status     非必填。0获取全部员工，1获取已关注成员列表，2获取禁用成员列表，4获取未关注成员列表。status可叠加
    */
-  List<WxCpUser> listByDepartment(Integer departId, Boolean fetchChild, Integer status) throws WxErrorException;
+  List<WxCpUser> listByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException;
 
   /**
    * <pre>
@@ -51,7 +51,7 @@ public interface WxCpUserService {
    * @param fetchChild 非必填。1/0：是否递归获取子部门下面的成员
    * @param status     非必填。0获取全部员工，1获取已关注成员列表，2获取禁用成员列表，4获取未关注成员列表。status可叠加
    */
-  List<WxCpUser> listSimpleByDepartment(Integer departId, Boolean fetchChild, Integer status) throws WxErrorException;
+  List<WxCpUser> listSimpleByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException;
 
   /**
    * 新建用户.

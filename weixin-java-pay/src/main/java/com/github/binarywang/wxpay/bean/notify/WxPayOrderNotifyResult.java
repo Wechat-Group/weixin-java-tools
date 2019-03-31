@@ -3,17 +3,18 @@ package com.github.binarywang.wxpay.bean.notify;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
+import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.converter.WxPayOrderNotifyResultConverter;
+import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 
 /**
@@ -284,7 +285,17 @@ public class WxPayOrderNotifyResult extends BaseWxPayResult {
    */
   @XStreamAlias("version")
   private String version;
-
+  
+  @Override
+  public void checkResult(WxPayService wxPayService, String signType, boolean checkSuccess) throws WxPayException {
+    //防止伪造成功通知
+    if (WxPayConstants.ResultCode.SUCCESS.equals(getReturnCode()) && getSign() == null) {
+      throw new WxPayException("伪造的通知！");
+    }
+    
+    super.checkResult(wxPayService, signType, checkSuccess);
+  }
+  
   /**
    * From xml wx pay order notify result.
    *
@@ -314,6 +325,6 @@ public class WxPayOrderNotifyResult extends BaseWxPayResult {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxGsonBuilder.create().toJson(this);
   }
 }

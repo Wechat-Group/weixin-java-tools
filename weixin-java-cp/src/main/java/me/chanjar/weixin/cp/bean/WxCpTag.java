@@ -1,14 +1,15 @@
 package me.chanjar.weixin.cp.bean;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
-import java.io.Serializable;
-
 /**
  * Created by Daniel Qian.
+ * @author Daniel Qian
  */
 @Data
 @AllArgsConstructor

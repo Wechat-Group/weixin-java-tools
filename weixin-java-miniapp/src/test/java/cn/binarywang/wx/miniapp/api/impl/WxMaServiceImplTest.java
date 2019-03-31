@@ -1,7 +1,5 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import java.io.File;
-
 import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.*;
 
@@ -11,6 +9,7 @@ import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.*;
 
 /**
@@ -33,9 +32,9 @@ public class WxMaServiceImplTest {
     assertTrue(StringUtils.isNotBlank(after));
   }
 
-  @Test
-  public void testImgSecCheck() throws WxErrorException {
-    boolean result = this.wxService.imgSecCheck(new File(ClassLoader.getSystemResource("tmp.png").getFile()));
-    assertTrue(result);
+  @Test(expectedExceptions = {WxErrorException.class})
+  public void testGetPaidUnionId() throws WxErrorException {
+    final String unionId = this.wxService.getPaidUnionId("1", null, "3", "4");
+    assertThat(unionId).isNotEmpty();
   }
 }

@@ -1,13 +1,12 @@
 package me.chanjar.weixin.open.bean.result;
 
+import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.open.bean.ma.WxOpenMaCategory;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.io.Serializable;
-import java.util.List;
+import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
 /**
  * 微信开放平台小程序分类目录列表返回
@@ -16,16 +15,16 @@ import java.util.List;
  * @date 2018/9/12
  */
 @Data
-public class WxOpenMaCategoryListResult implements Serializable {
-
-  private String errcode;
-  private String errmsg;
+@EqualsAndHashCode(callSuper = true)
+public class WxOpenMaCategoryListResult extends WxOpenResult {
+  private static final long serialVersionUID = 4549360618179745721L;
 
   @SerializedName("category_list")
   List<WxOpenMaCategory> categoryList;
 
+  @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxOpenGsonBuilder.create().toJson(this);
   }
 
 }

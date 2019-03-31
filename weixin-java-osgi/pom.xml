@@ -5,14 +5,14 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.binarywang</groupId>
-    <artifactId>weixin-java-parent</artifactId>
+    <artifactId>wx-java</artifactId>
     <version>2.6.0</version>
   </parent>
 
   <artifactId>weixin-java-osgi</artifactId>
   <packaging>bundle</packaging>
-  <name>Weixin Java Tools - OSGI</name>
-  <description>微信公众号Java SDK OSGI</description>
+  <name>WxJava - OSGI</name>
+  <description>微信Java开发SDK OSGI模块</description>
 
   <dependencies>
     <dependency>

@@ -75,7 +75,9 @@ public class BaseWxPayResultTest {
   @Test(expectedExceptions = {RuntimeException.class})
   public void testToMap_with_empty_xmlString() {
     WxPayOrderQueryResult result = new WxPayOrderQueryResult();
-    result.setXmlString(" ");
+    result.setXmlString( "<?xml version=\"1.0\" ?><!DOCTYPE doc " +
+      "[<!ENTITY win SYSTEM \"file:///C:/Users/user/Documents/testdata2.txt\">]" +
+      "><doc>&win;</doc>");
     Map<String, String> map = result.toMap();
     System.out.println(map);
   }

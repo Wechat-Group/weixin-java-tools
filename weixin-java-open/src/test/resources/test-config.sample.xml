@@ -1,0 +1,7 @@
+<xml>
+  <componentAppId>第三方平台appID</componentAppId>
+  <componentSecret>第三方平台appsecret</componentSecret>
+  <componentToken>第三方平台Token</componentToken>
+  <componentAesKey>第三方平台EncodingAESKey</componentAesKey>
+  <appId>测试APPID</appId>
+</xml>

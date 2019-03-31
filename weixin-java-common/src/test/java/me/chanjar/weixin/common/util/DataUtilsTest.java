@@ -1,8 +1,7 @@
 package me.chanjar.weixin.common.util;
 
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.*;
 
 /**
@@ -18,6 +17,6 @@ public class DataUtilsTest {
   public void testHandleDataWithSecret() {
     String data = "js_code=001tZveq0SMoiq1AEXeq0ECJeq0tZveZ&secret=5681022fa1643845392367ea88888888&grant_type=authorization_code&appid=wxe156d4848d999999";
     final String s = DataUtils.handleDataWithSecret(data);
-    assertThat(s).contains("&secret=******&");
+    assertTrue(s.contains("&secret=******&"));
   }
 }

@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
@@ -179,7 +176,7 @@ public class WxMpStoreBaseInfo implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return this.toJson();
   }
 
   public String toJson() {
@@ -195,7 +192,7 @@ public class WxMpStoreBaseInfo implements Serializable {
   public static class WxMpStorePhoto implements Serializable {
     private static final long serialVersionUID = -2942447907614186861L;
     /**
-     * 照片url
+     * 照片url.
      */
     @SerializedName("photo_url")
     private String photoUrl;

@@ -3,11 +3,9 @@ package com.github.binarywang.wxpay.bean.result;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
  * <pre>
@@ -19,16 +17,16 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class WxPayFundFlowResult implements Serializable{
+public class WxPayFundFlowResult implements Serializable {
   private static final long serialVersionUID = 8371500036495349207L;
 
   @Override
   public String toString() {
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    return WxGsonBuilder.create().toJson(this);
   }
 
   /**
-   * 资金流水返回对象
+   * 资金流水返回对象.
    */
   private List<WxPayFundFlowBaseResult> wxPayFundFlowBaseResultList;
 

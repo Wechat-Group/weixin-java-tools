@@ -3,6 +3,7 @@ package com.github.binarywang.wxpay.service.impl;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.PublicKey;
@@ -148,7 +149,7 @@ public class EntPayServiceImpl implements EntPayService {
           .getPublicKey((SubjectPublicKeyInfo) reader.readObject());
 
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        byte[] encrypt = cipher.doFinal(srcString.getBytes());
+        byte[] encrypt = cipher.doFinal(srcString.getBytes(StandardCharsets.UTF_8));
         return Base64.encodeBase64String(encrypt);
       }
     } catch (Exception e) {
@@ -160,7 +161,7 @@ public class EntPayServiceImpl implements EntPayService {
     try {
       String publicKeyStr = this.getPublicKey();
       Path tmpFile = Files.createTempFile("payToBank", ".pem");
-      Files.write(tmpFile, publicKeyStr.getBytes());
+      Files.write(tmpFile, publicKeyStr.getBytes(StandardCharsets.UTF_8));
       return tmpFile.toFile();
     } catch (Exception e) {
       throw new WxPayException("生成加密公钥文件时发生异常", e);

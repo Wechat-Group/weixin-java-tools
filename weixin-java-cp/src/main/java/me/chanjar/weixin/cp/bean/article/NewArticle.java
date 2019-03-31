@@ -1,8 +1,11 @@
 package me.chanjar.weixin.cp.bean.article;
 
-import lombok.Data;
-
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -12,6 +15,9 @@ import java.io.Serializable;
  * @author Binary Wang
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class NewArticle implements Serializable {
   private static final long serialVersionUID = 4087852055781140659L;
 

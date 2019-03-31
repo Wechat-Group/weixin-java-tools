@@ -1,5 +1,7 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,14 +21,19 @@ import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import me.chanjar.weixin.mp.enums.TicketType;
+import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
 /**
+ * 基础实现类.
+ *
  * @author someone
  */
 public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestHttp<H, P> {
@@ -35,7 +42,6 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
   protected WxSessionManager sessionManager = new StandardSessionManager();
-  protected WxMpConfigStorage wxMpConfigStorage;
   private WxMpKefuService kefuService = new WxMpKefuServiceImpl(this);
   private WxMpMaterialService materialService = new WxMpMaterialServiceImpl(this);
   private WxMpMenuService menuService = new WxMpMenuServiceImpl(this);
@@ -54,10 +60,12 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpMassMessageService massMessageService = new WxMpMassMessageServiceImpl(this);
   private WxMpAiOpenService aiOpenService = new WxMpAiOpenServiceImpl(this);
   private WxMpWifiService wifiService = new WxMpWifiServiceImpl(this);
+  private WxMpMarketingService marketingService = new WxMpMarketingServiceImpl(this);
+
+  private Map<String, WxMpConfigStorage> configStorageMap;
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
-
 
   @Override
   public boolean checkSignature(String timestamp, String nonce, String signature) {
@@ -71,31 +79,42 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   }
 
   @Override
-  public String getJsapiTicket() throws WxErrorException {
-    return getJsapiTicket(false);
+  public String getTicket(TicketType type) throws WxErrorException {
+    return this.getTicket(type, false);
   }
 
   @Override
-  public String getJsapiTicket(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.getWxMpConfigStorage().getJsapiTicketLock();
+  public String getTicket(TicketType type, boolean forceRefresh) throws WxErrorException {
+    Lock lock = this.getWxMpConfigStorage().getTicketLock(type);
     try {
       lock.lock();
       if (forceRefresh) {
-        this.getWxMpConfigStorage().expireJsapiTicket();
+        this.getWxMpConfigStorage().expireTicket(type);
       }
 
-      if (this.getWxMpConfigStorage().isJsapiTicketExpired()) {
-        String responseContent = execute(SimpleGetRequestExecutor.create(this), WxMpService.GET_JSAPI_TICKET_URL, null);
-        JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
-        JsonObject tmpJsonObject = tmpJsonElement.getAsJsonObject();
+      if (this.getWxMpConfigStorage().isTicketExpired(type)) {
+        String responseContent = execute(SimpleGetRequestExecutor.create(this),
+          WxMpService.GET_TICKET_URL + type.getCode(), null);
+        JsonObject tmpJsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
         String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
         int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
-        this.getWxMpConfigStorage().updateJsapiTicket(jsapiTicket, expiresInSeconds);
+        this.getWxMpConfigStorage().updateTicket(type, jsapiTicket, expiresInSeconds);
       }
     } finally {
       lock.unlock();
     }
-    return this.getWxMpConfigStorage().getJsapiTicket();
+
+    return this.getWxMpConfigStorage().getTicket(type);
+  }
+
+  @Override
+  public String getJsapiTicket() throws WxErrorException {
+    return this.getJsapiTicket(false);
+  }
+
+  @Override
+  public String getJsapiTicket(boolean forceRefresh) throws WxErrorException {
+    return this.getTicket(TicketType.JSAPI, forceRefresh);
   }
 
   @Override
@@ -314,13 +333,63 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public WxMpConfigStorage getWxMpConfigStorage() {
-    return this.wxMpConfigStorage;
+    return this.configStorageMap.get(WxMpConfigStorageHolder.get());
   }
 
   @Override
   public void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider) {
-    this.wxMpConfigStorage = wxConfigProvider;
+    final String defaultMpId = WxMpConfigStorageHolder.get();
+    this.setMultiConfigStorages(ImmutableMap.of(defaultMpId, wxConfigProvider), defaultMpId);
+  }
+
+  @Override
+  public void setMultiConfigStorages(Map<String, WxMpConfigStorage> configStorages) {
+    this.setMultiConfigStorages(configStorages, configStorages.keySet().iterator().next());
+  }
+
+  @Override
+  public void setMultiConfigStorages(Map<String, WxMpConfigStorage> configStorages, String defaultMpId) {
+    this.configStorageMap = Maps.newHashMap(configStorages);
+    WxMpConfigStorageHolder.set(defaultMpId);
     this.initHttp();
+  }
+
+  @Override
+  public void addConfigStorage(String mpId, WxMpConfigStorage configStorages) {
+    synchronized (this) {
+      if (this.configStorageMap.containsKey(mpId)) {
+        throw new RuntimeException("该公众号标识已存在，请更换其他标识！");
+      }
+      this.configStorageMap.put(mpId, configStorages);
+    }
+  }
+
+  @Override
+  public void removeConfigStorage(String mpId) {
+    synchronized (this) {
+      this.configStorageMap.remove(mpId);
+    }
+  }
+
+  @Override
+  public WxMpService switchover1(String mpId) {
+    if (this.configStorageMap.containsKey(mpId)) {
+      WxMpConfigStorageHolder.set(mpId);
+      return this;
+    }
+
+    throw new RuntimeException(String.format("无法找到对应【%s】的公众号配置信息，请核实！", mpId));
+  }
+
+  @Override
+  public boolean switchover(String mpId) {
+    if (this.configStorageMap.containsKey(mpId)) {
+      WxMpConfigStorageHolder.set(mpId);
+      return true;
+    }
+
+    log.error("无法找到对应【{}】的公众号配置信息，请核实！", mpId);
+    return false;
   }
 
   @Override
@@ -506,5 +575,15 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public WxMpWifiService getWifiService() {
     return this.wifiService;
+  }
+
+  @Override
+  public WxMpMarketingService getMarketingService() {
+    return this.marketingService;
+  }
+
+  @Override
+  public void setMarketingService(WxMpMarketingService marketingService) {
+    this.marketingService = marketingService;
   }
 }

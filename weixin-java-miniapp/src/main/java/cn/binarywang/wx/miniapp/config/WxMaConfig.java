@@ -1,9 +1,9 @@
 package cn.binarywang.wx.miniapp.config;
 
+import java.util.concurrent.locks.Lock;
+
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-
-import java.util.concurrent.locks.Lock;
 
 /**
  * 小程序配置
@@ -57,6 +57,9 @@ public interface WxMaConfig {
    */
   void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
 
+  /**
+   * 卡券api_ticket.
+   */
   String getCardApiTicket();
 
   Lock getCardApiTicketLock();
@@ -64,14 +67,14 @@ public interface WxMaConfig {
   boolean isCardApiTicketExpired();
 
   /**
-   * 强制将卡券api ticket过期掉
+   * 强制将卡券api ticket过期掉.
    */
   void expireCardApiTicket();
 
   /**
-   * 应该是线程安全的
+   * 应该是线程安全的.
    *
-   * @param 卡券apiTicket      新的卡券api ticket值
+   * @param apiTicket      新的卡券api ticket值
    * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateCardApiTicket(String apiTicket, int expiresInSeconds);

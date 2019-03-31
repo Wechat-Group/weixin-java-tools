@@ -1,5 +1,9 @@
 package com.github.binarywang.wxpay.service.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import javax.net.ssl.SSLContext;
+
 import com.github.binarywang.wxpay.bean.WxPayApiData;
 import com.github.binarywang.wxpay.bean.request.WxPayQueryCommentRequest;
 import com.github.binarywang.wxpay.bean.request.WxPayRedpackQueryRequest;
@@ -24,9 +28,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import javax.net.ssl.SSLContext;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+import com.github.binarywang.wxpay.bean.WxPayApiData;
+import com.github.binarywang.wxpay.exception.WxPayException;
+import jodd.util.Base64;
 
 /**
  * <pre>
@@ -69,7 +73,9 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
           String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
           this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
-          wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
+          if (this.getConfig().isIfSaveApiData()) {
+            wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
+          }
           return responseString;
         }
       } finally {
@@ -77,7 +83,9 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
-      wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
+      if (this.getConfig().isIfSaveApiData()) {
+        wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
+      }
       throw new WxPayException(e.getMessage(), e);
     }
   }
@@ -99,6 +107,10 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     }
 
     if (StringUtils.isNotBlank(this.getConfig().getHttpProxyHost()) && this.getConfig().getHttpProxyPort() > 0) {
+      if (StringUtils.isEmpty(this.getConfig().getHttpProxyUsername())) {
+        this.getConfig().setHttpProxyUsername("whatever");
+      }
+
       // 使用代理服务器 需要用户认证的代理服务器
       CredentialsProvider provider = new BasicCredentialsProvider();
       provider.setCredentials(new AuthScope(this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort()),
