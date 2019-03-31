@@ -1,6 +1,10 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.WxPayApiData;
+import com.github.binarywang.wxpay.bean.request.WxPayQueryCommentRequest;
+import com.github.binarywang.wxpay.bean.request.WxPayRedpackQueryRequest;
+import com.github.binarywang.wxpay.bean.result.WxPayCommonResult;
+import com.github.binarywang.wxpay.bean.result.WxPayRedpackQueryResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import jodd.util.Base64;
 import org.apache.commons.lang3.StringUtils;

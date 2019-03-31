@@ -3,6 +3,10 @@ package com.github.binarywang.wxpay.service.impl;
 import java.nio.charset.StandardCharsets;
 import javax.net.ssl.SSLContext;
 
+import com.github.binarywang.wxpay.bean.request.WxPayQueryCommentRequest;
+import com.github.binarywang.wxpay.bean.request.WxPayRedpackQueryRequest;
+import com.github.binarywang.wxpay.bean.result.WxPayCommonResult;
+import com.github.binarywang.wxpay.bean.result.WxPayRedpackQueryResult;
 import org.apache.commons.lang3.StringUtils;
 
 import com.github.binarywang.wxpay.bean.WxPayApiData;

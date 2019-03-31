@@ -247,6 +247,17 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     result.checkResult(this, request.getSignType(), true);
     return result;
   }
+  @Override
+  public WxPayRedpackQueryResult queryRedpack(WxPayRedpackQueryRequest request) throws WxPayException {
+    request.setBillType(BillType.MCHT);
+    request.checkAndSign(this.getConfig());
+
+    String url = this.getPayBaseUrl() + "/mmpaymkttransfers/gethbinfo";
+    String responseContent = this.post(url, request.toXML(), true);
+    WxPayRedpackQueryResult result = BaseWxPayResult.fromXML(responseContent, WxPayRedpackQueryResult.class);
+    result.checkResult(this, request.getSignType(), true);
+    return result;
+  }
 
   @Override
   public WxPayOrderQueryResult queryOrder(String transactionId, String outTradeNo) throws WxPayException {
@@ -881,4 +892,18 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
     return responseContent;
   }
+  @Override
+  public String queryComment(WxPayQueryCommentRequest request) throws WxPayException {
+    request.checkAndSign(this.getConfig());
+    request.setSignType(SignType.HMAC_SHA256);
+    String url = this.getPayBaseUrl() + "/billcommentsp/batchquerycomment";
+
+    String responseContent = this.post(url, request.toXML(), true);
+    if (responseContent.startsWith("<")) {
+      throw WxPayException.from(BaseWxPayResult.fromXML(responseContent, WxPayCommonResult.class));
+    }
+
+    return responseContent;
+  }
+
 }
