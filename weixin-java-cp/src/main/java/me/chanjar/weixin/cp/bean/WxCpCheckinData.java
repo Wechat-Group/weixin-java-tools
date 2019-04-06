@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Element
@@ -46,5 +47,5 @@ public class WxCpCheckinData implements Serializable {
   private String notes;
 
   @SerializedName("mediaids")
-  private String[] mediaIds;
+  private List<String> mediaIds;
 }

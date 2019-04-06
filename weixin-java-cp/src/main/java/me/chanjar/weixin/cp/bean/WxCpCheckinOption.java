@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Element
@@ -26,7 +27,7 @@ public class WxCpCheckinOption implements Serializable {
 
     private static final long serialVersionUID = -5601722383347110974L;
 
-    private Integer[] workdays;
+    private List<Integer> workdays;
 
     @SerializedName("checkintime")
     private CheckinTime[] checkinTime;
@@ -74,13 +75,13 @@ public class WxCpCheckinOption implements Serializable {
     private Integer type;
 
     @SerializedName("checkindate")
-    private CheckinDate[] checkinDate;
+    private List<CheckinDate> checkinDate;
 
     @SerializedName("spe_workdays")
-    private SpeDay[] speWorkdays;
+    private List<SpeDay> speWorkdays;
 
     @SerializedName("spe_offdays")
-    private SpeDay[] speOffdays;
+    private List<SpeDay> speOffdays;
 
     @SerializedName("sync_holidays")
     private Boolean syncHolidays;
@@ -98,10 +99,10 @@ public class WxCpCheckinOption implements Serializable {
     private Boolean allow_apply_offworkday;
 
     @SerializedName("wifimac_infos")
-    private WifiMACInfo[] wifiMACInfos;
+    private List<WifiMACInfo> wifiMACInfos;
 
     @SerializedName("loc_infos")
-    private LocInfo[] locInfos;
+    private List<LocInfo> locInfos;
 
   }
 
@@ -143,7 +144,7 @@ public class WxCpCheckinOption implements Serializable {
     private String notes;
 
     @SerializedName("checkintime")
-    private CheckinTime[] checkinTime;
+    private List<CheckinTime> checkinTime;
 
   }
 
