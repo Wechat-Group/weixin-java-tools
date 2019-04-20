@@ -33,8 +33,8 @@ public class BaseWxMpServiceImplTest {
   }
 
   @Test
-  public void testSwitchover1() throws WxErrorException {
-    assertThat(this.wxService.switchover1("another").getAccessToken()).isNotEmpty();
+  public void testSwitchoverTo() throws WxErrorException {
+    assertThat(this.wxService.switchoverTo("another").getAccessToken()).isNotEmpty();
     assertThat(WxMpConfigStorageHolder.get()).isEqualTo("another");
   }
 }

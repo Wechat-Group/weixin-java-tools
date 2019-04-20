@@ -347,7 +347,7 @@ public interface WxMpService {
    * @param mpId 公众号标识
    * @return 切换成功，则返回当前对象，方便链式调用，否则抛出异常
    */
-  WxMpService switchover1(String mpId);
+  WxMpService switchoverTo(String mpId);
 
   /**
    * 返回客服接口方法实现类，以方便调用其各个接口.

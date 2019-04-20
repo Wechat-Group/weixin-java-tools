@@ -28,4 +28,9 @@ public class BaseWxCpServiceImplTest {
     assertThat(this.wxService.getAgentJsapiTicket()).isNotEmpty();
     assertThat(this.wxService.getAgentJsapiTicket(true)).isNotEmpty();
   }
+
+  @Test
+  public void testJsCode2Session() throws WxErrorException {
+    assertThat(this.wxService.jsCode2Session("111")).isNotNull();
+  }
 }

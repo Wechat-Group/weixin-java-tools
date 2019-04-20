@@ -193,8 +193,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     }
 
     String responseContent = this.post(url, request.toXML(), true);
-    //无需校验，因为没有返回签名信息
-    return BaseWxPayResult.fromXML(responseContent, WxPaySendRedpackResult.class);
+    final WxPaySendRedpackResult result = BaseWxPayResult.fromXML(responseContent, WxPaySendRedpackResult.class);
+    result.checkResult(this, request.getSignType(), true);
+    return result;
   }
 
   @Override

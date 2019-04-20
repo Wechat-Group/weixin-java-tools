@@ -7,6 +7,7 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -23,6 +24,7 @@ public interface WxCpService {
   String BATCH_REPLACE_PARTY = "https://qyapi.weixin.qq.com/cgi-bin/batch/replaceparty";
   String BATCH_REPLACE_USER = "https://qyapi.weixin.qq.com/cgi-bin/batch/replaceuser";
   String BATCH_GET_RESULT = "https://qyapi.weixin.qq.com/cgi-bin/batch/getresult?jobid=";
+  String JSCODE_TO_SESSION_URL = "https://qyapi.weixin.qq.com/cgi-bin/miniprogram/jscode2session";
 
   /**
    * <pre>
@@ -123,6 +125,13 @@ public interface WxCpService {
    * @param message 要发送的消息对象
    */
   WxCpMessageSendResult messageSend(WxCpMessage message) throws WxErrorException;
+
+  /**
+   * 小程序登录凭证校验
+   *
+   * @param jsCode 登录时获取的 code
+   */
+  WxCpMaJsCode2SessionResult jsCode2Session(String jsCode) throws WxErrorException;
 
   /**
    * <pre>

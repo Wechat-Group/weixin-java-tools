@@ -12,7 +12,7 @@
 
 ```bash
 $ git clone git@github.com:my_user/WxJava.git
-$ cd weixin-java-tools
+$ cd WxJava
 $ git config user.name "yourname"
 $ git config user.email "your email"
 ```

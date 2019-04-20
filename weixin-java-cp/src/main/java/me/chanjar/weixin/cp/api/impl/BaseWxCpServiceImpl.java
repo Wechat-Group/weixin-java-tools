@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.api.impl;
 
+import com.google.common.base.Joiner;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,6 +19,7 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.cp.api.*;
+import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -26,6 +28,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author chanjarster
@@ -165,6 +169,16 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     }
 
     return WxCpMessageSendResult.fromJson(this.post(WxCpService.MESSAGE_SEND, message.toJson()));
+  }
+
+  @Override
+  public WxCpMaJsCode2SessionResult jsCode2Session(String jsCode) throws WxErrorException {
+    Map<String, String> params = new HashMap<>(2);
+    params.put("js_code", jsCode);
+    params.put("grant_type", "authorization_code");
+
+    String result = this.get(JSCODE_TO_SESSION_URL, Joiner.on("&").withKeyValueSeparator("=").join(params));
+    return WxCpMaJsCode2SessionResult.fromJson(result);
   }
 
   @Override
