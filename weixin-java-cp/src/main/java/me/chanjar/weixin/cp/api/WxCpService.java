@@ -303,6 +303,8 @@ public interface WxCpService {
 
   WxCpAgentService getAgentService();
 
+  WxCpOAService getOAService();
+
   /**
    * http请求对象
    */
