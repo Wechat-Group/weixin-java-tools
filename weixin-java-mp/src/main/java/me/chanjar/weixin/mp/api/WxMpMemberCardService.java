@@ -6,12 +6,7 @@ import me.chanjar.weixin.mp.bean.card.MemberCardActivateUserFormRequest;
 import me.chanjar.weixin.mp.bean.card.MemberCardActivateUserFormResult;
 import me.chanjar.weixin.mp.bean.card.MemberCardUpdateRequest;
 import me.chanjar.weixin.mp.bean.card.WxMpCardCreateResult;
-import me.chanjar.weixin.mp.bean.membercard.ActivatePluginParam;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardActivatedMessage;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardCreateMessage;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateMessage;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateResult;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUserInfoResult;
+import me.chanjar.weixin.mp.bean.membercard.*;
 
 /**
  * 会员卡相关接口.
@@ -41,19 +36,33 @@ public interface WxMpMemberCardService {
    */
   String MEMBER_CARD_UPDATE = "https://api.weixin.qq.com/card/update";
 
+  /**
+   * 跳转型会员卡开卡字段,获取用户提交资料(wx_activate=true情况调用),开发者根据activate_ticket获取到用户填写的信息
+   */
+  String MEMBER_CARD_ACTIVATE_TEMP_INFO = "https://api.weixin.qq.com/card/membercard/activatetempinfo/get";
 
   /**
    * 得到WxMpService.
+   *
+   * @return WxMpService
    */
   WxMpService getWxMpService();
 
   /**
    * 会员卡创建接口.
+   *
+   * @param createJson 会员卡json字符串
+   * @return 返回json字符串
+   * @throws WxErrorException 接口调用失败抛出的异常
    */
   WxMpCardCreateResult createMemberCard(String createJson) throws WxErrorException;
 
   /**
-   * 会员卡创建接口.
+   * 会员卡创建接口
+   *
+   * @param createMessageMessage 会员卡创建对象
+   * @return 会员卡信息的结果对象
+   * @throws WxErrorException 接口调用失败抛出的异常
    */
   WxMpCardCreateResult createMemberCard(WxMpMemberCardCreateMessage createMessageMessage) throws WxErrorException;
 
@@ -61,7 +70,7 @@ public interface WxMpMemberCardService {
    * 会员卡激活接口.
    *
    * @param activatedMessage 激活所需参数
-   * @return 返回json字符串
+   * @return 会员卡激活后的json字符串
    * @throws WxErrorException 接口调用失败抛出的异常
    */
   String activateMemberCard(WxMpMemberCardActivatedMessage activatedMessage) throws WxErrorException;
@@ -91,16 +100,40 @@ public interface WxMpMemberCardService {
 
   /**
    * 设置会员卡激活的字段（会员卡设置：wx_activate=true 时需要）.
+   *
+   * @param userFormRequest 会员卡激活字段对象
+   * @return 会员卡激活后结果对象
+   * @throws WxErrorException 接口调用失败抛出的异常
    */
   MemberCardActivateUserFormResult setActivateUserForm(MemberCardActivateUserFormRequest userFormRequest) throws WxErrorException;
 
   /**
    * 获取会员卡开卡插件参数(跳转型开卡组件需要参数).
+   *
+   * @param cardId 会员卡的CardId，微信分配
+   * @param outStr 会员卡设置商户的渠道
+   * @return 会员卡开卡插件参数结果对象
+   * @throws WxErrorException 接口调用失败抛出的异常
    */
   ActivatePluginParam getActivatePluginParam(String cardId, String outStr) throws WxErrorException;
 
   /**
    * 更新会员卡信息.
+   *
+   * @param memberCardUpdateRequest 会员卡更新对象
+   * @return 会员卡更新后结果对象
+   * @throws WxErrorException 接口调用失败抛出的异常
    */
   CardUpdateResult updateCardInfo(MemberCardUpdateRequest memberCardUpdateRequest) throws WxErrorException;
+
+  /**
+   * 解析跳转型开卡字段用户提交的资料
+   * 开发者在URL上截取ticket后须先进行urldecode
+   *
+   * @param activateTicket 用户提交的资料
+   * @return 开卡字段的会员信息对象
+   * @throws WxErrorException 接口调用失败抛出的异常
+   */
+  WxMpMemberCardActivateTempInfoResult getActivateTempInfo(String activateTicket) throws WxErrorException;
+
 }

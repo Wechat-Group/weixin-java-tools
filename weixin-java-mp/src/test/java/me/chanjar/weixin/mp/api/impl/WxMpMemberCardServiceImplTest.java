@@ -23,9 +23,9 @@ public class WxMpMemberCardServiceImplTest {
 
   @Inject
   protected WxMpService wxService;
-  private String cardId = "p2iQk1uwOUYlzHm4s-UYdZnABW88";
-  private String code = "435223630779";
-  private String openId = "o2iQk1u5X-XIJkatmAK1Q8VVuS90";
+  private String cardId = "p4p-v1bKn9tiQHxyO79aKmuTIZlQ";
+  private String code = "224765120681";
+  private String openId = "o4p-v1TIemEIpBSrSrTprkCaG6Xc";
 
   @Test
   public void createMemberCard() throws Exception {
@@ -150,6 +150,15 @@ public class WxMpMemberCardServiceImplTest {
     WxMpMemberCardService memberCardService = this.wxService.getMemberCardService();
     ActivatePluginParam response = memberCardService.getActivatePluginParam(cardId, "test");
     System.out.println(response);
-
   }
+
+  @Test
+  public void testGetActivateTempInfo() throws Exception {
+    String activateTicket = "fDZv9eMQAFfrNr3XBoqhb8eUX67DFb6h8yXDelGSMDLfg2OAIGQcU7mEKecnWZBK%2B%2Bvm%2FtZxZJrbRkdJB%2FUmpVoJkEsbeH%2BOefcntAsYDKA%3D";
+    WxMpMemberCardService memberCardService = this.wxService.getMemberCardService();
+    WxMpMemberCardActivateTempInfoResult result = memberCardService.getActivateTempInfo(activateTicket);
+    assertNotNull(result);
+    System.out.println(result);
+  }
+
 }
