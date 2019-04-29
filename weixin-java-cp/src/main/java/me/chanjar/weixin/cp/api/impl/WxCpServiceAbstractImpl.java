@@ -1,16 +1,10 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+import me.chanjar.weixin.common.bean.WxAgentJsapiSignature;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -24,18 +18,15 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
-import me.chanjar.weixin.cp.api.WxCpAgentService;
-import me.chanjar.weixin.cp.api.WxCpChatService;
-import me.chanjar.weixin.cp.api.WxCpDepartmentService;
-import me.chanjar.weixin.cp.api.WxCpMediaService;
-import me.chanjar.weixin.cp.api.WxCpMenuService;
-import me.chanjar.weixin.cp.api.WxCpOAuth2Service;
-import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.api.WxCpTagService;
-import me.chanjar.weixin.cp.api.WxCpUserService;
+import me.chanjar.weixin.cp.api.*;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
 
 public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, RequestHttp<H, P> {
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -115,6 +106,33 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
   }
 
   @Override
+  public String getAgentJsapiTicket() throws WxErrorException {
+    return getAgentJsapiTicket(false);
+  }
+
+  @Override
+  public String getAgentJsapiTicket(boolean forceRefresh) throws WxErrorException {
+    if (forceRefresh) {
+      this.configStorage.expireAgentJsapiTicket();
+    }
+    if (this.configStorage.isAgentJsapiTicketExpired()) {
+      synchronized (this.globalJsapiTicketRefreshLock) {
+        if (this.configStorage.isAgentJsapiTicketExpired()) {
+          String url = "https://qyapi.weixin.qq.com/cgi-bin/ticket/get?type=agent_config";
+          String responseContent = execute(SimpleGetRequestExecutor.create(this), url, null);
+          JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
+          JsonObject tmpJsonObject = tmpJsonElement.getAsJsonObject();
+          String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
+          int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
+          this.configStorage.updateAgentJsapiTicket(jsapiTicket,
+            expiresInSeconds);
+        }
+      }
+    }
+    return this.configStorage.getAgentJsapiTicket();
+  }
+
+  @Override
   public WxJsapiSignature createJsapiSignature(String url) throws WxErrorException {
     long timestamp = System.currentTimeMillis() / 1000;
     String noncestr = RandomUtils.getRandomStr();
@@ -135,6 +153,28 @@ public abstract class WxCpServiceAbstractImpl<H, P> implements WxCpService, Requ
     jsapiSignature.setAppId(this.configStorage.getCorpId());
 
     return jsapiSignature;
+  }
+
+  @Override
+  public WxAgentJsapiSignature createAgentJsapiSignature(String url) throws WxErrorException {
+    long timestamp = System.currentTimeMillis() / 1000;
+    String noncestr = RandomUtils.getRandomStr();
+    String jsapiTicket = getAgentJsapiTicket(false);
+    String signature = SHA1.genWithAmple(
+      "jsapi_ticket=" + jsapiTicket,
+      "noncestr=" + noncestr,
+      "timestamp=" + timestamp,
+      "url=" + url
+    );
+    WxAgentJsapiSignature agentJsapiSignature = new WxAgentJsapiSignature();
+    agentJsapiSignature.setTimestamp(timestamp);
+    agentJsapiSignature.setNonceStr(noncestr);
+    agentJsapiSignature.setUrl(url);
+    agentJsapiSignature.setSignature(signature);
+    // Fixed bug
+    agentJsapiSignature.setAppId(this.configStorage.getCorpId());
+    agentJsapiSignature.setAgentid(this.configStorage.getAgentId());
+    return agentJsapiSignature;
   }
 
   @Override

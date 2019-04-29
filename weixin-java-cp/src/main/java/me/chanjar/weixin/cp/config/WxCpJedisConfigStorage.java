@@ -26,6 +26,8 @@ public class WxCpJedisConfigStorage implements WxCpConfigStorage {
   private static final String ACCESS_TOKEN_EXPIRES_TIME_KEY = "WX_CP_ACCESS_TOKEN_EXPIRES_TIME";
   private static final String JS_API_TICKET_KEY = "WX_CP_JS_API_TICKET";
   private static final String JS_API_TICKET_EXPIRES_TIME_KEY = "WX_CP_JS_API_TICKET_EXPIRES_TIME";
+  private static final String JS_API_AGENT_TICKET_KEY = "WX_CP_JS_API_AGENT_TICKET";
+  private static final String JS_API_AGENT_TICKET_EXPIRES_TIME_KEY = "WX_CP_JS_API_AGENT_TICKET_EXPIRES_TIME";
   /**
    * Redis clients pool
    */
@@ -46,7 +48,7 @@ public class WxCpJedisConfigStorage implements WxCpConfigStorage {
   public WxCpJedisConfigStorage(JedisPool jedisPool) {
     this.jedisPool = jedisPool;
   }
-  
+
   public WxCpJedisConfigStorage(String host, int port) {
     jedisPool = new JedisPool(host, port);
   }
@@ -154,6 +156,46 @@ public class WxCpJedisConfigStorage implements WxCpConfigStorage {
         (System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L + ""));
     }
 
+  }
+
+  @Override
+  public String getAgentJsapiTicket() {
+    try (Jedis jedis = this.jedisPool.getResource()) {
+      return jedis.get(JS_API_AGENT_TICKET_KEY);
+    }
+  }
+
+  @Override
+  public boolean isAgentJsapiTicketExpired() {
+
+    try (Jedis jedis = this.jedisPool.getResource()) {
+      String expiresTimeStr = jedis.get(JS_API_AGENT_TICKET_EXPIRES_TIME_KEY);
+
+      if (expiresTimeStr != null) {
+        Long expiresTime = Long.parseLong(expiresTimeStr);
+        return System.currentTimeMillis() > expiresTime;
+      }
+
+      return true;
+
+    }
+  }
+
+  @Override
+  public void expireAgentJsapiTicket() {
+    try (Jedis jedis = this.jedisPool.getResource()) {
+      jedis.set(JS_API_AGENT_TICKET_EXPIRES_TIME_KEY, "0");
+    }
+  }
+
+  @Override
+  public void updateAgentJsapiTicket(String agentJsapiTicket, int expiresInSeconds) {
+    try (Jedis jedis = this.jedisPool.getResource()) {
+      jedis.set(JS_API_AGENT_TICKET_KEY, agentJsapiTicket);
+
+      jedis.set(JS_API_AGENT_TICKET_EXPIRES_TIME_KEY,
+        (System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L + ""));
+    }
   }
 
   @Override
