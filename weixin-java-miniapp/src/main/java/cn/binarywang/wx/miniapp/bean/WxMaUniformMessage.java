@@ -104,5 +104,11 @@ public class WxMaUniformMessage implements Serializable {
      * 加入此字段是基于微信官方接口变化多端的考虑
      */
     private boolean usePath = false;
+
+    /**
+     * 是否使用pagePath，否则使用pagepath.
+     * 加入此字段是基于微信官方接口变化多端的考虑
+     */
+    private boolean usePagePath = false;
   }
 }

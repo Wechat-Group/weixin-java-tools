@@ -36,6 +36,8 @@ public class WxMaUniformMessageGsonAdapter implements JsonSerializer<WxMaUniform
         miniProgramJson.addProperty("appid", miniProgram.getAppid());
         if (miniProgram.isUsePath()) {
           miniProgramJson.addProperty("path", miniProgram.getPagePath());
+        } else if (miniProgram.isUsePagePath()) {
+          miniProgramJson.addProperty("pagePath", miniProgram.getPagePath());
         } else {
           miniProgramJson.addProperty("pagepath", miniProgram.getPagePath());
         }
@@ -79,9 +81,6 @@ public class WxMaUniformMessageGsonAdapter implements JsonSerializer<WxMaUniform
       for (WxMaTemplateData templateData : message.getData()) {
         JsonObject dataJson = new JsonObject();
         dataJson.addProperty("value", templateData.getValue());
-        if (templateData.getColor() != null) {
-          dataJson.addProperty("color", templateData.getColor());
-        }
         data.add(templateData.getName(), dataJson);
       }
     }

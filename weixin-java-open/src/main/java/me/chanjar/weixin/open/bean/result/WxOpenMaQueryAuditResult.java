@@ -29,4 +29,9 @@ public class WxOpenMaQueryAuditResult extends WxOpenResult {
    * 审核失败原因.
    */
   String reason;
+  /**
+   * 当status=1，审核被拒绝时，会返回审核失败的小程序截图示例。 xxx丨yyy丨zzz是media_id可通过获取永久素材接口 拉取截图内容）.
+   */
+  @SerializedName(value = "screenshot")
+  private String screenShot;
 }

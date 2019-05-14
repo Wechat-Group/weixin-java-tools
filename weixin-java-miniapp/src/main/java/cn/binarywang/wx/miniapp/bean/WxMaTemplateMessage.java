@@ -13,7 +13,7 @@ import lombok.Setter;
 
 /**
  * 模板消息.
- * 参考 https://mp.weixin.qq.com/debug/wxadoc/dev/api/notice.html#接口说明  模板消息部分
+ * 参考 https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.send.html
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
@@ -74,16 +74,6 @@ public class WxMaTemplateMessage implements Serializable {
    * </pre>
    */
   private List<WxMaTemplateData> data;
-
-  /**
-   * 模板内容字体的颜色，不填默认黑色.
-   * <pre>
-   * 参数：color
-   * 是否必填： 否
-   * 描述： 模板内容字体的颜色，不填默认黑色
-   * </pre>
-   */
-  private String color;
 
   /**
    * 模板需要放大的关键词，不填则默认无放大.

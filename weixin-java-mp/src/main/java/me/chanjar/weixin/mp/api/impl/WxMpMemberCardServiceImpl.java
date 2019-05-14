@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.chanjar.weixin.mp.bean.membercard.*;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.gson.Gson;
@@ -30,13 +31,6 @@ import me.chanjar.weixin.mp.bean.card.WxMpCardCreateResult;
 import me.chanjar.weixin.mp.bean.card.enums.BusinessServiceType;
 import me.chanjar.weixin.mp.bean.card.enums.CardColor;
 import me.chanjar.weixin.mp.bean.card.enums.DateInfoType;
-import me.chanjar.weixin.mp.bean.membercard.ActivatePluginParam;
-import me.chanjar.weixin.mp.bean.membercard.ActivatePluginParamResult;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardActivatedMessage;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardCreateMessage;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateMessage;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateResult;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUserInfoResult;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
@@ -281,6 +275,15 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
   public CardUpdateResult updateCardInfo(MemberCardUpdateRequest memberCardUpdateRequest) throws WxErrorException {
     String response = this.wxMpService.post(MEMBER_CARD_UPDATE, GSON.toJson(memberCardUpdateRequest));
     CardUpdateResult result = GSON.fromJson(response, CardUpdateResult.class);
+    return result;
+  }
+
+  @Override
+  public WxMpMemberCardActivateTempInfoResult getActivateTempInfo(String activateTicket) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("activate_ticket", activateTicket);
+    String response = this.wxMpService.post(MEMBER_CARD_ACTIVATE_TEMP_INFO, GSON.toJson(params));
+    WxMpMemberCardActivateTempInfoResult result = GSON.fromJson(response, WxMpMemberCardActivateTempInfoResult.class);
     return result;
   }
 

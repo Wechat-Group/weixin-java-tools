@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import org.apache.commons.io.IOUtils;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -248,6 +249,13 @@ public class WxCpXmlMessage implements Serializable {
   private String telephone;
 
   /**
+   * 地址.
+   */
+  @XStreamAlias("Address")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String address;
+
+  /**
    * 扩展属性.
    */
   @XStreamAlias("ExtAttr")
@@ -327,17 +335,20 @@ public class WxCpXmlMessage implements Serializable {
    */
   @XStreamAlias("TotalCount")
   private Integer totalCount;
+
   /**
    * 过滤.
    * （过滤是指特定地区、性别的过滤、用户设置拒收的过滤，用户接收已超4条的过滤）后，准备发送的粉丝数，原则上，filterCount = sentCount + errorCount
    */
   @XStreamAlias("FilterCount")
   private Integer filterCount;
+
   /**
    * 发送成功的粉丝数.
    */
   @XStreamAlias("SentCount")
   private Integer sentCount;
+
   /**
    * 发送失败的粉丝数.
    */
@@ -411,9 +422,11 @@ public class WxCpXmlMessage implements Serializable {
 
   @Data
   public static class ExtAttr {
-    @XStreamAlias("Item")
+
+    @XStreamImplicit(itemFieldName = "Item")
     protected final List<Item> items = new ArrayList<>();
 
+    @XStreamAlias("Item")
     @Data
     public static class Item {
       @XStreamAlias("Name")
