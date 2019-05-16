@@ -1,22 +1,16 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.Data;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
-import me.chanjar.weixin.cp.bean.messagebuilder.FileBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.ImageBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.MpnewsBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.NewsBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.TextBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.TextCardBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.VideoBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.VoiceBuilder;
+import me.chanjar.weixin.cp.bean.messagebuilder.*;
+import me.chanjar.weixin.cp.bean.taskcard.TaskCardButton;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 消息.
@@ -44,6 +38,12 @@ public class WxCpMessage implements Serializable {
   private String btnTxt;
   private List<NewArticle> articles = new ArrayList<>();
   private List<MpnewsArticle> mpnewsArticles = new ArrayList<>();
+
+  /**
+   * 任务卡片特有的属性
+   */
+  private String taskId;
+  private List<TaskCardButton> taskButtons = new ArrayList<>();
 
   /**
    * 获得文本消息builder.
@@ -101,6 +101,13 @@ public class WxCpMessage implements Serializable {
     return new FileBuilder();
   }
 
+  /**
+   * 获得任务卡片消息builder.
+   */
+  public static TaskCardBuilder TASKCARD() {
+    return new TaskCardBuilder();
+  }
+
 
   /**
    * <pre>
@@ -112,6 +119,7 @@ public class WxCpMessage implements Serializable {
    * {@link WxConsts.KefuMsgType#VIDEO}
    * {@link WxConsts.KefuMsgType#NEWS}
    * {@link WxConsts.KefuMsgType#MPNEWS}
+   * {@link WxConsts.KefuMsgType#TASKCARD}
    * </pre>
    *
    * @param msgType 消息类型

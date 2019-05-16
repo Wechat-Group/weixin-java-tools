@@ -83,6 +83,11 @@ public class WxConsts {
      * 小程序卡片(要求小程序与公众号已关联)
      */
     public static final String MINIPROGRAMPAGE = "miniprogrampage";
+
+    /**
+     * 任务卡片消息
+     */
+    public static final String TASKCARD = "taskcard";
   }
 
   /**

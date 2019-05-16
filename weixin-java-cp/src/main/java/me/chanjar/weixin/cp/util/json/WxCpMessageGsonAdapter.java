@@ -13,6 +13,7 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
+import me.chanjar.weixin.cp.bean.taskcard.TaskCardButton;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
@@ -119,6 +120,42 @@ public class WxCpMessageGsonAdapter implements JsonSerializer<WxCpMessage> {
         newsJsonObject.add("articles", articleJsonArray);
       }
       messageJson.add("mpnews", newsJsonObject);
+    }
+
+    if (WxConsts.KefuMsgType.TASKCARD.equals(message.getMsgType())) {
+      JsonObject text = new JsonObject();
+      text.addProperty("title", message.getTitle());
+      text.addProperty("description", message.getDescription());
+
+      if (StringUtils.isNotBlank(message.getUrl())) {
+        text.addProperty("url", message.getUrl());
+      }
+
+      text.addProperty("task_id", message.getTaskId());
+
+      JsonArray buttonJsonArray = new JsonArray();
+      for (TaskCardButton button : message.getTaskButtons()) {
+        JsonObject buttonJson = new JsonObject();
+        buttonJson.addProperty("key", button.getKey());
+        buttonJson.addProperty("name", button.getName());
+
+        if (StringUtils.isNotBlank(button.getReplaceName())) {
+          buttonJson.addProperty("replace_name", button.getReplaceName());
+        }
+
+        if (StringUtils.isNotBlank(button.getColor())) {
+          buttonJson.addProperty("color", button.getColor());
+        }
+
+        if (button.getBold() != null) {
+          buttonJson.addProperty("is_bold", button.getBold());
+        }
+
+        buttonJsonArray.add(buttonJson);
+      }
+      text.add("btn", buttonJsonArray);
+
+      messageJson.add("taskcard", text);
     }
 
     return messageJson;
