@@ -37,7 +37,7 @@ public class WxCpInviteResult implements Serializable {
   private String errMsg;
 
   @SerializedName("invaliduser")
-  private String invalidUsers;
+  private String[] invalidUsers;
 
   @SerializedName("invalidparty")
   private String[] invalidParties;
