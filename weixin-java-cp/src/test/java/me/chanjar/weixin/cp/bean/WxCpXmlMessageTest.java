@@ -1,9 +1,11 @@
 package me.chanjar.weixin.cp.bean;
 
 import me.chanjar.weixin.common.api.WxConsts;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static me.chanjar.weixin.cp.WxCpConsts.EventType.TASKCARD_CLICK;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 @Test
 public class WxCpXmlMessageTest {
@@ -148,5 +150,27 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getExtAttrs().getItems().size(), 3);
     assertEquals(wxMessage.getExtAttrs().getItems().get(0).getName(), "爱好");
 
+  }
+
+  public void testTaskCardEvent() {
+    String xml = "<xml>" +
+      "<ToUserName><![CDATA[toUser]]></ToUserName>" +
+      "<FromUserName><![CDATA[FromUser]]></FromUserName>" +
+      "<CreateTime>123456789</CreateTime>" +
+      "<MsgType><![CDATA[event]]></MsgType>" +
+      "<Event><![CDATA[taskcard_click]]></Event>" +
+      "<EventKey><![CDATA[key111]]></EventKey>" +
+      "<TaskId><![CDATA[taskid111]]></TaskId >" +
+      "<AgentID>1</AgentID>" +
+      "</xml>";
+    WxCpXmlMessage wxMessage = WxCpXmlMessage.fromXml(xml);
+    assertEquals(wxMessage.getToUserName(), "toUser");
+    assertEquals(wxMessage.getFromUserName(), "FromUser");
+    assertEquals(wxMessage.getCreateTime(), Long.valueOf(123456789L));
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
+    assertEquals(wxMessage.getAgentId(), Integer.valueOf(1));
+    assertEquals(wxMessage.getEvent(), TASKCARD_CLICK);
+    assertEquals(wxMessage.getEventKey(), "key111");
+    assertEquals(wxMessage.getTaskId(), "taskid111");
   }
 }

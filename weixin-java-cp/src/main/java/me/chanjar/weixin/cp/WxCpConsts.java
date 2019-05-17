@@ -84,6 +84,11 @@ public class WxCpConsts {
      */
     public static final String LOCATION_SELECT = "location_select";
 
+    /**
+     * 任务卡片事件推送.
+     */
+    public static final String TASKCARD_CLICK = "taskcard_click";
+
   }
 
   /**

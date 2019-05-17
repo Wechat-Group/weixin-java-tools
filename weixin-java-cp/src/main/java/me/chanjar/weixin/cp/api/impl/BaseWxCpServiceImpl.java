@@ -46,6 +46,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxCpTagService tagService = new WxCpTagServiceImpl(this);
   private WxCpAgentService agentService = new WxCpAgentServiceImpl(this);
   private WxCpOAService oaService = new WxCpOAServiceImpl(this);
+  private WxCpTaskCardService taskCardService = new WxCpTaskCardServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁
@@ -390,6 +391,11 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public WxCpOAService getOAService() {
     return oaService;
+  }
+
+  @Override
+  public WxCpTaskCardService getTaskCardService() {
+    return taskCardService;
   }
 
   @Override
