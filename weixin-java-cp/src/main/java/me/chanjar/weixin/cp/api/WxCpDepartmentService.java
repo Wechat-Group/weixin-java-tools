@@ -35,6 +35,7 @@ public interface WxCpDepartmentService {
    * </pre>
    *
    * @param id 部门id。获取指定部门及其下的子部门。非必需，可为null
+   * @return 获取的部门列表
    * @throws WxErrorException 异常
    */
   List<WxCpDepart> list(Long id) throws WxErrorException;
