@@ -38,6 +38,10 @@ public interface WxCpTpConfigStorage {
    * 应该是线程安全的
    */
   void updateSuiteTicket(String suiteTicket, int expiresInSeconds);
+  
+  String getCorpId();
+
+  String getCorpSecret();
 
   String getSuiteId();
 

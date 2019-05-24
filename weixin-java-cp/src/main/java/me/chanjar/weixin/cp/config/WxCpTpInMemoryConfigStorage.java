@@ -12,7 +12,9 @@ import java.io.File;
  * @author Daniel Qian
  */
 public class WxCpTpInMemoryConfigStorage implements WxCpTpConfigStorage {
-
+  protected volatile String corpId;
+  protected volatile String corpSecret;
+  
   protected volatile String suiteId;
   protected volatile String suiteSecret;
 
@@ -65,7 +67,25 @@ public class WxCpTpInMemoryConfigStorage implements WxCpTpConfigStorage {
     this.suiteAccessToken = suiteAccessToken;
     this.expiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
   }
-
+  
+  @Override
+  public String getCorpId() {
+    return this.corpId;
+  }
+  
+  public void setCorpId(String corpId) {
+    this.corpId = corpId;
+  }
+  
+  @Override
+  public String getCorpSecret() {
+    return this.corpSecret;
+  }
+  
+  public void setCorpSecret(String corpSecret) {
+    this.corpSecret = corpSecret;
+  }
+  
   @Override
   public String getSuiteTicket() {
     return this.suiteTicket;

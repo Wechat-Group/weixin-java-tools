@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
@@ -24,6 +25,7 @@ import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpTpService;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
+import me.chanjar.weixin.cp.bean.WxCpTpCorp;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 
 /**
@@ -109,6 +111,19 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
 	String result = post(GET_CORP_TOKEN, jsonObject.toString());
 	
 	return WxAccessToken.fromJson(result);
+  }
+  
+
+  @Override
+  public WxCpTpCorp getPermanentCode(String authCode) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("auth_code", authCode);
+
+    String result = post(GET_PERMANENT_CODE, jsonObject.toString());
+    jsonObject = new JsonParser().parse(result).getAsJsonObject();
+    WxCpTpCorp wxCpTpCorp = WxCpTpCorp.fromJson(jsonObject.get("auth_corp_info").getAsString());
+    wxCpTpCorp.setPermanentCode(jsonObject.get("permanent_code").getAsString());
+    return wxCpTpCorp;
   }
 
   @Override

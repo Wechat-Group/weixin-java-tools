@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
+import me.chanjar.weixin.cp.bean.WxCpTpCorp;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 
@@ -16,7 +17,7 @@ import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 public interface WxCpTpService {
   String JSCODE_TO_SESSION_URL = "https://qyapi.weixin.qq.com/cgi-bin/service/miniprogram/jscode2session";
   String GET_CORP_TOKEN = "https://qyapi.weixin.qq.com/cgi-bin/service/get_corp_token";
-  
+  String GET_PERMANENT_CODE = "https://qyapi.weixin.qq.com/cgi-bin/service/get_permanent_code";
   /**
    * <pre>
    * 验证推送过来的消息的正确性
@@ -82,6 +83,13 @@ public interface WxCpTpService {
    * @param permanentCode 永久授权码，通过get_permanent_code获取
    */
   WxAccessToken getCorpToken(String authCorpid, String permanentCode) throws WxErrorException;
+  
+  /**
+   * 获取企业永久授权码
+   * @param authCode
+   * @return
+   */
+  WxCpTpCorp getPermanentCode(String authCode) throws WxErrorException;
   
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求
