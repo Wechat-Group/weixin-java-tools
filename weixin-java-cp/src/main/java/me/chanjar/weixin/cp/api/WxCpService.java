@@ -301,7 +301,16 @@ public interface WxCpService {
    */
   WxCpChatService getChatService();
 
+  /**
+   * 获取任务卡片服务
+   *
+   * @return 任务卡片服务
+   */
+  WxCpTaskCardService getTaskCardService();
+
   WxCpAgentService getAgentService();
+
+  WxCpOAService getOAService();
 
   /**
    * http请求对象

@@ -27,10 +27,6 @@ public class WxMaTemplateMessageGsonAdapter implements JsonSerializer<WxMaTempla
       messageJson.addProperty("form_id", message.getFormId());
     }
 
-    if (message.getColor() != null) {
-      messageJson.addProperty("color", message.getColor());
-    }
-
     if (message.getEmphasisKeyword() != null) {
       messageJson.addProperty("emphasis_keyword", message.getEmphasisKeyword());
     }
@@ -45,9 +41,6 @@ public class WxMaTemplateMessageGsonAdapter implements JsonSerializer<WxMaTempla
     for (WxMaTemplateData datum : message.getData()) {
       JsonObject dataJson = new JsonObject();
       dataJson.addProperty("value", datum.getValue());
-      if (datum.getColor() != null) {
-        dataJson.addProperty("color", datum.getColor());
-      }
       data.add(datum.getName(), dataJson);
     }
 

@@ -6,8 +6,15 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
 
+/**
+ * 更新会员卡请求对象.
+ *
+ * @author yuanqixun
+ */
 @Data
 public class MemberCardUpdateRequest implements Serializable {
+  private static final long serialVersionUID = -1025759626161614466L;
+
   @SerializedName("card_id")
   private String cardId;
 

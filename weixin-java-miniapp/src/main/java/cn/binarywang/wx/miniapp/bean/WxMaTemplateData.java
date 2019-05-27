@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * <pre>
- *
+ * 参考文档 https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.send.html
  * Created by Binary Wang on 2018/9/23.
  * </pre>
  *
@@ -28,5 +28,6 @@ public class WxMaTemplateData {
     this.value = value;
     this.color = color;
   }
+
 
 }

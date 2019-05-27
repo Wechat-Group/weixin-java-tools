@@ -70,7 +70,7 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
       return validResult;
     }
 
-    String response = this.wxMpService.post(MEMBER_CARD_CREAET, GSON.toJson(createMessageMessage));
+    String response = this.wxMpService.post(MEMBER_CARD_CREATE, GSON.toJson(createMessageMessage));
     return WxMpCardCreateResult.fromJson(response);
   }
 
@@ -243,7 +243,7 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
 
   @Override
   public MemberCardActivateUserFormResult setActivateUserForm(MemberCardActivateUserFormRequest userFormRequest) throws WxErrorException {
-    String responseContent = this.getWxMpService().post(MEMBER_CARD_ACTIVATEUSERFORM, GSON.toJson(userFormRequest));
+    String responseContent = this.getWxMpService().post(MEMBER_CARD_ACTIVATE_USER_FORM, GSON.toJson(userFormRequest));
     return MemberCardActivateUserFormResult.fromJson(responseContent);
   }
 

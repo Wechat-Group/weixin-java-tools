@@ -29,6 +29,11 @@ public interface WxCpChatService {
   String chatCreate(String name, String owner, List<String> users, String chatId) throws WxErrorException;
 
   /**
+   * chatCreate 同名方法
+   */
+  String create(String name, String owner, List<String> users, String chatId) throws WxErrorException;
+
+  /**
    * 修改群聊会话.
    *
    * @param chatId        群聊id
@@ -41,6 +46,11 @@ public interface WxCpChatService {
   void chatUpdate(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete) throws WxErrorException;
 
   /**
+   * chatUpdate 同名方法
+   */
+  void update(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete) throws WxErrorException;
+
+  /**
    * 获取群聊会话.
    *
    * @param chatId 群聊编号
@@ -48,6 +58,11 @@ public interface WxCpChatService {
    * @throws WxErrorException 发生异常
    */
   WxCpChat chatGet(String chatId) throws WxErrorException;
+
+  /**
+   * chatGet 同名方法
+   */
+  WxCpChat get(String chatId) throws WxErrorException;
 
   /**
    * 应用支持推送文本、图片、视频、文件、图文等类型.

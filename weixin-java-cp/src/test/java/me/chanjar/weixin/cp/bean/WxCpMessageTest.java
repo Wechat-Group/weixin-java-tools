@@ -1,9 +1,11 @@
 package me.chanjar.weixin.cp.bean;
 
-import org.testng.annotations.*;
-
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
+import me.chanjar.weixin.cp.bean.taskcard.TaskCardButton;
+import org.testng.annotations.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -67,7 +69,7 @@ public class WxCpMessageTest {
     WxCpMessage reply = WxCpMessage.NEWS().toUser("OPENID").addArticle(article1).addArticle(article2).build();
 
     assertThat(reply.toJson())
-      .isEqualTo( "{\"touser\":\"OPENID\",\"msgtype\":\"news\",\"news\":{\"articles\":" +
+      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"news\",\"news\":{\"articles\":" +
         "[{\"title\":\"Happy Day\",\"description\":\"Is Really A Happy Day\",\"url\":\"URL\",\"picurl\":\"PIC_URL\"}," +
         "{\"title\":\"Happy Day\",\"description\":\"Is Really A Happy Day\",\"url\":\"URL\",\"picurl\":\"PIC_URL\"}]}," +
         "\"safe\":\"0\"}");
@@ -97,7 +99,7 @@ public class WxCpMessageTest {
     WxCpMessage reply = WxCpMessage.MPNEWS().toUser("OPENID").addArticle(article1, article2).build();
 
     assertThat(reply.toJson())
-      .isEqualTo( "{\"touser\":\"OPENID\",\"msgtype\":\"mpnews\",\"mpnews\":{\"articles\":" +
+      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"mpnews\",\"mpnews\":{\"articles\":" +
         "[{\"title\":\"Happy Day\",\"thumb_media_id\":\"thumb\",\"author\":\"aaaaaa\"," +
         "\"content_source_url\":\"nice url\",\"content\":\"hahaha\",\"digest\":\"digest\",\"show_cover_pic\":\"heihei\"}" +
         ",{\"title\":\"Happy Day\",\"thumb_media_id\":\"thumb\",\"author\":\"aaaaaa\"," +
@@ -110,6 +112,32 @@ public class WxCpMessageTest {
 
     assertThat(reply.toJson())
       .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"mpnews\",\"mpnews\":{\"media_id\":\"mmm\"},\"safe\":\"0\"}");
+  }
+
+  public void testTaskCardBuilder() {
+    TaskCardButton button1 = TaskCardButton.builder()
+      .key("yes")
+      .name("批准")
+      .replaceName("已批准")
+      .color("blue")
+      .bold(true)
+      .build();
+    TaskCardButton button2 = TaskCardButton.builder()
+      .key("yes")
+      .name("拒绝")
+      .replaceName("已拒绝")
+      .color("red")
+      .bold(false)
+      .build();
+    WxCpMessage reply = WxCpMessage.TASKCARD().toUser("OPENID")
+      .title("任务卡片")
+      .description("有一条待处理任务")
+      .url("http://www.qq.com")
+      .taskId("task_123")
+      .buttons(Arrays.asList(button1, button2))
+      .build();
+    assertThat(reply.toJson())
+      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"taskcard\",\"taskcard\":{\"title\":\"任务卡片\",\"description\":\"有一条待处理任务\",\"url\":\"http://www.qq.com\",\"task_id\":\"task_123\",\"btn\":[{\"key\":\"yes\",\"name\":\"批准\",\"replace_name\":\"已批准\",\"color\":\"blue\",\"is_bold\":true},{\"key\":\"yes\",\"name\":\"拒绝\",\"replace_name\":\"已拒绝\",\"color\":\"red\",\"is_bold\":false}]}}");
   }
 
 }

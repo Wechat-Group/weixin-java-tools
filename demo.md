@@ -5,6 +5,10 @@
 1. 一般来说，Github上的版本应该是最新的，但也有可能没及时同步，此种情况下请以github上的版本为准，有问题也请在github对应项目issues页面提问）。
 1. 欢迎提供更多的demo实现。
 
+### Spring Boot Starter实现
+- 微信支付：[点击查看使用方法](https://github.com/Wechat-Group/WxJava/tree/master/starters/wx-java-pay-starter) 
+- 微信公众号：[点击查看使用方法](https://github.com/Wechat-Group/WxJava/tree/master/starters/wx-java-mp-starter) 
+
 ### Demo列表
 1. 微信支付Demo：[GitHub](http://github.com/binarywang/weixin-java-pay-demo)、[码云](http://gitee.com/binary/weixin-java-pay-demo)
 1. 企业号/企业微信Demo：[GitHub](http://github.com/binarywang/weixin-java-cp-demo)、[码云](http://gitee.com/binary/weixin-java-cp-demo)

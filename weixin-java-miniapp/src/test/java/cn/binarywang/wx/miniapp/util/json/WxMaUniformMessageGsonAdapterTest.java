@@ -1,10 +1,9 @@
 package cn.binarywang.wx.miniapp.util.json;
 
-import org.testng.annotations.*;
-
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
 import cn.binarywang.wx.miniapp.bean.WxMaUniformMessage;
 import com.google.gson.JsonParser;
+import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +25,7 @@ public class WxMaUniformMessageGsonAdapterTest {
       .appid("APPID")
       .templateId("TEMPLATE_ID")
       .url("http://weixin.qq.com/download")
-      .miniProgram(new WxMaUniformMessage.MiniProgram("xiaochengxuappid12345", "index?foo=bar", false))
+      .miniProgram(new WxMaUniformMessage.MiniProgram("xiaochengxuappid12345", "index?foo=bar", false, false))
       .build();
     message.addData(new WxMaTemplateData("first", "恭喜你购买成功！", "#173177"))
       .addData(new WxMaTemplateData("keyword1", "巧克力", "#173177"))
@@ -72,7 +71,7 @@ public class WxMaUniformMessageGsonAdapterTest {
 
   @Test
   public void testSerialize_ma() {
-    WxMaUniformMessage message =  WxMaUniformMessage.builder()
+    WxMaUniformMessage message = WxMaUniformMessage.builder()
       .isMpTemplateMsg(false)
       .toUser("OPENID")
       .page("page/page/index")

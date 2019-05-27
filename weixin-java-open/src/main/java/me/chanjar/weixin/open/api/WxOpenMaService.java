@@ -22,7 +22,7 @@ import java.util.Map;
 public interface WxOpenMaService extends WxMaService {
 
   /**
-   * 设置小程序服务器域名
+   * 设置小程序服务器域名.
    *
    * <pre>
    *     授权给第三方的小程序，其服务器域名只可以为第三方的服务器，当小程序通过第三方发布代码上线后，小程序原先自己配置的服务器域名将被删除，
@@ -170,21 +170,13 @@ public interface WxOpenMaService extends WxMaService {
 
   /**
    * 获得小程序的域名配置信息
-   *
-   * @return
    */
   WxOpenMaDomainResult getDomain() throws WxErrorException;
 
   /**
    * 修改域名
    *
-   * @param action              delete删除, set覆盖, get获取
-   * @param requestdomainList
-   * @param wsrequestdomainList
-   * @param uploaddomainList
-   * @param downloaddomainList
-   * @return
-   * @throws WxErrorException
+   * @param action delete删除, set覆盖, get获取
    */
   WxOpenMaDomainResult modifyDomain(String action, List<String> requestdomainList, List<String> wsrequestdomainList, List<String> uploaddomainList, List<String> downloaddomainList) throws WxErrorException;
 
@@ -198,17 +190,13 @@ public interface WxOpenMaService extends WxMaService {
   /**
    * 设置小程序的业务域名
    *
-   * @param action     add添加, delete删除, set覆盖
-   * @param domainList
+   * @param action add添加, delete删除, set覆盖
    * @return 直接返回字符串
    */
   String setWebViewDomain(String action, List<String> domainList) throws WxErrorException;
 
   /**
    * 获取小程序的信息
-   *
-   * @return
-   * @throws WxErrorException
    */
   String getAccountBasicInfo() throws WxErrorException;
 
@@ -225,16 +213,11 @@ public interface WxOpenMaService extends WxMaService {
    * 解除绑定小程序体验者
    *
    * @param wechatid 体验者微信号（不是openid）
-   * @return
-   * @throws WxErrorException
    */
   WxOpenResult unbindTester(String wechatid) throws WxErrorException;
 
   /**
    * 获得体验者列表
-   *
-   * @return
-   * @throws WxErrorException
    */
   WxOpenMaTesterListResult getTesterList() throws WxErrorException;
 
@@ -245,17 +228,11 @@ public interface WxOpenMaService extends WxMaService {
    * @param userVersion 用户定义版本
    * @param userDesc    用户定义版本描述
    * @param extInfo     第三方自定义的配置
-   * @return
-   * @throws WxErrorException
    */
   WxOpenResult codeCommit(Long templateId, String userVersion, String userDesc, WxMaOpenCommitExtInfo extInfo) throws WxErrorException;
 
   /**
    * 获取体验小程序的体验二维码
-   *
-   * @param pagePath
-   * @param params
-   * @return
    */
   File getTestQrcode(String pagePath, Map<String, String> params) throws WxErrorException;
 
@@ -264,9 +241,6 @@ public interface WxOpenMaService extends WxMaService {
    * <p>
    * 注意：该接口可获取已设置的二级类目及用于代码审核的可选三级类目。
    * </p>
-   *
-   * @return WxOpenMaCategoryListResult
-   * @throws WxErrorException
    */
   WxOpenMaCategoryListResult getCategoryList() throws WxErrorException;
 
@@ -280,69 +254,42 @@ public interface WxOpenMaService extends WxMaService {
 
   /**
    * 将第三方提交的代码包提交审核（仅供第三方开发者代小程序调用）
-   *
-   * @param submitAuditMessage
-   * @return
-   * @throws WxErrorException
    */
   WxOpenMaSubmitAuditResult submitAudit(WxOpenMaSubmitAuditMessage submitAuditMessage) throws WxErrorException;
 
   /**
    * 查询某个指定版本的审核状态（仅供第三方代小程序调用）
-   *
-   * @param auditid
-   * @return
-   * @throws WxErrorException
    */
   WxOpenMaQueryAuditResult getAuditStatus(Long auditid) throws WxErrorException;
 
   /**
-   * 查询最新一次提交的审核状态（仅供第三方代小程序调用）
-   *
-   * @return
-   * @throws WxErrorException
+   * 查询最新一次提交的审核状态（仅供第三方代小程序调用）.
    */
   WxOpenMaQueryAuditResult getLatestAuditStatus() throws WxErrorException;
 
   /**
-   * 发布已通过审核的小程序（仅供第三方代小程序调用）
-   *
-   * @return
-   * @throws WxErrorException
+   * 发布已通过审核的小程序（仅供第三方代小程序调用）.
    */
   WxOpenResult releaesAudited() throws WxErrorException;
 
   /**
    * 11. 小程序版本回退（仅供第三方代小程序调用）
-   *
-   * @return
-   * @throws WxErrorException
    */
   WxOpenResult revertCodeReleaes() throws WxErrorException;
 
   /**
    * 15. 小程序审核撤回
-   * <p>
    * 单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次。
-   * </p>
-   *
-   * @return
-   * @throws WxErrorException
    */
   WxOpenResult undoCodeAudit() throws WxErrorException;
 
   /**
    * 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
-   * @return
-   * @throws WxErrorException
    */
   String getSupportVersion() throws WxErrorException;
 
   /**
    * 设置最低基础库版本（仅供第三方代小程序调用）
-   * @param version
-   * @return
-   * @throws WxErrorException
    */
   String setSupportVersion(String version) throws WxErrorException;
 

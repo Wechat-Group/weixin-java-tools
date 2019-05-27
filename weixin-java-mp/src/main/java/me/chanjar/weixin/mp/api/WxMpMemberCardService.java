@@ -17,14 +17,14 @@ import me.chanjar.weixin.mp.bean.membercard.*;
  * @date 2018-08-30
  */
 public interface WxMpMemberCardService {
-  String MEMBER_CARD_CREAET = "https://api.weixin.qq.com/card/create";
+  String MEMBER_CARD_CREATE = "https://api.weixin.qq.com/card/create";
   String MEMBER_CARD_ACTIVATE = "https://api.weixin.qq.com/card/membercard/activate";
   String MEMBER_CARD_USER_INFO_GET = "https://api.weixin.qq.com/card/membercard/userinfo/get";
   String MEMBER_CARD_UPDATE_USER = "https://api.weixin.qq.com/card/membercard/updateuser";
   /**
    * 会员卡激活之微信开卡接口(wx_activate=true情况调用).
    */
-  String MEMBER_CARD_ACTIVATEUSERFORM = "https://api.weixin.qq.com/card/membercard/activateuserform/set";
+  String MEMBER_CARD_ACTIVATE_USER_FORM = "https://api.weixin.qq.com/card/membercard/activateuserform/set";
 
   /**
    * 获取会员卡开卡插件参数.
@@ -37,7 +37,8 @@ public interface WxMpMemberCardService {
   String MEMBER_CARD_UPDATE = "https://api.weixin.qq.com/card/update";
 
   /**
-   * 跳转型会员卡开卡字段,获取用户提交资料(wx_activate=true情况调用),开发者根据activate_ticket获取到用户填写的信息
+   * 跳转型会员卡开卡字段.
+   * 获取用户提交资料(wx_activate=true情况调用),开发者根据activate_ticket获取到用户填写的信息
    */
   String MEMBER_CARD_ACTIVATE_TEMP_INFO = "https://api.weixin.qq.com/card/membercard/activatetempinfo/get";
 
@@ -127,7 +128,7 @@ public interface WxMpMemberCardService {
   CardUpdateResult updateCardInfo(MemberCardUpdateRequest memberCardUpdateRequest) throws WxErrorException;
 
   /**
-   * 解析跳转型开卡字段用户提交的资料
+   * 解析跳转型开卡字段用户提交的资料.
    * 开发者在URL上截取ticket后须先进行urldecode
    *
    * @param activateTicket 用户提交的资料

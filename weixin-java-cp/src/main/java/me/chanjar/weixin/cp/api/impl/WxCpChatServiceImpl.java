@@ -1,11 +1,5 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
@@ -14,6 +8,11 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.bean.WxCpChat;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 群聊服务实现.
@@ -53,6 +52,11 @@ public class WxCpChatServiceImpl implements WxCpChatService {
   }
 
   @Override
+  public String create(String name, String owner, List<String> users, String chatId) throws WxErrorException {
+    return chatCreate(name, owner, users, chatId);
+  }
+
+  @Override
   public void chatUpdate(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete)
     throws WxErrorException {
     Map<String, Object> data = new HashMap<>(5);
@@ -76,10 +80,20 @@ public class WxCpChatServiceImpl implements WxCpChatService {
   }
 
   @Override
+  public void update(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete) throws WxErrorException {
+    chatUpdate(chatId, name, owner, usersToAdd, usersToDelete);
+  }
+
+  @Override
   public WxCpChat chatGet(String chatId) throws WxErrorException {
     String result = this.cpService.get(APPCHAT_GET_CHATID + chatId, null);
     return WxCpGsonBuilder.create()
       .fromJson(JSON_PARSER.parse(result).getAsJsonObject().getAsJsonObject("chat_info").toString(), WxCpChat.class);
+  }
+
+  @Override
+  public WxCpChat get(String chatId) throws WxErrorException {
+    return chatGet(chatId);
   }
 
   @Override

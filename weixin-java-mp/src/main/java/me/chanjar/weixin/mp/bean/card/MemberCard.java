@@ -39,12 +39,6 @@ public final class MemberCard implements Serializable {
   private boolean autoActivate;
 
   /**
-   * 是否一键开卡.
-   */
-  @SerializedName("wx_activate")
-  private boolean wxActivate;
-
-  /**
    * 显示积分.
    */
   @SerializedName("supply_bonus")
@@ -144,6 +138,24 @@ public final class MemberCard implements Serializable {
    */
   @SerializedName("advanced_info")
   private AdvancedInfo advancedInfo;
+
+  /**
+   * 是否支持一键激活 ，填true或false.
+   */
+  @SerializedName("wx_activate")
+  private boolean wxActivate;
+
+  /**
+   * 是否支持跳转型一键激活，填true或false.
+   */
+  @SerializedName("wx_activate_after_submit")
+  private boolean wxActivateAfterSubmit;
+
+  /**
+   * 跳转型一键激活跳转的地址链接，请填写http:// 或者https://开头的链接.
+   */
+  @SerializedName("wx_activate_after_submit_url")
+  private String wxActivateAfterSubmitUrl;
 
   @Override
   public String toString() {

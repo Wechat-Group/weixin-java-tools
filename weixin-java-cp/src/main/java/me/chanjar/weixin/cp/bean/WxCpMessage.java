@@ -1,26 +1,18 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Data;
 import me.chanjar.weixin.common.api.WxConsts.KefuMsgType;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
-import me.chanjar.weixin.cp.bean.messagebuilder.FileBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.ImageBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.MarkdownMsgBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.MpnewsBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.NewsBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.TextBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.TextCardBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.VideoBuilder;
-import me.chanjar.weixin.cp.bean.messagebuilder.VoiceBuilder;
+import me.chanjar.weixin.cp.bean.messagebuilder.*;
+import me.chanjar.weixin.cp.bean.taskcard.TaskCardButton;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 消息.
@@ -48,6 +40,12 @@ public class WxCpMessage implements Serializable {
   private String btnTxt;
   private List<NewArticle> articles = new ArrayList<>();
   private List<MpnewsArticle> mpnewsArticles = new ArrayList<>();
+
+  /**
+   * 任务卡片特有的属性
+   */
+  private String taskId;
+  private List<TaskCardButton> taskButtons = new ArrayList<>();
 
   /**
    * 获得文本消息builder.
@@ -112,6 +110,13 @@ public class WxCpMessage implements Serializable {
     return new FileBuilder();
   }
 
+  /**
+   * 获得任务卡片消息builder.
+   */
+  public static TaskCardBuilder TASKCARD() {
+    return new TaskCardBuilder();
+  }
+
 
   /**
    * <pre>
@@ -124,6 +129,7 @@ public class WxCpMessage implements Serializable {
    * {@link KefuMsgType#NEWS}
    * {@link KefuMsgType#MPNEWS}
    * {@link KefuMsgType#MARKDOWN}
+   * {@link KefuMsgType#TASKCARD}
    * </pre>
    *
    * @param msgType 消息类型
@@ -247,6 +253,42 @@ public class WxCpMessage implements Serializable {
           newsJsonObject.add("articles", articleJsonArray);
         }
         messageJson.add("mpnews", newsJsonObject);
+        break;
+      }
+      case KefuMsgType.TASKCARD: {
+        JsonObject text = new JsonObject();
+        text.addProperty("title", this.getTitle());
+        text.addProperty("description", this.getDescription());
+
+        if (StringUtils.isNotBlank(this.getUrl())) {
+          text.addProperty("url", this.getUrl());
+        }
+
+        text.addProperty("task_id", this.getTaskId());
+
+        JsonArray buttonJsonArray = new JsonArray();
+        for (TaskCardButton button : this.getTaskButtons()) {
+          JsonObject buttonJson = new JsonObject();
+          buttonJson.addProperty("key", button.getKey());
+          buttonJson.addProperty("name", button.getName());
+
+          if (StringUtils.isNotBlank(button.getReplaceName())) {
+            buttonJson.addProperty("replace_name", button.getReplaceName());
+          }
+
+          if (StringUtils.isNotBlank(button.getColor())) {
+            buttonJson.addProperty("color", button.getColor());
+          }
+
+          if (button.getBold() != null) {
+            buttonJson.addProperty("is_bold", button.getBold());
+          }
+
+          buttonJsonArray.add(buttonJson);
+        }
+        text.add("btn", buttonJsonArray);
+
+        messageJson.add("taskcard", text);
         break;
       }
       default: {

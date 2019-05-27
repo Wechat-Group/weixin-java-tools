@@ -304,6 +304,19 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
 
   /**
    * <pre>
+   * 字段名：电子发票入口开放标识.
+   * 变量名：	receipt
+   * 是否必填：否
+   * 类型：String(8)
+   * 示例值：Y
+   * 描述：	Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
+   * </pre>
+   */
+  @XStreamAlias("receipt")
+  private String receipt;
+
+  /**
+   * <pre>
    * 字段名：场景信息.
    * 变量名：scene_info
    * 是否必填：否，对H5支付来说是必填
