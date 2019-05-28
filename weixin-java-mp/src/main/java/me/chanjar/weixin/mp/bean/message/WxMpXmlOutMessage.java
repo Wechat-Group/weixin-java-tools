@@ -79,6 +79,13 @@ public abstract class WxMpXmlOutMessage implements Serializable {
   public static TransferCustomerServiceBuilder TRANSFER_CUSTOMER_SERVICE() {
     return new TransferCustomerServiceBuilder();
   }
+  
+  /**
+   * 获得设备消息builder
+   */
+  public static DeviceBuilder DEVICE() {
+      return new DeviceBuilder();
+  }
 
   @SuppressWarnings("unchecked")
   public String toXml() {
