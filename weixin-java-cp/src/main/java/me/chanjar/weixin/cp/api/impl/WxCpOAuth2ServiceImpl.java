@@ -44,7 +44,7 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
 
   @Override
   public String buildAuthorizationUrl(String redirectUri, String state, String scope) {
-    StringBuilder url = new StringBuilder(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpOAuth2Service.URL_OAUTH_2_AUTHORIZE));
+    StringBuilder url = new StringBuilder(WxCpOAuth2Service.URL_OAUTH_2_AUTHORIZE);
     url.append("?appid=").append(this.mainService.getWxCpConfigStorage().getCorpId());
     url.append("&redirect_uri=").append(URIUtil.encodeURIComponent(redirectUri));
     url.append("&response_type=code");
