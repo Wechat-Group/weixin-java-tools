@@ -1,11 +1,16 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import jodd.http.*;
+import jodd.http.HttpConnectionProvider;
+import jodd.http.HttpRequest;
+import jodd.http.HttpResponse;
+import jodd.http.JoddHttp;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.cp.WxCpConsts;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 
 public class WxCpServiceJoddHttpImpl extends BaseWxCpServiceImpl<HttpConnectionProvider, ProxyInfo> {
@@ -35,9 +40,10 @@ public class WxCpServiceJoddHttpImpl extends BaseWxCpServiceImpl<HttpConnectionP
     }
 
     synchronized (this.globalAccessTokenRefreshLock) {
-      String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"
+      String url = WxCpConsts.getQyapiUrl("/cgi-bin/gettoken?"
         + "&corpid=" + this.configStorage.getCorpId()
-        + "&corpsecret=" + this.configStorage.getCorpSecret();
+        + "&corpsecret=" + this.configStorage.getCorpSecret()
+      );
 
       HttpRequest request = HttpRequest.get(url);
       if (this.httpProxy != null) {

@@ -7,6 +7,7 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.URIUtil;
 import me.chanjar.weixin.common.util.json.GsonHelper;
+import me.chanjar.weixin.cp.WxCpConsts;
 import me.chanjar.weixin.cp.api.WxCpOAuth2Service;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpUserDetail;
@@ -68,7 +69,7 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
 
   @Override
   public String[] getUserInfo(Integer agentId, String code) throws WxErrorException {
-    String url = String.format("https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?code=%s&agentid=%d",
+    String url = String.format(WxCpConsts.getQyapiUrl("/cgi-bin/user/getuserinfo?code=%s&agentid=%d"),
       code, agentId);
     String responseText = this.mainService.get(url, null);
     JsonElement je = new JsonParser().parse(responseText);
@@ -83,7 +84,7 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
 
   @Override
   public WxCpUserDetail getUserDetail(String userTicket) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserdetail";
+    String url = WxCpConsts.getQyapiUrl("/cgi-bin/user/getuserdetail");
     JsonObject param = new JsonObject();
     param.addProperty("user_ticket", userTicket);
     String responseText = this.mainService.post(url, param.toString());

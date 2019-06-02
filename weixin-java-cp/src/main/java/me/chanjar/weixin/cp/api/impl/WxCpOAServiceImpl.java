@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.cp.WxCpConsts;
 import me.chanjar.weixin.cp.api.WxCpOAService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpApprovalDataResult;
@@ -49,7 +50,7 @@ public class WxCpOAServiceImpl implements WxCpOAService {
       throw new RuntimeException("获取记录时间跨度不超过一个月");
     }
 
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/checkin/getcheckindata";
+    String url = WxCpConsts.getQyapiUrl("/cgi-bin/checkin/getcheckindata");
 
     JsonObject jsonObject = new JsonObject();
     JsonArray jsonArray = new JsonArray();
@@ -76,7 +77,7 @@ public class WxCpOAServiceImpl implements WxCpOAService {
 
   @Override
   public List<WxCpCheckinOption> getCheckinOption(Date datetime, List<String> userIdList) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/checkin/getcheckinoption";
+    String url = WxCpConsts.getQyapiUrl("/cgi-bin/checkin/getcheckinoption");
     if (datetime == null) {
       throw new RuntimeException("datetime can't be null");
     }
@@ -108,7 +109,7 @@ public class WxCpOAServiceImpl implements WxCpOAService {
   @Override
   public WxCpApprovalDataResult getApprovalData(Date starttime, Date endtime, Long nextSpnum) throws WxErrorException {
 
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/corp/getapprovaldata";
+    String url = WxCpConsts.getQyapiUrl("/cgi-bin/corp/getapprovaldata");
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("starttime", starttime.getTime() / 1000L);
     jsonObject.addProperty("endtime", endtime.getTime() / 1000L);
@@ -123,7 +124,7 @@ public class WxCpOAServiceImpl implements WxCpOAService {
   @Override
   public List<WxCpDialRecord> getDialRecord(Date starttime, Date endtime, Integer offset, Integer limit) throws WxErrorException {
 
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/dial/get_dial_record";
+    String url = WxCpConsts.getQyapiUrl("/cgi-bin/dial/get_dial_record");
     JsonObject jsonObject = new JsonObject();
 
     if (offset == null) {

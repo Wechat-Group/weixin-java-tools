@@ -3,6 +3,7 @@ package me.chanjar.weixin.cp.api.impl;
 import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+import me.chanjar.weixin.cp.WxCpConsts;
 import me.chanjar.weixin.cp.api.WxCpChatService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpAppChatMessage;
@@ -47,7 +48,7 @@ public class WxCpChatServiceImpl implements WxCpChatService {
     if (StringUtils.isNotBlank(chatId)) {
       data.put("chatid", chatId);
     }
-    String result = this.cpService.post(APPCHAT_CREATE, WxGsonBuilder.create().toJson(data));
+    String result = this.cpService.post(WxCpConsts.getQyapiUrl(APPCHAT_CREATE), WxGsonBuilder.create().toJson(data));
     return new JsonParser().parse(result).getAsJsonObject().get("chatid").getAsString();
   }
 
@@ -76,7 +77,7 @@ public class WxCpChatServiceImpl implements WxCpChatService {
       data.put("del_user_list", usersToDelete);
     }
 
-    this.cpService.post(APPCHAT_UPDATE, WxGsonBuilder.create().toJson(data));
+    this.cpService.post(WxCpConsts.getQyapiUrl(APPCHAT_UPDATE), WxGsonBuilder.create().toJson(data));
   }
 
   @Override
@@ -86,7 +87,7 @@ public class WxCpChatServiceImpl implements WxCpChatService {
 
   @Override
   public WxCpChat chatGet(String chatId) throws WxErrorException {
-    String result = this.cpService.get(APPCHAT_GET_CHATID + chatId, null);
+    String result = this.cpService.get(WxCpConsts.getQyapiUrl(APPCHAT_GET_CHATID + chatId), null);
     return WxCpGsonBuilder.create()
       .fromJson(JSON_PARSER.parse(result).getAsJsonObject().getAsJsonObject("chat_info").toString(), WxCpChat.class);
   }
@@ -98,7 +99,7 @@ public class WxCpChatServiceImpl implements WxCpChatService {
 
   @Override
   public void sendMsg(WxCpAppChatMessage message) throws WxErrorException {
-    this.cpService.post("https://qyapi.weixin.qq.com/cgi-bin/appchat/send", message.toJson());
+    this.cpService.post(WxCpConsts.getQyapiUrl("/cgi-bin/appchat/send"), message.toJson());
   }
 
 }

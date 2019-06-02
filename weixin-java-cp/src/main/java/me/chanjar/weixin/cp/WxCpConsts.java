@@ -9,6 +9,34 @@ package me.chanjar.weixin.cp;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxCpConsts {
+
+  private static String qyapiBaseUrl = null;
+
+  /**
+   * 如果需要，调用 setQyapiBaseUrl("http://local_server:port") 设置私有安装地址.
+   * @param baseUrl
+   */
+  public static void setQyapiBaseUrl(String baseUrl) {
+    qyapiBaseUrl = baseUrl;
+  }
+
+  /**
+   * 所有代码使用 WxCpConsts.getQyapiBaseUrl()
+   */
+  public static String getQyapiBaseUrl() {
+    if (qyapiBaseUrl == null) {
+      qyapiBaseUrl = "https://qyapi.weixin.qq.com";
+    }
+    return qyapiBaseUrl;
+  }
+
+  /**
+   * 返回 API 请求地址.
+   */
+  public static String getQyapiUrl(String path) {
+    return getQyapiBaseUrl() + path;
+  }
+
   /**
    * 企业微信端推送过来的事件类型.
    * 参考文档：https://work.weixin.qq.com/api/doc#12974
