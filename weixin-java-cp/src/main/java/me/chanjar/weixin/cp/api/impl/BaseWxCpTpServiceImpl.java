@@ -98,7 +98,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     params.put("js_code", jsCode);
     params.put("grant_type", "authorization_code");
 
-    String result = this.get(JSCODE_TO_SESSION_URL, Joiner.on("&").withKeyValueSeparator("=").join(params));
+    String result = this.get(configStorage.getApiUrl(JSCODE_TO_SESSION_URL), Joiner.on("&").withKeyValueSeparator("=").join(params));
     return WxCpMaJsCode2SessionResult.fromJson(result);
   }
 
@@ -108,7 +108,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
 	JsonObject jsonObject = new JsonObject();
 	jsonObject.addProperty("auth_corpid", authCorpid);
 	jsonObject.addProperty("permanent_code", permanentCode);
-	String result = post(GET_CORP_TOKEN, jsonObject.toString());
+	String result = post(configStorage.getApiUrl(GET_CORP_TOKEN), jsonObject.toString());
 	
 	return WxAccessToken.fromJson(result);
   }
@@ -119,7 +119,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("auth_code", authCode);
 
-    String result = post(GET_PERMANENT_CODE, jsonObject.toString());
+    String result = post(configStorage.getApiUrl(GET_PERMANENT_CODE), jsonObject.toString());
     jsonObject = new JsonParser().parse(result).getAsJsonObject();
     WxCpTpCorp wxCpTpCorp = WxCpTpCorp.fromJson(jsonObject.get("auth_corp_info").getAsString());
     wxCpTpCorp.setPermanentCode(jsonObject.get("permanent_code").getAsString());

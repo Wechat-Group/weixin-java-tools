@@ -1,17 +1,16 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpAgentService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpAgent;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.util.List;
 
 
 /**
@@ -37,13 +36,14 @@ public class WxCpAgentServiceImpl implements WxCpAgentService {
       throw new IllegalArgumentException("缺少agentid参数");
     }
 
-    String responseContent = this.mainService.get(String.format(WxCpAgentService.GET_AGENT, agentId), null);
+    String responseContent = this.mainService.get(String.format(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpAgentService.GET_AGENT), agentId), null);
     return WxCpAgent.fromJson(responseContent);
   }
 
   @Override
   public void set(WxCpAgent agentInfo) throws WxErrorException {
-    String responseContent = this.mainService.post(WxCpAgentService.AGENT_SET, agentInfo.toJson());
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(WxCpAgentService.AGENT_SET);
+    String responseContent = this.mainService.post(url, agentInfo.toJson());
     JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
     if (jsonObject.get("errcode").getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent));
@@ -52,7 +52,8 @@ public class WxCpAgentServiceImpl implements WxCpAgentService {
 
   @Override
   public List<WxCpAgent> list() throws WxErrorException {
-    String responseContent = this.mainService.get(WxCpAgentService.AGENT_LIST, null);
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(WxCpAgentService.AGENT_LIST);
+    String responseContent = this.mainService.get(url, null);
     JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
     if (jsonObject.get("errcode").getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent));

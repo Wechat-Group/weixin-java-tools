@@ -13,9 +13,9 @@ import me.chanjar.weixin.cp.bean.WxCpUserDetail;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxCpOAuth2Service {
-  String URL_GET_USER_INFO = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?code=%s&agentid=%d";
-  String URL_GET_USER_DETAIL = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserdetail";
-  String URL_OAUTH_2_AUTHORIZE = "https://open.weixin.qq.com/connect/oauth2/authorize";
+  String URL_GET_USER_INFO = "/cgi-bin/user/getuserinfo?code=%s&agentid=%d";
+  String URL_GET_USER_DETAIL = "/cgi-bin/user/getuserdetail";
+  String URL_OAUTH_2_AUTHORIZE = "/connect/oauth2/authorize";
 
   /**
    * <pre>

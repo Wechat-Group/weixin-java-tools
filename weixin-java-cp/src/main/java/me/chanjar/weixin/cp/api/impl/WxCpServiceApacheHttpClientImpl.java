@@ -48,7 +48,8 @@ public class WxCpServiceApacheHttpClientImpl extends BaseWxCpServiceImpl<Closeab
     }
 
     synchronized (this.globalAccessTokenRefreshLock) {
-      String url = String.format(WxCpService.GET_TOKEN, this.configStorage.getCorpId(), this.configStorage.getCorpSecret());
+      String url = String.format(this.configStorage.getApiUrl(WxCpService.GET_TOKEN), this.configStorage.getCorpId(), this.configStorage.getCorpSecret());
+
       try {
         HttpGet httpGet = new HttpGet(url);
         if (this.httpProxy != null) {

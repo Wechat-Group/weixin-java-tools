@@ -15,10 +15,10 @@ import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
  * @author zhenjun cai
  */
 public interface WxCpTpService {
-  String JSCODE_TO_SESSION_URL = "https://qyapi.weixin.qq.com/cgi-bin/service/miniprogram/jscode2session";
-  String GET_CORP_TOKEN = "https://qyapi.weixin.qq.com/cgi-bin/service/get_corp_token";
-  String GET_PERMANENT_CODE = "https://qyapi.weixin.qq.com/cgi-bin/service/get_permanent_code";
-  String GET_SUITE_TOKEN = "https://qyapi.weixin.qq.com/cgi-bin/service/get_suite_token";
+  String JSCODE_TO_SESSION_URL = "/cgi-bin/service/miniprogram/jscode2session";
+  String GET_CORP_TOKEN = "/cgi-bin/service/get_corp_token";
+  String GET_PERMANENT_CODE = "`/cgi-bin/service/get_permanent_code";
+  String GET_SUITE_TOKEN = "/cgi-bin/service/get_suite_token";
 
   /**
    * <pre>

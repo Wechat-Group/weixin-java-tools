@@ -16,10 +16,10 @@ import java.util.List;
  * @date 2019-04-06 10:52
  */
 public interface WxCpOaService {
-  String GET_CHECKIN_DATA = "https://qyapi.weixin.qq.com/cgi-bin/checkin/getcheckindata";
-  String GET_CHECKIN_OPTION = "https://qyapi.weixin.qq.com/cgi-bin/checkin/getcheckinoption";
-  String GET_APPROVAL_DATA = "https://qyapi.weixin.qq.com/cgi-bin/corp/getapprovaldata";
-  String GET_DIAL_RECORD = "https://qyapi.weixin.qq.com/cgi-bin/dial/get_dial_record";
+  String GET_CHECKIN_DATA = "/cgi-bin/checkin/getcheckindata";
+  String GET_CHECKIN_OPTION = "/cgi-bin/checkin/getcheckinoption";
+  String GET_APPROVAL_DATA = "/cgi-bin/corp/getapprovaldata";
+  String GET_DIAL_RECORD = "/cgi-bin/dial/get_dial_record";
 
   /**
    * <pre>

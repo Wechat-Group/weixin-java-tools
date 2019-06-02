@@ -17,7 +17,6 @@ import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 
 /**
@@ -83,7 +82,7 @@ public class WxCpTagServiceImplTest {
   public void testGet() throws WxErrorException {
     String apiResultJson = "{\"errcode\": 0,\"errmsg\": \"ok\",\"userlist\": [{\"userid\": \"0124035\",\"name\": \"王五\"},{\"userid\": \"0114035\",\"name\": \"梦雪\"}],\"partylist\": [9576,9567,9566],\"tagname\": \"测试标签-001\"}";
     WxCpService wxService = mock(WxCpService.class);
-    when(wxService.get(String.format(WxCpTagService.TAG_GET, 150), null)).thenReturn(apiResultJson);
+    when(wxService.get(String.format(wxService.getWxCpConfigStorage().getApiUrl(WxCpTagService.TAG_GET), 150), null)).thenReturn(apiResultJson);
     when(wxService.getTagService()).thenReturn(new WxCpTagServiceImpl(wxService));
 
     WxCpTagService wxCpTagService = wxService.getTagService();
