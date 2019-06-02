@@ -12,10 +12,10 @@ import java.util.List;
  * @author gaigeshen
  */
 public interface WxCpChatService {
-  String APPCHAT_CREATE = "https://qyapi.weixin.qq.com/cgi-bin/appchat/create";
-  String APPCHAT_UPDATE = "https://qyapi.weixin.qq.com/cgi-bin/appchat/update";
-  String APPCHAT_GET_CHATID = "https://qyapi.weixin.qq.com/cgi-bin/appchat/get?chatid=";
-  String APPCHAT_SEND = "https://qyapi.weixin.qq.com/cgi-bin/appchat/send";
+  String APPCHAT_CREATE = "/cgi-bin/appchat/create";
+  String APPCHAT_UPDATE = "/cgi-bin/appchat/update";
+  String APPCHAT_GET_CHATID = "/cgi-bin/appchat/get?chatid=";
+  String APPCHAT_SEND = "/cgi-bin/appchat/send";
 
   @Deprecated
   String chatCreate(String name, String owner, List<String> users, String chatId) throws WxErrorException;

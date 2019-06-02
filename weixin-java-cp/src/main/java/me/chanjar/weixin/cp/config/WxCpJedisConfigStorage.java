@@ -38,6 +38,21 @@ public class WxCpJedisConfigStorage implements WxCpConfigStorage {
   private volatile File tmpDirFile;
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
 
+  protected volatile String baseApiUrl;
+
+  @Override
+  public void setBaseApiUrl(String baseUrl) {
+    this.baseApiUrl = baseUrl;
+  }
+
+  @Override
+  public String getApiUrl(String path) {
+    if (baseApiUrl == null) {
+      baseApiUrl = "https://qyapi.weixin.qq.com";
+    }
+    return baseApiUrl + path;
+  }
+
   public WxCpJedisConfigStorage(JedisPool jedisPool) {
     this.jedisPool = jedisPool;
   }

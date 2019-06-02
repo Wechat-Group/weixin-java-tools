@@ -8,7 +8,12 @@ import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
-import okhttp3.*;
+import okhttp3.Authenticator;
+import okhttp3.Credentials;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Route;
 
 import java.io.IOException;
 
@@ -45,7 +50,7 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
       OkHttpClient client = getRequestHttpClient();
       //请求的request
       Request request = new Request.Builder()
-        .url(String.format(WxCpService.GET_TOKEN, this.configStorage.getCorpId(), this.configStorage.getCorpSecret()))
+        .url(String.format(this.configStorage.getApiUrl(WxCpService.GET_TOKEN), this.configStorage.getCorpId(), this.configStorage.getCorpSecret()))
         .get()
         .build();
       String resultContent = null;

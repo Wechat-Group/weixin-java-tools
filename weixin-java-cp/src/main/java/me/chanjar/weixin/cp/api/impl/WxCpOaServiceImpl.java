@@ -59,7 +59,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
 
     jsonObject.add("useridlist", jsonArray);
 
-    String responseContent = this.mainService.post(WxCpOaService.GET_CHECKIN_DATA, jsonObject.toString());
+    String responseContent = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpOaService.GET_CHECKIN_DATA), jsonObject.toString());
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(
@@ -88,7 +88,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     jsonObject.addProperty("datetime", datetime.getTime() / 1000L);
     jsonObject.add("useridlist", jsonArray);
 
-    String responseContent = this.mainService.post(WxCpOaService.GET_CHECKIN_OPTION, jsonObject.toString());
+    String responseContent = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpOaService.GET_CHECKIN_OPTION), jsonObject.toString());
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
 
     return WxCpGsonBuilder.create()
@@ -108,7 +108,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       jsonObject.addProperty("next_spnum", nextSpnum);
     }
 
-    String responseContent = this.mainService.post(WxCpOaService.GET_APPROVAL_DATA, jsonObject.toString());
+    String responseContent = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpOaService.GET_APPROVAL_DATA), jsonObject.toString());
     return WxCpGsonBuilder.create().fromJson(responseContent, WxCpApprovalDataResult.class);
   }
 
@@ -140,7 +140,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       jsonObject.addProperty("end_time", endtimestamp);
     }
 
-    String responseContent = this.mainService.post(WxCpOaService.GET_DIAL_RECORD, jsonObject.toString());
+    String responseContent = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpOaService.GET_DIAL_RECORD), jsonObject.toString());
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
 
     return WxCpGsonBuilder.create()

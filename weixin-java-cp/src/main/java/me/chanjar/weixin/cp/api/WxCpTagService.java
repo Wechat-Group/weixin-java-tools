@@ -17,13 +17,13 @@ import java.util.List;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxCpTagService {
-  String TAG_CREATE = "https://qyapi.weixin.qq.com/cgi-bin/tag/create";
-  String TAG_UPDATE = "https://qyapi.weixin.qq.com/cgi-bin/tag/update";
-  String TAG_DELETE = "https://qyapi.weixin.qq.com/cgi-bin/tag/delete?tagid=%s";
-  String TAG_LIST = "https://qyapi.weixin.qq.com/cgi-bin/tag/list";
-  String TAG_GET = "https://qyapi.weixin.qq.com/cgi-bin/tag/get?tagid=%s";
-  String TAG_ADDTAGUSERS = "https://qyapi.weixin.qq.com/cgi-bin/tag/addtagusers";
-  String TAG_DELTAGUSERS = "https://qyapi.weixin.qq.com/cgi-bin/tag/deltagusers";
+  String TAG_CREATE = "/cgi-bin/tag/create";
+  String TAG_UPDATE = "/cgi-bin/tag/update";
+  String TAG_DELETE = "/cgi-bin/tag/delete?tagid=%s";
+  String TAG_LIST = "/cgi-bin/tag/list";
+  String TAG_GET = "/cgi-bin/tag/get?tagid=%s";
+  String TAG_ADDTAGUSERS = "/cgi-bin/tag/addtagusers";
+  String TAG_DELTAGUSERS = "/cgi-bin/tag/deltagusers";
 
   /**
    * 创建标签.

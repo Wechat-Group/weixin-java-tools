@@ -1,6 +1,10 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import jodd.http.*;
+import jodd.http.HttpConnectionProvider;
+import jodd.http.HttpRequest;
+import jodd.http.HttpResponse;
+import jodd.http.JoddHttp;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.error.WxError;
@@ -39,7 +43,7 @@ public class WxCpServiceJoddHttpImpl extends BaseWxCpServiceImpl<HttpConnectionP
     }
 
     synchronized (this.globalAccessTokenRefreshLock) {
-      HttpRequest request = HttpRequest.get(String.format(WxCpService.GET_TOKEN, this.configStorage.getCorpId(), this.configStorage.getCorpSecret()));
+      HttpRequest request = HttpRequest.get(String.format(this.configStorage.getApiUrl(WxCpService.GET_TOKEN), this.configStorage.getCorpId(), this.configStorage.getCorpSecret()));
       if (this.httpProxy != null) {
         httpClient.useProxy(this.httpProxy);
       }

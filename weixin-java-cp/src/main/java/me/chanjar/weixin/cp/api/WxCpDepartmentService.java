@@ -1,9 +1,9 @@
 package me.chanjar.weixin.cp.api;
 
-import java.util.List;
-
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpDepart;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -14,10 +14,10 @@ import me.chanjar.weixin.cp.bean.WxCpDepart;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxCpDepartmentService {
-  String DEPARTMENT_CREATE = "https://qyapi.weixin.qq.com/cgi-bin/department/create";
-  String DEPARTMENT_UPDATE = "https://qyapi.weixin.qq.com/cgi-bin/department/update";
-  String DEPARTMENT_DELETE = "https://qyapi.weixin.qq.com/cgi-bin/department/delete?id=%d";
-  String DEPARTMENT_LIST = "https://qyapi.weixin.qq.com/cgi-bin/department/list";
+  String DEPARTMENT_CREATE = "/cgi-bin/department/create";
+  String DEPARTMENT_UPDATE = "/cgi-bin/department/update";
+  String DEPARTMENT_DELETE = "/cgi-bin/department/delete?id=%d";
+  String DEPARTMENT_LIST = "/cgi-bin/department/list";
 
   /**
    * <pre>

@@ -52,7 +52,7 @@ public class WxCpTpServiceApacheHttpClientImpl extends BaseWxCpTpServiceImpl<Clo
 
     synchronized (this.globalSuiteAccessTokenRefreshLock) {
       try {
-        HttpPost httpPost = new HttpPost(WxCpTpService.GET_SUITE_TOKEN);
+        HttpPost httpPost = new HttpPost(configStorage.getApiUrl(WxCpTpService.GET_SUITE_TOKEN));
         if (this.httpProxy != null) {
           RequestConfig config = RequestConfig.custom()
             .setProxy(this.httpProxy).build();

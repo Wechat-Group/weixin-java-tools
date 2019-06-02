@@ -47,7 +47,7 @@ public class WxCpChatServiceImpl implements WxCpChatService {
     if (StringUtils.isNotBlank(chatId)) {
       data.put("chatid", chatId);
     }
-    String result = this.cpService.post(APPCHAT_CREATE, WxGsonBuilder.create().toJson(data));
+    String result = this.cpService.post(this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_CREATE), WxGsonBuilder.create().toJson(data));
     return new JsonParser().parse(result).getAsJsonObject().get("chatid").getAsString();
   }
 
@@ -76,7 +76,7 @@ public class WxCpChatServiceImpl implements WxCpChatService {
       data.put("del_user_list", usersToDelete);
     }
 
-    this.cpService.post(APPCHAT_UPDATE, WxGsonBuilder.create().toJson(data));
+    this.cpService.post(this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_UPDATE), WxGsonBuilder.create().toJson(data));
   }
 
   @Override
@@ -86,7 +86,7 @@ public class WxCpChatServiceImpl implements WxCpChatService {
 
   @Override
   public WxCpChat chatGet(String chatId) throws WxErrorException {
-    String result = this.cpService.get(APPCHAT_GET_CHATID + chatId, null);
+    String result = this.cpService.get(this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_GET_CHATID + chatId), null);
     return WxCpGsonBuilder.create()
       .fromJson(JSON_PARSER.parse(result).getAsJsonObject().getAsJsonObject("chat_info").toString(), WxCpChat.class);
   }
@@ -98,7 +98,7 @@ public class WxCpChatServiceImpl implements WxCpChatService {
 
   @Override
   public void sendMsg(WxCpAppChatMessage message) throws WxErrorException {
-    this.cpService.post(WxCpChatService.APPCHAT_SEND, message.toJson());
+    this.cpService.post(this.cpService.getWxCpConfigStorage().getApiUrl(WxCpChatService.APPCHAT_SEND), message.toJson());
   }
 
 }

@@ -1,6 +1,10 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -32,27 +36,31 @@ public class WxCpTagServiceImpl implements WxCpTagService {
   public String create(String tagName) throws WxErrorException {
     JsonObject o = new JsonObject();
     o.addProperty("tagname", tagName);
-    String responseContent = this.mainService.post(WxCpTagService.TAG_CREATE, o.toString());
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(WxCpTagService.TAG_CREATE);
+    String responseContent = this.mainService.post(url, o.toString());
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return tmpJsonElement.getAsJsonObject().get("tagid").getAsString();
   }
 
   @Override
   public void update(String tagId, String tagName) throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(WxCpTagService.TAG_UPDATE);
     JsonObject o = new JsonObject();
     o.addProperty("tagid", tagId);
     o.addProperty("tagname", tagName);
-    this.mainService.post(WxCpTagService.TAG_UPDATE, o.toString());
+    this.mainService.post(url, o.toString());
   }
 
   @Override
   public void delete(String tagId) throws WxErrorException {
-    this.mainService.get(String.format(WxCpTagService.TAG_DELETE, tagId), null);
+    String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpTagService.TAG_DELETE), tagId);
+    this.mainService.get(url, null);
   }
 
   @Override
   public List<WxCpTag> listAll() throws WxErrorException {
-    String responseContent = this.mainService.get(WxCpTagService.TAG_LIST, null);
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(WxCpTagService.TAG_LIST);
+    String responseContent = this.mainService.get(url, null);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(
@@ -64,7 +72,8 @@ public class WxCpTagServiceImpl implements WxCpTagService {
 
   @Override
   public List<WxCpUser> listUsersByTagId(String tagId) throws WxErrorException {
-    String responseContent = this.mainService.get(String.format(WxCpTagService.TAG_GET, tagId), null);
+    String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpTagService.TAG_GET), tagId);
+    String responseContent = this.mainService.get(url, null);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(
@@ -76,20 +85,22 @@ public class WxCpTagServiceImpl implements WxCpTagService {
 
   @Override
   public WxCpTagAddOrRemoveUsersResult addUsers2Tag(String tagId, List<String> userIds, List<String> partyIds) throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(WxCpTagService.TAG_ADDTAGUSERS);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("tagid", tagId);
     this.addUserIdsAndPartyIdsToJson(userIds, partyIds, jsonObject);
 
-    return WxCpTagAddOrRemoveUsersResult.fromJson(this.mainService.post(WxCpTagService.TAG_ADDTAGUSERS, jsonObject.toString()));
+    return WxCpTagAddOrRemoveUsersResult.fromJson(this.mainService.post(url, jsonObject.toString()));
   }
 
   @Override
   public WxCpTagAddOrRemoveUsersResult removeUsersFromTag(String tagId, List<String> userIds, List<String> partyIds) throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(WxCpTagService.TAG_DELTAGUSERS);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("tagid", tagId);
     this.addUserIdsAndPartyIdsToJson(userIds, partyIds, jsonObject);
 
-    return WxCpTagAddOrRemoveUsersResult.fromJson(this.mainService.post(WxCpTagService.TAG_DELTAGUSERS, jsonObject.toString()));
+    return WxCpTagAddOrRemoveUsersResult.fromJson(this.mainService.post(url, jsonObject.toString()));
   }
 
   private void addUserIdsAndPartyIdsToJson(List<String> userIds, List<String> partyIds, JsonObject jsonObject) {
@@ -116,7 +127,8 @@ public class WxCpTagServiceImpl implements WxCpTagService {
       throw new IllegalArgumentException("缺少tagId参数");
     }
 
-    String responseContent = this.mainService.get(String.format(WxCpTagService.TAG_GET, tagId), null);
+    String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpTagService.TAG_GET), tagId);
+    String responseContent = this.mainService.get(url, null);
     return WxCpTagGetResult.fromJson(responseContent);
   }
 }
