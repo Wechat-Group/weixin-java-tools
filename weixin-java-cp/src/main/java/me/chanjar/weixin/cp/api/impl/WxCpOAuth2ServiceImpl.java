@@ -44,7 +44,7 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
 
   @Override
   public String buildAuthorizationUrl(String redirectUri, String state, String scope) {
-    StringBuilder url = new StringBuilder(WxCpOAuth2Service.URL_OAUTH_2_AUTHORIZE);
+    StringBuilder url = new StringBuilder(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpOAuth2Service.URL_OAUTH_2_AUTHORIZE));
     url.append("?appid=").append(this.mainService.getWxCpConfigStorage().getCorpId());
     url.append("&redirect_uri=").append(URIUtil.encodeURIComponent(redirectUri));
     url.append("&response_type=code");
@@ -69,7 +69,7 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
 
   @Override
   public WxCpOauth2UserInfo getUserInfo(Integer agentId, String code) throws WxErrorException {
-    String responseText = this.mainService.get(String.format(WxCpOAuth2Service.URL_GET_USER_INFO, code, agentId), null);
+    String responseText = this.mainService.get(String.format(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpOAuth2Service.URL_GET_USER_INFO), code, agentId), null);
     JsonElement je = new JsonParser().parse(responseText);
     JsonObject jo = je.getAsJsonObject();
 
@@ -86,7 +86,7 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
   public WxCpUserDetail getUserDetail(String userTicket) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("user_ticket", userTicket);
-    String responseText = this.mainService.post(WxCpOAuth2Service.URL_GET_USER_DETAIL, param.toString());
+    String responseText = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(WxCpOAuth2Service.URL_GET_USER_DETAIL), param.toString());
     return WxCpGsonBuilder.create().fromJson(responseText, WxCpUserDetail.class);
   }
 }

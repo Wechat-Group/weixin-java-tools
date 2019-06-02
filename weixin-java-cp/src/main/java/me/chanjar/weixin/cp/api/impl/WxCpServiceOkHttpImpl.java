@@ -6,8 +6,14 @@ import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import me.chanjar.weixin.cp.WxCpConsts;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
-import okhttp3.*;
+import okhttp3.Authenticator;
+import okhttp3.Credentials;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Route;
 
 import java.io.IOException;
 
@@ -38,9 +44,10 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
     }
 
     synchronized (this.globalAccessTokenRefreshLock) {
-        String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"
+        String url = this.configStorage.getApiUrl("/cgi-bin/gettoken?"
           + "&corpid=" + this.configStorage.getCorpId()
-          + "&corpsecret=" + this.configStorage.getCorpSecret();
+          + "&corpsecret=" + this.configStorage.getCorpSecret()
+        );
         //得到httpClient
         OkHttpClient client = getRequestHttpClient();
         //请求的request

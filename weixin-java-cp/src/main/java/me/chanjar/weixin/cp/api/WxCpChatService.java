@@ -1,10 +1,10 @@
 package me.chanjar.weixin.cp.api;
 
-import java.util.List;
-
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.bean.WxCpChat;
+
+import java.util.List;
 
 /**
  * 群聊服务.
@@ -12,9 +12,9 @@ import me.chanjar.weixin.cp.bean.WxCpChat;
  * @author gaigeshen
  */
 public interface WxCpChatService {
-  String APPCHAT_CREATE = "https://qyapi.weixin.qq.com/cgi-bin/appchat/create";
-  String APPCHAT_UPDATE = "https://qyapi.weixin.qq.com/cgi-bin/appchat/update";
-  String APPCHAT_GET_CHATID = "https://qyapi.weixin.qq.com/cgi-bin/appchat/get?chatid=";
+  String APPCHAT_CREATE = "/cgi-bin/appchat/create";
+  String APPCHAT_UPDATE = "/cgi-bin/appchat/update";
+  String APPCHAT_GET_CHATID = "/cgi-bin/appchat/get?chatid=";
 
   /**
    * 创建群聊会话，注意：刚创建的群，如果没有下发消息，在企业微信不会出现该群.

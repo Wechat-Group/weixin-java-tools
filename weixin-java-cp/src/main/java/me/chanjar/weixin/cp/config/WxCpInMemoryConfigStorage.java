@@ -39,6 +39,18 @@ public class WxCpInMemoryConfigStorage implements WxCpConfigStorage {
 
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
 
+  protected volatile String baseApiUrl;
+
+  @Override
+  public void setBaseApiUrl(String baseUrl) {
+    this.baseApiUrl = baseUrl;
+  }
+
+  @Override
+  public String getApiUrl(String path) {
+    return baseApiUrl;
+  }
+
   @Override
   public String getAccessToken() {
     return this.accessToken;

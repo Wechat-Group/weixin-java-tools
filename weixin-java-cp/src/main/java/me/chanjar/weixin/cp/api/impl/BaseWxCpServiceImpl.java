@@ -18,7 +18,18 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
-import me.chanjar.weixin.cp.api.*;
+import me.chanjar.weixin.cp.WxCpConsts;
+import me.chanjar.weixin.cp.api.WxCpAgentService;
+import me.chanjar.weixin.cp.api.WxCpChatService;
+import me.chanjar.weixin.cp.api.WxCpDepartmentService;
+import me.chanjar.weixin.cp.api.WxCpMediaService;
+import me.chanjar.weixin.cp.api.WxCpMenuService;
+import me.chanjar.weixin.cp.api.WxCpOAService;
+import me.chanjar.weixin.cp.api.WxCpOAuth2Service;
+import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.api.WxCpTagService;
+import me.chanjar.weixin.cp.api.WxCpTaskCardService;
+import me.chanjar.weixin.cp.api.WxCpUserService;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
@@ -104,7 +115,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     if (this.configStorage.isAgentJsapiTicketExpired()) {
       synchronized (this.globalAgentJsapiTicketRefreshLock) {
         if (this.configStorage.isAgentJsapiTicketExpired()) {
-          String responseContent = this.get(WxCpService.GET_AGENT_CONFIG_TICKET, null);
+          String responseContent = this.get(this.configStorage.getApiUrl(WxCpService.GET_AGENT_CONFIG_TICKET), null);
           JsonObject jsonObject = new JsonParser().parse(responseContent).getAsJsonObject();
           this.configStorage.updateAgentJsapiTicket(jsonObject.get("ticket").getAsString(),
             jsonObject.get("expires_in").getAsInt());
@@ -129,7 +140,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     if (this.configStorage.isJsapiTicketExpired()) {
       synchronized (this.globalJsapiTicketRefreshLock) {
         if (this.configStorage.isJsapiTicketExpired()) {
-          String responseContent = this.get(WxCpService.GET_JSAPI_TICKET, null);
+          String responseContent = this.get(this.configStorage.getApiUrl(WxCpService.GET_JSAPI_TICKET), null);
           JsonObject tmpJsonObject = new JsonParser().parse(responseContent).getAsJsonObject();
           this.configStorage.updateJsapiTicket(tmpJsonObject.get("ticket").getAsString(),
             tmpJsonObject.get("expires_in").getAsInt());
@@ -170,7 +181,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       message.setAgentId(this.getWxCpConfigStorage().getAgentId());
     }
 
-    return WxCpMessageSendResult.fromJson(this.post(WxCpService.MESSAGE_SEND, message.toJson()));
+    return WxCpMessageSendResult.fromJson(this.post(this.configStorage.getApiUrl(WxCpService.MESSAGE_SEND), message.toJson()));
   }
 
   @Override
@@ -179,13 +190,13 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     params.put("js_code", jsCode);
     params.put("grant_type", "authorization_code");
 
-    String result = this.get(JSCODE_TO_SESSION_URL, Joiner.on("&").withKeyValueSeparator("=").join(params));
+    String result = this.get(this.configStorage.getApiUrl(JSCODE_TO_SESSION_URL), Joiner.on("&").withKeyValueSeparator("=").join(params));
     return WxCpMaJsCode2SessionResult.fromJson(result);
   }
 
   @Override
   public String[] getCallbackIp() throws WxErrorException {
-    String responseContent = get(WxCpService.GET_CALLBACK_IP, null);
+    String responseContent = get(this.configStorage.getApiUrl(WxCpService.GET_CALLBACK_IP), null);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     JsonArray jsonArray = tmpJsonElement.getAsJsonObject().get("ip_list").getAsJsonArray();
     String[] ips = new String[jsonArray.size()];
@@ -329,19 +340,19 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   public String replaceParty(String mediaId) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("media_id", mediaId);
-    return post(WxCpService.BATCH_REPLACE_PARTY, jsonObject.toString());
+    return post(this.configStorage.getApiUrl(WxCpService.BATCH_REPLACE_PARTY), jsonObject.toString());
   }
 
   @Override
   public String replaceUser(String mediaId) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("media_id", mediaId);
-    return post(WxCpService.BATCH_REPLACE_USER, jsonObject.toString());
+    return post(this.configStorage.getApiUrl(WxCpService.BATCH_REPLACE_USER), jsonObject.toString());
   }
 
   @Override
   public String getTaskResult(String joinId) throws WxErrorException {
-    String url = WxCpService.BATCH_GET_RESULT + joinId;
+    String url = this.configStorage.getApiUrl(WxCpService.BATCH_GET_RESULT + joinId);
     return get(url, null);
   }
 

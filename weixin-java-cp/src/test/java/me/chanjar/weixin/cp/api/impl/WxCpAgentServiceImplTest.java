@@ -2,11 +2,11 @@ package me.chanjar.weixin.cp.api.impl;
 
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.cp.WxCpConsts;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpAgentService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpAgent;
-import org.testng.Assert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
@@ -15,7 +15,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
 
 
 /**
@@ -71,7 +70,7 @@ public class WxCpAgentServiceImplTest {
     @Test
     public void testGet() throws Exception {
       String returnJson = "{\"errcode\": 0,\"errmsg\": \"ok\",\"agentid\": 9,\"name\": \"测试应用\",\"square_logo_url\": \"http://wx.qlogo.cn/mmhead/alksjf;lasdjf;lasjfuodiuj3rj2o34j/0\",\"description\": \"这是一个企业号应用\",\"allow_userinfos\": {\"user\": [{\"userid\": \"0009854\"}, {\"userid\": \"1723\"}, {\"userid\": \"5625\"}]},\"allow_partys\": {\"partyid\": [42762742]},\"allow_tags\": {\"tagid\": [23, 22, 35, 19, 32, 125, 133, 46, 150, 38, 183, 9, 7]},\"close\": 0,\"redirect_domain\": \"weixin.com.cn\",\"report_location_flag\": 0,\"isreportenter\": 0,\"home_url\": \"\"}";
-      when(wxService.get("https://qyapi.weixin.qq.com/cgi-bin/agent/get?agentid=9", null)).thenReturn(returnJson);
+      when(wxService.get(wxService.getWxCpConfigStorage().getApiUrl("/cgi-bin/agent/get?agentid=9"), null)).thenReturn(returnJson);
       when(wxService.getAgentService()).thenReturn(new WxCpAgentServiceImpl(wxService));
 
       WxCpAgentService wxAgentService = this.wxService.getAgentService();

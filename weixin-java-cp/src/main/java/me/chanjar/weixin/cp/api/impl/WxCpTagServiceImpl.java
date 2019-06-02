@@ -1,7 +1,5 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import java.util.List;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,6 +14,8 @@ import me.chanjar.weixin.cp.bean.WxCpTagAddOrRemoveUsersResult;
 import me.chanjar.weixin.cp.bean.WxCpTagGetResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -33,7 +33,7 @@ public class WxCpTagServiceImpl implements WxCpTagService {
 
   @Override
   public String create(String tagName) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/tag/create";
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl("/cgi-bin/tag/create");
     JsonObject o = new JsonObject();
     o.addProperty("tagname", tagName);
     String responseContent = this.mainService.post(url, o.toString());
@@ -43,7 +43,7 @@ public class WxCpTagServiceImpl implements WxCpTagService {
 
   @Override
   public void update(String tagId, String tagName) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/tag/update";
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl("/cgi-bin/tag/update");
     JsonObject o = new JsonObject();
     o.addProperty("tagid", tagId);
     o.addProperty("tagname", tagName);
@@ -52,13 +52,13 @@ public class WxCpTagServiceImpl implements WxCpTagService {
 
   @Override
   public void delete(String tagId) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/tag/delete?tagid=" + tagId;
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl("/cgi-bin/tag/delete?tagid=" + tagId);
     this.mainService.get(url, null);
   }
 
   @Override
   public List<WxCpTag> listAll() throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/tag/list";
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl("/cgi-bin/tag/list");
     String responseContent = this.mainService.get(url, null);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return WxCpGsonBuilder.create()
@@ -71,7 +71,7 @@ public class WxCpTagServiceImpl implements WxCpTagService {
 
   @Override
   public List<WxCpUser> listUsersByTagId(String tagId) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/tag/get?tagid=" + tagId;
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl("/cgi-bin/tag/get?tagid=" + tagId);
     String responseContent = this.mainService.get(url, null);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return WxCpGsonBuilder.create()
@@ -84,7 +84,7 @@ public class WxCpTagServiceImpl implements WxCpTagService {
 
   @Override
   public WxCpTagAddOrRemoveUsersResult addUsers2Tag(String tagId, List<String> userIds, List<String> partyIds) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/tag/addtagusers";
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl("/cgi-bin/tag/addtagusers");
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("tagid", tagId);
     this.addUserIdsAndPartyIdsToJson(userIds, partyIds, jsonObject);
@@ -94,7 +94,7 @@ public class WxCpTagServiceImpl implements WxCpTagService {
 
   @Override
   public WxCpTagAddOrRemoveUsersResult removeUsersFromTag(String tagId, List<String> userIds, List<String> partyIds) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/tag/deltagusers";
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl("/cgi-bin/tag/deltagusers");
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("tagid", tagId);
     this.addUserIdsAndPartyIdsToJson(userIds, partyIds, jsonObject);
@@ -122,7 +122,7 @@ public class WxCpTagServiceImpl implements WxCpTagService {
 
   @Override
   public WxCpTagGetResult get(String tagId) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/tag/get";
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl("/cgi-bin/tag/get");
     if (tagId != null) {
       url += "?tagId=" + tagId;
     } else {
