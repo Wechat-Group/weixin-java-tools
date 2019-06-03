@@ -149,3 +149,7 @@
 1. [charmingoh (Charming)](http://github.com/charmingoh)
 
 </details>
+
+### GitHub Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/Wechat-Group/WxJava.svg)](https://starchart.cc/Wechat-Group/WxJava)     
