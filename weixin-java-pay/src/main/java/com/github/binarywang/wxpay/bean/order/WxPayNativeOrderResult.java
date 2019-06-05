@@ -1,8 +1,9 @@
 package com.github.binarywang.wxpay.bean.order;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * <pre>
@@ -14,6 +15,6 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class WxPayNativeOrderResult {
+public class WxPayNativeOrderResult implements Serializable {
   private String codeUrl;
 }

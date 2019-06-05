@@ -2,8 +2,9 @@ package com.github.binarywang.wxpay.bean.order;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * <pre>
@@ -15,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class WxPayMwebOrderResult {
+public class WxPayMwebOrderResult implements Serializable {
   @XStreamAlias("mwebUrl")
   private String mwebUrl;
 }
