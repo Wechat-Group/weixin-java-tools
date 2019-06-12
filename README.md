@@ -97,15 +97,13 @@
 
 ----------------------------------
 ### 使用案例
-完整案例登记列表，请[【访问这里】](https://github.com/Wechat-Group/weixin-java-tools/issues/729)查看，欢迎提供更多的案例。
-
-<details>
-<summary>已整理过的案例列表，请点击此处展开查看</summary>
-
-1. 开源项目：https://github.com/workcheng/weiya
-1. 开源项目：https://github.com/jmdhappy/xxpay-master 
-1. 开源工具：https://github.com/rememberber/WePush
-1. 开源项目（微信点餐系统）：http://www.sqmax.top/springboot-project/
+完整案例登记列表，请[【访问这里】](https://github.com/Wechat-Group/weixin-java-tools/issues/729)查看，欢迎登记更多的案例。
+以下为部分案例列表：
+1. 开源项目：基于微信公众号的签到、抽奖、发送弹幕程序 （https://github.com/workcheng/weiya ）
+1. 开源项目：XxPay聚合支付 （https://github.com/jmdhappy/xxpay-master ）
+1. 开源项目：微同商城（https://gitee.com/fuyang_lipengjun/platform ）
+1. 开源项目：微信点餐系统（http://www.sqmax.top/springboot-project ）
+1. 开源工具：专注批量推送的小而美的工具 （https://github.com/rememberber/WePush ）
 1. 小程序：（京东）友家铺子，友家铺子店长版，京粉精选
 1. 小程序：[喵星人贴吧助手(扫码关注)](http://p98ahz3tg.bkt.clouddn.com/miniappqrcode.jpg)
 1. 小程序：树懒揽书+
@@ -129,8 +127,6 @@
 1. 锐捷网络：Saleslink
 1. 洽洽企业号
 1. HTC企业微信
-  
-</details>
 
 ----------------------------------
 ### 贡献者列表
