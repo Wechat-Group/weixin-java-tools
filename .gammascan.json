@@ -1,0 +1,89 @@
+{
+    "gammaAccess": {
+        "url": "",
+        "userName": "",
+        "password": ""
+    },
+    "repositories": [
+        {
+            "dataDir": "",
+            "repository": {
+                "uid": "364cc08af8958c04d8dc4e5822171141",
+                "projectName": "java_teamcity",
+                "languages": [
+                    "JAVA"
+                ],
+                "sources": {
+                    "baseDir": "",
+                    "exclusions": [
+                        "(?i)(test|generated|mock|thirdparty|third-party|3rd-party|3rdparty|external)"
+                    ]
+                }
+            },
+            "settings": {
+                "additionalOptions": [],
+                "includePaths": []
+            },
+            "modules": {
+                "codeissues": [
+                    {
+                        "name": "pmd",
+                        "enabled": true,
+                        "config": {
+                            "rules": [],
+                            "options": [
+                                {
+                                    "name": "javaVersion",
+                                    "type": "text",
+                                    "value": "1.8",
+                                    "required": false
+                                },
+                                {
+                                    "name": "ruleSets",
+                                    "type": "text",
+                                    "value": "rulesets/java/strictexception.xml,rulesets/java/basic.xml,rulesets/java/design.xml",
+                                    "required": true
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "gamma_java",
+                        "enabled": true,
+                        "config": {
+                            "rules": [],
+                            "options": []
+                        }
+                    }
+                ],
+                "unittest": [
+                    {
+                        "name": "junit",
+                        "enabled": true,
+                        "config": {
+                            "rules": [],
+                            "options": [
+                                {
+                                    "name": "reportDir",
+                                    "type": "upload",
+                                    "value": "",
+                                    "required": true
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "relevance": [
+                    {
+                        "name": "relevance",
+                        "enabled": true,
+                        "config": {
+                            "rules": [],
+                            "options": []
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
