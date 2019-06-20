@@ -4,8 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.WxType;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserTagService;
 import me.chanjar.weixin.mp.bean.tag.WxTagListUser;
@@ -60,7 +61,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
     json.add("tag", tagJson);
 
     String responseContent = this.wxMpService.post(url, json.toString());
-    WxError wxError = WxError.fromJson(responseContent);
+    WxError wxError = WxError.fromJson(responseContent, WxType.MP);
     if (wxError.getErrorCode() == 0) {
       return true;
     }
@@ -78,7 +79,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
     json.add("tag", tagJson);
 
     String responseContent = this.wxMpService.post(url, json.toString());
-    WxError wxError = WxError.fromJson(responseContent);
+    WxError wxError = WxError.fromJson(responseContent, WxType.MP);
     if (wxError.getErrorCode() == 0) {
       return true;
     }
@@ -113,7 +114,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
     json.add("openid_list", openidArrayJson);
 
     String responseContent = this.wxMpService.post(url, json.toString());
-    WxError wxError = WxError.fromJson(responseContent);
+    WxError wxError = WxError.fromJson(responseContent, WxType.MP);
     if (wxError.getErrorCode() == 0) {
       return true;
     }
@@ -135,7 +136,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
     json.add("openid_list", openidArrayJson);
 
     String responseContent = this.wxMpService.post(url, json.toString());
-    WxError wxError = WxError.fromJson(responseContent);
+    WxError wxError = WxError.fromJson(responseContent, WxType.MP);
     if (wxError.getErrorCode() == 0) {
       return true;
     }

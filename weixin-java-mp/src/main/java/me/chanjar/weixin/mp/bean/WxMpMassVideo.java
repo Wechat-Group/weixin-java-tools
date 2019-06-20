@@ -19,6 +19,6 @@ public class WxMpMassVideo implements Serializable {
   private String description;
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 }

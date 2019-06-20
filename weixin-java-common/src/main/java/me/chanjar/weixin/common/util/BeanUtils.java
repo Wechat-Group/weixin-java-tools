@@ -1,21 +1,17 @@
 package me.chanjar.weixin.common.util;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import me.chanjar.weixin.common.annotation.Required;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <pre>

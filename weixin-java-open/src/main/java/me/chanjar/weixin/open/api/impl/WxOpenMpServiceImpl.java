@@ -1,6 +1,6 @@
 package me.chanjar.weixin.open.api.impl;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;

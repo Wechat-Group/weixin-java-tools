@@ -1,6 +1,7 @@
 package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
@@ -34,7 +35,19 @@ public interface WxOpenConfigStorage {
 
   boolean isComponentAccessTokenExpired();
 
-  void updateComponentAccessTokent(WxOpenComponentAccessToken componentAccessToken);
+  void expireComponentAccessToken();
+
+  void updateComponentAccessToken(WxOpenComponentAccessToken componentAccessToken);
+
+  String getHttpProxyHost();
+
+  int getHttpProxyPort();
+
+  String getHttpProxyUsername();
+
+  String getHttpProxyPassword();
+
+  ApacheHttpClientBuilder getApacheHttpClientBuilder();
 
   WxMpConfigStorage getWxMpConfigStorage(String appId);
 
@@ -46,7 +59,7 @@ public interface WxOpenConfigStorage {
    * @param componentAccessToken 新的accessToken值
    * @param expiresInSeconds     过期时间，以秒为单位
    */
-  void updateComponentAccessTokent(String componentAccessToken, int expiresInSeconds);
+  void updateComponentAccessToken(String componentAccessToken, int expiresInSeconds);
 
   /**
    * 是否自动刷新token
@@ -115,5 +128,4 @@ public interface WxOpenConfigStorage {
    * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateCardApiTicket(String appId, String cardApiTicket, int expiresInSeconds);
-
 }

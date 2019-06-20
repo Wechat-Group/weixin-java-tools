@@ -1,6 +1,6 @@
 package me.chanjar.weixin.open.api;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>

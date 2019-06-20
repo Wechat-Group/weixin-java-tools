@@ -2,9 +2,13 @@ package com.github.binarywang.wxpay.bean.entpay;
 
 import com.github.binarywang.wxpay.bean.request.BaseWxPayRequest;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.annotation.Required;
-import me.chanjar.weixin.common.util.ToStringUtils;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
  * <pre>
@@ -44,7 +48,11 @@ public class EntPayQueryRequest extends BaseWxPayRequest {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxGsonBuilder.create().toJson(this);
   }
 
+  @Override
+  protected String[] getIgnoredParamsForSign() {
+    return new String[]{"sign_type"};
+  }
 }

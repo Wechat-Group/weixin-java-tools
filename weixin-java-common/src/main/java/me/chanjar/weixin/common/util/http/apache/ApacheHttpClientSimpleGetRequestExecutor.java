@@ -1,16 +1,17 @@
 package me.chanjar.weixin.common.util.http.apache;
 
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
+import java.io.IOException;
+
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 
-import java.io.IOException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 
 /**
  * Created by ecoolper on 2017/5/4.

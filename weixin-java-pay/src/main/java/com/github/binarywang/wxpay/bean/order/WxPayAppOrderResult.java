@@ -19,6 +19,9 @@ public class WxPayAppOrderResult {
   private String prepayId;
   private String partnerId;
   private String appId;
+  /**
+   * 由于package为java保留关键字，因此改为packageValue. 前端使用时记得要更改为package
+   */
   private String packageValue;
   private String timeStamp;
   private String nonceStr;

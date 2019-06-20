@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.bean.order;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,7 +13,7 @@ import lombok.Data;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Data
-@Builder
+@AllArgsConstructor
 public class WxPayNativeOrderResult {
   private String codeUrl;
 }

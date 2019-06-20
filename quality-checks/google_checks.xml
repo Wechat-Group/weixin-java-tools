@@ -83,20 +83,6 @@
     <module name="EmptyLineSeparator">
       <property name="allowNoEmptyLineBetweenFields" value="true"/>
     </module>
-    <module name="SeparatorWrap">
-      <property name="id" value="SeparatorWrapDot"/>
-      <property name="tokens" value="DOT"/>
-      <property name="option" value="nl"/>
-    </module>
-    <module name="SeparatorWrap">
-      <property name="id" value="SeparatorWrapComma"/>
-      <property name="tokens" value="COMMA"/>
-      <property name="option" value="EOL"/>
-    </module>
-    <module name="SeparatorWrap">
-      <property name="id" value="SeparatorWrapMethodRef"/>
-      <property name="option" value="nl"/>
-    </module>
     <module name="PackageName">
       <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
       <message key="name.invalidPattern"
@@ -154,14 +140,6 @@
     </module>
     <module name="OverloadMethodsDeclarationOrder"/>
     <module name="VariableDeclarationUsageDistance"/>
-    <module name="CustomImportOrder">
-      <property name="customImportOrderRules"
-                value="THIRD_PARTY_PACKAGE###SPECIAL_IMPORTS###STANDARD_JAVA_PACKAGE###STATIC"/>
-      <property name="specialImportsRegExp" value="^javax\."/>
-      <property name="standardPackageRegExp" value="^java\."/>
-      <property name="sortImportsInGroupAlphabetically" value="true"/>
-      <property name="separateLineBetweenGroups" value="false"/>
-    </module>
     <module name="MethodParamPad"/>
     <module name="ParenPad"/>
     <module name="OperatorWrap">

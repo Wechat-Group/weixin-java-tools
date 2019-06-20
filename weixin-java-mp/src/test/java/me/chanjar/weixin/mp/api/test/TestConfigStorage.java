@@ -52,10 +52,12 @@ public class TestConfigStorage extends WxMpInMemoryConfigStorage {
     this.qrconnectRedirectUrl = qrconnectRedirectUrl;
   }
 
+  @Override
   public String getTemplateId() {
     return this.templateId;
   }
 
+  @Override
   public void setTemplateId(String templateId) {
     this.templateId = templateId;
   }

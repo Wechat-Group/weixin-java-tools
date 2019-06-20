@@ -3,8 +3,8 @@ package me.chanjar.weixin.common.util.http.jodd;
 import jodd.http.*;
 import jodd.util.StringPool;
 
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 

@@ -36,10 +36,22 @@ public interface WxCpConfigStorage {
 
   /**
    * 应该是线程安全的
-   *
-   * @param jsapiTicket
    */
   void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
+
+  String getAgentJsapiTicket();
+
+  boolean isAgentJsapiTicketExpired();
+
+  /**
+   * 强制将jsapi ticket过期掉
+   */
+  void expireAgentJsapiTicket();
+
+  /**
+   * 应该是线程安全的
+   */
+  void updateAgentJsapiTicket(String jsapiTicket, int expiresInSeconds);
 
   String getCorpId();
 

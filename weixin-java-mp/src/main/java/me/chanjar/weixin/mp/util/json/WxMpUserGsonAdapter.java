@@ -33,6 +33,9 @@ public class WxMpUserGsonAdapter implements JsonDeserializer<WxMpUser> {
     user.setGroupId(GsonHelper.getInteger(o, "groupid"));
     user.setTagIds(GsonHelper.getLongArray(o, "tagid_list"));
     user.setPrivileges(GsonHelper.getStringArray(o, "privilege"));
+    user.setSubscribeScene(GsonHelper.getString(o, "subscribe_scene"));
+    user.setQrScene(GsonHelper.getString(o, "qr_scene"));
+    user.setQrSceneStr(GsonHelper.getString(o, "qr_scene_str"));
 
     Integer sex = GsonHelper.getInteger(o, "sex");
     if (sex != null) {

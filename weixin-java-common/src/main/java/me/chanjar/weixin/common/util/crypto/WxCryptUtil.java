@@ -1,21 +1,21 @@
 package me.chanjar.weixin.common.util.crypto;
 
-import org.apache.commons.codec.binary.Base64;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
-
+import java.io.StringReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Random;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.StringReader;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Random;
+
+import org.apache.commons.codec.binary.Base64;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
 /**
  * <pre>
@@ -25,6 +25,8 @@ import java.util.Random;
  * 需要导入架包commons-codec-1.9（或commons-codec-1.8等其他版本）
  * 官方下载地址：http://commons.apache.org/proper/commons-codec/download_codec.cgi
  * </pre>
+ *
+ * @author Tencent
  */
 public class WxCryptUtil {
 
@@ -35,7 +37,10 @@ public class WxCryptUtil {
     @Override
     protected DocumentBuilder initialValue() {
       try {
-        return DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setExpandEntityReferences(false);
+        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        return factory.newDocumentBuilder();
       } catch (ParserConfigurationException exc) {
         throw new IllegalArgumentException(exc);
       }
@@ -164,8 +169,7 @@ public class WxCryptUtil {
     ByteGroup byteCollector = new ByteGroup();
     byte[] randomStringBytes = randomStr.getBytes(CHARSET);
     byte[] plainTextBytes = plainText.getBytes(CHARSET);
-    byte[] bytesOfSizeInNetworkOrder = number2BytesInNetworkOrder(
-      plainTextBytes.length);
+    byte[] bytesOfSizeInNetworkOrder = number2BytesInNetworkOrder(plainTextBytes.length);
     byte[] appIdBytes = this.appidOrCorpid.getBytes(CHARSET);
 
     // randomStr + networkBytesOrder + text + appid
@@ -252,7 +256,7 @@ public class WxCryptUtil {
       throw new RuntimeException(e);
     }
 
-    String xmlContent, from_appid;
+    String xmlContent, fromAppid;
     try {
       // 去除补位字符
       byte[] bytes = PKCS7Encoder.decode(original);
@@ -264,14 +268,14 @@ public class WxCryptUtil {
 
       xmlContent = new String(Arrays.copyOfRange(bytes, 20, 20 + xmlLength),
         CHARSET);
-      from_appid = new String(
+      fromAppid = new String(
         Arrays.copyOfRange(bytes, 20 + xmlLength, bytes.length), CHARSET);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
 
     // appid不相同的情况
-    if (!from_appid.equals(this.appidOrCorpid)) {
+    if (!fromAppid.equals(this.appidOrCorpid)) {
       throw new RuntimeException("AppID不正确");
     }
 

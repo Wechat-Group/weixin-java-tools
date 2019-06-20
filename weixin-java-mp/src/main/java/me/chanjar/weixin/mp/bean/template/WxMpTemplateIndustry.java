@@ -1,11 +1,10 @@
 package me.chanjar.weixin.mp.bean.template;
 
 
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
+
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * @author miller
@@ -31,7 +30,7 @@ public class WxMpTemplateIndustry implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   public String toJson() {
@@ -39,8 +38,7 @@ public class WxMpTemplateIndustry implements Serializable {
   }
 
   /**
-   * @author miller
-   *         官方文档中，创建和获取的数据结构不一样。所以采用冗余字段的方式，实现相应的接口
+   * 官方文档中，创建和获取的数据结构不一样。所以采用冗余字段的方式，实现相应的接口.
    */
   @Data
   public static class Industry implements Serializable {
@@ -64,7 +62,7 @@ public class WxMpTemplateIndustry implements Serializable {
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxMpGsonBuilder.create().toJson(this);
     }
 
   }

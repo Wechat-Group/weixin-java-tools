@@ -74,15 +74,15 @@ public class WxPayCouponInfoQueryResult extends BaseWxPayResult {
   /**
    * <pre>
    * 字段名：代金券使用门槛.
-   * 变量名：coupon_mininum
+   * 变量名：coupon_minimum 微信文档有误
    * 是否必填：是
    * 示例值：10
    * 类型：Unsinged int
    * 说明：代金券使用最低限额,单位是分
    * </pre>
    */
-  @XStreamAlias("coupon_mininum")
-  private Integer couponMininum;
+  @XStreamAlias("coupon_minimum")
+  private Integer couponMinimum;
 
   /**
    * <pre>

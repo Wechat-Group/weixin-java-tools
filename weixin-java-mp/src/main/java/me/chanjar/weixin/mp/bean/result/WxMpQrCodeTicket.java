@@ -22,11 +22,11 @@ public class WxMpQrCodeTicket implements Serializable {
   protected String url;
 
   public static WxMpQrCodeTicket fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpQrCodeTicket.class);
+    return WxMpGsonBuilder.create().fromJson(json, WxMpQrCodeTicket.class);
   }
 
   @Override
   public String toString() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 }

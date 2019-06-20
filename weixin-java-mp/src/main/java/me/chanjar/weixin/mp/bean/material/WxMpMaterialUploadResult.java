@@ -1,10 +1,9 @@
 package me.chanjar.weixin.mp.bean.material;
 
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
+
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 @Data
 public class WxMpMaterialUploadResult implements Serializable {
@@ -20,7 +19,7 @@ public class WxMpMaterialUploadResult implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

@@ -1,12 +1,12 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonObject;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpQrcodeService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
-import me.chanjar.weixin.mp.util.http.QrCodeRequestExecutor;
+import me.chanjar.weixin.mp.util.requestexecuter.qrcode.QrCodeRequestExecutor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;

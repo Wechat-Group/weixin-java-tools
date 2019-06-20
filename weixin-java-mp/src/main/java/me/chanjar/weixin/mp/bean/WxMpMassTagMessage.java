@@ -38,17 +38,23 @@ public class WxMpMassTagMessage implements Serializable {
    * 是否群发给所有用户
    */
   private boolean isSendAll = false;
+
   /**
    * 文章被判定为转载时，是否继续进行群发操作。
    */
   private boolean sendIgnoreReprint = false;
+
+  /**
+   * 开发者侧群发msgid，长度限制64字节，如不填，则后台默认以群发范围和群发内容的摘要值做为clientmsgid
+   */
+  private String clientMsgId;
 
   public WxMpMassTagMessage() {
     super();
   }
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   public void setSendAll(boolean sendAll) {

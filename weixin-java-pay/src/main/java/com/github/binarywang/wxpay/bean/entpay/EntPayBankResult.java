@@ -46,6 +46,6 @@ public class EntPayBankResult extends BaseWxPayResult {
    * RMB：分
    */
   @XStreamAlias("cmms_amt")
-  private String cmmsAmount;
+  private Integer cmmsAmount;
 
 }

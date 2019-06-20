@@ -1,23 +1,24 @@
 package me.chanjar.weixin.open.api.impl;
 
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
  */
 public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, RequestHttp<H, P> {
-  protected final Logger log = LoggerFactory.getLogger(this.getClass());
-  protected WxOpenComponentService wxOpenComponentService = new WxOpenComponentServiceImpl(this);
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
+  private WxOpenComponentService wxOpenComponentService = new WxOpenComponentServiceImpl(this);
   private WxOpenConfigStorage wxOpenConfigStorage;
 
   @Override
@@ -33,7 +34,13 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
   @Override
   public void setWxOpenConfigStorage(WxOpenConfigStorage wxOpenConfigStorage) {
     this.wxOpenConfigStorage = wxOpenConfigStorage;
+    this.initHttp();
   }
+
+  /**
+   * 初始化 RequestHttp.
+   */
+  public abstract void initHttp();
 
   protected synchronized <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
     try {

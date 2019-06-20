@@ -6,12 +6,13 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.binarywang</groupId>
-    <artifactId>weixin-java-parent</artifactId>
-    <version>3.0.0</version>
+    <artifactId>wx-java</artifactId>
+    <version>3.4.0</version>
   </parent>
+
   <artifactId>weixin-java-miniapp</artifactId>
-  <name>Weixin Java Tools - MiniApp</name>
-  <description>微信小程序Java SDK</description>
+  <name>WxJava - MiniApp Java SDK</name>
+  <description>微信小程序 Java SDK</description>
 
   <dependencies>
     <dependency>
@@ -69,6 +70,11 @@
     <dependency>
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk15on</artifactId>
+      <version>1.59</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>

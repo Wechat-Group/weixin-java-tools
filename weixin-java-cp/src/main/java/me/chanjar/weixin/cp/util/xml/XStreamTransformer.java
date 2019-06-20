@@ -63,7 +63,6 @@ public class XStreamTransformer {
 
   private static XStream configWxCpXmlMessage() {
     XStream xstream = XStreamInitializer.getInstance();
-    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
 
     xstream.processAnnotations(WxCpXmlMessage.class);
     xstream.processAnnotations(WxCpXmlMessage.ScanCodeInfo.class);
@@ -75,7 +74,6 @@ public class XStreamTransformer {
 
   private static XStream configWxCpXmlOutImageMessage() {
     XStream xstream = XStreamInitializer.getInstance();
-    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
 
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutImageMessage.class);
@@ -84,7 +82,6 @@ public class XStreamTransformer {
 
   private static XStream configWxCpXmlOutNewsMessage() {
     XStream xstream = XStreamInitializer.getInstance();
-    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
 
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutNewsMessage.class);
@@ -94,7 +91,6 @@ public class XStreamTransformer {
 
   private static XStream configWxCpXmlOutTextMessage() {
     XStream xstream = XStreamInitializer.getInstance();
-    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
 
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutTextMessage.class);
@@ -103,7 +99,6 @@ public class XStreamTransformer {
 
   private static XStream configWxCpXmlOutVideoMessage() {
     XStream xstream = XStreamInitializer.getInstance();
-    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
 
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutVideoMessage.class);
@@ -113,7 +108,6 @@ public class XStreamTransformer {
 
   private static XStream configWxCpXmlOutVoiceMessage() {
     XStream xstream = XStreamInitializer.getInstance();
-    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
 
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutVoiceMessage.class);

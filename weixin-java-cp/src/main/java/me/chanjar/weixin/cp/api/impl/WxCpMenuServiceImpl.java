@@ -1,7 +1,7 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpMenuService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;

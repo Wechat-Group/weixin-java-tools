@@ -53,5 +53,17 @@ public class WxMaKefuMessageTest {
         "\"miniprogrampage\":{\"title\":\"title\",\"pagepath\":\"pagePath\",\"thumb_media_id\":\"thumbMediaId\"}}");
   }
 
+  public void testURLEscaped() {
+    WxMaKefuMessage reply = WxMaKefuMessage.newLinkBuilder()
+                                           .toUser("OPENID")
+                                           .url("https://mp.weixin.qq.com/s?__biz=MzI0MDA2OTY5NQ==")
+                                           .description("description")
+                                           .title("title")
+                                           .thumbUrl("thumbUrl")
+                                           .build();
+    assertThat(reply.toJson())
+      .isEqualTo( "{\"touser\":\"OPENID\",\"msgtype\":\"link\"," +
+        "\"link\":{\"title\":\"title\",\"description\":\"description\",\"url\":\"https://mp.weixin.qq.com/s?__biz=MzI0MDA2OTY5NQ==\",\"thumb_url\":\"thumbUrl\"}}");
+  }
 
 }

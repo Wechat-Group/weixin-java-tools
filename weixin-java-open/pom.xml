@@ -3,16 +3,17 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
   xmlns="http://maven.apache.org/POM/4.0.0">
-
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.binarywang</groupId>
-    <artifactId>weixin-java-parent</artifactId>
-    <version>3.0.0</version>
+    <artifactId>wx-java</artifactId>
+    <version>3.4.0</version>
   </parent>
+
   <artifactId>weixin-java-open</artifactId>
-  <name>Weixin Java Tools - Open</name>
-  <description>微信开放平台Java SDK</description>
+  <name>WxJava - Open Java SDK</name>
+  <description>微信开放平台 Java SDK</description>
+
   <developers>
     <developer>
       <name>007</name>

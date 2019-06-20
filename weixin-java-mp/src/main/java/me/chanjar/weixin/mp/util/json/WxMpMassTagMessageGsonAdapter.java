@@ -6,9 +6,13 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
 
+/**
+ * @author someone
+ */
 public class WxMpMassTagMessageGsonAdapter implements JsonSerializer<WxMpMassTagMessage> {
 
   @Override
@@ -51,6 +55,11 @@ public class WxMpMassTagMessageGsonAdapter implements JsonSerializer<WxMpMassTag
     }
     messageJson.addProperty("msgtype", message.getMsgType());
     messageJson.addProperty("send_ignore_reprint", message.isSendIgnoreReprint() ? 0 : 1);
+
+    if (StringUtils.isNotEmpty(message.getClientMsgId())) {
+      messageJson.addProperty("clientmsgid", message.getClientMsgId());
+    }
+
     return messageJson;
   }
 

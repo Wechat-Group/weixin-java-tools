@@ -1,20 +1,30 @@
 package com.github.binarywang.wxpay.bean.result;
 
-import com.thoughtworks.xstream.XStream;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import org.testng.*;
 import org.testng.annotations.*;
 
+import com.thoughtworks.xstream.XStream;
+import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+
+/**
+ * The type Wx pay send redpack result test.
+ */
 public class WxPaySendRedpackResultTest {
 
   private XStream xstream;
 
+  /**
+   * Sets .
+   */
   @BeforeTest
   public void setup() {
     this.xstream = XStreamInitializer.getInstance();
     this.xstream.processAnnotations(WxPaySendRedpackResult.class);
   }
 
+  /**
+   * Load success result.
+   */
   @Test
   public void loadSuccessResult() {
     final String successSample = "<xml>\n" +
@@ -37,6 +47,9 @@ public class WxPaySendRedpackResultTest {
     Assert.assertEquals("20150520102602", wxMpRedpackResult.getSendTime());
   }
 
+  /**
+   * Load failure result.
+   */
   @Test
   public void loadFailureResult() {
     final String failureSample = "<xml>\n" +

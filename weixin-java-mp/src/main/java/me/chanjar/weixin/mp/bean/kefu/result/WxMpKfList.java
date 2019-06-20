@@ -1,12 +1,11 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * @author Binary Wang
@@ -19,12 +18,12 @@ public class WxMpKfList implements Serializable {
   private List<WxMpKfInfo> kfList;
 
   public static WxMpKfList fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpKfList.class);
+    return WxMpGsonBuilder.create().fromJson(json, WxMpKfList.class);
   }
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

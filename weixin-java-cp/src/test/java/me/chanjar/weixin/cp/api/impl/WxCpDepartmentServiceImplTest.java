@@ -1,15 +1,15 @@
 package me.chanjar.weixin.cp.api.impl;
 
+import java.util.List;
+
+import org.testng.annotations.*;
+
 import com.google.inject.Inject;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpDepart;
-import org.testng.annotations.*;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.*;
 
 /**
  * <pre>
@@ -29,9 +29,9 @@ public class WxCpDepartmentServiceImplTest {
   public void testCreate() throws Exception {
     WxCpDepart cpDepart = new WxCpDepart();
     cpDepart.setName("子部门" + System.currentTimeMillis());
-    cpDepart.setParentId(1);
+    cpDepart.setParentId(1L);
     cpDepart.setOrder(1L);
-    Integer departId = this.wxCpService.getDepartmentService().create(cpDepart);
+    Long departId = this.wxCpService.getDepartmentService().create(cpDepart);
     System.out.println(departId);
   }
 
@@ -45,7 +45,7 @@ public class WxCpDepartmentServiceImplTest {
   }
 
   @Test(dataProvider = "departIds")
-  public void testList(Integer id) throws Exception {
+  public void testList(Long id) throws Exception {
     System.out.println("=================获取部门");
     List<WxCpDepart> departList = this.wxCpService.getDepartmentService().list(id);
     assertThat(departList).isNotEmpty();
@@ -56,7 +56,7 @@ public class WxCpDepartmentServiceImplTest {
     }
   }
 
-  @Test(dependsOnMethods = {"testListAll", "testCreate"})
+  @Test(dependsOnMethods = {"testList", "testCreate"})
   public void testUpdate() throws Exception {
     System.out.println("=================更新部门");
     this.depart.setName("子部门改名" + System.currentTimeMillis());

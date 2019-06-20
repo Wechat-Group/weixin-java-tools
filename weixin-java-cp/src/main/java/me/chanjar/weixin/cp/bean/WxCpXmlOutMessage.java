@@ -1,16 +1,26 @@
 package me.chanjar.weixin.cp.bean;
 
+import java.io.Serializable;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.cp.bean.outxmlbuilder.ImageBuilder;
+import me.chanjar.weixin.cp.bean.outxmlbuilder.NewsBuilder;
+import me.chanjar.weixin.cp.bean.outxmlbuilder.TextBuilder;
+import me.chanjar.weixin.cp.bean.outxmlbuilder.VideoBuilder;
+import me.chanjar.weixin.cp.bean.outxmlbuilder.VoiceBuilder;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.*;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 
-import java.io.Serializable;
-
+/**
+ * 被动回复消息.
+ * https://work.weixin.qq.com/api/doc#12975
+ *
+ * @author Daniel Qian
+ */
 @XStreamAlias("xml")
 @Data
 public abstract class WxCpXmlOutMessage implements Serializable {

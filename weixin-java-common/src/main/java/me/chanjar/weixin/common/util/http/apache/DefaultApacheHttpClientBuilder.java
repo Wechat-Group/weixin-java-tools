@@ -1,6 +1,7 @@
 package me.chanjar.weixin.common.util.http.apache;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.annotation.NotThreadSafe;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -226,29 +227,26 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
       .setConnectionManager(connectionManager)
       .setConnectionManagerShared(true)
       .setSSLSocketFactory(this.buildSSLConnectionSocketFactory())
-      .setDefaultRequestConfig(
-        RequestConfig.custom()
-          .setSocketTimeout(this.soTimeout)
-          .setConnectTimeout(this.connectionTimeout)
-          .setConnectionRequestTimeout(this.connectionRequestTimeout)
-          .build()
-      )
-      .setRetryHandler(this.httpRequestRetryHandler);
+      .setDefaultRequestConfig(RequestConfig.custom()
+        .setSocketTimeout(this.soTimeout)
+        .setConnectTimeout(this.connectionTimeout)
+        .setConnectionRequestTimeout(this.connectionRequestTimeout)
+        .build()
+      ).setRetryHandler(this.httpRequestRetryHandler);
 
-    if (StringUtils.isNotBlank(this.httpProxyHost)
-      && StringUtils.isNotBlank(this.httpProxyUsername)) {
+    if (StringUtils.isNotBlank(this.httpProxyHost) && StringUtils.isNotBlank(this.httpProxyUsername)) {
       // 使用代理服务器 需要用户认证的代理服务器
       CredentialsProvider provider = new BasicCredentialsProvider();
-      provider.setCredentials(
-        new AuthScope(this.httpProxyHost, this.httpProxyPort),
-        new UsernamePasswordCredentials(this.httpProxyUsername,
-          this.httpProxyPassword));
+      provider.setCredentials(new AuthScope(this.httpProxyHost, this.httpProxyPort),
+        new UsernamePasswordCredentials(this.httpProxyUsername, this.httpProxyPassword));
       httpClientBuilder.setDefaultCredentialsProvider(provider);
+      httpClientBuilder.setProxy(new HttpHost(this.httpProxyHost, this.httpProxyPort));
     }
 
     if (StringUtils.isNotBlank(this.userAgent)) {
       httpClientBuilder.setUserAgent(this.userAgent);
     }
+
     this.closeableHttpClient = httpClientBuilder.build();
     prepared.set(true);
   }

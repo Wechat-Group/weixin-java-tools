@@ -8,7 +8,7 @@ language: java
 
 jdk:
   - oraclejdk8
-script: "./mvnw clean package -DskipTests=true"
+script: "mvn clean package -DskipTests=true -Dcheckstyle.skip=true"
 
 #script:
 #  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar

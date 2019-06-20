@@ -19,7 +19,7 @@ public class FileUtils {
     File resultFile = File.createTempFile(name, '.' + ext, tmpDirFile);
 
     resultFile.deleteOnExit();
-    org.apache.commons.io.FileUtils.copyInputStreamToFile(inputStream, resultFile);
+    org.apache.commons.io.FileUtils.copyToFile(inputStream, resultFile);
     return resultFile;
   }
 

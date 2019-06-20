@@ -1,14 +1,18 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import org.apache.commons.lang3.StringUtils;
+import org.testng.*;
+import org.testng.annotations.*;
+
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConfigStorage;
 import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
-import org.testng.*;
-import org.testng.annotations.*;
+import me.chanjar.weixin.mp.enums.TicketType;
 
 import static org.testng.Assert.*;
 
@@ -40,4 +44,19 @@ public class WxMpServiceImplTest {
     System.out.println(qrConnectUrl);
   }
 
+  public void testGetTicket() throws WxErrorException {
+    String ticket = this.wxService.getTicket(TicketType.SDK, false);
+    System.out.println(ticket);
+    Assert.assertNotNull(ticket);
+  }
+
+  public void testRefreshAccessToken() throws WxErrorException {
+    WxMpConfigStorage configStorage = this.wxService.getWxMpConfigStorage();
+    String before = configStorage.getAccessToken();
+    this.wxService.getAccessToken(false);
+
+    String after = configStorage.getAccessToken();
+    Assert.assertNotEquals(before, after);
+    Assert.assertTrue(StringUtils.isNotBlank(after));
+  }
 }

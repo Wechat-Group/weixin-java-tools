@@ -1,12 +1,11 @@
 package me.chanjar.weixin.mp.bean.tag;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * <pre>
@@ -21,17 +20,17 @@ public class WxTagListUser implements Serializable {
   private static final long serialVersionUID = -4551768374200676112L;
 
   /**
-   * "count":2,这次获取的粉丝数量
+   * "count":2,这次获取的粉丝数量.
    */
   @SerializedName("count")
   private Integer count;
   /**
-   * "data" 粉丝列表
+   * "data" 粉丝列表.
    */
   @SerializedName("data")
   private WxTagListUserData data;
   /**
-   * "next_openid" 拉取列表最后一个用户的openid
+   * "next_openid" 拉取列表最后一个用户的openid.
    */
   @SerializedName("next_openid")
   private String nextOpenid;
@@ -46,7 +45,7 @@ public class WxTagListUser implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return this.toJson();
   }
 
   @Data
@@ -54,14 +53,14 @@ public class WxTagListUser implements Serializable {
     private static final long serialVersionUID = -8584537400336245701L;
 
     /**
-     * openid 列表
+     * openid 列表.
      */
     @SerializedName("openid")
     private List<String> openidList;
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxMpGsonBuilder.create().toJson(this);
     }
   }
 }

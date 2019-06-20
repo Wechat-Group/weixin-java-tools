@@ -8,31 +8,43 @@
  */
 package me.chanjar.weixin.cp.util.json;
 
-import com.google.gson.*;
+import java.lang.reflect.Type;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.cp.bean.WxCpDepart;
 
-import java.lang.reflect.Type;
-
 /**
+ * WxCpDepart的gson适配器.
+ *
  * @author Daniel Qian
  */
 public class WxCpDepartGsonAdapter implements JsonSerializer<WxCpDepart>, JsonDeserializer<WxCpDepart> {
+  private static final String ID = "id";
+  private static final String NAME = "name";
+  private static final String PARENT_ID = "parentid";
+  private static final String ORDER = "order";
 
   @Override
   public JsonElement serialize(WxCpDepart group, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject json = new JsonObject();
     if (group.getId() != null) {
-      json.addProperty("id", group.getId());
+      json.addProperty(ID, group.getId());
     }
     if (group.getName() != null) {
-      json.addProperty("name", group.getName());
+      json.addProperty(NAME, group.getName());
     }
     if (group.getParentId() != null) {
-      json.addProperty("parentid", group.getParentId());
+      json.addProperty(PARENT_ID, group.getParentId());
     }
     if (group.getOrder() != null) {
-      json.addProperty("order", String.valueOf(group.getOrder()));
+      json.addProperty(ORDER, String.valueOf(group.getOrder()));
     }
     return json;
   }
@@ -42,17 +54,17 @@ public class WxCpDepartGsonAdapter implements JsonSerializer<WxCpDepart>, JsonDe
     throws JsonParseException {
     WxCpDepart depart = new WxCpDepart();
     JsonObject departJson = json.getAsJsonObject();
-    if (departJson.get("id") != null && !departJson.get("id").isJsonNull()) {
-      depart.setId(GsonHelper.getAsInteger(departJson.get("id")));
+    if (departJson.get(ID) != null && !departJson.get(ID).isJsonNull()) {
+      depart.setId(GsonHelper.getAsLong(departJson.get(ID)));
     }
-    if (departJson.get("name") != null && !departJson.get("name").isJsonNull()) {
-      depart.setName(GsonHelper.getAsString(departJson.get("name")));
+    if (departJson.get(NAME) != null && !departJson.get(NAME).isJsonNull()) {
+      depart.setName(GsonHelper.getAsString(departJson.get(NAME)));
     }
-    if (departJson.get("order") != null && !departJson.get("order").isJsonNull()) {
-      depart.setOrder(GsonHelper.getAsLong(departJson.get("order")));
+    if (departJson.get(ORDER) != null && !departJson.get(ORDER).isJsonNull()) {
+      depart.setOrder(GsonHelper.getAsLong(departJson.get(ORDER)));
     }
-    if (departJson.get("parentid") != null && !departJson.get("parentid").isJsonNull()) {
-      depart.setParentId(GsonHelper.getAsInteger(departJson.get("parentid")));
+    if (departJson.get(PARENT_ID) != null && !departJson.get(PARENT_ID).isJsonNull()) {
+      depart.setParentId(GsonHelper.getAsLong(departJson.get(PARENT_ID)));
     }
     return depart;
   }

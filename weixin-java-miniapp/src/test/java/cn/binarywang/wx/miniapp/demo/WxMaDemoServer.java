@@ -1,9 +1,20 @@
 package cn.binarywang.wx.miniapp.demo;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
+
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaMessage;
+import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
@@ -12,17 +23,8 @@ import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
 import cn.binarywang.wx.miniapp.test.TestConfig;
 import com.google.common.collect.Lists;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -96,7 +98,7 @@ public class WxMaDemoServer {
       throws WxErrorException {
       service.getMsgService().sendTemplateMsg(WxMaTemplateMessage.builder()
         .templateId(templateId).data(Lists.newArrayList(
-          new WxMaTemplateMessage.Data("keyword1", "339208499", "#173177")))
+          new WxMaTemplateData("keyword1", "339208499", "#173177")))
         .toUser(wxMessage.getFromUser())
         .formId("自己替换可用的formid")
         .build());

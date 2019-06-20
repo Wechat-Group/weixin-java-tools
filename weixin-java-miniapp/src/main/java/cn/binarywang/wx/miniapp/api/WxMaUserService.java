@@ -3,7 +3,9 @@ package cn.binarywang.wx.miniapp.api;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
+
+import java.util.Map;
 
 /**
  * 用户信息相关操作接口.
@@ -27,6 +29,16 @@ public interface WxMaUserService {
    * @param ivStr         加密算法的初始向量
    */
   WxMaUserInfo getUserInfo(String sessionKey, String encryptedData, String ivStr);
+
+  /**
+   * 上报用户数据后台接口.
+   * <p>小游戏可以通过本接口上报key-value数据到用户的CloudStorage。</p>
+   * 文档参考https://developers.weixin.qq.com/minigame/dev/document/open-api/data/setUserStorage.html
+   *  @param kvMap      要上报的数据
+   * @param sessionKey 通过wx.login 获得的登录态
+   * @param openid
+   */
+  void setUserStorage(Map<String, String> kvMap, String sessionKey, String openid) throws WxErrorException;
 
   /**
    * 解密用户手机号信息.

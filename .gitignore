@@ -42,6 +42,7 @@ Icon
 .Spotlight-V100
 .TemporaryItems
 .Trashes
+.vscode
 .VolumeIcon.icns
 .AppleDB
 .AppleDesktop
@@ -53,3 +54,6 @@ sonar-project.properties
 
 !/.mvn/wrapper/maven-wrapper.jar
 *.versionsBackup
+
+# STS
+.factorypath

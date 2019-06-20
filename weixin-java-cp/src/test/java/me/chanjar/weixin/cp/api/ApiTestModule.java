@@ -1,20 +1,24 @@
 package me.chanjar.weixin.cp.api;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
-import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.config.WxCpInMemoryConfigStorage;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 public class ApiTestModule implements Module {
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
+  private static final String TEST_CONFIG_XML = "test-config.xml";
 
-  public static <T> T fromXml(Class<T> clazz, InputStream is) {
+  private static <T> T fromXml(Class<T> clazz, InputStream is) {
     XStream xstream = XStreamInitializer.getInstance();
     xstream.alias("xml", clazz);
     xstream.processAnnotations(clazz);
@@ -23,17 +27,19 @@ public class ApiTestModule implements Module {
 
   @Override
   public void configure(Binder binder) {
-    try (InputStream is1 = ClassLoader
-      .getSystemResourceAsStream("test-config.xml")) {
-      WxXmlCpInMemoryConfigStorage config = fromXml(
-        WxXmlCpInMemoryConfigStorage.class, is1);
+    try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(TEST_CONFIG_XML)) {
+      if (inputStream == null) {
+        throw new RuntimeException("测试配置文件【" + TEST_CONFIG_XML + "】未找到，请参照test-config-sample.xml文件生成");
+      }
+
+      WxXmlCpInMemoryConfigStorage config = fromXml(WxXmlCpInMemoryConfigStorage.class, inputStream);
       WxCpService wxService = new WxCpServiceImpl();
       wxService.setWxCpConfigStorage(config);
 
       binder.bind(WxCpService.class).toInstance(wxService);
       binder.bind(WxXmlCpInMemoryConfigStorage.class).toInstance(config);
     } catch (IOException e) {
-      e.printStackTrace();
+      this.log.error(e.getMessage(), e);
     }
   }
 

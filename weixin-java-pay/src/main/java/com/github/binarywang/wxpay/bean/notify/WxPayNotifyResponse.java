@@ -32,6 +32,12 @@ public class WxPayNotifyResponse {
   @XStreamAlias("return_msg")
   private String returnMsg;
 
+  /**
+   * Fail string.
+   *
+   * @param msg the msg
+   * @return the string
+   */
   public static String fail(String msg) {
     WxPayNotifyResponse response = new WxPayNotifyResponse(FAIL, msg);
     XStream xstream = XStreamInitializer.getInstance();
@@ -39,6 +45,12 @@ public class WxPayNotifyResponse {
     return xstream.toXML(response);
   }
 
+  /**
+   * Success string.
+   *
+   * @param msg the msg
+   * @return the string
+   */
   public static String success(String msg) {
     WxPayNotifyResponse response = new WxPayNotifyResponse(SUCCESS, msg);
     XStream xstream = XStreamInitializer.getInstance();

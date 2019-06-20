@@ -1,10 +1,12 @@
 package me.chanjar.weixin.cp.api;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.cp.bean.WxCpUser;
-
 import java.util.List;
 import java.util.Map;
+
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.cp.bean.WxCpInviteResult;
+import me.chanjar.weixin.cp.bean.WxCpUser;
+import me.chanjar.weixin.cp.bean.WxCpUserExternalContactInfo;
 
 /**
  * <pre>
@@ -17,7 +19,7 @@ import java.util.Map;
 public interface WxCpUserService {
   /**
    * <pre>
-   *   用在二次验证的时候
+   *   用在二次验证的时候.
    *   企业在员工验证成功后，调用本方法告诉企业号平台该员工关注成功。
    * </pre>
    *
@@ -27,7 +29,7 @@ public interface WxCpUserService {
 
   /**
    * <pre>
-   * 获取部门成员(详情)
+   * 获取部门成员(详情).
    *
    * http://qydev.weixin.qq.com/wiki/index.php?title=管理成员#.E8.8E.B7.E5.8F.96.E9.83.A8.E9.97.A8.E6.88.90.E5.91.98.28.E8.AF.A6.E6.83.85.29
    * </pre>
@@ -36,11 +38,11 @@ public interface WxCpUserService {
    * @param fetchChild 非必填。1/0：是否递归获取子部门下面的成员
    * @param status     非必填。0获取全部员工，1获取已关注成员列表，2获取禁用成员列表，4获取未关注成员列表。status可叠加
    */
-  List<WxCpUser> listByDepartment(Integer departId, Boolean fetchChild, Integer status) throws WxErrorException;
+  List<WxCpUser> listByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException;
 
   /**
    * <pre>
-   * 获取部门成员
+   * 获取部门成员.
    *
    * http://qydev.weixin.qq.com/wiki/index.php?title=管理成员#.E8.8E.B7.E5.8F.96.E9.83.A8.E9.97.A8.E6.88.90.E5.91.98
    * </pre>
@@ -49,17 +51,17 @@ public interface WxCpUserService {
    * @param fetchChild 非必填。1/0：是否递归获取子部门下面的成员
    * @param status     非必填。0获取全部员工，1获取已关注成员列表，2获取禁用成员列表，4获取未关注成员列表。status可叠加
    */
-  List<WxCpUser> listSimpleByDepartment(Integer departId, Boolean fetchChild, Integer status) throws WxErrorException;
+  List<WxCpUser> listSimpleByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException;
 
   /**
-   * 新建用户
+   * 新建用户.
    *
    * @param user 用户对象
    */
   void create(WxCpUser user) throws WxErrorException;
 
   /**
-   * 更新用户
+   * 更新用户.
    *
    * @param user 用户对象
    */
@@ -67,7 +69,7 @@ public interface WxCpUserService {
 
   /**
    * <pre>
-   * 删除用户/批量删除成员
+   * 删除用户/批量删除成员.
    * http://qydev.weixin.qq.com/wiki/index.php?title=管理成员#.E6.89.B9.E9.87.8F.E5.88.A0.E9.99.A4.E6.88.90.E5.91.98
    * </pre>
    *
@@ -76,7 +78,7 @@ public interface WxCpUserService {
   void delete(String... userIds) throws WxErrorException;
 
   /**
-   * 获取用户
+   * 获取用户.
    *
    * @param userid 用户id
    */
@@ -84,18 +86,18 @@ public interface WxCpUserService {
 
   /**
    * <pre>
-   * 邀请成员关注
-   * http://qydev.weixin.qq.com/wiki/index.php?title=管理成员#.E9.82.80.E8.AF.B7.E6.88.90.E5.91.98.E5.85.B3.E6.B3.A8
+   * 邀请成员.
+   * 企业可通过接口批量邀请成员使用企业微信，邀请后将通过短信或邮件下发通知。
+   * 请求方式：POST（HTTPS）
+   * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/batch/invite?access_token=ACCESS_TOKEN
+   * 文档地址：https://work.weixin.qq.com/api/doc#12543
    * </pre>
    *
-   * @param userId     用户的userid
-   * @param inviteTips 推送到微信上的提示语（只有认证号可以使用）。当使用微信推送时，该字段默认为“请关注XXX企业号”，邮件邀请时，该字段无效。
-   * @return 1:微信邀请 2.邮件邀请
-   * @deprecated api obsoleted. 邀请关注的功能微信企业号已经下线了，
-   * 详细请参考该链接点击查看 https://qy.weixin.qq.com/cgi-bin/homepagenotify?action=get&id=46
+   * @param userIds  成员ID列表, 最多支持1000个。
+   * @param partyIds 部门ID列表，最多支持100个。
+   * @param tagIds   标签ID列表，最多支持100个。
    */
-  @Deprecated
-  int invite(String userId, String inviteTips) throws WxErrorException;
+  WxCpInviteResult invite(List<String> userIds, List<String> partyIds, List<String> tagIds) throws WxErrorException;
 
   /**
    * <pre>
@@ -112,14 +114,14 @@ public interface WxCpUserService {
    * @param userId  企业内的成员id
    * @param agentId 非必填，整型，仅用于发红包。其它场景该参数不要填，如微信支付、企业转账、电子发票
    * @return map对象，可能包含以下值：
-   * - openid	企业微信成员userid对应的openid，若有传参agentid，则是针对该agentid的openid。否则是针对企业微信corpid的openid
-   * - appid	应用的appid，若请求包中不包含agentid则不返回appid。该appid在使用微信红包时会用到
+   * - openid 企业微信成员userid对应的openid，若有传参agentid，则是针对该agentid的openid。否则是针对企业微信corpid的openid
+   * - appid 应用的appid，若请求包中不包含agentid则不返回appid。该appid在使用微信红包时会用到
    */
   Map<String, String> userId2Openid(String userId, Integer agentId) throws WxErrorException;
 
   /**
    * <pre>
-   * openid转userid
+   * openid转userid.
    *
    * 该接口主要应用于使用微信支付、微信红包和企业转账之后的结果查询。
    * 开发者需要知道某个结果事件的openid对应企业微信内成员的信息时，可以通过调用该接口进行转换查询。
@@ -133,4 +135,17 @@ public interface WxCpUserService {
    * @return userid 该openid在企业微信对应的成员userid
    */
   String openid2UserId(String openid) throws WxErrorException;
+
+  /**
+   * 获取外部联系人详情.
+   * <pre>
+   *   企业可通过此接口，根据外部联系人的userid，拉取外部联系人详情。权限说明：
+   * 企业需要使用外部联系人管理secret所获取的accesstoken来调用
+   * 第三方应用需拥有“企业客户”权限。
+   * 第三方应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
+   * </pre>
+   *
+   * @param userId 外部联系人的userid
+   */
+  WxCpUserExternalContactInfo getExternalContact(String userId) throws WxErrorException;
 }

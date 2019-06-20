@@ -1,7 +1,7 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 

@@ -54,6 +54,7 @@ public class TestConfig extends WxMaInMemoryConfig {
     this.templateId = templateId;
   }
 
+  @Override
   public void setAccessTokenLock(Lock lock) {
     super.accessTokenLock = lock;
   }

@@ -155,6 +155,33 @@ public class WxPayMicropayRequest extends BaseWxPayRequest {
 
   /**
    * <pre>
+   * 字段名：交易起始时间.
+   * 变量名：time_start
+   * 是否必填：否
+   * 类型：String(14)
+   * 示例值：20091225091010
+   * 描述：订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
+   * </pre>
+   */
+  @XStreamAlias("time_start")
+  private String timeStart;
+
+  /**
+   * <pre>
+   * 字段名：交易结束时间.
+   * 变量名：time_expire
+   * 是否必填：否
+   * 类型：String(14)
+   * 示例值：20091227091010
+   * 描述：订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。其他详见时间规则
+   * 注意：最短失效时间间隔必须大于5分钟
+   * </pre>
+   */
+  @XStreamAlias("time_expire")
+  private String timeExpire;
+
+  /**
+   * <pre>
    * 字段名：授权码.
    * 变量名：auth_code
    * 是否必填：是
@@ -166,6 +193,23 @@ public class WxPayMicropayRequest extends BaseWxPayRequest {
   @Required
   @XStreamAlias("auth_code")
   private String authCode;
+
+  /**
+   * <pre>
+   * 字段名：场景信息.
+   * 变量名：scene_info
+   * 是否必填：否
+   * 类型：String(256)
+   * 示例值：{"store_info" : {
+   * "id": "SZTX001",
+   * "name": "腾大餐厅",
+   * "area_code": "440305",
+   * "address": "科技园中一路腾讯大厦" }}
+   * 描述：该字段用于上报场景信息，目前支持上报实际门店信息。该字段为JSON对象数据，对象格式为{"store_info":{"id": "门店ID","name": "名称","area_code": "编码","address": "地址" }}
+   * </pre>
+   */
+  @XStreamAlias("scene_info")
+  private String sceneInfo;
 
   @Override
   protected void checkConstraints() {

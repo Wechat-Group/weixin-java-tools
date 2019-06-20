@@ -1,23 +1,24 @@
 package me.chanjar.weixin.common.util.http.jodd;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import jodd.http.HttpConnectionProvider;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
 import jodd.http.ProxyInfo;
 import jodd.util.StringPool;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
-import me.chanjar.weixin.common.util.http.HttpResponseProxy;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
+import me.chanjar.weixin.common.util.http.HttpResponseProxy;
 import me.chanjar.weixin.common.util.http.RequestHttp;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by ecoolper on 2017/5/5.
@@ -57,9 +58,12 @@ public class JoddHttpMediaDownloadRequestExecutor extends BaseMediaDownloadReque
       return null;
     }
 
-    InputStream inputStream = new ByteArrayInputStream(response.bodyBytes());
-    return FileUtils.createTmpFile(inputStream, FilenameUtils.getBaseName(fileName), FilenameUtils.getExtension(fileName),
-      super.tmpDirFile);
+    try (InputStream inputStream = new ByteArrayInputStream(response.bodyBytes())) {
+      return FileUtils.createTmpFile(inputStream,
+        FilenameUtils.getBaseName(fileName),
+        FilenameUtils.getExtension(fileName),
+        super.tmpDirFile);
+    }
   }
 
 

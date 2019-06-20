@@ -1,6 +1,6 @@
 package me.chanjar.weixin.cp.demo;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpService;
 
 import javax.servlet.http.HttpServlet;

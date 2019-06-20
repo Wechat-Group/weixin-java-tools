@@ -1,7 +1,7 @@
 package me.chanjar.weixin.common.util.json;
 
 import com.google.gson.*;
-import me.chanjar.weixin.common.bean.result.WxError;
+import me.chanjar.weixin.common.error.WxError;
 
 import java.lang.reflect.Type;
 

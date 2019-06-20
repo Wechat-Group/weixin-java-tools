@@ -1,12 +1,12 @@
 package me.chanjar.weixin.mp.util.json;
 
+import java.lang.reflect.Type;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import me.chanjar.weixin.mp.bean.subscribe.WxMpSubscribeMessage;
-
-import java.lang.reflect.Type;
 
 /**
  * @author Mklaus
@@ -24,10 +24,15 @@ public class WxMpSubscribeMessageGsonAdapter implements JsonSerializer<WxMpSubsc
       messageJson.addProperty("url", message.getUrl());
     }
 
-    if (message.getMiniProgram() != null) {
+    final WxMpSubscribeMessage.MiniProgram miniProgram = message.getMiniProgram();
+    if (miniProgram != null) {
       JsonObject miniProgramJson = new JsonObject();
-      miniProgramJson.addProperty("appid", message.getMiniProgram().getAppid());
-      miniProgramJson.addProperty("pagepath", message.getMiniProgram().getPagePath());
+      miniProgramJson.addProperty("appid", miniProgram.getAppid());
+      if (miniProgram.isUsePath()) {
+        miniProgramJson.addProperty("path", miniProgram.getPagePath());
+      } else {
+        miniProgramJson.addProperty("pagepath", miniProgram.getPagePath());
+      }
       messageJson.add("miniprogram", miniProgramJson);
     }
 

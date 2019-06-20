@@ -5,12 +5,12 @@
   xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
-  <artifactId>weixin-java-parent</artifactId>
-  <version>3.0.0</version>
+  <artifactId>wx-java</artifactId>
+  <version>3.4.0</version>
   <packaging>pom</packaging>
-  <name>Weixin Java Tools - Parent</name>
-  <description>微信公众号、企业号上级POM</description>
-  <url>https://github.com/wechat-group/weixin-java-tools</url>
+  <name>WxJava - Weixin/Wechat Java SDK</name>
+  <description>微信开发Java SDK</description>
+  <url>https://github.com/Wechat-Group/WxJava</url>
 
   <licenses>
     <license>
@@ -85,12 +85,17 @@
       <email>007gzs@gmail.com</email>
       <url>https://github.com/007gzs</url>
     </developer>
+    <developer>
+      <name>Howard Liu</name>
+      <email>liuxinghao1988@gmail.com</email>
+      <url>https://github.com/howardliu-cn</url>
+    </developer>
   </developers>
 
   <scm>
-    <connection>scm:git:https://github.com/wechat-group/weixin-java-tools.git</connection>
-    <developerConnection>scm:git:git@github.com:wechat-group/weixin-java-tools.git</developerConnection>
-    <url>https://github.com/wechat-group/weixin-java-tools</url>
+    <connection>scm:git:https://github.com/Wechat-Group/WxJava.git</connection>
+    <developerConnection>scm:git:git@github.com:Wechat-Group/WxJava.git</developerConnection>
+    <url>https://github.com/Wechat-Group/WxJava</url>
   </scm>
 
   <modules>
@@ -100,6 +105,8 @@
     <module>weixin-java-pay</module>
     <module>weixin-java-miniapp</module>
     <module>weixin-java-open</module>
+    <module>starters/wx-java-pay-starter</module>
+    <module>starters/wx-java-mp-starter</module>
     <!--module>weixin-java-osgi</module-->
   </modules>
 
@@ -109,7 +116,7 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <httpclient.version>4.5</httpclient.version>
-    <jetty.version>9.3.0.RC0</jetty.version>
+    <jetty.version>9.4.17.v20190418</jetty.version>
   </properties>
 
   <dependencyManagement>
@@ -166,7 +173,7 @@
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
-        <version>1.4.9</version>
+        <version>1.4.10</version>
       </dependency>
       <!-- 由于guava较新的21.0版本需要jdk8，故而此处采用较低版本 -->
       <dependency>

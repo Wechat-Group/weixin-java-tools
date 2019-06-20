@@ -1,18 +1,21 @@
 package com.github.binarywang.wxpay.bean.notify;
 
-import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import org.testng.*;
 import org.testng.annotations.*;
 
 /**
  * <pre>
  * Created by Binary Wang on 2017-6-15.
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxPayOrderNotifyResultTest {
+  /**
+   * Test from xml.
+   */
   @Test
-  public void testFromXML() throws Exception {
+  public void testFromXML() {
     String xmlString = "<xml>\n" +
       "  <appid><![CDATA[wx2421b1c4370ec43b]]></appid>\n" +
       "  <attach><![CDATA[支付测试]]></attach>\n" +
@@ -32,12 +35,12 @@ public class WxPayOrderNotifyResultTest {
       "  <trade_type><![CDATA[JSAPI]]></trade_type>\n" +
       "  <transaction_id><![CDATA[1004400740201409030005092168]]></transaction_id>\n" +
       "   <coupon_count>2</coupon_count>\n" +
-      "   <coupon_type_0><![CDATA[CASH]]></coupon_type_0>\n" +
-      "   <coupon_id_0>10000</coupon_id_0>\n" +
-      "   <coupon_fee_0>100</coupon_fee_0>\n" +
       "   <coupon_type_1><![CDATA[NO_CASH]]></coupon_type_1>\n" +
       "   <coupon_id_1>10001</coupon_id_1>\n" +
       "   <coupon_fee_1>200</coupon_fee_1>\n" +
+      "   <coupon_type_0><![CDATA[CASH]]></coupon_type_0>\n" +
+      "   <coupon_id_0>10000</coupon_id_0>\n" +
+      "   <coupon_fee_0>100</coupon_fee_0>\n" +
       "</xml>";
 
     WxPayOrderNotifyResult result = WxPayOrderNotifyResult.fromXML(xmlString);

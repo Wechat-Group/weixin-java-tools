@@ -13,7 +13,6 @@ import me.chanjar.weixin.common.annotation.Required;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder(builderMethodName = "newBuilder")

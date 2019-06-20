@@ -1,7 +1,8 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.WxType;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpShakeService;
 import me.chanjar.weixin.mp.bean.WxMpShakeInfoResult;
@@ -53,7 +54,7 @@ public class WxMpShakeServiceImpl implements WxMpShakeService {
     String url = "https://api.weixin.qq.com/shakearound/device/bindpage";
     String postData = shakeAroundDeviceBindPageQuery.toJsonString();
     String responseContent = this.wxMpService.post(url, postData);
-    return WxError.fromJson(responseContent);
+    return WxError.fromJson(responseContent, WxType.MP);
   }
 
   @Override
