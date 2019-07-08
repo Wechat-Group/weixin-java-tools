@@ -3,30 +3,37 @@ package me.chanjar.weixin.mp.builder.kefu;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
- * 卡券消息builder
+ * 菜单消息builder
  * <pre>
- * 用法: WxMpKefuMessage m = WxMpKefuMessage.WXCARD().cardId(...).toUser(...).build();
+ * 用法:
+ * WxMpKefuMessage m = WxMpKefuMessage.MSGMENU().addList(lists).headContent(headContent).tailContent(tailContent).toUser(...).build();
  * </pre>
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
+ * @author billytomato
  */
 public final class WxMsgMenuBuilder extends BaseBuilder<WxMsgMenuBuilder> {
+  private List<WxMpKefuMessage.WxMsgMenu> list = new ArrayList<>();
   private String headContent;
   private String tailContent;
-  private String[] msgMenuList;
+
 
   public WxMsgMenuBuilder() {
     this.msgType = WxConsts.KefuMsgType.MSGMENU;
   }
 
-  @Override
-  public WxMpKefuMessage build() {
-    WxMpKefuMessage m = super.build();
-    m.setHeadContent(this.headContent);
-    m.setMsgMenuList(this.msgMenuList);
-    m.setTailContent(this.tailContent);
-    return m;
+  public WxMsgMenuBuilder addList(WxMpKefuMessage.WxMsgMenu... list) {
+    Collections.addAll(this.list, list);
+    return this;
+  }
+
+  public WxMsgMenuBuilder list(List<WxMpKefuMessage.WxMsgMenu> list) {
+    this.list = list;
+    return this;
   }
 
   public WxMsgMenuBuilder headContent(String headContent) {
@@ -39,8 +46,12 @@ public final class WxMsgMenuBuilder extends BaseBuilder<WxMsgMenuBuilder> {
     return this;
   }
 
-  public WxMsgMenuBuilder msgMenuList(String... msgMenuList) {
-    this.msgMenuList = msgMenuList;
-    return this;
+  @Override
+  public WxMpKefuMessage build() {
+    WxMpKefuMessage m = super.build();
+    m.setHeadContent(this.headContent);
+    m.setTailContent(this.tailContent);
+    m.setList(this.list);
+    return m;
   }
 }

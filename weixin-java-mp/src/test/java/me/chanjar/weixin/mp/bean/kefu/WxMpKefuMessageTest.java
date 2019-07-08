@@ -156,15 +156,24 @@ public class WxMpKefuMessageTest {
   }
 
   public void testMsgMenuBuild() {
+
+    WxMpKefuMessage.WxMsgMenu wxMsgMenu1=new WxMpKefuMessage.WxMsgMenu();
+    wxMsgMenu1.setId("101");
+    wxMsgMenu1.setContent("msgmenu1");
+
+    WxMpKefuMessage.WxMsgMenu wxMsgMenu2=new WxMpKefuMessage.WxMsgMenu();
+    wxMsgMenu2.setId("102");
+    wxMsgMenu2.setContent("msgmenu2");
+
     WxMpKefuMessage reply = WxMpKefuMessage.MSGMENU()
       .toUser("OPENID")
-      .msgMenuList("101,满意", "102,不满意")
-      .headContent("您对本次服务是否满意呢?")
-      .tailContent("欢迎再次光临")
+      .addList(wxMsgMenu1).addList(wxMsgMenu2)
+      .headContent("head_content")
+      .tailContent("tail_content")
       .build();
 
-    assertThat(reply.toJson())
-      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"msgmenu\",\"msgmenu\":{\"head_content\":\"您对本次服务是否满意呢?\",\"list\":[{\"id\":\"101\",\"content\":\"满意\"},{\"id\":\"102\",\"content\":\"不满意\"}],\"tail_content\":\"欢迎再次光临\"}}");
+    Assert.assertEquals(reply.toJson(),
+      "{\"touser\":\"OPENID\",\"msgtype\":\"msgmenu\",\"msgmenu\":{\"head_content\":\"head_content\",\"list\":[{\"id\":\"101\",\"content\":\"msgmenu1\"},{\"id\":\"102\",\"content\":\"msgmenu2\"}],\"tail_content\":\"tail_content\"}}");
   }
 
 }

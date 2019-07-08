@@ -32,10 +32,10 @@ public class WxMpKefuMessage implements Serializable {
   private String mpNewsMediaId;
   private String miniProgramAppId;
   private String miniProgramPagePath;
-  private List<WxArticle> articles = new ArrayList<>();
-
   private String headContent;
   private String tailContent;
+  private List<WxArticle> articles = new ArrayList<>();
+  private List<WxMsgMenu> list = new ArrayList<>();
   /**
    * 菜单消息里的菜单内容.
    * 请使用逗号分割的形式将id和content连起来放在数组的里面
@@ -144,5 +144,11 @@ public class WxMpKefuMessage implements Serializable {
     private String description;
     private String url;
     private String picUrl;
+  }
+
+  @Data
+  public static class WxMsgMenu implements Serializable {
+    private String id;
+    private String content;
   }
 }

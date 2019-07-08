@@ -81,19 +81,18 @@ public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMpKefuMessag
         messageJson.add("miniprogrampage", miniProgramPage);
         break;
       case KefuMsgType.MSGMENU: {
-        JsonObject msgMenu = new JsonObject();
-        JsonArray array = new JsonArray();
-        for (String s : message.getMsgMenuList()) {
-          JsonObject innerJson = new JsonObject();
-          final String[] split = s.split(",");
-          innerJson.addProperty("id", split[0]);
-          innerJson.addProperty("content", split[1]);
-          array.add(innerJson);
-        }
-        msgMenu.addProperty("head_content", message.getHeadContent());
-        msgMenu.add("list", array);
-        msgMenu.addProperty("tail_content", message.getTailContent());
-        messageJson.add("msgmenu", msgMenu);
+          JsonObject msgmenuJsonObject = new JsonObject();
+          JsonArray listJsonArray = new JsonArray();
+          for (WxMpKefuMessage.WxMsgMenu list : message.getList()) {
+            JsonObject listJson = new JsonObject();
+            listJson.addProperty("id", list.getId());
+            listJson.addProperty("content", list.getContent());
+            listJsonArray.add(listJson);
+          }
+          msgmenuJsonObject.addProperty("head_content",message.getHeadContent());
+          msgmenuJsonObject.add("list", listJsonArray);
+          msgmenuJsonObject.addProperty("tail_content",message.getTailContent());
+          messageJson.add("msgmenu", msgmenuJsonObject);
         break;
       }
       default: {
