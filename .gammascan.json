@@ -6,15 +6,15 @@
     },
     "repositories": [
         {
-            "dataDir": "$GAMMA_DATA",
+            "dataDir": "",
             "repository": {
-                "uid": "364cc08af8958c04d8dc4e5822171141",
-                "projectName": "java_teamcity",
+                "uid": "39729010ee0937bb6efc69e93911f4b5",
+                "projectName": "java",
                 "languages": [
                     "JAVA"
                 ],
                 "sources": {
-                    "baseDir": "$WORKSPACE",
+                    "baseDir": "",
                     "exclusions": [
                         "(?i)(test|generated|mock|thirdparty|third-party|3rd-party|3rdparty|external)"
                     ]
@@ -26,6 +26,14 @@
             },
             "modules": {
                 "codeissues": [
+                    {
+                        "name": "gamma_java",
+                        "enabled": true,
+                        "config": {
+                            "rules": [],
+                            "options": []
+                        }
+                    },
                     {
                         "name": "pmd",
                         "enabled": true,
@@ -45,14 +53,6 @@
                                     "required": true
                                 }
                             ]
-                        }
-                    },
-                    {
-                        "name": "gamma_java",
-                        "enabled": true,
-                        "config": {
-                            "rules": [],
-                            "options": []
                         }
                     }
                 ],
