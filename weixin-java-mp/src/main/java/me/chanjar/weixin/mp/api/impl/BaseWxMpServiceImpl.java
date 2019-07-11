@@ -97,7 +97,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
       if (this.getWxMpConfigStorage().isTicketExpired(type)) {
         String responseContent = execute(SimpleGetRequestExecutor.create(this),
-          GET_TICKET_URL + type.getCode(), null);
+          GET_TICKET_URL.getUrl(this.getWxMpConfigStorage()) + type.getCode(), null);
         JsonObject tmpJsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
         String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
         int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
