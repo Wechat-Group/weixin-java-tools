@@ -249,4 +249,9 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     String response = this.wxMpService.post(WxMpApiUrl.Card.CARD_DELETE, param.toString());
     return WxMpCardDeleteResult.fromJson(response);
   }
+
+  @Override
+  public CardUpdateResult updateCard() throws WxErrorException {
+    return null;
+  }
 }

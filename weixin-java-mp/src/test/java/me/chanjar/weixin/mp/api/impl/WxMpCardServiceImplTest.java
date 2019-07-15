@@ -205,6 +205,11 @@ public class WxMpCardServiceImplTest {
   }
 
   @Test
+  public void testUpdateCard() throws  Exception{
+    String cardId = "";
+  }
+
+  @Test
   public void testAddTestWhiteList() {
   }
 

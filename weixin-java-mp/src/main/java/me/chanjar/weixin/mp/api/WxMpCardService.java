@@ -206,4 +206,12 @@ public interface WxMpCardService {
    */
   WxMpCardDeleteResult deleteCard(String cardId) throws WxErrorException;
 
+  /**
+   * 更新卡券接口
+   *
+   * @return CardUpdateResult
+   * @throws WxErrorException 异常
+   */
+  CardUpdateResult updateCard() throws WxErrorException;
+
 }

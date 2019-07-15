@@ -433,6 +433,10 @@ public interface WxMpApiUrl {
      */
     CARD_CREATE(API_DEFAULT_HOST_URL, "/card/create"),
     /**
+     * update.
+     */
+    CARD_UPDATE(API_DEFAULT_HOST_URL, "/card/update"),
+    /**
      * get.
      */
     CARD_GET(API_DEFAULT_HOST_URL, "/card/get"),
