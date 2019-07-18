@@ -313,7 +313,17 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("offset", begin);
     jsonObject.addProperty("count", len);
     String responseContent = post(url, jsonObject.toString());
-    return WxOpenGsonBuilder.create().fromJson(responseContent, WxOpenAuthorizerListResult.class);
+    WxOpenAuthorizerListResult ret = WxOpenGsonBuilder.create().fromJson(responseContent, WxOpenAuthorizerListResult.class);
+    if(ret != null && ret.getList() != null){
+      for(Map<String, String> data : ret.getList()){
+        String authorizerAppid = data.get("authorizer_appid");
+        String refreshToken = data.get("refresh_token");
+        if(authorizerAppid != null && refreshToken != null){
+          this.getWxOpenConfigStorage().setAuthorizerRefreshToken(authorizerAppid, refreshToken);
+        }
+      }
+    }
+    return ret;
   }
 
   @Override
