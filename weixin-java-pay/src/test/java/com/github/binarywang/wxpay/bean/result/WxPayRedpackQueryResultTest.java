@@ -13,6 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxPayRedpackQueryResultTest {
+  /**
+   * Test from xml.
+   */
   @Test
   public void testFromXML() {
     String xmlString = "<xml>\n" +

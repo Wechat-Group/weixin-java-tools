@@ -10,7 +10,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-
 @XStreamAlias("xml")
 public class WxPayCommonResult extends BaseWxPayResult {
 }

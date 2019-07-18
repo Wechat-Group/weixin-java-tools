@@ -1,16 +1,19 @@
 package com.github.binarywang.wxpay.bean.notify;
 
-import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import org.testng.*;
 import org.testng.annotations.*;
 
 /**
  * <pre>
  * Created by Binary Wang on 2017-6-15.
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxPayOrderNotifyResultTest {
+  /**
+   * Test from xml.
+   */
   @Test
   public void testFromXML() {
     String xmlString = "<xml>\n" +

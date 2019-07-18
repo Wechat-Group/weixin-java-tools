@@ -1,13 +1,18 @@
 package me.chanjar.weixin.common.bean.menu;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+
+/**
+ * menu button.
+ *
+ * @author Daniel Qian
+ */
 @Data
 public class WxMenuButton implements Serializable {
   private static final long serialVersionUID = -1070939403109776555L;
@@ -76,7 +81,7 @@ public class WxMenuButton implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxGsonBuilder.create().toJson(this);
   }
 
 }

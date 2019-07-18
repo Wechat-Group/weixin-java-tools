@@ -1,5 +1,15 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
 import cn.binarywang.wx.miniapp.api.WxMaCodeService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.code.WxMaCategory;
@@ -16,12 +26,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.json.GsonHelper;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
 
 /**
  * @author <a href="https://github.com/charmingoh">Charming</a>
@@ -41,13 +45,19 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
   }
 
   @Override
-  public byte[] getQrCode() throws WxErrorException {
+  public byte[] getQrCode(String path) throws WxErrorException {
     String appId = this.wxMaService.getWxMaConfig().getAppid();
     Path qrCodeFilePath = null;
     try {
       RequestExecutor<File, String> executor = BaseMediaDownloadRequestExecutor
         .create(this.wxMaService.getRequestHttp(), Files.createTempDirectory("weixin-java-tools-ma-" + appId).toFile());
-      qrCodeFilePath = this.wxMaService.execute(executor, GET_QRCODE_URL, null).toPath();
+
+      final StringBuilder url = new StringBuilder(GET_QRCODE_URL);
+      if (StringUtils.isNotBlank(path)) {
+        url.append("?path=").append(URLEncoder.encode(path, StandardCharsets.UTF_8.name()));
+      }
+
+      qrCodeFilePath = this.wxMaService.execute(executor, url.toString(), null).toPath();
       return Files.readAllBytes(qrCodeFilePath);
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);

@@ -1,5 +1,12 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.*;
+
 import cn.binarywang.wx.miniapp.api.WxMaCodeService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.code.WxMaCategory;
@@ -11,16 +18,8 @@ import cn.binarywang.wx.miniapp.bean.code.WxMaCodeVersionDistribution;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 /**
  * @author <a href="https://github.com/charmingoh">Charming</a>
@@ -77,7 +76,7 @@ public class WxMaCodeServiceImplTest {
 
   @Test
   public void testGetQrCode() throws Exception {
-    byte[] qrCode = wxService.getCodeService().getQrCode();
+    byte[] qrCode = wxService.getCodeService().getQrCode(null);
     assertTrue(qrCode.length > 0);
   }
 

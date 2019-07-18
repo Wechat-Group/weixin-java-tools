@@ -1,8 +1,8 @@
 package me.chanjar.weixin.cp.config;
 
 import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.File;
 
@@ -31,6 +31,9 @@ public class WxCpInMemoryConfigStorage implements WxCpConfigStorage {
 
   protected volatile String jsapiTicket;
   protected volatile long jsapiTicketExpiresTime;
+
+  protected volatile String agentJsapiTicket;
+  protected volatile long agentJsapiTicketExpiresTime;
 
   protected volatile File tmpDirFile;
 
@@ -93,6 +96,28 @@ public class WxCpInMemoryConfigStorage implements WxCpConfigStorage {
     this.jsapiTicket = jsapiTicket;
     // 预留200秒的时间
     this.jsapiTicketExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
+  }
+
+  @Override
+  public String getAgentJsapiTicket() {
+    return this.agentJsapiTicket;
+  }
+
+  @Override
+  public boolean isAgentJsapiTicketExpired() {
+    return System.currentTimeMillis() > this.agentJsapiTicketExpiresTime;
+  }
+
+  @Override
+  public void expireAgentJsapiTicket() {
+    this.agentJsapiTicketExpiresTime = 0;
+  }
+
+  @Override
+  public void updateAgentJsapiTicket(String jsapiTicket, int expiresInSeconds) {
+    this.agentJsapiTicket = jsapiTicket;
+    // 预留200秒的时间
+    this.agentJsapiTicketExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
   }
 
   @Override
@@ -201,7 +226,7 @@ public class WxCpInMemoryConfigStorage implements WxCpConfigStorage {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxCpGsonBuilder.create().toJson(this);
   }
 
   @Override

@@ -1,9 +1,12 @@
 package me.chanjar.weixin.mp.util.requestexecuter.voice;
 
+import java.io.File;
+import java.io.IOException;
+
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
-
-import java.io.File;
+import me.chanjar.weixin.common.util.http.ResponseHandler;
 
 /**
  * <pre>
@@ -17,6 +20,11 @@ public abstract class VoiceUploadRequestExecutor<H, P> implements RequestExecuto
 
   public VoiceUploadRequestExecutor(RequestHttp requestHttp) {
     this.requestHttp = requestHttp;
+  }
+
+  @Override
+  public void execute(String uri, File data, ResponseHandler<Boolean> handler) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data));
   }
 
   public static RequestExecutor<Boolean, File> create(RequestHttp requestHttp) {

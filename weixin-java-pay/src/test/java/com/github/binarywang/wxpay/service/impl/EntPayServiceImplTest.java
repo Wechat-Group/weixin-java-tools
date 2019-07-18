@@ -28,6 +28,11 @@ public class EntPayServiceImplTest {
   @Inject
   private WxPayService payService;
 
+  /**
+   * Test ent pay.
+   *
+   * @throws WxPayException the wx pay exception
+   */
   @Test
   public void testEntPay() throws WxPayException {
     EntPayRequest request = EntPayRequest.newBuilder()
@@ -42,16 +47,31 @@ public class EntPayServiceImplTest {
     this.logger.info(this.payService.getEntPayService().entPay(request).toString());
   }
 
+  /**
+   * Test query ent pay.
+   *
+   * @throws WxPayException the wx pay exception
+   */
   @Test
   public void testQueryEntPay() throws WxPayException {
     this.logger.info(this.payService.getEntPayService().queryEntPay("11212121").toString());
   }
 
+  /**
+   * Test get public key.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testGetPublicKey() throws Exception {
     this.logger.info(this.payService.getEntPayService().getPublicKey());
   }
 
+  /**
+   * Test pay bank.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testPayBank() throws Exception {
     EntPayBankResult result = this.payService.getEntPayService().payBank(EntPayBankRequest.builder()
@@ -65,6 +85,11 @@ public class EntPayServiceImplTest {
     this.logger.info(result.toString());
   }
 
+  /**
+   * Test query pay bank.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testQueryPayBank() throws Exception {
     this.logger.info(this.payService.getEntPayService().queryPayBank("123").toString());

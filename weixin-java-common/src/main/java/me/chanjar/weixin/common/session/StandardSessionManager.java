@@ -1,15 +1,18 @@
 package me.chanjar.weixin.common.session;
 
-import me.chanjar.weixin.common.util.res.StringManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import me.chanjar.weixin.common.util.res.StringManager;
+
 /**
- * 基于内存的session manager
+ * 基于内存的session manager.
+ *
+ * @author Daniel Qian
  */
 public class StandardSessionManager implements WxSessionManager, InternalSessionManager {
 
@@ -193,6 +196,7 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
               Thread.sleep(StandardSessionManager.this.backgroundProcessorDelay * 1000L);
               backgroundProcess();
             } catch (InterruptedException e) {
+              Thread.currentThread().interrupt();
               StandardSessionManager.this.log.error("SessionManagerImpl.backgroundProcess error", e);
             }
           }

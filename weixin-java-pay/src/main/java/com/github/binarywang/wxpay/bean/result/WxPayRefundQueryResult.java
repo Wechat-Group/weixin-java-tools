@@ -1,10 +1,14 @@
 package com.github.binarywang.wxpay.bean.result;
 
+import java.util.List;
+
 import com.google.common.collect.Lists;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import lombok.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -168,6 +172,9 @@ public class WxPayRefundQueryResult extends BaseWxPayResult {
     }
   }
 
+  /**
+   * The type Refund record.
+   */
   @Data
   @Builder(builderMethodName = "newBuilder")
   @NoArgsConstructor

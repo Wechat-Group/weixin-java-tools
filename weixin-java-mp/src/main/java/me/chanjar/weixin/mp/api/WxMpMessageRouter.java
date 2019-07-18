@@ -1,5 +1,18 @@
 package me.chanjar.weixin.mp.api;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.api.WxMessageDuplicateChecker;
 import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
@@ -10,18 +23,6 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.LogExceptionHandler;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * <pre>
@@ -155,11 +156,12 @@ public class WxMpMessageRouter {
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context) {
     return route(wxMessage, context, null);
   }
+
   /**
    * 处理微信消息
    */
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context, WxMpService wxMpService) {
-    if(wxMpService == null){
+    if (wxMpService == null) {
       wxMpService = this.wxMpService;
     }
     final WxMpService mpService = wxMpService;
@@ -214,7 +216,10 @@ public class WxMpMessageRouter {
               WxMpMessageRouter.this.log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUser());
               // 异步操作结束，session访问结束
               sessionEndAccess(wxMessage);
-            } catch (InterruptedException | ExecutionException e) {
+            } catch (InterruptedException e) {
+              WxMpMessageRouter.this.log.error("Error happened when wait task finish", e);
+              Thread.currentThread().interrupt();
+            } catch (ExecutionException e) {
               WxMpMessageRouter.this.log.error("Error happened when wait task finish", e);
             }
           }

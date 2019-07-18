@@ -7,9 +7,13 @@ import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 
+/**
+ * .
+ * @author chanjarster
+ */
 public class WxGsonBuilder {
 
-  public static final GsonBuilder INSTANCE = new GsonBuilder();
+  private static final GsonBuilder INSTANCE = new GsonBuilder();
 
   static {
     INSTANCE.disableHtmlEscaping();

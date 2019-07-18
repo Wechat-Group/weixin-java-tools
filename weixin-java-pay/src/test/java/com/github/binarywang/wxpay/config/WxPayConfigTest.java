@@ -14,6 +14,11 @@ import static org.testng.Assert.*;
 public class WxPayConfigTest {
   private WxPayConfig payConfig = new WxPayConfig();
 
+  /**
+   * Test init ssl context.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testInitSSLContext() throws Exception {
     payConfig.setMchId("123");

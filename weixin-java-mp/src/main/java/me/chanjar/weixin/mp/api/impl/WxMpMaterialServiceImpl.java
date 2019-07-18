@@ -1,9 +1,16 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
@@ -11,17 +18,22 @@ import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpMaterialService;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.material.*;
-import me.chanjar.weixin.mp.util.requestexecuter.material.*;
-import me.chanjar.weixin.mp.util.requestexecuter.media.MediaImgUploadRequestExecutor;
+import me.chanjar.weixin.mp.bean.material.WxMediaImgUploadResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialArticleUpdate;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialCountResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialVideoInfoResult;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import me.chanjar.weixin.mp.util.requestexecuter.material.MaterialDeleteRequestExecutor;
+import me.chanjar.weixin.mp.util.requestexecuter.material.MaterialNewsInfoRequestExecutor;
+import me.chanjar.weixin.mp.util.requestexecuter.material.MaterialUploadRequestExecutor;
+import me.chanjar.weixin.mp.util.requestexecuter.material.MaterialVideoInfoRequestExecutor;
+import me.chanjar.weixin.mp.util.requestexecuter.material.MaterialVoiceAndImageDownloadRequestExecutor;
+import me.chanjar.weixin.mp.util.requestexecuter.media.MediaImgUploadRequestExecutor;
 
 /**
  * Created by Binary Wang on 2016/7/21.

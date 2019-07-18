@@ -1,10 +1,10 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-
-import java.io.Serializable;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  *
@@ -47,7 +47,7 @@ public class WxMpKfMsgRecord implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   public String getWorker() {

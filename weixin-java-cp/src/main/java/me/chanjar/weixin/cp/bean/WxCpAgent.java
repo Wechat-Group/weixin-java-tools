@@ -1,11 +1,14 @@
 package me.chanjar.weixin.cp.bean;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
  * <pre>
@@ -16,16 +19,20 @@ import java.util.List;
  * @author <a href="https://github.com/huansinho">huansinho</a>
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WxCpAgent implements Serializable {
+  private static final long serialVersionUID = 5002894979081127234L;
 
   @SerializedName("errcode")
-  private Integer errcode;
+  private Integer errCode;
 
   @SerializedName("errmsg")
-  private String errmsg;
+  private String errMsg;
 
   @SerializedName("agentid")
-  private Integer agentid;
+  private Integer agentId;
 
   @SerializedName("name")
   private String name;
@@ -33,14 +40,17 @@ public class WxCpAgent implements Serializable {
   @SerializedName("square_logo_url")
   private String squareLogoUrl;
 
+  @SerializedName("logo_mediaid")
+  private String logoMediaId;
+
   @SerializedName("description")
   private String description;
 
   @SerializedName("allow_userinfos")
-  private Users allowUserinfos;
+  private Users allowUserInfos;
 
   @SerializedName("allow_partys")
-  private Partys allowPartys;
+  private Parties allowParties;
 
   @SerializedName("allow_tags")
   private Tags allowTags;
@@ -55,7 +65,7 @@ public class WxCpAgent implements Serializable {
   private Integer reportLocationFlag;
 
   @SerializedName("isreportenter")
-  private Integer isreportenter;
+  private Integer isReportEnter;
 
   @SerializedName("home_url")
   private String homeUrl;
@@ -70,27 +80,28 @@ public class WxCpAgent implements Serializable {
 
   @Data
   public static class Users implements Serializable {
+    private static final long serialVersionUID = 8801100463558788565L;
     @SerializedName("user")
-    private List<User> user;
+    private List<User> users;
   }
-
 
   @Data
   public class User implements Serializable {
+    private static final long serialVersionUID = 7287632514385508024L;
     @SerializedName("userid")
-    private String userid;
+    private String userId;
   }
 
   @Data
-  public class Partys {
+  public class Parties {
     @SerializedName("partyid")
-    private List<Integer> partyids = null;
+    private List<Integer> partyIds = null;
   }
 
   @Data
   public class Tags {
     @SerializedName("tagid")
-    private List<Integer> tagids = null;
+    private List<Integer> tagIds = null;
   }
 
 }

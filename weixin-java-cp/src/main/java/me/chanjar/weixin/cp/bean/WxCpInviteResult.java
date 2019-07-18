@@ -1,15 +1,15 @@
 package me.chanjar.weixin.cp.bean;
 
-import com.google.common.base.Splitter;
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.base.Splitter;
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
  * 邀请成员的结果对象类.
@@ -23,11 +23,11 @@ public class WxCpInviteResult implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxCpGsonBuilder.create().toJson(this);
   }
 
   public static WxCpInviteResult fromJson(String json) {
-    return WxCpGsonBuilder.INSTANCE.create().fromJson(json, WxCpInviteResult.class);
+    return WxCpGsonBuilder.create().fromJson(json, WxCpInviteResult.class);
   }
 
   @SerializedName("errcode")
@@ -37,24 +37,12 @@ public class WxCpInviteResult implements Serializable {
   private String errMsg;
 
   @SerializedName("invaliduser")
-  private String invalidUsers;
+  private String[] invalidUsers;
 
   @SerializedName("invalidparty")
   private String[] invalidParties;
 
   @SerializedName("invalidtag")
   private String[] invalidTags;
-
-  public List<String> getInvalidUserList() {
-    return this.content2List(this.invalidUsers);
-  }
-
-  private List<String> content2List(String content) {
-    if (StringUtils.isBlank(content)) {
-      return Collections.emptyList();
-    }
-
-    return Splitter.on("|").splitToList(content);
-  }
 
 }

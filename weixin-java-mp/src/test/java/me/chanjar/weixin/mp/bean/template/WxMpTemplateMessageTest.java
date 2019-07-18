@@ -17,7 +17,7 @@ public class WxMpTemplateMessageTest {
     WxMpTemplateMessage tm = WxMpTemplateMessage.builder()
       .toUser("OPENID")
       .templateId("ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY")
-      .miniProgram(new WxMpTemplateMessage.MiniProgram("xiaochengxuappid12345", "index?foo=bar"))
+      .miniProgram(new WxMpTemplateMessage.MiniProgram("xiaochengxuappid12345", "index?foo=bar",true))
       .url("http://weixin.qq.com/download")
       .build();
 

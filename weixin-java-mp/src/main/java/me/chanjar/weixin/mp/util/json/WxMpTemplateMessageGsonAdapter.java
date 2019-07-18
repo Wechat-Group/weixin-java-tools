@@ -9,6 +9,9 @@ import com.google.gson.JsonSerializer;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 
+/**
+ * @author chanjarster
+ */
 public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTemplateMessage> {
 
   @Override
@@ -20,10 +23,15 @@ public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTempla
       messageJson.addProperty("url", message.getUrl());
     }
 
-    if (message.getMiniProgram() != null) {
+    final WxMpTemplateMessage.MiniProgram miniProgram = message.getMiniProgram();
+    if (miniProgram != null) {
       JsonObject miniProgramJson = new JsonObject();
-      miniProgramJson.addProperty("appid", message.getMiniProgram().getAppid());
-      miniProgramJson.addProperty("pagepath", message.getMiniProgram().getPagePath());
+      miniProgramJson.addProperty("appid", miniProgram.getAppid());
+      if (miniProgram.isUsePath()) {
+        miniProgramJson.addProperty("path", miniProgram.getPagePath());
+      } else {
+        miniProgramJson.addProperty("pagepath", miniProgram.getPagePath());
+      }
       messageJson.add("miniprogram", miniProgramJson);
     }
 

@@ -1,5 +1,8 @@
 package me.chanjar.weixin.common.util.http;
 
+import java.io.IOException;
+
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheSimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpSimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpSimplePostRequestExecutor;
@@ -15,6 +18,11 @@ public abstract class SimplePostRequestExecutor<H, P> implements RequestExecutor
 
   public SimplePostRequestExecutor(RequestHttp requestHttp) {
     this.requestHttp = requestHttp;
+  }
+
+  @Override
+  public void execute(String uri, String data, ResponseHandler<String> handler) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data));
   }
 
   public static RequestExecutor<String, String> create(RequestHttp requestHttp) {

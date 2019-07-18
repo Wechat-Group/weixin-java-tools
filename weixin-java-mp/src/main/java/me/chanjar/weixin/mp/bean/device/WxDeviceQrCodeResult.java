@@ -24,7 +24,7 @@ public class WxDeviceQrCodeResult extends AbstractDeviceBean {
   private BaseResp baseResp;
 
   public static WxDeviceQrCodeResult fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxDeviceQrCodeResult.class);
+    return WxMpGsonBuilder.create().fromJson(json, WxDeviceQrCodeResult.class);
   }
 
 }

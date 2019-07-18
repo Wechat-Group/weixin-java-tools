@@ -6,11 +6,12 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.binarywang</groupId>
-    <artifactId>weixin-java-parent</artifactId>
-    <version>3.1.0</version>
+    <artifactId>wx-java</artifactId>
+    <version>3.4.0</version>
   </parent>
+
   <artifactId>weixin-java-mp</artifactId>
-  <name>Weixin Java Tools - MP</name>
+  <name>WxJava - MP Java SDK</name>
   <description>微信公众号Java SDK</description>
 
   <dependencies>
@@ -34,6 +35,11 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

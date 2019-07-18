@@ -1,17 +1,22 @@
 package me.chanjar.weixin.cp.api.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import com.google.common.collect.Maps;
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpUserService;
 import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
+import me.chanjar.weixin.cp.bean.WxCpUserExternalContactInfo;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * <pre>
@@ -71,7 +76,7 @@ public class WxCpUserServiceImpl implements WxCpUserService {
   }
 
   @Override
-  public List<WxCpUser> listByDepartment(Integer departId, Boolean fetchChild, Integer status) throws WxErrorException {
+  public List<WxCpUser> listByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/user/list?department_id=" + departId;
     String params = "";
     if (fetchChild != null) {
@@ -85,7 +90,7 @@ public class WxCpUserServiceImpl implements WxCpUserService {
 
     String responseContent = this.mainService.get(url, params);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
-    return WxCpGsonBuilder.INSTANCE.create()
+    return WxCpGsonBuilder.create()
       .fromJson(tmpJsonElement.getAsJsonObject().get("userlist"),
         new TypeToken<List<WxCpUser>>() {
         }.getType()
@@ -93,7 +98,7 @@ public class WxCpUserServiceImpl implements WxCpUserService {
   }
 
   @Override
-  public List<WxCpUser> listSimpleByDepartment(Integer departId, Boolean fetchChild, Integer status) throws WxErrorException {
+  public List<WxCpUser> listSimpleByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?department_id=" + departId;
     String params = "";
     if (fetchChild != null) {
@@ -107,7 +112,7 @@ public class WxCpUserServiceImpl implements WxCpUserService {
 
     String responseContent = this.mainService.get(url, params);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
-    return WxCpGsonBuilder.INSTANCE.create()
+    return WxCpGsonBuilder.create()
       .fromJson(
         tmpJsonElement.getAsJsonObject().get("userlist"),
         new TypeToken<List<WxCpUser>>() {
@@ -177,5 +182,12 @@ public class WxCpUserServiceImpl implements WxCpUserService {
     String responseContent = this.mainService.post(url, jsonObject.toString());
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return tmpJsonElement.getAsJsonObject().get("userid").getAsString();
+  }
+
+  @Override
+  public WxCpUserExternalContactInfo getExternalContact(String userId) throws WxErrorException {
+    String url = "https://qyapi.weixin.qq.com/cgi-bin/crm/get_external_contact?external_userid=" + userId;
+    String responseContent = this.mainService.get(url, null);
+    return WxCpUserExternalContactInfo.fromJson(responseContent);
   }
 }

@@ -794,8 +794,7 @@ public enum WxCpErrorMsgEnum {
    * 通过错误代码查找其中文含义.
    */
   public static String findMsgByCode(int code) {
-    WxCpErrorMsgEnum[] values = WxCpErrorMsgEnum.values();
-    for (WxCpErrorMsgEnum value : values) {
+    for (WxCpErrorMsgEnum value : WxCpErrorMsgEnum.values()) {
       if (value.code == code) {
         return value.msg;
       }

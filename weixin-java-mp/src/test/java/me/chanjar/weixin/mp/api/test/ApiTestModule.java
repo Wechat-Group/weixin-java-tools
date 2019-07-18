@@ -14,7 +14,6 @@ import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceOkHttpImpl;
 
 public class ApiTestModule implements Module {
   private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -29,11 +28,13 @@ public class ApiTestModule implements Module {
 
       TestConfigStorage config = this.fromXml(TestConfigStorage.class, inputStream);
       config.setAccessTokenLock(new ReentrantLock());
-      WxMpService wxService = new WxMpServiceHttpClientImpl();
-      wxService.setWxMpConfigStorage(config);
+      WxMpService mpService = new WxMpServiceHttpClientImpl();
 
-      binder.bind(WxMpService.class).toInstance(wxService);
+      mpService.setWxMpConfigStorage(config);
+      mpService.addConfigStorage("another", config);
+
       binder.bind(WxMpConfigStorage.class).toInstance(config);
+      binder.bind(WxMpService.class).toInstance(mpService);
     } catch (IOException e) {
       this.log.error(e.getMessage(), e);
     }

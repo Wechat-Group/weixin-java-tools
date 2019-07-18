@@ -109,6 +109,7 @@ public class WxMpKefuMessage implements Serializable {
    * {@link WxConsts.KefuMsgType#MPNEWS}
    * {@link WxConsts.KefuMsgType#WXCARD}
    * {@link WxConsts.KefuMsgType#MINIPROGRAMPAGE}
+   * {@link WxConsts.KefuMsgType#TASKCARD}
    * </pre>
    *
    */
@@ -117,7 +118,7 @@ public class WxMpKefuMessage implements Serializable {
   }
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   @Data

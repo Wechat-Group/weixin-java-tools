@@ -20,11 +20,11 @@ public class WxMpUserBlacklistGetResult implements Serializable {
   protected String nextOpenid;
 
   public static WxMpUserBlacklistGetResult fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpUserBlacklistGetResult.class);
+    return WxMpGsonBuilder.create().fromJson(json, WxMpUserBlacklistGetResult.class);
   }
 
   @Override
   public String toString() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 }

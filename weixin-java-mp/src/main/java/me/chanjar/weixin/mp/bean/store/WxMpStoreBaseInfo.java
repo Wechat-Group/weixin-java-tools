@@ -1,17 +1,16 @@
 package me.chanjar.weixin.mp.bean.store;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Data;
 import me.chanjar.weixin.common.annotation.Required;
-import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * <pre>
@@ -177,7 +176,7 @@ public class WxMpStoreBaseInfo implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return this.toJson();
   }
 
   public String toJson() {
@@ -193,7 +192,7 @@ public class WxMpStoreBaseInfo implements Serializable {
   public static class WxMpStorePhoto implements Serializable {
     private static final long serialVersionUID = -2942447907614186861L;
     /**
-     * 照片url
+     * 照片url.
      */
     @SerializedName("photo_url")
     private String photoUrl;

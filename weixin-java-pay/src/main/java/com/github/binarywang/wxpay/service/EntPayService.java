@@ -24,6 +24,8 @@ public interface EntPayService {
    * </pre>
    *
    * @param request 请求对象
+   * @return the ent pay result
+   * @throws WxPayException the wx pay exception
    */
   EntPayResult entPay(EntPayRequest request) throws WxPayException;
 
@@ -36,8 +38,23 @@ public interface EntPayService {
    * </pre>
    *
    * @param partnerTradeNo 商户订单号
+   * @return the ent pay query result
+   * @throws WxPayException the wx pay exception
    */
   EntPayQueryResult queryEntPay(String partnerTradeNo) throws WxPayException;
+  /**
+   * <pre>
+   * 查询企业付款API.
+   * 用于商户的企业付款操作进行结果查询，返回付款操作详细结果。
+   * 文档详见:https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_3
+   * 接口链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo
+   * </pre>
+   *
+   * @param partnerTradeNo 商户订单号
+   * @return the ent pay query result
+   * @throws WxPayException the wx pay exception
+   */
+  EntPayQueryResult queryEntPay(EntPayQueryRequest request) throws WxPayException;
 
   /**
    * <pre>
@@ -54,6 +71,9 @@ public interface EntPayService {
    * 文档详见:https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_7&index=4
    * 接口链接：https://fraud.mch.weixin.qq.com/risk/getpublickey
    * </pre>
+   *
+   * @return the public key
+   * @throws WxPayException the wx pay exception
    */
   String getPublicKey() throws WxPayException;
 
@@ -67,6 +87,8 @@ public interface EntPayService {
    * </pre>
    *
    * @param request 请求对象
+   * @return the ent pay bank result
+   * @throws WxPayException the wx pay exception
    */
   EntPayBankResult payBank(EntPayBankRequest request) throws WxPayException;
 
@@ -79,6 +101,21 @@ public interface EntPayService {
    * </pre>
    *
    * @param partnerTradeNo 商户订单号
+   * @return the ent pay bank query result
+   * @throws WxPayException the wx pay exception
    */
   EntPayBankQueryResult queryPayBank(String partnerTradeNo) throws WxPayException;
+  /**
+   * 企业付款到银行卡查询.
+   * <pre>
+   * 用于对商户企业付款到银行卡操作进行结果查询，返回付款操作详细结果。
+   * 文档详见：https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_3
+   * 接口链接：https://api.mch.weixin.qq.com/mmpaysptrans/query_bank
+   * </pre>
+   *
+   * @param partnerTradeNo 商户订单号
+   * @return the ent pay bank query result
+   * @throws WxPayException the wx pay exception
+   */
+  EntPayBankQueryResult queryPayBank(EntPayBankQueryRequest request) throws WxPayException;
 }

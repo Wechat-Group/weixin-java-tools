@@ -4,7 +4,15 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import javax.net.ssl.SSLContext;
 
+import com.github.binarywang.wxpay.bean.WxPayApiData;
+import com.github.binarywang.wxpay.bean.request.WxPayQueryCommentRequest;
+import com.github.binarywang.wxpay.bean.request.WxPayRedpackQueryRequest;
+import com.github.binarywang.wxpay.bean.result.WxPayCommonResult;
+import com.github.binarywang.wxpay.bean.result.WxPayRedpackQueryResult;
+import com.github.binarywang.wxpay.exception.WxPayException;
+import jodd.util.Base64;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -65,7 +73,9 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
           String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
           this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
-          wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
+          if (this.getConfig().isIfSaveApiData()) {
+            wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
+          }
           return responseString;
         }
       } finally {
@@ -73,7 +83,9 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
-      wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
+      if (this.getConfig().isIfSaveApiData()) {
+        wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
+      }
       throw new WxPayException(e.getMessage(), e);
     }
   }
@@ -83,7 +95,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       return new StringEntity(new String(requestStr.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
     } catch (UnsupportedEncodingException e) {
       //cannot happen
-      this.log.error(e.getMessage(),e);
+      this.log.error(e.getMessage(), e);
       return null;
     }
   }
@@ -94,14 +106,17 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       this.initSSLContext(httpClientBuilder);
     }
 
-    if (StringUtils.isNotBlank(this.getConfig().getHttpProxyHost())
-      && this.getConfig().getHttpProxyPort() > 0) {
+    if (StringUtils.isNotBlank(this.getConfig().getHttpProxyHost()) && this.getConfig().getHttpProxyPort() > 0) {
+      if (StringUtils.isEmpty(this.getConfig().getHttpProxyUsername())) {
+        this.getConfig().setHttpProxyUsername("whatever");
+      }
+
       // 使用代理服务器 需要用户认证的代理服务器
       CredentialsProvider provider = new BasicCredentialsProvider();
-      provider.setCredentials(
-        new AuthScope(this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort()),
+      provider.setCredentials(new AuthScope(this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort()),
         new UsernamePasswordCredentials(this.getConfig().getHttpProxyUsername(), this.getConfig().getHttpProxyPassword()));
       httpClientBuilder.setDefaultCredentialsProvider(provider);
+      httpClientBuilder.setProxy(new HttpHost(this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort()));
     }
     return httpClientBuilder;
   }

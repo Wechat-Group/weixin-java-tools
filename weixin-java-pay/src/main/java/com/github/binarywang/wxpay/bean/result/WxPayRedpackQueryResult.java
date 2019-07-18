@@ -223,6 +223,9 @@ public class WxPayRedpackQueryResult extends BaseWxPayResult {
   @XStreamAlias("hblist")
   private List<RedpackInfo> redpackList;
 
+  /**
+   * The type Redpack info.
+   */
   @Data
   @XStreamAlias("hbinfo")
   public static class RedpackInfo implements Serializable {

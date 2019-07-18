@@ -1,6 +1,5 @@
 package me.chanjar.weixin.open.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -12,33 +11,34 @@ import me.chanjar.weixin.common.util.http.URIUtil;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
-import me.chanjar.weixin.open.api.WxOpenComponentService;
-import me.chanjar.weixin.open.api.WxOpenConfigStorage;
-import me.chanjar.weixin.open.api.WxOpenService;
+import me.chanjar.weixin.open.api.*;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
+import me.chanjar.weixin.open.bean.WxOpenCreateResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
 import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
 import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
+import me.chanjar.weixin.open.bean.result.WxOpenResult;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
  */
 public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   private static final JsonParser JSON_PARSER = new JsonParser();
-  private static final Map<String, WxMaService> WX_OPEN_MA_SERVICE_MAP = new Hashtable<>();
-  private static final Map<String, WxMpService> WX_OPEN_MP_SERVICE_MAP = new Hashtable<>();
+  private static final Map<String, WxOpenMaService> WX_OPEN_MA_SERVICE_MAP = new ConcurrentHashMap<>();
+  private static final Map<String, WxMpService> WX_OPEN_MP_SERVICE_MAP = new ConcurrentHashMap<>();
+  private static final Map<String, WxOpenFastMaService> WX_OPEN_FAST_MA_SERVICE_MAP = new ConcurrentHashMap<>();
 
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
   private WxOpenService wxOpenService;
@@ -64,18 +64,33 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public WxMaService getWxMaServiceByAppid(String appId) {
-    WxMaService wxMaService = WX_OPEN_MA_SERVICE_MAP.get(appId);
-    if (wxMaService == null) {
+  public WxOpenMaService getWxMaServiceByAppid(String appId) {
+    WxOpenMaService wxOpenMaService = WX_OPEN_MA_SERVICE_MAP.get(appId);
+    if (wxOpenMaService == null) {
       synchronized (WX_OPEN_MA_SERVICE_MAP) {
-        wxMaService = WX_OPEN_MA_SERVICE_MAP.get(appId);
-        if (wxMaService == null) {
-          wxMaService = new WxOpenMaServiceImpl(this, appId, getWxOpenConfigStorage().getWxMaConfig(appId));
-          WX_OPEN_MA_SERVICE_MAP.put(appId, wxMaService);
+        wxOpenMaService = WX_OPEN_MA_SERVICE_MAP.get(appId);
+        if (wxOpenMaService == null) {
+          wxOpenMaService = new WxOpenMaServiceImpl(this, appId, getWxOpenConfigStorage().getWxMaConfig(appId));
+          WX_OPEN_MA_SERVICE_MAP.put(appId, wxOpenMaService);
         }
       }
     }
-    return wxMaService;
+    return wxOpenMaService;
+  }
+
+  @Override
+  public WxOpenFastMaService getWxFastMaServiceByAppid(String appId) {
+    WxOpenFastMaService fastMaService = WX_OPEN_FAST_MA_SERVICE_MAP.get(appId);
+    if (fastMaService == null) {
+      synchronized (WX_OPEN_FAST_MA_SERVICE_MAP) {
+        fastMaService = WX_OPEN_FAST_MA_SERVICE_MAP.get(appId);
+        if (fastMaService == null) {
+          fastMaService = new WxOpenFastMaServiceImpl(this, appId, getWxOpenConfigStorage().getWxMaConfig(appId));
+          WX_OPEN_FAST_MA_SERVICE_MAP.put(appId, fastMaService);
+        }
+      }
+    }
+    return fastMaService;
   }
 
   public WxOpenService getWxOpenService() {
@@ -109,7 +124,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
       String responseContent = this.getWxOpenService().post(API_COMPONENT_TOKEN_URL, jsonObject.toString());
       WxOpenComponentAccessToken componentAccessToken = WxOpenComponentAccessToken.fromJson(responseContent);
-      getWxOpenConfigStorage().updateComponentAccessTokent(componentAccessToken);
+      getWxOpenConfigStorage().updateComponentAccessToken(componentAccessToken);
     }
     return this.getWxOpenConfigStorage().getComponentAccessToken();
   }
@@ -148,6 +163,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   private String get(String uri) throws WxErrorException {
     return get(uri, "component_access_token");
   }
+
   private String get(String uri, String accessTokenKey) throws WxErrorException {
     String componentAccessToken = getComponentAccessToken(false);
     String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + accessTokenKey + "=" + componentAccessToken;
@@ -177,13 +193,58 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public String getPreAuthUrl(String redirectURI) throws WxErrorException {
+    return getPreAuthUrl(redirectURI, null, null);
+  }
 
+  @Override
+  public String getPreAuthUrl(String redirectURI, String authType, String bizAppid) throws WxErrorException {
+    return createPreAuthUrl(redirectURI, authType, bizAppid, false);
+  }
+
+  @Override
+  public String getMobilePreAuthUrl(String redirectURI) throws WxErrorException {
+    return getMobilePreAuthUrl(redirectURI, null, null);
+  }
+
+  @Override
+  public String getMobilePreAuthUrl(String redirectURI, String authType, String bizAppid) throws WxErrorException {
+    return createPreAuthUrl(redirectURI, authType, bizAppid, true);
+  }
+
+  /**
+   * 创建预授权链接
+   *
+   * @param redirectURI
+   * @param authType
+   * @param bizAppid
+   * @param isMobile    是否移动端预授权
+   * @return
+   * @throws WxErrorException
+   */
+  private String createPreAuthUrl(String redirectURI, String authType, String bizAppid, boolean isMobile) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
     String responseContent = post(API_CREATE_PREAUTHCODE_URL, jsonObject.toString());
     jsonObject = WxGsonBuilder.create().fromJson(responseContent, JsonObject.class);
-    return String.format(COMPONENT_LOGIN_PAGE_URL, getWxOpenConfigStorage().getComponentAppId(), jsonObject.get("pre_auth_code").getAsString(), URIUtil.encodeURIComponent(redirectURI));
+
+    StringBuilder preAuthUrl = new StringBuilder(String.format((isMobile ? COMPONENT_MOBILE_LOGIN_PAGE_URL : COMPONENT_LOGIN_PAGE_URL),
+      getWxOpenConfigStorage().getComponentAppId(),
+      jsonObject.get("pre_auth_code").getAsString(),
+      URIUtil.encodeURIComponent(redirectURI)));
+    String preAuthUrlStr = preAuthUrl.toString();
+    if (StringUtils.isNotEmpty(authType)) {
+      preAuthUrlStr = preAuthUrlStr.replace("&auth_type=xxx", "&auth_type=" + authType);
+    } else {
+      preAuthUrlStr = preAuthUrlStr.replace("&auth_type=xxx", "");
+    }
+    if (StringUtils.isNotEmpty(bizAppid)) {
+      preAuthUrlStr = preAuthUrlStr.replace("&biz_appid=xxx", "&biz_appid=" + bizAppid);
+    } else {
+      preAuthUrlStr = preAuthUrlStr.replace("&biz_appid=xxx", "");
+    }
+    return preAuthUrlStr;
   }
+
 
   @Override
   public String route(final WxOpenXmlMessage wxMessage) throws WxErrorException {
@@ -194,9 +255,17 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       getWxOpenConfigStorage().setComponentVerifyTicket(wxMessage.getComponentVerifyTicket());
       return "success";
     }
-    //新增、跟新授权
+    //新增、更新授权
     if (StringUtils.equalsAnyIgnoreCase(wxMessage.getInfoType(), "authorized", "updateauthorized")) {
       WxOpenQueryAuthResult queryAuth = wxOpenService.getWxOpenComponentService().getQueryAuth(wxMessage.getAuthorizationCode());
+      if (queryAuth == null || queryAuth.getAuthorizationInfo() == null || queryAuth.getAuthorizationInfo().getAuthorizerAppid() == null) {
+        throw new NullPointerException("getQueryAuth");
+      }
+      return "success";
+    }
+    //快速创建小程序
+    if (StringUtils.equalsIgnoreCase(wxMessage.getInfoType(), "notify_third_fasteregister") && wxMessage.getStatus () == 0) {
+      WxOpenQueryAuthResult queryAuth = wxOpenService.getWxOpenComponentService().getQueryAuth(wxMessage.getAuthCode ());
       if (queryAuth == null || queryAuth.getAuthorizationInfo() == null || queryAuth.getAuthorizationInfo().getAuthorizerAppid() == null) {
         throw new NullPointerException("getQueryAuth");
       }
@@ -343,5 +412,38 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     JsonObject param = new JsonObject();
     param.addProperty("template_id", templateId);
     post(DELETE_TEMPLATE_URL, param.toString(), "access_token");
+  }
+
+  @Override
+  public WxOpenCreateResult createOpenAccount(String appId) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("appid", appId);
+
+    String json = post(CREATE_OPEN_URL, param.toString(), "access_token");
+
+    return WxOpenCreateResult.fromJson(json);
+  }
+
+  @Override
+  public WxOpenResult fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException{
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("name",name);
+    jsonObject.addProperty("code", code);
+    jsonObject.addProperty("code_type", codeType);
+    jsonObject.addProperty("legal_persona_wechat", legalPersonaWechat);
+    jsonObject.addProperty("legal_persona_name", legalPersonaName);
+    jsonObject.addProperty("component_phone", componentPhone);
+    String response = post(FAST_REGISTER_WEAPP_URL, jsonObject.toString (), "component_access_token");
+    return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult fastRegisterWeappSearch(String name, String legalPersonaWechat, String legalPersonaName) throws WxErrorException{
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("name",name);
+    jsonObject.addProperty("legal_persona_wechat", legalPersonaWechat);
+    jsonObject.addProperty("legal_persona_name", legalPersonaName);
+    String response = post(FAST_REGISTER_WEAPP_SEARCH_URL, jsonObject.toString (), "component_access_token");
+    return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
   }
 }

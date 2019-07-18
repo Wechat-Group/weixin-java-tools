@@ -16,4 +16,9 @@ public class WxPayDefaultRequest extends BaseWxPayRequest {
   protected void checkConstraints() {
     //do nothing
   }
+
+  @Override
+  protected boolean ignoreAppid() {
+    return true;
+  }
 }

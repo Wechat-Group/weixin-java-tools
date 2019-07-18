@@ -16,10 +16,16 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class WxScanPayNotifyResultTest {
 
+  /**
+   * Test to map.
+   */
   @Test
   public void testToMap() {
   }
 
+  /**
+   * Test from xml.
+   */
   @Test
   public void testFromXML() {
     String xmlString = "<xml>\n" +

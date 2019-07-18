@@ -1,17 +1,20 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.testng.annotations.*;
+
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
+import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
+import cn.binarywang.wx.miniapp.bean.WxMaUniformMessage;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.test.TestConfig;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
-import org.testng.annotations.*;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * 测试消息相关接口
@@ -45,15 +48,33 @@ public class WxMaMsgServiceImplTest {
       .formId("FORMID")
       .page("index")
       .data(Lists.newArrayList(
-        new WxMaTemplateMessage.Data("keyword1", "339208499", "#173177"),
-        new WxMaTemplateMessage.Data("keyword2", dateFormat.format(new Date()), "#173177"),
-        new WxMaTemplateMessage.Data("keyword3", "粤海喜来登酒店", "#173177"),
-        new WxMaTemplateMessage.Data("keyword4", "广州市天河区天河路208号", "#173177")))
+        new WxMaTemplateData("keyword1", "339208499"),
+        new WxMaTemplateData("keyword2", dateFormat.format(new Date())),
+        new WxMaTemplateData("keyword3", "粤海喜来登酒店"),
+        new WxMaTemplateData("keyword4", "广州市天河区天河路208号")))
       .templateId(config.getTemplateId())
       .emphasisKeyword("keyword1.DATA")
       .build();
-    //templateMessage.addData( new WxMaTemplateMessage.Data("keyword1", "339208499", "#173177"));
+    //templateMessage.addData( new WxMaTemplateData("keyword1", "339208499", "#173177"));
     this.wxService.getMsgService().sendTemplateMsg(templateMessage);
   }
 
+  @Test
+  public void testSendUniformMsg() throws WxErrorException {
+    TestConfig config = (TestConfig) this.wxService.getWxMaConfig();
+    WxMaUniformMessage message =  WxMaUniformMessage.builder()
+      .isMpTemplateMsg(false)
+      .toUser(config.getOpenid())
+      .page("page/page/index")
+      .templateId("TEMPLATE_ID")
+      .formId("FORMID")
+      .emphasisKeyword("keyword1.DATA")
+      .build();
+    message.addData(new WxMaTemplateData("keyword1", "339208499"))
+      .addData(new WxMaTemplateData("keyword2", "2015年01月05日 12:30"))
+      .addData(new WxMaTemplateData("keyword3", "腾讯微信总部"))
+      .addData(new WxMaTemplateData("keyword4", "广州市海珠区新港中路397号"));
+
+    this.wxService.getMsgService().sendUniformMsg(message);
+  }
 }

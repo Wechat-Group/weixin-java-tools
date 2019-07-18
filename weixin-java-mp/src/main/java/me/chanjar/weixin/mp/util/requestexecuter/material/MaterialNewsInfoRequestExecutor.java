@@ -1,7 +1,11 @@
 package me.chanjar.weixin.mp.util.requestexecuter.material;
 
+import java.io.IOException;
+
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
 
 public abstract class MaterialNewsInfoRequestExecutor<H, P> implements RequestExecutor<WxMpMaterialNews, String> {
@@ -9,6 +13,11 @@ public abstract class MaterialNewsInfoRequestExecutor<H, P> implements RequestEx
 
   public MaterialNewsInfoRequestExecutor(RequestHttp requestHttp) {
     this.requestHttp = requestHttp;
+  }
+
+  @Override
+  public void execute(String uri, String data, ResponseHandler<WxMpMaterialNews> handler) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data));
   }
 
   public static RequestExecutor<WxMpMaterialNews, String> create(RequestHttp requestHttp) {

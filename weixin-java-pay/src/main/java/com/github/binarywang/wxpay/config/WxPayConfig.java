@@ -88,6 +88,13 @@ public class WxPayConfig {
    * 默认不使用
    */
   private boolean useSandboxEnv = false;
+
+  /**
+   * 是否将接口请求日志信息保存到threadLocal中.
+   * 默认不保存
+   */
+  private boolean ifSaveApiData = false;
+
   private String httpProxyHost;
   private Integer httpProxyPort;
   private String httpProxyUsername;
@@ -95,6 +102,9 @@ public class WxPayConfig {
 
   /**
    * 初始化ssl.
+   *
+   * @return the ssl context
+   * @throws WxPayException the wx pay exception
    */
   public SSLContext initSSLContext() throws WxPayException {
     if (StringUtils.isBlank(this.getMchId())) {

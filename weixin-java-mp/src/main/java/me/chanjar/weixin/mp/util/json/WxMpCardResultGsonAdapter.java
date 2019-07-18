@@ -1,12 +1,16 @@
 package me.chanjar.weixin.mp.util.json;
 
-import com.google.gson.*;
+import java.lang.reflect.Type;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.util.json.GsonHelper;
-import me.chanjar.weixin.mp.bean.WxMpCard;
-import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
-
-import java.lang.reflect.Type;
+import me.chanjar.weixin.mp.bean.card.WxMpCard;
+import me.chanjar.weixin.mp.bean.card.WxMpCardResult;
 
 /**
  * Created by YuJian on 15/11/11.
@@ -18,6 +22,7 @@ public class WxMpCardResultGsonAdapter implements JsonDeserializer<WxMpCardResul
   @Override
   public WxMpCardResult deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
     WxMpCardResult cardResult = new WxMpCardResult();
+
     JsonObject jsonObject = jsonElement.getAsJsonObject();
 
     cardResult.setOpenId(GsonHelper.getString(jsonObject, "openid"));
@@ -25,8 +30,11 @@ public class WxMpCardResultGsonAdapter implements JsonDeserializer<WxMpCardResul
     cardResult.setErrorMsg(GsonHelper.getString(jsonObject, "errmsg"));
     cardResult.setCanConsume(GsonHelper.getBoolean(jsonObject, "can_consume"));
     cardResult.setUserCardStatus(GsonHelper.getString(jsonObject, "user_card_status"));
+    cardResult.setOutStr(GsonHelper.getString(jsonObject, "outer_str"));
+    cardResult.setBackgroundPicUrl(GsonHelper.getString(jsonObject, "background_pic_url"));
+    cardResult.setUnionid(GsonHelper.getString(jsonObject, "unionid"));
 
-    WxMpCard card = WxMpGsonBuilder.INSTANCE.create().fromJson(jsonObject.get("card"),
+    WxMpCard card = WxMpGsonBuilder.create().fromJson(jsonObject.get("card"),
       new TypeToken<WxMpCard>() {
       }.getType());
 

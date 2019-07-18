@@ -33,7 +33,7 @@ public class WxMpSubscribeMessageTest {
       .toUser("OPENID")
       .templateId("TEMPLATE_ID")
       .url("URL")
-      .miniProgram(new WxMpSubscribeMessage.MiniProgram("xiaochengxuappid12345", "index?foo=bar"))
+      .miniProgram(new WxMpSubscribeMessage.MiniProgram("xiaochengxuappid12345", "index?foo=bar",false))
       .scene("SCENE")
       .title("TITLE")
       .contentValue("VALUE")

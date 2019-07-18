@@ -1,13 +1,14 @@
 package me.chanjar.weixin.mp.api;
 
-import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-
 import java.io.File;
 import java.util.concurrent.locks.Lock;
 
+import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
+import me.chanjar.weixin.mp.enums.TicketType;
+
 /**
- * 微信客户端配置存储
+ * 微信客户端配置存储.
  *
  * @author chanjarster
  */
@@ -20,62 +21,45 @@ public interface WxMpConfigStorage {
   boolean isAccessTokenExpired();
 
   /**
-   * 强制将access token过期掉
+   * 强制将access token过期掉.
    */
   void expireAccessToken();
 
   /**
-   * 应该是线程安全的
+   * 应该是线程安全的.
    *
    * @param accessToken 要更新的WxAccessToken对象
    */
   void updateAccessToken(WxAccessToken accessToken);
 
   /**
-   * 应该是线程安全的
+   * 应该是线程安全的.
    *
    * @param accessToken      新的accessToken值
    * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateAccessToken(String accessToken, int expiresInSeconds);
 
-  String getJsapiTicket();
+  String getTicket(TicketType type);
 
-  Lock getJsapiTicketLock();
+  Lock getTicketLock(TicketType type);
 
-  boolean isJsapiTicketExpired();
+  boolean isTicketExpired(TicketType type);
 
   /**
-   * 强制将jsapi ticket过期掉
+   * 强制将ticket过期掉.
    */
-  void expireJsapiTicket();
+  void expireTicket(TicketType type);
 
   /**
+   * 更新ticket.
    * 应该是线程安全的
    *
-   * @param jsapiTicket      新的jsapi ticket值
+   * @param type             ticket类型
+   * @param ticket           新的ticket值
    * @param expiresInSeconds 过期时间，以秒为单位
    */
-  void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
-
-  String getCardApiTicket();
-
-  Lock getCardApiTicketLock();
-
-  boolean isCardApiTicketExpired();
-
-  /**
-   * 强制将卡券api ticket过期掉
-   */
-  void expireCardApiTicket();
-
-  /**
-   * 应该是线程安全的
-   *
-   * @param cardApiTicket    新的cardApi ticket值
-   * @param expiresInSeconds 过期时间，以秒为单位
-   */
-  void updateCardApiTicket(String cardApiTicket, int expiresInSeconds);
+  void updateTicket(TicketType type, String ticket, int expiresInSeconds);
 
   String getAppId();
 
@@ -102,14 +86,14 @@ public interface WxMpConfigStorage {
   File getTmpDirFile();
 
   /**
-   * http client builder
+   * http client builder.
    *
    * @return ApacheHttpClientBuilder
    */
   ApacheHttpClientBuilder getApacheHttpClientBuilder();
 
   /**
-   * 是否自动刷新token
+   * 是否自动刷新token.
    */
   boolean autoRefreshToken();
 

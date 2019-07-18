@@ -13,7 +13,7 @@ public class WxMpShakeAroundPageAddResult implements Serializable {
   private String errorMsg;
   private Integer pageId;
   public static WxMpShakeAroundPageAddResult fromJson(String json) {
-    JsonObject jsonObject = WxMpGsonBuilder.INSTANCE.create().fromJson(json, JsonObject.class);
+    JsonObject jsonObject = WxMpGsonBuilder.create().fromJson(json, JsonObject.class);
     WxMpShakeAroundPageAddResult result = new WxMpShakeAroundPageAddResult();
     result.setErrorCode(GsonHelper.getInteger(jsonObject, "errcode"));
     result.setErrorMsg(GsonHelper.getString(jsonObject, "errmsg"));

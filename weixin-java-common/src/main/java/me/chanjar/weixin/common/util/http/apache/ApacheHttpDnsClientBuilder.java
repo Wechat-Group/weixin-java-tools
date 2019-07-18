@@ -1,6 +1,11 @@
 package me.chanjar.weixin.common.util.http.apache;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.annotation.NotThreadSafe;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -23,10 +28,6 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * httpclient 连接管理器 自带DNS解析.
@@ -236,9 +237,10 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
     if (StringUtils.isNotBlank(this.httpProxyHost) && StringUtils.isNotBlank(this.httpProxyUsername)) {
       // 使用代理服务器 需要用户认证的代理服务器
       CredentialsProvider provider = new BasicCredentialsProvider();
-      provider.setCredentials(new AuthScope(this.httpProxyHost, this.httpProxyPort)
-        , new UsernamePasswordCredentials(this.httpProxyUsername, this.httpProxyPassword));
+      provider.setCredentials(new AuthScope(this.httpProxyHost, this.httpProxyPort),
+        new UsernamePasswordCredentials(this.httpProxyUsername, this.httpProxyPassword));
       this.httpClientBuilder.setDefaultCredentialsProvider(provider);
+      this.httpClientBuilder.setProxy(new HttpHost(this.httpProxyHost, this.httpProxyPort));
     }
 
     if (StringUtils.isNotBlank(this.userAgent)) {
@@ -290,6 +292,7 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
           }
         }
       } catch (InterruptedException ignore) {
+        Thread.currentThread().interrupt();
       }
     }
 

@@ -48,11 +48,22 @@ import static com.github.binarywang.wxpay.constant.WxPayConstants.TarType;
  */
 public abstract class BaseWxPayServiceImpl implements WxPayService {
   private static final String PAY_BASE_URL = "https://api.mch.weixin.qq.com";
-  protected final Logger log = LoggerFactory.getLogger(this.getClass());
-  protected static ThreadLocal<WxPayApiData> wxApiData = new ThreadLocal<>();
+  private static final String TOTAL_FUND_COUNT = "资金流水总笔数";
+
+  /**
+   * The Log.
+   */
+  final Logger log = LoggerFactory.getLogger(this.getClass());
+  /**
+   * The constant wxApiData.
+   */
+  static ThreadLocal<WxPayApiData> wxApiData = new ThreadLocal<>();
 
   private EntPayService entPayService = new EntPayServiceImpl(this);
 
+  /**
+   * The Config.
+   */
   protected WxPayConfig config;
 
   @Override
@@ -89,9 +100,12 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     request.checkAndSign(this.getConfig());
 
     String url = this.getPayBaseUrl() + "/secapi/pay/refund";
+    if (this.getConfig().isUseSandboxEnv()) {
+      url = PAY_BASE_URL + "/sandboxnew/pay/refund";
+    }
+
     String responseContent = this.post(url, request.toXML(), true);
-    WxPayRefundResult result = BaseWxPayResult.fromXML(responseContent, WxPayRefundResult.class);
-    result.composeRefundCoupons();
+    WxPayRefundResult result = WxPayRefundResult.fromXML(responseContent);
     result.checkResult(this, request.getSignType(), true);
     return result;
   }
@@ -179,14 +193,20 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     }
 
     String responseContent = this.post(url, request.toXML(), true);
-    //无需校验，因为没有返回签名信息
-    return BaseWxPayResult.fromXML(responseContent, WxPaySendRedpackResult.class);
+    final WxPaySendRedpackResult result = BaseWxPayResult.fromXML(responseContent, WxPaySendRedpackResult.class);
+    result.checkResult(this, request.getSignType(), true);
+    return result;
   }
 
   @Override
   public WxPayRedpackQueryResult queryRedpack(String mchBillNo) throws WxPayException {
     WxPayRedpackQueryRequest request = new WxPayRedpackQueryRequest();
     request.setMchBillNo(mchBillNo);
+    return this.queryRedpack(request);
+  }
+
+  @Override
+  public WxPayRedpackQueryResult queryRedpack(WxPayRedpackQueryRequest request) throws WxPayException {
     request.setBillType(BillType.MCHT);
     request.checkAndSign(this.getConfig());
 
@@ -275,11 +295,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
         Map<String, String> configMap = new HashMap<>(8);
         // 此map用于参与调起sdk支付的二次签名,格式全小写，timestamp只能是10位,格式固定，切勿修改
-        String partnerId;
-        if (StringUtils.isEmpty(request.getMchId())) {
-          partnerId = this.getConfig().getMchId();
-        } else {
-          partnerId = request.getMchId();
+        String partnerId = unifiedOrderResult.getMchId();
+        if (StringUtils.isNotEmpty(unifiedOrderResult.getSubMchId())) {
+          partnerId = unifiedOrderResult.getSubMchId();
         }
 
         configMap.put("prepayid", prepayId);
@@ -291,7 +309,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
         configMap.put("appid", appId);
 
         final WxPayAppOrderResult result = WxPayAppOrderResult.builder()
-          .sign(SignUtils.createSign(configMap, null, this.getConfig().getMchKey(), false))
+          .sign(SignUtils.createSign(configMap, request.getSignType(), this.getConfig().getMchKey(), null))
           .prepayId(prepayId)
           .partnerId(partnerId)
           .appId(appId)
@@ -317,7 +335,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
           .signType(signType)
           .build();
 
-        payResult.setPaySign(SignUtils.createSign(payResult, signType, this.getConfig().getMchKey(), false));
+        payResult.setPaySign(SignUtils.createSign(payResult, signType, this.getConfig().getMchKey(), null));
         return (T) payResult;
       }
 
@@ -368,7 +386,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       configMap.put("noncestr", nonceStr);
       configMap.put("appid", appId);
       // 此map用于客户端与微信服务器交互
-      payInfo.put("sign", SignUtils.createSign(configMap, null, this.getConfig().getMchKey(), false));
+      payInfo.put("sign", SignUtils.createSign(configMap, request.getSignType(), this.getConfig().getMchKey(), null));
       payInfo.put("prepayId", prepayId);
       payInfo.put("partnerId", partnerId);
       payInfo.put("appId", appId);
@@ -381,8 +399,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       payInfo.put("timeStamp", timestamp);
       payInfo.put("nonceStr", nonceStr);
       payInfo.put("package", "prepay_id=" + prepayId);
-      payInfo.put("signType", SignType.MD5);
-      payInfo.put("paySign", SignUtils.createSign(payInfo, null, this.getConfig().getMchKey(), false));
+      payInfo.put("signType", request.getSignType());
+      payInfo.put("paySign", SignUtils.createSign(payInfo, request.getSignType(), this.getConfig().getMchKey(), null));
     }
 
     return payInfo;
@@ -406,7 +424,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     params.put("time_stamp", String.valueOf(System.currentTimeMillis() / 1000));
     params.put("nonce_str", String.valueOf(System.currentTimeMillis()));
 
-    String sign = SignUtils.createSign(params, null, this.getConfig().getMchKey(), false);
+    String sign = SignUtils.createSign(params, SignType.MD5, this.getConfig().getMchKey(), null);
     params.put("sign", sign);
 
     for (String key : params.keySet()) {
@@ -442,22 +460,40 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
-  public WxPayBillResult downloadBill(String billDate, String billType, String tarType, String deviceInfo) throws WxPayException {
-    if (!BillType.ALL.equals(billType)) {
-      throw new WxPayException("目前仅支持ALL类型的对账单下载");
-    }
+  public String downloadRawBill(String billDate, String billType, String tarType, String deviceInfo)
+    throws WxPayException {
+    return this.downloadRawBill(this.buildDownloadBillRequest(billDate, billType, tarType, deviceInfo));
+  }
 
+  @Override
+  public WxPayBillResult downloadBill(String billDate, String billType, String tarType, String deviceInfo)
+    throws WxPayException {
+    return this.downloadBill(this.buildDownloadBillRequest(billDate, billType, tarType, deviceInfo));
+  }
+
+  private WxPayDownloadBillRequest buildDownloadBillRequest(String billDate, String billType, String tarType,
+                                                            String deviceInfo) {
     WxPayDownloadBillRequest request = new WxPayDownloadBillRequest();
     request.setBillType(billType);
     request.setBillDate(billDate);
     request.setTarType(tarType);
     request.setDeviceInfo(deviceInfo);
-
-    return this.downloadBill(request);
+    return request;
   }
 
   @Override
   public WxPayBillResult downloadBill(WxPayDownloadBillRequest request) throws WxPayException {
+    String responseContent = this.downloadRawBill(request);
+
+    if (StringUtils.isEmpty(responseContent)) {
+      return null;
+    }
+
+    return this.handleBill(request.getBillType(), responseContent);
+  }
+
+  @Override
+  public String downloadRawBill(WxPayDownloadBillRequest request) throws WxPayException {
     request.checkAndSign(this.getConfig());
 
     String url = this.getPayBaseUrl() + "/pay/downloadbill";
@@ -471,19 +507,14 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
         throw WxPayException.from(BaseWxPayResult.fromXML(responseContent, WxPayCommonResult.class));
       }
     }
-
-    return this.handleBill(request.getBillType(), responseContent);
+    return responseContent;
   }
 
   private WxPayBillResult handleBill(String billType, String responseContent) {
-    if (!BillType.ALL.equals(billType)) {
-      return null;
-    }
-
-    return this.handleAllBill(responseContent);
+    return WxPayBillResult.fromRawBillResultString(responseContent, billType);
   }
 
-  private String handleGzipBill(String url, String requestStr) throws WxPayException {
+  private String handleGzipBill(String url, String requestStr) {
     try {
       byte[] responseBytes = this.postForBytes(url, requestStr, false);
       Path tempDirectory = Files.createTempDirectory("bill");
@@ -507,23 +538,79 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     return null;
   }
 
-  private WxPayBillResult handleAllBill(String responseContent) {
-    WxPayBillResult wxPayBillResult = new WxPayBillResult();
+  @Override
+  public WxPayFundFlowResult downloadFundFlow(String billDate, String accountType, String tarType) throws WxPayException {
+
+    WxPayDownloadFundFlowRequest request = new WxPayDownloadFundFlowRequest();
+    request.setBillDate(billDate);
+    request.setAccountType(accountType);
+    request.setTarType(tarType);
+
+    return this.downloadFundFlow(request);
+  }
+
+  @Override
+  public WxPayFundFlowResult downloadFundFlow(WxPayDownloadFundFlowRequest request) throws WxPayException {
+    request.checkAndSign(this.getConfig());
+
+    String url = this.getPayBaseUrl() + "/pay/downloadfundflow";
+
+    String responseContent;
+    if (TarType.GZIP.equals(request.getTarType())) {
+      responseContent = this.handleGzipFundFlow(url, request.toXML());
+    } else {
+      responseContent = this.post(url, request.toXML(), true);
+      if (responseContent.startsWith("<")) {
+        throw WxPayException.from(BaseWxPayResult.fromXML(responseContent, WxPayCommonResult.class));
+      }
+    }
+
+    return this.handleFundFlow(responseContent);
+  }
+
+  private String handleGzipFundFlow(String url, String requestStr) throws WxPayException {
+    try {
+      byte[] responseBytes = this.postForBytes(url, requestStr, true);
+      Path tempDirectory = Files.createTempDirectory("fundFlow");
+      Path path = Paths.get(tempDirectory.toString(), System.currentTimeMillis() + ".gzip");
+      Files.write(path, responseBytes);
+
+      try {
+        List<String> allLines = Files.readAllLines(ZipUtil.ungzip(path.toFile()).toPath(), StandardCharsets.UTF_8);
+        return Joiner.on("\n").join(allLines);
+      } catch (ZipException e) {
+        if (e.getMessage().contains("Not in GZIP format")) {
+          throw WxPayException.from(BaseWxPayResult.fromXML(new String(responseBytes, StandardCharsets.UTF_8),
+            WxPayCommonResult.class));
+        } else {
+          this.log.error("解压zip文件出错", e);
+          throw new WxPayException("解压zip文件出错");
+        }
+      }
+    } catch (WxPayException wxPayException) {
+      throw wxPayException;
+    } catch (Exception e) {
+      this.log.error("解析对账单文件时出错", e);
+      throw new WxPayException("解压zip文件出错");
+    }
+  }
+
+  private WxPayFundFlowResult handleFundFlow(String responseContent) {
+    WxPayFundFlowResult wxPayFundFlowResult = new WxPayFundFlowResult();
 
     String listStr = "";
     String objStr = "";
-    if (responseContent.contains("总交易单数")) {
-      listStr = responseContent.substring(0, responseContent.indexOf("总交易单数"));
-      objStr = responseContent.substring(responseContent.indexOf("总交易单数"));
-    }
 
+    if (StringUtils.isNotBlank(responseContent) && responseContent.contains(TOTAL_FUND_COUNT)) {
+      listStr = responseContent.substring(0, responseContent.indexOf(TOTAL_FUND_COUNT));
+      objStr = responseContent.substring(responseContent.indexOf(TOTAL_FUND_COUNT));
+    }
     /*
-     * 交易时间:2017-04-06 01:00:02 公众账号ID: 商户号: 子商户号:0 设备号:WEB 微信订单号: 商户订单号:2017040519091071873216 用户标识: 交易类型:NATIVE
-     * 交易状态:REFUND 付款银行:CFT 货币种类:CNY 总金额:0.00 企业红包金额:0.00 微信退款单号: 商户退款单号:20170406010000933 退款金额:0.01 企业红包退款金额:0.00
-     * 退款类型:ORIGINAL 退款状态:SUCCESS 商品名称: 商户数据包: 手续费:0.00000 费率 :0.60%
+     * 记账时间:2018-02-01 04:21:23 微信支付业务单号:50000305742018020103387128253 资金流水单号:1900009231201802015884652186 业务名称:退款
+     * 业务类型:退款 收支类型:支出 收支金额（元）:0.02 账户结余（元）:0.17 资金变更提交申请人:system 备注:缺货 业务凭证号:REF4200000068201801293084726067
      * 参考以上格式进行取值
      */
-    List<WxPayBillBaseResult> wxPayBillBaseResultLst = new LinkedList<>();
+    List<WxPayFundFlowBaseResult> wxPayFundFlowBaseResultList = new LinkedList<>();
     // 去空格
     String newStr = listStr.replaceAll(",", " ");
     // 数据分组
@@ -535,50 +622,39 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     // 纪录数组下标
     int k = 1;
     for (int i = 0; i < j; i++) {
-      WxPayBillBaseResult wxPayBillBaseResult = new WxPayBillBaseResult();
+      WxPayFundFlowBaseResult wxPayFundFlowBaseResult = new WxPayFundFlowBaseResult();
 
-      wxPayBillBaseResult.setTradeTime(tempStr[k].trim());
-      wxPayBillBaseResult.setAppId(tempStr[k + 1].trim());
-      wxPayBillBaseResult.setMchId(tempStr[k + 2].trim());
-      wxPayBillBaseResult.setSubMchId(tempStr[k + 3].trim());
-      wxPayBillBaseResult.setDeviceInfo(tempStr[k + 4].trim());
-      wxPayBillBaseResult.setTransactionId(tempStr[k + 5].trim());
-      wxPayBillBaseResult.setOutTradeNo(tempStr[k + 6].trim());
-      wxPayBillBaseResult.setOpenId(tempStr[k + 7].trim());
-      wxPayBillBaseResult.setTradeType(tempStr[k + 8].trim());
-      wxPayBillBaseResult.setTradeState(tempStr[k + 9].trim());
-      wxPayBillBaseResult.setBankType(tempStr[k + 10].trim());
-      wxPayBillBaseResult.setFeeType(tempStr[k + 11].trim());
-      wxPayBillBaseResult.setTotalFee(tempStr[k + 12].trim());
-      wxPayBillBaseResult.setCouponFee(tempStr[k + 13].trim());
-      wxPayBillBaseResult.setRefundId(tempStr[k + 14].trim());
-      wxPayBillBaseResult.setOutRefundNo(tempStr[k + 15].trim());
-      wxPayBillBaseResult.setSettlementRefundFee(tempStr[k + 16].trim());
-      wxPayBillBaseResult.setCouponRefundFee(tempStr[k + 17].trim());
-      wxPayBillBaseResult.setRefundChannel(tempStr[k + 18].trim());
-      wxPayBillBaseResult.setRefundState(tempStr[k + 19].trim());
-      wxPayBillBaseResult.setBody(tempStr[k + 20].trim());
-      wxPayBillBaseResult.setAttach(tempStr[k + 21].trim());
-      wxPayBillBaseResult.setPoundage(tempStr[k + 22].trim());
-      wxPayBillBaseResult.setPoundageRate(tempStr[k + 23].trim());
-      wxPayBillBaseResultLst.add(wxPayBillBaseResult);
+      wxPayFundFlowBaseResult.setBillingTime(tempStr[k].trim());
+      wxPayFundFlowBaseResult.setBizTransactionId(tempStr[k + 1].trim());
+      wxPayFundFlowBaseResult.setFundFlowId(tempStr[k + 2].trim());
+      wxPayFundFlowBaseResult.setBizName(tempStr[k + 3].trim());
+      wxPayFundFlowBaseResult.setBizType(tempStr[k + 4].trim());
+      wxPayFundFlowBaseResult.setFinancialType(tempStr[k + 5].trim());
+      wxPayFundFlowBaseResult.setFinancialFee(tempStr[k + 6].trim());
+      wxPayFundFlowBaseResult.setAccountBalance(tempStr[k + 7].trim());
+      wxPayFundFlowBaseResult.setFundApplicant(tempStr[k + 8].trim());
+      wxPayFundFlowBaseResult.setMemo(tempStr[k + 9].trim());
+      wxPayFundFlowBaseResult.setBizVoucherId(tempStr[k + 10].trim());
+
+      wxPayFundFlowBaseResultList.add(wxPayFundFlowBaseResult);
       k += t.length;
     }
-    wxPayBillResult.setWxPayBillBaseResultLst(wxPayBillBaseResultLst);
+    wxPayFundFlowResult.setWxPayFundFlowBaseResultList(wxPayFundFlowBaseResultList);
 
     /*
-     * 总交易单数,总交易额,总退款金额,总代金券或立减优惠退款金额,手续费总金额 `2,`0.02,`0.0,`0.0,`0
+     * 资金流水总笔数,收入笔数,收入金额,支出笔数,支出金额 `20.0,`17.0,`0.35,`3.0,`0.18
      * 参考以上格式进行取值
      */
     String totalStr = objStr.replaceAll(",", " ");
     String[] totalTempStr = totalStr.split("`");
-    wxPayBillResult.setTotalRecord(totalTempStr[1]);
-    wxPayBillResult.setTotalFee(totalTempStr[2]);
-    wxPayBillResult.setTotalRefundFee(totalTempStr[3]);
-    wxPayBillResult.setTotalCouponFee(totalTempStr[4]);
-    wxPayBillResult.setTotalPoundageFee(totalTempStr[5]);
+    wxPayFundFlowResult.setTotalRecord(totalTempStr[1]);
+    wxPayFundFlowResult.setIncomeRecord(totalTempStr[2]);
+    wxPayFundFlowResult.setIncomeAmount(totalTempStr[3]);
+    wxPayFundFlowResult.setExpenditureRecord(totalTempStr[4]);
+    wxPayFundFlowResult.setExpenditureAmount(totalTempStr[5]);
 
-    return wxPayBillResult;
+    return wxPayFundFlowResult;
+
   }
 
   @Override
@@ -698,12 +774,16 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     request.setEndTime(QUERY_COMMENT_DATE_FORMAT.format(endDate));
     request.setOffset(offset);
     request.setLimit(limit);
+
+    return this.queryComment(request);
+  }
+
+  @Override
+  public String queryComment(WxPayQueryCommentRequest request) throws WxPayException {
+    request.checkAndSign(this.getConfig());
     request.setSignType(SignType.HMAC_SHA256);
 
-    request.checkAndSign(this.getConfig());
-
     String url = this.getPayBaseUrl() + "/billcommentsp/batchquerycomment";
-
     String responseContent = this.post(url, request.toXML(), true);
     if (responseContent.startsWith("<")) {
       throw WxPayException.from(BaseWxPayResult.fromXML(responseContent, WxPayCommonResult.class));
@@ -711,4 +791,5 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
     return responseContent;
   }
+
 }

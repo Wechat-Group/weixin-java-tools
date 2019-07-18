@@ -1,9 +1,13 @@
 package me.chanjar.weixin.common.util.json;
 
-import com.google.gson.*;
-import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-
 import java.lang.reflect.Type;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 
 /**
  * @author Daniel Qian
@@ -12,22 +16,25 @@ public class WxMediaUploadResultAdapter implements JsonDeserializer<WxMediaUploa
 
   @Override
   public WxMediaUploadResult deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-    WxMediaUploadResult uploadResult = new WxMediaUploadResult();
-    JsonObject uploadResultJsonObject = json.getAsJsonObject();
+    WxMediaUploadResult result = new WxMediaUploadResult();
+    JsonObject jsonObject = json.getAsJsonObject();
+    if (jsonObject.get("url") != null && !jsonObject.get("url").isJsonNull()) {
+      result.setUrl(GsonHelper.getAsString(jsonObject.get("url")));
+    }
 
-    if (uploadResultJsonObject.get("type") != null && !uploadResultJsonObject.get("type").isJsonNull()) {
-      uploadResult.setType(GsonHelper.getAsString(uploadResultJsonObject.get("type")));
+    if (jsonObject.get("type") != null && !jsonObject.get("type").isJsonNull()) {
+      result.setType(GsonHelper.getAsString(jsonObject.get("type")));
     }
-    if (uploadResultJsonObject.get("media_id") != null && !uploadResultJsonObject.get("media_id").isJsonNull()) {
-      uploadResult.setMediaId(GsonHelper.getAsString(uploadResultJsonObject.get("media_id")));
+    if (jsonObject.get("media_id") != null && !jsonObject.get("media_id").isJsonNull()) {
+      result.setMediaId(GsonHelper.getAsString(jsonObject.get("media_id")));
     }
-    if (uploadResultJsonObject.get("thumb_media_id") != null && !uploadResultJsonObject.get("thumb_media_id").isJsonNull()) {
-      uploadResult.setThumbMediaId(GsonHelper.getAsString(uploadResultJsonObject.get("thumb_media_id")));
+    if (jsonObject.get("thumb_media_id") != null && !jsonObject.get("thumb_media_id").isJsonNull()) {
+      result.setThumbMediaId(GsonHelper.getAsString(jsonObject.get("thumb_media_id")));
     }
-    if (uploadResultJsonObject.get("created_at") != null && !uploadResultJsonObject.get("created_at").isJsonNull()) {
-      uploadResult.setCreatedAt(GsonHelper.getAsPrimitiveLong(uploadResultJsonObject.get("created_at")));
+    if (jsonObject.get("created_at") != null && !jsonObject.get("created_at").isJsonNull()) {
+      result.setCreatedAt(GsonHelper.getAsPrimitiveLong(jsonObject.get("created_at")));
     }
-    return uploadResult;
+    return result;
   }
 
 }

@@ -1,9 +1,10 @@
 package cn.binarywang.wx.miniapp.bean;
 
-import com.google.common.collect.Lists;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
-import static org.testng.AssertJUnit.assertEquals;
+import com.google.common.collect.Lists;
+
+import static org.testng.AssertJUnit.*;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -17,10 +18,10 @@ public class WxMaTemplateMessageTest {
       .formId("FORMID")
       .page("index")
       .data(Lists.newArrayList(
-        new WxMaTemplateMessage.Data("keyword1", "339208499", "#173177"),
-        new WxMaTemplateMessage.Data("keyword2", "2015年01月05日12:30", "#173177"),
-        new WxMaTemplateMessage.Data("keyword3", "粤海喜来登酒店", "#173177"),
-        new WxMaTemplateMessage.Data("keyword4", "广州市天河区天河路208号", "#173177")))
+        new WxMaTemplateData("keyword1", "339208499", "#173177"),
+        new WxMaTemplateData("keyword2", "2015年01月05日12:30", "#173177"),
+        new WxMaTemplateData("keyword3", "粤海喜来登酒店", "#173177"),
+        new WxMaTemplateData("keyword4", "广州市天河区天河路208号", "#173177")))
       .templateId("TEMPLATE_ID")
       .emphasisKeyword("keyword1.DATA")
       .build();

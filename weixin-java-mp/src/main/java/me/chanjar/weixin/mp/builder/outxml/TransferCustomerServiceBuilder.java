@@ -1,17 +1,19 @@
 package me.chanjar.weixin.mp.builder.outxml;
 
-import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTransferKefuMessage;
 import org.apache.commons.lang3.StringUtils;
+
+import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTransferKefuMessage;
 
 /**
  * 客服消息builder
  * <pre>
- * 用法: WxMpKefuMessage m = WxMpXmlOutMessage.TRANSFER_CUSTOMER_SERVICE().content(...).toUser(...).build();
+ * 用法: WxMpXmlOutTransferKefuMessage m = WxMpXmlOutMessage.TRANSFER_CUSTOMER_SERVICE().kfAccount("").toUser("").build();
  * </pre>
  *
  * @author chanjarster
  */
-public final class TransferCustomerServiceBuilder extends BaseBuilder<TransferCustomerServiceBuilder, WxMpXmlOutTransferKefuMessage> {
+public final class TransferCustomerServiceBuilder
+  extends BaseBuilder<TransferCustomerServiceBuilder, WxMpXmlOutTransferKefuMessage> {
   private String kfAccount;
 
   public TransferCustomerServiceBuilder kfAccount(String kf) {
@@ -28,6 +30,7 @@ public final class TransferCustomerServiceBuilder extends BaseBuilder<TransferCu
       transInfo.setKfAccount(this.kfAccount);
       m.setTransInfo(transInfo);
     }
+
     return m;
   }
 }

@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class WxPayRefundResultTest {
 
   @Test
-  public void testComposeRefundCoupons() {
+  public void testFromXML() {
     /*
       该xml字符串来自于官方文档示例，稍加改造，加上代金卷
       refund_channel 是个什么鬼，官方文档只字不提
@@ -40,8 +40,7 @@ public class WxPayRefundResultTest {
       "   <refund_fee>2</refund_fee> \n" +
       "</xml>";
 
-    WxPayRefundResult result = WxPayRefundResult.fromXML(xmlString, WxPayRefundResult.class);
-    result.composeRefundCoupons();
+    WxPayRefundResult result = WxPayRefundResult.fromXML(xmlString);
 
     assertThat(result.getRefundCoupons()).isNotEmpty();
     assertThat(result.getRefundCoupons().get(0).getCouponRefundId()).isEqualTo("123");

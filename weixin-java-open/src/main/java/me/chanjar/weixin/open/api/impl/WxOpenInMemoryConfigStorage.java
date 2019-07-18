@@ -1,20 +1,21 @@
 package me.chanjar.weixin.open.api.impl;
 
 
+import java.io.File;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
+import me.chanjar.weixin.mp.enums.TicketType;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
-
-import java.io.File;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
 /**
  * 基于内存的微信配置provider，在实际生产环境中应该将这些配置持久化
@@ -34,11 +35,12 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private int httpProxyPort;
   private String httpProxyUsername;
   private String httpProxyPassword;
+  private ApacheHttpClientBuilder apacheHttpClientBuilder;
 
-  private Map<String, Token> authorizerRefreshTokens = new Hashtable<>();
-  private Map<String, Token> authorizerAccessTokens = new Hashtable<>();
-  private Map<String, Token> jsapiTickets = new Hashtable<>();
-  private Map<String, Token> cardApiTickets = new Hashtable<>();
+  private Map<String, Token> authorizerRefreshTokens = new ConcurrentHashMap<>();
+  private Map<String, Token> authorizerAccessTokens = new ConcurrentHashMap<>();
+  private Map<String, Token> jsapiTickets = new ConcurrentHashMap<>();
+  private Map<String, Token> cardApiTickets = new ConcurrentHashMap<>();
 
   @Override
   public String getComponentAppId() {
@@ -106,8 +108,8 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   }
 
   @Override
-  public void updateComponentAccessTokent(WxOpenComponentAccessToken componentAccessToken) {
-    updateComponentAccessTokent(componentAccessToken.getComponentAccessToken(), componentAccessToken.getExpiresIn());
+  public void updateComponentAccessToken(WxOpenComponentAccessToken componentAccessToken) {
+    updateComponentAccessToken(componentAccessToken.getComponentAccessToken(), componentAccessToken.getExpiresIn());
   }
 
   @Override
@@ -147,6 +149,15 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   }
 
   @Override
+  public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
+    return apacheHttpClientBuilder;
+  }
+
+  public ApacheHttpClientBuilder setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
+    return this.apacheHttpClientBuilder = apacheHttpClientBuilder;
+  }
+
+  @Override
   public WxMpConfigStorage getWxMpConfigStorage(String appId) {
     return new WxOpenInnerConfigStorage(this, appId);
   }
@@ -157,7 +168,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   }
 
   @Override
-  public void updateComponentAccessTokent(String componentAccessToken, int expiresInSeconds) {
+  public void updateComponentAccessToken(String componentAccessToken, int expiresInSeconds) {
     this.componentAccessToken = componentAccessToken;
     this.componentExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
   }
@@ -313,6 +324,90 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     }
 
     @Override
+    public String getTicket(TicketType type) {
+      switch (type) {
+        case JSAPI: {
+          return wxOpenConfigStorage.getJsapiTicket(appId);
+        }
+        case WX_CARD: {
+          return wxOpenConfigStorage.getCardApiTicket(appId);
+        }
+        default: {
+          // do nothing
+        }
+      }
+      return null;
+    }
+
+    @Override
+    public Lock getTicketLock(TicketType type) {
+      switch (type) {
+        case JSAPI: {
+          return this.jsapiTicketLock;
+        }
+        case WX_CARD: {
+          return this.cardApiTicketLock;
+        }
+        default: {
+          // do nothing
+        }
+      }
+      return null;
+    }
+
+    @Override
+    public boolean isTicketExpired(TicketType type) {
+      switch (type) {
+        case JSAPI: {
+          return wxOpenConfigStorage.isJsapiTicketExpired(appId);
+        }
+        case WX_CARD: {
+          return wxOpenConfigStorage.isCardApiTicketExpired(appId);
+        }
+        default: {
+          // do nothing
+        }
+      }
+
+      return false;
+    }
+
+    @Override
+    public void expireTicket(TicketType type) {
+      switch (type) {
+        case JSAPI: {
+          wxOpenConfigStorage.expireJsapiTicket(appId);
+          break;
+        }
+        case WX_CARD: {
+          wxOpenConfigStorage.expireCardApiTicket(appId);
+          break;
+        }
+        default: {
+          // do nothing
+        }
+      }
+    }
+
+    @Override
+    public void updateTicket(TicketType type, String ticket, int expiresInSeconds) {
+      switch (type) {
+        case JSAPI: {
+          wxOpenConfigStorage.updateJsapiTicket(appId, ticket, expiresInSeconds);
+          break;
+        }
+        case WX_CARD: {
+          wxOpenConfigStorage.updateCardApiTicket(appId, ticket, expiresInSeconds);
+          break;
+        }
+        default: {
+          // do nothing
+        }
+      }
+
+    }
+
+    @Override
     public String getAppid() {
       return this.appId;
     }
@@ -347,9 +442,6 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
       wxOpenConfigStorage.expireJsapiTicket(appId);
     }
 
-    /**
-     * 卡券api_ticket
-     */
     @Override
     public String getCardApiTicket() {
       return wxOpenConfigStorage.getCardApiTicket(appId);
@@ -438,7 +530,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxOpenGsonBuilder.create().toJson(this);
     }
 
     @Override
@@ -448,7 +540,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
     @Override
     public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
-      return null;
+      return wxOpenConfigStorage.getApacheHttpClientBuilder();
     }
 
 

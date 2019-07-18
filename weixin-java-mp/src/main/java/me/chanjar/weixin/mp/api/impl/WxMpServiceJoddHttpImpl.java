@@ -48,36 +48,37 @@ public class WxMpServiceJoddHttpImpl extends BaseWxMpServiceImpl<HttpConnectionP
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
+    if (!this.getWxMpConfigStorage().isAccessTokenExpired() && !forceRefresh) {
+      return this.getWxMpConfigStorage().getAccessToken();
+    }
+
     Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+    lock.lock();
     try {
-      lock.lock();
+      String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
+        this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
 
-      if (this.getWxMpConfigStorage().isAccessTokenExpired() || forceRefresh) {
-        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
-          this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
+      HttpRequest request = HttpRequest.get(url);
 
-        HttpRequest request = HttpRequest.get(url);
+      if (this.getRequestHttpProxy() != null) {
+        SocketHttpConnectionProvider provider = new SocketHttpConnectionProvider();
+        provider.useProxy(getRequestHttpProxy());
 
-        if (this.getRequestHttpProxy() != null) {
-          SocketHttpConnectionProvider provider = new SocketHttpConnectionProvider();
-          provider.useProxy(getRequestHttpProxy());
-
-          request.withConnectionProvider(provider);
-        }
-        HttpResponse response = request.send();
-        String resultContent = response.bodyText();
-        WxError error = WxError.fromJson(resultContent, WxType.MP);
-        if (error.getErrorCode() != 0) {
-          throw new WxErrorException(error);
-        }
-        WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-        this.getWxMpConfigStorage().updateAccessToken(accessToken.getAccessToken(),
-          accessToken.getExpiresIn());
+        request.withConnectionProvider(provider);
       }
+      HttpResponse response = request.send();
+      String resultContent = response.bodyText();
+      WxError error = WxError.fromJson(resultContent, WxType.MP);
+      if (error.getErrorCode() != 0) {
+        throw new WxErrorException(error);
+      }
+      WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+      this.getWxMpConfigStorage().updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
+
+      return this.getWxMpConfigStorage().getAccessToken();
     } finally {
       lock.unlock();
     }
-    return this.getWxMpConfigStorage().getAccessToken();
   }
 
 }

@@ -1,16 +1,15 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import com.google.gson.JsonObject;
+import java.io.File;
+
 import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.AiLangType;
 import me.chanjar.weixin.mp.api.WxMpAiOpenService;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.enums.AiLangType;
 import me.chanjar.weixin.mp.util.requestexecuter.voice.VoiceUploadRequestExecutor;
-
-import java.io.File;
 
 /**
  * <pre>
@@ -20,9 +19,7 @@ import java.io.File;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMpAiOpenServiceImpl implements WxMpAiOpenService {
-
   private static final JsonParser JSON_PARSER = new JsonParser();
-  public static final String TRANSLATE_URL = "http://api.weixin.qq.com/cgi-bin/media/voice/translatecontent?lfrom=%s&lto=%s";
   private WxMpService wxMpService;
 
   public WxMpAiOpenServiceImpl(WxMpService wxMpService) {
@@ -48,14 +45,14 @@ public class WxMpAiOpenServiceImpl implements WxMpAiOpenService {
 
   @Override
   public String translate(AiLangType langFrom, AiLangType langTo, String content) throws WxErrorException {
-    final String responseContent = this.wxMpService.post(String.format(TRANSLATE_URL, langFrom.getCode(), langTo.getCode()),
-      content);
-    final JsonObject jsonObject = new JsonParser().parse(responseContent).getAsJsonObject();
-    if (jsonObject.get("errcode") == null || jsonObject.get("errcode").getAsInt() == 0) {
-      return jsonObject.get("to_content").getAsString();
+    String response = this.wxMpService.post(String.format(TRANSLATE_URL, langFrom.getCode(), langTo.getCode()), content);
+
+    WxError error = WxError.fromJson(response, WxType.MP);
+    if (error.getErrorCode() != 0) {
+      throw new WxErrorException(error);
     }
 
-    throw new WxErrorException(WxError.fromJson(responseContent, WxType.MP));
+    return JSON_PARSER.parse(response).getAsJsonObject().get("to_content").getAsString();
   }
 
   @Override
@@ -64,13 +61,13 @@ public class WxMpAiOpenServiceImpl implements WxMpAiOpenService {
       lang = AiLangType.zh_CN;
     }
 
-    final String responseContent = this.wxMpService.get(VOICE_QUERY_RESULT_URL,
+    final String response = this.wxMpService.get(VOICE_QUERY_RESULT_URL,
       String.format("voice_id=%s&lang=%s", voiceId, lang.getCode()));
-    final JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
-    if (jsonObject.get("errcode") == null || jsonObject.get("errcode").getAsInt() == 0) {
-      return jsonObject.get("result").getAsString();
+    WxError error = WxError.fromJson(response, WxType.MP);
+    if (error.getErrorCode() != 0) {
+      throw new WxErrorException(error);
     }
 
-    throw new WxErrorException(WxError.fromJson(responseContent, WxType.MP));
+    return JSON_PARSER.parse(response).getAsJsonObject().get("result").getAsString();
   }
 }
