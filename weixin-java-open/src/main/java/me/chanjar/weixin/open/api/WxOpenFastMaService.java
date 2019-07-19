@@ -52,7 +52,7 @@ public interface WxOpenFastMaService extends WxMaService {
   /**
    * 7 换绑小程序管理员接口
    */
-  String OPEN_COMPONENT_REBIND_ADMIN = "https://api.weixin.qq.com/cgi- bin/account/componentrebindadmin";
+  String OPEN_COMPONENT_REBIND_ADMIN = "https://api.weixin.qq.com/cgi-bin/account/componentrebindadmin";
 
   /**
    * 8.1 获取账号可以设置的所有类目
