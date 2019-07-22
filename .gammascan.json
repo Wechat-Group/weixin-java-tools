@@ -8,8 +8,8 @@
         {
             "dataDir": "",
             "repository": {
-                "uid": "44f0ccb6afd73e1f378d8fbceb6de925",
-                "projectName": "javaTC",
+                "uid": "25688de746c22157fb4ac65a53815e26",
+                "projectName": "teamcity_weixin",
                 "languages": [
                     "JAVA"
                 ],
@@ -26,14 +26,6 @@
             },
             "modules": {
                 "codeissues": [
-                    {
-                        "name": "gamma_java",
-                        "enabled": true,
-                        "config": {
-                            "rules": [],
-                            "options": []
-                        }
-                    },
                     {
                         "name": "pmd",
                         "enabled": true,
@@ -53,6 +45,14 @@
                                     "required": true
                                 }
                             ]
+                        }
+                    },
+                    {
+                        "name": "gamma_java",
+                        "enabled": true,
+                        "config": {
+                            "rules": [],
+                            "options": []
                         }
                     }
                 ],
