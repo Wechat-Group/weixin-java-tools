@@ -39,7 +39,7 @@ public interface WxMaPluginService {
   void unbindPlugin(String pluginAppId) throws WxErrorException;
 
   /**
-   * 快速更新插件版本号
+   * 快速更新插件版本号(第三方平台代小程序管理插件)
    *
    * @param pluginAppId 插件 appid
    * @param userVersion 升级至版本号，要求此插件版本支持快速更新
