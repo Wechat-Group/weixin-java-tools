@@ -53,6 +53,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   private WxMaShareService shareService = new WxMaShareServiceImpl(this);
   private WxMaRunService runService = new WxMaRunServiceImpl(this);
   private WxMaSecCheckService secCheckService = new WxMaSecCheckServiceImpl(this);
+  private WxMaPluginService pluginService = new WxMaPluginServiceImpl(this);
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -124,7 +125,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
           }
           WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
           this.getWxMaConfig().updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
-          
+
           return this.getWxMaConfig().getAccessToken();
         } finally {
           httpGet.releaseConnection();
@@ -358,5 +359,10 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   @Override
   public WxMaSecCheckService getSecCheckService() {
     return this.secCheckService;
+  }
+
+  @Override
+  public WxMaPluginService getPluginService() {
+    return this.pluginService;
   }
 }
