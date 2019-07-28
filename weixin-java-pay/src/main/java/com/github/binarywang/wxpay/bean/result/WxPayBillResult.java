@@ -106,6 +106,7 @@ public class WxPayBillResult implements Serializable {
     int j = tempStr.length / t.length;
     // 纪录数组下标
     int k = 1;
+    // 交易时间,公众账号ID,商户号,特约商户号,设备号,微信订单号,商户订单号,用户标识,交易类型,交易状态,付款银行,货币种类,应结订单金额,代金券金额,微信退款单号,商户退款单号,退款金额,充值券退款金额,退款类型,退款状态,商品名称,商户数据包,手续费,费率,订单金额,申请退款金额,费率备注
     for (int i = 0; i < j; i++) {
       WxPayBillInfo result = new WxPayBillInfo();
       result.setTradeTime(tempStr[k].trim());
@@ -132,6 +133,9 @@ public class WxPayBillResult implements Serializable {
       result.setAttach(tempStr[k + 21].trim());
       result.setPoundage(tempStr[k + 22].trim());
       result.setPoundageRate(tempStr[k + 23].trim());
+      result.setTotalAmount(tempStr[k + 24].trim());
+      result.setAppliedRefundAmount(tempStr[k + 25].trim());
+      result.setFeeRemark(tempStr[k + 26].trim());
       results.add(result);
       k += t.length;
     }
@@ -140,7 +144,7 @@ public class WxPayBillResult implements Serializable {
     billResult.setBillInfoList(results);
 
     /*
-     * 总交易单数,应结订单总金额,退款总金额,充值券退款总金额,手续费总金额,订单总金额,申请退款总金额 `2,`0.02,`0.0,`0.0,`0
+     * 总交易单数,应结订单总金额,退款总金额,充值券退款总金额,手续费总金额,订单总金额,申请退款总金额 `48,`5.76,`1.42,`0.00,`0.01000,`5.76,`1.42
      * 参考以上格式进行取值
      */
     String[] totalTempStr = objStr.replaceAll(",", " ").split("`");
@@ -177,7 +181,7 @@ public class WxPayBillResult implements Serializable {
     int j = tempStr.length / t.length;
     // 纪录数组下标
     int k = 1;
-    // 交易时间,公众账号ID,商户号,子商户号,设备号,微信订单号,商户订单号,用户标识,交易类型,交易状态,付款银行,货币种类,总金额,代金券或立减优惠金额,商品名称,商户数据包,手续费,费率
+    // 交易时间,公众账号ID,商户号,特约商户号,设备号,微信订单号,商户订单号,用户标识,交易类型,交易状态,付款银行,货币种类,应结订单金额,代金券金额,商品名称,商户数据包,手续费,费率,订单金额,费率备注
     for (int i = 0; i < j; i++) {
       WxPayBillInfo result = new WxPayBillInfo();
       result.setTradeTime(tempStr[k].trim());
@@ -198,6 +202,8 @@ public class WxPayBillResult implements Serializable {
       result.setAttach(tempStr[k + 15].trim());
       result.setPoundage(tempStr[k + 16].trim());
       result.setPoundageRate(tempStr[k + 17].trim());
+      result.setTotalAmount(tempStr[k + 18].trim());
+      result.setFeeRemark(tempStr[k + 19].trim());
       results.add(result);
       k += t.length;
     }
@@ -206,7 +212,7 @@ public class WxPayBillResult implements Serializable {
     billResult.setBillInfoList(results);
 
     /*
-     * 总交易单数,应结订单总金额,退款总金额,充值券退款总金额,手续费总金额,订单总金额,申请退款总金额 `2,`0.02,`0.0,`0.0,`0
+     * 总交易单数,应结订单总金额,退款总金额,充值券退款总金额,手续费总金额,订单总金额,申请退款总金额 `31,`3.05,`0.00,`0.00,`0.02000,`3.05,`0.00
      * 参考以上格式进行取值
      */
     String[] totalTempStr = objStr.replaceAll(",", " ").split("`");
