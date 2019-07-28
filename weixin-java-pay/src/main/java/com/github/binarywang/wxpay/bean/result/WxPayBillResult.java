@@ -149,6 +149,9 @@ public class WxPayBillResult implements Serializable {
     billResult.setTotalRefundFee(totalTempStr[3].trim());
     billResult.setTotalCouponFee(totalTempStr[4].trim());
     billResult.setTotalPoundageFee(totalTempStr[5].trim());
+    billResult.setTotalAmount(get(totalTempStr, 6));
+    billResult.setTotalAppliedRefundFee(get(totalTempStr, 7));
+
     return billResult;
   }
 
@@ -212,6 +215,8 @@ public class WxPayBillResult implements Serializable {
     billResult.setTotalRefundFee(totalTempStr[3].trim());
     billResult.setTotalCouponFee(totalTempStr[4].trim());
     billResult.setTotalPoundageFee(totalTempStr[5].trim());
+    billResult.setTotalAmount(get(totalTempStr, 6));
+    billResult.setTotalAppliedRefundFee(get(totalTempStr, 7));
     return billResult;
   }
 
