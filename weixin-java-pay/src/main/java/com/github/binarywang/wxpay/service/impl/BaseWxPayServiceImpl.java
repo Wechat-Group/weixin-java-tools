@@ -779,8 +779,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public String queryComment(WxPayQueryCommentRequest request) throws WxPayException {
-    request.checkAndSign(this.getConfig());
     request.setSignType(SignType.HMAC_SHA256);
+    request.checkAndSign(this.getConfig());
 
     String url = this.getPayBaseUrl() + "/billcommentsp/batchquerycomment";
     String responseContent = this.post(url, request.toXML(), true);
