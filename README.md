@@ -38,7 +38,7 @@
 </table>
 
 ### 重要信息
-1. **2019-5-18 发布 [【3.4.0正式版】](https://github.com/Wechat-Group/WxJava/releases)**！
+1. **2019-8-10 发布 [【3.5.0正式版】](https://github.com/Wechat-Group/WxJava/releases)**！
 1. 新手重要提示：本项目仅是一个SDK开发工具包，未提供Web实现，建议使用 `maven` 或 `gradle` 引用本项目即可使用本SDK提供的各种功能，详情可参考 **[【Demo项目】](demo.md)** 或本项目中的部分单元测试代码；另外微信开发新手请务必阅读[【开发文档 Wiki 首页】](https://github.com/Wechat-Group/WxJava/wiki)的常见问题部分，可以少走很多弯路，节省不少时间。
 1. 入群技术交流：若想获得QQ群/微信群/企业微信/钉钉企业群等信息的，请使用微信扫描上面的微信公众号二维码关注 `WxJava` 后点击相关菜单即可，同时也可以在微信中搜索 `weixin-java-tools` 或 `WxJava` 后选择正确的公众号进行关注，该公众号会及时通知SDK相关更新信息，并不定期分享微信Java开发相关技术知识；
 1. 付费QQ群：（**注意：刚入群会有5分钟禁言，稍等片刻即可正常发言**） [![加入QQ群](https://img.shields.io/badge/QQ群-343954419-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=731dc3e7ea31ebe25376cc1a791445468612c63fd0e9e05399b088ec81fd9e15) 或 [![加入QQ群](https://img.shields.io/badge/QQ群-343954419-blue.svg)](http://jq.qq.com/?_wv=1027&k=40lRskK)，或者请自行搜索群号`343954419`进行添加；当然由于某种原因无法入群的，可关注公众号后获取其他群的加入方式；
@@ -68,19 +68,16 @@
 <dependency>
   <groupId>com.github.binarywang</groupId>
   <artifactId>（不同模块参考下文）</artifactId>
-  <version>3.4.0</version>
+  <version>3.5.0</version>
 </dependency>
 ```
 
-<details>
-<summary>各模块的artifactId，请点击此处展开查看</summary>
-  
   - 微信小程序：`weixin-java-miniapp`   
   - 微信支付：`weixin-java-pay`
   - 微信开放平台：`weixin-java-open`   
   - 公众号（包括订阅号和服务号）：`weixin-java-mp`    
   - 企业号/企业微信：`weixin-java-cp`
-</details>
+
 
 ---------------------------------
 ### 版本说明

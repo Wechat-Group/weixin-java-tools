@@ -6,8 +6,9 @@
 1. 欢迎提供更多的demo实现。
 
 ### Spring Boot Starter实现
-- 微信支付：[点击查看使用方法](https://github.com/Wechat-Group/WxJava/tree/master/starters/wx-java-pay-starter) 
-- 微信公众号：[点击查看使用方法](https://github.com/Wechat-Group/WxJava/tree/master/starters/wx-java-mp-starter) 
+- 微信支付：[点击查看使用方法](https://github.com/Wechat-Group/WxJava/tree/master/spring-boot-starters/wx-java-pay-spring-boot-starter) 
+- 微信公众号：[点击查看使用方法](https://github.com/Wechat-Group/WxJava/tree/master/spring-boot-starters/wx-java-mp-spring-boot-starter) 
+- 微信小程序：[点击查看使用方法](https://github.com/Wechat-Group/WxJava/tree/master/spring-boot-starters/wx-java-miniapp-spring-boot-starter) 
 
 ### Demo列表
 1. 微信支付Demo：[GitHub](http://github.com/binarywang/weixin-java-pay-demo)、[码云](http://gitee.com/binary/weixin-java-pay-demo)

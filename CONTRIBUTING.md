@@ -12,7 +12,7 @@
 * 在 GitHub 上 `fork` 到自己的仓库，如 `my_user/WxJava`，然后 `clone` 到本地，并设置用户信息。
 
 ```bash
-$ git clone git@github.com:my_user/WxJava.git
+$ git clone git@github.com:{your-github-username}/WxJava.git
 $ cd WxJava
 $ git config user.name "yourname"
 $ git config user.email "your email"
