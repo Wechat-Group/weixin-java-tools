@@ -36,34 +36,36 @@ import java.util.Map;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.*;
 
 /**
+ * .
+ *
  * @author chanjarster
  */
 @Slf4j
 public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestHttp<H, P> {
-  private WxCpUserService       userService       = new WxCpUserServiceImpl(this);
-  private WxCpChatService       chatService       = new WxCpChatServiceImpl(this);
+  private WxCpUserService userService = new WxCpUserServiceImpl(this);
+  private WxCpChatService chatService = new WxCpChatServiceImpl(this);
   private WxCpDepartmentService departmentService = new WxCpDepartmentServiceImpl(this);
-  private WxCpMediaService      mediaService      = new WxCpMediaServiceImpl(this);
-  private WxCpMenuService       menuService       = new WxCpMenuServiceImpl(this);
-  private WxCpOAuth2Service     oauth2Service     = new WxCpOAuth2ServiceImpl(this);
-  private WxCpTagService        tagService        = new WxCpTagServiceImpl(this);
-  private WxCpAgentService      agentService      = new WxCpAgentServiceImpl(this);
-  private WxCpOaService         oaService         = new WxCpOaServiceImpl(this);
-  private WxCpTaskCardService   taskCardService   = new WxCpTaskCardServiceImpl(this);
+  private WxCpMediaService mediaService = new WxCpMediaServiceImpl(this);
+  private WxCpMenuService menuService = new WxCpMenuServiceImpl(this);
+  private WxCpOAuth2Service oauth2Service = new WxCpOAuth2ServiceImpl(this);
+  private WxCpTagService tagService = new WxCpTagServiceImpl(this);
+  private WxCpAgentService agentService = new WxCpAgentServiceImpl(this);
+  private WxCpOaService oaService = new WxCpOaServiceImpl(this);
+  private WxCpTaskCardService taskCardService = new WxCpTaskCardServiceImpl(this);
   private WxCpExternalContactService externalContactService = new WxCpExternalContactServiceImpl(this);
 
   /**
-   * 全局的是否正在刷新access token的锁
+   * 全局的是否正在刷新access token的锁.
    */
   protected final Object globalAccessTokenRefreshLock = new Object();
 
   /**
-   * 全局的是否正在刷新jsapi_ticket的锁
+   * 全局的是否正在刷新jsapi_ticket的锁.
    */
   protected final Object globalJsapiTicketRefreshLock = new Object();
 
   /**
-   * 全局的是否正在刷新agent的jsapi_ticket的锁
+   * 全局的是否正在刷新agent的jsapi_ticket的锁.
    */
   protected final Object globalAgentJsapiTicketRefreshLock = new Object();
 
@@ -72,7 +74,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxSessionManager sessionManager = new StandardSessionManager();
 
   /**
-   * 临时文件目录
+   * 临时文件目录.
    */
   private File tmpDirFile;
   private int retrySleepMillis = 1000;
@@ -183,8 +185,8 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     params.put("js_code", jsCode);
     params.put("grant_type", "authorization_code");
 
-    String result = this.get(this.configStorage.getApiUrl(JSCODE_TO_SESSION), Joiner.on("&").withKeyValueSeparator("=").join(params));
-    return WxCpMaJsCode2SessionResult.fromJson(result);
+    final String url = this.configStorage.getApiUrl(JSCODE_TO_SESSION);
+    return WxCpMaJsCode2SessionResult.fromJson(this.get(url, Joiner.on("&").withKeyValueSeparator("=").join(params)));
   }
 
   @Override

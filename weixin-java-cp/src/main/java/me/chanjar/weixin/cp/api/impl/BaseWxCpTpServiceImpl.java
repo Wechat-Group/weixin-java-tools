@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * .
+ *
  * @author zhenjun cai
  */
 @Slf4j
@@ -73,7 +75,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
 
   @Override
   public String getSuiteTicket(boolean forceRefresh) throws WxErrorException {
-//	  suite ticket由微信服务器推送，不能强制刷新
+//     suite ticket由微信服务器推送，不能强制刷新
 //    if (forceRefresh) {
 //      this.configStorage.expireSuiteTicket();
 //    }
@@ -93,8 +95,8 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     params.put("js_code", jsCode);
     params.put("grant_type", "authorization_code");
 
-    String result = this.get(configStorage.getApiUrl(WxCpApiPathConsts.Tp.JSCODE_TO_SESSION), Joiner.on("&").withKeyValueSeparator("=").join(params));
-    return WxCpMaJsCode2SessionResult.fromJson(result);
+    final String url = configStorage.getApiUrl(WxCpApiPathConsts.Tp.JSCODE_TO_SESSION);
+    return WxCpMaJsCode2SessionResult.fromJson(this.get(url, Joiner.on("&").withKeyValueSeparator("=").join(params)));
   }
 
 

@@ -20,22 +20,22 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
 
   @Override
   public WxCpUserExternalContactInfo getExternalContact(String userId) throws WxErrorException {
-    String responseContent = this.mainService.get(this.mainService.getWxCpConfigStorage().getApiUrl(GET_EXTERNAL_CONTACT + userId), null);
-
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_EXTERNAL_CONTACT + userId);
+    String responseContent = this.mainService.get(url, null);
     return WxCpUserExternalContactInfo.fromJson(responseContent);
   }
 
   @Override
   public List<String> listExternalContacts(String userId) throws WxErrorException {
-    String responseContent = this.mainService.get(this.mainService.getWxCpConfigStorage().getApiUrl(LIST_EXTERNAL_CONTACT + userId), null);
-    WxCpUserExternalContactList list = WxCpUserExternalContactList.fromJson(responseContent);
-    return list.getExternalUserId();
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(LIST_EXTERNAL_CONTACT + userId);
+    String responseContent = this.mainService.get(url, null);
+    return WxCpUserExternalContactList.fromJson(responseContent).getExternalUserId();
   }
 
   @Override
   public List<String> listFollowUser() throws WxErrorException {
-    String responseContent = this.mainService.get(this.mainService.getWxCpConfigStorage().getApiUrl(GET_FOLLOW_USER_LIST), null);
-    WxCpUserWithExternalPermission list = WxCpUserWithExternalPermission.fromJson(responseContent);
-    return list.getFollowUser();
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_FOLLOW_USER_LIST);
+    String responseContent = this.mainService.get(url, null);
+    return WxCpUserWithExternalPermission.fromJson(responseContent).getFollowUser();
   }
 }

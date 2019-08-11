@@ -36,8 +36,8 @@ public class WxCpAgentServiceImpl implements WxCpAgentService {
       throw new IllegalArgumentException("缺少agentid参数");
     }
 
-    String responseContent = this.mainService.get(String.format(this.mainService.getWxCpConfigStorage().getApiUrl(AGENT_GET), agentId), null);
-    return WxCpAgent.fromJson(responseContent);
+    final String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(AGENT_GET), agentId);
+    return WxCpAgent.fromJson(this.mainService.get(url, null));
   }
 
   @Override

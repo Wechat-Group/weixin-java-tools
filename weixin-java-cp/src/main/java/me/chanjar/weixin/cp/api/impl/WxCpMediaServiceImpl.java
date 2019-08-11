@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
+import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.cp.api.WxCpMediaService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
@@ -59,8 +60,8 @@ public class WxCpMediaServiceImpl implements WxCpMediaService {
 
   @Override
   public String uploadImg(File file) throws WxErrorException {
-    final WxMediaUploadResult result = this.mainService
-      .execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()), this.mainService.getWxCpConfigStorage().getApiUrl(IMG_UPLOAD), file);
-    return result.getUrl();
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(IMG_UPLOAD);
+    return this.mainService.execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()), url, file)
+      .getUrl();
   }
 }
