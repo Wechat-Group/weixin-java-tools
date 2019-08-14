@@ -111,6 +111,10 @@ public interface WxMpApiUrl {
      */
     GET_CALLBACK_IP_URL(API_DEFAULT_HOST_URL, "/cgi-bin/getcallbackip"),
     /**
+     * 网络检测.
+     */
+    NETCHECK_URL(API_DEFAULT_HOST_URL, "/cgi-bin/callback/check"),
+    /**
      * 第三方使用网站应用授权登录的url.
      */
     QRCONNECT_URL(OPEN_DEFAULT_HOST_URL, "/connect/qrconnect?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect"),
