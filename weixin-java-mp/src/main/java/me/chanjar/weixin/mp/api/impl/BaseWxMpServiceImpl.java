@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
+import me.chanjar.weixin.common.bean.WxNetCheckResult;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.StandardSessionManager;
@@ -234,6 +235,15 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       ipArray[i] = ipList.get(i).getAsString();
     }
     return ipArray;
+  }
+
+  @Override
+  public WxNetCheckResult netCheck(String action, String operator) throws WxErrorException {
+    JsonObject o = new JsonObject();
+    o.addProperty("action", action);
+    o.addProperty("check_operator", operator);
+    String responseContent = this.post(NETCHECK_URL, o.toString());
+    return WxNetCheckResult.fromJson(responseContent);
   }
 
   @Override

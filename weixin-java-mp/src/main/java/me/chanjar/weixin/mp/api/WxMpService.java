@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
+import me.chanjar.weixin.common.bean.WxNetCheckResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -177,6 +178,20 @@ public interface WxMpService {
    * </pre>
    */
   String[] getCallbackIP() throws WxErrorException;
+
+
+  /**
+   * <pre>
+   *  网络检测
+   *  https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21541575776DtsuT
+   *  为了帮助开发者排查回调连接失败的问题，提供这个网络检测的API。它可以对开发者URL做域名解析，然后对所有IP进行一次ping操作，得到丢包率和耗时。
+   * </pre>
+   *
+   * @param action   执行的检测动作
+   * @param operator 指定平台从某个运营商进行检测
+   * @throws WxErrorException
+   */
+  WxNetCheckResult netCheck(String action, String operator) throws WxErrorException;
 
   /**
    * <pre>
