@@ -15,7 +15,6 @@ import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
  * @author zhenjun cai
  */
 public interface WxCpTpService {
-
   /**
    * <pre>
    * 验证推送过来的消息的正确性
@@ -84,15 +83,15 @@ public interface WxCpTpService {
   WxAccessToken getCorpToken(String authCorpid, String permanentCode) throws WxErrorException;
 
   /**
-   * 获取企业永久授权码
+   * 获取企业永久授权码 .
    *
-   * @param authCode
-   * @return
+   * @param authCode .
+   * @return .
    */
   WxCpTpCorp getPermanentCode(String authCode) throws WxErrorException;
 
   /**
-   * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求
+   * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求.
    *
    * @param url        接口地址
    * @param queryParam 请求参数
@@ -100,7 +99,7 @@ public interface WxCpTpService {
   String get(String url, String queryParam) throws WxErrorException;
 
   /**
-   * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的POST请求
+   * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的POST请求.
    *
    * @param url      接口地址
    * @param postData 请求body字符串
@@ -124,7 +123,7 @@ public interface WxCpTpService {
 
   /**
    * <pre>
-   * 设置当微信系统响应系统繁忙时，要等待多少 retrySleepMillis(ms) * 2^(重试次数 - 1) 再发起重试
+   * 设置当微信系统响应系统繁忙时，要等待多少 retrySleepMillis(ms) * 2^(重试次数 - 1) 再发起重试.
    * 默认：1000ms
    * </pre>
    *
@@ -134,7 +133,7 @@ public interface WxCpTpService {
 
   /**
    * <pre>
-   * 设置当微信系统响应系统繁忙时，最大重试次数
+   * 设置当微信系统响应系统繁忙时，最大重试次数.
    * 默认：5次
    * </pre>
    *
@@ -148,21 +147,21 @@ public interface WxCpTpService {
   void initHttp();
 
   /**
-   * 获取WxMpConfigStorage 对象
+   * 获取WxMpConfigStorage 对象.
    *
    * @return WxMpConfigStorage
    */
   WxCpTpConfigStorage getWxCpTpConfigStorage();
 
   /**
-   * 注入 {@link WxCpTpConfigStorage} 的实现
+   * 注入 {@link WxCpTpConfigStorage} 的实现.
    *
    * @param wxConfigProvider 配置对象
    */
   void setWxCpTpConfigStorage(WxCpTpConfigStorage wxConfigProvider);
 
   /**
-   * http请求对象
+   * http请求对象.
    */
   RequestHttp<?, ?> getRequestHttp();
 
