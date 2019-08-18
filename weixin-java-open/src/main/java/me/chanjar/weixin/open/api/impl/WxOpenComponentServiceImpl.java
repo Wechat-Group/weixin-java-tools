@@ -126,11 +126,13 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     return this.getWxOpenConfigStorage().getComponentAccessToken();
   }
 
-  private String post(String uri, String postData) throws WxErrorException {
+  @Override
+  public String post(String uri, String postData) throws WxErrorException {
     return post(uri, postData, "component_access_token");
   }
 
-  private String post(String uri, String postData, String accessTokenKey) throws WxErrorException {
+  @Override
+  public String post(String uri, String postData, String accessTokenKey) throws WxErrorException {
     String componentAccessToken = getComponentAccessToken(false);
     String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + accessTokenKey + "=" + componentAccessToken;
     try {
@@ -157,11 +159,13 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     }
   }
 
-  private String get(String uri) throws WxErrorException {
+  @Override
+  public String get(String uri) throws WxErrorException {
     return get(uri, "component_access_token");
   }
 
-  private String get(String uri, String accessTokenKey) throws WxErrorException {
+  @Override
+  public String get(String uri, String accessTokenKey) throws WxErrorException {
     String componentAccessToken = getComponentAccessToken(false);
     String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + accessTokenKey + "=" + componentAccessToken;
     try {
@@ -189,8 +193,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public String getPreAuthUrl(String redirectURI) throws WxErrorException {
-    return getPreAuthUrl(redirectURI, null, null);
+  public String getPreAuthUrl(String redirectUri) throws WxErrorException {
+    return getPreAuthUrl(redirectUri, null, null);
   }
 
   @Override
