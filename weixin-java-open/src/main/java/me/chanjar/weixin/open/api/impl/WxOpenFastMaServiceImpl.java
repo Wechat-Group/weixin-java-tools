@@ -208,7 +208,7 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
   public WxOpenResult deleteCategory (int first, int second) throws WxErrorException {
     JsonObject params = new JsonObject ();
     params.addProperty ("first", first);
-    params.addProperty ("Second", second);
+    params.addProperty ("second", second);
     String response = post (OPEN_DELETE_CATEGORY, GSON.toJson (params));
     return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
   }

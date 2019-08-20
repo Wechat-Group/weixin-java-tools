@@ -1,9 +1,10 @@
 package me.chanjar.weixin.cp.bean;
 
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.cp.constant.WxCpConsts;
 import org.testng.annotations.Test;
 
-import static me.chanjar.weixin.cp.WxCpConsts.EventType.TASKCARD_CLICK;
+import static me.chanjar.weixin.cp.constant.WxCpConsts.EventType.TASKCARD_CLICK;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -106,7 +107,7 @@ public class WxCpXmlMessageTest {
       "<Count>2</Count>" +
       "</SendPicsInfo>" +
       "</xml>";
-    WxCpXmlMessage wxMessage = WxCpXmlMessage.fromXml(xml.replace("</PicList><PicList>",""));
+    WxCpXmlMessage wxMessage = WxCpXmlMessage.fromXml(xml.replace("</PicList><PicList>", ""));
     assertEquals(wxMessage.getToUserName(), "wx45a0972125658be9");
     assertEquals(wxMessage.getFromUserName(), "xiaohe");
     assertEquals(wxMessage.getCreateTime(), new Long(1502012364L));
@@ -172,5 +173,53 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getEvent(), TASKCARD_CLICK);
     assertEquals(wxMessage.getEventKey(), "key111");
     assertEquals(wxMessage.getTaskId(), "taskid111");
+  }
+
+  public void testAddExternalUserEvent() {
+    String xml = "<xml>" +
+      "<ToUserName><![CDATA[toUser]]></ToUserName>" +
+      "<FromUserName><![CDATA[sys]]></FromUserName>" +
+      "<CreateTime>1403610513</CreateTime>" +
+      "<MsgType><![CDATA[event]]></MsgType>" +
+      "<Event><![CDATA[change_external_contact]]></Event>" +
+      "<ChangeType><![CDATA[add_external_contact]]></ChangeType>" +
+      "<UserID><![CDATA[zhangsan]]></UserID>" +
+      "<ExternalUserID><![CDATA[woAJ2GCAAAXtWyujaWJHDDGi0mACH71w]]></ExternalUserID>" +
+      "<State><![CDATA[teststate]]></State>" +
+      "<WelcomeCode><![CDATA[WELCOMECODE]]></WelcomeCode>" +
+      "</xml >";
+    WxCpXmlMessage wxMessage = WxCpXmlMessage.fromXml(xml);
+    assertEquals(wxMessage.getToUserName(), "toUser");
+    assertEquals(wxMessage.getFromUserName(), "sys");
+    assertEquals(wxMessage.getCreateTime(), Long.valueOf(1403610513L));
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
+    assertEquals(wxMessage.getEvent(), WxCpConsts.EventType.CHANGE_EXTERNAL_CONTACT);
+    assertEquals(wxMessage.getChangeType(), WxCpConsts.ExternalContactChangeType.ADD_EXTERNAL_CONTACT);
+    assertEquals(wxMessage.getExternalUserId(), "woAJ2GCAAAXtWyujaWJHDDGi0mACH71w");
+    assertEquals(wxMessage.getState(), "teststate");
+    assertEquals(wxMessage.getWelcomeCode(), "WELCOMECODE");
+
+  }
+
+  public void testDelExternalUserEvent() {
+    String xml = "<xml>" +
+      "<ToUserName><![CDATA[toUser]]></ToUserName>" +
+      "<FromUserName><![CDATA[sys]]></FromUserName>" +
+      "<CreateTime>1403610513</CreateTime>" +
+      "<MsgType><![CDATA[event]]></MsgType>" +
+      "<Event><![CDATA[change_external_contact]]></Event>" +
+      "<ChangeType><![CDATA[del_external_contact]]></ChangeType>" +
+      "<UserID><![CDATA[zhangsan]]></UserID>" +
+      "<ExternalUserID><![CDATA[woAJ2GCAAAXtWyujaWJHDDGi0mACH71w]]></ExternalUserID>" +
+      "</xml>";
+    WxCpXmlMessage wxMessage = WxCpXmlMessage.fromXml(xml);
+    assertEquals(wxMessage.getToUserName(), "toUser");
+    assertEquals(wxMessage.getFromUserName(), "sys");
+    assertEquals(wxMessage.getCreateTime(), Long.valueOf(1403610513L));
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
+    assertEquals(wxMessage.getEvent(), WxCpConsts.EventType.CHANGE_EXTERNAL_CONTACT);
+    assertEquals(wxMessage.getChangeType(), WxCpConsts.ExternalContactChangeType.DEL_EXTERNAL_CONTACT);
+    assertEquals(wxMessage.getUserId(), "zhangsan");
+    assertEquals(wxMessage.getExternalUserId(), "woAJ2GCAAAXtWyujaWJHDDGi0mACH71w");
   }
 }

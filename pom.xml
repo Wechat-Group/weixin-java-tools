@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>3.4.0</version>
+  <version>3.5.0</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -105,8 +105,9 @@
     <module>weixin-java-pay</module>
     <module>weixin-java-miniapp</module>
     <module>weixin-java-open</module>
-    <module>starters/wx-java-pay-starter</module>
-    <module>starters/wx-java-mp-starter</module>
+    <module>spring-boot-starters/wx-java-pay-spring-boot-starter</module>
+    <module>spring-boot-starters/wx-java-mp-spring-boot-starter</module>
+    <module>spring-boot-starters/wx-java-miniapp-spring-boot-starter</module>
     <!--module>weixin-java-osgi</module-->
   </modules>
 
@@ -173,7 +174,7 @@
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
-        <version>1.4.10</version>
+        <version>1.4.11</version>
       </dependency>
       <!-- 由于guava较新的21.0版本需要jdk8，故而此处采用较低版本 -->
       <dependency>
@@ -246,7 +247,7 @@
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-        <version>1.16.18</version>
+        <version>1.18.8</version>
         <scope>provided</scope>
       </dependency>
     </dependencies>
@@ -370,6 +371,7 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>2.17</version>
         <configuration>
+          <skip>true</skip>
           <configLocation>quality-checks/google_checks.xml</configLocation>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <consoleOutput>true</consoleOutput>

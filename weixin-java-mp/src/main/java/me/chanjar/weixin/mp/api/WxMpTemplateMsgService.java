@@ -17,7 +17,6 @@ import java.util.List;
  * </pre>
  */
 public interface WxMpTemplateMsgService {
-
   /**
    * <pre>
    * 设置所属行业

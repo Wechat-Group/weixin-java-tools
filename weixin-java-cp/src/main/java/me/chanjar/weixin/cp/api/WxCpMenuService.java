@@ -12,6 +12,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxCpMenuService {
+
   /**
    * <pre>
    * 自定义菜单创建接口

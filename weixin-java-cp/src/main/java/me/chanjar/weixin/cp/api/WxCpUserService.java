@@ -1,12 +1,12 @@
 package me.chanjar.weixin.cp.api;
 
-import java.util.List;
-import java.util.Map;
-
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 import me.chanjar.weixin.cp.bean.WxCpUserExternalContactInfo;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <pre>
@@ -17,6 +17,7 @@ import me.chanjar.weixin.cp.bean.WxCpUserExternalContactInfo;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxCpUserService {
+
   /**
    * <pre>
    *   用在二次验证的时候.
@@ -137,6 +138,23 @@ public interface WxCpUserService {
   String openid2UserId(String openid) throws WxErrorException;
 
   /**
+   * <pre>
+   *
+   * 通过手机号获取其所对应的userid。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/user/getuserid?access_token=ACCESS_TOKEN
+   *
+   * 文档地址：https://work.weixin.qq.com/api/doc#90001/90143/91693
+   * </pre>
+   *
+   * @param mobile 手机号码。长度为5~32个字节
+   * @return userid  mobile对应的成员userid
+   * @throws WxErrorException .
+   */
+  String getUserId(String mobile) throws WxErrorException;
+
+  /**
    * 获取外部联系人详情.
    * <pre>
    *   企业可通过此接口，根据外部联系人的userid，拉取外部联系人详情。权限说明：
@@ -146,6 +164,10 @@ public interface WxCpUserService {
    * </pre>
    *
    * @param userId 外部联系人的userid
+   * @return 联系人详情
+   * @throws WxErrorException .
    */
   WxCpUserExternalContactInfo getExternalContact(String userId) throws WxErrorException;
+
+
 }

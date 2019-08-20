@@ -8,7 +8,7 @@ import org.testng.annotations.*;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.cp.WxCpConsts.AppChatMsgType;
+import me.chanjar.weixin.cp.constant.WxCpConsts.AppChatMsgType;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpAppChatMessage;

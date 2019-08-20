@@ -1,11 +1,11 @@
 package me.chanjar.weixin.cp.api;
 
+import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.error.WxErrorException;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
  * <pre>
@@ -16,10 +16,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxCpMediaService {
-  String MEDIA_GET_URL = "https://qyapi.weixin.qq.com/cgi-bin/media/get";
-  String MEDIA_UPLOAD_URL = "https://qyapi.weixin.qq.com/cgi-bin/media/upload?type=";
-  String IMG_UPLOAD_URL = "https://qyapi.weixin.qq.com/cgi-bin/media/uploadimg";
-  String JSSDK_MEDIA_GET_URL = "https://qyapi.weixin.qq.com/cgi-bin/media/get/jssdk";
 
   /**
    * <pre>

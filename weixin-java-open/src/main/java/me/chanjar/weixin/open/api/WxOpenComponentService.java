@@ -7,10 +7,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.open.bean.WxOpenCreateResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
-import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
-import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
-import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
-import me.chanjar.weixin.open.bean.result.WxOpenResult;
+import me.chanjar.weixin.open.bean.result.*;
 
 import java.util.List;
 
@@ -25,6 +22,7 @@ public interface WxOpenComponentService {
   String API_GET_AUTHORIZER_INFO_URL = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_info";
   String API_GET_AUTHORIZER_OPTION_URL = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_option";
   String API_SET_AUTHORIZER_OPTION_URL = "https://api.weixin.qq.com/cgi-bin/component/api_set_authorizer_option";
+  String API_GET_AUTHORIZER_LIST = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_list?component_access_token=%s";
 
   String COMPONENT_LOGIN_PAGE_URL = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=xxx&biz_appid=xxx";
 
@@ -125,6 +123,11 @@ public interface WxOpenComponentService {
    * 获取授权方的选项设置信息
    */
   WxOpenAuthorizerOptionResult getAuthorizerOption(String authorizerAppid, String optionName) throws WxErrorException;
+
+  /**
+   * 获取所有授权方列表
+   */
+  WxOpenAuthorizerListResult getAuthorizerList(int begin, int len) throws WxErrorException;
 
   /**
    * 设置授权方的选项信息

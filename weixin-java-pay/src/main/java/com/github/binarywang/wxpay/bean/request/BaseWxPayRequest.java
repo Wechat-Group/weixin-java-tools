@@ -3,6 +3,7 @@ package com.github.binarywang.wxpay.bean.request;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 
 import com.github.binarywang.wxpay.config.WxPayConfig;
@@ -27,6 +28,7 @@ import static com.github.binarywang.wxpay.constant.WxPayConstants.SignType.ALL_S
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Data
+@Accessors(chain = true)
 public abstract class BaseWxPayRequest implements Serializable {
   private static final long serialVersionUID = -4766915659779847060L;
 

@@ -5,6 +5,8 @@ import me.chanjar.weixin.mp.bean.device.*;
 
 /**
  * Created by keungtung on 10/12/2016.
+ *
+ * @author keungtung
  */
 public interface WxMpDeviceService {
   /**

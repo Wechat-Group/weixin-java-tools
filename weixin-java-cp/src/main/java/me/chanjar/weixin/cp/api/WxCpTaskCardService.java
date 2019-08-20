@@ -14,6 +14,7 @@ import java.util.List;
  * @date 2019-05-16
  */
 public interface WxCpTaskCardService {
+
   /**
    * <pre>
    * 更新任务卡片消息状态

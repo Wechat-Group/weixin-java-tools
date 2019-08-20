@@ -144,21 +144,21 @@ public class WxMpMessageRouter {
   }
 
   /**
-   * 开始一个新的Route规则
+   * 开始一个新的Route规则.
    */
   public WxMpMessageRouterRule rule() {
     return new WxMpMessageRouterRule(this);
   }
 
   /**
-   * 处理微信消息
+   * 处理微信消息.
    */
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context) {
     return route(wxMessage, context, null);
   }
 
   /**
-   * 处理微信消息
+   * 处理微信消息.
    */
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context, WxMpService wxMpService) {
     if (wxMpService == null) {
@@ -252,7 +252,7 @@ public class WxMpMessageRouter {
   }
 
   /**
-   * 对session的访问结束
+   * 对session的访问结束.
    */
   protected void sessionEndAccess(WxMpXmlMessage wxMessage) {
 

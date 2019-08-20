@@ -1,8 +1,7 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import java.io.File;
-
 import com.google.gson.JsonParser;
+import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -11,6 +10,10 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.enums.AiLangType;
 import me.chanjar.weixin.mp.util.requestexecuter.voice.VoiceUploadRequestExecutor;
 
+import java.io.File;
+
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.AiOpen.*;
+
 /**
  * <pre>
  *  Created by BinaryWang on 2018/6/9.
@@ -18,13 +21,10 @@ import me.chanjar.weixin.mp.util.requestexecuter.voice.VoiceUploadRequestExecuto
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@RequiredArgsConstructor
 public class WxMpAiOpenServiceImpl implements WxMpAiOpenService {
   private static final JsonParser JSON_PARSER = new JsonParser();
-  private WxMpService wxMpService;
-
-  public WxMpAiOpenServiceImpl(WxMpService wxMpService) {
-    this.wxMpService = wxMpService;
-  }
+  private final WxMpService wxMpService;
 
   @Override
   public void uploadVoice(String voiceId, AiLangType lang, File voiceFile) throws WxErrorException {
@@ -33,7 +33,7 @@ public class WxMpAiOpenServiceImpl implements WxMpAiOpenService {
     }
 
     this.wxMpService.execute(VoiceUploadRequestExecutor.create(this.wxMpService.getRequestHttp()),
-      String.format(VOICE_UPLOAD_URL, "mp3", voiceId, lang.getCode()),
+      String.format(VOICE_UPLOAD_URL.getUrl(this.wxMpService.getWxMpConfigStorage()), "mp3", voiceId, lang.getCode()),
       voiceFile);
   }
 
@@ -45,7 +45,8 @@ public class WxMpAiOpenServiceImpl implements WxMpAiOpenService {
 
   @Override
   public String translate(AiLangType langFrom, AiLangType langTo, String content) throws WxErrorException {
-    String response = this.wxMpService.post(String.format(TRANSLATE_URL, langFrom.getCode(), langTo.getCode()), content);
+    String response = this.wxMpService.post(String.format(TRANSLATE_URL.getUrl(this.wxMpService.getWxMpConfigStorage()),
+      langFrom.getCode(), langTo.getCode()), content);
 
     WxError error = WxError.fromJson(response, WxType.MP);
     if (error.getErrorCode() != 0) {

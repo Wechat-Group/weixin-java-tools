@@ -6,7 +6,6 @@ import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import org.apache.http.HttpHost;
 import org.apache.http.impl.client.CloseableHttpClient;

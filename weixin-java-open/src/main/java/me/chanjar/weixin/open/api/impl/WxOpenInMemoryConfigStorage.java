@@ -10,7 +10,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
+import me.chanjar.weixin.mp.bean.WxMpHostConfig;
 import me.chanjar.weixin.mp.enums.TicketType;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
@@ -543,10 +544,14 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
       return wxOpenConfigStorage.getApacheHttpClientBuilder();
     }
 
-
     @Override
     public boolean autoRefreshToken() {
       return true;
+    }
+
+    @Override
+    public WxMpHostConfig getHostConfig() {
+      return null;
     }
   }
 }

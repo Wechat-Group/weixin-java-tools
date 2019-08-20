@@ -13,19 +13,10 @@ import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 
 /**
- * 微信API的Service
+ * 微信API的Service.
  * @author chanjaster
  */
 public interface WxCpService {
-  String GET_JSAPI_TICKET = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket";
-  String GET_AGENT_CONFIG_TICKET = "https://qyapi.weixin.qq.com/cgi-bin/ticket/get?&type=agent_config";
-  String MESSAGE_SEND = "https://qyapi.weixin.qq.com/cgi-bin/message/send";
-  String GET_CALLBACK_IP = "https://qyapi.weixin.qq.com/cgi-bin/getcallbackip";
-  String BATCH_REPLACE_PARTY = "https://qyapi.weixin.qq.com/cgi-bin/batch/replaceparty";
-  String BATCH_REPLACE_USER = "https://qyapi.weixin.qq.com/cgi-bin/batch/replaceuser";
-  String BATCH_GET_RESULT = "https://qyapi.weixin.qq.com/cgi-bin/batch/getresult?jobid=";
-  String JSCODE_TO_SESSION_URL = "https://qyapi.weixin.qq.com/cgi-bin/miniprogram/jscode2session";
-
   /**
    * <pre>
    * 验证推送过来的消息的正确性
@@ -293,7 +284,9 @@ public interface WxCpService {
    * 获取用户相关接口的服务类对象
    */
   WxCpUserService getUserService();
-  
+
+  WxCpExternalContactService getExternalContactService();
+
   /**
    * 获取群聊服务
    * 
@@ -310,7 +303,7 @@ public interface WxCpService {
 
   WxCpAgentService getAgentService();
 
-  WxCpOAService getOAService();
+  WxCpOaService getOAService();
 
   /**
    * http请求对象

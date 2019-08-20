@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.chanjar.weixin.cp.WxCpConsts.AppChatMsgType;
+import me.chanjar.weixin.cp.constant.WxCpConsts.AppChatMsgType;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
 

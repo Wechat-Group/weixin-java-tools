@@ -13,24 +13,6 @@ import java.util.List;
  * @author binarywang (https://github.com/binarywang)
  */
 public interface WxMpDataCubeService {
-  String GET_USER_SUMMARY = "https://api.weixin.qq.com/datacube/getusersummary";
-  String GET_USER_CUMULATE = "https://api.weixin.qq.com/datacube/getusercumulate";
-  String GET_ARTICLE_SUMMARY = "https://api.weixin.qq.com/datacube/getarticlesummary";
-  String GET_ARTICLE_TOTAL = "https://api.weixin.qq.com/datacube/getarticletotal";
-  String GET_USER_READ = "https://api.weixin.qq.com/datacube/getuserread";
-  String GET_USER_READ_HOUR = "https://api.weixin.qq.com/datacube/getuserreadhour";
-  String GET_USER_SHARE = "https://api.weixin.qq.com/datacube/getusershare";
-  String GET_USER_SHARE_HOUR = "https://api.weixin.qq.com/datacube/getusersharehour";
-  String GET_UPSTREAM_MSG = "https://api.weixin.qq.com/datacube/getupstreammsg";
-  String GET_UPSTREAM_MSG_HOUR = "https://api.weixin.qq.com/datacube/getupstreammsghour";
-  String GET_UPSTREAM_MSG_WEEK = "https://api.weixin.qq.com/datacube/getupstreammsgweek";
-  String GET_UPSTREAM_MSG_MONTH = "https://api.weixin.qq.com/datacube/getupstreammsgmonth";
-  String GET_UPSTREAM_MSG_DIST = "https://api.weixin.qq.com/datacube/getupstreammsgdist";
-  String GET_UPSTREAM_MSG_DIST_WEEK = "https://api.weixin.qq.com/datacube/getupstreammsgdistweek";
-  String GET_UPSTREAM_MSG_DIST_MONTH = "https://api.weixin.qq.com/datacube/getupstreammsgdistmonth";
-  String GET_INTERFACE_SUMMARY = "https://api.weixin.qq.com/datacube/getinterfacesummary";
-  String GET_INTERFACE_SUMMARY_HOUR = "https://api.weixin.qq.com/datacube/getinterfacesummaryhour";
-
   //*******************用户分析数据接口***********************//
 
   /**

@@ -38,12 +38,12 @@
 </table>
 
 ### 重要信息
-1. **2019-5-18 发布 [【3.4.0正式版】](https://github.com/Wechat-Group/WxJava/releases)**！
+1. **2019-8-10 发布 [【3.5.0正式版】](https://github.com/Wechat-Group/WxJava/releases)**！
 1. 新手重要提示：本项目仅是一个SDK开发工具包，未提供Web实现，建议使用 `maven` 或 `gradle` 引用本项目即可使用本SDK提供的各种功能，详情可参考 **[【Demo项目】](demo.md)** 或本项目中的部分单元测试代码；另外微信开发新手请务必阅读[【开发文档 Wiki 首页】](https://github.com/Wechat-Group/WxJava/wiki)的常见问题部分，可以少走很多弯路，节省不少时间。
 1. 入群技术交流：若想获得QQ群/微信群/企业微信/钉钉企业群等信息的，请使用微信扫描上面的微信公众号二维码关注 `WxJava` 后点击相关菜单即可，同时也可以在微信中搜索 `weixin-java-tools` 或 `WxJava` 后选择正确的公众号进行关注，该公众号会及时通知SDK相关更新信息，并不定期分享微信Java开发相关技术知识；
 1. 付费QQ群：（**注意：刚入群会有5分钟禁言，稍等片刻即可正常发言**） [![加入QQ群](https://img.shields.io/badge/QQ群-343954419-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=731dc3e7ea31ebe25376cc1a791445468612c63fd0e9e05399b088ec81fd9e15) 或 [![加入QQ群](https://img.shields.io/badge/QQ群-343954419-blue.svg)](http://jq.qq.com/?_wv=1027&k=40lRskK)，或者请自行搜索群号`343954419`进行添加；当然由于某种原因无法入群的，可关注公众号后获取其他群的加入方式；
 1. 钉钉企业群：[请点击链接申请加入](https://h5.dingtalk.com/inviteColleague/index.html#/invite/9ed100cc4a/E1DF918E32E398D191E7FE61FE0552A6) 或者 [用手机钉钉APP扫码](https://gitee.com/binary/weixin-java-tools/raw/master/images/qrcodes/ding.jpg) 申请加入。
-1. 微信开发新手或者Java开发新手在群内提问或新开Issue提问前，请先阅读[【提问的智慧】](http://www.binarywang.com/article/smart-questions)，并确保已查阅过 [【开发文档Wiki】](https://github.com/wechat-group/WxJava/wiki) ，避免浪费大家的宝贵时间；
+1. 微信开发新手或者Java开发新手在群内提问或新开Issue提问前，请先阅读[【提问的智慧】](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)，并确保已查阅过 [【开发文档Wiki】](https://github.com/wechat-group/WxJava/wiki) ，避免浪费大家的宝贵时间；
 1. 寻求帮助时需贴代码或大长串异常信息的，请利用 http://paste.ubuntu.com 
 
 --------------------------------
@@ -68,19 +68,16 @@
 <dependency>
   <groupId>com.github.binarywang</groupId>
   <artifactId>（不同模块参考下文）</artifactId>
-  <version>3.4.0</version>
+  <version>3.5.0</version>
 </dependency>
 ```
 
-<details>
-<summary>各模块的artifactId，请点击此处展开查看</summary>
-  
   - 微信小程序：`weixin-java-miniapp`   
   - 微信支付：`weixin-java-pay`
   - 微信开放平台：`weixin-java-open`   
   - 公众号（包括订阅号和服务号）：`weixin-java-mp`    
   - 企业号/企业微信：`weixin-java-cp`
-</details>
+
 
 ---------------------------------
 ### 版本说明
@@ -97,39 +94,50 @@
 
 ----------------------------------
 ### 使用案例
-完整案例登记列表，请[【访问这里】](https://github.com/Wechat-Group/weixin-java-tools/issues/729)查看，欢迎提供更多的案例。
+完整案例登记列表，请[【访问这里】](https://github.com/Wechat-Group/weixin-java-tools/issues/729)查看，欢迎登记更多的案例。
 
-<details>
-<summary>已整理过的案例列表，请点击此处展开查看</summary>
+以下为部分案例列表：
 
-1. 开源项目：https://github.com/workcheng/weiya
-1. 开源项目：https://github.com/jmdhappy/xxpay-master 
-1. 开源工具：https://github.com/rememberber/WePush
-1. 开源项目（微信点餐系统）：http://www.sqmax.top/springboot-project/
-1. 微信公众号管理系统：http://demo.joolun.com
-1. 小程序：（京东）友家铺子，友家铺子店长版，京粉精选
-1. 小程序：[喵星人贴吧助手(扫码关注)](http://p98ahz3tg.bkt.clouddn.com/miniappqrcode.jpg)
-1. 小程序：树懒揽书+
-1. 小程序：广廉快线，鹏城巴士等
-1. 小程序：当燃挑战、sportlight轻灵运动
-1. 小程序：360考试宝典
-1. 公众号：中国电信上海网厅（sh_189）
-1. 公众号：E答平台
-1. 公众号：宁夏生鲜365
-1. 公众号：通服货滴
-1. 公众号：神龙养车
-1. 公众号：沃音乐商务智能
-1. 公众号：[全民约跑健身便利店](http://www.oneminsport.com/)
-1. 公众号：[洽洽食品](https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFM8TwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAycDRPOXBZbVZib2UxMDAwME0wN2gAAgRIu4RbAwQAAAAA)、[洽洽合伙人](https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFP8jwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyOUpJaU5VcXBlWTAxMDAwME0wN1oAAgSau4RbAwQAAAAA)
-1. 公众号和小程序：民医台（可自行搜索）
-1. 高善人力资源
-1. 平台：[小猪餐餐](http://www.xzcancan.com/)
-1. 平台：[餐饮系统](http://canyin.daydao.com)
-1. 锐捷网络：Saleslink
-1. 洽洽企业号
-1. HTC企业微信
-  
-</details>
+#### 开源项目：
+- 基于微信公众号的签到、抽奖、发送弹幕程序：https://github.com/workcheng/weiya
+- XxPay聚合支付：https://github.com/jmdhappy/xxpay-master
+- 微同商城：https://gitee.com/fuyang_lipengjun/platform
+- 微信点餐系统：https://github.com/sqmax/springboot-project
+- 专注批量推送的小而美的工具：https://github.com/rememberber/WePush
+
+#### 小程序：
+- （京东）友家铺子，友家铺子店长版，京粉精选
+- [喵星人贴吧助手(扫码关注)](http://p98ahz3tg.bkt.clouddn.com/miniappqrcode.jpg)
+- 树懒揽书+
+- 广廉快线，鹏城巴士等
+- 当燃挑战、sportlight轻灵运动
+- 360考试宝典
+- 民医台（可自行搜索）
+- 来一团商家版
+
+#### 公众号：
+- 中国电信上海网厅（sh_189）
+- E答平台
+- 宁夏生鲜365
+- 通服货滴
+- 神龙养车
+- 沃音乐商务智能
+- 光环云社群
+- 手机排队
+- [全民约跑健身便利店](http://www.oneminsport.com/)
+- [洽洽食品](https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFM8TwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAycDRPOXBZbVZib2UxMDAwME0wN2gAAgRIu4RbAwQAAAAA)、[洽洽合伙人](https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFP8jwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyOUpJaU5VcXBlWTAxMDAwME0wN1oAAgSau4RbAwQAAAAA)
+- 民医台（可自行搜索）
+
+#### 企业号/企业微信：
+- 洽洽企业号
+- HTC企业微信
+
+#### 其他：
+- 高善人力资源
+- [小猪餐餐](http://www.xzcancan.com/)
+- [餐饮系统](http://canyin.daydao.com)
+- 微信公众号管理系统：http://demo.joolun.com
+- 锐捷网络：Saleslink
 
 ----------------------------------
 ### 贡献者列表

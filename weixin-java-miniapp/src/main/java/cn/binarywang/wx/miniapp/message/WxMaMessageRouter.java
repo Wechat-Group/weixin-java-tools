@@ -32,8 +32,6 @@ public class WxMaMessageRouter {
 
   private ExecutorService executorService;
 
-  private WxMessageDuplicateChecker messageDuplicateChecker;
-
   private WxSessionManager sessionManager;
 
   private WxErrorExceptionHandler exceptionHandler;
@@ -43,7 +41,6 @@ public class WxMaMessageRouter {
     ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxMaMessageRouter-pool-%d").build();
     this.executorService = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE,
       0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), namedThreadFactory);
-    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
   }
@@ -56,16 +53,6 @@ public class WxMaMessageRouter {
    */
   public void setExecutorService(ExecutorService executorService) {
     this.executorService = executorService;
-  }
-
-  /**
-   * <pre>
-   * 设置自定义的 {@link me.chanjar.weixin.common.api.WxMessageDuplicateChecker}
-   * 如果不调用该方法，默认使用 {@link me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker}
-   * </pre>
-   */
-  public void setMessageDuplicateChecker(WxMessageDuplicateChecker messageDuplicateChecker) {
-    this.messageDuplicateChecker = messageDuplicateChecker;
   }
 
   /**
@@ -93,16 +80,16 @@ public class WxMaMessageRouter {
   }
 
   /**
-   * 开始一个新的Route规则
+   * 开始一个新的Route规则.
    */
   public WxMaMessageRouterRule rule() {
     return new WxMaMessageRouterRule(this);
   }
 
   /**
-   * 处理微信消息
+   * 处理微信消息.
    */
-  public void route(final WxMaMessage wxMessage, final Map<String, Object> context) {
+  private WxMaXmlOutMessage route(final WxMaMessage wxMessage, final Map<String, Object> context) {
     final List<WxMaMessageRouterRule> matchRules = new ArrayList<>();
     // 收集匹配的规则
     for (final WxMaMessageRouterRule rule : this.rules) {
@@ -115,10 +102,11 @@ public class WxMaMessageRouter {
     }
 
     if (matchRules.size() == 0) {
-      return;
+      return null;
     }
 
     final List<Future<?>> futures = new ArrayList<>();
+    WxMaXmlOutMessage result = null;
     for (final WxMaMessageRouterRule rule : matchRules) {
       // 返回最后一个非异步的rule的执行结果
       if (rule.isAsync()) {
@@ -131,7 +119,7 @@ public class WxMaMessageRouter {
           })
         );
       } else {
-        rule.service(wxMessage, context, this.wxMaService, this.sessionManager, this.exceptionHandler);
+        result = rule.service(wxMessage, context, this.wxMaService, this.sessionManager, this.exceptionHandler);
         // 在同步操作结束，session访问结束
         this.log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUser());
         sessionEndAccess(wxMessage);
@@ -155,18 +143,17 @@ public class WxMaMessageRouter {
         }
       });
     }
-
+    return result;
   }
 
-  public void route(final WxMaMessage wxMessage) {
-    this.route(wxMessage, new HashMap<String, Object>(2));
+  public WxMaXmlOutMessage route(final WxMaMessage wxMessage) {
+   return this.route(wxMessage, new HashMap<String, Object>(2));
   }
 
   /**
-   * 对session的访问结束
+   * 对session的访问结束.
    */
-  protected void sessionEndAccess(WxMaMessage wxMessage) {
-
+  private void sessionEndAccess(WxMaMessage wxMessage) {
     InternalSession session = ((InternalSessionManager) this.sessionManager).findSession(wxMessage.getFromUser());
     if (session != null) {
       session.endAccess();

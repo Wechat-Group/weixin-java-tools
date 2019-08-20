@@ -17,6 +17,7 @@ import java.util.List;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxCpTagService {
+
   /**
    * 创建标签.
    *
@@ -52,6 +53,14 @@ public interface WxCpTagService {
   List<WxCpUser> listUsersByTagId(String tagId) throws WxErrorException;
 
   /**
+   * 获取标签成员.
+   * 对应: http://qydev.weixin.qq.com/wiki/index.php?title=管理标签 中的get接口
+   *
+   * @param tagId 标签id
+   */
+  WxCpTagGetResult get(String tagId) throws WxErrorException;
+
+  /**
    * 增加标签成员.
    *
    * @param tagId    标签id
@@ -68,14 +77,5 @@ public interface WxCpTagService {
    * @param partyIds 企业部门ID列表
    */
   WxCpTagAddOrRemoveUsersResult removeUsersFromTag(String tagId, List<String> userIds, List<String> partyIds) throws WxErrorException;
-
-
-  /**
-   * 获取标签成员.
-   * 对应: http://qydev.weixin.qq.com/wiki/index.php?title=管理标签 中的get接口
-   *
-   * @param tagId 标签id
-   */
-  WxCpTagGetResult get(String tagId) throws WxErrorException;
 
 }

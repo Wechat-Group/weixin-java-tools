@@ -3,23 +3,21 @@ package me.chanjar.weixin.mp.api;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
-import org.testng.*;
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
 /**
  * 测试jsapi ticket接口
  *
  * @author chanjarster
  */
-@Test(groups = "jsAPI", dependsOnGroups = "baseAPI")
+@Test
 @Guice(modules = ApiTestModule.class)
 public class WxMpJsAPITest {
 
   @Inject
   protected WxMpService wxService;
-
-
-
 
   public void test() {
     long timestamp = 1419835025L;

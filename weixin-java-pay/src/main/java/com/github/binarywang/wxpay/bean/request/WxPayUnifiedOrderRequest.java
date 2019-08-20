@@ -5,6 +5,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
+import lombok.experimental.Accessors;
 import me.chanjar.weixin.common.annotation.Required;
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
+@Accessors(chain = true)
 public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
   private static final long serialVersionUID = 4611350167813931828L;
 
@@ -309,7 +311,7 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
    * 是否必填：否
    * 类型：String(8)
    * 示例值：Y
-   * 描述：	Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
+   * 描述：Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
    * </pre>
    */
   @XStreamAlias("receipt")

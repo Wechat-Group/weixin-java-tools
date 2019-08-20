@@ -9,8 +9,7 @@ import me.chanjar.weixin.mp.bean.card.*;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertNotNull;
+import static org.testng.AssertJUnit.*;
 
 /**
  * 测试代码仅供参考，未做严格测试，因原接口作者并未提供单元测试代码
@@ -106,7 +105,6 @@ public class WxMpCardServiceImplTest {
 
   @Test
   public void testCreateGrouponCard() throws WxErrorException {
-
     BaseInfo base = new BaseInfo();
     base.setLogoUrl("http://mmbiz.qpic.cn/mmbiz/iaL1LJM1mF9aRKPZJkmG8xXhiaHqkKSVMMWeN3hLut7X7hicFNjakmxibMLGWpXrEXB33367o7zHN0CwngnQY7zb7g/0");
     base.setBrandName("测试优惠券");
@@ -202,8 +200,31 @@ public class WxMpCardServiceImplTest {
   public void testDeleteCard() throws Exception {
     String cardId = "pwkrWjtw7W4_l50kCQcZ1in1yS6g";
     WxMpCardDeleteResult result = this.wxService.getCardService().deleteCard(cardId);
-    assertEquals(result.isSuccess(), true);
+    assertTrue(result.isSuccess());
     System.out.println(result);
   }
 
+  @Test
+  public void testAddTestWhiteList() {
+  }
+
+  @Test
+  public void testCreateCard() {
+  }
+
+  @Test
+  public void testCreateQrcodeCard() {
+  }
+
+  @Test
+  public void testCreateQrcodeCard1() {
+  }
+
+  @Test
+  public void testCreateQrcodeCard2() {
+  }
+
+  @Test
+  public void testCreateLandingPage() {
+  }
 }

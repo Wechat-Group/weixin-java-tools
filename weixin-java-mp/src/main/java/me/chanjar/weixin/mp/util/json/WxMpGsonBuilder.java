@@ -17,6 +17,9 @@ import me.chanjar.weixin.mp.bean.subscribe.WxMpSubscribeMessage;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateIndustry;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 
+/**
+ * @author someone
+ */
 public class WxMpGsonBuilder {
 
   private static final GsonBuilder INSTANCE = new GsonBuilder();

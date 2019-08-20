@@ -70,6 +70,7 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     user.setStatus(GsonHelper.getInteger(o, "status"));
     user.setEnable(GsonHelper.getInteger(o, "enable"));
     user.setIsLeader(GsonHelper.getInteger(o, "isleader"));
+    user.setIsLeaderInDept(GsonHelper.getIntArray(o, "is_leader_in_dept"));
     user.setHideMobile(GsonHelper.getInteger(o, "hide_mobile"));
     user.setEnglishName(GsonHelper.getString(o, "english_name"));
     user.setTelephone(GsonHelper.getString(o, "telephone"));
@@ -196,6 +197,13 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     }
     if (user.getIsLeader() != null) {
       o.addProperty("isleader", user.getIsLeader());
+    }
+    if (user.getIsLeaderInDept() != null && user.getIsLeaderInDept().length > 0) {
+      JsonArray ary = new JsonArray();
+      for (int item : user.getIsLeaderInDept()) {
+        ary.add(item);
+      }
+      o.add("is_leader_in_dept", ary);
     }
     if (user.getHideMobile() != null) {
       o.addProperty("hide_mobile", user.getHideMobile());

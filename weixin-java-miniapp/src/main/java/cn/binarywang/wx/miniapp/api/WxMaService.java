@@ -208,6 +208,13 @@ public interface WxMaService {
   WxMaSecCheckService getSecCheckService();
 
   /**
+   * 返回插件相关接口服务对象.
+   *
+   * @return WxMaPluginService
+   */
+  WxMaPluginService getPluginService();
+
+  /**
    * 初始化http请求对象.
    */
   void initHttp();

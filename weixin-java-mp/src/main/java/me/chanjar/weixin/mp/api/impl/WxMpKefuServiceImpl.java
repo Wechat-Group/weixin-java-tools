@@ -1,12 +1,8 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import java.io.File;
-import java.util.Date;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.JsonObject;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -16,23 +12,20 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.kefu.request.WxMpKfAccountRequest;
 import me.chanjar.weixin.mp.bean.kefu.request.WxMpKfSessionRequest;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfList;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfMsgList;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfOnlineList;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfSessionGetResult;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfSessionList;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfSessionWaitCaseList;
+import me.chanjar.weixin.mp.bean.kefu.result.*;
+
+import java.io.File;
+import java.util.Date;
+
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Kefu.*;
 
 /**
  * @author Binary Wang
  */
+@Slf4j
+@RequiredArgsConstructor
 public class WxMpKefuServiceImpl implements WxMpKefuService {
-  protected final Logger log = LoggerFactory.getLogger(this.getClass());
-  private WxMpService wxMpService;
-
-  public WxMpKefuServiceImpl(WxMpService wxMpService) {
-    this.wxMpService = wxMpService;
-  }
+  private final WxMpService wxMpService;
 
   @Override
   public boolean sendKefuMessage(WxMpKefuMessage message) throws WxErrorException {
@@ -73,13 +66,15 @@ public class WxMpKefuServiceImpl implements WxMpKefuService {
   @Override
   public boolean kfAccountUploadHeadImg(String kfAccount, File imgFile) throws WxErrorException {
     WxMediaUploadResult responseContent = this.wxMpService
-      .execute(MediaUploadRequestExecutor.create(this.wxMpService.getRequestHttp()), String.format(KFACCOUNT_UPLOAD_HEAD_IMG, kfAccount), imgFile);
+      .execute(MediaUploadRequestExecutor.create(this.wxMpService.getRequestHttp()),
+        String.format(KFACCOUNT_UPLOAD_HEAD_IMG.getUrl(this.wxMpService.getWxMpConfigStorage()), kfAccount), imgFile);
     return responseContent != null;
   }
 
   @Override
   public boolean kfAccountDel(String kfAccount) throws WxErrorException {
-    String responseContent = this.wxMpService.get(String.format(KFACCOUNT_DEL, kfAccount), null);
+    String responseContent = this.wxMpService.get(String.format(KFACCOUNT_DEL.getUrl(this.wxMpService.getWxMpConfigStorage()),
+      kfAccount), null);
     return responseContent != null;
   }
 
@@ -99,13 +94,15 @@ public class WxMpKefuServiceImpl implements WxMpKefuService {
 
   @Override
   public WxMpKfSessionGetResult kfSessionGet(String openid) throws WxErrorException {
-    String responseContent = this.wxMpService.get(String.format(KFSESSION_GET_SESSION, openid), null);
+    String responseContent = this.wxMpService.get(String.format(KFSESSION_GET_SESSION
+      .getUrl(this.wxMpService.getWxMpConfigStorage()), openid), null);
     return WxMpKfSessionGetResult.fromJson(responseContent);
   }
 
   @Override
   public WxMpKfSessionList kfSessionList(String kfAccount) throws WxErrorException {
-    String responseContent = this.wxMpService.get(String.format(KFSESSION_GET_SESSION_LIST, kfAccount), null);
+    String responseContent = this.wxMpService.get(String.format(KFSESSION_GET_SESSION_LIST
+      .getUrl(this.wxMpService.getWxMpConfigStorage()), kfAccount), null);
     return WxMpKfSessionList.fromJson(responseContent);
   }
 

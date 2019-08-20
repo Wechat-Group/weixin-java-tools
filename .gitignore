@@ -1,9 +1,6 @@
 *.class
 test-output
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
 *.jar
 *.war
@@ -27,10 +24,6 @@ test-config.xml
 *.bat
 /gradlew
 **/build/
-
-# OSX
-# Icon must end with two \r
-Icon
 
 
 ._*

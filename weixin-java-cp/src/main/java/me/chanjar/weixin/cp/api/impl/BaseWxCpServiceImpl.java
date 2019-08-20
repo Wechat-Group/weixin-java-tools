@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -23,6 +24,7 @@ import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,22 +33,24 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.*;
+
 /**
  * @author chanjarster
  */
+@Slf4j
 public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestHttp<H, P> {
-  protected final Logger log = LoggerFactory.getLogger(this.getClass());
-
-  private WxCpUserService userService = new WxCpUserServiceImpl(this);
-  private WxCpChatService chatService = new WxCpChatServiceImpl(this);
+  private WxCpUserService       userService       = new WxCpUserServiceImpl(this);
+  private WxCpChatService       chatService       = new WxCpChatServiceImpl(this);
   private WxCpDepartmentService departmentService = new WxCpDepartmentServiceImpl(this);
-  private WxCpMediaService mediaService = new WxCpMediaServiceImpl(this);
-  private WxCpMenuService menuService = new WxCpMenuServiceImpl(this);
-  private WxCpOAuth2Service oauth2Service = new WxCpOAuth2ServiceImpl(this);
-  private WxCpTagService tagService = new WxCpTagServiceImpl(this);
-  private WxCpAgentService agentService = new WxCpAgentServiceImpl(this);
-  private WxCpOAService oaService = new WxCpOAServiceImpl(this);
-  private WxCpTaskCardService taskCardService = new WxCpTaskCardServiceImpl(this);
+  private WxCpMediaService      mediaService      = new WxCpMediaServiceImpl(this);
+  private WxCpMenuService       menuService       = new WxCpMenuServiceImpl(this);
+  private WxCpOAuth2Service     oauth2Service     = new WxCpOAuth2ServiceImpl(this);
+  private WxCpTagService        tagService        = new WxCpTagServiceImpl(this);
+  private WxCpAgentService      agentService      = new WxCpAgentServiceImpl(this);
+  private WxCpOaService         oaService         = new WxCpOaServiceImpl(this);
+  private WxCpTaskCardService   taskCardService   = new WxCpTaskCardServiceImpl(this);
+  private WxCpExternalContactService externalContactService = new WxCpExternalContactServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁
@@ -80,7 +84,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       return SHA1.gen(this.configStorage.getToken(), timestamp, nonce, data)
         .equals(msgSignature);
     } catch (Exception e) {
-      this.log.error("Checking signature failed, and the reason is :" + e.getMessage());
+      log.error("Checking signature failed, and the reason is :" + e.getMessage());
       return false;
     }
   }
@@ -104,7 +108,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     if (this.configStorage.isAgentJsapiTicketExpired()) {
       synchronized (this.globalAgentJsapiTicketRefreshLock) {
         if (this.configStorage.isAgentJsapiTicketExpired()) {
-          String responseContent = this.get(WxCpService.GET_AGENT_CONFIG_TICKET, null);
+          String responseContent = this.get(this.configStorage.getApiUrl(GET_AGENT_CONFIG_TICKET), null);
           JsonObject jsonObject = new JsonParser().parse(responseContent).getAsJsonObject();
           this.configStorage.updateAgentJsapiTicket(jsonObject.get("ticket").getAsString(),
             jsonObject.get("expires_in").getAsInt());
@@ -129,7 +133,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     if (this.configStorage.isJsapiTicketExpired()) {
       synchronized (this.globalJsapiTicketRefreshLock) {
         if (this.configStorage.isJsapiTicketExpired()) {
-          String responseContent = this.get(WxCpService.GET_JSAPI_TICKET, null);
+          String responseContent = this.get(this.configStorage.getApiUrl(GET_JSAPI_TICKET), null);
           JsonObject tmpJsonObject = new JsonParser().parse(responseContent).getAsJsonObject();
           this.configStorage.updateJsapiTicket(tmpJsonObject.get("ticket").getAsString(),
             tmpJsonObject.get("expires_in").getAsInt());
@@ -170,7 +174,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       message.setAgentId(this.getWxCpConfigStorage().getAgentId());
     }
 
-    return WxCpMessageSendResult.fromJson(this.post(WxCpService.MESSAGE_SEND, message.toJson()));
+    return WxCpMessageSendResult.fromJson(this.post(this.configStorage.getApiUrl(MESSAGE_SEND), message.toJson()));
   }
 
   @Override
@@ -179,13 +183,13 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     params.put("js_code", jsCode);
     params.put("grant_type", "authorization_code");
 
-    String result = this.get(JSCODE_TO_SESSION_URL, Joiner.on("&").withKeyValueSeparator("=").join(params));
+    String result = this.get(this.configStorage.getApiUrl(JSCODE_TO_SESSION), Joiner.on("&").withKeyValueSeparator("=").join(params));
     return WxCpMaJsCode2SessionResult.fromJson(result);
   }
 
   @Override
   public String[] getCallbackIp() throws WxErrorException {
-    String responseContent = get(WxCpService.GET_CALLBACK_IP, null);
+    String responseContent = get(this.configStorage.getApiUrl(GET_CALLBACK_IP), null);
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     JsonArray jsonArray = tmpJsonElement.getAsJsonObject().get("ip_list").getAsJsonArray();
     String[] ips = new String[jsonArray.size()];
@@ -216,7 +220,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
         return this.executeInternal(executor, uri, data);
       } catch (WxErrorException e) {
         if (retryTimes + 1 > this.maxRetryTimes) {
-          this.log.warn("重试达到最大次数【{}】", this.maxRetryTimes);
+          log.warn("重试达到最大次数【{}】", this.maxRetryTimes);
           //最后一次重试失败后，直接抛出异常，不再等待
           throw new RuntimeException("微信服务端异常，超出重试次数");
         }
@@ -228,7 +232,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
         if (error.getErrorCode() == -1) {
           int sleepMillis = this.retrySleepMillis * (1 << retryTimes);
           try {
-            this.log.debug("微信系统繁忙，{} ms 后重试(第{}次)", sleepMillis, retryTimes + 1);
+            log.debug("微信系统繁忙，{} ms 后重试(第{}次)", sleepMillis, retryTimes + 1);
             Thread.sleep(sleepMillis);
           } catch (InterruptedException e1) {
             Thread.currentThread().interrupt();
@@ -239,7 +243,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       }
     } while (retryTimes++ < this.maxRetryTimes);
 
-    this.log.warn("重试达到最大次数【{}】", this.maxRetryTimes);
+    log.warn("重试达到最大次数【{}】", this.maxRetryTimes);
     throw new RuntimeException("微信服务端异常，超出重试次数");
   }
 
@@ -255,7 +259,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
 
     try {
       T result = executor.execute(uriWithAccessToken, data);
-      this.log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog, result);
+      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog, result);
       return result;
     } catch (WxErrorException e) {
       WxError error = e.getError();
@@ -272,12 +276,12 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       }
 
       if (error.getErrorCode() != 0) {
-        this.log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      this.log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
       throw new RuntimeException(e);
     }
   }
@@ -329,19 +333,19 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   public String replaceParty(String mediaId) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("media_id", mediaId);
-    return post(WxCpService.BATCH_REPLACE_PARTY, jsonObject.toString());
+    return post(this.configStorage.getApiUrl(BATCH_REPLACE_PARTY), jsonObject.toString());
   }
 
   @Override
   public String replaceUser(String mediaId) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("media_id", mediaId);
-    return post(WxCpService.BATCH_REPLACE_USER, jsonObject.toString());
+    return post(this.configStorage.getApiUrl(BATCH_REPLACE_USER), jsonObject.toString());
   }
 
   @Override
   public String getTaskResult(String joinId) throws WxErrorException {
-    String url = WxCpService.BATCH_GET_RESULT + joinId;
+    String url = this.configStorage.getApiUrl(BATCH_GET_RESULT + joinId);
     return get(url, null);
   }
 
@@ -384,12 +388,17 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   }
 
   @Override
+  public WxCpExternalContactService getExternalContactService() {
+    return externalContactService;
+  }
+
+  @Override
   public WxCpChatService getChatService() {
     return chatService;
   }
 
   @Override
-  public WxCpOAService getOAService() {
+  public WxCpOaService getOAService() {
     return oaService;
   }
 

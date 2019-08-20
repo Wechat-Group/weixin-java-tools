@@ -4,7 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.builder.outxml.*;
 import me.chanjar.weixin.mp.util.crypto.WxMpCryptUtil;
 import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
@@ -78,6 +78,13 @@ public abstract class WxMpXmlOutMessage implements Serializable {
    */
   public static TransferCustomerServiceBuilder TRANSFER_CUSTOMER_SERVICE() {
     return new TransferCustomerServiceBuilder();
+  }
+
+  /**
+   * 获得设备消息builder
+   */
+  public static DeviceBuilder DEVICE() {
+      return new DeviceBuilder();
   }
 
   @SuppressWarnings("unchecked")

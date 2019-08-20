@@ -14,7 +14,6 @@ import java.io.File;
  * @author Binary Wang
  */
 public interface WxMpQrcodeService {
-
   /**
    * <pre>
    * 换取临时二维码ticket

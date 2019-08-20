@@ -5,10 +5,13 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpTaskCardService;
+import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.TaskCard.*;
 
 /**
  * <pre>
@@ -33,7 +36,7 @@ public class WxCpTaskCardServiceImpl implements WxCpTaskCardService {
     data.put("task_id", taskId);
     data.put("clicked_key", clickedKey);
 
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/message/update_taskcard";
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_TASK_CARD);
     this.mainService.post(url, WxGsonBuilder.create().toJson(data));
   }
 }

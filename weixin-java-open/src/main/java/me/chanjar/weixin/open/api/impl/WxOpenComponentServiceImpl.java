@@ -18,10 +18,7 @@ import me.chanjar.weixin.open.bean.WxOpenCreateResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
-import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
-import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
-import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
-import me.chanjar.weixin.open.bean.result.WxOpenResult;
+import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -302,6 +299,31 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("authorizer_appid", authorizerAppid);
     String responseContent = post(API_GET_AUTHORIZER_INFO_URL, jsonObject.toString());
     return WxOpenGsonBuilder.create().fromJson(responseContent, WxOpenAuthorizerInfoResult.class);
+  }
+
+  @Override
+  public WxOpenAuthorizerListResult getAuthorizerList(int begin, int len) throws WxErrorException {
+
+    String url = String.format(API_GET_AUTHORIZER_LIST, getComponentAccessToken(false));
+    begin = begin < 0 ? 0 : begin;
+    len = len == 0 ? 10 : len;
+
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
+    jsonObject.addProperty("offset", begin);
+    jsonObject.addProperty("count", len);
+    String responseContent = post(url, jsonObject.toString());
+    WxOpenAuthorizerListResult ret = WxOpenGsonBuilder.create().fromJson(responseContent, WxOpenAuthorizerListResult.class);
+    if(ret != null && ret.getList() != null){
+      for(Map<String, String> data : ret.getList()){
+        String authorizerAppid = data.get("authorizer_appid");
+        String refreshToken = data.get("refresh_token");
+        if(authorizerAppid != null && refreshToken != null){
+          this.getWxOpenConfigStorage().setAuthorizerRefreshToken(authorizerAppid, refreshToken);
+        }
+      }
+    }
+    return ret;
   }
 
   @Override

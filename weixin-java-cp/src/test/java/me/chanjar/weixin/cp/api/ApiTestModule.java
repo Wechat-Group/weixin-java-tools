@@ -12,7 +12,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
-import me.chanjar.weixin.cp.config.WxCpInMemoryConfigStorage;
+import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 
 public class ApiTestModule implements Module {
   private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -44,13 +44,15 @@ public class ApiTestModule implements Module {
   }
 
   @XStreamAlias("xml")
-  public static class WxXmlCpInMemoryConfigStorage extends WxCpInMemoryConfigStorage {
+  public static class WxXmlCpInMemoryConfigStorage extends WxCpDefaultConfigImpl {
 
     protected String userId;
 
     protected String departmentId;
 
     protected String tagId;
+
+    protected String externalUserId;
 
     public String getUserId() {
       return this.userId;
@@ -76,12 +78,22 @@ public class ApiTestModule implements Module {
       this.tagId = tagId;
     }
 
+    public String getExternalUserId() {
+      return externalUserId;
+    }
+
+    public void setExternalUserId(String externalUserId) {
+      this.externalUserId = externalUserId;
+    }
+
     @Override
     public String toString() {
       return super.toString() + " > WxXmlCpConfigStorage{" +
         "userId='" + this.userId + '\'' +
         ", departmentId='" + this.departmentId + '\'' +
         ", tagId='" + this.tagId + '\'' +
+        ", externalUserId='" + this.externalUserId + '\'' +
+
         '}';
     }
   }

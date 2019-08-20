@@ -11,7 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.reflect.Type;
 
 /**
- * @author someone
+ * 群发消息json转换适配器.
+ *
+ * @author chanjarster
  */
 public class WxMpMassTagMessageGsonAdapter implements JsonSerializer<WxMpMassTagMessage> {
 

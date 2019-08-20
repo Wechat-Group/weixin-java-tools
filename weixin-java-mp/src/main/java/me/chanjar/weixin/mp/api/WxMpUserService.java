@@ -1,12 +1,12 @@
 package me.chanjar.weixin.mp.api;
 
-import java.util.List;
-
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.WxMpUserQuery;
 import me.chanjar.weixin.mp.bean.result.WxMpChangeOpenid;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUserList;
+
+import java.util.List;
 
 /**
  * 用户管理相关操作接口.
@@ -14,12 +14,6 @@ import me.chanjar.weixin.mp.bean.result.WxMpUserList;
  * @author Binary Wang
  */
 public interface WxMpUserService {
-  String USER_INFO_BATCH_GET_URL = "https://api.weixin.qq.com/cgi-bin/user/info/batchget";
-  String USER_GET_URL = "https://api.weixin.qq.com/cgi-bin/user/get";
-  String USER_INFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info";
-  String USER_INFO_UPDATE_REMARK_URL = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark";
-  String USER_CHANGE_OPENID_URL = "http://api.weixin.qq.com/cgi-bin/changeopenid";
-
   /**
    * <pre>
    * 设置用户备注名
@@ -87,7 +81,9 @@ public interface WxMpUserService {
   /**
    * <pre>
    * 获取用户列表
-   * 公众号可通过本接口来获取帐号的关注者列表，关注者列表由一串OpenID（加密后的微信号，每个用户对每个公众号的OpenID是唯一的）组成。一次拉取调用最多拉取10000个关注者的OpenID，可以通过多次拉取的方式来满足需求。
+   * 公众号可通过本接口来获取帐号的关注者列表，
+   * 关注者列表由一串OpenID（加密后的微信号，每个用户对每个公众号的OpenID是唯一的）组成。
+   * 一次拉取调用最多拉取10000个关注者的OpenID，可以通过多次拉取的方式来满足需求。
    * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140840&token=&lang=zh_CN
    * http请求方式: GET（请使用https协议）
    * 接口地址：https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&next_openid=NEXT_OPENID
@@ -101,11 +97,12 @@ public interface WxMpUserService {
    * <pre>
    * 微信公众号主体变更迁移用户 openid
    * 详情请见: http://kf.qq.com/faq/170221aUnmmU170221eUZJNf.html
+   * http://kf.qq.com/faq/1901177NrqMr190117nqYJze.html
    * http请求方式: POST
    * 接口地址：https://api.weixin.qq.com/cgi-bin/changeopenid?access_token=ACCESS_TOKEN
    * </pre>
    *
-   * @param fromAppid 原公众号的 appid
+   * @param fromAppid  原公众号的 appid
    * @param openidList 需要转换的openid，这些必须是旧账号目前关注的才行，否则会出错；一次最多100个
    */
   List<WxMpChangeOpenid> changeOpenid(String fromAppid, List<String> openidList) throws WxErrorException;

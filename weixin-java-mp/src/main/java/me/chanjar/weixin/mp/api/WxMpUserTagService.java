@@ -13,7 +13,6 @@ import java.util.List;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMpUserTagService {
-
   /**
    * <pre>
    * 创建标签

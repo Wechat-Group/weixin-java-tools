@@ -1,15 +1,10 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -118,9 +113,26 @@ public class WxCpUserExternalContactInfo {
     private String description;
     @SerializedName("createtime")
     private Long createTime;
+    private String state;
+    @SerializedName("remark_company")
+    private String remarkCompany;
+    @SerializedName("remark_mobiles")
+    private String[] remarkMobiles;
+    private Tag[] tags;
+
   }
 
   public static WxCpUserExternalContactInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserExternalContactInfo.class);
+  }
+
+  @Setter
+  @Getter
+  public static class Tag {
+    @SerializedName("group_name")
+    private String groupName;
+    @SerializedName("tag_name")
+    private String tagName;
+    private int type;
   }
 }

@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>3.4.0</version>
+    <version>3.5.0</version>
   </parent>
 
   <artifactId>weixin-java-miniapp</artifactId>
@@ -80,6 +80,12 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>
+ 	<dependency>
+	  <groupId>com.github.jedis-lock</groupId>
+	  <artifactId>jedis-lock</artifactId>
+	  <version>1.0.0</version>
+	  <optional>true</optional>
+	</dependency>
   </dependencies>
 
   <build>

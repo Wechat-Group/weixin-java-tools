@@ -12,7 +12,7 @@ import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 
 public class ApiTestModule implements Module {

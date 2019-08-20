@@ -1,17 +1,24 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import jodd.http.*;
+import jodd.http.HttpConnectionProvider;
+import jodd.http.HttpRequest;
+import jodd.http.HttpResponse;
+import jodd.http.JoddHttp;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 
+/**
+ * @author someone
+ */
 public class WxCpServiceJoddHttpImpl extends BaseWxCpServiceImpl<HttpConnectionProvider, ProxyInfo> {
-  protected HttpConnectionProvider httpClient;
-  protected ProxyInfo httpProxy;
-
+  private HttpConnectionProvider httpClient;
+  private ProxyInfo httpProxy;
 
   @Override
   public HttpConnectionProvider getRequestHttpClient() {
@@ -35,11 +42,8 @@ public class WxCpServiceJoddHttpImpl extends BaseWxCpServiceImpl<HttpConnectionP
     }
 
     synchronized (this.globalAccessTokenRefreshLock) {
-      String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"
-        + "&corpid=" + this.configStorage.getCorpId()
-        + "&corpsecret=" + this.configStorage.getCorpSecret();
-
-      HttpRequest request = HttpRequest.get(url);
+      HttpRequest request = HttpRequest.get(String.format(this.configStorage.getApiUrl(WxCpApiPathConsts.GET_TOKEN),
+        this.configStorage.getCorpId(), this.configStorage.getCorpSecret()));
       if (this.httpProxy != null) {
         httpClient.useProxy(this.httpProxy);
       }
@@ -60,7 +64,8 @@ public class WxCpServiceJoddHttpImpl extends BaseWxCpServiceImpl<HttpConnectionP
   @Override
   public void initHttp() {
     if (this.configStorage.getHttpProxyHost() != null && this.configStorage.getHttpProxyPort() > 0) {
-      httpProxy = new ProxyInfo(ProxyInfo.ProxyType.HTTP, configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort(), configStorage.getHttpProxyUsername(), configStorage.getHttpProxyPassword());
+      httpProxy = new ProxyInfo(ProxyInfo.ProxyType.HTTP, configStorage.getHttpProxyHost(),
+        configStorage.getHttpProxyPort(), configStorage.getHttpProxyUsername(), configStorage.getHttpProxyPassword());
     }
 
     httpClient = JoddHttp.httpConnectionProvider;

@@ -8,11 +8,15 @@ import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
 import me.chanjar.weixin.cp.bean.messagebuilder.*;
 import me.chanjar.weixin.cp.bean.taskcard.TaskCardButton;
+import me.chanjar.weixin.cp.constant.WxCpConsts;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static me.chanjar.weixin.common.api.WxConsts.KefuMsgType.*;
 
 /**
  * 消息.
@@ -40,9 +44,13 @@ public class WxCpMessage implements Serializable {
   private String btnTxt;
   private List<NewArticle> articles = new ArrayList<>();
   private List<MpnewsArticle> mpnewsArticles = new ArrayList<>();
+  private String appId;
+  private String page;
+  private Boolean emphasisFirstItem;
+  private Map<String, String> contentItems;
 
   /**
-   * 任务卡片特有的属性
+   * 任务卡片特有的属性.
    */
   private String taskId;
   private List<TaskCardButton> taskButtons = new ArrayList<>();
@@ -117,10 +125,16 @@ public class WxCpMessage implements Serializable {
     return new TaskCardBuilder();
   }
 
+  /**
+   * 获得小程序通知消息builder.
+   */
+  public static MiniProgramNoticeMsgBuilder newMiniProgramNoticeBuilder() {
+    return new MiniProgramNoticeMsgBuilder();
+  }
 
   /**
    * <pre>
-   * 请使用
+   * 请使用.
    * {@link KefuMsgType#TEXT}
    * {@link KefuMsgType#IMAGE}
    * {@link KefuMsgType#VOICE}
@@ -130,6 +144,7 @@ public class WxCpMessage implements Serializable {
    * {@link KefuMsgType#MPNEWS}
    * {@link KefuMsgType#MARKDOWN}
    * {@link KefuMsgType#TASKCARD}
+   * {@link KefuMsgType#MINIPROGRAM_NOTICE}
    * </pre>
    *
    * @param msgType 消息类型
@@ -169,19 +184,19 @@ public class WxCpMessage implements Serializable {
 
   private void handleMsgType(JsonObject messageJson) {
     switch (this.getMsgType()) {
-      case KefuMsgType.TEXT: {
+      case TEXT: {
         JsonObject text = new JsonObject();
         text.addProperty("content", this.getContent());
         messageJson.add("text", text);
         break;
       }
-      case KefuMsgType.MARKDOWN: {
+      case MARKDOWN: {
         JsonObject text = new JsonObject();
         text.addProperty("content", this.getContent());
         messageJson.add("markdown", text);
         break;
       }
-      case KefuMsgType.TEXTCARD: {
+      case TEXTCARD: {
         JsonObject text = new JsonObject();
         text.addProperty("title", this.getTitle());
         text.addProperty("description", this.getDescription());
@@ -190,25 +205,25 @@ public class WxCpMessage implements Serializable {
         messageJson.add("textcard", text);
         break;
       }
-      case KefuMsgType.IMAGE: {
+      case IMAGE: {
         JsonObject image = new JsonObject();
         image.addProperty("media_id", this.getMediaId());
         messageJson.add("image", image);
         break;
       }
-      case KefuMsgType.FILE: {
+      case FILE: {
         JsonObject image = new JsonObject();
         image.addProperty("media_id", this.getMediaId());
         messageJson.add("file", image);
         break;
       }
-      case KefuMsgType.VOICE: {
+      case VOICE: {
         JsonObject voice = new JsonObject();
         voice.addProperty("media_id", this.getMediaId());
         messageJson.add("voice", voice);
         break;
       }
-      case KefuMsgType.VIDEO: {
+      case VIDEO: {
         JsonObject video = new JsonObject();
         video.addProperty("media_id", this.getMediaId());
         video.addProperty("thumb_media_id", this.getThumbMediaId());
@@ -217,7 +232,7 @@ public class WxCpMessage implements Serializable {
         messageJson.add("video", video);
         break;
       }
-      case KefuMsgType.NEWS: {
+      case NEWS: {
         JsonObject newsJsonObject = new JsonObject();
         JsonArray articleJsonArray = new JsonArray();
         for (NewArticle article : this.getArticles()) {
@@ -232,7 +247,7 @@ public class WxCpMessage implements Serializable {
         messageJson.add("news", newsJsonObject);
         break;
       }
-      case KefuMsgType.MPNEWS: {
+      case MPNEWS: {
         JsonObject newsJsonObject = new JsonObject();
         if (this.getMediaId() != null) {
           newsJsonObject.addProperty("media_id", this.getMediaId());
@@ -255,7 +270,7 @@ public class WxCpMessage implements Serializable {
         messageJson.add("mpnews", newsJsonObject);
         break;
       }
-      case KefuMsgType.TASKCARD: {
+      case TASKCARD: {
         JsonObject text = new JsonObject();
         text.addProperty("title", this.getTitle());
         text.addProperty("description", this.getDescription());
@@ -289,6 +304,25 @@ public class WxCpMessage implements Serializable {
         text.add("btn", buttonJsonArray);
 
         messageJson.add("taskcard", text);
+        break;
+      }
+      case MINIPROGRAM_NOTICE: {
+        JsonObject notice = new JsonObject();
+        notice.addProperty("appid", this.getAppId());
+        notice.addProperty("page", this.getPage());
+        notice.addProperty("description", this.getDescription());
+        notice.addProperty("title", this.getTitle());
+        notice.addProperty("emphasis_first_item", this.getEmphasisFirstItem());
+        JsonArray content = new JsonArray();
+        for (Map.Entry<String, String> item : this.getContentItems().entrySet()) {
+          JsonObject articleJson = new JsonObject();
+          articleJson.addProperty("key", item.getKey());
+          articleJson.addProperty("value", item.getValue());
+          content.add(articleJson);
+        }
+        notice.add("content_item", content);
+
+        messageJson.add("miniprogram_notice", notice);
         break;
       }
       default: {
