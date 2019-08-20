@@ -142,10 +142,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       result.checkResult(this, this.getConfig().getSignType(), false);
       return result;
     } catch (WxPayException e) {
-      log.error(e.getMessage(), e);
       throw e;
     } catch (Exception e) {
-      log.error(e.getMessage(), e);
       throw new WxPayException("发生异常，" + e.getMessage(), e);
     }
   }
@@ -158,7 +156,6 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       log.debug("微信支付退款异步通知解析后的对象：{}", result);
       return result;
     } catch (Exception e) {
-      log.error(e.getMessage(), e);
       throw new WxPayException("发生异常，" + e.getMessage(), e);
     }
   }
@@ -172,10 +169,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       result.checkResult(this, this.getConfig().getSignType(), false);
       return result;
     } catch (WxPayException e) {
-      log.error(e.getMessage(), e);
       throw e;
     } catch (Exception e) {
-      log.error(e.getMessage(), e);
       throw new WxPayException("发生异常，" + e.getMessage(), e);
     }
 
@@ -527,13 +522,12 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
           throw WxPayException.from(BaseWxPayResult.fromXML(new String(responseBytes, StandardCharsets.UTF_8),
             WxPayCommonResult.class));
         } else {
-          this.log.error("解压zip文件出错", e);
+          throw new WxPayException("解压zip文件出错，" + e.getMessage(), e);
         }
       }
     } catch (Exception e) {
-      this.log.error("解析对账单文件时出错", e);
+      throw new WxPayException("解析对账单文件时出错，" + e.getMessage(), e);
     }
-
     return null;
   }
 
@@ -582,15 +576,13 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
           throw WxPayException.from(BaseWxPayResult.fromXML(new String(responseBytes, StandardCharsets.UTF_8),
             WxPayCommonResult.class));
         } else {
-          this.log.error("解压zip文件出错", e);
-          throw new WxPayException("解压zip文件出错");
+          throw new WxPayException("解压zip文件出错", e);
         }
       }
     } catch (WxPayException wxPayException) {
       throw wxPayException;
     } catch (Exception e) {
-      this.log.error("解析对账单文件时出错", e);
-      throw new WxPayException("解压zip文件出错");
+      throw new WxPayException("解压zip文件出错",e);
     }
   }
 
