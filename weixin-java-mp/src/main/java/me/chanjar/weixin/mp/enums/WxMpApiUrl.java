@@ -436,7 +436,9 @@ public interface WxMpApiUrl {
     /**
      * 身份证识别.
      */
-    IDCARD(API_DEFAULT_HOST_URL, "/cv/ocr/idcard?type=%s&img_url=%s");
+    IDCARD(API_DEFAULT_HOST_URL, "/cv/ocr/idcard?type=%s&img_url=%s"),
+
+    FILEIDCARD(API_DEFAULT_HOST_URL, "/cv/ocr/idcard?type=%s");
 
     private String prefix;
     private String path;
