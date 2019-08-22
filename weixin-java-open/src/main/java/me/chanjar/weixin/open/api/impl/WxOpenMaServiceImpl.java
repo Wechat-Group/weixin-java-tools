@@ -105,6 +105,16 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   /**
+   * 获取小程序的业务域名
+   *
+   * @return
+   */
+  @Override
+  public WxOpenResult getWebViewDomainInfo() throws WxErrorException {
+    return setWebViewDomainInfo("get", null);
+  }
+
+  /**
    * 设置小程序的业务域名
    *
    * @param action     add添加, delete删除, set覆盖
@@ -123,6 +133,20 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return response;
   }
 
+
+  /**
+   * 设置小程序的业务域名
+   *
+   * @param action     add添加, delete删除, set覆盖
+   * @return
+   */
+  @Override
+  public WxOpenResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException {
+    String response = this.setWebViewDomain(action, domainList);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
   /**
    * 获取小程序的信息,GET请求
    * <pre>
@@ -138,6 +162,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     String response = get(API_GET_ACCOUNT_BASICINFO, "");
     return response;
   }
+
 
   /**
    * 绑定小程序体验者
@@ -302,6 +327,22 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
+
+  /**
+   * 10. 修改小程序线上代码的可见状态（仅供第三方代小程序调用）
+   * @param action 设置可访问状态，发布后默认可访问，close为不可见，open为可见
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult changeVisitstatus(String action) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("action", action);
+    String response = post(API_CHANGE_VISITSTATUS, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
   /**
    * 11. 小程序版本回退（仅供第三方代小程序调用）
    *
@@ -313,6 +354,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     String response = get(API_REVERT_CODE_RELEASE, null);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
+
 
   /**
    * 15. 小程序审核撤回
@@ -330,7 +372,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   /**
-   * 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
+   * 12. 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
    *
    * @return
    * @throws WxErrorException
@@ -342,8 +384,21 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return response;
   }
 
+
   /**
-   * 设置最低基础库版本（仅供第三方代小程序调用）
+   * 12. 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenMaWeappSupportVersionResult getSupportVersionInfo() throws WxErrorException {
+    String response = this.getSupportVersion();
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaWeappSupportVersionResult.class);
+  }
+
+  /**
+   * 13. 设置最低基础库版本（仅供第三方代小程序调用）
    *
    * @param version
    * @return
@@ -356,6 +411,66 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     String response = post(API_SET_WEAPP_SUPPORT_VERSION, GSON.toJson(params));
     return response;
   }
+
+
+
+  /**
+   * 13. 设置最低基础库版本（仅供第三方代小程序调用）
+   *
+   * @param version
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult setSupportVersionInfo(String version) throws WxErrorException {
+    String response = this.setSupportVersion(version);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
+  /**
+   * 16. 小程序分阶段发布 - 1)分阶段发布接口
+   *
+   * @param grayPercentage 灰度的百分比，1到100的整数
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult grayrelease(Integer grayPercentage) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("gray_percentage", grayPercentage);
+    String response = post(API_GRAY_RELEASE, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
+  /**
+   * 16. 小程序分阶段发布 - 2)取消分阶段发布
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+
+  public WxOpenResult revertgrayrelease() throws WxErrorException {
+    String response = get(API_REVERT_GRAY_RELEASE, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
+  /**
+   * 16. 小程序分阶段发布 - 3)查询当前分阶段发布详情
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenMaGrayReleasePlanResult getgrayreleaseplan() throws WxErrorException {
+    String response = get(API_GET_GRAY_RELEASE_PLAN, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaGrayReleasePlanResult.class);
+  }
+
+
 
   /**
    * 将字符串对象转化为GsonArray对象

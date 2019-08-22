@@ -188,12 +188,29 @@ public interface WxOpenMaService extends WxMaService {
   String getWebViewDomain() throws WxErrorException;
 
   /**
+   * 获取小程序的业务域名
+   *
+   * @return
+   */
+  public WxOpenResult getWebViewDomainInfo() throws WxErrorException;
+
+  /**
    * 设置小程序的业务域名
    *
    * @param action add添加, delete删除, set覆盖
    * @return 直接返回字符串
    */
   String setWebViewDomain(String action, List<String> domainList) throws WxErrorException;
+
+
+  /**
+   * 设置小程序的业务域名
+   *
+   * @param action     add添加, delete删除, set覆盖
+   * @param domainList
+   * @return
+   */
+  WxOpenResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException;
 
   /**
    * 获取小程序的信息
@@ -273,6 +290,12 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenResult releaesAudited() throws WxErrorException;
 
   /**
+   * 10. 修改小程序线上代码的可见状态（仅供第三方代小程序调用）
+   */
+  public WxOpenResult changeVisitstatus(String action) throws WxErrorException;
+
+
+  /**
    * 11. 小程序版本回退（仅供第三方代小程序调用）
    */
   WxOpenResult revertCodeReleaes() throws WxErrorException;
@@ -289,8 +312,33 @@ public interface WxOpenMaService extends WxMaService {
   String getSupportVersion() throws WxErrorException;
 
   /**
+   * 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
+   */
+  WxOpenMaWeappSupportVersionResult getSupportVersionInfo() throws WxErrorException;
+
+  /**
    * 设置最低基础库版本（仅供第三方代小程序调用）
    */
   String setSupportVersion(String version) throws WxErrorException;
+
+  /**
+   * 设置最低基础库版本（仅供第三方代小程序调用）
+   */
+  WxOpenResult setSupportVersionInfo(String version) throws WxErrorException;
+
+  /**
+   * 16. 小程序分阶段发布 - 1)分阶段发布接口
+   */
+  WxOpenResult grayrelease(Integer grayPercentage) throws WxErrorException;
+
+  /**
+   * 16. 小程序分阶段发布 - 2)取消分阶段发布
+   */
+  WxOpenResult revertgrayrelease() throws WxErrorException;
+
+  /**
+   * 16. 小程序分阶段发布 - 3)查询当前分阶段发布详情
+   */
+  WxOpenMaGrayReleasePlanResult getgrayreleaseplan() throws WxErrorException;
 
 }
