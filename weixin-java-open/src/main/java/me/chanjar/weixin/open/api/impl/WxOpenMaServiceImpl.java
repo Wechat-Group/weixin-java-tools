@@ -137,7 +137,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   /**
    * 设置小程序的业务域名
    *
-   * @param action     add添加, delete删除, set覆盖
+   * @param action add添加, delete删除, set覆盖
    * @return
    */
   @Override
@@ -207,6 +207,58 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     String response = post(API_GET_TESTERLIST, GSON.toJson(paramJson));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaTesterListResult.class);
   }
+
+
+  /**
+   * 设置小程序隐私设置（是否可被搜索）
+   *
+   * @param status 1表示不可搜索，0表示可搜索
+   */
+  @Override
+  public WxOpenResult changeWxaSearchStatus(Integer status) throws WxErrorException {
+    JsonObject paramJson = new JsonObject();
+    paramJson.addProperty("status", status);
+    String response = post(API_CHANGE_WXA_SEARCH_STATUS, GSON.toJson(paramJson));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
+  /**
+   * 2. 查询小程序当前隐私设置（是否可被搜索）
+   */
+  @Override
+  public WxOpenMaSearchStatusResult getWxaSearchStatus() throws WxErrorException {
+    JsonObject paramJson = new JsonObject();
+    String response = post(API_GET_WXA_SEARCH_STATUS, GSON.toJson(paramJson));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaSearchStatusResult.class);
+  }
+
+
+  /**
+   * 3.1 获取展示的公众号信息
+   */
+  @Override
+  public WxOpenMaShowItemResult getShowWxaItem() throws WxErrorException {
+    String response = get(API_GET_SHOW_WXA_ITEM, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaShowItemResult.class);
+  }
+
+
+  /**
+   * 3.2 设置展示的公众号
+   *
+   * @param flag    0 关闭，1 开启
+   * @param mpappid 如果开启，需要传新的公众号appid
+   */
+  @Override
+  public WxOpenResult updateShowwxaitem(Integer flag, String mpappid) throws WxErrorException {
+    JsonObject paramJson = new JsonObject();
+    paramJson.addProperty("wxa_subscribe_biz_flag", flag);
+    paramJson.addProperty("appid", mpappid);
+    String response = post(API_UPDATE_SHOW_WXA_ITEM, GSON.toJson(paramJson));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
 
   /**
    * 1、为授权的小程序帐号上传小程序代码
@@ -330,6 +382,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
 
   /**
    * 10. 修改小程序线上代码的可见状态（仅供第三方代小程序调用）
+   *
    * @param action 设置可访问状态，发布后默认可访问，close为不可见，open为可见
    * @return
    * @throws WxErrorException
@@ -413,7 +466,6 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
 
-
   /**
    * 13. 设置最低基础库版本（仅供第三方代小程序调用）
    *
@@ -469,7 +521,6 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     String response = get(API_GET_GRAY_RELEASE_PLAN, null);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaGrayReleasePlanResult.class);
   }
-
 
 
   /**

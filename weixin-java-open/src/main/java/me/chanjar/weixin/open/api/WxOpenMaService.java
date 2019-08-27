@@ -71,6 +71,35 @@ public interface WxOpenMaService extends WxMaService {
   String API_GET_TESTERLIST = "https://api.weixin.qq.com/wxa/memberauth";
 
   /**
+   * 以下接口基础信息设置
+   * <p>
+   *     https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21517799059ZSEMr&token=6f965b5daf30a98a6bbd2a386faea5c934e929bf&lang=zh_CN
+   * </p>
+   */
+
+  /**
+   * 1. 设置小程序隐私设置（是否可被搜索）
+   */
+  String API_CHANGE_WXA_SEARCH_STATUS = "https://api.weixin.qq.com/wxa/changewxasearchstatus";
+
+  /**
+   * 2. 查询小程序当前隐私设置（是否可被搜索）
+   */
+  String API_GET_WXA_SEARCH_STATUS = "https://api.weixin.qq.com/wxa/getwxasearchstatus";
+
+  /**
+   * 3.1. 获取展示的公众号信息
+   */
+  String API_GET_SHOW_WXA_ITEM = "https://api.weixin.qq.com/wxa/getshowwxaitem";
+
+  /**
+   * 3.2 设置展示的公众号
+   */
+  String API_UPDATE_SHOW_WXA_ITEM = "https://api.weixin.qq.com/wxa/updateshowwxaitem";
+
+
+
+  /**
    * 以下接口为三方平台代小程序实现的代码管理功能
    * <p>
    *     https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4&token=fe774228c66725425675810097f9e48d0737a4bf&lang=zh_CN
@@ -237,6 +266,35 @@ public interface WxOpenMaService extends WxMaService {
    * 获得体验者列表
    */
   WxOpenMaTesterListResult getTesterList() throws WxErrorException;
+
+
+
+  /**
+   * 设置小程序隐私设置（是否可被搜索）
+   *
+   * @param status 1表示不可搜索，0表示可搜索
+   */
+  public WxOpenResult changeWxaSearchStatus(Integer status) throws WxErrorException;
+
+
+  /**
+   * 2. 查询小程序当前隐私设置（是否可被搜索）
+   */
+  public WxOpenMaSearchStatusResult getWxaSearchStatus() throws WxErrorException;
+
+  /**
+   * 3.1 获取展示的公众号信息
+   */
+  public WxOpenMaShowItemResult getShowWxaItem() throws WxErrorException;
+
+
+  /**
+   * 3.2 设置展示的公众号
+   *
+   * @param flag    0 关闭，1 开启
+   * @param mpappid 如果开启，需要传新的公众号appid
+   */
+  public WxOpenResult updateShowwxaitem(Integer flag, String mpappid) throws WxErrorException;
 
   /**
    * 1、为授权的小程序帐号上传小程序代码
