@@ -253,7 +253,7 @@ public interface WxOpenMaService extends WxMaService {
    * @return
    * @throws WxErrorException
    */
-  WxOpenResult bindTester(String wechatid) throws WxErrorException;
+  WxOpenMaBindTesterResult bindTester(String wechatid) throws WxErrorException;
 
   /**
    * 解除绑定小程序体验者

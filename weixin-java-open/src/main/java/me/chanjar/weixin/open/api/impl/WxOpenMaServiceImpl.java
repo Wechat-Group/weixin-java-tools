@@ -172,11 +172,11 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @throws WxErrorException
    */
   @Override
-  public WxOpenResult bindTester(String wechatid) throws WxErrorException {
+  public WxOpenMaBindTesterResult bindTester(String wechatid) throws WxErrorException {
     JsonObject paramJson = new JsonObject();
     paramJson.addProperty("wechatid", wechatid);
     String response = post(API_BIND_TESTER, GSON.toJson(paramJson));
-    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaBindTesterResult.class);
   }
 
   /**
