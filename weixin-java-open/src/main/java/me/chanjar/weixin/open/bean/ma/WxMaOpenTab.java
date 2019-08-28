@@ -18,4 +18,12 @@ public class WxMaOpenTab implements Serializable {
   private String text;
   private String iconPath;
   private String selectedIconPath;
+
+
+  public WxMaOpenTab(String pagePath, String text) {
+    this.pagePath = pagePath;
+    this.text = text;
+  }
+
+
 }
