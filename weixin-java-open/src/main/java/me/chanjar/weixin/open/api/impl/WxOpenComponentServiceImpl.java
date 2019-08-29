@@ -416,8 +416,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   public List<WxOpenMaCodeTemplate> getTemplateList() throws WxErrorException {
     String responseContent = get(GET_TEMPLATE_LIST_URL, "access_token");
     JsonObject response = JSON_PARSER.parse(StringUtils.defaultString(responseContent, "{}")).getAsJsonObject();
-    boolean hasDraftList = response.has("template_list");
-    if (hasDraftList) {
+    boolean hasTemplateList = response.has("template_list");
+    if (hasTemplateList) {
       return WxOpenGsonBuilder.create().fromJson(response.getAsJsonArray("template_list"),
         new TypeToken<List<WxOpenMaCodeTemplate>>() {
         }.getType());

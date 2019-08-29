@@ -16,6 +16,21 @@ import java.util.List;
 @Data
 public class WxOpenMaSubmitAuditMessage implements Serializable {
 
+  /**
+   * 提交审核项的一个列表（至少填写1项，至多填写5项）
+   */
   @SerializedName("item_list")
   private List<WxOpenMaSubmitAudit> itemList;
+
+  /**
+   * 反馈内容，不超过200字
+   */
+  @SerializedName("feedback_info")
+  private String feedbackInfo;
+
+  /**
+   * 图片media_id列表，中间用“丨”分割，xx丨yy丨zz，不超过5张图片, 其中 media_id 可以通过新增临时素材接口上传而得到
+   */
+  @SerializedName("feedback_stuff")
+  private String feedbackStuff;
 }
