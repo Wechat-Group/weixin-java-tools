@@ -94,6 +94,16 @@ public interface WxMpMemberCardService {
   ActivatePluginParam getActivatePluginParam(String cardId, String outStr) throws WxErrorException;
 
   /**
+   * 获取开卡组件链接接口
+   *
+   * @param cardId 会员卡的CardId，微信分配
+   * @param outStr 会员卡设置商户的渠道
+   * @return 会员卡开卡插件参数结果对象
+   * @throws WxErrorException 接口调用失败抛出的异常
+   */
+  String getActivatePluginUrl(String cardId, String outStr) throws WxErrorException;
+
+  /**
    * 更新会员卡信息.
    *
    * @param memberCardUpdateRequest 会员卡更新对象
