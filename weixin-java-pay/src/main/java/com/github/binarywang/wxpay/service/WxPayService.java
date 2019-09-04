@@ -650,6 +650,19 @@ public interface WxPayService {
   WxPayCouponInfoQueryResult queryCouponInfo(WxPayCouponInfoQueryRequest request) throws WxPayException;
 
   /**
+   * <pre>
+   * 获取微信刷脸支付凭证.
+   * 接口请求链接：https://payapp.weixin.qq.com/face/get_wxpayface_authinfo
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_5
+   * </pre>
+   *
+   * @param request the request
+   * @return the wx pay get face authinfo result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayFaceAuthInfoResult getWxPayFaceAuthInfo(WxPayFaceAuthInfoRequest request) throws WxPayException;
+
+  /**
    * 获取微信请求数据，方便接口调用方获取处理.
    *
    * @return the wx api data
