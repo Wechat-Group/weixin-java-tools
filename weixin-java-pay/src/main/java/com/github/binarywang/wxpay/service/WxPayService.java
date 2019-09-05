@@ -650,19 +650,6 @@ public interface WxPayService {
   WxPayCouponInfoQueryResult queryCouponInfo(WxPayCouponInfoQueryRequest request) throws WxPayException;
 
   /**
-   * <pre>
-   * 获取微信刷脸支付凭证.
-   * 接口请求链接：https://payapp.weixin.qq.com/face/get_wxpayface_authinfo
-   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_5
-   * </pre>
-   *
-   * @param request the request
-   * @return the wx pay get face authinfo result
-   * @throws WxPayException the wx pay exception
-   */
-  WxPayFaceAuthInfoResult getWxPayFaceAuthInfo(WxPayFaceAuthInfoRequest request) throws WxPayException;
-
-  /**
    * 获取微信请求数据，方便接口调用方获取处理.
    *
    * @return the wx api data
@@ -709,4 +696,37 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   String queryComment(WxPayQueryCommentRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 获取微信刷脸支付凭证.
+   * 接口请求链接：https://payapp.weixin.qq.com/face/get_wxpayface_authinfo
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_5
+   * </pre>
+   *
+   * @param request the request
+   * @return the wx pay get face authinfo result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayFaceAuthInfoResult getWxPayFaceAuthInfo(WxPayFaceAuthInfoRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 提交刷脸支付.
+   * 文档地址：https://share.weiyun.com/5dxUgCw
+   * 应用场景：
+   * 用户在商超，便利店，餐饮等场景，在屏幕上通过刷脸完成支付。
+   * 步骤1：用户在自助收银机上点击“刷脸支付”；
+   * 步骤2：发起人脸识别，摄像头自动抓取识别用户人脸，提示用户输入11位手机号码；
+   * 步骤3：商户收银系统提交刷脸支付；
+   * 步骤4：微信支付后台收到支付请求，验证人脸信息，返回支付结果给商户收银系统。
+   * 是否需要证书：不需要。
+   * </pre>
+   *
+   * @param request the request
+   * @return the wx pay facepay result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayFacepayResult facepay(WxPayFacepayRequest request) throws WxPayException;
+
 }
