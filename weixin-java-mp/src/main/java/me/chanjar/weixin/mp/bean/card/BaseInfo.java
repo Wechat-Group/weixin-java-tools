@@ -227,16 +227,6 @@ public class BaseInfo implements Serializable {
    */
   @SerializedName("promotion_app_brand_pass")
   private String promotionAppBrandPass;
-  /**
-   * 小程序的user_name,
-   */
-  @SerializedName("activate_app_brand_user_name")
-  private String activateAppBrandUserName;
-  /**
-   * 激活小程序页面地址
-   */
-  @SerializedName("activate_app_brand_pass")
-  private String activateAppBrandPass;
 
   @Override
   public String toString() {
