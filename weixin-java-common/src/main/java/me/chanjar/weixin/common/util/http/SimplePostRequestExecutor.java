@@ -36,7 +36,7 @@ public abstract class SimplePostRequestExecutor<H, P> implements RequestExecutor
       case OK_HTTP:
         return new OkHttpSimplePostRequestExecutor(requestHttp);
       default:
-        return null;
+        throw new IllegalArgumentException("非法请求参数");
     }
   }
 
