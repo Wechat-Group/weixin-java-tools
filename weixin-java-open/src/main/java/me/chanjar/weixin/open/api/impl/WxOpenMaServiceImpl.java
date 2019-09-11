@@ -228,8 +228,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    */
   @Override
   public WxOpenMaSearchStatusResult getWxaSearchStatus() throws WxErrorException {
-    JsonObject paramJson = new JsonObject();
-    String response = post(API_GET_WXA_SEARCH_STATUS, GSON.toJson(paramJson));
+    String response = get(API_GET_WXA_SEARCH_STATUS, null);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaSearchStatusResult.class);
   }
 
@@ -520,6 +519,32 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   public WxOpenMaGrayReleasePlanResult getgrayreleaseplan() throws WxErrorException {
     String response = get(API_GET_GRAY_RELEASE_PLAN, null);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaGrayReleasePlanResult.class);
+  }
+
+
+  /**
+   * 查询服务商的当月提审限额和加急次数（Quota）
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html
+   */
+  @Override
+  public WxOpenMaQueryQuotaResult queryQuota() throws WxErrorException {
+    String response = get(API_QUERY_QUOTA, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaQueryQuotaResult.class);
+  }
+
+
+
+  /**
+   * 加急审核申请
+   * 有加急次数的第三方可以通过该接口，对已经提审的小程序进行加急操作，加急后的小程序预计2-12小时内审完。
+   */
+  @Override
+  public Boolean speedAudit(Long auditid) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("auditid", auditid);
+    String response = post(API_SPEED_AUDIT, GSON.toJson(params));
+    WxOpenResult result = WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+    return result.isSuccess();
   }
 
 

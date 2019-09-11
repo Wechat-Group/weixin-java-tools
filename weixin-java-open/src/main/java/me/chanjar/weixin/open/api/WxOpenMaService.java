@@ -197,6 +197,17 @@ public interface WxOpenMaService extends WxMaService {
 
 
   /**
+   * 查询服务商的当月提审限额和加急次数（Quota）
+   */
+  String API_QUERY_QUOTA = "https://api.weixin.qq.com/wxa/queryquota";
+
+  /**
+   * 加急审核申请
+   */
+  String API_SPEED_AUDIT = "https://api.weixin.qq.com/wxa/speedupaudit";
+
+
+  /**
    * 获得小程序的域名配置信息
    */
   WxOpenMaDomainResult getDomain() throws WxErrorException;
@@ -396,5 +407,18 @@ public interface WxOpenMaService extends WxMaService {
    * 16. 小程序分阶段发布 - 3)查询当前分阶段发布详情
    */
   WxOpenMaGrayReleasePlanResult getgrayreleaseplan() throws WxErrorException;
+
+
+  /**
+   * 查询服务商的当月提审限额和加急次数（Quota）
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html
+   */
+  WxOpenMaQueryQuotaResult queryQuota() throws WxErrorException;
+
+  /**
+   * 加急审核申请
+   * 有加急次数的第三方可以通过该接口，对已经提审的小程序进行加急操作，加急后的小程序预计2-12小时内审完。
+   */
+  Boolean speedAudit(Long auditid) throws WxErrorException;
 
 }
