@@ -53,7 +53,7 @@ public class WxPayApiData {
   public String toString() {
     if (this.exceptionMsg != null) {
       return String.format("\n【请求地址】：%s\n【请求数据】：%s\n【异常信息】：%s",
-        this, url, this.requestData, this.exceptionMsg);
+        this.url, this.requestData, this.exceptionMsg);
     }
 
     return String.format("\n【请求地址】：%s\n【请求数据】：%s\n【响应数据】：%s",
