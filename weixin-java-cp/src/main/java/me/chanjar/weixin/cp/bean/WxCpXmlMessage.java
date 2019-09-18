@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XStreamCDataIntegerArrayConverter;
+import me.chanjar.weixin.common.util.xml.XStreamCDataLongArrayConverter;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
@@ -214,7 +216,7 @@ public class WxCpXmlMessage implements Serializable {
    * 成员部门列表，变更时推送，仅返回该应用有查看权限的部门id.
    */
   @XStreamAlias("Department")
-  @XStreamConverter(value = XStreamCDataConverter.class)
+  @XStreamConverter(value = XStreamCDataLongArrayConverter.class)
   private Long[] departments;
 
   /**
@@ -268,6 +270,7 @@ public class WxCpXmlMessage implements Serializable {
    * 表示所在部门是否为上级，0-否，1-是，顺序与Department字段的部门逐一对应.
    */
   @XStreamAlias("IsLeaderInDept")
+  @XStreamConverter(value = XStreamCDataIntegerArrayConverter.class)
   private Integer[] isLeaderInDept;
 
   /**
