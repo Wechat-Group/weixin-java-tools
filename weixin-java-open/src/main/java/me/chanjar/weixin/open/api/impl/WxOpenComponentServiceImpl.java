@@ -12,10 +12,7 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.open.api.*;
-import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
-import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
-import me.chanjar.weixin.open.bean.WxOpenCreateResult;
-import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
+import me.chanjar.weixin.open.bean.*;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.result.*;
@@ -449,6 +446,41 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
     return WxOpenCreateResult.fromJson(json);
   }
+
+
+  @Override
+  public Boolean bindOpenAccount(String appId, String openAppid) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("appid", appId);
+    param.addProperty("open_appid", openAppid);
+
+    String json = post(BIND_OPEN_URL, param.toString(), "access_token");
+
+    return WxOpenResult.fromJson(json).isSuccess();
+  }
+
+
+  @Override
+  public Boolean unbindOpenAccount(String appId, String openAppid) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("appid", appId);
+    param.addProperty("open_appid", openAppid);
+
+    String json = post(UNBIND_OPEN_URL, param.toString(), "access_token");
+
+    return WxOpenResult.fromJson(json).isSuccess();
+  }
+
+
+  @Override
+  public WxOpenGetResult getOpenAccount(String appId) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("appid", appId);
+
+    String json = post(GET_OPEN_URL, param.toString(), "access_token");
+    return WxOpenGetResult.fromJson(json);
+  }
+
 
   @Override
   public WxOpenResult fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException {

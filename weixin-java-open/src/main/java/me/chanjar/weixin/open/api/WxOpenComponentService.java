@@ -1,13 +1,16 @@
 package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.open.bean.WxOpenCreateResult;
+import me.chanjar.weixin.open.bean.WxOpenGetResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.result.*;
+import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
 import java.util.List;
 
@@ -46,6 +49,12 @@ public interface WxOpenComponentService {
   String MINIAPP_JSCODE_2_SESSION = "https://api.weixin.qq.com/sns/component/jscode2session?appid=%s&js_code=%s&grant_type=authorization_code&component_appid=%s";
 
   String CREATE_OPEN_URL = "https://api.weixin.qq.com/cgi-bin/open/create";
+
+  String BIND_OPEN_URL = "https://api.weixin.qq.com/cgi-bin/open/bind";
+
+  String UNBIND_OPEN_URL = "https://api.weixin.qq.com/cgi-bin/open/unbind";
+
+  String GET_OPEN_URL = "https://api.weixin.qq.com/cgi-bin/open/get";
 
   /**
    * 快速创建小程序接口.
@@ -211,6 +220,36 @@ public interface WxOpenComponentService {
    * @return .
    */
   WxOpenCreateResult createOpenAccount(String appId) throws WxErrorException;
+
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/account/bind.html
+   * 将公众号/小程序绑定到开放平台帐号下
+   *
+   * @param appId     公众号/小程序的appId
+   * @param openAppid 开放平台帐号 appid，由创建开发平台帐号接口返回
+   */
+  Boolean bindOpenAccount(String appId, String openAppid) throws WxErrorException;
+
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/account/unbind.html
+   * 将公众号/小程序从开放平台帐号下解绑
+   *
+   * @param appId     公众号/小程序的appId
+   * @param openAppid 开放平台帐号 appid，由创建开发平台帐号接口返回
+   */
+  Boolean unbindOpenAccount(String appId, String openAppid) throws WxErrorException;
+
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/account/get.html
+   * 获取公众号/小程序所绑定的开放平台帐号
+   *
+   * @param appId 公众号/小程序的appId
+   * @return 开放平台帐号 appid，由创建开发平台帐号接口返回
+   */
+  WxOpenGetResult getOpenAccount(String appId) throws WxErrorException;
 
   /**
    * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21538208049W8uwq&token=&lang=zh_CN
