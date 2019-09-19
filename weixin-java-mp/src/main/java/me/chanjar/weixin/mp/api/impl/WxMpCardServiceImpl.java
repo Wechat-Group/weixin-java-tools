@@ -348,7 +348,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     param.addProperty("is_open", isOpen);
     param.addProperty("need_verify_cod", needVerifyCod);
     param.addProperty("need_remark_amount", needRemarkAmount);
-    this.wxMpService.post(WxMpApiUrl.Card.CARD_PAYCELL_SET, param.toString());
+    this.wxMpService.post(WxMpApiUrl.Card.CARD_SELF_CONSUME_CELL_SET, param.toString());
   }
 
 
