@@ -506,7 +506,38 @@ public interface WxMpApiUrl {
     /**
      * 卡券删除.
      */
-    CARD_DELETE(API_DEFAULT_HOST_URL, "/card/delete");
+    CARD_DELETE(API_DEFAULT_HOST_URL, "/card/delete"),
+
+    /**
+     * 导入code接口.
+     */
+    CARD_CODE_DEPOSIT(API_DEFAULT_HOST_URL, "/card/code/deposit"),
+
+    /**
+     * 查询导入code数目接口
+     */
+    CARD_CODE_DEPOSIT_COUNT(API_DEFAULT_HOST_URL, "/card/code/getdepositcount"),
+
+    /**
+     * 核查code接口
+     */
+    CARD_CODE_CHECKCODE(API_DEFAULT_HOST_URL, "/card/code/checkcode"),
+
+    /**
+     * 图文消息群发卡券
+     */
+    CARD_MPNEWS_GETHTML(API_DEFAULT_HOST_URL, "/card/mpnews/gethtml"),
+
+    /**
+     * 修改库存接口
+     */
+    CARD_MODIFY_STOCK(API_DEFAULT_HOST_URL, "/card/modifystock"),
+
+    /**
+     * 更改Code接口
+     */
+    CARD_CODE_UPDATE(API_DEFAULT_HOST_URL, "/card/code/update"),
+    ;
 
     private String prefix;
     private String path;
@@ -694,7 +725,25 @@ public interface WxMpApiUrl {
     /**
      * 删除群发接口.
      */
-    MESSAGE_MASS_DELETE_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/mass/delete");
+    MESSAGE_MASS_DELETE_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/mass/delete"),
+
+
+    /**
+     * 获取群发速度.
+     */
+    MESSAGE_MASS_SPEED_GET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/mass/speed/get"),
+
+
+    /**
+     * 设置群发速度.
+     */
+    MESSAGE_MASS_SPEED_SET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/mass/speed/set"),
+
+
+    /**
+     * 查询群发消息发送状态【订阅号与服务号认证后均可用】
+     */
+    MESSAGE_MASS_GET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/mass/get");
 
     private String prefix;
     private String path;

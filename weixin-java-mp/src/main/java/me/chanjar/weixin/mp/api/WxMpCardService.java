@@ -1,8 +1,16 @@
 package me.chanjar.weixin.mp.api;
 
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
+import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.bean.card.*;
+import me.chanjar.weixin.mp.bean.result.WxMpResult;
+import me.chanjar.weixin.mp.enums.WxMpApiUrl;
+
+import java.util.List;
 
 /**
  * 卡券相关接口.
@@ -206,5 +214,56 @@ public interface WxMpCardService {
    * @throws WxErrorException 异常
    */
   WxMpCardDeleteResult deleteCard(String cardId) throws WxErrorException;
+
+
+  /**
+   * 导入自定义code(仅对自定义code商户)
+   *
+   * @param cardId   卡券id
+   * @param codeList 需导入微信卡券后台的自定义code，上限为100个。
+   */
+  WxMpCardCodeDepositResult cardCodeDeposit(String cardId, List<String> codeList) throws WxErrorException;
+
+  /**
+   * 查询导入code数目接口
+   *
+   * @param cardId 卡券id
+   */
+  WxMpCardCodeDepositCountResult cardCodeDepositCount(String cardId) throws WxErrorException;
+
+
+  /**
+   * 核查code接口
+   *
+   * @param cardId   卡券id
+   * @param codeList 已经微信卡券后台的自定义code，上限为100个
+   */
+  WxMpCardCodeCheckcodeResult cardCodeCheckcode(String cardId, List<String> codeList) throws WxErrorException;
+
+  /**
+   * 图文消息群发卡券获取内嵌html
+   *
+   * @param cardId 卡券id
+   */
+  WxMpCardMpnewsGethtmlResult cardMpnewsGethtml(String cardId) throws WxErrorException;
+
+
+  /**
+   * 修改库存接口
+   * https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#5
+   * @param cardId      卡券ID
+   * @param changeValue 库存变更值，负值为减少库存
+   */
+  void cardModifyStock(String cardId, Integer changeValue) throws WxErrorException;
+
+
+  /**
+   * 更改Code接口
+   * https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#6
+   * @param cardId  卡券ID
+   * @param oldCode 需变更的Code码
+   * @param newCode 变更后的有效Code码
+   */
+  void cardCodeUpdate(String cardId, String oldCode, String newCode) throws WxErrorException;
 
 }

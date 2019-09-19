@@ -632,7 +632,17 @@ public enum WxMpErrorMsgEnum {
   /**
    * 查询起始值 begin 不合法.
    */
-  CODE_9001036(9001036, "查询起始值 begin 不合法");
+  CODE_9001036(9001036, "查询起始值 begin 不合法"),
+
+  /**
+   * 设置的 speed 参数不在0到4的范围内
+   */
+  CODE_45083(45083, "设置的 speed 参数不在0到4的范围内"),
+
+  /**
+   * 没有设置 speed 参数
+   */
+  CODE_45084(45084, "没有设置 speed 参数");
 
   private int code;
   private String msg;

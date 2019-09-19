@@ -9,9 +9,11 @@ import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpCardService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.card.*;
+import me.chanjar.weixin.mp.bean.result.WxMpResult;
 import me.chanjar.weixin.mp.enums.TicketType;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
@@ -19,6 +21,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -241,12 +244,94 @@ public class WxMpCardServiceImpl implements WxMpCardService {
 
   @Override
   public WxMpCardDeleteResult deleteCard(String cardId) throws WxErrorException {
-    if (StringUtils.isEmpty(cardId)) {
-      throw new WxErrorException(WxError.builder().errorCode(41012).errorMsg("cardId不能为空").build());
-    }
+    checkCardId(cardId);
     JsonObject param = new JsonObject();
     param.addProperty("card_id", cardId);
     String response = this.wxMpService.post(WxMpApiUrl.Card.CARD_DELETE, param.toString());
     return WxMpCardDeleteResult.fromJson(response);
+  }
+
+
+  @Override
+  public WxMpCardCodeDepositResult cardCodeDeposit(String cardId, List<String> codeList) throws WxErrorException {
+    checkCardId(cardId);
+    if (codeList.size() == 0 || codeList.size() > 100) {
+      throw new WxErrorException(WxError.builder().errorCode(40109).errorMsg("code数量为0或者code数量超过100个").build());
+    }
+    JsonObject param = new JsonObject();
+    param.addProperty("card_id", cardId);
+    param.add("code",
+      WxGsonBuilder.create().toJsonTree(codeList, new TypeToken<List<String>>() {
+      }.getType()).getAsJsonArray());
+    String response = this.wxMpService.post(WxMpApiUrl.Card.CARD_CODE_DEPOSIT, param.toString());
+    return WxMpCardCodeDepositResult.fromJson(response);
+  }
+
+
+  @Override
+  public WxMpCardCodeDepositCountResult cardCodeDepositCount(String cardId) throws WxErrorException {
+    checkCardId(cardId);
+    JsonObject param = new JsonObject();
+    param.addProperty("card_id", cardId);
+    String response = this.wxMpService.post(WxMpApiUrl.Card.CARD_CODE_DEPOSIT_COUNT, param.toString());
+    return WxMpCardCodeDepositCountResult.fromJson(response);
+  }
+
+
+  @Override
+  public WxMpCardCodeCheckcodeResult cardCodeCheckcode(String cardId, List<String> codeList) throws WxErrorException {
+    checkCardId(cardId);
+    if (codeList.size() == 0 || codeList.size() > 100) {
+      throw new WxErrorException(WxError.builder().errorCode(40109).errorMsg("code数量为0或者code数量超过100个").build());
+    }
+    JsonObject param = new JsonObject();
+    param.addProperty("card_id", cardId);
+    param.add("code",
+      WxGsonBuilder.create().toJsonTree(codeList, new TypeToken<List<String>>() {
+      }.getType()).getAsJsonArray());
+    String response = this.wxMpService.post(WxMpApiUrl.Card.CARD_CODE_CHECKCODE, param.toString());
+    return WxMpCardCodeCheckcodeResult.fromJson(response);
+  }
+
+
+  @Override
+  public WxMpCardMpnewsGethtmlResult cardMpnewsGethtml(String cardId) throws WxErrorException {
+    checkCardId(cardId);
+    JsonObject param = new JsonObject();
+    param.addProperty("card_id", cardId);
+    String response = this.wxMpService.post(WxMpApiUrl.Card.CARD_MPNEWS_GETHTML, param.toString());
+    return WxMpCardMpnewsGethtmlResult.fromJson(response);
+  }
+
+
+  @Override
+  public void cardModifyStock(String cardId, Integer changeValue) throws WxErrorException {
+    checkCardId(cardId);
+    JsonObject param = new JsonObject();
+    param.addProperty("card_id", cardId);
+    if (changeValue > 0) {
+      param.addProperty("increase_stock_value", changeValue);
+    } else {
+      param.addProperty("reduce_stock_value", Math.abs(changeValue));
+    }
+    this.wxMpService.post(WxMpApiUrl.Card.CARD_MODIFY_STOCK, param.toString());
+  }
+
+
+  @Override
+  public void cardCodeUpdate(String cardId, String oldCode, String newCode) throws WxErrorException {
+    checkCardId(cardId);
+    JsonObject param = new JsonObject();
+    param.addProperty("card_id", cardId);
+    param.addProperty("code", oldCode);
+    param.addProperty("new_code", newCode);
+    this.wxMpService.post(WxMpApiUrl.Card.CARD_CODE_UPDATE, param.toString());
+  }
+
+
+  private void checkCardId(String cardId) throws WxErrorException {
+    if (StringUtils.isEmpty(cardId)) {
+      throw new WxErrorException(WxError.builder().errorCode(41012).errorMsg("cardId不能为空").build());
+    }
   }
 }
