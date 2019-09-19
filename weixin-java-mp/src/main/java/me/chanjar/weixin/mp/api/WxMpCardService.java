@@ -1,14 +1,8 @@
 package me.chanjar.weixin.mp.api;
 
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
-import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.bean.card.*;
-import me.chanjar.weixin.mp.bean.result.WxMpResult;
-import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 
 import java.util.List;
 
@@ -251,6 +245,7 @@ public interface WxMpCardService {
   /**
    * 修改库存接口
    * https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#5
+   *
    * @param cardId      卡券ID
    * @param changeValue 库存变更值，负值为减少库存
    */
@@ -260,10 +255,32 @@ public interface WxMpCardService {
   /**
    * 更改Code接口
    * https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#6
+   *
    * @param cardId  卡券ID
    * @param oldCode 需变更的Code码
    * @param newCode 变更后的有效Code码
    */
   void cardCodeUpdate(String cardId, String oldCode, String newCode) throws WxErrorException;
+
+  /**
+   * 设置买单接口
+   * https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Create_a_Coupon_Voucher_or_Card.html#12
+   *
+   * @param cardId 卡券ID
+   * @param isOpen 是否开启买单功能，填true/false
+   */
+  void cardPaycellSet(String cardId, Boolean isOpen) throws WxErrorException;
+
+  /**
+   * 设置自助核销
+   * https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Create_a_Coupon_Voucher_or_Card.html#14
+   *
+   * @param cardId           卡券ID
+   * @param isOpen           是否开启自助核销功能
+   * @param needVerifyCod    用户核销时是否需要输入验证码， 填true/false， 默认为false
+   * @param needRemarkAmount 用户核销时是否需要备注核销金额， 填true/false， 默认为false
+   */
+  void cardSelfConsumeCellSet(String cardId, Boolean isOpen,
+                              Boolean needVerifyCod, Boolean needRemarkAmount) throws WxErrorException;
 
 }

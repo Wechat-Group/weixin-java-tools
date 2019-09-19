@@ -329,6 +329,29 @@ public class WxMpCardServiceImpl implements WxMpCardService {
   }
 
 
+  @Override
+  public void cardPaycellSet(String cardId, Boolean isOpen) throws WxErrorException {
+    checkCardId(cardId);
+    JsonObject param = new JsonObject();
+    param.addProperty("card_id", cardId);
+    param.addProperty("is_open", isOpen);
+    this.wxMpService.post(WxMpApiUrl.Card.CARD_PAYCELL_SET, param.toString());
+  }
+
+
+  @Override
+  public void cardSelfConsumeCellSet(String cardId, Boolean isOpen,
+                                     Boolean needVerifyCod, Boolean needRemarkAmount) throws WxErrorException {
+    checkCardId(cardId);
+    JsonObject param = new JsonObject();
+    param.addProperty("card_id", cardId);
+    param.addProperty("is_open", isOpen);
+    param.addProperty("need_verify_cod", needVerifyCod);
+    param.addProperty("need_remark_amount", needRemarkAmount);
+    this.wxMpService.post(WxMpApiUrl.Card.CARD_PAYCELL_SET, param.toString());
+  }
+
+
   private void checkCardId(String cardId) throws WxErrorException {
     if (StringUtils.isEmpty(cardId)) {
       throw new WxErrorException(WxError.builder().errorCode(41012).errorMsg("cardId不能为空").build());

@@ -537,6 +537,16 @@ public interface WxMpApiUrl {
      * 更改Code接口
      */
     CARD_CODE_UPDATE(API_DEFAULT_HOST_URL, "/card/code/update"),
+
+    /**
+     * 设置买单接口
+     */
+    CARD_PAYCELL_SET(API_DEFAULT_HOST_URL, "/card/paycell/set"),
+
+    /**
+     * 设置自助核销接口
+     */
+    CARD_SELF_CONSUME_CELL_SET(API_DEFAULT_HOST_URL, "/card/selfconsumecell/set"),
     ;
 
     private String prefix;
