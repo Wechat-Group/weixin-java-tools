@@ -13,7 +13,6 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpCardService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.card.*;
-import me.chanjar.weixin.mp.bean.result.WxMpResult;
 import me.chanjar.weixin.mp.enums.TicketType;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
