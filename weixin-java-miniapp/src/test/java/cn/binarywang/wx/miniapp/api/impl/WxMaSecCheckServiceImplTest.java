@@ -38,12 +38,13 @@ public class WxMaSecCheckServiceImplTest {
     return new Object[][]{
       {"特3456书yuuo莞6543李zxcz蒜7782法fgnv级", false},
       {"完2347全dfji试3726测asad感3847知qwez到", false},
+      {"提现&下载&棋牌游戏&网页", false},
       {"hello world!", true}
     };
   }
 
   @Test(dataProvider = "secData")
-  public void testCheckMessage(String msg, boolean result) {
+  public void testCheckMessage(String msg, boolean result) throws WxErrorException {
     assertThat(this.wxService.getSecCheckService()
       .checkMessage(msg))
       .isEqualTo(result);
