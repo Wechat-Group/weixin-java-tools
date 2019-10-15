@@ -3,6 +3,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaMsgService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
+import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaUniformMessage;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
@@ -30,6 +31,15 @@ public class WxMaMsgServiceImpl implements WxMaMsgService {
   @Override
   public void sendTemplateMsg(WxMaTemplateMessage templateMessage) throws WxErrorException {
     String responseContent = this.wxMaService.post(TEMPLATE_MSG_SEND_URL, templateMessage.toJson());
+    JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
+    if (jsonObject.get(WxMaConstants.ERRCODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+  }
+
+  @Override
+  public void sendSubscribeMsg(WxMaSubscribeMessage subscribeMessage) throws WxErrorException {
+    String responseContent = this.wxMaService.post(SUBSCRIBE_MSG_SEND_URL, subscribeMessage.toJson());
     JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
     if (jsonObject.get(WxMaConstants.ERRCODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
