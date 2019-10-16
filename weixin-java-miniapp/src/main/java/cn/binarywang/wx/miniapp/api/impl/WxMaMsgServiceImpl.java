@@ -28,6 +28,11 @@ public class WxMaMsgServiceImpl implements WxMaMsgService {
     return responseContent != null;
   }
 
+  /**
+   * <pre>
+   * 小程序模板消息接口将于2020年1月10日下线，开发者可使用订阅消息功能
+   * </pre>
+   */
   @Override
   public void sendTemplateMsg(WxMaTemplateMessage templateMessage) throws WxErrorException {
     String responseContent = this.wxMaService.post(TEMPLATE_MSG_SEND_URL, templateMessage.toJson());
