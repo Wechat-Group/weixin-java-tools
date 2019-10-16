@@ -965,7 +965,17 @@ public interface WxMpApiUrl {
     /**
      * 二维码/条码识别(文件)
      */
-    FILE_QRCODE(API_DEFAULT_HOST_URL, "/cv/img/qrcode");
+    FILE_QRCODE(API_DEFAULT_HOST_URL, "/cv/img/qrcode"),
+
+    /**
+     * 图片高清化
+     */
+    SUPER_RESOLUTION(API_DEFAULT_HOST_URL, "/cv/img/superresolution?img_url=%s"),
+
+    /**
+     * 图片高清化(文件)
+     */
+    FILE_SUPER_RESOLUTION(API_DEFAULT_HOST_URL, "/cv/img/superresolution");
 
     private String prefix;
     private String path;

@@ -7,6 +7,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConstants;
 import me.chanjar.weixin.mp.bean.imgproc.WxMpImgProcQrCodeResult;
+import me.chanjar.weixin.mp.bean.imgproc.WxMpImgProcSuperResolutionResult;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
@@ -37,6 +38,21 @@ public class WxMpImgProcServiceImplTest {
     InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
     File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
     final WxMpImgProcQrCodeResult result = this.mpService.getImgProcService().qrCode(tempFile);
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testSuperResolution() throws WxErrorException {
+    final WxMpImgProcSuperResolutionResult result = this.mpService.getImgProcService().superResolution("https://gitee.com/binary/weixin-java-tools/raw/master/images/qrcodes/mp.png");
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  public void testSuperResolution2() throws Exception {
+    InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
+    File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
+    final WxMpImgProcSuperResolutionResult result = this.mpService.getImgProcService().superResolution(tempFile);
     assertThat(result).isNotNull();
     System.out.println(result);
   }
@@ -111,6 +127,20 @@ public class WxMpImgProcServiceImplTest {
       when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
       final WxMpImgProcService wxMpImgProcService = new WxMpImgProcServiceImpl(wxService);
       final WxMpImgProcQrCodeResult result = wxMpImgProcService.qrCode("abc");
+      assertThat(result).isNotNull();
+      System.out.println(result);
+    }
+
+    @Test
+    public void testSuperResolution() throws Exception {
+      String returnJson = "{\n" +
+        "    \"errcode\": 0, \n" +
+        "    \"errmsg\": \"ok\", \n" +
+        "    \"media_id\": \"6WXsIXkG7lXuDLspD9xfm5dsvHzb0EFl0li6ySxi92ap8Vl3zZoD9DpOyNudeJGB\"\n" +
+        "}";
+      when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
+      final WxMpImgProcService wxMpImgProcService = new WxMpImgProcServiceImpl(wxService);
+      final WxMpImgProcSuperResolutionResult result = wxMpImgProcService.superResolution("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }
