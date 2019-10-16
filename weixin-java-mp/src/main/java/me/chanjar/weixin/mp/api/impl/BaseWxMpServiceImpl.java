@@ -67,6 +67,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpMarketingService marketingService = new WxMpMarketingServiceImpl(this);
   private WxMpCommentService commentService = new WxMpCommentServiceImpl(this);
   private WxMpOcrService ocrService = new WxMpOcrServiceImpl(this);
+  private WxMpImgProcService imgProcService = new WxMpImgProcServiceImpl(this);
 
   private Map<String, WxMpConfigStorage> configStorageMap;
 
@@ -646,5 +647,15 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void setCommentService(WxMpCommentService commentService) {
     this.commentService = commentService;
+  }
+
+  @Override
+  public WxMpImgProcService getImgProcService() {
+    return this.imgProcService;
+  }
+
+  @Override
+  public void setImgProcService(WxMpImgProcService imgProcService) {
+    this.imgProcService = imgProcService;
   }
 }

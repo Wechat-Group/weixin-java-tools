@@ -523,6 +523,12 @@ public interface WxMpService {
   WxMpOcrService getOcrService();
 
   /**
+   * 返回图像处理接口的实现类对象，以方便调用其各个接口.
+   * @return WxMpImgProcService
+   */
+  WxMpImgProcService getImgProcService();
+
+  /**
    * .
    *
    * @param kefuService .
@@ -647,6 +653,13 @@ public interface WxMpService {
    * @param ocrService .
    */
   void setOcrService(WxMpOcrService ocrService);
+
+  /**
+   * .
+   *
+   * @param imgProcService .
+   */
+  void setImgProcService(WxMpImgProcService imgProcService);
 
   /**
    * 返回评论数据管理接口方法的实现类对象，以方便调用其各个接口.
