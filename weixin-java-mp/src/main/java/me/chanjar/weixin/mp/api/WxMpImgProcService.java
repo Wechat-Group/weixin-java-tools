@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.bean.imgproc.WxMpImgProcAiCropResult;
 import me.chanjar.weixin.mp.bean.imgproc.WxMpImgProcQrCodeResult;
 import me.chanjar.weixin.mp.bean.imgproc.WxMpImgProcSuperResolutionResult;
 
@@ -69,4 +70,52 @@ public interface WxMpImgProcService {
    * @throws WxErrorException .
    */
   WxMpImgProcSuperResolutionResult superResolution(File imgFile) throws WxErrorException;
+
+  /**
+   * 图片智能裁剪接口
+   * 说明：
+   * 1.图片支持使用img参数实时上传，也支持使用img_url参数传送图片地址，由微信后台下载图片进行识别
+   * 2.文件大小限制：小于2M
+   * 3.该接口默认使用最佳宽高比
+   * @param imgUrl 图片url地址
+   * @return WxMpImgProcAiCropResult
+   * @throws WxErrorException .
+   */
+  WxMpImgProcAiCropResult aiCrop(String imgUrl) throws WxErrorException;
+
+  /**
+   * 图片智能裁剪接口
+   * 说明：
+   * 1.图片支持使用img参数实时上传，也支持使用img_url参数传送图片地址，由微信后台下载图片进行识别
+   * 2.文件大小限制：小于2M
+   * @param imgUrl 图片url地址
+   * @param ratios 宽高比，最多支持5个，请以英文逗号分隔
+   * @return WxMpImgProcAiCropResult
+   * @throws WxErrorException .
+   */
+  WxMpImgProcAiCropResult aiCrop(String imgUrl, String ratios) throws WxErrorException;
+
+  /**
+   * 图片智能裁剪接口
+   * 说明：
+   * 1.图片支持使用img参数实时上传，也支持使用img_url参数传送图片地址，由微信后台下载图片进行识别
+   * 2.文件大小限制：小于2M
+   * 3.该接口默认使用最佳宽高比
+   * @param imgFile 图片文件对象
+   * @return WxMpImgProcAiCropResult
+   * @throws WxErrorException .
+   */
+  WxMpImgProcAiCropResult aiCrop(File imgFile) throws WxErrorException;
+
+  /**
+   * 图片智能裁剪接口
+   * 说明：
+   * 1.图片支持使用img参数实时上传，也支持使用img_url参数传送图片地址，由微信后台下载图片进行识别
+   * 2.文件大小限制：小于2M
+   * @param imgFile 图片文件对象
+   * @param ratios 宽高比，最多支持5个，请以英文逗号分隔
+   * @return WxMpImgProcAiCropResult
+   * @throws WxErrorException .
+   */
+  WxMpImgProcAiCropResult aiCrop(File imgFile, String ratios) throws WxErrorException;
 }

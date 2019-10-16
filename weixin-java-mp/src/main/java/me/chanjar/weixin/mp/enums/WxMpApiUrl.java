@@ -975,7 +975,17 @@ public interface WxMpApiUrl {
     /**
      * 图片高清化(文件)
      */
-    FILE_SUPER_RESOLUTION(API_DEFAULT_HOST_URL, "/cv/img/superresolution");
+    FILE_SUPER_RESOLUTION(API_DEFAULT_HOST_URL, "/cv/img/superresolution"),
+
+    /**
+     * 图片智能裁剪
+     */
+    AI_CROP(API_DEFAULT_HOST_URL, "/cv/img/aicrop?img_url=%s&ratios=%s"),
+
+    /**
+     * 图片智能裁剪(文件)
+     */
+    FILE_AI_CROP(API_DEFAULT_HOST_URL, "/cv/img/aicrop?ratios=%s");
 
     private String prefix;
     private String path;

@@ -6,6 +6,7 @@ import me.chanjar.weixin.mp.api.WxMpImgProcService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConstants;
+import me.chanjar.weixin.mp.bean.imgproc.WxMpImgProcAiCropResult;
 import me.chanjar.weixin.mp.bean.imgproc.WxMpImgProcQrCodeResult;
 import me.chanjar.weixin.mp.bean.imgproc.WxMpImgProcSuperResolutionResult;
 import org.testng.annotations.Guice;
@@ -49,10 +50,43 @@ public class WxMpImgProcServiceImplTest {
     System.out.println(result);
   }
 
+  @Test
   public void testSuperResolution2() throws Exception {
     InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
     File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
     final WxMpImgProcSuperResolutionResult result = this.mpService.getImgProcService().superResolution(tempFile);
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testAiCrop() throws WxErrorException {
+    final WxMpImgProcAiCropResult result = this.mpService.getImgProcService().aiCrop("https://gitee.com/binary/weixin-java-tools/raw/master/images/qrcodes/mp.png");
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testAiCrop2() throws WxErrorException {
+    final WxMpImgProcAiCropResult result = this.mpService.getImgProcService().aiCrop("https://gitee.com/binary/weixin-java-tools/raw/master/images/qrcodes/mp.png", "1,2.35");
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testAiCrop3() throws Exception {
+    InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
+    File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
+    final WxMpImgProcAiCropResult result = this.mpService.getImgProcService().aiCrop(tempFile);
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testAiCrop4() throws Exception {
+    InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
+    File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
+    final WxMpImgProcAiCropResult result = this.mpService.getImgProcService().aiCrop(tempFile, "1,2.35,3.5");
     assertThat(result).isNotNull();
     System.out.println(result);
   }
@@ -141,6 +175,37 @@ public class WxMpImgProcServiceImplTest {
       when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
       final WxMpImgProcService wxMpImgProcService = new WxMpImgProcServiceImpl(wxService);
       final WxMpImgProcSuperResolutionResult result = wxMpImgProcService.superResolution("abc");
+      assertThat(result).isNotNull();
+      System.out.println(result);
+    }
+
+    @Test
+    public void testAiCrop() throws Exception {
+      String returnJson = "{\n" +
+        "    \"errcode\": 0, \n" +
+        "    \"errmsg\": \"ok\", \n" +
+        "    \"results\": [ //智能裁剪结果\n" +
+        "        {\n" +
+        "            \"crop_left\": 112, \n" +
+        "            \"crop_top\": 0, \n" +
+        "            \"crop_right\": 839, \n" +
+        "            \"crop_bottom\": 727\n" +
+        "        }, \n" +
+        "        {\n" +
+        "            \"crop_left\": 0, \n" +
+        "            \"crop_top\": 205, \n" +
+        "            \"crop_right\": 965, \n" +
+        "            \"crop_bottom\": 615\n" +
+        "        }\n" +
+        "    ], \n" +
+        "    \"img_size\": { //图片大小\n" +
+        "        \"w\": 966, \n" +
+        "        \"h\": 728\n" +
+        "    }\n" +
+        "}";
+      when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
+      final WxMpImgProcService wxMpImgProcService = new WxMpImgProcServiceImpl(wxService);
+      final WxMpImgProcAiCropResult result = wxMpImgProcService.aiCrop("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }
