@@ -442,7 +442,17 @@ public interface WxMpApiUrl {
      */
     IDCARD(API_DEFAULT_HOST_URL, "/cv/ocr/idcard?type=%s&img_url=%s"),
 
-    FILEIDCARD(API_DEFAULT_HOST_URL, "/cv/ocr/idcard?type=%s");
+    FILEIDCARD(API_DEFAULT_HOST_URL, "/cv/ocr/idcard?type=%s"),
+
+    /**
+     * 银行卡OCR识别
+     */
+    BANK_CARD(API_DEFAULT_HOST_URL, "/cv/ocr/bankcard?img_url=%s"),
+
+    /**
+     * 银行卡OCR识别(文件)
+     */
+    FILE_BANK_CARD(API_DEFAULT_HOST_URL, "/cv/ocr/bankcard");
 
     private String prefix;
     private String path;
