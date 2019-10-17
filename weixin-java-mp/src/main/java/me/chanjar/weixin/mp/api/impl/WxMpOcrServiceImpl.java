@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpOcrService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBankCardResult;
+import me.chanjar.weixin.mp.bean.ocr.WxMpOcrDrivingResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrIdCardResult;
 import me.chanjar.weixin.mp.util.requestexecuter.ocr.OcrDiscernRequestExecutor;
 
@@ -14,8 +15,10 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.BANK_CARD;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.DRIVING;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILEIDCARD;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_BANK_CARD;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_DRIVING;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.IDCARD;
 
 /**
@@ -65,5 +68,24 @@ public class WxMpOcrServiceImpl implements WxMpOcrService {
   public WxMpOcrBankCardResult bankCard(File imgFile) throws WxErrorException {
     String result = this.wxMpService.execute(OcrDiscernRequestExecutor.create(this.wxMpService.getRequestHttp()), FILE_BANK_CARD.getUrl(this.wxMpService.getWxMpConfigStorage()), imgFile);
     return WxMpOcrBankCardResult.fromJson(result);
+  }
+
+  @Override
+  public WxMpOcrDrivingResult driving(String imgUrl) throws WxErrorException {
+    try {
+      imgUrl = URLEncoder.encode(imgUrl, StandardCharsets.UTF_8.name());
+    } catch (UnsupportedEncodingException e) {
+      // ignore cannot happen
+    }
+
+    final String result = this.wxMpService.get(String.format(DRIVING.getUrl(this.wxMpService.getWxMpConfigStorage()),
+      imgUrl), null);
+    return WxMpOcrDrivingResult.fromJson(result);
+  }
+
+  @Override
+  public WxMpOcrDrivingResult driving(File imgFile) throws WxErrorException {
+    String result = this.wxMpService.execute(OcrDiscernRequestExecutor.create(this.wxMpService.getRequestHttp()), FILE_DRIVING.getUrl(this.wxMpService.getWxMpConfigStorage()), imgFile);
+    return WxMpOcrDrivingResult.fromJson(result);
   }
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBankCardResult;
+import me.chanjar.weixin.mp.bean.ocr.WxMpOcrDrivingResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrIdCardResult;
 
 import java.io.File;
@@ -66,4 +67,22 @@ public interface WxMpOcrService {
    * @throws WxErrorException .
    */
   WxMpOcrBankCardResult bankCard(File imgFile) throws WxErrorException;
+
+  /**
+   * 行驶证OCR识别接口
+   * 文件大小限制：小于2M
+   * @param imgUrl 图片url地址
+   * @return WxMpOcrDrivingResult
+   * @throws WxErrorException .
+   */
+  WxMpOcrDrivingResult driving(String imgUrl) throws WxErrorException;
+
+  /**
+   * 行驶证OCR识别接口
+   * 文件大小限制：小于2M
+   * @param imgFile 图片文件对象
+   * @return WxMpOcrDrivingResult
+   * @throws WxErrorException .
+   */
+  WxMpOcrDrivingResult driving(File imgFile) throws WxErrorException;
 }

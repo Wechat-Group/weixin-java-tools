@@ -452,7 +452,16 @@ public interface WxMpApiUrl {
     /**
      * 银行卡OCR识别(文件)
      */
-    FILE_BANK_CARD(API_DEFAULT_HOST_URL, "/cv/ocr/bankcard");
+    FILE_BANK_CARD(API_DEFAULT_HOST_URL, "/cv/ocr/bankcard"),
+
+    /**
+     * 行驶证OCR识别
+     */
+    DRIVING(API_DEFAULT_HOST_URL, "/cv/ocr/driving?img_url=%s"),
+    /**
+     * 行驶证OCR识别(文件)
+     */
+    FILE_DRIVING(API_DEFAULT_HOST_URL, "/cv/ocr/driving");
 
     private String prefix;
     private String path;
