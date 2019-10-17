@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Data
 public class WxMpOcrBankCardResult implements Serializable {
 
+  private static final long serialVersionUID = 554136620394204143L;
   @SerializedName("number")
   private String number;
 

@@ -7,6 +7,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConstants;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBankCardResult;
+import me.chanjar.weixin.mp.bean.ocr.WxMpOcrDrivingLicenseResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrDrivingResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrIdCardResult;
 import org.testng.annotations.Guice;
@@ -74,6 +75,22 @@ public class WxMpOcrServiceImplTest {
     InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
     File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
     final WxMpOcrDrivingResult result = this.mpService.getOcrService().driving(tempFile);
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testDrivingLicense() throws WxErrorException {
+    final WxMpOcrDrivingLicenseResult result = this.mpService.getOcrService().drivingLicense("https://res.wx.qq.com/op_res/kD4YXjYVAW1eaQqn9uTA0rrOFoZRvVINitNDSGo5gJ7SzTCezNq_ZDDmU1I08kGn");
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testDrivingLicense2() throws Exception {
+    InputStream inputStream = this.getImageStream("https://res.wx.qq.com/op_res/kD4YXjYVAW1eaQqn9uTA0rrOFoZRvVINitNDSGo5gJ7SzTCezNq_ZDDmU1I08kGn");
+    File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
+    final WxMpOcrDrivingLicenseResult result = this.mpService.getOcrService().drivingLicense(tempFile);
     assertThat(result).isNotNull();
     System.out.println(result);
   }
@@ -191,6 +208,31 @@ public class WxMpOcrServiceImplTest {
       final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
 
       final WxMpOcrDrivingResult result = wxMpOcrService.driving("abc");
+      assertThat(result).isNotNull();
+      System.out.println(result);
+    }
+
+    @Test
+    public void testDrivingLicense() throws Exception {
+      String returnJson = "{\n" +
+        "    \"errcode\": 0,\n" +
+        "    \"errmsg\": \"ok\",\n" +
+        "    \"id_num\": \"660601xxxxxxxx1234\", //证号\n" +
+        "    \"name\": \"张三\", //姓名\n" +
+        "    \"sex\": \"男\", //性别\n" +
+        "    \"nationality\": \"中国\", //国籍\n" +
+        "    \"address\": \"广东省东莞市xxxxx号\", //住址\n" +
+        "    \"birth_date\": \"1990-12-21\", //出生日期\n" +
+        "    \"issue_date\": \"2012-12-21\", //初次领证日期\n" +
+        "    \"car_class\": \"C1\", //准驾车型\n" +
+        "    \"valid_from\": \"2018-07-06\", //有效期限起始日\n" +
+        "    \"valid_to\": \"2020-07-01\", //有效期限终止日\n" +
+        "    \"official_seal\": \"xx市公安局公安交通管理局\" //印章文字\n" +
+        "}";
+      when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
+      final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
+
+      final WxMpOcrDrivingLicenseResult result = wxMpOcrService.drivingLicense("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }

@@ -461,7 +461,17 @@ public interface WxMpApiUrl {
     /**
      * 行驶证OCR识别(文件)
      */
-    FILE_DRIVING(API_DEFAULT_HOST_URL, "/cv/ocr/driving");
+    FILE_DRIVING(API_DEFAULT_HOST_URL, "/cv/ocr/driving"),
+
+    /**
+     * 驾驶证OCR识别
+     */
+    DRIVING_LICENSE(API_DEFAULT_HOST_URL, "/cv/ocr/drivinglicense?img_url=%s"),
+
+    /**
+     * 驾驶证OCR识别(文件)
+     */
+    FILE_DRIVING_LICENSE(API_DEFAULT_HOST_URL, "/cv/ocr/drivinglicense");
 
     private String prefix;
     private String path;
