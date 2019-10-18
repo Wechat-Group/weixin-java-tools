@@ -7,6 +7,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConstants;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBankCardResult;
+import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBizLicenseResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrDrivingLicenseResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrDrivingResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrIdCardResult;
@@ -91,6 +92,22 @@ public class WxMpOcrServiceImplTest {
     InputStream inputStream = this.getImageStream("https://res.wx.qq.com/op_res/kD4YXjYVAW1eaQqn9uTA0rrOFoZRvVINitNDSGo5gJ7SzTCezNq_ZDDmU1I08kGn");
     File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
     final WxMpOcrDrivingLicenseResult result = this.mpService.getOcrService().drivingLicense(tempFile);
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testBizLicense() throws WxErrorException {
+    final WxMpOcrBizLicenseResult result = this.mpService.getOcrService().bizLicense("https://res.wx.qq.com/op_res/apCy0YbnEdjYsa_cjW6x3FlpCc20uQ-2BYE7aXnFsrB-ALHZNgdKXhzIUcrRnDoL");
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testBizLicense2() throws Exception {
+    InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
+    File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
+    final WxMpOcrBizLicenseResult result = this.mpService.getOcrService().bizLicense(tempFile);
     assertThat(result).isNotNull();
     System.out.println(result);
   }
@@ -233,6 +250,56 @@ public class WxMpOcrServiceImplTest {
       final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
 
       final WxMpOcrDrivingLicenseResult result = wxMpOcrService.drivingLicense("abc");
+      assertThat(result).isNotNull();
+      System.out.println(result);
+    }
+
+    @Test
+    public void testBizLicense() throws Exception {
+      String returnJson = "{\n" +
+        "    \"errcode\": 0, \n" +
+        "    \"errmsg\": \"ok\", \n" +
+        "    \"reg_num\": \"123123\",//注册号\n" +
+        "    \"serial\": \"123123\",//编号\n" +
+        "    \"legal_representative\": \"张三\", //法定代表人姓名\n" +
+        "    \"enterprise_name\": \"XX饮食店\", //企业名称\n" +
+        "    \"type_of_organization\": \"个人经营\", //组成形式\n" +
+        "    \"address\": \"XX市XX区XX路XX号\", //经营场所/企业住所\n" +
+        "    \"type_of_enterprise\": \"xxx\", //公司类型\n" +
+        "    \"business_scope\": \"中型餐馆(不含凉菜、不含裱花蛋糕，不含生食海产品)。\", //经营范围\n" +
+        "    \"registered_capital\": \"200万\", //注册资本\n" +
+        "    \"paid_in_capital\": \"200万\", //实收资本\n" +
+        "    \"valid_period\": \"2019年1月1日\", //营业期限\n" +
+        "    \"registered_date\": \"2018年1月1日\", //注册日期/成立日期\n" +
+        "    \"cert_position\": { //营业执照位置\n" +
+        "        \"pos\": {\n" +
+        "            \"left_top\": {\n" +
+        "                \"x\": 155, \n" +
+        "                \"y\": 191\n" +
+        "            }, \n" +
+        "            \"right_top\": {\n" +
+        "                \"x\": 725, \n" +
+        "                \"y\": 157\n" +
+        "            }, \n" +
+        "            \"right_bottom\": {\n" +
+        "                \"x\": 743, \n" +
+        "                \"y\": 512\n" +
+        "            }, \n" +
+        "            \"left_bottom\": {\n" +
+        "                \"x\": 164, \n" +
+        "                \"y\": 525\n" +
+        "            }\n" +
+        "        }\n" +
+        "    }, \n" +
+        "    \"img_size\": { //图片大小\n" +
+        "        \"w\": 966, \n" +
+        "        \"h\": 728\n" +
+        "    }\n" +
+        "}";
+      when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
+      final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
+
+      final WxMpOcrBizLicenseResult result = wxMpOcrService.bizLicense("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }
