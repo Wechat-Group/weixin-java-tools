@@ -6,6 +6,7 @@ import me.chanjar.weixin.mp.api.WxMpOcrService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBankCardResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBizLicenseResult;
+import me.chanjar.weixin.mp.bean.ocr.WxMpOcrCommResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrDrivingLicenseResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrDrivingResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrIdCardResult;
@@ -18,11 +19,13 @@ import java.nio.charset.StandardCharsets;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.BANK_CARD;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.BIZ_LICENSE;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.COMM;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.DRIVING;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.DRIVING_LICENSE;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILEIDCARD;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_BANK_CARD;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_BIZ_LICENSE;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_COMM;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_DRIVING;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_DRIVING_LICENSE;
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.IDCARD;
@@ -131,5 +134,24 @@ public class WxMpOcrServiceImpl implements WxMpOcrService {
   public WxMpOcrBizLicenseResult bizLicense(File imgFile) throws WxErrorException {
     String result = this.wxMpService.execute(OcrDiscernRequestExecutor.create(this.wxMpService.getRequestHttp()), FILE_BIZ_LICENSE.getUrl(this.wxMpService.getWxMpConfigStorage()), imgFile);
     return WxMpOcrBizLicenseResult.fromJson(result);
+  }
+
+  @Override
+  public WxMpOcrCommResult comm(String imgUrl) throws WxErrorException {
+    try {
+      imgUrl = URLEncoder.encode(imgUrl, StandardCharsets.UTF_8.name());
+    } catch (UnsupportedEncodingException e) {
+      // ignore cannot happen
+    }
+
+    final String result = this.wxMpService.get(String.format(COMM.getUrl(this.wxMpService.getWxMpConfigStorage()),
+      imgUrl), null);
+    return WxMpOcrCommResult.fromJson(result);
+  }
+
+  @Override
+  public WxMpOcrCommResult comm(File imgFile) throws WxErrorException {
+    String result = this.wxMpService.execute(OcrDiscernRequestExecutor.create(this.wxMpService.getRequestHttp()), FILE_COMM.getUrl(this.wxMpService.getWxMpConfigStorage()), imgFile);
+    return WxMpOcrCommResult.fromJson(result);
   }
 }

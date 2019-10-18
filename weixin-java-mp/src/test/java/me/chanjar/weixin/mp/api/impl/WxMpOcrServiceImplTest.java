@@ -8,6 +8,7 @@ import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConstants;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBankCardResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBizLicenseResult;
+import me.chanjar.weixin.mp.bean.ocr.WxMpOcrCommResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrDrivingLicenseResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrDrivingResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrIdCardResult;
@@ -108,6 +109,22 @@ public class WxMpOcrServiceImplTest {
     InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
     File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
     final WxMpOcrBizLicenseResult result = this.mpService.getOcrService().bizLicense(tempFile);
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testComm() throws WxErrorException {
+    final WxMpOcrCommResult result = this.mpService.getOcrService().comm("https://res.wx.qq.com/op_res/apCy0YbnEdjYsa_cjW6x3FlpCc20uQ-2BYE7aXnFsrB-ALHZNgdKXhzIUcrRnDoL");
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testComm2() throws Exception {
+    InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
+    File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
+    final WxMpOcrCommResult result = this.mpService.getOcrService().comm(tempFile);
     assertThat(result).isNotNull();
     System.out.println(result);
   }
@@ -300,6 +317,68 @@ public class WxMpOcrServiceImplTest {
       final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
 
       final WxMpOcrBizLicenseResult result = wxMpOcrService.bizLicense("abc");
+      assertThat(result).isNotNull();
+      System.out.println(result);
+    }
+
+    @Test
+    public void testComm() throws Exception {
+      String returnJson = "{\n" +
+        "    \"errcode\": 0, \n" +
+        "    \"errmsg\": \"ok\", \n" +
+        "    \"items\": [ //识别结果\n" +
+        "        {\n" +
+        "            \"text\": \"腾讯\", \n" +
+        "            \"pos\": {\n" +
+        "                \"left_top\": {\n" +
+        "                    \"x\": 575, \n" +
+        "                    \"y\": 519\n" +
+        "                }, \n" +
+        "                \"right_top\": {\n" +
+        "                    \"x\": 744, \n" +
+        "                    \"y\": 519\n" +
+        "                }, \n" +
+        "                \"right_bottom\": {\n" +
+        "                    \"x\": 744, \n" +
+        "                    \"y\": 532\n" +
+        "                }, \n" +
+        "                \"left_bottom\": {\n" +
+        "                    \"x\": 573, \n" +
+        "                    \"y\": 532\n" +
+        "                }\n" +
+        "            }\n" +
+        "        }, \n" +
+        "        {\n" +
+        "            \"text\": \"微信团队\", \n" +
+        "            \"pos\": {\n" +
+        "                \"left_top\": {\n" +
+        "                    \"x\": 670, \n" +
+        "                    \"y\": 516\n" +
+        "                }, \n" +
+        "                \"right_top\": {\n" +
+        "                    \"x\": 762, \n" +
+        "                    \"y\": 517\n" +
+        "                }, \n" +
+        "                \"right_bottom\": {\n" +
+        "                    \"x\": 762, \n" +
+        "                    \"y\": 532\n" +
+        "                }, \n" +
+        "                \"left_bottom\": {\n" +
+        "                    \"x\": 670, \n" +
+        "                    \"y\": 531\n" +
+        "                }\n" +
+        "            }\n" +
+        "        }\n" +
+        "    ], \n" +
+        "    \"img_size\": { //图片大小\n" +
+        "        \"w\": 1280, \n" +
+        "        \"h\": 720\n" +
+        "    }\n" +
+        "}";
+      when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
+      final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
+
+      final WxMpOcrCommResult result = wxMpOcrService.comm("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }
