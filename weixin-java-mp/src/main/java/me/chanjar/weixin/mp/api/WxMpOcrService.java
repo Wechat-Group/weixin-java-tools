@@ -1,7 +1,5 @@
 package me.chanjar.weixin.mp.api;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBankCardResult;
 import me.chanjar.weixin.mp.bean.ocr.WxMpOcrBizLicenseResult;
@@ -20,38 +18,24 @@ import java.io.File;
  * @date 2019-06-22
  */
 public interface WxMpOcrService {
-  @AllArgsConstructor
-  @Getter
-  enum ImageType {
-    /**
-     * 拍照模型，带背景的图片.
-     */
-    PHOTO("photo"),
-    /**
-     * 扫描模式，不带背景的图片.
-     */
-    SCAN("scan");
-
-    private String type;
-  }
 
   /**
    * 身份证OCR识别接口.
    *
-   * @param imgType 图片类型
    * @param imgUrl  图片url地址
+   * @return WxMpOcrIdCardResult
    * @throws WxErrorException .
    */
-  WxMpOcrIdCardResult idCard(ImageType imgType, String imgUrl) throws WxErrorException;
+  WxMpOcrIdCardResult idCard(String imgUrl) throws WxErrorException;
 
   /**
    * 身份证OCR识别接口.
    *
-   * @param imgType 图片类型
    * @param imgFile 图片文件对象
+   * @return WxMpOcrIdCardResult
    * @throws WxErrorException .
    */
-  WxMpOcrIdCardResult idCard(ImageType imgType, File imgFile) throws WxErrorException;
+  WxMpOcrIdCardResult idCard(File imgFile) throws WxErrorException;
 
   /**
    * 银行卡OCR识别接口

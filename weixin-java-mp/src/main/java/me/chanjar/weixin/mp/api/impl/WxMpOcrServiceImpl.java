@@ -41,7 +41,7 @@ public class WxMpOcrServiceImpl implements WxMpOcrService {
   private final WxMpService wxMpService;
 
   @Override
-  public WxMpOcrIdCardResult idCard(ImageType imgType, String imgUrl) throws WxErrorException {
+  public WxMpOcrIdCardResult idCard(String imgUrl) throws WxErrorException {
     try {
       imgUrl = URLEncoder.encode(imgUrl, StandardCharsets.UTF_8.name());
     } catch (UnsupportedEncodingException e) {
@@ -49,14 +49,13 @@ public class WxMpOcrServiceImpl implements WxMpOcrService {
     }
 
     final String result = this.wxMpService.get(String.format(IDCARD.getUrl(this.wxMpService.getWxMpConfigStorage()),
-      imgType.getType(), imgUrl), null);
+      imgUrl), null);
     return WxMpOcrIdCardResult.fromJson(result);
   }
 
   @Override
-  public WxMpOcrIdCardResult idCard(ImageType imgType, File imgFile) throws WxErrorException {
-    String result = this.wxMpService.execute(OcrDiscernRequestExecutor.create(this.wxMpService.getRequestHttp()), String.format(FILEIDCARD.getUrl(this.wxMpService.getWxMpConfigStorage()),
-      imgType.getType()), imgFile);
+  public WxMpOcrIdCardResult idCard(File imgFile) throws WxErrorException {
+    String result = this.wxMpService.execute(OcrDiscernRequestExecutor.create(this.wxMpService.getRequestHttp()), FILEIDCARD.getUrl(this.wxMpService.getWxMpConfigStorage()), imgFile);
     return WxMpOcrIdCardResult.fromJson(result);
   }
 

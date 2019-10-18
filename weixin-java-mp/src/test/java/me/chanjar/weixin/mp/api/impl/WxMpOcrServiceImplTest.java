@@ -2,7 +2,6 @@ package me.chanjar.weixin.mp.api.impl;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
-import me.chanjar.weixin.mp.api.WxMpOcrService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConstants;
@@ -43,8 +42,17 @@ public class WxMpOcrServiceImplTest {
 
   @Test
   public void testIdCard() throws WxErrorException {
-    final WxMpOcrIdCardResult result = this.mpService.getOcrService().idCard(WxMpOcrService.ImageType.PHOTO,
-      "http://www.baidu.com");
+    final WxMpOcrIdCardResult result = this.mpService.getOcrService().idCard(
+      "https://res.wx.qq.com/op_res/E_oqdHqP4ETOJsT46sQnXz1HbeHOpqDQTuhkYeaLaJTf-JKld7de3091dwxCQwa6");
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testIdCard2() throws Exception {
+    InputStream inputStream = this.getImageStream("https://res.wx.qq.com/op_res/E_oqdHqP4ETOJsT46sQnXz1HbeHOpqDQTuhkYeaLaJTf-JKld7de3091dwxCQwa6");
+    File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
+    final WxMpOcrIdCardResult result = this.mpService.getOcrService().idCard(tempFile);
     assertThat(result).isNotNull();
     System.out.println(result);
   }
@@ -154,7 +162,7 @@ public class WxMpOcrServiceImplTest {
       when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
       final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
 
-      final WxMpOcrIdCardResult result = wxMpOcrService.idCard(WxMpOcrService.ImageType.PHOTO, "abc");
+      final WxMpOcrIdCardResult result = wxMpOcrService.idCard("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }
