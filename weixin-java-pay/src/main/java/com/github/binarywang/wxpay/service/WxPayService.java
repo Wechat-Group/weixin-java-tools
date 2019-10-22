@@ -66,6 +66,13 @@ public interface WxPayService {
   EntPayService getEntPayService();
 
   /**
+   * 获取分账服务类.
+   *
+   * @return the ent pay service
+   */
+  ProfitSharingService getProfitSharingService();
+
+  /**
    * 设置企业付款服务类，允许开发者自定义实现类.
    *
    * @param entPayService the ent pay service
@@ -304,6 +311,7 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayRedpackQueryResult queryRedpack(String mchBillNo) throws WxPayException;
+
   /**
    * <pre>
    *   查询红包记录.
