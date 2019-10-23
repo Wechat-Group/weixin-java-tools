@@ -3,6 +3,9 @@ package com.github.binarywang.wxpay.service;
 import com.github.binarywang.wxpay.bean.profitsharing.*;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
+import com.github.binarywang.wxpay.bean.profitsharing.ProfitSharingResult;
+import com.github.binarywang.wxpay.bean.profitsharing.ProfitSharingRequest;
+
 /**
  * 注意：微信最高分账比例为30%
  * 可多次分账到同一个人，但是依然不能超过30%

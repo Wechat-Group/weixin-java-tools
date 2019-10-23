@@ -1,6 +1,8 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.profitsharing.*;
+import com.github.binarywang.wxpay.bean.profitsharing.ProfitSharingResult;
+import com.github.binarywang.wxpay.bean.profitsharing.ProfitSharingRequest;
 import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.ProfitSharingService;
@@ -12,6 +14,7 @@ import com.github.binarywang.wxpay.service.WxPayService;
  */
 public class ProfitSharingServiceImpl implements ProfitSharingService {
   private WxPayService payService;
+
   public ProfitSharingServiceImpl(WxPayService payService) {
     this.payService = payService;
   }

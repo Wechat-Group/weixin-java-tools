@@ -1,6 +1,9 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.profitsharing.*;
+import com.github.binarywang.wxpay.bean.profitsharing.ProfitSharingRequest;
+import com.github.binarywang.wxpay.bean.profitsharing.Receiver;
+import com.github.binarywang.wxpay.bean.profitsharing.ReceiverList;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -31,7 +34,6 @@ public class ProfitSharingServiceImplTest {
       .newBuilder()
       .outOrderNo("20191023112023031060677")
       .transactionId("4200000431201910234736634272")
-//      .receivers("[{\"type\": \"PERSONAL_OPENID\",\"account\":\"oyOUE5ql4TtzrBg5cVOwxq6tbjOs\",\"amount\":100,\"description\": \"分到用户\"}]")
       .receivers(instance.toJSONString())
       .build();
     this.logger.info(this.payService.getProfitSharingService().profitsharing(request).toString());
