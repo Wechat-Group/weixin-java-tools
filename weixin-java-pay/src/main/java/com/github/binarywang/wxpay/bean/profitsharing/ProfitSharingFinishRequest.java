@@ -8,7 +8,7 @@ import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
 /**
- * @author Wang GuangXin 2019/10/21 17:57
+ * @author Wang GuangXin 2019/10/23 14:02
  * @version 1.0
  */
 @Data
@@ -17,8 +17,9 @@ import me.chanjar.weixin.common.annotation.Required;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class ProfitsharingRequest extends BaseWxPayRequest {
-  private static final long serialVersionUID = 212049937430575842L;
+public class ProfitSharingFinishRequest extends BaseWxPayRequest {
+
+  private static final long serialVersionUID = -4265779954583596627L;
 
   /**
    * <pre>
@@ -50,37 +51,20 @@ public class ProfitsharingRequest extends BaseWxPayRequest {
 
   /**
    * <pre>
-   * 字段名：分账接收方列表.
-   * 变量名：receivers
+   * 字段名：分账完结描述.
+   * 变量名：out_order_no
    * 是否必填：是
-   * String(10240)
-   * 示例值：[
-   *     {
-   *          "type": "MERCHANT_ID",
-   *          "account":"190001001",
-   *          "amount":100,
-   *          "description": "分到商户"
-   * },
-   *     {
-   *          "type": "PERSONAL_WECHATID",
-   *          "account":"86693952",
-   *          "amount":888,
-   *          "description": "分到个人"
-   * }
-   * ]
-   * 描述：分账接收方列表，不超过50个json对象，不能设置分账方作为分账接受方，使用Json格式
+   * String(80)
+   * 示例值：分账已完成
+   * 描述：分账完结的原因描述
    * </pre>
    */
-  @XStreamAlias("receivers")
+  @XStreamAlias("description")
   @Required
-  private String receivers;
-
+  private String description;
 
   @Override
   protected void checkConstraints() throws WxPayException {
-    /**
-     * 目前仅支持HMAC-SHA256
-     */
     this.setSignType(WxPayConstants.SignType.HMAC_SHA256);
   }
 }

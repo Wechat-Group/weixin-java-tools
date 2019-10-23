@@ -346,6 +346,17 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
    */
   @XStreamAlias("fingerprint")
   private String fingerprint;
+  /**
+   * <pre>
+   * 字段名：是否指定服务商分账.
+   * 变量名：profit_sharing
+   * 是否必填：否
+   * 详情：Y-是，需要分账  N-否，不分账，字母要求大写，不传默认不分账
+   * 详细参考 https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=24_3&index=3
+   * </pre>
+   */
+  @XStreamAlias("profit_sharing")
+  private String profitSharing;
 
   /**
    * 如果配置中已经设置，可以不设置值.
