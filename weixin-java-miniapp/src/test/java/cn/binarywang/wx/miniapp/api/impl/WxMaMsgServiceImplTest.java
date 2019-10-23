@@ -3,13 +3,10 @@ package cn.binarywang.wx.miniapp.api.impl;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import cn.binarywang.wx.miniapp.bean.*;
 import org.testng.annotations.*;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
-import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
-import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
-import cn.binarywang.wx.miniapp.bean.WxMaUniformMessage;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.test.TestConfig;
 import com.google.common.collect.Lists;
@@ -76,5 +73,23 @@ public class WxMaMsgServiceImplTest {
       .addData(new WxMaTemplateData("keyword4", "广州市海珠区新港中路397号"));
 
     this.wxService.getMsgService().sendUniformMsg(message);
+  }
+
+  @Test(invocationCount = 5, threadPoolSize = 3)
+  public void testSendSubscribeMsg() throws WxErrorException {
+    TestConfig config = (TestConfig) this.wxService.getWxMaConfig();
+
+    WxMaSubscribeMessage subcribeMessage = WxMaSubscribeMessage.builder()
+      .toUser(config.getOpenid())
+      .page("index")
+      //data由订阅消息模板决定
+      .data(Lists.newArrayList(
+        new WxMaTemplateData("character_string1", "NO222222222"),
+        new WxMaTemplateData("thing2", "限量版LV包"),
+        new WxMaTemplateData("name3", "申通快递"),
+        new WxMaTemplateData("character_string4", "FHD3412543553445")))
+      .templateId(config.getTemplateId())
+      .build();
+    this.wxService.getMsgService().sendSubscribeMsg(subcribeMessage);
   }
 }

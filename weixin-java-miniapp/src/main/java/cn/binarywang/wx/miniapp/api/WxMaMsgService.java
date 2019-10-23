@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
+import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaUniformMessage;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -16,6 +17,7 @@ public interface WxMaMsgService {
   String KEFU_MESSAGE_SEND_URL = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
   String TEMPLATE_MSG_SEND_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send";
   String UNIFORM_MSG_SEND_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/uniform_send";
+  String SUBSCRIBE_MSG_SEND_URL = "https://api.weixin.qq.com/cgi-bin/message/subscribe/send";
 
   /**
    * <pre>
@@ -44,4 +46,13 @@ public interface WxMaMsgService {
    * </pre>
    */
   void sendUniformMsg(WxMaUniformMessage uniformMessage) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 发送订阅消息
+   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html">发送模板消息</a>
+   * 接口url格式：https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=ACCESS_TOKEN
+   * </pre>
+   */
+  void sendSubscribeMsg(WxMaSubscribeMessage subscribeMessage) throws WxErrorException;
 }
