@@ -110,7 +110,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @return
    */
   @Override
-  public WxOpenResult getWebViewDomainInfo() throws WxErrorException {
+  public WxOpenMaWebDomainResult getWebViewDomainInfo() throws WxErrorException {
     return setWebViewDomainInfo("get", null);
   }
 
@@ -141,9 +141,9 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @return
    */
   @Override
-  public WxOpenResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException {
+  public WxOpenMaWebDomainResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException {
     String response = this.setWebViewDomain(action, domainList);
-    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaWebDomainResult.class);
   }
 
 

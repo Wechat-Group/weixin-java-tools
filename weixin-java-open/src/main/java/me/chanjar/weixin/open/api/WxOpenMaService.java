@@ -231,7 +231,7 @@ public interface WxOpenMaService extends WxMaService {
    *
    * @return
    */
-  public WxOpenResult getWebViewDomainInfo() throws WxErrorException;
+  public WxOpenMaWebDomainResult getWebViewDomainInfo() throws WxErrorException;
 
   /**
    * 设置小程序的业务域名
@@ -249,7 +249,7 @@ public interface WxOpenMaService extends WxMaService {
    * @param domainList
    * @return
    */
-  WxOpenResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException;
+  WxOpenMaWebDomainResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException;
 
   /**
    * 获取小程序的信息
