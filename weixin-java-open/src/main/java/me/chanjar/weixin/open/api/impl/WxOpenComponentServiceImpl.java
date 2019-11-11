@@ -36,7 +36,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   private static final Map<String, WxOpenMaService> WX_OPEN_MA_SERVICE_MAP = new ConcurrentHashMap<>();
   private static final Map<String, WxMpService> WX_OPEN_MP_SERVICE_MAP = new ConcurrentHashMap<>();
   private static final Map<String, WxOpenFastMaService> WX_OPEN_FAST_MA_SERVICE_MAP = new ConcurrentHashMap<>();
-
+  private static final int MAX_RETRY = 5;
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
   private WxOpenService wxOpenService;
 
@@ -135,7 +135,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String componentAccessToken = getComponentAccessToken(false);
     String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + accessTokenKey + "=" + componentAccessToken;
     try {
-    	if(retryCount>=5) {
+    	if(retryCount>=MAX_RETRY) {
 			throw new WxErrorException(
 					WxError.builder().errorCode(40000).errorMsg("重试多次仍失败").errorMsgEn("请确认请求参数无误").build());
 		}
@@ -429,14 +429,14 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   public void addToTemplate(long draftId) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("draft_id", draftId);
-    post(ADD_TO_TEMPLATE_URL, param.toString(), "access_token");
+    post(ADD_TO_TEMPLATE_URL, param.toString(), "access_token",0);
   }
 
   @Override
   public void deleteTemplate(long templateId) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("template_id", templateId);
-    post(DELETE_TEMPLATE_URL, param.toString(), "access_token");
+    post(DELETE_TEMPLATE_URL, param.toString(), "access_token",0);
   }
 
   @Override
@@ -444,7 +444,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     JsonObject param = new JsonObject();
     param.addProperty("appid", appId);
 
-    String json = post(CREATE_OPEN_URL, param.toString(), "access_token");
+    String json = post(CREATE_OPEN_URL, param.toString(), "access_token",0);
 
     return WxOpenCreateResult.fromJson(json);
   }
@@ -458,7 +458,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("legal_persona_wechat", legalPersonaWechat);
     jsonObject.addProperty("legal_persona_name", legalPersonaName);
     jsonObject.addProperty("component_phone", componentPhone);
-    String response = post(FAST_REGISTER_WEAPP_URL, jsonObject.toString (), "component_access_token");
+    String response = post(FAST_REGISTER_WEAPP_URL, jsonObject.toString (), "component_access_token",0);
     return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
   }
 
@@ -468,7 +468,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("name",name);
     jsonObject.addProperty("legal_persona_wechat", legalPersonaWechat);
     jsonObject.addProperty("legal_persona_name", legalPersonaName);
-    String response = post(FAST_REGISTER_WEAPP_SEARCH_URL, jsonObject.toString (), "component_access_token");
+    String response = post(FAST_REGISTER_WEAPP_SEARCH_URL, jsonObject.toString (), "component_access_token",0);
     return WxOpenGsonBuilder.create ().fromJson (response, WxOpenResult.class);
   }
 }
