@@ -303,16 +303,13 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public WxOpenAuthorizerListResult getAuthorizerList(int begin, int len) throws WxErrorException {
-
-    String url = String.format(API_GET_AUTHORIZER_LIST, getComponentAccessToken(false));
     begin = begin < 0 ? 0 : begin;
     len = len == 0 ? 10 : len;
-
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
     jsonObject.addProperty("offset", begin);
     jsonObject.addProperty("count", len);
-    String responseContent = post(url, jsonObject.toString());
+    String responseContent = post(API_GET_AUTHORIZER_LIST, jsonObject.toString());
     WxOpenAuthorizerListResult ret = WxOpenGsonBuilder.create().fromJson(responseContent, WxOpenAuthorizerListResult.class);
     if(ret != null && ret.getList() != null){
       for(Map<String, String> data : ret.getList()){
