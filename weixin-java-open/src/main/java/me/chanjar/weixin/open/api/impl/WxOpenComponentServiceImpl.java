@@ -127,13 +127,18 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   private String post(String uri, String postData) throws WxErrorException {
-    return post(uri, postData, "component_access_token");
+	  int retryCount  = 0;
+    return post(uri, postData, "component_access_token",retryCount);
   }
 
-  private String post(String uri, String postData, String accessTokenKey) throws WxErrorException {
+  private String post(String uri, String postData, String accessTokenKey,int retryCount) throws WxErrorException {
     String componentAccessToken = getComponentAccessToken(false);
     String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + accessTokenKey + "=" + componentAccessToken;
     try {
+    	if(retryCount>=5) {
+			throw new WxErrorException(
+					WxError.builder().errorCode(40000).errorMsg("重试多次仍失败").errorMsgEn("请确认请求参数无误").build());
+		}
       return getWxOpenService().post(uriWithComponentAccessToken, postData);
     } catch (WxErrorException e) {
       WxError error = e.getError();
@@ -147,7 +152,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
         this.getWxOpenConfigStorage().expireComponentAccessToken();
         if (this.getWxOpenConfigStorage().autoRefreshToken()) {
-          return this.post(uri, postData, accessTokenKey);
+        	retryCount++;
+          return this.post(uri, postData, accessTokenKey,retryCount);
         }
       }
       if (error.getErrorCode() != 0) {
