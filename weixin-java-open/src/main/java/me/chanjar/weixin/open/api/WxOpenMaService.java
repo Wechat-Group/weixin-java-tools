@@ -167,10 +167,33 @@ public interface WxOpenMaService extends WxMaService {
 
   /**
    * 14.设置小程序“扫普通链接二维码打开小程序”能力
-   * <p>
-   *     TODO 暂时不实现
-   * </p>
+   *
+   * https://mp.weixin.qq.com/debug/wxadoc/introduction/qrcode.html
    */
+  /**
+   * 14.1 增加或修改二维码规则
+   */
+  String API_QRCODE_JUMP_ADD = "https://api.weixin.qq.com/cgi-bin/wxopen/qrcodejumpadd";
+
+  /**
+   * 14.2 获取已设置的二维码规则
+   */
+  String API_QRCODE_JUMP_GET = "https://api.weixin.qq.com/cgi-bin/wxopen/qrcodejumpget";
+
+  /**
+   * 14.3 获取校验文件名称及内容
+   */
+  String API_QRCODE_JUMP_DOWNLOAD = "https://api.weixin.qq.com/cgi-bin/wxopen/qrcodejumpdownload";
+
+  /**
+   * 14.4 删除已设置的二维码规则
+   */
+  String API_QRCODE_JUMP_DELETE = "https://api.weixin.qq.com/cgi-bin/wxopen/qrcodejumpdelete";
+
+  /**
+   * 14.5 发布已设置的二维码规则
+   */
+  String API_QRCODE_JUMP_PUBLISH = "https://api.weixin.qq.com/cgi-bin/wxopen/qrcodejumppublish";
 
   /**
    * 15.小程序审核撤回
@@ -421,4 +444,28 @@ public interface WxOpenMaService extends WxMaService {
    */
   Boolean speedAudit(Long auditid) throws WxErrorException;
 
+  /**
+   * (1)增加或修改二维码规则
+   */
+  WxOpenResult addQrcodeJump(WxQrcodeJumpRule wxQrcodeJumpRule) throws WxErrorException;
+
+  /**
+   * (2)获取已设置的二维码规则
+   */
+  WxGetQrcodeJumpResult getQrcodeJump() throws WxErrorException;
+
+  /**
+   * (3)获取校验文件名称及内容
+   */
+  WxDownlooadQrcodeJumpResult downloadQrcodeJump() throws WxErrorException;
+
+  /**
+   * (4)删除已设置的二维码规则
+   */
+  WxOpenResult deleteQrcodeJump(String prefix) throws WxErrorException;
+
+  /**
+   * (5)发布已设置的二维码规则
+   */
+  WxOpenResult publishQrcodeJump(String prefix) throws WxErrorException;
 }
