@@ -549,6 +549,68 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
 
 
   /**
+   * (1)增加或修改二维码规则
+   * @param wxQrcodeJumpRule
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult addQrcodeJump(WxQrcodeJumpRule wxQrcodeJumpRule) throws WxErrorException {
+    String response = post(API_QRCODE_JUMP_ADD, GSON.toJson(wxQrcodeJumpRule));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  /**
+   * (2)获取已设置的二维码规则
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxGetQrcodeJumpResult getQrcodeJump() throws WxErrorException {
+    String response = post(API_QRCODE_JUMP_GET, "{}");
+    return WxMaGsonBuilder.create().fromJson(response, WxGetQrcodeJumpResult.class);
+  }
+
+  /**
+   * (3)获取校验文件名称及内容
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxDownlooadQrcodeJumpResult downloadQrcodeJump() throws WxErrorException {
+    String response = post(API_QRCODE_JUMP_DOWNLOAD, "{}");
+    return WxMaGsonBuilder.create().fromJson(response, WxDownlooadQrcodeJumpResult.class);
+  }
+
+  /**
+   * (4)删除已设置的二维码规则
+   * @param prefix
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult deleteQrcodeJump(String prefix) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("prefix", prefix);
+    String response = post(API_QRCODE_JUMP_DELETE, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  /**
+   * (5)发布已设置的二维码规则
+   * @param prefix
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult publishQrcodeJump(String prefix) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("prefix", prefix);
+    String response = post(API_QRCODE_JUMP_PUBLISH, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  /**
    * 将字符串对象转化为GsonArray对象
    *
    * @param strList

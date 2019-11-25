@@ -10,14 +10,11 @@ import me.chanjar.weixin.cp.bean.WxCpTag;
 import me.chanjar.weixin.cp.bean.WxCpTagAddOrRemoveUsersResult;
 import me.chanjar.weixin.cp.bean.WxCpTagGetResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.util.List;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tag.*;
-import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tag.TAG_CREATE;
-import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tag.TAG_UPDATE;
 
 /**
  * <pre>
@@ -32,11 +29,26 @@ public class WxCpTagServiceImpl implements WxCpTagService {
   private final WxCpService mainService;
 
   @Override
+  public String create(String name, Integer id) throws WxErrorException {
+    JsonObject o = new JsonObject();
+    o.addProperty("tagname", name);
+
+    if (id != null) {
+      o.addProperty("tagid", id);
+    }
+    return this.create(o);
+  }
+
+  @Override
   public String create(String tagName) throws WxErrorException {
     JsonObject o = new JsonObject();
     o.addProperty("tagname", tagName);
+    return this.create(o);
+  }
+
+  private String create(JsonObject param) throws WxErrorException {
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(TAG_CREATE);
-    String responseContent = this.mainService.post(url, o.toString());
+    String responseContent = this.mainService.post(url, param.toString());
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return tmpJsonElement.getAsJsonObject().get("tagid").getAsString();
   }

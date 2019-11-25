@@ -820,6 +820,10 @@ public interface WxMpApiUrl {
      */
     MEDIA_GET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/media/get"),
     /**
+     * jssdk media get.
+     */
+    JSSDK_MEDIA_GET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/media/get/jssdk"),
+    /**
      * upload.
      */
     MEDIA_UPLOAD_URL(API_DEFAULT_HOST_URL, "/cgi-bin/media/upload?type=%s"),

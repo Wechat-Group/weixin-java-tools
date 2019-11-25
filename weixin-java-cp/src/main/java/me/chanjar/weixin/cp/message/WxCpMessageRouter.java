@@ -219,8 +219,11 @@ public class WxCpMessageRouter {
       messageId.append("-").append(wxMessage.getUserId());
     }
 
-    return this.messageDuplicateChecker.isDuplicate(messageId.toString());
+    if (StringUtils.isNotEmpty(wxMessage.getChangeType())) {
+      messageId.append("-").append(wxMessage.getChangeType());
+    }
 
+    return this.messageDuplicateChecker.isDuplicate(messageId.toString());
   }
 
   /**
