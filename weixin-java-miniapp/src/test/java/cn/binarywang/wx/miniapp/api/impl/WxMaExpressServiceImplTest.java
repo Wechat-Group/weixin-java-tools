@@ -2,10 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaExpressService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressAccount;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressBindAccountRequest;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPrinterUpdateRequest;
+import cn.binarywang.wx.miniapp.bean.express.*;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
@@ -54,9 +51,16 @@ public class WxMaExpressServiceImplTest {
   public void testUpdatePrinter() throws WxErrorException {
     final WxMaExpressService service = wxMaService.getExpressService();
     WxMaExpressPrinterUpdateRequest request = WxMaExpressPrinterUpdateRequest.builder()
-      .openid("*********")
-      .updateType(WxMaConstants.BindAccountType.BIND)
+      .openid("*************")
+      .updateType(WxMaConstants.BindAccountType.UNBIND)
       .build();
     service.updatePrinter(request);
+  }
+
+  @Test
+  public void testGetPrinter() throws WxErrorException {
+    final WxMaExpressService service = wxMaService.getExpressService();
+    WxMaExpressPrinter printer = service.getPrinter();
+    System.out.println(WxMaGsonBuilder.create().toJson(printer));
   }
 }

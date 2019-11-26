@@ -2,10 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaExpressService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressAccount;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressBindAccountRequest;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPrinterUpdateRequest;
+import cn.binarywang.wx.miniapp.bean.express.*;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -40,5 +37,11 @@ public class WxMaExpressServiceImpl implements WxMaExpressService {
   @Override
   public void updatePrinter(WxMaExpressPrinterUpdateRequest wxMaExpressPrinterUpdateRequest) throws WxErrorException {
     this.wxMaService.post(UPDATE_PRINTER_URL,wxMaExpressPrinterUpdateRequest.toJson());
+  }
+
+  @Override
+  public WxMaExpressPrinter getPrinter() throws WxErrorException {
+    String responseContent = this.wxMaService.get(GET_PRINTER_URL, null);
+    return WxMaExpressPrinter.fromJson(responseContent);
   }
 }

@@ -1,9 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressAccount;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressBindAccountRequest;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPrinterUpdateRequest;
+import cn.binarywang.wx.miniapp.bean.express.*;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
@@ -35,6 +32,11 @@ public interface WxMaExpressService {
   String UPDATE_PRINTER_URL = "https://api.weixin.qq.com/cgi-bin/express/business/printer/update";
 
   /**
+   * 获取打印员
+   */
+  String GET_PRINTER_URL = "https://api.weixin.qq.com/cgi-bin/express/business/printer/getall";
+
+  /**
    * 获取支持的快递公司列表
    * @return  快递公司列表
    * @throws WxErrorException 获取失败时返回
@@ -61,4 +63,10 @@ public interface WxMaExpressService {
    * @throws WxErrorException 请求失败时返回
    */
   void updatePrinter(WxMaExpressPrinterUpdateRequest wxMaExpressPrinterUpdateRequest) throws WxErrorException;
+
+  /**
+   * 获取打印员。若需要使用微信打单 PC 软件，才需要调用
+   * @throws WxErrorException 获取失败时返回
+   */
+  WxMaExpressPrinter getPrinter() throws WxErrorException;
 }
