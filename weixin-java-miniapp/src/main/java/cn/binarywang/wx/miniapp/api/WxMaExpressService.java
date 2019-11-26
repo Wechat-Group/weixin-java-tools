@@ -3,6 +3,7 @@ package cn.binarywang.wx.miniapp.api;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressAccount;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressBindAccountRequest;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPrinterUpdateRequest;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
@@ -29,6 +30,11 @@ public interface WxMaExpressService {
   String BIND_ACCOUNT_URL = "https://api.weixin.qq.com/cgi-bin/express/business/account/bind";
 
   /**
+   * 配置面单打印员
+   */
+  String UPDATE_PRINTER_URL = "https://api.weixin.qq.com/cgi-bin/express/business/printer/update";
+
+  /**
    * 获取支持的快递公司列表
    * @return  快递公司列表
    * @throws WxErrorException 获取失败时返回
@@ -48,4 +54,11 @@ public interface WxMaExpressService {
    * @throws WxErrorException 请求失败时返回
    */
   void bindAccount(WxMaExpressBindAccountRequest wxMaExpressBindAccountRequest) throws WxErrorException;
+
+  /**
+   * 配置面单打印员，可以设置多个，若需要使用微信打单 PC 软件，才需要调用。
+   * @param wxMaExpressPrinterUpdateRequest  面单打印员对象
+   * @throws WxErrorException 请求失败时返回
+   */
+  void updatePrinter(WxMaExpressPrinterUpdateRequest wxMaExpressPrinterUpdateRequest) throws WxErrorException;
 }

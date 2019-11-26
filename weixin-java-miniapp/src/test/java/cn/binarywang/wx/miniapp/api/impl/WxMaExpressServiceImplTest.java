@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressAccount;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressBindAccountRequest;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPrinterUpdateRequest;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
@@ -39,12 +40,23 @@ public class WxMaExpressServiceImplTest {
   @Test
   public void testBindAccount() throws WxErrorException {
     final WxMaExpressService service = wxMaService.getExpressService();
-    WxMaExpressBindAccountRequest request = new WxMaExpressBindAccountRequest();
-    request.setDeliveryId("YUNDA");
-    request.setBizId("******");
-    request.setPassword("********************");
-    request.setRemarkContent("#####");
-    request.setType(WxMaConstants.BindAccountType.BIND);
+    WxMaExpressBindAccountRequest request = WxMaExpressBindAccountRequest.builder()
+      .deliveryId("YUNDA")
+      .bizId("******")
+      .password("*********")
+      .remarkContent("####")
+      .type(WxMaConstants.BindAccountType.BIND)
+      .build();
     service.bindAccount(request);
+  }
+
+  @Test
+  public void testUpdatePrinter() throws WxErrorException {
+    final WxMaExpressService service = wxMaService.getExpressService();
+    WxMaExpressPrinterUpdateRequest request = WxMaExpressPrinterUpdateRequest.builder()
+      .openid("*********")
+      .updateType(WxMaConstants.BindAccountType.BIND)
+      .build();
+    service.updatePrinter(request);
   }
 }

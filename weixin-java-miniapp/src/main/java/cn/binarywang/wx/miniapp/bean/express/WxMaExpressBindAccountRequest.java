@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.bean.express;
 
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @since 2019-11-26
  */
 @Data
+@Builder
 public class WxMaExpressBindAccountRequest implements Serializable {
 
   private static final long serialVersionUID = 3868003945297939946L;
