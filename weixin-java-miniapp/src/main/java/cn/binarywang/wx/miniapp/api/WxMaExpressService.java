@@ -1,7 +1,8 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.WxMaExpressAccount;
-import cn.binarywang.wx.miniapp.bean.WxMaExpressDelivery;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressAccount;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressBindAccountRequest;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
@@ -23,6 +24,11 @@ public interface WxMaExpressService {
   String ALL_ACCOUNT_URL = "https://api.weixin.qq.com/cgi-bin/express/business/account/getall";
 
   /**
+   * 绑定、解绑物流账号
+   */
+  String BIND_ACCOUNT_URL = "https://api.weixin.qq.com/cgi-bin/express/business/account/bind";
+
+  /**
    * 获取支持的快递公司列表
    * @return  快递公司列表
    * @throws WxErrorException 获取失败时返回
@@ -35,4 +41,11 @@ public interface WxMaExpressService {
    * @throws WxErrorException 获取失败时返回
    */
   List<WxMaExpressAccount> getAllAccount() throws WxErrorException;
+
+  /**
+   * 绑定、解绑物流账号
+   * @param wxMaExpressBindAccountRequest 物流账号对象
+   * @throws WxErrorException 请求失败时返回
+   */
+  void bindAccount(WxMaExpressBindAccountRequest wxMaExpressBindAccountRequest) throws WxErrorException;
 }

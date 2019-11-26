@@ -2,8 +2,9 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaExpressService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaExpressAccount;
-import cn.binarywang.wx.miniapp.bean.WxMaExpressDelivery;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressAccount;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressBindAccountRequest;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -28,5 +29,10 @@ public class WxMaExpressServiceImpl implements WxMaExpressService {
   public List<WxMaExpressAccount> getAllAccount() throws WxErrorException {
     String responseContent = this.wxMaService.get(ALL_ACCOUNT_URL, null);
     return WxMaExpressAccount.fromJson(responseContent);
+  }
+
+  @Override
+  public void bindAccount(WxMaExpressBindAccountRequest wxMaExpressBindAccountRequest) throws WxErrorException {
+    this.wxMaService.post(BIND_ACCOUNT_URL,wxMaExpressBindAccountRequest.toJson());
   }
 }

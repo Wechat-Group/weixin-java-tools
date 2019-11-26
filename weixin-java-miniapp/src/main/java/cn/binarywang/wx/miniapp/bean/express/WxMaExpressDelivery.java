@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.bean;
+package cn.binarywang.wx.miniapp.bean.express;
 
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
