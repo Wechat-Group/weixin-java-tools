@@ -54,6 +54,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   private WxMaRunService runService = new WxMaRunServiceImpl(this);
   private WxMaSecCheckService secCheckService = new WxMaSecCheckServiceImpl(this);
   private WxMaPluginService pluginService = new WxMaPluginServiceImpl(this);
+  private WxMaExpressService expressService = new WxMaExpressServiceImpl(this);
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -365,4 +366,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   public WxMaPluginService getPluginService() {
     return this.pluginService;
   }
+
+  @Override
+  public WxMaExpressService getExpressService() { return this.expressService; }
 }

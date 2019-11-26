@@ -85,4 +85,20 @@ public class WxMaConstants {
      */
     public static final int IMAGE = 2;
   }
+
+  /**
+   * 快递账号绑定类型
+   */
+  public static final class BindAccountType{
+
+    /**
+     * 绑定
+     */
+    public static final String BIND = "bind";
+
+    /**
+     * 解绑
+     */
+    public static final String UNBIND = "unbind";
+  }
 }

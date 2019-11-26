@@ -224,5 +224,9 @@ public interface WxMaService {
    */
   RequestHttp getRequestHttp();
 
-
+  /**
+   * 获取物流助手接口服务对象
+   * @return
+   */
+  WxMaExpressService getExpressService();
 }
