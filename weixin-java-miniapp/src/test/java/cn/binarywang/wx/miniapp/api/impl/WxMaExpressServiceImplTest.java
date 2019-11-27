@@ -3,10 +3,8 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaExpressService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.express.*;
-import cn.binarywang.wx.miniapp.bean.express.request.WxMaExpressAddOrderRequest;
-import cn.binarywang.wx.miniapp.bean.express.request.WxMaExpressBindAccountRequest;
-import cn.binarywang.wx.miniapp.bean.express.request.WxMaExpressPrinterUpdateRequest;
-import cn.binarywang.wx.miniapp.bean.express.result.WxMaExpressAddOrderResult;
+import cn.binarywang.wx.miniapp.bean.express.request.*;
+import cn.binarywang.wx.miniapp.bean.express.result.WxMaExpressOrderInfoResult;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
@@ -54,6 +52,19 @@ public class WxMaExpressServiceImplTest {
   }
 
   @Test
+  public void testGetQuota() throws WxErrorException {
+    final WxMaExpressService service = wxMaService.getExpressService();
+    WxMaExpressBindAccountRequest request = WxMaExpressBindAccountRequest.builder()
+      .deliveryId("YUNDA")
+      .bizId("******")
+      .build();
+    Integer quotaNum = service.getQuota(request);
+    System.out.println(quotaNum);
+  }
+
+
+
+  @Test
   public void testUpdatePrinter() throws WxErrorException {
     final WxMaExpressService service = wxMaService.getExpressService();
     WxMaExpressPrinterUpdateRequest request = WxMaExpressPrinterUpdateRequest.builder()
@@ -76,7 +87,7 @@ public class WxMaExpressServiceImplTest {
 
     WxMaExpressOrderPerson sender = new WxMaExpressOrderPerson();
     sender.setName("张三");
-    sender.setMobile("177*****809");
+    sender.setMobile("177****9809");
     sender.setProvince("北京市");
     sender.setCity("朝阳区");
     sender.setArea("朝阳区");
@@ -84,11 +95,11 @@ public class WxMaExpressServiceImplTest {
 
     WxMaExpressOrderPerson receiver = new WxMaExpressOrderPerson();
     receiver.setName("李四");
-    receiver.setMobile("180*****772");
+    receiver.setMobile("180****8772");
     receiver.setProvince("北京市");
     receiver.setCity("朝阳区");
     receiver.setArea("朝阳区");
-    receiver.setAddress("西坝河******单元101");
+    receiver.setAddress("西坝河北里****101");
 
 
     WxMaExpressOrderCargo cargo = new WxMaExpressOrderCargo();
@@ -123,9 +134,9 @@ public class WxMaExpressServiceImplTest {
     serviceType.setServiceType(1);
 
     WxMaExpressAddOrderRequest request = WxMaExpressAddOrderRequest.builder()
-      .addSource(0)
-      .orderId("test201911271429003")
-      .openid("*****")
+      .addSource(WxMaConstants.OrderAddSource.MINI_PROGRAM)
+      .orderId("test201911271429004")
+      .openid("oAg_-0PDUPuLbQw9V9kXE9OkU-Vo")
       .deliveryId("TEST")
       .bizId("test_biz_id")
       .customRemark("")
@@ -134,11 +145,87 @@ public class WxMaExpressServiceImplTest {
       .receiver(receiver)
       .cargo(cargo)
       .shop(shop)
-      .insured(new WxMaExpressOrderInsured())
+      .insured(WxMaExpressOrderInsured.builder().build())
       .service(serviceType)
       .build();
 
-    WxMaExpressAddOrderResult result = service.addOrder(request);
+    WxMaExpressOrderInfoResult result = service.addOrder(request);
     System.out.println(WxMaGsonBuilder.create().toJson(result));
+  }
+
+  @Test
+  public void testBatchGetOrder() throws WxErrorException {
+    final WxMaExpressService service = wxMaService.getExpressService();
+    List<WxMaExpressGetOrderRequest> requests = new ArrayList<>();
+
+    List<String> orderIds = new ArrayList<>();
+    orderIds.add("test201911271429000");
+
+    List<String> waybillIds = new ArrayList<>();
+    waybillIds.add("test201911271429000_1574836404_waybill_id");
+    for (int i = 0; i < orderIds.size(); i++) {
+      WxMaExpressGetOrderRequest request = WxMaExpressGetOrderRequest.builder()
+        .orderId(orderIds.get(i))
+        .deliveryId("TEST")
+        .waybillId(waybillIds.get(i))
+        .build();
+      requests.add(request);
+    }
+
+    List<WxMaExpressOrderInfoResult> results = service.batchGetOrder(requests);
+    System.out.println(WxMaGsonBuilder.create().toJson(results));
+  }
+
+  @Test
+  public void testCancelOrder() throws WxErrorException {
+    final WxMaExpressService service = wxMaService.getExpressService();
+    WxMaExpressGetOrderRequest request = WxMaExpressGetOrderRequest.builder()
+      .orderId("test201911271429000")
+      .deliveryId("TEST")
+      .waybillId("test201911271429000_1574836404_waybill_id")
+      .openid("oAg_-0PDUPuLbQw9V9kXE9OkU-Vo")
+      .build();
+    service.cancelOrder(request);
+  }
+
+
+  @Test
+  public void testGetOrder() throws WxErrorException {
+    final WxMaExpressService service = wxMaService.getExpressService();
+    WxMaExpressGetOrderRequest request = WxMaExpressGetOrderRequest.builder()
+      .orderId("test201911271429000")
+      .deliveryId("TEST")
+      .waybillId("test201911271429000_1574836404_waybill_id")
+      .openid("oAg_-0PDUPuLbQw9V9kXE9OkU-Vo")
+      .build();
+    WxMaExpressOrderInfoResult result = service.getOrder(request);
+    System.out.println(WxMaGsonBuilder.create().toJson(result));
+  }
+
+
+  @Test
+  public void testGetPath() throws WxErrorException {
+    final WxMaExpressService service = wxMaService.getExpressService();
+    WxMaExpressGetOrderRequest request = WxMaExpressGetOrderRequest.builder()
+      .orderId("test201911271429000")
+      .deliveryId("TEST")
+      .waybillId("test201911271429000_1574836404_waybill_id")
+      .openid("oAg_-0PDUPuLbQw9V9kXE9OkU-Vo")
+      .build();
+    WxMaExpressPath path = service.getPath(request);
+    System.out.println(WxMaGsonBuilder.create().toJson(path));
+  }
+
+  @Test
+  public void testTestUpdateOrder() throws WxErrorException {
+    final WxMaExpressService service = wxMaService.getExpressService();
+    WxMaExpressTestUpdateOrderRequest request = WxMaExpressTestUpdateOrderRequest.builder()
+      .orderId("test201911271429000")
+      .waybillId("test201911271429000_1574836404_waybill_id")
+      .actionTime(1574850455L)
+      .actionType(300002)
+      .actionMsg("开始派送")
+      .build();
+    service.testUpdateOrder(request);
   }
 }

@@ -1,7 +1,9 @@
-package cn.binarywang.wx.miniapp.bean.express;
+package cn.binarywang.wx.miniapp.bean.express.request;
 
 
+import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import com.google.gson.annotations.SerializedName;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +14,7 @@ import java.io.Serializable;
  * @since 2019-11-26
  */
 @Data
+@Builder
 public class WxMaExpressOrderInsured implements Serializable {
 
   private static final long serialVersionUID = -8636857630937445422L;
@@ -24,7 +27,7 @@ public class WxMaExpressOrderInsured implements Serializable {
    * </pre>
    */
   @SerializedName("use_insured")
-  private Integer useInsured;
+  private final Integer useInsured = WxMaConstants.OrderAddInsured.INSURED_PROGRAM;
 
   /**
    * 保价金额
@@ -34,11 +37,7 @@ public class WxMaExpressOrderInsured implements Serializable {
    * </pre>
    */
   @SerializedName("insured_value")
-  private Integer insuredValue;
+  @Builder.Default
+  private final Integer insuredValue = WxMaConstants.OrderAddInsured.DEFAULT_INSURED_VALUE;
 
-
-  public  WxMaExpressOrderInsured(){
-    this.insuredValue = 0;
-    this.useInsured = 0;
-  }
 }

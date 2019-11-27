@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.bean.express;
+package cn.binarywang.wx.miniapp.bean.express.request;
 
 import lombok.Data;
 

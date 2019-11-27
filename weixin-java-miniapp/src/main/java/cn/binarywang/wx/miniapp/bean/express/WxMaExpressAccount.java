@@ -90,10 +90,14 @@ public class WxMaExpressAccount implements Serializable {
   @SerializedName("service_type")
   private List<WxMaExpressDelivery.ServiceType> serviceType;
 
-  public static List<WxMaExpressAccount> fromJson(String json) {
+  public static List<WxMaExpressAccount> fromJsonList(String json) {
     JsonObject jsonObject = JSON_PARSER.parse(json).getAsJsonObject();
     return WxMaGsonBuilder.create().fromJson(jsonObject.get("list").toString(),
       new TypeToken<List<WxMaExpressAccount>>() {
       }.getType());
+  }
+
+  public static WxMaExpressAccount fromJson(String json) {
+    return WxMaGsonBuilder.create().fromJson(json, WxMaExpressAccount.class);
   }
 }

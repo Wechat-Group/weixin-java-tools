@@ -101,4 +101,40 @@ public class WxMaConstants {
      */
     public static final String UNBIND = "unbind";
   }
+
+  /**
+   * 快递下单订单来源
+   */
+  public static final class OrderAddSource{
+
+    /**
+     * 小程序
+     */
+    public static final int MINI_PROGRAM = 0;
+
+    /**
+     * APP或H5
+     */
+    public static final int APP_OR_H5 = 2;
+  }
+
+  /**
+   * 快递下单保价
+   */
+  public static final class OrderAddInsured{
+    /**
+     * 不保价
+     */
+    public static final int INSURED_PROGRAM = 0;
+
+    /**
+     * 保价
+     */
+    public static final int USE_INSURED = 1;
+
+    /**
+     * 默认保价金额
+     */
+    public static final int DEFAULT_INSURED_VALUE = 0;
+  }
 }
