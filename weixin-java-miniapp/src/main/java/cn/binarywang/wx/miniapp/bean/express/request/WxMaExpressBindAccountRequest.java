@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.bean.express;
+package cn.binarywang.wx.miniapp.bean.express.request;
 
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -8,6 +8,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * <pre>
+ * 绑定、解绑物流账号请求对象
+ * </pre>
  * @author <a href="https://github.com/mr-xiaoyu">xiaoyu</a>
  * @since 2019-11-26
  */

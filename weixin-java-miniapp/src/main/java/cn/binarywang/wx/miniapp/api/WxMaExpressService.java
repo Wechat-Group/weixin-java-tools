@@ -1,6 +1,12 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.express.*;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressAccount;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPrinter;
+import cn.binarywang.wx.miniapp.bean.express.request.WxMaExpressAddOrderRequest;
+import cn.binarywang.wx.miniapp.bean.express.request.WxMaExpressBindAccountRequest;
+import cn.binarywang.wx.miniapp.bean.express.request.WxMaExpressPrinterUpdateRequest;
+import cn.binarywang.wx.miniapp.bean.express.result.WxMaExpressAddOrderResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
@@ -37,11 +43,16 @@ public interface WxMaExpressService {
   String GET_PRINTER_URL = "https://api.weixin.qq.com/cgi-bin/express/business/printer/getall";
 
   /**
+   * 生成运单
+   */
+  String ADD_ORDER_URL = "https://api.weixin.qq.com/cgi-bin/express/business/order/add";
+
+  /**
    * 获取支持的快递公司列表
    * @return  快递公司列表
    * @throws WxErrorException 获取失败时返回
    * <pre>
-   *     文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getAllDelivery.html
+   *   <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getAllDelivery.html">查看文档</a>
    * </pre>
    */
   List<WxMaExpressDelivery> getAllDelivery() throws WxErrorException;
@@ -51,7 +62,7 @@ public interface WxMaExpressService {
    * @return 物流账号list
    * @throws WxErrorException 获取失败时返回
    * <pre>
-   *     文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getAllAccount.html
+   *   <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getAllAccount.html">查看文档</a>
    * </pre>
    */
   List<WxMaExpressAccount> getAllAccount() throws WxErrorException;
@@ -61,7 +72,7 @@ public interface WxMaExpressService {
    * @param wxMaExpressBindAccountRequest 物流账号对象
    * @throws WxErrorException 请求失败时返回
    * <pre>
-   *     文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.bindAccount.html
+   *   <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.bindAccount.html">查看文档</a>
    * </pre>
    */
   void bindAccount(WxMaExpressBindAccountRequest wxMaExpressBindAccountRequest) throws WxErrorException;
@@ -71,7 +82,7 @@ public interface WxMaExpressService {
    * @param wxMaExpressPrinterUpdateRequest  面单打印员对象
    * @throws WxErrorException 请求失败时返回
    * <pre>
-   *     文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.updatePrinter.html
+   *   <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.updatePrinter.html">查看文档</a>
    * </pre>
    */
   void updatePrinter(WxMaExpressPrinterUpdateRequest wxMaExpressPrinterUpdateRequest) throws WxErrorException;
@@ -81,8 +92,19 @@ public interface WxMaExpressService {
    * @return 打印员
    * @throws WxErrorException 获取失败时返回
    * <pre>
-   *     文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getPrinter.html
+   *   <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getPrinter.html">查看文档</a>
    * </pre>
    */
   WxMaExpressPrinter getPrinter() throws WxErrorException;
+
+  /**
+   * 生成运单
+   * @param wxMaExpressAddOrderRequest 生成运单请求对象
+   * @return 生成运单结果
+   * @throws WxErrorException 请求失败时返回
+   * <pre>
+   *   <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.addOrder.html">查看文档</a>
+   * </pre>
+   */
+  WxMaExpressAddOrderResult addOrder(WxMaExpressAddOrderRequest wxMaExpressAddOrderRequest) throws WxErrorException;
 }

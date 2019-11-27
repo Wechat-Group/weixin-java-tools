@@ -1,17 +1,17 @@
 package cn.binarywang.wx.miniapp.bean.express;
 
-import cn.binarywang.wx.miniapp.bean.WxMaShareInfo;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
+ * <pre>
+ * 面单打印员对象
+ * </pre>
  * @author <a href="https://github.com/mr-xiaoyu">xiaoyu</a>
  * @since 2019-11-26
  */

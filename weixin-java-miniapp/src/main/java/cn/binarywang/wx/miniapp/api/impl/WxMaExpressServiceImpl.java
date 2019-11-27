@@ -2,7 +2,13 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaExpressService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.express.*;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressAccount;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
+import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPrinter;
+import cn.binarywang.wx.miniapp.bean.express.request.WxMaExpressAddOrderRequest;
+import cn.binarywang.wx.miniapp.bean.express.request.WxMaExpressBindAccountRequest;
+import cn.binarywang.wx.miniapp.bean.express.request.WxMaExpressPrinterUpdateRequest;
+import cn.binarywang.wx.miniapp.bean.express.result.WxMaExpressAddOrderResult;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -43,5 +49,11 @@ public class WxMaExpressServiceImpl implements WxMaExpressService {
   public WxMaExpressPrinter getPrinter() throws WxErrorException {
     String responseContent = this.wxMaService.get(GET_PRINTER_URL, null);
     return WxMaExpressPrinter.fromJson(responseContent);
+  }
+
+  @Override
+  public WxMaExpressAddOrderResult addOrder(WxMaExpressAddOrderRequest wxMaExpressAddOrderRequest) throws WxErrorException {
+    String responseContent = this.wxMaService.post(ADD_ORDER_URL,wxMaExpressAddOrderRequest.toJson());
+    return WxMaExpressAddOrderResult.fromJson(responseContent);
   }
 }

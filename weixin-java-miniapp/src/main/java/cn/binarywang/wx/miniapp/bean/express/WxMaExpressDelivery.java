@@ -11,6 +11,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * <pre>
+ * 快递公司对象
+ * </pre>
  * @author <a href="https://github.com/mr-xiaoyu">xiaoyu</a>
  * @since 2019-11-26
  */
