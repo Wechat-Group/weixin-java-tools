@@ -195,6 +195,9 @@ public interface WxMaExpressService {
    * 模拟快递公司更新订单状态, 该接口只能用户测试
    * @param wxMaExpressTestUpdateOrderRequest  模拟快递公司更新订单状态请求对象
    * @throws WxErrorException 模拟更新订单状态失败时返回
+   * <pre>
+   *   <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.testUpdateOrder.html">查看文档</a>
+   * </pre>
    */
   void testUpdateOrder(WxMaExpressTestUpdateOrderRequest wxMaExpressTestUpdateOrderRequest) throws WxErrorException;
 }
