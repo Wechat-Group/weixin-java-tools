@@ -546,7 +546,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
     @Override
     public boolean autoRefreshToken() {
-      return true;
+      return wxOpenConfigStorage.autoRefreshToken();
     }
 
     @Override
