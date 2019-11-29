@@ -109,6 +109,7 @@
 - 微同商城：https://gitee.com/fuyang_lipengjun/platform
 - 微信点餐系统：https://github.com/sqmax/springboot-project
 - 专注批量推送的小而美的工具：https://github.com/rememberber/WePush
+- yshop意象商城系统：https://gitee.com/guchengwuyue/yshopmall
 
 #### 小程序：
 - （京东）友家铺子，友家铺子店长版，京粉精选
@@ -117,7 +118,7 @@
 - 广廉快线，鹏城巴士等
 - 当燃挑战、sportlight轻灵运动
 - 360考试宝典
-- 民医台（可自行搜索）
+- 民医台
 - 来一团商家版
 
 #### 公众号：
@@ -131,7 +132,8 @@
 - 手机排队
 - [全民约跑健身便利店](http://www.oneminsport.com/)
 - [洽洽食品](https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFM8TwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAycDRPOXBZbVZib2UxMDAwME0wN2gAAgRIu4RbAwQAAAAA)、[洽洽合伙人](https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFP8jwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyOUpJaU5VcXBlWTAxMDAwME0wN1oAAgSau4RbAwQAAAAA)
-- 民医台（可自行搜索）
+- 民医台
+- YshopMall
 
 #### 企业号/企业微信：
 - 洽洽企业号
