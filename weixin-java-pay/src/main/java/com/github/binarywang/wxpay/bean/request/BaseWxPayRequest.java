@@ -1,21 +1,20 @@
 package com.github.binarywang.wxpay.bean.request;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
-import lombok.experimental.Accessors;
-import org.apache.commons.lang3.StringUtils;
-
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.BeanUtils;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 import static com.github.binarywang.wxpay.constant.WxPayConstants.SignType.ALL_SIGN_TYPES;
 
@@ -118,6 +117,21 @@ public abstract class BaseWxPayRequest implements Serializable {
   @XStreamAlias("sign_type")
   private String signType;
 
+
+  /**
+   * 企业微信签名
+   */
+  @XStreamAlias("workwx_sign")
+  private String workWxSign;
+
+  public String getWorkWxSign() {
+    return workWxSign;
+  }
+
+  public void setWorkWxSign(String workWxSign) {
+    this.workWxSign = workWxSign;
+  }
+
   /**
    * 将单位为元转换为单位为分.
    *
@@ -206,6 +220,26 @@ public abstract class BaseWxPayRequest implements Serializable {
   }
 
   /**
+   * 签名时，是否忽略sub_appid.
+   *
+   * @return the boolean
+   */
+  protected boolean ignoreSubAppId() {
+    return false;
+  }
+
+  protected boolean ignoreSubMchId(){
+    return false;
+  }
+
+  /**
+   * 是否是企业微信字段
+   */
+  protected boolean isWxWorkSign(){
+    return false;
+  }
+
+  /**
    * 签名时，忽略的参数.
    *
    * @return the string [ ]
@@ -238,12 +272,16 @@ public abstract class BaseWxPayRequest implements Serializable {
       this.setMchId(config.getMchId());
     }
 
-    if (StringUtils.isBlank(getSubAppId())) {
-      this.setSubAppId(config.getSubAppId());
+    if (!ignoreSubAppId()) {
+      if (StringUtils.isBlank(getSubAppId())) {
+        this.setSubAppId(config.getSubAppId());
+      }
     }
 
-    if (StringUtils.isBlank(getSubMchId())) {
-      this.setSubMchId(config.getSubMchId());
+    if (!ignoreSubMchId()) {
+      if (StringUtils.isBlank(getSubMchId())) {
+        this.setSubMchId(config.getSubMchId());
+      }
     }
 
     if (StringUtils.isBlank(getSignType())) {
