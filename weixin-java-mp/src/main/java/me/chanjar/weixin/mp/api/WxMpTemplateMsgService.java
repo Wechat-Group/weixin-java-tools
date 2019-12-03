@@ -24,7 +24,9 @@ public interface WxMpTemplateMsgService {
    * 详情请见：http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277&token=&lang=zh_CN
    * </pre>
    *
+   * @param wxMpIndustry 行业信息
    * @return 是否成功
+   * @throws WxErrorException .
    */
   boolean setIndustry(WxMpTemplateIndustry wxMpIndustry) throws WxErrorException;
 
@@ -35,6 +37,7 @@ public interface WxMpTemplateMsgService {
    * </pre>
    *
    * @return wxMpIndustry
+   * @throws WxErrorException .
    */
   WxMpTemplateIndustry getIndustry() throws WxErrorException;
 
@@ -44,7 +47,9 @@ public interface WxMpTemplateMsgService {
    * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277&token=&lang=zh_CN
    * </pre>
    *
+   * @param templateMessage 模板消息
    * @return 消息Id
+   * @throws WxErrorException .
    */
   String sendTemplateMsg(WxMpTemplateMessage templateMessage) throws WxErrorException;
 
@@ -58,6 +63,7 @@ public interface WxMpTemplateMsgService {
    *
    * @param shortTemplateId 模板库中模板的编号，有“TM**”和“OPENTMTM**”等形式
    * @return templateId 模板Id
+   * @throws WxErrorException .
    */
   String addTemplate(String shortTemplateId) throws WxErrorException;
 
@@ -70,6 +76,7 @@ public interface WxMpTemplateMsgService {
    * </pre>
    *
    * @return templateId 模板Id
+   * @throws WxErrorException .
    */
   List<WxMpTemplate> getAllPrivateTemplate() throws WxErrorException;
 
@@ -82,6 +89,8 @@ public interface WxMpTemplateMsgService {
    * </pre>
    *
    * @param templateId 模板Id
+   * @return .
+   * @throws WxErrorException .
    */
   boolean delPrivateTemplate(String templateId) throws WxErrorException;
 }

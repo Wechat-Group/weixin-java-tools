@@ -1,13 +1,12 @@
 package me.chanjar.weixin.common.error;
 
-import java.io.Serializable;
-
-import org.apache.commons.lang3.StringUtils;
-
 import lombok.Builder;
 import lombok.Data;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
 
 /**
  * 微信错误码.
@@ -46,29 +45,38 @@ public class WxError implements Serializable {
 
   public static WxError fromJson(String json, WxType type) {
     final WxError wxError = WxGsonBuilder.create().fromJson(json, WxError.class);
+    if (wxError.getErrorCode() == 0 || type == null) {
+      return wxError;
+    }
+
     if (StringUtils.isNotEmpty(wxError.getErrorMsg())) {
       wxError.setErrorMsgEn(wxError.getErrorMsg());
     }
 
-    if (type == null) {
-      return wxError;
-    }
-
-    if (type == WxType.MP) {
-      final String msg = WxMpErrorMsgEnum.findMsgByCode(wxError.getErrorCode());
-      if (msg != null) {
-        wxError.setErrorMsg(msg);
+    switch (type) {
+      case MP: {
+        final String msg = WxMpErrorMsgEnum.findMsgByCode(wxError.getErrorCode());
+        if (msg != null) {
+          wxError.setErrorMsg(msg);
+        }
+        break;
       }
-    } else if (type == WxType.CP) {
-      final String msg = WxCpErrorMsgEnum.findMsgByCode(wxError.getErrorCode());
-      if (msg != null) {
-        wxError.setErrorMsg(msg);
+      case CP: {
+        final String msg = WxCpErrorMsgEnum.findMsgByCode(wxError.getErrorCode());
+        if (msg != null) {
+          wxError.setErrorMsg(msg);
+        }
+        break;
       }
-    } else if (type == WxType.MiniApp) {
+      case MiniApp: {
         final String msg = WxMaErrorMsgEnum.findMsgByCode(wxError.getErrorCode());
         if (msg != null) {
           wxError.setErrorMsg(msg);
         }
+        break;
+      }
+      default:
+        return wxError;
     }
 
     return wxError;
@@ -76,10 +84,11 @@ public class WxError implements Serializable {
 
   @Override
   public String toString() {
-    if (this.json != null) {
-      return this.json;
+    if (this.json == null) {
+      return "错误代码：" + this.errorCode + ", 错误信息：" + this.errorMsg;
     }
-    return "错误: Code=" + this.errorCode + ", Msg=" + this.errorMsg;
+
+    return "错误代码：" + this.errorCode + ", 错误信息：" + this.errorMsg + "，微信原始报文：" + this.json;
   }
 
 }

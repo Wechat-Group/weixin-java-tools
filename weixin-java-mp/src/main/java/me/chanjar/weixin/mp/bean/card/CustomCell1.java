@@ -33,6 +33,21 @@ public class CustomCell1 implements Serializable {
   @SerializedName("url")
   private String url;
 
+  /**
+   * 参考https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V卡券内跳转小程序参数说明：会员卡自定义入口，包含以下两个字段
+   */
+  /**
+   * 自定义入口小程序user_name，格式为原始id+@app.
+   */
+  @SerializedName("app_brand_user_name")
+  private String appBrandUserName;
+  /**
+   * 自定义入口小程序的页面路径.
+   */
+  @SerializedName("app_brand_pass")
+  private String appBrandPass;
+
+
   @Override
   public String toString() {
     return WxMpGsonBuilder.create().toJson(this);

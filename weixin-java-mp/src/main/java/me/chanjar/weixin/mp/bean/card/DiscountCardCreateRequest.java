@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DiscountCardCreateRequest extends CardCreateRequest implements Serializable {
+public class DiscountCardCreateRequest extends AbstractCardCreateRequest implements Serializable {
   private static final long serialVersionUID = 1190518086576489692L;
 
   @SerializedName("card_type")

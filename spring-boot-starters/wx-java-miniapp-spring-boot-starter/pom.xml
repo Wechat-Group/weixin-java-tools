@@ -3,10 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>wx-java</artifactId>
+    <artifactId>wx-java-spring-boot-starters</artifactId>
     <groupId>com.github.binarywang</groupId>
-    <version>3.5.0</version>
-    <relativePath>../../</relativePath>
+    <version>3.6.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -14,27 +13,7 @@
   <name>WxJava - Spring Boot Starter for MiniApp</name>
   <description>微信小程序开发的 Spring Boot Starter</description>
 
-  <properties>
-    <spring.boot.version>2.1.4.RELEASE</spring.boot.version>
-  </properties>
-
   <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-autoconfigure</artifactId>
-      <version>${spring.boot.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <version>${spring.boot.version}</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <scope>provided</scope>
-    </dependency>
     <dependency>
       <groupId>com.github.binarywang</groupId>
       <artifactId>weixin-java-miniapp</artifactId>

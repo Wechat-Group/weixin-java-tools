@@ -32,6 +32,8 @@ public class WxMaMessageRouterRule {
 
   private String rContent;
 
+  private String title;
+
   private WxMaMessageMatcher matcher;
 
   private boolean reEnter = false;
@@ -57,6 +59,16 @@ public class WxMaMessageRouterRule {
    */
   public WxMaMessageRouterRule msgType(String msgType) {
     this.msgType = msgType;
+    return this;
+  }
+
+  /**
+   * 标题,发送小程序页卡时有效
+   * @param title
+   * @return
+   */
+  public WxMaMessageRouterRule title(String title){
+    this.title = title;
     return this;
   }
 
@@ -99,6 +111,8 @@ public class WxMaMessageRouterRule {
     this.fromUser = fromUser;
     return this;
   }
+
+
 
   /**
    * 如果消息匹配某个matcher，用在用户需要自定义更复杂的匹配规则的时候.
@@ -164,6 +178,8 @@ public class WxMaMessageRouterRule {
     return end();
   }
 
+
+
   /**
    * 将微信自定义的事件修正为不区分大小写.
    * 比如框架定义的事件常量为click，但微信传递过来的却是CLICK
@@ -183,6 +199,9 @@ public class WxMaMessageRouterRule {
           .matches(this.rContent, wxMessage.getContent() == null ? "" : wxMessage.getContent().trim()))
         &&
         (this.matcher == null || this.matcher.match(wxMessage))
+        &&
+        (this.title == null || this.title
+          .equals(wxMessage.getTitle() == null ? null : wxMessage.getTitle().trim()))
       ;
   }
 

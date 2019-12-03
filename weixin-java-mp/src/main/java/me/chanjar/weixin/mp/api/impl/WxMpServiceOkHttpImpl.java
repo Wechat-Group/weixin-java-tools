@@ -48,6 +48,9 @@ public class WxMpServiceOkHttpImpl extends BaseWxMpServiceImpl<OkHttpClient, OkH
     Lock lock = config.getAccessTokenLock();
     lock.lock();
     try {
+      if (!config.isAccessTokenExpired() && !forceRefresh) {
+        return config.getAccessToken();
+      }
       String url = String.format(GET_ACCESS_TOKEN_URL.getUrl(config), config.getAppId(), config.getSecret());
 
       Request request = new Request.Builder().url(url).get().build();

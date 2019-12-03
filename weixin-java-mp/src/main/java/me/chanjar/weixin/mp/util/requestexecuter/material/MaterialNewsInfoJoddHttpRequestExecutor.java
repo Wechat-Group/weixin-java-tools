@@ -29,7 +29,7 @@ public class MaterialNewsInfoJoddHttpRequestExecutor extends MaterialNewsInfoReq
   }
 
   @Override
-  public WxMpMaterialNews execute(String uri, String materialId) throws WxErrorException, IOException {
+  public WxMpMaterialNews execute(String uri, String materialId, WxType wxType) throws WxErrorException, IOException {
     if (requestHttp.getRequestHttpProxy() != null) {
       requestHttp.getRequestHttpClient().useProxy(requestHttp.getRequestHttpProxy());
     }

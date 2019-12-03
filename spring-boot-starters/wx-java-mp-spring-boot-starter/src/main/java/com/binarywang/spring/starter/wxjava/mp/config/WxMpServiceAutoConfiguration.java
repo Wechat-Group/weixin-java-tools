@@ -1,13 +1,9 @@
 package com.binarywang.spring.starter.wxjava.mp.config;
 
-import me.chanjar.weixin.mp.config.WxMpConfigStorage;
-import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.*;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,38 +14,118 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class WxMpServiceAutoConfiguration {
-  @Autowired
-  private ApplicationContext ctx;
 
   @Bean
   @ConditionalOnMissingBean
   public WxMpService wxMpService(WxMpConfigStorage configStorage) {
     WxMpService wxMpService = new WxMpServiceImpl();
     wxMpService.setWxMpConfigStorage(configStorage);
-    registerWxMpSubService(wxMpService);
     return wxMpService;
   }
 
-  @ConditionalOnBean(WxMpService.class)
-  public Object registerWxMpSubService(WxMpService wxMpService) {
-    ConfigurableListableBeanFactory factory = (ConfigurableListableBeanFactory) ctx.getAutowireCapableBeanFactory();
-    factory.registerSingleton("wxMpKefuService", wxMpService.getKefuService());
-    factory.registerSingleton("wxMpMaterialService", wxMpService.getMaterialService());
-    factory.registerSingleton("wxMpMenuService", wxMpService.getMenuService());
-    factory.registerSingleton("wxMpUserService", wxMpService.getUserService());
-    factory.registerSingleton("wxMpUserTagService", wxMpService.getUserTagService());
-    factory.registerSingleton("wxMpQrcodeService", wxMpService.getQrcodeService());
-    factory.registerSingleton("wxMpCardService", wxMpService.getCardService());
-    factory.registerSingleton("wxMpDataCubeService", wxMpService.getDataCubeService());
-    factory.registerSingleton("wxMpUserBlacklistService", wxMpService.getBlackListService());
-    factory.registerSingleton("wxMpStoreService", wxMpService.getStoreService());
-    factory.registerSingleton("wxMpTemplateMsgService", wxMpService.getTemplateMsgService());
-    factory.registerSingleton("wxMpSubscribeMsgService", wxMpService.getSubscribeMsgService());
-    factory.registerSingleton("wxMpDeviceService", wxMpService.getDeviceService());
-    factory.registerSingleton("wxMpShakeService", wxMpService.getShakeService());
-    factory.registerSingleton("wxMpMemberCardService", wxMpService.getMemberCardService());
-    factory.registerSingleton("wxMpMassMessageService", wxMpService.getMassMessageService());
-    return Boolean.TRUE;
+  @Bean
+  public WxMpKefuService wxMpKefuService(WxMpService wxMpService) {
+    return wxMpService.getKefuService();
+  }
+
+  @Bean
+  public WxMpMaterialService wxMpMaterialService(WxMpService wxMpService) {
+    return wxMpService.getMaterialService();
+  }
+
+  @Bean
+  public WxMpMenuService wxMpMenuService(WxMpService wxMpService) {
+    return wxMpService.getMenuService();
+  }
+
+  @Bean
+  public WxMpUserService wxMpUserService(WxMpService wxMpService) {
+    return wxMpService.getUserService();
+  }
+
+  @Bean
+  public WxMpUserTagService wxMpUserTagService(WxMpService wxMpService) {
+    return wxMpService.getUserTagService();
+  }
+
+  @Bean
+  public WxMpQrcodeService wxMpQrcodeService(WxMpService wxMpService) {
+    return wxMpService.getQrcodeService();
+  }
+
+  @Bean
+  public WxMpCardService wxMpCardService(WxMpService wxMpService) {
+    return wxMpService.getCardService();
+  }
+
+  @Bean
+  public WxMpDataCubeService wxMpDataCubeService(WxMpService wxMpService) {
+    return wxMpService.getDataCubeService();
+  }
+
+  @Bean
+  public WxMpUserBlacklistService wxMpUserBlacklistService(WxMpService wxMpService) {
+    return wxMpService.getBlackListService();
+  }
+
+  @Bean
+  public WxMpStoreService wxMpStoreService(WxMpService wxMpService) {
+    return wxMpService.getStoreService();
+  }
+
+  @Bean
+  public WxMpTemplateMsgService wxMpTemplateMsgService(WxMpService wxMpService) {
+    return wxMpService.getTemplateMsgService();
+  }
+
+  @Bean
+  public WxMpSubscribeMsgService wxMpSubscribeMsgService(WxMpService wxMpService) {
+    return wxMpService.getSubscribeMsgService();
+  }
+
+  @Bean
+  public WxMpDeviceService wxMpDeviceService(WxMpService wxMpService) {
+    return wxMpService.getDeviceService();
+  }
+
+  @Bean
+  public WxMpShakeService wxMpShakeService(WxMpService wxMpService) {
+    return wxMpService.getShakeService();
+  }
+
+  @Bean
+  public WxMpMemberCardService wxMpMemberCardService(WxMpService wxMpService) {
+    return wxMpService.getMemberCardService();
+  }
+
+  @Bean
+  public WxMpMassMessageService wxMpMassMessageService(WxMpService wxMpService) {
+    return wxMpService.getMassMessageService();
+  }
+
+  @Bean
+  public WxMpAiOpenService wxMpAiOpenService(WxMpService wxMpService) {
+    return wxMpService.getAiOpenService();
+  }
+
+  @Bean
+  public WxMpWifiService wxMpWifiService(WxMpService wxMpService) {
+    return wxMpService.getWifiService();
+  }
+
+  @Bean
+  public WxMpMarketingService wxMpMarketingService(WxMpService wxMpService) {
+    return wxMpService.getMarketingService();
+  }
+
+  @Bean
+  public WxMpCommentService wxMpCommentService(WxMpService wxMpService) {
+    return wxMpService.getCommentService();
+  }
+
+  @Bean
+  public WxMpOcrService wxMpOcrService(WxMpService wxMpService) {
+    return wxMpService.getOcrService();
   }
 
 }

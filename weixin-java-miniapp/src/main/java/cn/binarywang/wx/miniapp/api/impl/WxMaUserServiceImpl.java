@@ -10,7 +10,6 @@ import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
-import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.SignUtils;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -49,11 +48,7 @@ public class WxMaUserServiceImpl implements WxMaUserService {
     String params = param.toString();
     String signature = SignUtils.createHmacSha256Sign(params, sessionKey);
     String url = String.format(SET_USER_STORAGE, config.getAppid(), signature, openid, "hmac_sha256");
-    String result = this.service.post(url, params);
-    WxError error = WxError.fromJson(result);
-    if (error.getErrorCode() != 0) {
-      throw new WxErrorException(error);
-    }
+    this.service.post(url, params);
   }
 
   @Override

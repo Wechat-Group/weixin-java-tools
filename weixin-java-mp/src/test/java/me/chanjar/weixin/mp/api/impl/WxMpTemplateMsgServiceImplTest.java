@@ -5,10 +5,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConfigStorage;
-import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
-import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
-import me.chanjar.weixin.mp.bean.template.WxMpTemplateIndustry;
-import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
+import me.chanjar.weixin.mp.bean.template.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Guice;
@@ -32,10 +29,8 @@ public class WxMpTemplateMsgServiceImplTest {
 
   @Test(invocationCount = 5, threadPoolSize = 3)
   public void testSendTemplateMsg() throws WxErrorException {
-    SimpleDateFormat dateFormat = new SimpleDateFormat(
-      "yyyy-MM-dd HH:mm:ss.SSS");
-    TestConfigStorage configStorage = (TestConfigStorage) this.wxService
-      .getWxMpConfigStorage();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    TestConfigStorage configStorage = (TestConfigStorage) this.wxService.getWxMpConfigStorage();
     WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder()
       .toUser(configStorage.getOpenid())
       .templateId(configStorage.getTemplateId())
@@ -58,8 +53,8 @@ public class WxMpTemplateMsgServiceImplTest {
 
   @Test
   public void testSetIndustry() throws Exception {
-    WxMpTemplateIndustry industry = new WxMpTemplateIndustry(new WxMpTemplateIndustry.Industry("1"),
-      new WxMpTemplateIndustry.Industry("04"));
+    WxMpTemplateIndustry industry = new WxMpTemplateIndustry(WxMpTemplateIndustryEnum.findByCode(1),
+      WxMpTemplateIndustryEnum.findByCode(4));
     boolean result = this.wxService.getTemplateMsgService().setIndustry(industry);
     Assert.assertTrue(result);
   }

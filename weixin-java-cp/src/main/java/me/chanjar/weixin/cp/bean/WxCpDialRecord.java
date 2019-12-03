@@ -7,10 +7,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 公费电话拨打记录.
+ *
  * @author Element
- * @Package me.chanjar.weixin.cp.bean
  * @date 2019-04-06 15:38
- * @Description: 公费电话拨打记录
  */
 @Data
 public class WxCpDialRecord implements Serializable {
@@ -39,7 +39,7 @@ public class WxCpDialRecord implements Serializable {
    * 主叫信息
    */
   @Data
-  public static class Caller implements Serializable{
+  public static class Caller implements Serializable {
 
     private static final long serialVersionUID = 4792200404338145607L;
 
@@ -53,7 +53,7 @@ public class WxCpDialRecord implements Serializable {
    * 被叫信息
    */
   @Data
-  public static class Callee implements Serializable{
+  public static class Callee implements Serializable {
 
     private static final long serialVersionUID = 2390963671336179550L;
 

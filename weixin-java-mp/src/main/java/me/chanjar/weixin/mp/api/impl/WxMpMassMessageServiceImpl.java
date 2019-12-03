@@ -7,7 +7,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMassMessageService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.*;
+import me.chanjar.weixin.mp.bean.result.WxMpMassGetResult;
 import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
+import me.chanjar.weixin.mp.bean.result.WxMpMassSpeedGetResult;
 import me.chanjar.weixin.mp.bean.result.WxMpMassUploadResult;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 
@@ -62,6 +64,31 @@ public class WxMpMassMessageServiceImpl implements WxMpMassMessageService {
     jsonObject.addProperty("msg_id", msgId);
     jsonObject.addProperty("article_idx", articleIndex);
     this.wxMpService.post(MassMessage.MESSAGE_MASS_DELETE_URL, jsonObject.toString());
+  }
+
+
+  @Override
+  public WxMpMassSpeedGetResult messageMassSpeedGet() throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    String response = this.wxMpService.post(MassMessage.MESSAGE_MASS_SPEED_GET_URL, jsonObject.toString());
+    return WxMpMassSpeedGetResult.fromJson(response);
+  }
+
+
+  @Override
+  public void messageMassSpeedSet(Integer speed) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("speed", speed);
+    this.wxMpService.post(MassMessage.MESSAGE_MASS_SPEED_SET_URL, jsonObject.toString());
+  }
+
+
+  @Override
+  public WxMpMassGetResult messageMassGet(Long msgId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("msg_id", msgId);
+    String response = this.wxMpService.post(MassMessage.MESSAGE_MASS_GET_URL, jsonObject.toString());
+    return WxMpMassGetResult.fromJson(response);
   }
 
 }

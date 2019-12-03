@@ -248,26 +248,30 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
 
   @Override
   public ActivatePluginParam getActivatePluginParam(String cardId, String outStr) throws WxErrorException {
+    String url = this.getActivatePluginUrl(cardId, outStr);
+    try {
+      String decodedUrl = URLDecoder.decode(url, "UTF-8");
+      Map<String, String> resultMap = parseRequestUrl(decodedUrl);
+      ActivatePluginParam activatePluginParam = new ActivatePluginParam();
+      activatePluginParam.setEncryptCardId(resultMap.get("encrypt_card_id"));
+      activatePluginParam.setOuterStr(resultMap.get("outer_str"));
+      activatePluginParam.setBiz(resultMap.get("biz") + "==");
+      return activatePluginParam;
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+
+  @Override
+  public String getActivatePluginUrl(String cardId, String outStr) throws WxErrorException {
     JsonObject params = new JsonObject();
     params.addProperty("card_id", cardId);
     params.addProperty("outer_str", outStr);
     String response = this.wxMpService.post(WxMpApiUrl.MemberCard.MEMBER_CARD_ACTIVATE_URL, GSON.toJson(params));
     ActivatePluginParamResult result = GSON.fromJson(response, ActivatePluginParamResult.class);
-    if (0 == result.getErrcode()) {
-      String url = result.getUrl();
-      try {
-        String decodedUrl = URLDecoder.decode(url, "UTF-8");
-        Map<String, String> resultMap = parseRequestUrl(decodedUrl);
-        ActivatePluginParam activatePluginParam = new ActivatePluginParam();
-        activatePluginParam.setEncryptCardId(resultMap.get("encrypt_card_id"));
-        activatePluginParam.setOuterStr(resultMap.get("outer_str"));
-        activatePluginParam.setBiz(resultMap.get("biz") + "==");
-        return activatePluginParam;
-      } catch (UnsupportedEncodingException e) {
-        e.printStackTrace();
-      }
-    }
-    return null;
+    return result.getUrl();
   }
 
   @Override

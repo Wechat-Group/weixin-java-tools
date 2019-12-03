@@ -42,8 +42,8 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
 
   @Override
   public boolean setIndustry(WxMpTemplateIndustry wxMpIndustry) throws WxErrorException {
-    if (null == wxMpIndustry.getPrimaryIndustry() || null == wxMpIndustry.getPrimaryIndustry().getId()
-      || null == wxMpIndustry.getSecondIndustry() || null == wxMpIndustry.getSecondIndustry().getId()) {
+    if (null == wxMpIndustry.getPrimaryIndustry() || null == wxMpIndustry.getPrimaryIndustry().getCode()
+      || null == wxMpIndustry.getSecondIndustry() || null == wxMpIndustry.getSecondIndustry().getCode()) {
       throw new IllegalArgumentException("行业Id不能为空，请核实");
     }
 

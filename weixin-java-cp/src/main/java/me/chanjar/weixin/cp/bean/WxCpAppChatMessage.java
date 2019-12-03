@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.chanjar.weixin.cp.constant.WxCpConsts.AppChatMsgType;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
+import me.chanjar.weixin.cp.constant.WxCpConsts.AppChatMsgType;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,16 +28,49 @@ import java.util.List;
 public class WxCpAppChatMessage implements Serializable {
   private static final long serialVersionUID = -5469013416372240229L;
 
+  /**
+   * 消息类型
+   */
   private String msgType;
+  /**
+   * 消息内容
+   */
   private String content;
+  /**
+   * 群聊id
+   */
   private String chatId;
+  /**
+   * 图片媒体文件id，可以调用上传临时素材接口获取
+   */
   private String mediaId;
+  /**
+   * 视频消息的标题，不超过128个字节，超过会自动截断
+   */
   private String title;
+  /**
+   * 视频消息的描述，不超过512个字节，超过会自动截断
+   */
   private String description;
+  /**
+   * 表示是否是保密消息
+   */
   private Boolean safe;
+  /**
+   * 点击后跳转的链接。
+   */
   private String url;
+  /**
+   * 按钮文字。 默认为“详情”， 不超过4个文字，超过自动截断。
+   */
   private String btnTxt;
+  /**
+   * 图文消息，一个图文消息支持1到8条图文
+   */
   private List<NewArticle> articles;
+  /**
+   * Mpnews图文消息，一个图文消息支持1到8条图文
+   */
   private List<MpnewsArticle> mpnewsArticles;
 
   /**

@@ -10,7 +10,6 @@ import me.chanjar.weixin.cp.api.WxCpUserService;
 import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 import me.chanjar.weixin.cp.bean.WxCpUserExternalContactInfo;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.util.List;
@@ -61,7 +60,7 @@ public class WxCpUserServiceImpl implements WxCpUserService {
     }
 
     jsonObject.add("useridlist", jsonArray);
-    this.mainService.post(USER_BATCH_DELETE, jsonObject.toString());
+    this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(USER_BATCH_DELETE), jsonObject.toString());
   }
 
   @Override
@@ -94,7 +93,8 @@ public class WxCpUserServiceImpl implements WxCpUserService {
   }
 
   @Override
-  public List<WxCpUser> listSimpleByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException {
+  public List<WxCpUser> listSimpleByDepartment(Long departId, Boolean fetchChild, Integer status)
+    throws WxErrorException {
     String params = "";
     if (fetchChild != null) {
       params += "&fetch_child=" + (fetchChild ? "1" : "0");
@@ -117,7 +117,8 @@ public class WxCpUserServiceImpl implements WxCpUserService {
   }
 
   @Override
-  public WxCpInviteResult invite(List<String> userIds, List<String> partyIds, List<String> tagIds) throws WxErrorException {
+  public WxCpInviteResult invite(List<String> userIds, List<String> partyIds, List<String> tagIds)
+    throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     if (userIds != null) {
       JsonArray jsonArray = new JsonArray();

@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class GrouponCardCreateRequest extends CardCreateRequest implements Serializable {
+public class GrouponCardCreateRequest extends AbstractCardCreateRequest implements Serializable {
   private static final long serialVersionUID = 7551441058859934512L;
 
   @SerializedName("card_type")

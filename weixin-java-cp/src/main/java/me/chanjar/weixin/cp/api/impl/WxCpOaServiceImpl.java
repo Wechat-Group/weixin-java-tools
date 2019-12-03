@@ -22,6 +22,8 @@ import java.util.List;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 
 /**
+ * .
+ *
  * @author Element
  * @date 2019-04-06 11:20
  */
@@ -60,7 +62,8 @@ public class WxCpOaServiceImpl implements WxCpOaService {
 
     jsonObject.add("useridlist", jsonArray);
 
-    String responseContent = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(GET_CHECKIN_DATA), jsonObject.toString());
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CHECKIN_DATA);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(
@@ -89,7 +92,8 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     jsonObject.addProperty("datetime", datetime.getTime() / 1000L);
     jsonObject.add("useridlist", jsonArray);
 
-    String responseContent = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(GET_CHECKIN_OPTION), jsonObject.toString());
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CHECKIN_OPTION);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
 
     return WxCpGsonBuilder.create()
@@ -109,12 +113,14 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       jsonObject.addProperty("next_spnum", nextSpnum);
     }
 
-    String responseContent = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(GET_APPROVAL_DATA), jsonObject.toString());
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_APPROVAL_DATA);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
     return WxCpGsonBuilder.create().fromJson(responseContent, WxCpApprovalDataResult.class);
   }
 
   @Override
-  public List<WxCpDialRecord> getDialRecord(Date startTime, Date endTime, Integer offset, Integer limit) throws WxErrorException {
+  public List<WxCpDialRecord> getDialRecord(Date startTime, Date endTime, Integer offset, Integer limit)
+    throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
 
     if (offset == null) {
@@ -141,14 +147,13 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       jsonObject.addProperty("end_time", endtimestamp);
     }
 
-    String responseContent = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(GET_DIAL_RECORD), jsonObject.toString());
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_DIAL_RECORD);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
 
-    return WxCpGsonBuilder.create()
-      .fromJson(
-        tmpJsonElement.getAsJsonObject().get("record"),
-        new TypeToken<List<WxCpDialRecord>>() {
-        }.getType()
-      );
+    return WxCpGsonBuilder.create().fromJson(tmpJsonElement.getAsJsonObject().get("record"),
+      new TypeToken<List<WxCpDialRecord>>() {
+      }.getType()
+    );
   }
 }

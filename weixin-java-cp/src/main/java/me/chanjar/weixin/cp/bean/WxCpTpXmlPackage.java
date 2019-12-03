@@ -26,13 +26,13 @@ import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 @XStreamAlias("xml")
 @Data
 public class WxCpTpXmlPackage implements Serializable {
-
   private static final long serialVersionUID = 6031833682211475786L;
+
   /**
    * 使用dom4j解析的存放所有xml属性和值的map.
    */
   private Map<String, Object> allFieldsMap;
-  
+
   @XStreamAlias("ToUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String toUserName;

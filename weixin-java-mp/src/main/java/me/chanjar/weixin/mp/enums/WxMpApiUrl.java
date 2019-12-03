@@ -111,6 +111,10 @@ public interface WxMpApiUrl {
      */
     GET_CALLBACK_IP_URL(API_DEFAULT_HOST_URL, "/cgi-bin/getcallbackip"),
     /**
+     * 网络检测.
+     */
+    NETCHECK_URL(API_DEFAULT_HOST_URL, "/cgi-bin/callback/check"),
+    /**
      * 第三方使用网站应用授权登录的url.
      */
     QRCONNECT_URL(OPEN_DEFAULT_HOST_URL, "/connect/qrconnect?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect"),
@@ -436,7 +440,58 @@ public interface WxMpApiUrl {
     /**
      * 身份证识别.
      */
-    IDCARD(API_DEFAULT_HOST_URL, "/cv/ocr/idcard?type=%s&img_url=%s");
+    IDCARD(API_DEFAULT_HOST_URL, "/cv/ocr/idcard?img_url=%s"),
+
+    FILEIDCARD(API_DEFAULT_HOST_URL, "/cv/ocr/idcard"),
+
+    /**
+     * 银行卡OCR识别
+     */
+    BANK_CARD(API_DEFAULT_HOST_URL, "/cv/ocr/bankcard?img_url=%s"),
+
+    /**
+     * 银行卡OCR识别(文件)
+     */
+    FILE_BANK_CARD(API_DEFAULT_HOST_URL, "/cv/ocr/bankcard"),
+
+    /**
+     * 行驶证OCR识别
+     */
+    DRIVING(API_DEFAULT_HOST_URL, "/cv/ocr/driving?img_url=%s"),
+    /**
+     * 行驶证OCR识别(文件)
+     */
+    FILE_DRIVING(API_DEFAULT_HOST_URL, "/cv/ocr/driving"),
+
+    /**
+     * 驾驶证OCR识别
+     */
+    DRIVING_LICENSE(API_DEFAULT_HOST_URL, "/cv/ocr/drivinglicense?img_url=%s"),
+
+    /**
+     * 驾驶证OCR识别(文件)
+     */
+    FILE_DRIVING_LICENSE(API_DEFAULT_HOST_URL, "/cv/ocr/drivinglicense"),
+
+    /**
+     * 营业执照OCR识别
+     */
+    BIZ_LICENSE(API_DEFAULT_HOST_URL, "/cv/ocr/bizlicense?img_url=%s"),
+
+    /**
+     * 营业执照OCR识别(文件)
+     */
+    FILE_BIZ_LICENSE(API_DEFAULT_HOST_URL, "/cv/ocr/bizlicense"),
+
+    /**
+     * 通用印刷体OCR识别
+     */
+    COMM(API_DEFAULT_HOST_URL, "/cv/ocr/comm?img_url=%s"),
+
+    /**
+     * 通用印刷体OCR识别(文件)
+     */
+    FILE_COMM(API_DEFAULT_HOST_URL, "/cv/ocr/comm");
 
     private String prefix;
     private String path;
@@ -500,7 +555,48 @@ public interface WxMpApiUrl {
     /**
      * 卡券删除.
      */
-    CARD_DELETE(API_DEFAULT_HOST_URL, "/card/delete");
+    CARD_DELETE(API_DEFAULT_HOST_URL, "/card/delete"),
+
+    /**
+     * 导入code接口.
+     */
+    CARD_CODE_DEPOSIT(API_DEFAULT_HOST_URL, "/card/code/deposit"),
+
+    /**
+     * 查询导入code数目接口
+     */
+    CARD_CODE_DEPOSIT_COUNT(API_DEFAULT_HOST_URL, "/card/code/getdepositcount"),
+
+    /**
+     * 核查code接口
+     */
+    CARD_CODE_CHECKCODE(API_DEFAULT_HOST_URL, "/card/code/checkcode"),
+
+    /**
+     * 图文消息群发卡券
+     */
+    CARD_MPNEWS_GETHTML(API_DEFAULT_HOST_URL, "/card/mpnews/gethtml"),
+
+    /**
+     * 修改库存接口
+     */
+    CARD_MODIFY_STOCK(API_DEFAULT_HOST_URL, "/card/modifystock"),
+
+    /**
+     * 更改Code接口
+     */
+    CARD_CODE_UPDATE(API_DEFAULT_HOST_URL, "/card/code/update"),
+
+    /**
+     * 设置买单接口
+     */
+    CARD_PAYCELL_SET(API_DEFAULT_HOST_URL, "/card/paycell/set"),
+
+    /**
+     * 设置自助核销接口
+     */
+    CARD_SELF_CONSUME_CELL_SET(API_DEFAULT_HOST_URL, "/card/selfconsumecell/set"),
+    ;
 
     private String prefix;
     private String path;
@@ -688,7 +784,25 @@ public interface WxMpApiUrl {
     /**
      * 删除群发接口.
      */
-    MESSAGE_MASS_DELETE_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/mass/delete");
+    MESSAGE_MASS_DELETE_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/mass/delete"),
+
+
+    /**
+     * 获取群发速度.
+     */
+    MESSAGE_MASS_SPEED_GET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/mass/speed/get"),
+
+
+    /**
+     * 设置群发速度.
+     */
+    MESSAGE_MASS_SPEED_SET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/mass/speed/set"),
+
+
+    /**
+     * 查询群发消息发送状态【订阅号与服务号认证后均可用】
+     */
+    MESSAGE_MASS_GET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/mass/get");
 
     private String prefix;
     private String path;
@@ -705,6 +819,10 @@ public interface WxMpApiUrl {
      * get.
      */
     MEDIA_GET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/media/get"),
+    /**
+     * jssdk media get.
+     */
+    JSSDK_MEDIA_GET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/media/get/jssdk"),
     /**
      * upload.
      */
@@ -869,7 +987,17 @@ public interface WxMpApiUrl {
     /**
      * 打开已群发文章评论.
      */
-    OPEN(API_DEFAULT_HOST_URL, "/cgi-bin/comment/open");
+    OPEN(API_DEFAULT_HOST_URL, "/cgi-bin/comment/open"),
+
+    /**
+     * 关闭已群发文章评论.
+     */
+    CLOSE(API_DEFAULT_HOST_URL, "/cgi-bin/comment/close"),
+
+    /**
+     * 查看指定文章的评论数据.
+     */
+    LIST(API_DEFAULT_HOST_URL, "/cgi-bin/comment/list");
 
     private String prefix;
     private String path;
@@ -879,4 +1007,49 @@ public interface WxMpApiUrl {
       return buildUrl(config.getHostConfig(), prefix, path);
     }
   }
+
+  @AllArgsConstructor
+  enum ImgProc implements WxMpApiUrl {
+    /**
+     * 二维码/条码识别
+     */
+    QRCODE(API_DEFAULT_HOST_URL, "/cv/img/qrcode?img_url=%s"),
+
+    /**
+     * 二维码/条码识别(文件)
+     */
+    FILE_QRCODE(API_DEFAULT_HOST_URL, "/cv/img/qrcode"),
+
+    /**
+     * 图片高清化
+     */
+    SUPER_RESOLUTION(API_DEFAULT_HOST_URL, "/cv/img/superresolution?img_url=%s"),
+
+    /**
+     * 图片高清化(文件)
+     */
+    FILE_SUPER_RESOLUTION(API_DEFAULT_HOST_URL, "/cv/img/superresolution"),
+
+    /**
+     * 图片智能裁剪
+     */
+    AI_CROP(API_DEFAULT_HOST_URL, "/cv/img/aicrop?img_url=%s&ratios=%s"),
+
+    /**
+     * 图片智能裁剪(文件)
+     */
+    FILE_AI_CROP(API_DEFAULT_HOST_URL, "/cv/img/aicrop?ratios=%s");
+
+    private String prefix;
+    private String path;
+
+    @Override
+    public String getUrl(WxMpConfigStorage config) {
+      if (null == config) {
+        return buildUrl(null, prefix, path);
+      }
+      return buildUrl(config.getHostConfig(), prefix, path);
+    }
+  }
+
 }

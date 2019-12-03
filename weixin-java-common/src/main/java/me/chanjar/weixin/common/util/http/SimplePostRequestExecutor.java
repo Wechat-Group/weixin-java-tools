@@ -2,6 +2,7 @@ package me.chanjar.weixin.common.util.http;
 
 import java.io.IOException;
 
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheSimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpSimplePostRequestExecutor;
@@ -21,8 +22,9 @@ public abstract class SimplePostRequestExecutor<H, P> implements RequestExecutor
   }
 
   @Override
-  public void execute(String uri, String data, ResponseHandler<String> handler) throws WxErrorException, IOException {
-    handler.handle(this.execute(uri, data));
+  public void execute(String uri, String data, ResponseHandler<String> handler, WxType wxType)
+    throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data, wxType));
   }
 
   public static RequestExecutor<String, String> create(RequestHttp requestHttp) {
@@ -34,7 +36,7 @@ public abstract class SimplePostRequestExecutor<H, P> implements RequestExecutor
       case OK_HTTP:
         return new OkHttpSimplePostRequestExecutor(requestHttp);
       default:
-        return null;
+        throw new IllegalArgumentException("非法请求参数");
     }
   }
 

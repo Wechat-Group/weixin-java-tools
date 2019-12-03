@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaSettingService;
 import cn.binarywang.wx.miniapp.bean.WxMaDomainAction;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.HashMap;
@@ -13,12 +14,9 @@ import java.util.Map;
  * @author <a href="https://github.com/charmingoh">Charming</a>
  * @since 2018-04-27 15:46
  */
+@AllArgsConstructor
 public class WxMaSettingServiceImpl implements WxMaSettingService {
   private WxMaService wxMaService;
-
-  public WxMaSettingServiceImpl(WxMaService wxMaService) {
-    this.wxMaService = wxMaService;
-  }
 
   @Override
   public WxMaDomainAction modifyDomain(WxMaDomainAction domainAction) throws WxErrorException {

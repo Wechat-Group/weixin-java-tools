@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.binarywang.spring.starter.wxjava.open.config.WxOpenAutoConfiguration

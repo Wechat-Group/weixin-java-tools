@@ -13,7 +13,7 @@ import me.chanjar.weixin.open.bean.ma.WxMaOpenCommitExtInfo;
 import me.chanjar.weixin.open.bean.ma.WxMaQrcodeParam;
 import me.chanjar.weixin.open.bean.message.WxOpenMaSubmitAuditMessage;
 import me.chanjar.weixin.open.bean.result.*;
-import me.chanjar.weixin.open.util.requestexecuter.ma.MaQrCodeRequestExecutor;
+import me.chanjar.weixin.open.executor.MaQrCodeRequestExecutor;
 
 import java.io.File;
 import java.util.List;
@@ -105,6 +105,16 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   /**
+   * 获取小程序的业务域名
+   *
+   * @return
+   */
+  @Override
+  public WxOpenMaWebDomainResult getWebViewDomainInfo() throws WxErrorException {
+    return setWebViewDomainInfo("get", null);
+  }
+
+  /**
    * 设置小程序的业务域名
    *
    * @param action     add添加, delete删除, set覆盖
@@ -123,6 +133,20 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return response;
   }
 
+
+  /**
+   * 设置小程序的业务域名
+   *
+   * @param action add添加, delete删除, set覆盖
+   * @return
+   */
+  @Override
+  public WxOpenMaWebDomainResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException {
+    String response = this.setWebViewDomain(action, domainList);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaWebDomainResult.class);
+  }
+
+
   /**
    * 获取小程序的信息,GET请求
    * <pre>
@@ -139,6 +163,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return response;
   }
 
+
   /**
    * 绑定小程序体验者
    *
@@ -147,11 +172,11 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
    * @throws WxErrorException
    */
   @Override
-  public WxOpenResult bindTester(String wechatid) throws WxErrorException {
+  public WxOpenMaBindTesterResult bindTester(String wechatid) throws WxErrorException {
     JsonObject paramJson = new JsonObject();
     paramJson.addProperty("wechatid", wechatid);
     String response = post(API_BIND_TESTER, GSON.toJson(paramJson));
-    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaBindTesterResult.class);
   }
 
   /**
@@ -182,6 +207,57 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     String response = post(API_GET_TESTERLIST, GSON.toJson(paramJson));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaTesterListResult.class);
   }
+
+
+  /**
+   * 设置小程序隐私设置（是否可被搜索）
+   *
+   * @param status 1表示不可搜索，0表示可搜索
+   */
+  @Override
+  public WxOpenResult changeWxaSearchStatus(Integer status) throws WxErrorException {
+    JsonObject paramJson = new JsonObject();
+    paramJson.addProperty("status", status);
+    String response = post(API_CHANGE_WXA_SEARCH_STATUS, GSON.toJson(paramJson));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
+  /**
+   * 2. 查询小程序当前隐私设置（是否可被搜索）
+   */
+  @Override
+  public WxOpenMaSearchStatusResult getWxaSearchStatus() throws WxErrorException {
+    String response = get(API_GET_WXA_SEARCH_STATUS, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaSearchStatusResult.class);
+  }
+
+
+  /**
+   * 3.1 获取展示的公众号信息
+   */
+  @Override
+  public WxOpenMaShowItemResult getShowWxaItem() throws WxErrorException {
+    String response = get(API_GET_SHOW_WXA_ITEM, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaShowItemResult.class);
+  }
+
+
+  /**
+   * 3.2 设置展示的公众号
+   *
+   * @param flag    0 关闭，1 开启
+   * @param mpappid 如果开启，需要传新的公众号appid
+   */
+  @Override
+  public WxOpenResult updateShowwxaitem(Integer flag, String mpappid) throws WxErrorException {
+    JsonObject paramJson = new JsonObject();
+    paramJson.addProperty("wxa_subscribe_biz_flag", flag);
+    paramJson.addProperty("appid", mpappid);
+    String response = post(API_UPDATE_SHOW_WXA_ITEM, GSON.toJson(paramJson));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
 
   /**
    * 1、为授权的小程序帐号上传小程序代码
@@ -302,6 +378,23 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
+
+  /**
+   * 10. 修改小程序线上代码的可见状态（仅供第三方代小程序调用）
+   *
+   * @param action 设置可访问状态，发布后默认可访问，close为不可见，open为可见
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult changeVisitstatus(String action) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("action", action);
+    String response = post(API_CHANGE_VISITSTATUS, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
   /**
    * 11. 小程序版本回退（仅供第三方代小程序调用）
    *
@@ -313,6 +406,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     String response = get(API_REVERT_CODE_RELEASE, null);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
+
 
   /**
    * 15. 小程序审核撤回
@@ -330,7 +424,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   /**
-   * 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
+   * 12. 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
    *
    * @return
    * @throws WxErrorException
@@ -342,8 +436,21 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return response;
   }
 
+
   /**
-   * 设置最低基础库版本（仅供第三方代小程序调用）
+   * 12. 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenMaWeappSupportVersionResult getSupportVersionInfo() throws WxErrorException {
+    String response = this.getSupportVersion();
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaWeappSupportVersionResult.class);
+  }
+
+  /**
+   * 13. 设置最低基础库版本（仅供第三方代小程序调用）
    *
    * @param version
    * @return
@@ -355,6 +462,152 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     params.addProperty("version", version);
     String response = post(API_SET_WEAPP_SUPPORT_VERSION, GSON.toJson(params));
     return response;
+  }
+
+
+  /**
+   * 13. 设置最低基础库版本（仅供第三方代小程序调用）
+   *
+   * @param version
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult setSupportVersionInfo(String version) throws WxErrorException {
+    String response = this.setSupportVersion(version);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
+  /**
+   * 16. 小程序分阶段发布 - 1)分阶段发布接口
+   *
+   * @param grayPercentage 灰度的百分比，1到100的整数
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult grayrelease(Integer grayPercentage) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("gray_percentage", grayPercentage);
+    String response = post(API_GRAY_RELEASE, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
+  /**
+   * 16. 小程序分阶段发布 - 2)取消分阶段发布
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+
+  public WxOpenResult revertgrayrelease() throws WxErrorException {
+    String response = get(API_REVERT_GRAY_RELEASE, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+
+  /**
+   * 16. 小程序分阶段发布 - 3)查询当前分阶段发布详情
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenMaGrayReleasePlanResult getgrayreleaseplan() throws WxErrorException {
+    String response = get(API_GET_GRAY_RELEASE_PLAN, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaGrayReleasePlanResult.class);
+  }
+
+
+  /**
+   * 查询服务商的当月提审限额和加急次数（Quota）
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html
+   */
+  @Override
+  public WxOpenMaQueryQuotaResult queryQuota() throws WxErrorException {
+    String response = get(API_QUERY_QUOTA, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaQueryQuotaResult.class);
+  }
+
+
+
+  /**
+   * 加急审核申请
+   * 有加急次数的第三方可以通过该接口，对已经提审的小程序进行加急操作，加急后的小程序预计2-12小时内审完。
+   */
+  @Override
+  public Boolean speedAudit(Long auditid) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("auditid", auditid);
+    String response = post(API_SPEED_AUDIT, GSON.toJson(params));
+    WxOpenResult result = WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+    return result.isSuccess();
+  }
+
+
+  /**
+   * (1)增加或修改二维码规则
+   * @param wxQrcodeJumpRule
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult addQrcodeJump(WxQrcodeJumpRule wxQrcodeJumpRule) throws WxErrorException {
+    String response = post(API_QRCODE_JUMP_ADD, GSON.toJson(wxQrcodeJumpRule));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  /**
+   * (2)获取已设置的二维码规则
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxGetQrcodeJumpResult getQrcodeJump() throws WxErrorException {
+    String response = post(API_QRCODE_JUMP_GET, "{}");
+    return WxMaGsonBuilder.create().fromJson(response, WxGetQrcodeJumpResult.class);
+  }
+
+  /**
+   * (3)获取校验文件名称及内容
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxDownlooadQrcodeJumpResult downloadQrcodeJump() throws WxErrorException {
+    String response = post(API_QRCODE_JUMP_DOWNLOAD, "{}");
+    return WxMaGsonBuilder.create().fromJson(response, WxDownlooadQrcodeJumpResult.class);
+  }
+
+  /**
+   * (4)删除已设置的二维码规则
+   * @param prefix
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult deleteQrcodeJump(String prefix) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("prefix", prefix);
+    String response = post(API_QRCODE_JUMP_DELETE, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  /**
+   * (5)发布已设置的二维码规则
+   * @param prefix
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult publishQrcodeJump(String prefix) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("prefix", prefix);
+    String response = post(API_QRCODE_JUMP_PUBLISH, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
   /**

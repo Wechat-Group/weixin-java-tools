@@ -270,10 +270,10 @@ public class WxCryptUtil {
       throw new RuntimeException(e);
     }
 
-    // appid不相同的情况
-    if (!fromAppid.equals(this.appidOrCorpid)) {
-      throw new RuntimeException("AppID不正确，请核实！");
-    }
+    // appid不相同的情况 暂时忽略这段判断
+//    if (!fromAppid.equals(this.appidOrCorpid)) {
+//      throw new RuntimeException("AppID不正确，请核实！");
+//    }
 
     return xmlContent;
 

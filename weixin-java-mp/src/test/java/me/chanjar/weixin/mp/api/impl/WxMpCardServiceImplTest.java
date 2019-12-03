@@ -137,7 +137,7 @@ public class WxMpCardServiceImplTest {
     base.setLocationIdList("1234");
 
     //团购券
-    WxMpCardCreateMessage grouponMessage = new WxMpCardCreateMessage();
+    WxMpCardCreateRequest grouponMessage = new WxMpCardCreateRequest();
     GrouponCardCreateRequest grouponCardCreateRequest = new GrouponCardCreateRequest();
     GrouponCard grouponCard = new GrouponCard();
     grouponCard.setBaseInfo(base);
@@ -149,7 +149,7 @@ public class WxMpCardServiceImplTest {
     System.out.println(this.wxService.getCardService().createCard(grouponMessage));
 
     //现金券
-    WxMpCardCreateMessage cashMessage = new WxMpCardCreateMessage();
+    WxMpCardCreateRequest cashMessage = new WxMpCardCreateRequest();
     CashCardCreateRequest cashCardCreateRequest = new CashCardCreateRequest();
     CashCard cashCard = new CashCard();
     cashCard.setBaseInfo(base);
@@ -162,7 +162,7 @@ public class WxMpCardServiceImplTest {
     System.out.println(this.wxService.getCardService().createCard(cashMessage));
 
     //折扣券
-    WxMpCardCreateMessage discountMessage = new WxMpCardCreateMessage();
+    WxMpCardCreateRequest discountMessage = new WxMpCardCreateRequest();
     DiscountCardCreateRequest discountCardCreateRequest = new DiscountCardCreateRequest();
     DiscountCard discountCard = new DiscountCard();
     discountCard.setBaseInfo(base);
@@ -174,7 +174,7 @@ public class WxMpCardServiceImplTest {
     System.out.println(this.wxService.getCardService().createCard(discountMessage));
 
     //兑换券
-    WxMpCardCreateMessage giftMessage = new WxMpCardCreateMessage();
+    WxMpCardCreateRequest giftMessage = new WxMpCardCreateRequest();
     GiftCardCreateRequest giftCardCreateRequest = new GiftCardCreateRequest();
     GiftCard giftCard = new GiftCard();
     giftCard.setBaseInfo(base);
@@ -185,14 +185,14 @@ public class WxMpCardServiceImplTest {
     System.out.println(this.wxService.getCardService().createCard(giftMessage));
 
     //普通兑换券
-    WxMpCardCreateMessage generalMessage = new WxMpCardCreateMessage();
-    GeneralCardCreateRequest generalCardCreateRequest = new GeneralCardCreateRequest();
-    GeneralCard generalCard = new GeneralCard();
-    generalCard.setBaseInfo(base);
-    generalCard.setDefaultDetail("音乐木盒");
+    WxMpCardCreateRequest generalMessage = new WxMpCardCreateRequest();
+    GeneralCouponCreateRequest generalCouponCreateRequest = new GeneralCouponCreateRequest();
+    GeneralCoupon generalCoupon = new GeneralCoupon();
+    generalCoupon.setBaseInfo(base);
+    generalCoupon.setDefaultDetail("音乐木盒");
 
-    generalCardCreateRequest.setGeneralCoupon(generalCard);
-    generalMessage.setCardCreateRequest(generalCardCreateRequest);
+    generalCouponCreateRequest.setGeneralCoupon(generalCoupon);
+    generalMessage.setCardCreateRequest(generalCouponCreateRequest);
     System.out.println(this.wxService.getCardService().createCard(generalMessage));
   }
 

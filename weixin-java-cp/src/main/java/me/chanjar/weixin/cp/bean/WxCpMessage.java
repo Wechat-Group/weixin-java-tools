@@ -8,7 +8,6 @@ import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
 import me.chanjar.weixin.cp.bean.messagebuilder.*;
 import me.chanjar.weixin.cp.bean.taskcard.TaskCardButton;
-import me.chanjar.weixin.cp.constant.WxCpConsts;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;

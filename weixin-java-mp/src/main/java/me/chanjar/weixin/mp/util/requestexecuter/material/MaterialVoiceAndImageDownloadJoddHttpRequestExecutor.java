@@ -6,6 +6,7 @@ import jodd.http.HttpResponse;
 import jodd.http.ProxyInfo;
 import jodd.util.StringPool;
 
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
@@ -27,7 +28,7 @@ public class MaterialVoiceAndImageDownloadJoddHttpRequestExecutor extends Materi
   }
 
   @Override
-  public InputStream execute(String uri, String materialId) throws WxErrorException, IOException {
+  public InputStream execute(String uri, String materialId, WxType wxType) throws WxErrorException, IOException {
     HttpRequest request = HttpRequest.post(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       requestHttp.getRequestHttpClient().useProxy(requestHttp.getRequestHttpProxy());

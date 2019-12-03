@@ -7,10 +7,10 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
+ * 企业微信 OA 审批数据.
+ *
  * @author Element
- * @Package me.chanjar.weixin.cp.bean
  * @date 2019-04-06 14:36
- * @Description: 企业微信 OA 审批数据
  */
 @Data
 public class WxCpApprovalDataResult implements Serializable {
@@ -27,17 +27,16 @@ public class WxCpApprovalDataResult implements Serializable {
   private Integer total;
 
   @SerializedName("next_spnum")
-  private Long nextSpnum;
+  private Long nextSpNum;
 
   private WxCpApprovalData[] data;
 
 
   @Data
-  public static class WxCpApprovalData implements Serializable{
-
+  public static class WxCpApprovalData implements Serializable {
     private static final long serialVersionUID = -3051785319608491640L;
-
-    private String spname;
+    @SerializedName("spname")
+    private String spName;
 
     @SerializedName("apply_name")
     private String applyName;
@@ -64,6 +63,6 @@ public class WxCpApprovalDataResult implements Serializable {
     private String applyUserId;
 
     @SerializedName("comm")
-    private Map<String,String> comm;
+    private Map<String, String> comm;
   }
 }

@@ -11,5 +11,5 @@ import java.util.Map;
 @Data
 public class WxOpenAuthorizerListResult {
   private int totalCount;
-  private List<Map<String,String>> list;
+  private List<Map<String, String>> list;
 }

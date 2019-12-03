@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpCommentService;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.enums.WxMpApiUrl;
+import me.chanjar.weixin.mp.bean.comment.WxMpCommentListVo;
+
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Comment.*;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -22,6 +24,33 @@ public class WxMpCommentServiceImpl implements WxMpCommentService {
     if (index != null) {
       json.addProperty("index", index);
     }
-    this.wxMpService.post(WxMpApiUrl.Comment.OPEN, json.toString());
+
+    this.wxMpService.post(OPEN, json.toString());
+  }
+
+  @Override
+  public void close(Integer msgDataId, Integer index) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("msg_data_id", msgDataId);
+    if (index != null) {
+      json.addProperty("index", index);
+    }
+
+    this.wxMpService.post(CLOSE, json.toString());
+  }
+
+  @Override
+  public WxMpCommentListVo list(Integer msgDataId, Integer index, int begin, int count, int type) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("msg_data_id", msgDataId);
+    json.addProperty("begin", begin);
+    json.addProperty("count", count);
+    json.addProperty("type", type);
+
+    if (index != null) {
+      json.addProperty("index", index);
+    }
+
+    return WxMpCommentListVo.fromJson(this.wxMpService.post(LIST, json.toString()));
   }
 }

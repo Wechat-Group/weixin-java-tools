@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>3.5.0</version>
+  <version>3.6.0</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -105,9 +105,7 @@
     <module>weixin-java-pay</module>
     <module>weixin-java-miniapp</module>
     <module>weixin-java-open</module>
-    <module>spring-boot-starters/wx-java-pay-spring-boot-starter</module>
-    <module>spring-boot-starters/wx-java-mp-spring-boot-starter</module>
-    <module>spring-boot-starters/wx-java-miniapp-spring-boot-starter</module>
+    <module>spring-boot-starters</module>
     <!--module>weixin-java-osgi</module-->
   </modules>
 

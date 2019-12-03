@@ -18,14 +18,17 @@ import me.chanjar.weixin.cp.api.WxCpTpService;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpTpCorp;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.*;
+
 /**
+ * .
+ *
  * @author zhenjun cai
  */
 @Slf4j
@@ -73,7 +76,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
 
   @Override
   public String getSuiteTicket(boolean forceRefresh) throws WxErrorException {
-//	  suite ticket由微信服务器推送，不能强制刷新
+//     suite ticket由微信服务器推送，不能强制刷新
 //    if (forceRefresh) {
 //      this.configStorage.expireSuiteTicket();
 //    }
@@ -93,8 +96,8 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     params.put("js_code", jsCode);
     params.put("grant_type", "authorization_code");
 
-    String result = this.get(configStorage.getApiUrl(WxCpApiPathConsts.Tp.JSCODE_TO_SESSION), Joiner.on("&").withKeyValueSeparator("=").join(params));
-    return WxCpMaJsCode2SessionResult.fromJson(result);
+    final String url = configStorage.getApiUrl(JSCODE_TO_SESSION);
+    return WxCpMaJsCode2SessionResult.fromJson(this.get(url, Joiner.on("&").withKeyValueSeparator("=").join(params)));
   }
 
 
@@ -103,20 +106,19 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("auth_corpid", authCorpid);
     jsonObject.addProperty("permanent_code", permanentCode);
-    String result = post(configStorage.getApiUrl(WxCpApiPathConsts.Tp.GET_CORP_TOKEN), jsonObject.toString());
+    String result = post(configStorage.getApiUrl(GET_CORP_TOKEN), jsonObject.toString());
 
     return WxAccessToken.fromJson(result);
   }
-
 
   @Override
   public WxCpTpCorp getPermanentCode(String authCode) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("auth_code", authCode);
 
-    String result = post(configStorage.getApiUrl(WxCpApiPathConsts.Tp.GET_PERMANENT_CODE), jsonObject.toString());
+    String result = post(configStorage.getApiUrl(GET_PERMANENT_CODE), jsonObject.toString());
     jsonObject = new JsonParser().parse(result).getAsJsonObject();
-    WxCpTpCorp wxCpTpCorp = WxCpTpCorp.fromJson(jsonObject.get("auth_corp_info").getAsString());
+    WxCpTpCorp wxCpTpCorp = WxCpTpCorp.fromJson(jsonObject.get("auth_corp_info").getAsJsonObject().toString());
     wxCpTpCorp.setPermanentCode(jsonObject.get("permanent_code").getAsString());
     return wxCpTpCorp;
   }
@@ -180,7 +182,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     String uriWithAccessToken = uri + (uri.contains("?") ? "&" : "?") + "suite_access_token=" + suiteAccessToken;
 
     try {
-      T result = executor.execute(uriWithAccessToken, data);
+      T result = executor.execute(uriWithAccessToken, data, WxType.CP);
       log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog, result);
       return result;
     } catch (WxErrorException e) {

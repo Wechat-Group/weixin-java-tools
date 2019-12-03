@@ -23,7 +23,7 @@ public class MaterialVideoInfoJoddHttpRequestExecutor extends MaterialVideoInfoR
   }
 
   @Override
-  public WxMpMaterialVideoInfoResult execute(String uri, String materialId) throws WxErrorException, IOException {
+  public WxMpMaterialVideoInfoResult execute(String uri, String materialId, WxType wxType) throws WxErrorException, IOException {
     HttpRequest request = HttpRequest.post(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       requestHttp.getRequestHttpClient().useProxy(requestHttp.getRequestHttpProxy());

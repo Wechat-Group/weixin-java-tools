@@ -74,6 +74,9 @@ public class WxMpServiceHttpClientImpl extends BaseWxMpServiceImpl<CloseableHttp
     Lock lock = config.getAccessTokenLock();
     lock.lock();
     try {
+      if (!config.isAccessTokenExpired() && !forceRefresh) {
+        return config.getAccessToken();
+      }
       String url = String.format(GET_ACCESS_TOKEN_URL.getUrl(config), config.getAppId(), config.getSecret());
       try {
         HttpGet httpGet = new HttpGet(url);

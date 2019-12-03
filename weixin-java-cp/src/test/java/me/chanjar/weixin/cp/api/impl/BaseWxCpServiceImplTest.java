@@ -33,4 +33,9 @@ public class BaseWxCpServiceImplTest {
   public void testJsCode2Session() throws WxErrorException {
     assertThat(this.wxService.jsCode2Session("111")).isNotNull();
   }
+
+  @Test
+  public void testGetProviderToken() throws WxErrorException {
+    assertThat(this.wxService.getProviderToken("111","123")).isNotNull();
+  }
 }

@@ -1,7 +1,5 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import java.io.File;
-
 import cn.binarywang.wx.miniapp.api.WxMaQrcodeService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaCodeLineColor;
@@ -10,17 +8,17 @@ import cn.binarywang.wx.miniapp.bean.WxaCode;
 import cn.binarywang.wx.miniapp.bean.WxaCodeUnlimit;
 import cn.binarywang.wx.miniapp.util.QrcodeBytesRequestExecutor;
 import cn.binarywang.wx.miniapp.util.QrcodeRequestExecutor;
+import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
+
+import java.io.File;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@AllArgsConstructor
 public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
   private WxMaService wxMaService;
-
-  public WxMaQrcodeServiceImpl(WxMaService wxMaService) {
-    this.wxMaService = wxMaService;
-  }
 
   @Override
   public byte[] createQrcodeBytes(String path, int width) throws WxErrorException {

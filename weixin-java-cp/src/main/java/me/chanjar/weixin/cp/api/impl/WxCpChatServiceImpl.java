@@ -43,13 +43,14 @@ public class WxCpChatServiceImpl implements WxCpChatService {
     if (StringUtils.isNotBlank(chatId)) {
       data.put("chatid", chatId);
     }
-    String result = this.cpService.post(this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_CREATE), WxGsonBuilder.create().toJson(data));
+    final String url = this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_CREATE);
+    String result = this.cpService.post(url, WxGsonBuilder.create().toJson(data));
     return new JsonParser().parse(result).getAsJsonObject().get("chatid").getAsString();
   }
 
   @Override
   public String create(String name, String owner, List<String> users, String chatId) throws WxErrorException {
-    return chatCreate(name, owner, users, chatId);
+    return this.chatCreate(name, owner, users, chatId);
   }
 
   @Override
@@ -72,24 +73,27 @@ public class WxCpChatServiceImpl implements WxCpChatService {
       data.put("del_user_list", usersToDelete);
     }
 
-    this.cpService.post(this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_UPDATE), WxGsonBuilder.create().toJson(data));
+    final String url = this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_UPDATE);
+    this.cpService.post(url, WxGsonBuilder.create().toJson(data));
   }
 
   @Override
-  public void update(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete) throws WxErrorException {
+  public void update(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete)
+    throws WxErrorException {
     chatUpdate(chatId, name, owner, usersToAdd, usersToDelete);
   }
 
   @Override
   public WxCpChat chatGet(String chatId) throws WxErrorException {
-    String result = this.cpService.get(this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_GET_CHATID + chatId), null);
-    return WxCpGsonBuilder.create()
-      .fromJson(JSON_PARSER.parse(result).getAsJsonObject().getAsJsonObject("chat_info").toString(), WxCpChat.class);
+    final String url = this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_GET_CHATID + chatId);
+    String result = this.cpService.get(url, null);
+    final String chatInfo = JSON_PARSER.parse(result).getAsJsonObject().getAsJsonObject("chat_info").toString();
+    return WxCpGsonBuilder.create().fromJson(chatInfo, WxCpChat.class);
   }
 
   @Override
   public WxCpChat get(String chatId) throws WxErrorException {
-    return chatGet(chatId);
+    return this.chatGet(chatId);
   }
 
   @Override

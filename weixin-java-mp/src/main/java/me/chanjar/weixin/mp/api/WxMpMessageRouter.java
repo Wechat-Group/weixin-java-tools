@@ -53,7 +53,6 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
  * @author Daniel Qian
  */
 public class WxMpMessageRouter {
-
   private static final int DEFAULT_THREAD_POOL_SIZE = 100;
   protected final Logger log = LoggerFactory.getLogger(WxMpMessageRouter.class);
   private final List<WxMpMessageRouterRule> rules = new ArrayList<>();
@@ -77,9 +76,7 @@ public class WxMpMessageRouter {
   }
 
   /**
-   * <pre>
-   * 使用自定义的 {@link ExecutorService}
-   * </pre>
+   * 使用自定义的 {@link ExecutorService}.
    */
   public WxMpMessageRouter(WxMpService wxMpService, ExecutorService executorService) {
     this.wxMpService = wxMpService;
@@ -90,9 +87,7 @@ public class WxMpMessageRouter {
   }
 
   /**
-   * <pre>
-   * 如果使用默认的 {@link ExecutorService}，则系统退出前，应该调用该方法。
-   * </pre>
+   * 如果使用默认的 {@link ExecutorService}，则系统退出前，应该调用该方法.
    */
   public void shutDownExecutorService() {
     this.executorService.shutdown();
@@ -230,21 +225,24 @@ public class WxMpMessageRouter {
   }
 
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage) {
-    return this.route(wxMessage, new HashMap<String, Object>());
+    return this.route(wxMessage, new HashMap<String, Object>(2));
   }
 
-  protected boolean isMsgDuplicated(WxMpXmlMessage wxMessage) {
+  private boolean isMsgDuplicated(WxMpXmlMessage wxMessage) {
     StringBuilder messageId = new StringBuilder();
     if (wxMessage.getMsgId() == null) {
       messageId.append(wxMessage.getCreateTime())
         .append("-").append(wxMessage.getFromUser())
         .append("-").append(StringUtils.trimToEmpty(wxMessage.getEventKey()))
-        .append("-").append(StringUtils.trimToEmpty(wxMessage.getEvent()))
-      ;
+        .append("-").append(StringUtils.trimToEmpty(wxMessage.getEvent()));
     } else {
       messageId.append(wxMessage.getMsgId())
         .append("-").append(wxMessage.getCreateTime())
         .append("-").append(wxMessage.getFromUser());
+    }
+
+    if (StringUtils.isNotEmpty(wxMessage.getUserCardCode())) {
+      messageId.append("-").append(wxMessage.getUserCardCode());
     }
 
     return this.messageDuplicateChecker.isDuplicate(messageId.toString());
@@ -254,12 +252,10 @@ public class WxMpMessageRouter {
   /**
    * 对session的访问结束.
    */
-  protected void sessionEndAccess(WxMpXmlMessage wxMessage) {
-
+  private void sessionEndAccess(WxMpXmlMessage wxMessage) {
     InternalSession session = ((InternalSessionManager) this.sessionManager).findSession(wxMessage.getFromUser());
     if (session != null) {
       session.endAccess();
     }
-
   }
 }

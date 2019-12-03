@@ -1,5 +1,6 @@
 package me.chanjar.weixin.common.util.http.apache;
 
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
@@ -15,16 +16,18 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import java.io.IOException;
 
 /**
- * Created by ecoolper on 2017/5/4.
+ * .
+ *
+ * @author ecoolper
+ * @date 2017/5/4
  */
 public class ApacheSimplePostRequestExecutor extends SimplePostRequestExecutor<CloseableHttpClient, HttpHost> {
-
   public ApacheSimplePostRequestExecutor(RequestHttp requestHttp) {
     super(requestHttp);
   }
 
   @Override
-  public String execute(String uri, String postEntity) throws WxErrorException, IOException {
+  public String execute(String uri, String postEntity, WxType wxType) throws WxErrorException, IOException {
     HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       RequestConfig config = RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build();
@@ -47,7 +50,7 @@ public class ApacheSimplePostRequestExecutor extends SimplePostRequestExecutor<C
         return responseContent;
       }
 
-      WxError error = WxError.fromJson(responseContent);
+      WxError error = WxError.fromJson(responseContent, wxType);
       if (error.getErrorCode() != 0) {
         throw new WxErrorException(error);
       }

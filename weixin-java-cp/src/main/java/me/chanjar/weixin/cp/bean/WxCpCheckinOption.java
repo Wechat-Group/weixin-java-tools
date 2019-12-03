@@ -7,10 +7,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 企业微信打卡规则.
+ *
  * @author Element
- * @Package me.chanjar.weixin.cp.bean
  * @date 2019-04-06 13:22
- * @Description: 企业微信打卡规则
  */
 @Data
 public class WxCpCheckinOption implements Serializable {
@@ -21,10 +21,8 @@ public class WxCpCheckinOption implements Serializable {
 
   private Group group;
 
-
   @Data
   public static class CheckinDate implements Serializable {
-
     private static final long serialVersionUID = -5601722383347110974L;
 
     private List<Integer> workdays;
@@ -36,15 +34,14 @@ public class WxCpCheckinOption implements Serializable {
     private Long flexTime;
 
     @SerializedName("noneed_offwork")
-    private Boolean noneedOffwork;
+    private Boolean noNeedOffwork;
 
     @SerializedName("limit_aheadtime")
-    private Long limitAheadtime;
+    private Long limitAheadTime;
   }
 
   @Data
   public static class CheckinTime implements Serializable {
-
     private static final long serialVersionUID = -8579954143265336276L;
 
     @SerializedName("work_sec")
@@ -90,16 +87,16 @@ public class WxCpCheckinOption implements Serializable {
     private Boolean needPhoto;
 
     @SerializedName("note_can_use_local_pic")
-    private Boolean note_can_use_local_pic;
+    private Boolean noteCanUseLocalPic;
 
     @SerializedName("allow_checkin_offworkday")
-    private Boolean allow_checkin_offworkday;
+    private Boolean allowCheckinOffWorkday;
 
     @SerializedName("allow_apply_offworkday")
-    private Boolean allow_apply_offworkday;
+    private Boolean allowApplyOffWorkday;
 
     @SerializedName("wifimac_infos")
-    private List<WifiMACInfo> wifiMACInfos;
+    private List<WifiMacInfo> wifiMacInfos;
 
     @SerializedName("loc_infos")
     private List<LocInfo> locInfos;
@@ -107,8 +104,7 @@ public class WxCpCheckinOption implements Serializable {
   }
 
   @Data
-  public static class WifiMACInfo implements Serializable{
-
+  public static class WifiMacInfo implements Serializable {
     private static final long serialVersionUID = -4657809185716627368L;
 
     @SerializedName("wifiname")
@@ -119,8 +115,7 @@ public class WxCpCheckinOption implements Serializable {
   }
 
   @Data
-  public static class LocInfo implements Serializable{
-
+  public static class LocInfo implements Serializable {
     private static final long serialVersionUID = -618965280668099608L;
 
     private Long lat;
@@ -136,8 +131,7 @@ public class WxCpCheckinOption implements Serializable {
   }
 
   @Data
-  public static class SpeDay implements Serializable{
-
+  public static class SpeDay implements Serializable {
     private static final long serialVersionUID = -3538818921359212748L;
 
     private Long timestamp;

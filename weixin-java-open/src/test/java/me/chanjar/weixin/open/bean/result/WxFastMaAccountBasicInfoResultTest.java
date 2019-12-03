@@ -37,14 +37,14 @@ public class WxFastMaAccountBasicInfoResultTest {
       "    }\n" +
       "}";
 
-    WxFastMaAccountBasicInfoResult res = WxOpenGsonBuilder.create ().fromJson (json, WxFastMaAccountBasicInfoResult.class);
+    WxFastMaAccountBasicInfoResult res = WxOpenGsonBuilder.create().fromJson(json, WxFastMaAccountBasicInfoResult.class);
 
     assertNotNull(res);
-    assertNotNull(res.getAppId ());
-    assertNotNull(res.getSignatureInfo ().getModifyQuota ());
-    assertNotNull(res.getHeadImageInfo ().getHeadImageUrl ());
-    assertNotNull(res.getWxVerifyInfo ().getNamingVerify ());
-    assertTrue(res.getWxVerifyInfo ().getNamingVerify ());
+    assertNotNull(res.getAppId());
+    assertNotNull(res.getSignatureInfo().getModifyQuota());
+    assertNotNull(res.getHeadImageInfo().getHeadImageUrl());
+    assertNotNull(res.getWxVerifyInfo().getNamingVerify());
+    assertTrue(res.getWxVerifyInfo().getNamingVerify());
     System.out.println(res);
   }
 

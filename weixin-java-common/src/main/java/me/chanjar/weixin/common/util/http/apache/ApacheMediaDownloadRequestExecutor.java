@@ -1,9 +1,12 @@
 package me.chanjar.weixin.common.util.http.apache;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
+import me.chanjar.weixin.common.WxType;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.fs.FileUtils;
+import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
+import me.chanjar.weixin.common.util.http.HttpResponseProxy;
+import me.chanjar.weixin.common.util.http.RequestHttp;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
@@ -14,15 +17,15 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 
-import me.chanjar.weixin.common.error.WxError;
-import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.fs.FileUtils;
-import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
-import me.chanjar.weixin.common.util.http.HttpResponseProxy;
-import me.chanjar.weixin.common.util.http.RequestHttp;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * Created by ecoolper on 2017/5/5.
+ * .
+ *
+ * @author ecoolper
+ * @date 2017/5/5
  */
 public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequestExecutor<CloseableHttpClient, HttpHost> {
   public ApacheMediaDownloadRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {
@@ -30,7 +33,7 @@ public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
   }
 
   @Override
-  public File execute(String uri, String queryParam) throws WxErrorException, IOException {
+  public File execute(String uri, String queryParam, WxType wxType) throws WxErrorException, IOException {
     if (queryParam != null) {
       if (uri.indexOf('?') == -1) {
         uri += '?';
@@ -51,7 +54,7 @@ public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
         if (contentTypeHeader[0].getValue().startsWith(ContentType.APPLICATION_JSON.getMimeType())) {
           // application/json; encoding=utf-8 下载媒体文件出错
           String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-          throw new WxErrorException(WxError.fromJson(responseContent));
+          throw new WxErrorException(WxError.fromJson(responseContent, wxType));
         }
       }
 

@@ -58,48 +58,48 @@ public class WxOpenXmlMessage implements Serializable {
 
   // 以下为快速创建小程序接口推送的的信息
 
-  @XStreamAlias ("appid")
+  @XStreamAlias("appid")
   private String registAppId;
 
-  @XStreamAlias ("status")
+  @XStreamAlias("status")
   private int status;
 
-  @XStreamAlias ("auth_code")
+  @XStreamAlias("auth_code")
   private String authCode;
 
-  @XStreamAlias ("msg")
-  @XStreamConverter (value = XStreamCDataConverter.class)
+  @XStreamAlias("msg")
+  @XStreamConverter(value = XStreamCDataConverter.class)
   private String msg;
 
-  @XStreamAlias ("info")
+  @XStreamAlias("info")
   private Info info = new Info();
 
-  @XStreamAlias ("info")
+  @XStreamAlias("info")
   @Data
   public static class Info implements Serializable {
     private static final long serialVersionUID = 7706235740094081194L;
 
-    @XStreamAlias ("name")
-    @XStreamConverter (value = XStreamCDataConverter.class)
+    @XStreamAlias("name")
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String name;
 
-    @XStreamAlias ("code")
-    @XStreamConverter (value = XStreamCDataConverter.class)
+    @XStreamAlias("code")
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String code;
 
-    @XStreamAlias ("code_type")
+    @XStreamAlias("code_type")
     private int codeType;
 
-    @XStreamAlias ("legal_persona_wechat")
-    @XStreamConverter (value = XStreamCDataConverter.class)
+    @XStreamAlias("legal_persona_wechat")
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String legalPersonaWechat;
 
-    @XStreamAlias ("legal_persona_name")
-    @XStreamConverter (value = XStreamCDataConverter.class)
+    @XStreamAlias("legal_persona_name")
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String legalPersonaName;
 
-    @XStreamAlias ("component_phone")
-    @XStreamConverter (value = XStreamCDataConverter.class)
+    @XStreamAlias("component_phone")
+    @XStreamConverter(value = XStreamCDataConverter.class)
     private String componentPhone;
   }
 

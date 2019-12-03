@@ -31,7 +31,7 @@ public class VoiceUploadApacheHttpRequestExecutor extends VoiceUploadRequestExec
   }
 
   @Override
-  public Boolean execute(String uri, File data) throws WxErrorException, IOException {
+  public Boolean execute(String uri, File data, WxType wxType) throws WxErrorException, IOException {
     if (data == null) {
       throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("文件对象为空").build());
     }

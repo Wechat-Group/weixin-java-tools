@@ -8,6 +8,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * 积分规则.
+ *
  * @author yuanqixun
  * date:2018-08-25 00:33
  */
@@ -54,8 +55,8 @@ public class BonusRule implements Serializable {
   /**
    * 抵扣条件,满xx元（这里以分为单位）可用.
    */
-  @SerializedName("least_moneyto_use_bonus")
-  private Integer leastMoneytoUseBonus;
+  @SerializedName("least_money_to_use_bonus")
+  private Integer leastMoneyToUseBonus;
 
   /**
    * 抵扣条件,单笔最多使用xx积分.

@@ -119,7 +119,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
         }
         try (CloseableHttpResponse response = getRequestHttpClient().execute(httpGet)) {
           String resultContent = new BasicResponseHandler().handleResponse(response);
-          WxError error = WxError.fromJson(resultContent);
+          WxError error = WxError.fromJson(resultContent, WxType.MiniApp);
           if (error.getErrorCode() != 0) {
             throw new WxErrorException(error);
           }
@@ -251,7 +251,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
     String uriWithAccessToken = uri + (uri.contains("?") ? "&" : "?") + "access_token=" + accessToken;
 
     try {
-      T result = executor.execute(uriWithAccessToken, data);
+      T result = executor.execute(uriWithAccessToken, data, WxType.MiniApp);
       log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog, result);
       return result;
     } catch (WxErrorException e) {

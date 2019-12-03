@@ -2,9 +2,11 @@ package me.chanjar.weixin.cp.bean;
 
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.cp.constant.WxCpConsts;
+import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 import org.testng.annotations.Test;
 
 import static me.chanjar.weixin.cp.constant.WxCpConsts.EventType.TASKCARD_CLICK;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -221,5 +223,53 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getChangeType(), WxCpConsts.ExternalContactChangeType.DEL_EXTERNAL_CONTACT);
     assertEquals(wxMessage.getUserId(), "zhangsan");
     assertEquals(wxMessage.getExternalUserId(), "woAJ2GCAAAXtWyujaWJHDDGi0mACH71w");
+  }
+
+  public void testChangeContact() {
+    String xml = "<xml>\n" +
+      "    <ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "    <FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "    <CreateTime>1403610513</CreateTime>\n" +
+      "    <MsgType><![CDATA[event]]></MsgType>\n" +
+      "    <Event><![CDATA[change_contact]]></Event>\n" +
+      "    <ChangeType>update_user</ChangeType>\n" +
+      "    <UserID><![CDATA[zhangsan]]></UserID>\n" +
+      "    <NewUserID><![CDATA[zhangsan001]]></NewUserID>\n" +
+      "    <Name><![CDATA[张三]]></Name>\n" +
+      "    <Department><![CDATA[1,2,3]]></Department>\n" +
+      "    <IsLeaderInDept><![CDATA[1,0,0]]></IsLeaderInDept>\n" +
+      "    <Position><![CDATA[产品经理]]></Position>\n" +
+      "    <Mobile>15913215421</Mobile>\n" +
+      "    <Gender>1</Gender>\n" +
+      "    <Email><![CDATA[zhangsan@gzdev.com]]></Email>\n" +
+      "    <Status>1</Status>\n" +
+      "    <Avatar><![CDATA[http://wx.qlogo.cn/mmopen/ajNVdqHZLLA3WJ6DSZUfiakYe37PKnQhBIeOQBO4czqrnZDS79FH5Wm5m4X69TBicnHFlhiafvDwklOpZeXYQQ2icg/0]]></Avatar>\n" +
+      "    <Alias><![CDATA[zhangsan]]></Alias>\n" +
+      "    <Telephone><![CDATA[020-3456788]]></Telephone>\n" +
+      "    <Address><![CDATA[广州市]]></Address>\n" +
+      "    <ExtAttr>\n" +
+      "        <Item>\n" +
+      "        <Name><![CDATA[爱好]]></Name>\n" +
+      "        <Type>0</Type>\n" +
+      "        <Text>\n" +
+      "            <Value><![CDATA[旅游]]></Value>\n" +
+      "        </Text>\n" +
+      "        </Item>\n" +
+      "        <Item>\n" +
+      "        <Name><![CDATA[卡号]]></Name>\n" +
+      "        <Type>1</Type>\n" +
+      "        <Web>\n" +
+      "            <Title><![CDATA[企业微信]]></Title>\n" +
+      "            <Url><![CDATA[https://work.weixin.qq.com]]></Url>\n" +
+      "        </Web>\n" +
+      "        </Item>\n" +
+      "    </ExtAttr>\n" +
+      "</xml>";
+
+    WxCpXmlMessage wxCpXmlMessage = WxCpXmlMessage.fromXml(xml);
+    assertThat(wxCpXmlMessage).isNotNull();
+    assertThat(wxCpXmlMessage.getDepartments()).isNotEmpty();
+
+    System.out.println(XStreamTransformer.toXml(WxCpXmlMessage.class, wxCpXmlMessage));
   }
 }

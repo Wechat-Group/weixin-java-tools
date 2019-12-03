@@ -69,4 +69,20 @@ public class WxMaConstants {
      */
     public static final int ERR_40014 = 40014;
   }
+
+  /**
+   * 内容安全检测的媒体类型
+   */
+  public static final class SecCheckMediaType {
+
+    /**
+     * 音频
+     */
+    public static final int VOICE = 1;
+
+    /**
+     * 图片
+     */
+    public static final int IMAGE = 2;
+  }
 }
