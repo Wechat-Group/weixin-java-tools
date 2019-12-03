@@ -91,7 +91,7 @@ public class SignUtils {
 
       if (shouldSign) {
         toSign.append(key).append("=").append(value).append("&");
-      }
+    }
     }
 
     toSign.append("key=").append(signKey);
@@ -100,6 +100,49 @@ public class SignUtils {
     } else {
       return DigestUtils.md5Hex(toSign.toString()).toUpperCase();
     }
+  }
+
+  /**
+   * 企业微信签名
+   * @param signType md5 目前接口要求使用的加密类型
+   */
+  public static String createEntSign(String actName,String mchBillNo,String mchId,String nonceStr,
+                                     String reOpenid,Integer totalAmount,String wxAppId,String signKey,
+                                     String signType){
+    Map<String, String> sortedMap = new HashMap<>();
+    sortedMap.put("act_name",actName);
+    sortedMap.put("mch_billno",mchBillNo);
+    sortedMap.put("mch_id",mchId);
+    sortedMap.put("nonce_str",nonceStr);
+    sortedMap.put("re_openid",reOpenid);
+    sortedMap.put("total_amount", totalAmount + "");
+    sortedMap.put("wxappid",wxAppId);
+
+    Map<String, String> sortParams = new TreeMap<>(sortedMap);
+    Set<Map.Entry<String, String>> entries = sortParams.entrySet();
+    Iterator<Map.Entry<String, String>> iterator = entries.iterator();
+    StringBuilder toSign = new StringBuilder();
+    while(iterator.hasNext()){
+      Map.Entry entry = iterator.next();
+      String key = String.valueOf(entry.getKey());
+      String value = String.valueOf(entry.getValue());
+      boolean shouldSign = false;
+      if (StringUtils.isNotEmpty(value)) {
+        shouldSign = true;
+      }
+
+      if (shouldSign) {
+        toSign.append(key).append("=").append(value).append("&");
+      }
+    }
+    //企业微信这里字段名不一样
+    toSign.append("secret=").append(signKey);
+    if (SignType.HMAC_SHA256.equals(signType)) {
+      return me.chanjar.weixin.common.util.SignUtils.createHmacSha256Sign(toSign.toString(), signKey);
+    } else {
+      return DigestUtils.md5Hex(toSign.toString()).toUpperCase();
+    }
+
   }
 
   /**

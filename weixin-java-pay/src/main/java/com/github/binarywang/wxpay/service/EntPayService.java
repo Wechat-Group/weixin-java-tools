@@ -119,4 +119,28 @@ public interface EntPayService {
    * @throws WxPayException the wx pay exception
    */
   EntPayBankQueryResult queryPayBank(EntPayBankQueryRequest request) throws WxPayException;
+
+  /**
+   * 企业发送微信红包给个人用户
+   * <pre>
+   *   文档地址：https://work.weixin.qq.com/api/doc
+   *   接口地址： https://api.mch.weixin.qq.com/mmpaymkttransfers/sendworkwxredpack
+   * </pre>
+   * @param request 请求对象
+   * @return the wx pay send redpack result
+   * @throws WxPayException the wx pay exception
+   */
+  EntPayRedpackResult sendEnterpriseRedpack(EntPayRedpackRequest request) throws WxPayException;
+
+  /**
+   * 企业发送微信红包查询
+   * <pre>
+   *   文档地址：https://work.weixin.qq.com/api/doc
+   *   接口地址： https://api.mch.weixin.qq.com/mmpaymkttransfers/queryworkwxredpack
+   * </pre>
+   * @param request 请求对象
+   * @return the wx pay send redpack result
+   * @throws WxPayException the wx pay exception
+   */
+  EntPayRedpackQueryResult queryEnterpriseRedpack(EntPayRedpackQueryRequest request) throws WxPayException;
 }
