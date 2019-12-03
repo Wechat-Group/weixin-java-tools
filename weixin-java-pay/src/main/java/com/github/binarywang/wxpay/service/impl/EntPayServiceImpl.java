@@ -1,35 +1,26 @@
 package com.github.binarywang.wxpay.service.impl;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.security.PublicKey;
-import java.security.Security;
-import javax.crypto.Cipher;
-
+import com.github.binarywang.wxpay.bean.entpay.*;
+import com.github.binarywang.wxpay.bean.request.WxPayDefaultRequest;
+import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
+import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.service.EntPayService;
+import com.github.binarywang.wxpay.service.WxPayService;
+import com.github.binarywang.wxpay.util.SignUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 
-import com.github.binarywang.wxpay.bean.entpay.EntPayBankQueryRequest;
-import com.github.binarywang.wxpay.bean.entpay.EntPayBankQueryResult;
-import com.github.binarywang.wxpay.bean.entpay.EntPayBankRequest;
-import com.github.binarywang.wxpay.bean.entpay.EntPayBankResult;
-import com.github.binarywang.wxpay.bean.entpay.EntPayQueryRequest;
-import com.github.binarywang.wxpay.bean.entpay.EntPayQueryResult;
-import com.github.binarywang.wxpay.bean.entpay.EntPayRequest;
-import com.github.binarywang.wxpay.bean.entpay.EntPayResult;
-import com.github.binarywang.wxpay.bean.entpay.GetPublicKeyResult;
-import com.github.binarywang.wxpay.bean.request.WxPayDefaultRequest;
-import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
-import com.github.binarywang.wxpay.exception.WxPayException;
-import com.github.binarywang.wxpay.service.EntPayService;
-import com.github.binarywang.wxpay.service.WxPayService;
+import javax.crypto.Cipher;
+import java.io.File;
+import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.PublicKey;
+import java.security.Security;
 
 /**
  * <pre>
@@ -136,6 +127,32 @@ public class EntPayServiceImpl implements EntPayService {
     String url = this.payService.getPayBaseUrl() + "/mmpaysptrans/query_bank";
     String responseContent = this.payService.post(url, request.toXML(), true);
     EntPayBankQueryResult result = BaseWxPayResult.fromXML(responseContent, EntPayBankQueryResult.class);
+    result.checkResult(this.payService, request.getSignType(), true);
+    return result;
+  }
+
+  @Override
+  public EntPayRedpackResult sendEnterpriseRedpack(EntPayRedpackRequest request) throws WxPayException {
+    //企业微信签名,需要在请求签名之前
+    request.setNonceStr(String.valueOf(System.currentTimeMillis()));
+    request.setWorkWxSign(SignUtils.createEntSign(request.getActName(),request.getMchBillNo(),request.getMchId(),request.getNonceStr(),request.getReOpenid(),request.getTotalAmount(),request.getWxAppId(),"Hcf-X_dzLeaTIyK33okGmODK8sLzc7kLrgkWXOAoMbE","MD5"));
+
+    request.checkAndSign(this.payService.getConfig());
+
+    String url = this.payService.getPayBaseUrl() + "/mmpaymkttransfers/sendworkwxredpack";
+    String responseContent = this.payService.post(url, request.toXML(), true);
+    final EntPayRedpackResult result = BaseWxPayResult.fromXML(responseContent, EntPayRedpackResult.class);
+
+    result.checkResult(this.payService, request.getSignType(), true);
+    return result;
+  }
+
+  @Override
+  public EntPayRedpackQueryResult queryEnterpriseRedpack(EntPayRedpackQueryRequest request) throws WxPayException {
+    request.checkAndSign(this.payService.getConfig());
+    String url = this.payService.getPayBaseUrl() + "/mmpaymkttransfers/queryworkwxredpack";
+    String responseContent = this.payService.post(url, request.toXML(), true);
+    final EntPayRedpackQueryResult result = BaseWxPayResult.fromXML(responseContent, EntPayRedpackQueryResult.class);
     result.checkResult(this.payService, request.getSignType(), true);
     return result;
   }
