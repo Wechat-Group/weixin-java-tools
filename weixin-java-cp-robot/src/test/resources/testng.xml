@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Weixin-java-tool-suite" verbose="1">
+  <test name="Bean_Test">
+    <classes>
+      <class name="me.chanjar.weixin.cp.robot.bean.WxCpRobotMessageTest"/>
+    </classes>
+  </test>
+</suite>

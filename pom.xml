@@ -106,6 +106,7 @@
     <module>weixin-java-miniapp</module>
     <module>weixin-java-open</module>
     <module>spring-boot-starters</module>
+    <module>weixin-java-cp-robot</module>
     <!--module>weixin-java-osgi</module-->
   </modules>
 
