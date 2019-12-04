@@ -135,7 +135,7 @@ public class EntPayServiceImpl implements EntPayService {
   public EntPayRedpackResult sendEnterpriseRedpack(EntPayRedpackRequest request) throws WxPayException {
     //企业微信签名,需要在请求签名之前
     request.setNonceStr(String.valueOf(System.currentTimeMillis()));
-    request.setWorkWxSign(SignUtils.createEntSign(request.getActName(),request.getMchBillNo(),request.getMchId(),request.getNonceStr(),request.getReOpenid(),request.getTotalAmount(),request.getWxAppId(),"Hcf-X_dzLeaTIyK33okGmODK8sLzc7kLrgkWXOAoMbE","MD5"));
+    request.setWorkWxSign(SignUtils.createEntSign(request.getActName(),request.getMchBillNo(),request.getMchId(),request.getNonceStr(),request.getReOpenid(),request.getTotalAmount(),request.getWxAppId(),payService.getConfig().getPayKey(),"MD5"));
 
     request.checkAndSign(this.payService.getConfig());
 
