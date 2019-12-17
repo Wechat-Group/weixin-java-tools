@@ -8,6 +8,10 @@ import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
 
+/**
+ * @author IOMan（lewis.lynn1006@gmail.com）
+ */
+@Deprecated
 public interface WxMaTemplateService {
   /**
    * 获取小程序模板库标题列表.

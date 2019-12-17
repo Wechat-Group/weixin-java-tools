@@ -159,6 +159,13 @@ public interface WxMaService {
   WxMaTemplateService getTemplateService();
 
   /**
+   * 返回订阅消息配置相关接口方法的实现类对象, 以方便调用其各个接口.
+   *
+   * @return WxMaSubscribeService
+   */
+  WxMaSubscribeService getSubscribeService();
+
+  /**
    * 数据分析相关查询服务.
    *
    * @return WxMaAnalysisService
@@ -224,5 +231,10 @@ public interface WxMaService {
    */
   RequestHttp getRequestHttp();
 
-
+  /**
+   * 获取物流助手接口服务对象
+   *
+   * @return
+   */
+  WxMaExpressService getExpressService();
 }

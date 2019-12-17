@@ -66,6 +66,14 @@ public class WxMpMaterialServiceImpl implements WxMpMaterialService {
   }
 
   @Override
+  public File jssdkMediaDownload(String mediaId) throws WxErrorException {
+    return this.wxMpService.execute(
+      BaseMediaDownloadRequestExecutor.create(this.wxMpService.getRequestHttp(), this.wxMpService.getWxMpConfigStorage().getTmpDirFile()),
+      JSSDK_MEDIA_GET_URL,
+      "media_id=" + mediaId);
+  }
+
+  @Override
   public WxMediaImgUploadResult mediaImgUpload(File file) throws WxErrorException {
     return this.wxMpService.execute(MediaImgUploadRequestExecutor.create(this.wxMpService.getRequestHttp()), IMG_UPLOAD_URL, file);
   }

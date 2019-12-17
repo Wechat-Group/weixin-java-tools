@@ -90,6 +90,22 @@ public interface WxMpMaterialService {
 
   /**
    * <pre>
+   * 获取高清语音素材
+   * 公众号可以使用本接口获取从JSSDK的uploadVoice接口上传的临时语音素材，格式为speex，16K采样率。
+   * 该音频比上文的临时素材获取接口（格式为amr，8K采样率）更加清晰，适合用作语音识别等对音质要求较高的业务。
+   * 详情请见: <a href="https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_temporary_materials.html">
+   * 获取高清语音素材</a>
+   * 接口url格式：https://api.weixin.qq.com/cgi-bin/media/get/jssdk?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
+   * </pre>
+   *
+   * @param mediaId 媒体文件Id
+   * @return 保存到本地的临时文件
+   * @throws WxErrorException
+   */
+  File jssdkMediaDownload(String mediaId) throws WxErrorException;
+
+  /**
+   * <pre>
    * 上传图文消息内的图片获取URL
    * 请注意，本接口所上传的图片不占用公众号的素材库中图片数量的5000个的限制。图片仅支持jpg/png格式，大小必须在1MB以下。
    * 详情请见: <a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729&token=&lang=zh_CN">新增永久素材</a>

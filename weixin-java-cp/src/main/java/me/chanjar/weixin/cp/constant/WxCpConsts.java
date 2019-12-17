@@ -109,6 +109,15 @@ public class WxCpConsts {
      * 删除外部联系人
      */
     public static final String DEL_EXTERNAL_CONTACT = "del_external_contact";
+
+    /**
+     * 外部联系人免验证添加成员事件
+     */
+    public static final String ADD_HALF_EXTERNAL_CONTACT = "add_half_external_contact";
+    /**
+     * 删除跟进成员事件
+     */
+    public static final String DEL_FOLLOW_USER = "del_follow_user";
   }
 
   /**

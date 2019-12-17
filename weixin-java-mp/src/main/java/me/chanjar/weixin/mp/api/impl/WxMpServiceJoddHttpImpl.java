@@ -59,6 +59,9 @@ public class WxMpServiceJoddHttpImpl extends BaseWxMpServiceImpl<HttpConnectionP
     Lock lock = config.getAccessTokenLock();
     lock.lock();
     try {
+      if (!config.isAccessTokenExpired() && !forceRefresh) {
+        return config.getAccessToken();
+      }
       String url = String.format(GET_ACCESS_TOKEN_URL.getUrl(config), config.getAppId(), config.getSecret());
 
       HttpRequest request = HttpRequest.get(url);

@@ -44,6 +44,8 @@ public class WxMpMaterialServiceImplTest {
   private WxMpMaterialCountResult wxMaterialCountResultBeforeTest;
   // 以下为media接口的测试
   private List<String> mediaIdsToDownload = new ArrayList<>();
+  // 以下为高清语音接口的测试
+  private List<String> voiceMediaIdsToDownload = new ArrayList<>();
 
   @DataProvider
   public Object[][] mediaFiles() {
@@ -289,6 +291,11 @@ public class WxMpMaterialServiceImplTest {
       if (res.getMediaId() != null && !mediaType.equals(WxConsts.MediaFileType.VIDEO)) {
         //video 不支持下载，所以不加入
         this.mediaIdsToDownload.add(res.getMediaId());
+
+        // 音频media, 用于测试下载高清语音接口
+        if (mediaType.equals(WxConsts.MediaFileType.VOICE)) {
+          this.voiceMediaIdsToDownload.add(res.getMediaId());
+        }
       }
 
       if (res.getThumbMediaId() != null) {
@@ -308,9 +315,25 @@ public class WxMpMaterialServiceImplTest {
     return params;
   }
 
+  @DataProvider
+  public Object[][] downloadJssdkMedia() {
+    Object[][] params = new Object[this.voiceMediaIdsToDownload.size()][];
+    for (int i = 0; i < this.voiceMediaIdsToDownload.size(); i++) {
+      params[i] = new Object[]{this.voiceMediaIdsToDownload.get(i)};
+    }
+    return params;
+  }
+
   @Test(dependsOnMethods = {"testUploadMedia"}, dataProvider = "downloadMedia")
   public void testDownloadMedia(String mediaId) throws WxErrorException {
     File file = this.wxService.getMaterialService().mediaDownload(mediaId);
+    assertNotNull(file);
+    System.out.println(file.getAbsolutePath());
+  }
+
+  @Test(dependsOnMethods = {"testUploadMedia"}, dataProvider = "downloadJssdkMedia")
+  public void testDownloadJssdkMedia(String mediaId) throws WxErrorException {
+    File file = this.wxService.getMaterialService().jssdkMediaDownload(mediaId);
     assertNotNull(file);
     System.out.println(file.getAbsolutePath());
   }

@@ -1,16 +1,7 @@
 package com.github.binarywang.wxpay.service;
 
-import java.io.File;
-import java.util.Date;
-import java.util.Map;
-
 import com.github.binarywang.wxpay.bean.WxPayApiData;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponInfoQueryRequest;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponInfoQueryResult;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponSendRequest;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponSendResult;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponStockQueryRequest;
-import com.github.binarywang.wxpay.bean.coupon.WxPayCouponStockQueryResult;
+import com.github.binarywang.wxpay.bean.coupon.*;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.notify.WxPayRefundNotifyResult;
 import com.github.binarywang.wxpay.bean.notify.WxScanPayNotifyResult;
@@ -18,6 +9,10 @@ import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
+
+import java.io.File;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * <pre>
@@ -280,6 +275,19 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxScanPayNotifyResult parseScanPayNotifyResult(String xmlData) throws WxPayException;
+
+  /**
+   * <pre>
+   * 发送小程序红包.
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/tools/miniprogram_hb.php?chapter=13_9&index=2
+   *  接口地址：https://api.mch.weixin.qq.com/mmpaymkttransfers/sendminiprogramhb
+   * </pre>
+   *
+   * @param request 请求对象
+   * @return the result
+   * @throws WxPayException the exception
+   */
+  WxPaySendMiniProgramRedpackResult sendMiniProgramRedpack(WxPaySendMiniProgramRedpackRequest request) throws WxPayException;
 
   /**
    * 发送微信红包给个人用户.

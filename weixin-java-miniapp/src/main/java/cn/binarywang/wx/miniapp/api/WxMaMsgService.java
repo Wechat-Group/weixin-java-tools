@@ -33,16 +33,23 @@ public interface WxMaMsgService {
    * 发送模板消息
    * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.send.html">发送模板消息</a>
    * 接口url格式：https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=ACCESS_TOKEN
+   * 小程序模板消息接口将于2020年1月10日下线，开发者可使用订阅消息功能
    * </pre>
+   *
+   * @param templateMessage 模版消息
+   * @throws WxErrorException .
    */
+  @Deprecated
   void sendTemplateMsg(WxMaTemplateMessage templateMessage) throws WxErrorException;
-
 
   /**
    * <pre>
+   * 发送订阅消息
    * https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html
    * </pre>
-   * 发送订阅消息
+   *
+   * @param subscribeMessage 订阅消息
+   * @throws WxErrorException .
    */
   void sendSubscribeMsg(WxMaSubscribeMessage subscribeMessage) throws WxErrorException;
 

@@ -52,6 +52,10 @@ public class WxPayConfig {
    */
   private String mchKey;
   /**
+   * 企业支付密钥.
+   */
+  private String entPayKey;
+  /**
    * 服务商模式下的子商户号.
    */
   private String subMchId;

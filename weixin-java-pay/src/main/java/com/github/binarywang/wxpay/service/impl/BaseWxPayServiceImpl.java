@@ -182,7 +182,19 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   }
 
-  @Override
+    @Override
+    public WxPaySendMiniProgramRedpackResult sendMiniProgramRedpack(WxPaySendMiniProgramRedpackRequest request)
+      throws WxPayException {
+      request.checkAndSign(this.getConfig());
+      String url = this.getPayBaseUrl() + "/mmpaymkttransfers/sendminiprogramhb";
+      String responseContent = this.post(url, request.toXML(), true);
+
+      WxPaySendMiniProgramRedpackResult result = BaseWxPayResult.fromXML(responseContent, WxPaySendMiniProgramRedpackResult.class);
+      result.checkResult(this, request.getSignType(), true);
+      return result;
+    }
+
+    @Override
   public WxPaySendRedpackResult sendRedpack(WxPaySendRedpackRequest request) throws WxPayException {
     request.checkAndSign(this.getConfig());
 

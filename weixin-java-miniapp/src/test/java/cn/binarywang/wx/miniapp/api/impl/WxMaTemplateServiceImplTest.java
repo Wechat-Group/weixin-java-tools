@@ -17,7 +17,6 @@ import java.util.List;
 @Test
 @Guice(modules = ApiTestModule.class)
 public class WxMaTemplateServiceImplTest {
-
   @Inject
   protected WxMaService wxService;
 
@@ -36,7 +35,7 @@ public class WxMaTemplateServiceImplTest {
   }
 
   @Test
-  public void testAddTemplate() throws Exception{
+  public void testAddTemplate() throws Exception {
     List<Integer> list = Lists.newArrayList();
     list.add(1);
     list.add(20);
@@ -48,7 +47,7 @@ public class WxMaTemplateServiceImplTest {
   }
 
   @Test
-  public void testFindTemplateList() throws Exception{
+  public void testFindTemplateList() throws Exception {
     WxMaTemplateListResult result = this.wxService.getTemplateService().findTemplateList(0, 20);
     System.out.println(result);
   }

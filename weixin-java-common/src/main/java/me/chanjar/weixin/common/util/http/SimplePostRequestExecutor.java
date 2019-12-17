@@ -1,15 +1,14 @@
 package me.chanjar.weixin.common.util.http;
 
-import java.io.IOException;
-
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheSimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpSimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpSimplePostRequestExecutor;
 
+import java.io.IOException;
+
 /**
- * 用装饰模式实现
  * 简单的POST请求执行器，请求的参数是String, 返回的结果也是String
  *
  * @author Daniel Qian
