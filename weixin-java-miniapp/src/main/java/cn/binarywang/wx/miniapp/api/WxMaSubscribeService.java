@@ -57,7 +57,7 @@ public interface WxMaSubscribeService {
    * @return .
    * @throws WxErrorException .
    */
-  WxMaTemplateLibraryListResult getPubTemplateTitleList(Integer[] ids, int start, int limit) throws WxErrorException;
+  WxMaTemplateLibraryListResult getPubTemplateTitleList(String[] ids, int start, int limit) throws WxErrorException;
 
   /**
    * <pre>

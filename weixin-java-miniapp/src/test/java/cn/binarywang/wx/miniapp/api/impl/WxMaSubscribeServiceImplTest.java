@@ -27,18 +27,18 @@ public class WxMaSubscribeServiceImplTest {
 
   @Test
   public void testGetPubTemplateTitleList() throws WxErrorException {
-    this.wxService.getSubscribeService().getPubTemplateTitleList(new Integer[]{578}, 1, 1);
+    this.wxService.getSubscribeService().getPubTemplateTitleList(new String[]{"2", "616"}, 0, 1);
   }
 
   @Test
   public void testGetPubTemplateKeyWordsById() throws WxErrorException {
-    final List<WxMaSubscribeService.PubTemplateKeyword> result = this.wxService.getSubscribeService().getPubTemplateKeyWordsById("578");
+    final List<WxMaSubscribeService.PubTemplateKeyword> result = this.wxService.getSubscribeService().getPubTemplateKeyWordsById("99");
     System.out.println(result);
   }
 
   @Test
   public void testAddTemplate() throws WxErrorException {
-    final String templateId = this.wxService.getSubscribeService().addTemplate("1", Lists.newArrayList(1), "hhaa");
+    final String templateId = this.wxService.getSubscribeService().addTemplate("401", Lists.newArrayList(1, 2), "测试数据");
     System.out.println(templateId);
   }
 

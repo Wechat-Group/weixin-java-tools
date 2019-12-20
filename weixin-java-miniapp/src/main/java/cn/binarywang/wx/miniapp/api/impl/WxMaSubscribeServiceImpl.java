@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaSubscribeService;
 import cn.binarywang.wx.miniapp.bean.template.WxMaTemplateLibraryListResult;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
@@ -22,15 +23,18 @@ public class WxMaSubscribeServiceImpl implements WxMaSubscribeService {
   private WxMaService wxMaService;
 
   @Override
-  public WxMaTemplateLibraryListResult getPubTemplateTitleList(Integer[] ids, int start, int limit) throws WxErrorException {
-    return WxMaTemplateLibraryListResult.fromJson(this.wxMaService.post(GET_PUB_TEMPLATE_TITLE_LIST_URL,
-      ImmutableMap.of("ids", StringUtils.join(ids, ","),
-        "start", start, "limit", limit)));
+  public WxMaTemplateLibraryListResult getPubTemplateTitleList(String[] ids, int start, int limit) throws WxErrorException {
+    ImmutableMap<String, ? extends Serializable> params = ImmutableMap.of("ids", StringUtils.join(ids, ","),
+      "start", start, "limit", limit);
+    String responseText = this.wxMaService.get(GET_PUB_TEMPLATE_TITLE_LIST_URL,
+      Joiner.on("&").withKeyValueSeparator("=").join(params));
+    return WxMaTemplateLibraryListResult.fromJson(responseText);
   }
 
   @Override
   public List<PubTemplateKeyword> getPubTemplateKeyWordsById(String id) throws WxErrorException {
-    String responseText = this.wxMaService.post(GET_PUB_TEMPLATE_KEY_WORDS_BY_ID_URL, ImmutableMap.of("tid", id));
+    String responseText = this.wxMaService.get(GET_PUB_TEMPLATE_KEY_WORDS_BY_ID_URL,
+      Joiner.on("&").withKeyValueSeparator("=").join(ImmutableMap.of("tid", id)));
     return WxMaGsonBuilder.create().fromJson(new JsonParser().parse(responseText).getAsJsonObject()
       .getAsJsonArray("data"), new TypeToken<List<PubTemplateKeyword>>() {
     }.getType());
