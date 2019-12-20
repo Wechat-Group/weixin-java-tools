@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
