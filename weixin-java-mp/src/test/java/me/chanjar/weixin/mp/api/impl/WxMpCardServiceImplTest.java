@@ -227,4 +227,13 @@ public class WxMpCardServiceImplTest {
   @Test
   public void testCreateLandingPage() {
   }
+
+  @Test
+  public void testGetUserCardList() throws WxErrorException {
+    String openId = "ou7Gr5sJZgFGgj38sRCNQg5pc3Fc";
+    String cardId = "pu7Gr5secJXPkxBeuYUhmp8TYsuY";
+    WxUserCardListResult result = this.wxService.getCardService().getUserCardList(openId, cardId);
+    assertTrue(result.isSuccess());
+    System.out.println(result);
+  }
 }
