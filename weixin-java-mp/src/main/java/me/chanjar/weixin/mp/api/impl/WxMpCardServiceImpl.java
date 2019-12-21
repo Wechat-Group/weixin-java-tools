@@ -351,6 +351,16 @@ public class WxMpCardServiceImpl implements WxMpCardService {
   }
 
 
+  @Override
+  public WxUserCardListResult getUserCardList(String openId, String cardId) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("openid", openId);
+    param.addProperty("card_id", cardId);
+    String response = this.wxMpService.post(WxMpApiUrl.Card.CARD_USER_CARD_LIST, param.toString());
+    return WxUserCardListResult.fromJson(response);
+  }
+
+
   private void checkCardId(String cardId) throws WxErrorException {
     if (StringUtils.isEmpty(cardId)) {
       throw new WxErrorException(WxError.builder().errorCode(41012).errorMsg("cardId不能为空").build());

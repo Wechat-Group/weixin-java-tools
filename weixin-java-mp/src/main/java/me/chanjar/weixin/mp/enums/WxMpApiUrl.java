@@ -596,6 +596,11 @@ public interface WxMpApiUrl {
      * 设置自助核销接口
      */
     CARD_SELF_CONSUME_CELL_SET(API_DEFAULT_HOST_URL, "/card/selfconsumecell/set"),
+
+    /**
+     * 获取用户已领取卡券接口
+     */
+    CARD_USER_CARD_LIST(API_DEFAULT_HOST_URL, "/card/user/getcardlist"),
     ;
 
     private String prefix;
