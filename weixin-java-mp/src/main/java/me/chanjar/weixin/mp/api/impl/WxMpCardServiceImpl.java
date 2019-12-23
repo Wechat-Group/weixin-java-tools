@@ -81,6 +81,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     signParams[optionalSignParam.length + 1] = nonceStr;
     signParams[optionalSignParam.length + 2] = cardApiTicket;
     StringBuilder sb = new StringBuilder();
+    Arrays.sort(signParams);
     for (String a : signParams) {
       sb.append(a);
     }
