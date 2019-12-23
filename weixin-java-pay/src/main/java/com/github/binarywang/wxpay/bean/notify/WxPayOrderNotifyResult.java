@@ -300,6 +300,18 @@ public class WxPayOrderNotifyResult extends BaseWxPayResult {
   @XStreamAlias("rate_value")
   private String rateValue;
 
+  /**
+   * <pre>
+   * 字段名：签名类型.
+   * 变量名：sign_type
+   * 类型：String(32)
+   * 示例值：HMAC-SHA256
+   * 签名类型，目前支持HMAC-SHA256和MD5，默认为MD5
+   * </pre>
+   */
+  @XStreamAlias("sign_type")
+  private String signType;
+
   @Override
   public void checkResult(WxPayService wxPayService, String signType, boolean checkSuccess) throws WxPayException {
     //防止伪造成功通知
