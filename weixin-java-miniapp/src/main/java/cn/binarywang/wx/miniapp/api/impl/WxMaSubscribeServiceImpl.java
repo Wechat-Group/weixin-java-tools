@@ -2,7 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaSubscribeService;
-import cn.binarywang.wx.miniapp.bean.template.WxMaTemplateLibraryListResult;
+import cn.binarywang.wx.miniapp.bean.template.WxMaPubTemplateTitleListResult;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
@@ -24,12 +24,12 @@ public class WxMaSubscribeServiceImpl implements WxMaSubscribeService {
   private WxMaService wxMaService;
 
   @Override
-  public WxMaTemplateLibraryListResult getPubTemplateTitleList(String[] ids, int start, int limit) throws WxErrorException {
+  public WxMaPubTemplateTitleListResult getPubTemplateTitleList(String[] ids, int start, int limit) throws WxErrorException {
     ImmutableMap<String, ? extends Serializable> params = ImmutableMap.of("ids", StringUtils.join(ids, ","),
       "start", start, "limit", limit);
     String responseText = this.wxMaService.get(GET_PUB_TEMPLATE_TITLE_LIST_URL,
       Joiner.on("&").withKeyValueSeparator("=").join(params));
-    return WxMaTemplateLibraryListResult.fromJson(responseText);
+    return WxMaPubTemplateTitleListResult.fromJson(responseText);
   }
 
   @Override

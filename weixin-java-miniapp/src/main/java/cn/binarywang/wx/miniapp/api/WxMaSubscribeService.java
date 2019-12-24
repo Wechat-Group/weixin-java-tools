@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.template.WxMaTemplateLibraryListResult;
+import cn.binarywang.wx.miniapp.bean.template.WxMaPubTemplateTitleListResult;
 import lombok.Data;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -57,7 +57,7 @@ public interface WxMaSubscribeService {
    * @return .
    * @throws WxErrorException .
    */
-  WxMaTemplateLibraryListResult getPubTemplateTitleList(String[] ids, int start, int limit) throws WxErrorException;
+  WxMaPubTemplateTitleListResult getPubTemplateTitleList(String[] ids, int start, int limit) throws WxErrorException;
 
   /**
    * <pre>
