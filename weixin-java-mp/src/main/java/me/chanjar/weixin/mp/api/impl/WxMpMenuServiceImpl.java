@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
@@ -46,16 +47,16 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
 
   @Override
   public String menuCreate(String json) throws WxErrorException {
-    JsonParser jsonParser = new JsonParser();
-    JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
+    // 因${code WxMenuGsonAdapter}中重写了反序列化方式，固在此使用原始的方式生成菜单对象
+    WxMenu wxMenu = new Gson().fromJson(json, WxMenu.class);
     WxMpApiUrl.Menu url = MENU_CREATE;
-    if (jsonObject.get("matchrule") != null) {
+    if (wxMenu.getMatchRule() != null) {
       url = MENU_ADDCONDITIONAL;
     }
 
-    String result = this.wxMpService.post(url, json);
-    if (jsonObject.get("matchrule") != null) {
-      return jsonParser.parse(result).getAsJsonObject().get("menuid").getAsString();
+    String result = this.wxMpService.post(url, wxMenu.toJson());
+    if (wxMenu.getMatchRule() != null) {
+      return new JsonParser().parse(result).getAsJsonObject().get("menuid").getAsString();
     }
 
     return null;
