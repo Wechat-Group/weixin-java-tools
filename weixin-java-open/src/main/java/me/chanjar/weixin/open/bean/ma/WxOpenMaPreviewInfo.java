@@ -17,11 +17,11 @@ public class WxOpenMaPreviewInfo {
    * 录屏mediaid列表，可以通过提审素材上传接口获得
    */
   @SerializedName("video_id_list")
-  private List<String> videoIdList;
+  private String[] videoIdList;
 
   /**
    * 截屏mediaid列表，可以通过提审素材上传接口获得
    */
   @SerializedName("pic_id_list")
-  private List<String> picIdList;
+  private String[] picIdList;
 }
