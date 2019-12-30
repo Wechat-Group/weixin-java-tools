@@ -139,11 +139,12 @@ public class WxCpOaServiceImpl implements WxCpOaService {
 
   @Override
   public WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime) throws WxErrorException {
-    return this.getApprovalInfo(startTime,endTime);
+    return this.getApprovalInfo(startTime, endTime, null, null, null);
   }
 
   @Override
   public WxCpApprovaldetail getApprovalDetail(@NonNull String spNo) throws WxErrorException {
+
     return null;
   }
 
