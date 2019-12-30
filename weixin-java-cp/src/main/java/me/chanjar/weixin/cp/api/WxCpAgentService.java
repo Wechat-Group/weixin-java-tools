@@ -15,7 +15,6 @@ import java.util.List;
  * @author <a href="https://github.com/huansinho">huansinho</a>
  */
 public interface WxCpAgentService {
-
   /**
    * <pre>
    * 获取企业号应用信息

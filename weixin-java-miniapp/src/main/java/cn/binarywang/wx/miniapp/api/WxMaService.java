@@ -87,6 +87,11 @@ public interface WxMaService {
   String post(String url, String postData) throws WxErrorException;
 
   /**
+   * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的POST请求.
+   */
+  String post(String url, Object obj) throws WxErrorException;
+
+  /**
    * <pre>
    * Service没有实现某个API的时候，可以用这个，
    * 比{@link #get}和{@link #post}方法更灵活，可以自己构造RequestExecutor用来处理不同的参数和不同的返回类型。
@@ -159,6 +164,13 @@ public interface WxMaService {
   WxMaTemplateService getTemplateService();
 
   /**
+   * 返回订阅消息配置相关接口方法的实现类对象, 以方便调用其各个接口.
+   *
+   * @return WxMaSubscribeService
+   */
+  WxMaSubscribeService getSubscribeService();
+
+  /**
    * 数据分析相关查询服务.
    *
    * @return WxMaAnalysisService
@@ -208,6 +220,13 @@ public interface WxMaService {
   WxMaSecCheckService getSecCheckService();
 
   /**
+   * 返回插件相关接口服务对象.
+   *
+   * @return WxMaPluginService
+   */
+  WxMaPluginService getPluginService();
+
+  /**
    * 初始化http请求对象.
    */
   void initHttp();
@@ -217,5 +236,10 @@ public interface WxMaService {
    */
   RequestHttp getRequestHttp();
 
-
+  /**
+   * 获取物流助手接口服务对象
+   *
+   * @return
+   */
+  WxMaExpressService getExpressService();
 }

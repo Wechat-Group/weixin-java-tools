@@ -22,22 +22,6 @@ import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfSessionWaitCaseList;
  * @author Binary Wang
  */
 public interface WxMpKefuService {
-  String MESSAGE_CUSTOM_SEND = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
-  String GET_KF_LIST = "https://api.weixin.qq.com/cgi-bin/customservice/getkflist";
-  String GET_ONLINE_KF_LIST = "https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist";
-  String KFACCOUNT_ADD = "https://api.weixin.qq.com/customservice/kfaccount/add";
-  String KFACCOUNT_UPDATE = "https://api.weixin.qq.com/customservice/kfaccount/update";
-  String KFACCOUNT_INVITE_WORKER = "https://api.weixin.qq.com/customservice/kfaccount/inviteworker";
-  String KFACCOUNT_UPLOAD_HEAD_IMG = "https://api.weixin.qq.com/customservice/kfaccount/uploadheadimg?kf_account=%s";
-  String KFACCOUNT_DEL = "https://api.weixin.qq.com/customservice/kfaccount/del?kf_account=%s";
-  String KFSESSION_CREATE = "https://api.weixin.qq.com/customservice/kfsession/create";
-  String KFSESSION_CLOSE = "https://api.weixin.qq.com/customservice/kfsession/close";
-  String KFSESSION_GET_SESSION = "https://api.weixin.qq.com/customservice/kfsession/getsession?openid=%s";
-  String KFSESSION_GET_SESSION_LIST = "https://api.weixin.qq.com/customservice/kfsession/getsessionlist?kf_account=%s";
-  String KFSESSION_GET_WAIT_CASE = "https://api.weixin.qq.com/customservice/kfsession/getwaitcase";
-  String MSG_RECORD_LIST = "https://api.weixin.qq.com/customservice/msgrecord/getmsglist";
-  String CUSTOM_TYPING = "https://api.weixin.qq.com/cgi-bin/message/custom/typing";
-
   /**
    * <pre>
    * 发送客服消息

@@ -7,34 +7,35 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
+ * 获取小程序已经设置的类目结果类.
+ *
  * @author Hipple
- * @description 获取小程序已经设置的类目结果类
  * @since 2019/1/26 18:27
  */
 @Data
-@EqualsAndHashCode (callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class WxFastMaBeenSetCategoryResult extends WxOpenResult {
-  private static final long serialVersionUID = - 7662344448437700644L;
+  private static final long serialVersionUID = -7662344448437700644L;
 
   /**
    * 一个更改周期内可以设置类目的次数
    */
-  @SerializedName ("limit")
+  @SerializedName("limit")
   private int limit;
   /**
    * 本更改周期内还可以设置类目的次数
    */
-  @SerializedName ("quota")
+  @SerializedName("quota")
   private int quota;
   /**
    * 最多可以设置的类目数量
    */
-  @SerializedName ("category_limit")
+  @SerializedName("category_limit")
   private int categoryLimit;
   /**
    * 类目
    */
-  @SerializedName ("categories")
+  @SerializedName("categories")
   private List<CategoriesBean> categories;
 
   @Data
@@ -42,32 +43,32 @@ public class WxFastMaBeenSetCategoryResult extends WxOpenResult {
     /**
      * 一级类目ID
      */
-    @SerializedName ("first")
+    @SerializedName("first")
     private int first;
     /**
      * 一级类目名称
      */
-    @SerializedName ("first_name")
+    @SerializedName("first_name")
     private String firstName;
     /**
      * 二级类目ID
      */
-    @SerializedName ("second")
+    @SerializedName("second")
     private int second;
     /**
      * 二级类目名称
      */
-    @SerializedName ("second_name")
+    @SerializedName("second_name")
     private String secondName;
     /**
      * 审核状态（1审核中 2审核不通过 3审核通过）
      */
-    @SerializedName ("audit_status")
+    @SerializedName("audit_status")
     private int auditStatus;
     /**
      * 审核不通过原因
      */
-    @SerializedName ("audit_reason")
+    @SerializedName("audit_reason")
     private String auditReason;
   }
 }

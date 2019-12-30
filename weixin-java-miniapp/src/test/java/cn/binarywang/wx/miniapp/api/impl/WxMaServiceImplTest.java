@@ -37,4 +37,16 @@ public class WxMaServiceImplTest {
     final String unionId = this.wxService.getPaidUnionId("1", null, "3", "4");
     assertThat(unionId).isNotEmpty();
   }
+
+  @Test
+  public void testPost() throws WxErrorException {
+    final String postResult = this.wxService.post("https://api.weixin.qq.com/wxa/setdynamicdata", "{\n" +
+      "    \"data\": \"{\\\"items\\\": [{\\\"from\\\":{\\\"city_name_cn\\\":\\\"广州市\\\"},\\\"to\\\":{\\\"city_name_cn\\\":\\\"北京市\\\"}}], \\\"attribute\\\": {\\\"count\\\": 1, \\\"totalcount\\\": 100, \\\"id\\\": \\\"1\\\", \\\"seq\\\": 0}}\",\n" +
+      "    \"lifespan\": 86400,\n" +
+      "    \"query\": \"{\\\"type\\\":100005}\",\n" +
+      "    \"scene\": 1\n" +
+      "}");
+
+    System.out.println(postResult);
+  }
 }

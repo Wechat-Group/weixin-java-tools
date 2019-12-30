@@ -28,12 +28,12 @@ public class WxFastMaBeenSetCategoryResultTest {
       "    \"category_limit\": 20\n" +
       "}";
 
-    WxFastMaBeenSetCategoryResult res = WxOpenGsonBuilder.create ().fromJson (json, WxFastMaBeenSetCategoryResult.class);
+    WxFastMaBeenSetCategoryResult res = WxOpenGsonBuilder.create().fromJson(json, WxFastMaBeenSetCategoryResult.class);
 
     assertNotNull(res);
-    assertTrue(res.getCategories ().size ()> 0);
-    assertNotNull(res.getCategories ().get (0));
-    assertNotNull(res.getCategories ().get (0).getFirstName ());
+    assertTrue(res.getCategories().size() > 0);
+    assertNotNull(res.getCategories().get(0));
+    assertNotNull(res.getCategories().get(0).getFirstName());
     System.out.println(res);
   }
 

@@ -39,12 +39,6 @@ public final class MemberCard implements Serializable {
   private boolean autoActivate;
 
   /**
-   * 是否一键开卡.
-   */
-  @SerializedName("wx_activate")
-  private boolean wxActivate;
-
-  /**
    * 显示积分.
    */
   @SerializedName("supply_bonus")
@@ -144,6 +138,48 @@ public final class MemberCard implements Serializable {
    */
   @SerializedName("advanced_info")
   private AdvancedInfo advancedInfo;
+
+  /**
+   * 是否支持一键激活 ，填true或false.
+   */
+  @SerializedName("wx_activate")
+  private boolean wxActivate;
+
+  /**
+   * 是否支持跳转型一键激活，填true或false.
+   */
+  @SerializedName("wx_activate_after_submit")
+  private boolean wxActivateAfterSubmit;
+
+  /**
+   * 跳转型一键激活跳转的地址链接，请填写http:// 或者https://开头的链接.
+   */
+  @SerializedName("wx_activate_after_submit_url")
+  private String wxActivateAfterSubmitUrl;
+
+  /**
+   * 参照https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V卡券内跳转小程序
+   */
+  /**
+   * 积分信息类目对应的小程序 user_name，格式为原始id+@app
+   */
+  @SerializedName("bonus_app_brand_user_name")
+  private String bonusAppBrandUserName;
+  /**
+   *积分入口小程序的页面路径
+   */
+  @SerializedName("bonus_app_brand_pass")
+  private String bonusAppBrandPass;
+  /**
+   *余额信息类目对应的小程序 user_name，格式为原始id+@app
+   */
+  @SerializedName("balance_app_brand_user_name")
+  private String balanceAppBrandUserName;
+  /**
+   *余额入口小程序的页面路径
+   */
+  @SerializedName("balance_app_brand_pass")
+  private String balanceAppBrandPass;
 
   @Override
   public String toString() {

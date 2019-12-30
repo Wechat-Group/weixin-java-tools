@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import cn.binarywang.wx.miniapp.api.WxMaCodeService;
@@ -31,13 +32,10 @@ import me.chanjar.weixin.common.util.json.GsonHelper;
  * @author <a href="https://github.com/charmingoh">Charming</a>
  * @since 2018-04-26 20:00
  */
+@AllArgsConstructor
 public class WxMaCodeServiceImpl implements WxMaCodeService {
   private static final JsonParser JSON_PARSER = new JsonParser();
   private WxMaService wxMaService;
-
-  public WxMaCodeServiceImpl(WxMaService wxMaService) {
-    this.wxMaService = wxMaService;
-  }
 
   @Override
   public void commit(WxMaCodeCommitRequest commitRequest) throws WxErrorException {
@@ -50,7 +48,7 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
     Path qrCodeFilePath = null;
     try {
       RequestExecutor<File, String> executor = BaseMediaDownloadRequestExecutor
-        .create(this.wxMaService.getRequestHttp(), Files.createTempDirectory("weixin-java-tools-ma-" + appId).toFile());
+        .create(this.wxMaService.getRequestHttp(), Files.createTempDirectory("wxjava-ma-" + appId).toFile());
 
       final StringBuilder url = new StringBuilder(GET_QRCODE_URL);
       if (StringUtils.isNotBlank(path)) {

@@ -9,8 +9,7 @@ import me.chanjar.weixin.mp.bean.card.*;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertNotNull;
+import static org.testng.AssertJUnit.*;
 
 /**
  * 测试代码仅供参考，未做严格测试，因原接口作者并未提供单元测试代码
@@ -106,7 +105,6 @@ public class WxMpCardServiceImplTest {
 
   @Test
   public void testCreateGrouponCard() throws WxErrorException {
-
     BaseInfo base = new BaseInfo();
     base.setLogoUrl("http://mmbiz.qpic.cn/mmbiz/iaL1LJM1mF9aRKPZJkmG8xXhiaHqkKSVMMWeN3hLut7X7hicFNjakmxibMLGWpXrEXB33367o7zHN0CwngnQY7zb7g/0");
     base.setBrandName("测试优惠券");
@@ -139,7 +137,7 @@ public class WxMpCardServiceImplTest {
     base.setLocationIdList("1234");
 
     //团购券
-    WxMpCardCreateMessage grouponMessage = new WxMpCardCreateMessage();
+    WxMpCardCreateRequest grouponMessage = new WxMpCardCreateRequest();
     GrouponCardCreateRequest grouponCardCreateRequest = new GrouponCardCreateRequest();
     GrouponCard grouponCard = new GrouponCard();
     grouponCard.setBaseInfo(base);
@@ -151,7 +149,7 @@ public class WxMpCardServiceImplTest {
     System.out.println(this.wxService.getCardService().createCard(grouponMessage));
 
     //现金券
-    WxMpCardCreateMessage cashMessage = new WxMpCardCreateMessage();
+    WxMpCardCreateRequest cashMessage = new WxMpCardCreateRequest();
     CashCardCreateRequest cashCardCreateRequest = new CashCardCreateRequest();
     CashCard cashCard = new CashCard();
     cashCard.setBaseInfo(base);
@@ -164,7 +162,7 @@ public class WxMpCardServiceImplTest {
     System.out.println(this.wxService.getCardService().createCard(cashMessage));
 
     //折扣券
-    WxMpCardCreateMessage discountMessage = new WxMpCardCreateMessage();
+    WxMpCardCreateRequest discountMessage = new WxMpCardCreateRequest();
     DiscountCardCreateRequest discountCardCreateRequest = new DiscountCardCreateRequest();
     DiscountCard discountCard = new DiscountCard();
     discountCard.setBaseInfo(base);
@@ -176,7 +174,7 @@ public class WxMpCardServiceImplTest {
     System.out.println(this.wxService.getCardService().createCard(discountMessage));
 
     //兑换券
-    WxMpCardCreateMessage giftMessage = new WxMpCardCreateMessage();
+    WxMpCardCreateRequest giftMessage = new WxMpCardCreateRequest();
     GiftCardCreateRequest giftCardCreateRequest = new GiftCardCreateRequest();
     GiftCard giftCard = new GiftCard();
     giftCard.setBaseInfo(base);
@@ -187,14 +185,14 @@ public class WxMpCardServiceImplTest {
     System.out.println(this.wxService.getCardService().createCard(giftMessage));
 
     //普通兑换券
-    WxMpCardCreateMessage generalMessage = new WxMpCardCreateMessage();
-    GeneralCardCreateRequest generalCardCreateRequest = new GeneralCardCreateRequest();
-    GeneralCard generalCard = new GeneralCard();
-    generalCard.setBaseInfo(base);
-    generalCard.setDefaultDetail("音乐木盒");
+    WxMpCardCreateRequest generalMessage = new WxMpCardCreateRequest();
+    GeneralCouponCreateRequest generalCouponCreateRequest = new GeneralCouponCreateRequest();
+    GeneralCoupon generalCoupon = new GeneralCoupon();
+    generalCoupon.setBaseInfo(base);
+    generalCoupon.setDefaultDetail("音乐木盒");
 
-    generalCardCreateRequest.setGeneralCoupon(generalCard);
-    generalMessage.setCardCreateRequest(generalCardCreateRequest);
+    generalCouponCreateRequest.setGeneralCoupon(generalCoupon);
+    generalMessage.setCardCreateRequest(generalCouponCreateRequest);
     System.out.println(this.wxService.getCardService().createCard(generalMessage));
   }
 
@@ -202,8 +200,40 @@ public class WxMpCardServiceImplTest {
   public void testDeleteCard() throws Exception {
     String cardId = "pwkrWjtw7W4_l50kCQcZ1in1yS6g";
     WxMpCardDeleteResult result = this.wxService.getCardService().deleteCard(cardId);
-    assertEquals(result.isSuccess(), true);
+    assertTrue(result.isSuccess());
     System.out.println(result);
   }
 
+  @Test
+  public void testAddTestWhiteList() {
+  }
+
+  @Test
+  public void testCreateCard() {
+  }
+
+  @Test
+  public void testCreateQrcodeCard() {
+  }
+
+  @Test
+  public void testCreateQrcodeCard1() {
+  }
+
+  @Test
+  public void testCreateQrcodeCard2() {
+  }
+
+  @Test
+  public void testCreateLandingPage() {
+  }
+
+  @Test
+  public void testGetUserCardList() throws WxErrorException {
+    String openId = "ou7Gr5sJZgFGgj38sRCNQg5pc3Fc";
+    String cardId = "pu7Gr5secJXPkxBeuYUhmp8TYsuY";
+    WxUserCardListResult result = this.wxService.getCardService().getUserCardList(openId, cardId);
+    assertTrue(result.isSuccess());
+    System.out.println(result);
+  }
 }

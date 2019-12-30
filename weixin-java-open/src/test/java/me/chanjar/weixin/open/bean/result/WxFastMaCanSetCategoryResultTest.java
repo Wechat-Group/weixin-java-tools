@@ -69,10 +69,10 @@ public class WxFastMaCanSetCategoryResultTest {
       "        ]\n" +
       "    }\n" +
       "}";
-    WxFastMaCanSetCategoryResult res = WxOpenGsonBuilder.create ().fromJson (json, WxFastMaCanSetCategoryResult.class);
+    WxFastMaCanSetCategoryResult res = WxOpenGsonBuilder.create().fromJson(json, WxFastMaCanSetCategoryResult.class);
 
     assertNotNull(res);
-    assertNotNull(res.getCategoriesList ());
+    assertNotNull(res.getCategoriesList());
     System.out.println(res);
   }
 

@@ -141,7 +141,6 @@ public class WxMpKefuMessageTest {
   }
 
   public void testMiniProgramPageBuild() {
-
     WxMpKefuMessage reply = WxMpKefuMessage.MINIPROGRAMPAGE()
       .toUser("OPENID")
       .title("title")
@@ -152,6 +151,19 @@ public class WxMpKefuMessageTest {
 
     Assert.assertEquals(reply.toJson(),
       "{\"touser\":\"OPENID\",\"msgtype\":\"miniprogrampage\",\"miniprogrampage\":{\"title\":\"title\",\"appid\":\"appid\",\"pagepath\":\"pagepath\",\"thumb_media_id\":\"thumb_media_id\"}}");
+  }
+
+  public void testMsgMenuBuild() {
+    WxMpKefuMessage reply = WxMpKefuMessage.MSGMENU()
+      .toUser("OPENID")
+      .addMenus(new WxMpKefuMessage.MsgMenu("101", "msgmenu1"),
+        new WxMpKefuMessage.MsgMenu("102", "msgmenu2"))
+      .headContent("head_content")
+      .tailContent("tail_content")
+      .build();
+
+    Assert.assertEquals(reply.toJson(),
+      "{\"touser\":\"OPENID\",\"msgtype\":\"msgmenu\",\"msgmenu\":{\"head_content\":\"head_content\",\"list\":[{\"id\":\"101\",\"content\":\"msgmenu1\"},{\"id\":\"102\",\"content\":\"msgmenu2\"}],\"tail_content\":\"tail_content\"}}");
   }
 
 }

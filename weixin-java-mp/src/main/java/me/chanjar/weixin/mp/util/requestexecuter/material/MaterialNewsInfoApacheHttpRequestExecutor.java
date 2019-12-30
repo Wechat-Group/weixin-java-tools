@@ -35,7 +35,7 @@ public class MaterialNewsInfoApacheHttpRequestExecutor
   }
 
   @Override
-  public WxMpMaterialNews execute(String uri, String materialId) throws WxErrorException, IOException {
+  public WxMpMaterialNews execute(String uri, String materialId, WxType wxType) throws WxErrorException, IOException {
     HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       RequestConfig config = RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build();

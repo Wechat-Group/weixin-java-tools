@@ -12,6 +12,7 @@ import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -23,13 +24,10 @@ import java.util.List;
  * @author <a href="https://github.com/charmingoh">Charming</a>
  * @since 2018-04-28
  */
+@AllArgsConstructor
 public class WxMaAnalysisServiceImpl implements WxMaAnalysisService {
   private static final JsonParser JSON_PARSER = new JsonParser();
   private WxMaService wxMaService;
-
-  public WxMaAnalysisServiceImpl(WxMaService wxMaService) {
-    this.wxMaService = wxMaService;
-  }
 
   @Override
   public List<WxMaSummaryTrend> getDailySummaryTrend(Date beginDate, Date endDate) throws WxErrorException {

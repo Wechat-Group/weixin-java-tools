@@ -6,7 +6,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
+import me.chanjar.weixin.common.bean.WxNetCheckResult;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.StandardSessionManager;
@@ -21,25 +24,26 @@ import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.enums.TicketType;
+import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
+
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.*;
 
 /**
  * 基础实现类.
  *
  * @author someone
  */
+@Slf4j
 public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestHttp<H, P> {
   private static final JsonParser JSON_PARSER = new JsonParser();
-
-  protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
   protected WxSessionManager sessionManager = new StandardSessionManager();
   private WxMpKefuService kefuService = new WxMpKefuServiceImpl(this);
@@ -61,6 +65,9 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpAiOpenService aiOpenService = new WxMpAiOpenServiceImpl(this);
   private WxMpWifiService wifiService = new WxMpWifiServiceImpl(this);
   private WxMpMarketingService marketingService = new WxMpMarketingServiceImpl(this);
+  private WxMpCommentService commentService = new WxMpCommentServiceImpl(this);
+  private WxMpOcrService ocrService = new WxMpOcrServiceImpl(this);
+  private WxMpImgProcService imgProcService = new WxMpImgProcServiceImpl(this);
 
   private Map<String, WxMpConfigStorage> configStorageMap;
 
@@ -73,7 +80,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       return SHA1.gen(this.getWxMpConfigStorage().getToken(), timestamp, nonce)
         .equals(signature);
     } catch (Exception e) {
-      this.log.error("Checking signature failed, and the reason is :" + e.getMessage());
+      log.error("Checking signature failed, and the reason is :" + e.getMessage());
       return false;
     }
   }
@@ -94,7 +101,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
       if (this.getWxMpConfigStorage().isTicketExpired(type)) {
         String responseContent = execute(SimpleGetRequestExecutor.create(this),
-          WxMpService.GET_TICKET_URL + type.getCode(), null);
+          GET_TICKET_URL.getUrl(this.getWxMpConfigStorage()) + type.getCode(), null);
         JsonObject tmpJsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
         String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
         int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
@@ -140,36 +147,42 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public String shortUrl(String longUrl) throws WxErrorException {
+    if (longUrl.contains("&access_token=")) {
+      throw new WxErrorException(WxError.builder().errorCode(-1)
+        .errorMsg("要转换的网址中存在非法字符｛&access_token=｝，会导致微信接口报错，属于微信bug，请调整地址，否则不建议使用此方法！")
+        .build());
+    }
+
     JsonObject o = new JsonObject();
     o.addProperty("action", "long2short");
     o.addProperty("long_url", longUrl);
-    String responseContent = this.post(WxMpService.SHORTURL_API_URL, o.toString());
+    String responseContent = this.post(SHORTURL_API_URL, o.toString());
     JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
     return tmpJsonElement.getAsJsonObject().get("short_url").getAsString();
   }
 
   @Override
   public WxMpSemanticQueryResult semanticQuery(WxMpSemanticQuery semanticQuery) throws WxErrorException {
-    String responseContent = this.post(WxMpService.SEMANTIC_SEMPROXY_SEARCH_URL, semanticQuery.toJson());
+    String responseContent = this.post(SEMANTIC_SEMPROXY_SEARCH_URL, semanticQuery.toJson());
     return WxMpSemanticQueryResult.fromJson(responseContent);
   }
 
   @Override
   public String oauth2buildAuthorizationUrl(String redirectURI, String scope, String state) {
-    return String.format(WxMpService.CONNECT_OAUTH2_AUTHORIZE_URL,
+    return String.format(CONNECT_OAUTH2_AUTHORIZE_URL.getUrl(this.getWxMpConfigStorage()),
       this.getWxMpConfigStorage().getAppId(), URIUtil.encodeURIComponent(redirectURI), scope, StringUtils.trimToEmpty(state));
   }
 
   @Override
   public String buildQrConnectUrl(String redirectURI, String scope, String state) {
-    return String.format(WxMpService.QRCONNECT_URL,
-      this.getWxMpConfigStorage().getAppId(), URIUtil.encodeURIComponent(redirectURI), scope, StringUtils.trimToEmpty(state));
+    return String.format(QRCONNECT_URL.getUrl(this.getWxMpConfigStorage()), this.getWxMpConfigStorage().getAppId(),
+      URIUtil.encodeURIComponent(redirectURI), scope, StringUtils.trimToEmpty(state));
   }
 
   private WxMpOAuth2AccessToken getOAuth2AccessToken(String url) throws WxErrorException {
     try {
       RequestExecutor<String, String> executor = SimpleGetRequestExecutor.create(this);
-      String responseText = executor.execute(url, null);
+      String responseText = executor.execute(url, null, WxType.MP);
       return WxMpOAuth2AccessToken.fromJson(responseText);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -178,13 +191,14 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public WxMpOAuth2AccessToken oauth2getAccessToken(String code) throws WxErrorException {
-    String url = String.format(WxMpService.OAUTH2_ACCESS_TOKEN_URL, this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret(), code);
+    String url = String.format(OAUTH2_ACCESS_TOKEN_URL.getUrl(this.getWxMpConfigStorage()), this.getWxMpConfigStorage().getAppId(),
+      this.getWxMpConfigStorage().getSecret(), code);
     return this.getOAuth2AccessToken(url);
   }
 
   @Override
   public WxMpOAuth2AccessToken oauth2refreshAccessToken(String refreshToken) throws WxErrorException {
-    String url = String.format(WxMpService.OAUTH2_REFRESH_TOKEN_URL, this.getWxMpConfigStorage().getAppId(), refreshToken);
+    String url = String.format(OAUTH2_REFRESH_TOKEN_URL.getUrl(this.getWxMpConfigStorage()), this.getWxMpConfigStorage().getAppId(), refreshToken);
     return this.getOAuth2AccessToken(url);
   }
 
@@ -194,11 +208,11 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       lang = "zh_CN";
     }
 
-    String url = String.format(WxMpService.OAUTH2_USERINFO_URL, token.getAccessToken(), token.getOpenId(), lang);
+    String url = String.format(OAUTH2_USERINFO_URL.getUrl(this.getWxMpConfigStorage()), token.getAccessToken(), token.getOpenId(), lang);
 
     try {
       RequestExecutor<String, String> executor = SimpleGetRequestExecutor.create(this);
-      String responseText = executor.execute(url, null);
+      String responseText = executor.execute(url, null, WxType.MP);
       return WxMpUser.fromJson(responseText);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -207,10 +221,10 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public boolean oauth2validateAccessToken(WxMpOAuth2AccessToken token) {
-    String url = String.format(WxMpService.OAUTH2_VALIDATE_TOKEN_URL, token.getAccessToken(), token.getOpenId());
+    String url = String.format(OAUTH2_VALIDATE_TOKEN_URL.getUrl(this.getWxMpConfigStorage()), token.getAccessToken(), token.getOpenId());
 
     try {
-      SimpleGetRequestExecutor.create(this).execute(url, null);
+      SimpleGetRequestExecutor.create(this).execute(url, null, WxType.MP);
     } catch (IOException e) {
       throw new RuntimeException(e);
     } catch (WxErrorException e) {
@@ -221,7 +235,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public String[] getCallbackIP() throws WxErrorException {
-    String responseContent = this.get(WxMpService.GET_CALLBACK_IP_URL, null);
+    String responseContent = this.get(GET_CALLBACK_IP_URL, null);
     JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
     JsonArray ipList = tmpJsonElement.getAsJsonObject().get("ip_list").getAsJsonArray();
     String[] ipArray = new String[ipList.size()];
@@ -229,6 +243,15 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       ipArray[i] = ipList.get(i).getAsString();
     }
     return ipArray;
+  }
+
+  @Override
+  public WxNetCheckResult netCheck(String action, String operator) throws WxErrorException {
+    JsonObject o = new JsonObject();
+    o.addProperty("action", action);
+    o.addProperty("check_operator", operator);
+    String responseContent = this.post(NETCHECK_URL, o.toString());
+    return WxNetCheckResult.fromJson(responseContent);
   }
 
   @Override
@@ -249,8 +272,23 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   }
 
   @Override
+  public String get(WxMpApiUrl url, String queryParam) throws WxErrorException {
+    return this.get(url.getUrl(this.getWxMpConfigStorage()), queryParam);
+  }
+
+  @Override
   public String post(String url, String postData) throws WxErrorException {
     return execute(SimplePostRequestExecutor.create(this), url, postData);
+  }
+
+  @Override
+  public String post(WxMpApiUrl url, String postData) throws WxErrorException {
+    return this.post(url.getUrl(this.getWxMpConfigStorage()), postData);
+  }
+
+  @Override
+  public <T, E> T execute(RequestExecutor<T, E> executor, WxMpApiUrl url, E data) throws WxErrorException {
+    return this.execute(executor, url.getUrl(this.getWxMpConfigStorage()), data);
   }
 
   /**
@@ -264,7 +302,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
         return this.executeInternal(executor, uri, data);
       } catch (WxErrorException e) {
         if (retryTimes + 1 > this.maxRetryTimes) {
-          this.log.warn("重试达到最大次数【{}】", maxRetryTimes);
+          log.warn("重试达到最大次数【{}】", maxRetryTimes);
           //最后一次重试失败后，直接抛出异常，不再等待
           throw new RuntimeException("微信服务端异常，超出重试次数");
         }
@@ -274,7 +312,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
         if (error.getErrorCode() == -1) {
           int sleepMillis = this.retrySleepMillis * (1 << retryTimes);
           try {
-            this.log.warn("微信系统繁忙，{} ms 后重试(第{}次)", sleepMillis, retryTimes + 1);
+            log.warn("微信系统繁忙，{} ms 后重试(第{}次)", sleepMillis, retryTimes + 1);
             Thread.sleep(sleepMillis);
           } catch (InterruptedException e1) {
             throw new RuntimeException(e1);
@@ -285,11 +323,11 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       }
     } while (retryTimes++ < this.maxRetryTimes);
 
-    this.log.warn("重试达到最大次数【{}】", this.maxRetryTimes);
+    log.warn("重试达到最大次数【{}】", this.maxRetryTimes);
     throw new RuntimeException("微信服务端异常，超出重试次数");
   }
 
-  public <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
     E dataForLog = DataUtils.handleDataWithSecret(data);
 
     if (uri.contains("access_token=")) {
@@ -297,12 +335,11 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
     }
 
     String accessToken = getAccessToken(false);
-
     String uriWithAccessToken = uri + (uri.contains("?") ? "&" : "?") + "access_token=" + accessToken;
 
     try {
-      T result = executor.execute(uriWithAccessToken, data);
-      this.log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog, result);
+      T result = executor.execute(uriWithAccessToken, data, WxType.MP);
+      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog, result);
       return result;
     } catch (WxErrorException e) {
       WxError error = e.getError();
@@ -321,12 +358,12 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       }
 
       if (error.getErrorCode() != 0) {
-        this.log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      this.log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);
     }
   }
@@ -583,6 +620,11 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   }
 
   @Override
+  public WxMpOcrService getOcrService() {
+    return this.ocrService;
+  }
+
+  @Override
   public WxMpMarketingService getMarketingService() {
     return this.marketingService;
   }
@@ -590,5 +632,30 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void setMarketingService(WxMpMarketingService marketingService) {
     this.marketingService = marketingService;
+  }
+
+  @Override
+  public void setOcrService(WxMpOcrService ocrService) {
+    this.ocrService = ocrService;
+  }
+
+  @Override
+  public WxMpCommentService getCommentService() {
+    return this.commentService;
+  }
+
+  @Override
+  public void setCommentService(WxMpCommentService commentService) {
+    this.commentService = commentService;
+  }
+
+  @Override
+  public WxMpImgProcService getImgProcService() {
+    return this.imgProcService;
+  }
+
+  @Override
+  public void setImgProcService(WxMpImgProcService imgProcService) {
+    this.imgProcService = imgProcService;
   }
 }

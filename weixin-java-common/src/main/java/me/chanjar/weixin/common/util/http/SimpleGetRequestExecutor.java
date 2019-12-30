@@ -2,6 +2,7 @@ package me.chanjar.weixin.common.util.http;
 
 import java.io.IOException;
 
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientSimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpSimpleGetRequestExecutor;
@@ -21,8 +22,8 @@ public abstract class SimpleGetRequestExecutor<H, P> implements RequestExecutor<
   }
 
   @Override
-  public void execute(String uri, String data, ResponseHandler<String> handler) throws WxErrorException, IOException {
-    handler.handle(this.execute(uri, data));
+  public void execute(String uri, String data, ResponseHandler<String> handler, WxType wxType) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data, wxType));
   }
 
   public static RequestExecutor<String, String> create(RequestHttp requestHttp) {

@@ -5,6 +5,8 @@ import cn.binarywang.wx.miniapp.bean.WxMaMessage;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
+import cn.binarywang.wx.miniapp.message.WxMaXmlOutMessage;
+import lombok.AllArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -18,19 +20,13 @@ import java.util.Objects;
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@AllArgsConstructor
 public class WxMaPortalServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-  private WxMaConfig wxMaConfig;
-  private WxMaService wxMaService;
-  private WxMaMessageRouter wxMaMessageRouter;
-
-  WxMaPortalServlet(WxMaConfig wxMaConfig, WxMaService wxMaService,
-                    WxMaMessageRouter wxMaMessageRouter) {
-    this.wxMaConfig = wxMaConfig;
-    this.wxMaService = wxMaService;
-    this.wxMaMessageRouter = wxMaMessageRouter;
-  }
+  private WxMaConfig config;
+  private WxMaService service;
+  private WxMaMessageRouter messageRouter;
 
   @Override
   protected void service(HttpServletRequest request, HttpServletResponse response)
@@ -42,7 +38,7 @@ public class WxMaPortalServlet extends HttpServlet {
     String nonce = request.getParameter("nonce");
     String timestamp = request.getParameter("timestamp");
 
-    if (!this.wxMaService.checkSignature(timestamp, nonce, signature)) {
+    if (!this.service.checkSignature(timestamp, nonce, signature)) {
       // 消息签名不正确，说明不是公众平台发过来的消息
       response.getWriter().println("非法请求");
       return;
@@ -56,7 +52,7 @@ public class WxMaPortalServlet extends HttpServlet {
     }
 
     String encryptType = request.getParameter("encrypt_type");
-    final boolean isJson = Objects.equals(this.wxMaConfig.getMsgDataFormat(), WxMaConstants.MsgDataFormat.JSON);
+    final boolean isJson = Objects.equals(this.config.getMsgDataFormat(), WxMaConstants.MsgDataFormat.JSON);
     if (StringUtils.isBlank(encryptType)) {
       // 明文传输的消息
       WxMaMessage inMessage;
@@ -66,7 +62,12 @@ public class WxMaPortalServlet extends HttpServlet {
         inMessage = WxMaMessage.fromXml(request.getInputStream());
       }
 
-      this.wxMaMessageRouter.route(inMessage);
+      final WxMaXmlOutMessage outMessage = this.messageRouter.route(inMessage);
+      if (outMessage != null) {
+        response.getWriter().write(outMessage.toXml());
+        return;
+      }
+
       response.getWriter().write("success");
       return;
     }
@@ -76,12 +77,16 @@ public class WxMaPortalServlet extends HttpServlet {
       String msgSignature = request.getParameter("msg_signature");
       WxMaMessage inMessage;
       if (isJson) {
-        inMessage = WxMaMessage.fromEncryptedJson(request.getInputStream(), this.wxMaConfig);
+        inMessage = WxMaMessage.fromEncryptedJson(request.getInputStream(), this.config);
       } else {//xml
-        inMessage = WxMaMessage.fromEncryptedXml(request.getInputStream(), this.wxMaConfig, timestamp, nonce, msgSignature);
+        inMessage = WxMaMessage.fromEncryptedXml(request.getInputStream(), this.config, timestamp, nonce, msgSignature);
       }
 
-      this.wxMaMessageRouter.route(inMessage);
+      final WxMaXmlOutMessage outMessage = this.messageRouter.route(inMessage);
+      if (outMessage != null) {
+        response.getWriter().write(outMessage.toEncryptedXml(this.config));
+        return;
+      }
       response.getWriter().write("success");
       return;
     }

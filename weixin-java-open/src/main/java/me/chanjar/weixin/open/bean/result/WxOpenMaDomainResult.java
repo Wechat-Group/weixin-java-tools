@@ -1,10 +1,10 @@
 package me.chanjar.weixin.open.bean.result;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 /**
  * 微信开放平台小程序域名设置返回对象.

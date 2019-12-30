@@ -9,11 +9,10 @@ import java.io.Serializable;
 /**
  * .
  * @author leeis
- * @Date 2018/12/29
+ * @date 2018/12/29
  */
 @Data
 public class Card implements Serializable {
-
   private static final long serialVersionUID = -3697110761983756780L;
 
   /**

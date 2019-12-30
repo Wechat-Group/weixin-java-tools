@@ -1,29 +1,31 @@
 package me.chanjar.weixin.common.util.http.apache;
 
-import java.io.IOException;
-
+import me.chanjar.weixin.common.WxType;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 
-import me.chanjar.weixin.common.error.WxError;
-import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
+import java.io.IOException;
 
 /**
- * Created by ecoolper on 2017/5/4.
+ * .
+ *
+ * @author ecoolper
+ * @date 2017/5/4
  */
 public class ApacheHttpClientSimpleGetRequestExecutor extends SimpleGetRequestExecutor<CloseableHttpClient, HttpHost> {
-
   public ApacheHttpClientSimpleGetRequestExecutor(RequestHttp requestHttp) {
     super(requestHttp);
   }
 
   @Override
-  public String execute(String uri, String queryParam) throws WxErrorException, IOException {
+  public String execute(String uri, String queryParam, WxType wxType) throws WxErrorException, IOException {
     if (queryParam != null) {
       if (uri.indexOf('?') == -1) {
         uri += '?';
@@ -38,7 +40,7 @@ public class ApacheHttpClientSimpleGetRequestExecutor extends SimpleGetRequestEx
 
     try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpGet)) {
       String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      WxError error = WxError.fromJson(responseContent);
+      WxError error = WxError.fromJson(responseContent, wxType);
       if (error.getErrorCode() != 0) {
         throw new WxErrorException(error);
       }

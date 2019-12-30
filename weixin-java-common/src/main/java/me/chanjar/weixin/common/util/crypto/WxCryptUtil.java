@@ -55,20 +55,19 @@ public class WxCryptUtil {
   }
 
   /**
-   * 构造函数
+   * 构造函数.
    *
    * @param token          公众平台上，开发者设置的token
    * @param encodingAesKey 公众平台上，开发者设置的EncodingAESKey
    * @param appidOrCorpid  公众平台appid/corpid
    */
-  public WxCryptUtil(String token, String encodingAesKey,
-                     String appidOrCorpid) {
+  public WxCryptUtil(String token, String encodingAesKey, String appidOrCorpid) {
     this.token = token;
     this.appidOrCorpid = appidOrCorpid;
     this.aesKey = Base64.decodeBase64(encodingAesKey + "=");
   }
 
-  static String extractEncryptPart(String xml) {
+  private static String extractEncryptPart(String xml) {
     try {
       DocumentBuilder db = BUILDER_LOCAL.get();
       Document document = db.parse(new InputSource(new StringReader(xml)));
@@ -81,7 +80,7 @@ public class WxCryptUtil {
   }
 
   /**
-   * 将一个数字转换成生成4个字节的网络字节序bytes数组
+   * 将一个数字转换成生成4个字节的网络字节序bytes数组.
    */
   private static byte[] number2BytesInNetworkOrder(int number) {
     byte[] orderBytes = new byte[4];
@@ -93,7 +92,7 @@ public class WxCryptUtil {
   }
 
   /**
-   * 4个字节的网络字节序bytes数组还原成一个数字
+   * 4个字节的网络字节序bytes数组还原成一个数字.
    */
   private static int bytesNetworkOrder2Number(byte[] bytesInNetworkOrder) {
     int sourceNumber = 0;
@@ -105,7 +104,7 @@ public class WxCryptUtil {
   }
 
   /**
-   * 随机生成16位字符串
+   * 随机生成16位字符串.
    */
   private static String genRandomStr() {
     String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -119,7 +118,7 @@ public class WxCryptUtil {
   }
 
   /**
-   * 生成xml消息
+   * 生成xml消息.
    *
    * @param encrypt   加密后的消息密文
    * @param signature 安全签名
@@ -127,8 +126,7 @@ public class WxCryptUtil {
    * @param nonce     随机字符串
    * @return 生成的xml字符串
    */
-  private static String generateXml(String encrypt, String signature,
-                                    String timestamp, String nonce) {
+  private static String generateXml(String encrypt, String signature, String timestamp, String nonce) {
     String format = "<xml>\n" + "<Encrypt><![CDATA[%1$s]]></Encrypt>\n"
       + "<MsgSignature><![CDATA[%2$s]]></MsgSignature>\n"
       + "<TimeStamp>%3$s</TimeStamp>\n" + "<Nonce><![CDATA[%4$s]]></Nonce>\n"
@@ -242,10 +240,9 @@ public class WxCryptUtil {
     try {
       // 设置解密模式为AES的CBC模式
       Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
-      SecretKeySpec key_spec = new SecretKeySpec(this.aesKey, "AES");
-      IvParameterSpec iv = new IvParameterSpec(
-        Arrays.copyOfRange(this.aesKey, 0, 16));
-      cipher.init(Cipher.DECRYPT_MODE, key_spec, iv);
+      SecretKeySpec keySpec = new SecretKeySpec(this.aesKey, "AES");
+      IvParameterSpec iv = new IvParameterSpec(Arrays.copyOfRange(this.aesKey, 0, 16));
+      cipher.init(Cipher.DECRYPT_MODE, keySpec, iv);
 
       // 使用BASE64对密文进行解码
       byte[] encrypted = Base64.decodeBase64(cipherText);
@@ -256,7 +253,8 @@ public class WxCryptUtil {
       throw new RuntimeException(e);
     }
 
-    String xmlContent, fromAppid;
+    String xmlContent;
+    String fromAppid;
     try {
       // 去除补位字符
       byte[] bytes = PKCS7Encoder.decode(original);
@@ -266,18 +264,16 @@ public class WxCryptUtil {
 
       int xmlLength = bytesNetworkOrder2Number(networkOrder);
 
-      xmlContent = new String(Arrays.copyOfRange(bytes, 20, 20 + xmlLength),
-        CHARSET);
-      fromAppid = new String(
-        Arrays.copyOfRange(bytes, 20 + xmlLength, bytes.length), CHARSET);
+      xmlContent = new String(Arrays.copyOfRange(bytes, 20, 20 + xmlLength), CHARSET);
+      fromAppid = new String(Arrays.copyOfRange(bytes, 20 + xmlLength, bytes.length), CHARSET);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
 
-    // appid不相同的情况
-    if (!fromAppid.equals(this.appidOrCorpid)) {
-      throw new RuntimeException("AppID不正确");
-    }
+    // appid不相同的情况 暂时忽略这段判断
+//    if (!fromAppid.equals(this.appidOrCorpid)) {
+//      throw new RuntimeException("AppID不正确，请核实！");
+//    }
 
     return xmlContent;
 

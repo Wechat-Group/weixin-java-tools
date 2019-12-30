@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.RandomUtils;
@@ -19,19 +20,18 @@ import java.util.concurrent.locks.Lock;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@AllArgsConstructor
 public class WxMaJsapiServiceImpl implements WxMaJsapiService {
   private static final JsonParser JSON_PARSER = new JsonParser();
 
   private WxMaService wxMaService;
 
-  public WxMaJsapiServiceImpl(WxMaService wxMaService) {
-    this.wxMaService = wxMaService;
-  }
-
+  @Override
   public String getCardApiTicket() throws WxErrorException {
     return getCardApiTicket(false);
   }
 
+  @Override
   public String getCardApiTicket(boolean forceRefresh) throws WxErrorException {
     Lock lock = this.wxMaService.getWxMaConfig().getCardApiTicketLock();
     try {

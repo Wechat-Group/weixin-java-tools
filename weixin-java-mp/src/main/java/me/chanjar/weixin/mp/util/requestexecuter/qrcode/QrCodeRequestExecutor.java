@@ -3,6 +3,7 @@ package me.chanjar.weixin.mp.util.requestexecuter.qrcode;
 import java.io.File;
 import java.io.IOException;
 
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -23,8 +24,8 @@ public abstract class QrCodeRequestExecutor<H, P> implements RequestExecutor<Fil
   }
 
   @Override
-  public void execute(String uri, WxMpQrCodeTicket data, ResponseHandler<File> handler) throws WxErrorException, IOException {
-    handler.handle(this.execute(uri, data));
+  public void execute(String uri, WxMpQrCodeTicket data, ResponseHandler<File> handler, WxType wxType) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data, wxType));
   }
 
   public static RequestExecutor<File, WxMpQrCodeTicket> create(RequestHttp requestHttp) throws WxErrorException {

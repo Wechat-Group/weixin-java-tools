@@ -3,6 +3,7 @@ package me.chanjar.weixin.common.util.http;
 import java.io.File;
 import java.io.IOException;
 
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpMediaDownloadRequestExecutor;
@@ -25,8 +26,8 @@ public abstract class BaseMediaDownloadRequestExecutor<H, P> implements RequestE
   }
 
   @Override
-  public void execute(String uri, String data, ResponseHandler<File> handler) throws WxErrorException, IOException {
-    handler.handle(this.execute(uri, data));
+  public void execute(String uri, String data, ResponseHandler<File> handler, WxType wxType) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data, wxType));
   }
 
   public static RequestExecutor<File, String> create(RequestHttp requestHttp, File tmpDirFile) {

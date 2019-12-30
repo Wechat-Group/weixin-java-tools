@@ -4,6 +4,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  * 微信公众号支付进行统一下单后组装所需参数的类
@@ -15,7 +17,9 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class WxPayMpOrderResult {
+public class WxPayMpOrderResult implements Serializable {
+  private static final long serialVersionUID = -7966682379048446567L;
+
   private String appId;
   private String timeStamp;
   private String nonceStr;

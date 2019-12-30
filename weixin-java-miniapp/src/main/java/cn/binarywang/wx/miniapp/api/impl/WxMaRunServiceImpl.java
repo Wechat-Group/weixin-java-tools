@@ -6,6 +6,7 @@ import cn.binarywang.wx.miniapp.api.WxMaRunService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaRunStepInfo;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
+import lombok.AllArgsConstructor;
 
 /**
  * <pre>
@@ -15,12 +16,9 @@ import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@AllArgsConstructor
 public class WxMaRunServiceImpl implements WxMaRunService {
   private WxMaService service;
-
-  public WxMaRunServiceImpl(WxMaService service) {
-    this.service = service;
-  }
 
   @Override
   public List<WxMaRunStepInfo> getRunStepInfo(String sessionKey, String encryptedData, String ivStr) {

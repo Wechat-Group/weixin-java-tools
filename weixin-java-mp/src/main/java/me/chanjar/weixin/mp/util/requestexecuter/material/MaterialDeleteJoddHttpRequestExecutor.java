@@ -22,7 +22,7 @@ public class MaterialDeleteJoddHttpRequestExecutor extends MaterialDeleteRequest
   }
 
   @Override
-  public Boolean execute(String uri, String materialId) throws WxErrorException, IOException {
+  public Boolean execute(String uri, String materialId, WxType wxType) throws WxErrorException, IOException {
     HttpRequest request = HttpRequest.post(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       requestHttp.getRequestHttpClient().useProxy(requestHttp.getRequestHttpProxy());

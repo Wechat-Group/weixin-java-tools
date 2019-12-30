@@ -25,7 +25,7 @@ public class Utf8ResponseHandler implements ResponseHandler<String> {
     final HttpEntity entity = response.getEntity();
     if (statusLine.getStatusCode() >= 300) {
       EntityUtils.consume(entity);
-      throw new HttpResponseException(statusLine.getStatusCode(), statusLine.getReasonPhrase());
+      throw new HttpResponseException(statusLine.getStatusCode(), statusLine.toString());
     }
     return entity == null ? null : EntityUtils.toString(entity, Consts.UTF_8);
   }

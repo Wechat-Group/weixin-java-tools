@@ -26,7 +26,7 @@ public class MaterialDeleteApacheHttpRequestExecutor extends MaterialDeleteReque
   }
 
   @Override
-  public Boolean execute(String uri, String materialId) throws WxErrorException, IOException {
+  public Boolean execute(String uri, String materialId, WxType wxType) throws WxErrorException, IOException {
     HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       RequestConfig config = RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build();

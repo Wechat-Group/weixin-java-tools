@@ -25,6 +25,8 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class EntPayRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = 8647710192770447579L;
+
   /**
    * <pre>
    * 字段名：公众账号appid.
@@ -187,11 +189,6 @@ public class EntPayRequest extends BaseWxPayRequest {
   @Override
   public void setMchId(String mchId) {
     this.mchId = mchId;
-  }
-
-  @Override
-  public String toString() {
-    return WxGsonBuilder.create().toJson(this);
   }
 
   @Override

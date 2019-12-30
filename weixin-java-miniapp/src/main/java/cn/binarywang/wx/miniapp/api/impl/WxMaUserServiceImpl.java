@@ -9,27 +9,19 @@ import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.chanjar.weixin.common.error.WxError;
+import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.SignUtils;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@AllArgsConstructor
 public class WxMaUserServiceImpl implements WxMaUserService {
   private WxMaService service;
-
-  public WxMaUserServiceImpl(WxMaService service) {
-    this.service = service;
-  }
 
   @Override
   public WxMaJscode2SessionResult getSessionInfo(String jsCode) throws WxErrorException {
@@ -55,14 +47,8 @@ public class WxMaUserServiceImpl implements WxMaUserService {
     param.add("kv_list", array);
     String params = param.toString();
     String signature = SignUtils.createHmacSha256Sign(params, sessionKey);
-    String url = String.format("https://api.weixin.qq.com/wxa/set_user_storage" +
-        "?appid=%s&signature=%s&openid=%s&sig_method=%s",
-      config.getAppid(), signature, openid, "hmac_sha256");
-    String result = this.service.post(url, params);
-    WxError error = WxError.fromJson(result);
-    if (error.getErrorCode() != 0) {
-      throw new WxErrorException(error);
-    }
+    String url = String.format(SET_USER_STORAGE, config.getAppid(), signature, openid, "hmac_sha256");
+    this.service.post(url, params);
   }
 
   @Override

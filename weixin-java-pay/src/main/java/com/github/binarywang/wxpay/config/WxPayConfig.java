@@ -1,19 +1,15 @@
 package com.github.binarywang.wxpay.config;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.KeyStore;
-import javax.net.ssl.SSLContext;
-
+import com.github.binarywang.wxpay.exception.WxPayException;
+import lombok.Data;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.ssl.SSLContexts;
 
-import com.github.binarywang.wxpay.exception.WxPayException;
-import lombok.Data;
+import javax.net.ssl.SSLContext;
+import java.io.*;
+import java.net.URL;
+import java.security.KeyStore;
 
 /**
  * 微信支付配置
@@ -22,6 +18,12 @@ import lombok.Data;
  */
 @Data
 public class WxPayConfig {
+  private static final String DEFAULT_PAY_BASE_URL = "https://api.mch.weixin.qq.com";
+
+  /**
+   * 微信支付接口请求地址域名部分.
+   */
+  private String payBaseUrl = DEFAULT_PAY_BASE_URL;
 
   /**
    * http请求连接超时时间.
@@ -49,6 +51,10 @@ public class WxPayConfig {
    * 商户密钥.
    */
   private String mchKey;
+  /**
+   * 企业支付密钥.
+   */
+  private String entPayKey;
   /**
    * 服务商模式下的子商户号.
    */
@@ -101,6 +107,18 @@ public class WxPayConfig {
   private String httpProxyPassword;
 
   /**
+   * 返回所设置的微信支付接口请求地址域名.
+   * @return 微信支付接口请求地址域名
+   */
+  public String getPayBaseUrl() {
+    if (StringUtils.isEmpty(this.payBaseUrl)) {
+      return DEFAULT_PAY_BASE_URL;
+    }
+
+    return this.payBaseUrl;
+  }
+
+  /**
    * 初始化ssl.
    *
    * @return the ssl context
@@ -130,6 +148,15 @@ public class WxPayConfig {
         inputStream = WxPayConfig.class.getResourceAsStream(path);
         if (inputStream == null) {
           throw new WxPayException(fileNotFoundMsg);
+        }
+      } else if (this.getKeyPath().startsWith("http://") || this.getKeyPath().startsWith("https://")) {
+        try {
+          inputStream = new URL(this.keyPath).openStream();
+          if (inputStream == null) {
+            throw new WxPayException(fileNotFoundMsg);
+          }
+        } catch (IOException e) {
+          throw new WxPayException(fileNotFoundMsg, e);
         }
       } else {
         try {

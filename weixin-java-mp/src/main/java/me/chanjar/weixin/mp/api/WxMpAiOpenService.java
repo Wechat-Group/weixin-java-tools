@@ -15,9 +15,6 @@ import me.chanjar.weixin.mp.enums.AiLangType;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMpAiOpenService {
-  String TRANSLATE_URL = "http://api.weixin.qq.com/cgi-bin/media/voice/translatecontent?lfrom=%s&lto=%s";
-  String VOICE_UPLOAD_URL = "http://api.weixin.qq.com/cgi-bin/media/voice/addvoicetorecofortext?format=%s&voice_id=%s&lang=%s";
-  String VOICE_QUERY_RESULT_URL = "http://api.weixin.qq.com/cgi-bin/media/voice/queryrecoresultfortext";
 
   /**
    * <pre>

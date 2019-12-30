@@ -33,7 +33,7 @@ public class MaterialUploadApacheHttpRequestExecutor extends MaterialUploadReque
   }
 
   @Override
-  public WxMpMaterialUploadResult execute(String uri, WxMpMaterial material) throws WxErrorException, IOException {
+  public WxMpMaterialUploadResult execute(String uri, WxMpMaterial material, WxType wxType) throws WxErrorException, IOException {
     HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       RequestConfig response = RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build();

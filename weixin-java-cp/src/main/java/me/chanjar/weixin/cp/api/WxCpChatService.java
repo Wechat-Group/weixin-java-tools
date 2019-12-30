@@ -1,10 +1,10 @@
 package me.chanjar.weixin.cp.api;
 
-import java.util.List;
-
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.bean.WxCpChat;
+
+import java.util.List;
 
 /**
  * 群聊服务.
@@ -12,9 +12,9 @@ import me.chanjar.weixin.cp.bean.WxCpChat;
  * @author gaigeshen
  */
 public interface WxCpChatService {
-  String APPCHAT_CREATE = "https://qyapi.weixin.qq.com/cgi-bin/appchat/create";
-  String APPCHAT_UPDATE = "https://qyapi.weixin.qq.com/cgi-bin/appchat/update";
-  String APPCHAT_GET_CHATID = "https://qyapi.weixin.qq.com/cgi-bin/appchat/get?chatid=";
+
+  @Deprecated
+  String chatCreate(String name, String owner, List<String> users, String chatId) throws WxErrorException;
 
   /**
    * 创建群聊会话，注意：刚创建的群，如果没有下发消息，在企业微信不会出现该群.
@@ -24,14 +24,12 @@ public interface WxCpChatService {
    * @param users  群成员id列表。至少2人，至多500人
    * @param chatId 群聊的唯一标志，不能与已有的群重复；字符串类型，最长32个字符。只允许字符0-9及字母a-zA-Z。如果不填，系统会随机生成群id
    * @return 创建的群聊会话chatId
-   * @throws WxErrorException 发生异常
-   */
-  String chatCreate(String name, String owner, List<String> users, String chatId) throws WxErrorException;
-
-  /**
-   * chatCreate 同名方法
+   * @throws WxErrorException 异常
    */
   String create(String name, String owner, List<String> users, String chatId) throws WxErrorException;
+
+  @Deprecated
+  void chatUpdate(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete) throws WxErrorException;
 
   /**
    * 修改群聊会话.
@@ -41,26 +39,19 @@ public interface WxCpChatService {
    * @param owner         新群主的id。若不需更新，请忽略此参数（null or empty）
    * @param usersToAdd    添加成员的id列表，若不需要更新，则传递空对象或者空集合
    * @param usersToDelete 踢出成员的id列表，若不需要更新，则传递空对象或者空集合
-   * @throws WxErrorException 发生异常
-   */
-  void chatUpdate(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete) throws WxErrorException;
-
-  /**
-   * chatUpdate 同名方法
+   * @throws WxErrorException 异常
    */
   void update(String chatId, String name, String owner, List<String> usersToAdd, List<String> usersToDelete) throws WxErrorException;
+
+  @Deprecated
+  WxCpChat chatGet(String chatId) throws WxErrorException;
 
   /**
    * 获取群聊会话.
    *
    * @param chatId 群聊编号
    * @return 群聊会话
-   * @throws WxErrorException 发生异常
-   */
-  WxCpChat chatGet(String chatId) throws WxErrorException;
-
-  /**
-   * chatGet 同名方法
+   * @throws WxErrorException 异常
    */
   WxCpChat get(String chatId) throws WxErrorException;
 
@@ -71,6 +62,7 @@ public interface WxCpChatService {
    * 文档地址：https://work.weixin.qq.com/api/doc#90000/90135/90248
    *
    * @param message 要发送的消息内容对象
+   * @throws WxErrorException 异常
    */
   void sendMsg(WxCpAppChatMessage message) throws WxErrorException;
 

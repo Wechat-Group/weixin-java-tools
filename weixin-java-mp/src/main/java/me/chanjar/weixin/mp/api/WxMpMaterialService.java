@@ -22,19 +22,10 @@ import me.chanjar.weixin.mp.bean.material.WxMpMaterialVideoInfoResult;
  * 即以https://api.weixin.qq.com/cgi-bin/material
  * 和 https://api.weixin.qq.com/cgi-bin/media开头的接口
  * </pre>
+ *
+ * @author Binary Wang
  */
 public interface WxMpMaterialService {
-  String MEDIA_GET_URL = "https://api.weixin.qq.com/cgi-bin/media/get";
-  String MEDIA_UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?type=%s";
-  String IMG_UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/uploadimg";
-  String MATERIAL_ADD_URL = "https://api.weixin.qq.com/cgi-bin/material/add_material?type=%s";
-  String NEWS_ADD_URL = "https://api.weixin.qq.com/cgi-bin/material/add_news";
-  String MATERIAL_GET_URL = "https://api.weixin.qq.com/cgi-bin/material/get_material";
-  String NEWS_UPDATE_URL = "https://api.weixin.qq.com/cgi-bin/material/update_news";
-  String MATERIAL_DEL_URL = "https://api.weixin.qq.com/cgi-bin/material/del_material";
-  String MATERIAL_GET_COUNT_URL = "https://api.weixin.qq.com/cgi-bin/material/get_materialcount";
-  String MATERIAL_BATCHGET_URL = "https://api.weixin.qq.com/cgi-bin/material/batchget_material";
-
   /**
    * <pre>
    * 新增临时素材
@@ -96,6 +87,22 @@ public interface WxMpMaterialService {
    * @throws WxErrorException
    */
   File mediaDownload(String mediaId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取高清语音素材
+   * 公众号可以使用本接口获取从JSSDK的uploadVoice接口上传的临时语音素材，格式为speex，16K采样率。
+   * 该音频比上文的临时素材获取接口（格式为amr，8K采样率）更加清晰，适合用作语音识别等对音质要求较高的业务。
+   * 详情请见: <a href="https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_temporary_materials.html">
+   * 获取高清语音素材</a>
+   * 接口url格式：https://api.weixin.qq.com/cgi-bin/media/get/jssdk?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
+   * </pre>
+   *
+   * @param mediaId 媒体文件Id
+   * @return 保存到本地的临时文件
+   * @throws WxErrorException
+   */
+  File jssdkMediaDownload(String mediaId) throws WxErrorException;
 
   /**
    * <pre>

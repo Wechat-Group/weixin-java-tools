@@ -459,9 +459,10 @@ public class WxPayErrorCode {
      * 描述：账单不存在.
      * 原因：当前商户号没有已成交的订单，不生成对账单
      * 解决方案：请检查当前商户号在指定日期内是否有成功的交易。
+     * 错误：微信官方文档这个错误的字符串显示是'NO Bill Exist'('o'是大写)，实际返回是'No Bill Exist'('o'是小写）
      * </pre>
      */
-    public static final String NO_Bill_Exist = "NO Bill Exist";
+    public static final String NO_Bill_Exist = "No Bill Exist";
 
     /**
      * <pre>

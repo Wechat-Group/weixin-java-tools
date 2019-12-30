@@ -3,6 +3,7 @@ package me.chanjar.weixin.mp.util.requestexecuter.media;
 import java.io.File;
 import java.io.IOException;
 
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
@@ -20,8 +21,8 @@ public abstract class MediaImgUploadRequestExecutor<H, P> implements RequestExec
   }
 
   @Override
-  public void execute(String uri, File data, ResponseHandler<WxMediaImgUploadResult> handler) throws WxErrorException, IOException {
-    handler.handle(this.execute(uri, data));
+  public void execute(String uri, File data, ResponseHandler<WxMediaImgUploadResult> handler, WxType wxType) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data, wxType));
   }
 
   public static RequestExecutor<WxMediaImgUploadResult, File> create(RequestHttp requestHttp) {

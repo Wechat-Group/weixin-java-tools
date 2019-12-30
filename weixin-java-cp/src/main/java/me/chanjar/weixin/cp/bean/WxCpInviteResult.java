@@ -37,24 +37,12 @@ public class WxCpInviteResult implements Serializable {
   private String errMsg;
 
   @SerializedName("invaliduser")
-  private String invalidUsers;
+  private String[] invalidUsers;
 
   @SerializedName("invalidparty")
   private String[] invalidParties;
 
   @SerializedName("invalidtag")
   private String[] invalidTags;
-
-  public List<String> getInvalidUserList() {
-    return this.content2List(this.invalidUsers);
-  }
-
-  private List<String> content2List(String content) {
-    if (StringUtils.isBlank(content)) {
-      return Collections.emptyList();
-    }
-
-    return Splitter.on("|").splitToList(content);
-  }
 
 }

@@ -1,8 +1,7 @@
 package me.chanjar.weixin.cp.util.json;
 
-import org.testng.annotations.*;
-
 import me.chanjar.weixin.cp.bean.WxCpUser;
+import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,6 +31,7 @@ public class WxCpUserGsonAdapterTest {
       "    \"isleader\": 1,\n" +
       "    \"avatar\": \"http://wx.qlogo.cn/mmopen/ajNVdqHZLLA3WJ6DSZUfiakYe37PKnQhBIeOQBO4czqrnZDS79FH5Wm5m4X69TBicnHFlhiafvDwklOpZeXYQQ2icg/0\",\n" +
       "    \"telephone\": \"020-123456\",\n" +
+      "    \"address\": \"广州市海珠区新港中路\"," +
       "    \"enable\": 1,\n" +
       "    \"alias\": \"jackzhang\",\n" +
       "    \"extattr\": {\n" +
@@ -82,7 +82,7 @@ public class WxCpUserGsonAdapterTest {
     assertThat(user.getOrders()[0]).isEqualTo(1);
     assertThat(user.getOrders()[1]).isEqualTo(2);
 
-
+    assertThat(user.getAddress()).isEqualTo("广州市海珠区新港中路");
     assertThat(user.getExternalAttrs()).isNotEmpty();
 
     final WxCpUser.ExternalAttribute externalAttr1 = user.getExternalAttrs().get(0);

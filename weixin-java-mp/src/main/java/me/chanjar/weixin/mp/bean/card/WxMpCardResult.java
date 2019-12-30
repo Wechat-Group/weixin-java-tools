@@ -6,7 +6,7 @@ import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
- * 卡券查询Code，核销Code接口返回结果
+ * 卡券查询Code，核销Code接口返回结果.
  *
  * @author YuJian
  * @version 15/11/11

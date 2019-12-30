@@ -10,22 +10,15 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
+import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 
 /**
- * 微信API的Service
+ * 微信API的Service.
+ *
  * @author chanjaster
  */
 public interface WxCpService {
-  String GET_JSAPI_TICKET = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket";
-  String GET_AGENT_CONFIG_TICKET = "https://qyapi.weixin.qq.com/cgi-bin/ticket/get?&type=agent_config";
-  String MESSAGE_SEND = "https://qyapi.weixin.qq.com/cgi-bin/message/send";
-  String GET_CALLBACK_IP = "https://qyapi.weixin.qq.com/cgi-bin/getcallbackip";
-  String BATCH_REPLACE_PARTY = "https://qyapi.weixin.qq.com/cgi-bin/batch/replaceparty";
-  String BATCH_REPLACE_USER = "https://qyapi.weixin.qq.com/cgi-bin/batch/replaceuser";
-  String BATCH_GET_RESULT = "https://qyapi.weixin.qq.com/cgi-bin/batch/getresult?jobid=";
-  String JSCODE_TO_SESSION_URL = "https://qyapi.weixin.qq.com/cgi-bin/miniprogram/jscode2session";
-
   /**
    * <pre>
    * 验证推送过来的消息的正确性
@@ -81,9 +74,10 @@ public interface WxCpService {
   /**
    * 获得jsapi_ticket,不强制刷新jsapi_ticket
    * 应用的jsapi_ticket用于计算agentConfig（参见“通过agentConfig注入应用的权限”）的签名，签名计算方法与上述介绍的config的签名算法完全相同，但需要注意以下区别：
-   *
+   * <p>
    * 签名的jsapi_ticket必须使用以下接口获取。且必须用wx.agentConfig中的agentid对应的应用secret去获取access_token。
    * 签名用的noncestr和timestamp必须与wx.agentConfig中的nonceStr和timestamp相同。
+   *
    * @see #getJsapiTicket(boolean)
    */
   String getAgentJsapiTicket() throws WxErrorException;
@@ -142,6 +136,26 @@ public interface WxCpService {
    * @return { "ip_list": ["101.226.103.*", "101.226.62.*"] }
    */
   String[] getCallbackIp() throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取服务商凭证
+   * 文档地址：https://work.weixin.qq.com/api/doc#90001/90143/91200
+   * 请求方式：POST（HTTPS）
+   * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/service/get_provider_token
+   * </pre>
+   *
+   * @param corpId         服务商的corpid
+   * @param providerSecret 服务商的secret，在服务商管理后台可见
+   * @return {
+   * "errcode":0 ,
+   * "errmsg":"ok" ,
+   * "provider_access_token":"enLSZ5xxxxxxJRL",
+   * "expires_in":7200
+   * }
+   * @throws WxErrorException .
+   */
+  WxCpProviderToken getProviderToken(String corpId, String providerSecret) throws WxErrorException;
 
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求
@@ -215,7 +229,7 @@ public interface WxCpService {
    * @return WxSessionManager
    */
   WxSessionManager getSessionManager();
-  
+
   /**
    * <pre>
    * 设置WxSessionManager，只有当需要使用个性化的WxSessionManager的时候才需要调用此方法，
@@ -293,17 +307,26 @@ public interface WxCpService {
    * 获取用户相关接口的服务类对象
    */
   WxCpUserService getUserService();
-  
+
+  WxCpExternalContactService getExternalContactService();
+
   /**
    * 获取群聊服务
-   * 
+   *
    * @return 群聊服务
    */
   WxCpChatService getChatService();
 
+  /**
+   * 获取任务卡片服务
+   *
+   * @return 任务卡片服务
+   */
+  WxCpTaskCardService getTaskCardService();
+
   WxCpAgentService getAgentService();
 
-  WxCpOAService getOAService();
+  WxCpOaService getOAService();
 
   /**
    * http请求对象

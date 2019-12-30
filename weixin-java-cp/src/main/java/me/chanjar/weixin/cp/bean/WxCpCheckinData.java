@@ -7,14 +7,13 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 企业微信打卡数据.
+ *
  * @author Element
- * @Package me.chanjar.weixin.cp.bean
  * @date 2019-04-06 11:01
- * @Description: 企业微信打卡数据
  */
 @Data
 public class WxCpCheckinData implements Serializable {
-
   private static final long serialVersionUID = 1915820330847799605L;
 
   @SerializedName("userid")
@@ -42,7 +41,7 @@ public class WxCpCheckinData implements Serializable {
   private String wifiName;
 
   @SerializedName("wifimac")
-  private String wifiMAC;
+  private String wifiMac;
 
   private String notes;
 

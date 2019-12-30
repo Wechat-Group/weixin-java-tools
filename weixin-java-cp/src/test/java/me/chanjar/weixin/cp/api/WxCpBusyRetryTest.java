@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.api;
 
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -13,8 +14,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 @Test
+@Slf4j
 public class WxCpBusyRetryTest {
-
   @DataProvider(name = "getService")
   public Object[][] getService() {
     WxCpService service = new WxCpServiceImpl() {
@@ -23,7 +24,7 @@ public class WxCpBusyRetryTest {
       public synchronized <T, E> T executeInternal(
         RequestExecutor<T, E> executor, String uri, E data)
         throws WxErrorException {
-        this.log.info("Executed");
+        log.info("Executed");
         throw new WxErrorException(WxError.builder().errorCode(-1).build());
       }
     };

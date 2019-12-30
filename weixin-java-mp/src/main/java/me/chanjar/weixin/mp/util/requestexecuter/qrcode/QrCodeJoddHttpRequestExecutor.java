@@ -30,7 +30,7 @@ public class QrCodeJoddHttpRequestExecutor extends QrCodeRequestExecutor<HttpCon
   }
 
   @Override
-  public File execute(String uri, WxMpQrCodeTicket ticket) throws WxErrorException, IOException {
+  public File execute(String uri, WxMpQrCodeTicket ticket, WxType wxType) throws WxErrorException, IOException {
     if (ticket != null) {
       if (uri.indexOf('?') == -1) {
         uri += '?';

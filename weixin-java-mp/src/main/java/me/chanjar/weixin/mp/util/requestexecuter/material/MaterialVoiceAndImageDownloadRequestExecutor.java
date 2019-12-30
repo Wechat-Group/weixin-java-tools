@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
@@ -19,8 +20,8 @@ public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> impleme
   }
 
   @Override
-  public void execute(String uri, String data, ResponseHandler<InputStream> handler) throws WxErrorException, IOException {
-    handler.handle(this.execute(uri, data));
+  public void execute(String uri, String data, ResponseHandler<InputStream> handler, WxType wxType) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data, wxType));
   }
 
   public static RequestExecutor<InputStream, String> create(RequestHttp requestHttp, File tmpDirFile) {

@@ -1,11 +1,10 @@
 package com.github.binarywang.wxpay.constant;
 
-import java.text.Format;
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.time.FastDateFormat;
 
-import com.google.common.collect.Lists;
+import java.text.Format;
+import java.util.List;
 
 /**
  * <pre>
@@ -272,5 +271,24 @@ public class WxPayConstants {
      * 退款到银行发现用户的卡作废或者冻结了，导致原路退款银行卡失败，可前往商户平台（pay.weixin.qq.com）-交易中心，手动处理此笔退款。
      */
     public static final String CHANGE = "CHANGE";
+  }
+
+  public static class ReceiverType {
+    /**
+     * 商户id
+     */
+    public static final String MERCHANT_ID = "MERCHANT_ID";
+    /**
+     * 个人微信号
+     */
+    public static final String PERSONAL_WECHATID = "PERSONAL_WECHATID";
+    /**
+     * 个人openid
+     */
+    public static final String PERSONAL_OPENID = "PERSONAL_OPENID";
+    /**
+     * 个人sub_openid
+     */
+    public static final String PERSONAL_SUB_OPENID = "PERSONAL_SUB_OPENID";
   }
 }

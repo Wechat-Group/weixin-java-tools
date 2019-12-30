@@ -1,17 +1,22 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
-
+import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
+import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.cp.api.WxCpMediaService;
 import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
+
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Media.*;
 
 /**
  * <pre>
@@ -21,12 +26,9 @@ import me.chanjar.weixin.cp.api.WxCpService;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@RequiredArgsConstructor
 public class WxCpMediaServiceImpl implements WxCpMediaService {
-  private WxCpService mainService;
-
-  public WxCpMediaServiceImpl(WxCpService mainService) {
-    this.mainService = mainService;
-  }
+  private final WxCpService mainService;
 
   @Override
   public WxMediaUploadResult upload(String mediaType, String fileType, InputStream inputStream)
@@ -37,7 +39,7 @@ public class WxCpMediaServiceImpl implements WxCpMediaService {
   @Override
   public WxMediaUploadResult upload(String mediaType, File file) throws WxErrorException {
     return this.mainService.execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()),
-      MEDIA_UPLOAD_URL + mediaType, file);
+      this.mainService.getWxCpConfigStorage().getApiUrl(MEDIA_UPLOAD + mediaType), file);
   }
 
   @Override
@@ -45,7 +47,7 @@ public class WxCpMediaServiceImpl implements WxCpMediaService {
     return this.mainService.execute(
       BaseMediaDownloadRequestExecutor.create(this.mainService.getRequestHttp(),
         this.mainService.getWxCpConfigStorage().getTmpDirFile()),
-      MEDIA_GET_URL, "media_id=" + mediaId);
+      this.mainService.getWxCpConfigStorage().getApiUrl(MEDIA_GET), "media_id=" + mediaId);
   }
 
   @Override
@@ -53,13 +55,13 @@ public class WxCpMediaServiceImpl implements WxCpMediaService {
     return this.mainService.execute(
       BaseMediaDownloadRequestExecutor.create(this.mainService.getRequestHttp(),
         this.mainService.getWxCpConfigStorage().getTmpDirFile()),
-      JSSDK_MEDIA_GET_URL, "media_id=" + mediaId);
+      this.mainService.getWxCpConfigStorage().getApiUrl(JSSDK_MEDIA_GET), "media_id=" + mediaId);
   }
 
   @Override
   public String uploadImg(File file) throws WxErrorException {
-    final WxMediaUploadResult result = this.mainService
-      .execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()), IMG_UPLOAD_URL, file);
-    return result.getUrl();
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(IMG_UPLOAD);
+    return this.mainService.execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()), url, file)
+      .getUrl();
   }
 }

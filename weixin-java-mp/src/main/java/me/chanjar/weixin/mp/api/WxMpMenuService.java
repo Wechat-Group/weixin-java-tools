@@ -6,12 +6,11 @@ import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 
 /**
- * 菜单相关操作接口
+ * 菜单相关操作接口.
  *
  * @author Binary Wang
  */
 public interface WxMpMenuService {
-
   /**
    * <pre>
    * 自定义菜单创建接口

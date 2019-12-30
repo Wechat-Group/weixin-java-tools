@@ -3,6 +3,7 @@ package me.chanjar.weixin.mp.api.impl;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -12,6 +13,7 @@ import me.chanjar.weixin.mp.api.WxMpStoreService;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreInfo;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreListResult;
+import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.util.List;
@@ -21,18 +23,15 @@ import java.util.List;
  *
  * @author binarywang (https://github.com/binarywang)
  */
+@RequiredArgsConstructor
 public class WxMpStoreServiceImpl implements WxMpStoreService {
-  private WxMpService wxMpService;
-
-  public WxMpStoreServiceImpl(WxMpService wxMpService) {
-    this.wxMpService = wxMpService;
-  }
+  private final WxMpService wxMpService;
 
   @Override
   public void add(WxMpStoreBaseInfo request) throws WxErrorException {
     BeanUtils.checkRequiredFields(request);
 
-    String response = this.wxMpService.post(POI_ADD_URL, request.toJson());
+    String response = this.wxMpService.post(WxMpApiUrl.Store.POI_ADD_URL, request.toJson());
     WxError wxError = WxError.fromJson(response, WxType.MP);
     if (wxError.getErrorCode() != 0) {
       throw new WxErrorException(wxError);
@@ -43,7 +42,7 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
   public WxMpStoreBaseInfo get(String poiId) throws WxErrorException {
     JsonObject paramObject = new JsonObject();
     paramObject.addProperty("poi_id", poiId);
-    String response = this.wxMpService.post(POI_GET_URL, paramObject.toString());
+    String response = this.wxMpService.post(WxMpApiUrl.Store.POI_GET_URL, paramObject.toString());
     WxError wxError = WxError.fromJson(response, WxType.MP);
     if (wxError.getErrorCode() != 0) {
       throw new WxErrorException(wxError);
@@ -56,7 +55,7 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
   public void delete(String poiId) throws WxErrorException {
     JsonObject paramObject = new JsonObject();
     paramObject.addProperty("poi_id", poiId);
-    String response = this.wxMpService.post(POI_DEL_URL, paramObject.toString());
+    String response = this.wxMpService.post(WxMpApiUrl.Store.POI_DEL_URL, paramObject.toString());
     WxError wxError = WxError.fromJson(response, WxType.MP);
     if (wxError.getErrorCode() != 0) {
       throw new WxErrorException(wxError);
@@ -69,7 +68,7 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
     JsonObject params = new JsonObject();
     params.addProperty("begin", begin);
     params.addProperty("limit", limit);
-    String response = this.wxMpService.post(POI_LIST_URL, params.toString());
+    String response = this.wxMpService.post(WxMpApiUrl.Store.POI_LIST_URL, params.toString());
 
     WxError wxError = WxError.fromJson(response, WxType.MP);
     if (wxError.getErrorCode() != 0) {
@@ -102,7 +101,7 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
 
   @Override
   public void update(WxMpStoreBaseInfo request) throws WxErrorException {
-    String response = this.wxMpService.post(POI_UPDATE_URL, request.toJson());
+    String response = this.wxMpService.post(WxMpApiUrl.Store.POI_UPDATE_URL, request.toJson());
     WxError wxError = WxError.fromJson(response, WxType.MP);
     if (wxError.getErrorCode() != 0) {
       throw new WxErrorException(wxError);
@@ -111,7 +110,7 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
 
   @Override
   public List<String> listCategories() throws WxErrorException {
-    String response = this.wxMpService.get(POI_GET_WX_CATEGORY_URL, null);
+    String response = this.wxMpService.get(WxMpApiUrl.Store.POI_GET_WX_CATEGORY_URL, null);
     WxError wxError = WxError.fromJson(response, WxType.MP);
     if (wxError.getErrorCode() != 0) {
       throw new WxErrorException(wxError);

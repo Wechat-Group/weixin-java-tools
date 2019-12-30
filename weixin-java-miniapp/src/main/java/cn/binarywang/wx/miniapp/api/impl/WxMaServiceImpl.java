@@ -16,6 +16,7 @@ import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.*;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -53,6 +54,9 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   private WxMaShareService shareService = new WxMaShareServiceImpl(this);
   private WxMaRunService runService = new WxMaRunServiceImpl(this);
   private WxMaSecCheckService secCheckService = new WxMaSecCheckServiceImpl(this);
+  private WxMaPluginService pluginService = new WxMaPluginServiceImpl(this);
+  private WxMaExpressService expressService = new WxMaExpressServiceImpl(this);
+  private WxMaSubscribeService subscribeService = new WxMaSubscribeServiceImpl(this);
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -118,13 +122,13 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
         }
         try (CloseableHttpResponse response = getRequestHttpClient().execute(httpGet)) {
           String resultContent = new BasicResponseHandler().handleResponse(response);
-          WxError error = WxError.fromJson(resultContent);
+          WxError error = WxError.fromJson(resultContent, WxType.MiniApp);
           if (error.getErrorCode() != 0) {
             throw new WxErrorException(error);
           }
           WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
           this.getWxMaConfig().updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
-          
+
           return this.getWxMaConfig().getAccessToken();
         } finally {
           httpGet.releaseConnection();
@@ -203,6 +207,11 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
     return execute(SimplePostRequestExecutor.create(this), url, postData);
   }
 
+  @Override
+  public String post(String url, Object obj) throws WxErrorException {
+    return this.execute(SimplePostRequestExecutor.create(this), url, WxGsonBuilder.create().toJson(obj));
+  }
+
   /**
    * 向微信端发送请求，在这里执行的策略是当发生access_token过期时才去刷新，然后重新执行请求，而不是全局定时请求
    */
@@ -250,7 +259,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
     String uriWithAccessToken = uri + (uri.contains("?") ? "&" : "?") + "access_token=" + accessToken;
 
     try {
-      T result = executor.execute(uriWithAccessToken, data);
+      T result = executor.execute(uriWithAccessToken, data, WxType.MiniApp);
       log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog, result);
       return result;
     } catch (WxErrorException e) {
@@ -326,6 +335,11 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   }
 
   @Override
+  public WxMaSubscribeService getSubscribeService() {
+    return this.subscribeService;
+  }
+
+  @Override
   public WxMaAnalysisService getAnalysisService() {
     return this.analysisService;
   }
@@ -358,5 +372,15 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   @Override
   public WxMaSecCheckService getSecCheckService() {
     return this.secCheckService;
+  }
+
+  @Override
+  public WxMaPluginService getPluginService() {
+    return this.pluginService;
+  }
+
+  @Override
+  public WxMaExpressService getExpressService() {
+    return this.expressService;
   }
 }

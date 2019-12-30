@@ -33,6 +33,22 @@ public class CustomField implements Serializable {
   @SerializedName("url")
   private String url;
 
+  /**
+   * 参考https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V卡券内跳转小程序参数说明：会员卡顶部的信息类目字段，包含以下两个字段
+   */
+  /**
+   * 自定义信息类目小程序user_name，格式为原始id+@app
+   */
+  @SerializedName("app_brand_user_name")
+  private String appBrandUserName;
+  /**
+   * 自定义信息类目小程序的页面路径
+   */
+  @SerializedName("app_brand_pass")
+  private String appBrandPass;
+
+
+
   public String getNameType() {
     return nameType;
   }

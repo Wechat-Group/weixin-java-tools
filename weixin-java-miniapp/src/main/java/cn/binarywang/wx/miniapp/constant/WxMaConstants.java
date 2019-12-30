@@ -69,4 +69,72 @@ public class WxMaConstants {
      */
     public static final int ERR_40014 = 40014;
   }
+
+  /**
+   * 内容安全检测的媒体类型
+   */
+  public static final class SecCheckMediaType {
+
+    /**
+     * 音频
+     */
+    public static final int VOICE = 1;
+
+    /**
+     * 图片
+     */
+    public static final int IMAGE = 2;
+  }
+
+  /**
+   * 快递账号绑定类型
+   */
+  public static final class BindAccountType{
+
+    /**
+     * 绑定
+     */
+    public static final String BIND = "bind";
+
+    /**
+     * 解绑
+     */
+    public static final String UNBIND = "unbind";
+  }
+
+  /**
+   * 快递下单订单来源
+   */
+  public static final class OrderAddSource{
+
+    /**
+     * 小程序
+     */
+    public static final int MINI_PROGRAM = 0;
+
+    /**
+     * APP或H5
+     */
+    public static final int APP_OR_H5 = 2;
+  }
+
+  /**
+   * 快递下单保价
+   */
+  public static final class OrderAddInsured{
+    /**
+     * 不保价
+     */
+    public static final int INSURED_PROGRAM = 0;
+
+    /**
+     * 保价
+     */
+    public static final int USE_INSURED = 1;
+
+    /**
+     * 默认保价金额
+     */
+    public static final int DEFAULT_INSURED_VALUE = 0;
+  }
 }

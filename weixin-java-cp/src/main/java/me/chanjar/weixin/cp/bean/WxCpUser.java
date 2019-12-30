@@ -27,10 +27,19 @@ public class WxCpUser implements Serializable {
   private Gender gender;
   private String email;
   private String avatar;
+  /**
+   * 地址。长度最大128个字符
+   */
+  private String address;
   private String avatarMediaId;
   private Integer status;
   private Integer enable;
   private Integer isLeader;
+  /**
+   * is_leader_in_dept.
+   * 个数必须和department一致，表示在所在的部门内是否为上级。1表示为上级，0表示非上级。在审批等应用里可以用来标识上级审批人
+   */
+  private Integer[] isLeaderInDept;
   private final List<Attr> extAttrs = new ArrayList<>();
   private Integer hideMobile;
   private String englishName;

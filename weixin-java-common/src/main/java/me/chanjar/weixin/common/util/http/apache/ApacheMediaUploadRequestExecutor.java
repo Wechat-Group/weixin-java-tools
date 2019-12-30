@@ -1,7 +1,8 @@
 package me.chanjar.weixin.common.util.http.apache;
 
-import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
@@ -26,7 +27,7 @@ public class ApacheMediaUploadRequestExecutor extends MediaUploadRequestExecutor
   }
 
   @Override
-  public WxMediaUploadResult execute(String uri, File file) throws WxErrorException, IOException {
+  public WxMediaUploadResult execute(String uri, File file, WxType wxType) throws WxErrorException, IOException {
     HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       RequestConfig config = RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build();
@@ -42,7 +43,7 @@ public class ApacheMediaUploadRequestExecutor extends MediaUploadRequestExecutor
     }
     try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
       String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      WxError error = WxError.fromJson(responseContent);
+      WxError error = WxError.fromJson(responseContent, wxType);
       if (error.getErrorCode() != 0) {
         throw new WxErrorException(error);
       }

@@ -50,7 +50,7 @@ public interface EntPayService {
    * 接口链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo
    * </pre>
    *
-   * @param partnerTradeNo 商户订单号
+   * @param request 请求对象
    * @return the ent pay query result
    * @throws WxPayException the wx pay exception
    */
@@ -105,6 +105,7 @@ public interface EntPayService {
    * @throws WxPayException the wx pay exception
    */
   EntPayBankQueryResult queryPayBank(String partnerTradeNo) throws WxPayException;
+
   /**
    * 企业付款到银行卡查询.
    * <pre>
@@ -113,9 +114,33 @@ public interface EntPayService {
    * 接口链接：https://api.mch.weixin.qq.com/mmpaysptrans/query_bank
    * </pre>
    *
-   * @param partnerTradeNo 商户订单号
+   * @param request 请求对象
    * @return the ent pay bank query result
    * @throws WxPayException the wx pay exception
    */
   EntPayBankQueryResult queryPayBank(EntPayBankQueryRequest request) throws WxPayException;
+
+  /**
+   * 企业发送微信红包给个人用户
+   * <pre>
+   *   文档地址：https://work.weixin.qq.com/api/doc
+   *   接口地址： https://api.mch.weixin.qq.com/mmpaymkttransfers/sendworkwxredpack
+   * </pre>
+   * @param request 请求对象
+   * @return the wx pay send redpack result
+   * @throws WxPayException the wx pay exception
+   */
+  EntPayRedpackResult sendEnterpriseRedpack(EntPayRedpackRequest request) throws WxPayException;
+
+  /**
+   * 企业发送微信红包查询
+   * <pre>
+   *   文档地址：https://work.weixin.qq.com/api/doc
+   *   接口地址： https://api.mch.weixin.qq.com/mmpaymkttransfers/queryworkwxredpack
+   * </pre>
+   * @param request 请求对象
+   * @return the wx pay send redpack result
+   * @throws WxPayException the wx pay exception
+   */
+  EntPayRedpackQueryResult queryEnterpriseRedpack(EntPayRedpackQueryRequest request) throws WxPayException;
 }

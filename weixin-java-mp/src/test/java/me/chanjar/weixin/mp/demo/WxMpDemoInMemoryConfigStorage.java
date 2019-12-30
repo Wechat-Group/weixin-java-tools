@@ -6,13 +6,13 @@ import java.util.concurrent.locks.ReentrantLock;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
-import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 
 /**
  * @author Daniel Qian
  */
 @XStreamAlias("xml")
-class WxMpDemoInMemoryConfigStorage extends WxMpInMemoryConfigStorage {
+class WxMpDemoInMemoryConfigStorage extends WxMpDefaultConfigImpl {
   private static final long serialVersionUID = -3706236839197109704L;
 
   public static WxMpDemoInMemoryConfigStorage fromXml(InputStream is) {
