@@ -64,8 +64,10 @@ public final class WxCpApiPathConsts {
   public static class Oa {
     public static final String GET_CHECKIN_DATA = "/cgi-bin/checkin/getcheckindata";
     public static final String GET_CHECKIN_OPTION = "/cgi-bin/checkin/getcheckinoption";
-    public static final String GET_APPROVAL_DATA = "/cgi-bin/corp/getapprovaldata";
+    public static final String GET_APPROVAL_INFO = "/cgi-bin/oa/getapprovalinfo";
     public static final String GET_DIAL_RECORD = "/cgi-bin/dial/get_dial_record";
+    @Deprecated
+    public static final String GET_APPROVAL_DATA = "/cgi-bin/corp/getapprovaldata";
   }
 
   public static class Tag {
