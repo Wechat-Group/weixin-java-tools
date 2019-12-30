@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpOaService;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.*;
+import me.chanjar.weixin.cp.bean.oa.*;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.util.Date;
@@ -19,7 +19,7 @@ import java.util.List;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 
 /**
- * .
+ * 企业微信 OA 接口实现
  *
  * @author Element
  * @date 2019-04-06 11:20
@@ -143,9 +143,15 @@ public class WxCpOaServiceImpl implements WxCpOaService {
   }
 
   @Override
-  public WxCpApprovaldetail getApprovalDetail(@NonNull String spNo) throws WxErrorException {
+  public WxCpApprovalDetailResult getApprovalDetail(@NonNull String spNo) throws WxErrorException {
 
-    return null;
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("sp_no",spNo);
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_APPROVAL_DETAIL);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+
+    return WxCpGsonBuilder.create().fromJson(responseContent, WxCpApprovalDetailResult.class);
   }
 
   @Override

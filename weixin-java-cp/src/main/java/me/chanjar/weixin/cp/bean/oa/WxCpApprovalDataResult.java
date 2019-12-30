@@ -1,4 +1,4 @@
-package me.chanjar.weixin.cp.bean;
+package me.chanjar.weixin.cp.bean.oa;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;

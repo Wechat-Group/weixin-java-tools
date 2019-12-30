@@ -2,7 +2,7 @@ package me.chanjar.weixin.cp.api;
 
 import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.cp.bean.*;
+import me.chanjar.weixin.cp.bean.oa.*;
 
 import java.util.Date;
 import java.util.List;
@@ -40,7 +40,7 @@ public interface WxCpOaService {
    * @param datetime   需要获取规则的当天日期
    * @param userIdList 需要获取打卡规则的用户列表
    * @return 打卡规则列表
-   * @throws WxErrorException 异常
+   * @throws WxErrorException
    */
   List<WxCpCheckinOption> getCheckinOption(Date datetime, List<String> userIdList) throws WxErrorException;
 
@@ -62,7 +62,8 @@ public interface WxCpOaService {
    * @param cursor    分页查询游标，默认为0，后续使用返回的next_cursor进行分页拉取
    * @param size      一次请求拉取审批单数量，默认值为100，上限值为100
    * @param filters   筛选条件，可对批量拉取的审批申请设置约束条件，支持设置多个条件,nullable
-   * @return ApprovalInfo
+   * @return WxCpApprovalInfo
+   * @throws WxErrorException
    */
   WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime, Integer cursor, Integer size,
                                    List<WxCpApprovalInfoQueryFilter> filters) throws WxErrorException;
@@ -91,7 +92,7 @@ public interface WxCpOaService {
    * @return WxCpApprovaldetail
    * @throws WxErrorException
    */
-  WxCpApprovaldetail getApprovalDetail(@NonNull String spNo) throws WxErrorException;
+  WxCpApprovalDetailResult getApprovalDetail(@NonNull String spNo) throws WxErrorException;
 
   /**
    * <pre>

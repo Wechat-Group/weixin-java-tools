@@ -5,9 +5,10 @@ import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.WxCpApprovalInfo;
-import me.chanjar.weixin.cp.bean.WxCpCheckinData;
-import me.chanjar.weixin.cp.bean.WxCpCheckinOption;
+import me.chanjar.weixin.cp.bean.oa.WxCpApprovalDetailResult;
+import me.chanjar.weixin.cp.bean.oa.WxCpApprovalInfo;
+import me.chanjar.weixin.cp.bean.oa.WxCpCheckinData;
+import me.chanjar.weixin.cp.bean.oa.WxCpCheckinOption;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
@@ -20,10 +21,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * 企业微信 OA数据接口 测试用例
+ *
  * @author Element
- * @Package me.chanjar.weixin.cp.api.impl
- * @date 2019-04-20 13:46
- * @Description: TODO
  */
 
 @Guice(modules = ApiTestModule.class)
@@ -64,7 +64,18 @@ public class WxCpOAServiceImplTest {
   public void testGetApprovalInfo() throws WxErrorException, ParseException {
     Date startTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2019-04-11");
     Date endTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2019-05-10");
-    WxCpApprovalInfo result = wxService.getOAService().getApprovalInfo(startTime,endTime,null,null,null);
+    WxCpApprovalInfo result = wxService.getOAService().getApprovalInfo(startTime, endTime);
+
+    assertThat(result).isNotNull();
+
+    System.out.println("result ");
+    System.out.println(gson.toJson(result));
+  }
+
+  @Test
+  public void testGetApprovalDetail() throws WxErrorException {
+    String spNo = "201909270001";
+    WxCpApprovalDetailResult result = wxService.getOAService().getApprovalDetail(spNo);
 
     assertThat(result).isNotNull();
 
