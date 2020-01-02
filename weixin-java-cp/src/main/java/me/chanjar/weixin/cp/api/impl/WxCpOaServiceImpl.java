@@ -28,6 +28,9 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 public class WxCpOaServiceImpl implements WxCpOaService {
   private final WxCpService mainService;
 
+  private static final int MONTH_SECONDS = 30 * 24 * 60 * 60;
+  private static final int USER_IDS_LIMIT = 100;
+
   @Override
   public List<WxCpCheckinData> getCheckinData(Integer openCheckinDataType, Date startTime, Date endTime,
                                               List<String> userIdList) throws WxErrorException {
@@ -35,14 +38,14 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       throw new RuntimeException("starttime and endtime can't be null");
     }
 
-    if (userIdList == null || userIdList.size() > 100) {
-      throw new RuntimeException("用户列表不能为空，不超过100个，若用户超过100个，请分批获取");
+    if (userIdList == null || userIdList.size() > USER_IDS_LIMIT) {
+      throw new RuntimeException("用户列表不能为空，不超过 " + USER_IDS_LIMIT + " 个，若用户超过 " + USER_IDS_LIMIT + " 个，请分批获取");
     }
 
     long endtimestamp = endTime.getTime() / 1000L;
     long starttimestamp = startTime.getTime() / 1000L;
 
-    if (endtimestamp - starttimestamp < 0 || endtimestamp - starttimestamp >= 30 * 24 * 60 * 60) {
+    if (endtimestamp - starttimestamp < 0 || endtimestamp - starttimestamp >= MONTH_SECONDS) {
       throw new RuntimeException("获取记录时间跨度不超过一个月");
     }
 
@@ -76,8 +79,8 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       throw new RuntimeException("datetime can't be null");
     }
 
-    if (userIdList == null || userIdList.size() > 100) {
-      throw new RuntimeException("用户列表不能为空，不超过100个，若用户超过100个，请分批获取");
+    if (userIdList == null || userIdList.size() > USER_IDS_LIMIT) {
+      throw new RuntimeException("用户列表不能为空，不超过 " + USER_IDS_LIMIT + " 个，若用户超过 " + USER_IDS_LIMIT + " 个，请分批获取");
     }
 
     JsonArray jsonArray = new JsonArray();
@@ -146,7 +149,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
   public WxCpApprovalDetailResult getApprovalDetail(@NonNull String spNo) throws WxErrorException {
 
     JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("sp_no",spNo);
+    jsonObject.addProperty("sp_no", spNo);
 
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_APPROVAL_DETAIL);
     String responseContent = this.mainService.post(url, jsonObject.toString());
@@ -189,7 +192,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       long endtimestamp = endTime.getTime() / 1000L;
       long starttimestamp = startTime.getTime() / 1000L;
 
-      if (endtimestamp - starttimestamp < 0 || endtimestamp - starttimestamp >= 30 * 24 * 60 * 60) {
+      if (endtimestamp - starttimestamp < 0 || endtimestamp - starttimestamp >= MONTH_SECONDS) {
         throw new RuntimeException("受限于网络传输，起止时间的最大跨度为30天，如超过30天，则以结束时间为基准向前取30天进行查询");
       }
 

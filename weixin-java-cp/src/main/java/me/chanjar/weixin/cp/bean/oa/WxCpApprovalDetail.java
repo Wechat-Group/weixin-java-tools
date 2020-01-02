@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 审批申请详情
@@ -55,5 +56,23 @@ public class WxCpApprovalDetail implements Serializable {
    */
   @SerializedName("sp_record")
   private WxCpApprovalRecord spRecord;
+
+  /**
+   * 抄送信息，可能有多个抄送节点
+   */
+  @SerializedName("notifyer")
+  private WxCpOperator notifyer;
+
+  /**
+   * 审批申请数据
+   */
+  @SerializedName("apply_data")
+  private WxCpApprovalApplyData applyData;
+
+  /**
+   * 审批申请备注信息，可能有多个备注节点
+   */
+  @SerializedName("comments")
+  private List<WxCpApprovalComment> comments;
 
 }

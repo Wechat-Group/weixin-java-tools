@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 
 @Guice(modules = ApiTestModule.class)
-public class WxCpOAServiceImplTest {
+public class WxCpOaServiceImplTest {
 
   @Inject
   protected WxCpService wxService;
