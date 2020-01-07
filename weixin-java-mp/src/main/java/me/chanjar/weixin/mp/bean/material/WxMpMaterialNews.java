@@ -61,7 +61,7 @@ public class WxMpMaterialNews implements Serializable {
    * @author chanjarster
    */
   @Data
-  public static class WxMpMaterialNewsArticle {
+  public static class WxMpMaterialNewsArticle implements Serializable{
     /**
      * (必填) 图文消息缩略图的media_id，可以在基础支持-上传多媒体文件接口中获得.
      */
