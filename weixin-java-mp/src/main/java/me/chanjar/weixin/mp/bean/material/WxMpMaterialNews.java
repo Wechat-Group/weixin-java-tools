@@ -62,6 +62,8 @@ public class WxMpMaterialNews implements Serializable {
    */
   @Data
   public static class WxMpMaterialNewsArticle implements Serializable{
+
+    private static final long serialVersionUID = -635384661692321171L;
     /**
      * (必填) 图文消息缩略图的media_id，可以在基础支持-上传多媒体文件接口中获得.
      */
