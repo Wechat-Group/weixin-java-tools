@@ -1,4 +1,4 @@
-package me.chanjar.weixin.cp.bean;
+package me.chanjar.weixin.cp.bean.oa;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
@@ -12,6 +12,7 @@ import java.util.Map;
  * @author Element
  * @date 2019-04-06 14:36
  */
+@Deprecated
 @Data
 public class WxCpApprovalDataResult implements Serializable {
   private static final long serialVersionUID = -1046940445840716590L;

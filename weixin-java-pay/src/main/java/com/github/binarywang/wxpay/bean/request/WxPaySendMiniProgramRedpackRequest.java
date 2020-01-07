@@ -105,8 +105,28 @@ public class WxPaySendMiniProgramRedpackRequest extends BaseWxPayRequest {
   @XStreamAlias("scene_id")
   private String sceneId;
 
+  /**
+   * wxappid.
+   * 微信分配的公众账号ID（企业号corpid即为此appId）。
+   * 接口传入的所有appid应该为公众号的appid（在mp.weixin.qq.com申请的），
+   * 不能为APP的appid（在open.weixin.qq.com申请的）
+   */
+  @XStreamAlias("wxappid")
+  private String wxAppid;
+
   @Override
   protected void checkConstraints() {
 
   }
+
+  @Override
+  public String getAppid() {
+    return this.wxAppid;
+  }
+
+  @Override
+  public void setAppid(String appid) {
+    this.wxAppid = appid;
+  }
+
 }

@@ -65,6 +65,7 @@ public class WxMaSubscribeMessage implements Serializable {
     if (this.data == null) {
       this.data = new ArrayList<>();
     }
+
     this.data.add(datum);
 
     return this;
@@ -77,7 +78,9 @@ public class WxMaSubscribeMessage implements Serializable {
   @lombok.Data
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class Data {
+  public static class Data implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private String value;
   }

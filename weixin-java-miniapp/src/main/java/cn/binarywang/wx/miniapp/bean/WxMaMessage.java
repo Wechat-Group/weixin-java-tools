@@ -1,12 +1,5 @@
 package cn.binarywang.wx.miniapp.bean;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
-
-import org.apache.commons.io.IOUtils;
-
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
@@ -16,6 +9,12 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -107,6 +106,34 @@ public class WxMaMessage implements Serializable {
   @XStreamAlias("SessionFrom")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String sessionFrom;
+
+  /**
+   * 以下是异步校验图片/音频是否含有违法违规内容的异步检测结果推送报文中的参数
+   */
+  @SerializedName("isrisky")
+  @XStreamAlias("isrisky")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String isRisky;
+
+  @SerializedName("extra_info_json")
+  @XStreamAlias("extra_info_json")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String extraInfoJson;
+
+  @SerializedName("appid")
+  @XStreamAlias("appid")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String appid;
+
+  @SerializedName("trace_id")
+  @XStreamAlias("trace_id")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String traceId;
+
+  @SerializedName("status_code")
+  @XStreamAlias("status_code")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String statusCode;
 
   public static WxMaMessage fromXml(String xml) {
     return XStreamTransformer.fromXml(WxMaMessage.class, xml);

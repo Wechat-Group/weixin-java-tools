@@ -5,15 +5,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpOaService;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.WxCpApprovalDataResult;
-import me.chanjar.weixin.cp.bean.WxCpCheckinData;
-import me.chanjar.weixin.cp.bean.WxCpCheckinOption;
-import me.chanjar.weixin.cp.bean.WxCpDialRecord;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
+import me.chanjar.weixin.cp.bean.oa.*;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.util.Date;
@@ -22,7 +19,7 @@ import java.util.List;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 
 /**
- * .
+ * 企业微信 OA 接口实现
  *
  * @author Element
  * @date 2019-04-06 11:20
@@ -31,6 +28,9 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 public class WxCpOaServiceImpl implements WxCpOaService {
   private final WxCpService mainService;
 
+  private static final int MONTH_SECONDS = 30 * 24 * 60 * 60;
+  private static final int USER_IDS_LIMIT = 100;
+
   @Override
   public List<WxCpCheckinData> getCheckinData(Integer openCheckinDataType, Date startTime, Date endTime,
                                               List<String> userIdList) throws WxErrorException {
@@ -38,14 +38,14 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       throw new RuntimeException("starttime and endtime can't be null");
     }
 
-    if (userIdList == null || userIdList.size() > 100) {
-      throw new RuntimeException("用户列表不能为空，不超过100个，若用户超过100个，请分批获取");
+    if (userIdList == null || userIdList.size() > USER_IDS_LIMIT) {
+      throw new RuntimeException("用户列表不能为空，不超过 " + USER_IDS_LIMIT + " 个，若用户超过 " + USER_IDS_LIMIT + " 个，请分批获取");
     }
 
     long endtimestamp = endTime.getTime() / 1000L;
     long starttimestamp = startTime.getTime() / 1000L;
 
-    if (endtimestamp - starttimestamp < 0 || endtimestamp - starttimestamp >= 30 * 24 * 60 * 60) {
+    if (endtimestamp - starttimestamp < 0 || endtimestamp - starttimestamp >= MONTH_SECONDS) {
       throw new RuntimeException("获取记录时间跨度不超过一个月");
     }
 
@@ -79,8 +79,8 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       throw new RuntimeException("datetime can't be null");
     }
 
-    if (userIdList == null || userIdList.size() > 100) {
-      throw new RuntimeException("用户列表不能为空，不超过100个，若用户超过100个，请分批获取");
+    if (userIdList == null || userIdList.size() > USER_IDS_LIMIT) {
+      throw new RuntimeException("用户列表不能为空，不超过 " + USER_IDS_LIMIT + " 个，若用户超过 " + USER_IDS_LIMIT + " 个，请分批获取");
     }
 
     JsonArray jsonArray = new JsonArray();
@@ -102,6 +102,59 @@ public class WxCpOaServiceImpl implements WxCpOaService {
         new TypeToken<List<WxCpCheckinOption>>() {
         }.getType()
       );
+  }
+
+  @Override
+  public WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime,
+                                          Integer cursor, Integer size, List<WxCpApprovalInfoQueryFilter> filters) throws WxErrorException {
+
+    if (cursor == null) {
+      cursor = 0;
+    }
+
+    if (size == null) {
+      size = 100;
+    }
+
+    if (size < 0 || size > 100) {
+      throw new IllegalArgumentException("size参数错误,请使用[1-100]填充，默认100");
+    }
+
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("starttime", startTime.getTime() / 1000L);
+    jsonObject.addProperty("endtime", endTime.getTime() / 1000L);
+    jsonObject.addProperty("size", size);
+    jsonObject.addProperty("cursor", cursor);
+
+    if (filters != null && !filters.isEmpty()) {
+      JsonArray filterJsonArray = new JsonArray();
+      for (WxCpApprovalInfoQueryFilter filter : filters) {
+        filterJsonArray.add(new JsonParser().parse(filter.toJson()));
+      }
+      jsonObject.add("filters", filterJsonArray);
+    }
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_APPROVAL_INFO);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+
+    return WxCpGsonBuilder.create().fromJson(responseContent, WxCpApprovalInfo.class);
+  }
+
+  @Override
+  public WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime) throws WxErrorException {
+    return this.getApprovalInfo(startTime, endTime, null, null, null);
+  }
+
+  @Override
+  public WxCpApprovalDetailResult getApprovalDetail(@NonNull String spNo) throws WxErrorException {
+
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("sp_no", spNo);
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_APPROVAL_DETAIL);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+
+    return WxCpGsonBuilder.create().fromJson(responseContent, WxCpApprovalDetailResult.class);
   }
 
   @Override
@@ -139,7 +192,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       long endtimestamp = endTime.getTime() / 1000L;
       long starttimestamp = startTime.getTime() / 1000L;
 
-      if (endtimestamp - starttimestamp < 0 || endtimestamp - starttimestamp >= 30 * 24 * 60 * 60) {
+      if (endtimestamp - starttimestamp < 0 || endtimestamp - starttimestamp >= MONTH_SECONDS) {
         throw new RuntimeException("受限于网络传输，起止时间的最大跨度为30天，如超过30天，则以结束时间为基准向前取30天进行查询");
       }
 

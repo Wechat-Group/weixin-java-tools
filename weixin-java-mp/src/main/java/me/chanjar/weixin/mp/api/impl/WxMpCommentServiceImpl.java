@@ -18,7 +18,7 @@ public class WxMpCommentServiceImpl implements WxMpCommentService {
   private final WxMpService wxMpService;
 
   @Override
-  public void open(Integer msgDataId, Integer index) throws WxErrorException {
+  public void open(String msgDataId, Integer index) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("msg_data_id", msgDataId);
     if (index != null) {
@@ -29,7 +29,7 @@ public class WxMpCommentServiceImpl implements WxMpCommentService {
   }
 
   @Override
-  public void close(Integer msgDataId, Integer index) throws WxErrorException {
+  public void close(String msgDataId, Integer index) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("msg_data_id", msgDataId);
     if (index != null) {
@@ -40,7 +40,7 @@ public class WxMpCommentServiceImpl implements WxMpCommentService {
   }
 
   @Override
-  public WxMpCommentListVo list(Integer msgDataId, Integer index, int begin, int count, int type) throws WxErrorException {
+  public WxMpCommentListVo list(String msgDataId, Integer index, int begin, int count, int type) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("msg_data_id", msgDataId);
     json.addProperty("begin", begin);

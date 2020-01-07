@@ -31,14 +31,14 @@ public class WxMpCommentServiceImplTest {
 
   @Test
   public void testOpen() throws WxErrorException {
-    this.wxService.getCommentService().open(1, null);
-    this.wxService.getCommentService().open(1, 0);
+    this.wxService.getCommentService().open("1", null);
+    this.wxService.getCommentService().open("1", 0);
   }
 
   @Test
   public void testClose() throws WxErrorException {
-    this.wxService.getCommentService().close(1000000001, null);
-    this.wxService.getCommentService().close(1, 0);
+    this.wxService.getCommentService().close("1000000001", null);
+    this.wxService.getCommentService().close("1", 0);
   }
 
   @Test
@@ -66,7 +66,7 @@ public class WxMpCommentServiceImplTest {
     WxMpCommentService commentService = new WxMpCommentServiceImpl(wxService);
     doReturn(expectedResponse).when(wxService).post(anyString(), anyString());
 
-    final WxMpCommentListVo commentListVo = commentService.list(1, 1, 1, 1, 1);
+    final WxMpCommentListVo commentListVo = commentService.list("1", 1, 1, 1, 1);
     assertThat(commentListVo).isNotNull();
     System.out.println(commentListVo);
     assertThat(commentListVo.getTotal()).isEqualTo(1);

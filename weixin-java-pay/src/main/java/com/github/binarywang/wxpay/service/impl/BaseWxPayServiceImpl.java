@@ -13,12 +13,12 @@ import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
-import com.github.binarywang.wxpay.constant.WxPayConstants.BillType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.EntPayService;
 import com.github.binarywang.wxpay.service.ProfitSharingService;
+import com.github.binarywang.wxpay.service.RedpackService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.google.common.base.Joiner;
@@ -61,6 +61,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   private EntPayService entPayService = new EntPayServiceImpl(this);
   private ProfitSharingService profitSharingService = new ProfitSharingServiceImpl(this);
+  private RedpackService redpackService = new RedpackServiceImpl(this);
+
   /**
    * The Config.
    */
@@ -74,6 +76,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public ProfitSharingService getProfitSharingService() {
     return profitSharingService;
+  }
+
+  @Override
+  public RedpackService getRedpackService() {
+    return this.redpackService;
   }
 
   @Override
@@ -182,51 +189,25 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   }
 
-    @Override
-    public WxPaySendMiniProgramRedpackResult sendMiniProgramRedpack(WxPaySendMiniProgramRedpackRequest request)
-      throws WxPayException {
-      request.checkAndSign(this.getConfig());
-      String url = this.getPayBaseUrl() + "/mmpaymkttransfers/sendminiprogramhb";
-      String responseContent = this.post(url, request.toXML(), true);
+  @Override
+  public WxPaySendMiniProgramRedpackResult sendMiniProgramRedpack(WxPaySendMiniProgramRedpackRequest request)
+    throws WxPayException {
+    return this.redpackService.sendMiniProgramRedpack(request);
+  }
 
-      WxPaySendMiniProgramRedpackResult result = BaseWxPayResult.fromXML(responseContent, WxPaySendMiniProgramRedpackResult.class);
-      result.checkResult(this, request.getSignType(), true);
-      return result;
-    }
-
-    @Override
+  @Override
   public WxPaySendRedpackResult sendRedpack(WxPaySendRedpackRequest request) throws WxPayException {
-    request.checkAndSign(this.getConfig());
-
-    String url = this.getPayBaseUrl() + "/mmpaymkttransfers/sendredpack";
-    if (request.getAmtType() != null) {
-      //裂变红包
-      url = this.getPayBaseUrl() + "/mmpaymkttransfers/sendgroupredpack";
-    }
-
-    String responseContent = this.post(url, request.toXML(), true);
-    final WxPaySendRedpackResult result = BaseWxPayResult.fromXML(responseContent, WxPaySendRedpackResult.class);
-    result.checkResult(this, request.getSignType(), true);
-    return result;
+    return this.redpackService.sendRedpack(request);
   }
 
   @Override
   public WxPayRedpackQueryResult queryRedpack(String mchBillNo) throws WxPayException {
-    WxPayRedpackQueryRequest request = new WxPayRedpackQueryRequest();
-    request.setMchBillNo(mchBillNo);
-    return this.queryRedpack(request);
+    return this.redpackService.queryRedpack(mchBillNo);
   }
 
   @Override
   public WxPayRedpackQueryResult queryRedpack(WxPayRedpackQueryRequest request) throws WxPayException {
-    request.setBillType(BillType.MCHT);
-    request.checkAndSign(this.getConfig());
-
-    String url = this.getPayBaseUrl() + "/mmpaymkttransfers/gethbinfo";
-    String responseContent = this.post(url, request.toXML(), true);
-    WxPayRedpackQueryResult result = BaseWxPayResult.fromXML(responseContent, WxPayRedpackQueryResult.class);
-    result.checkResult(this, request.getSignType(), true);
-    return result;
+    return this.redpackService.queryRedpack(request);
   }
 
   @Override

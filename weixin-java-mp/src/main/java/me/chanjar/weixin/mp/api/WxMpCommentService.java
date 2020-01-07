@@ -5,7 +5,7 @@ import me.chanjar.weixin.mp.bean.comment.WxMpCommentListVo;
 
 /**
  * 图文消息留言管理接口.
- * https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY
+ * https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * @date 2019-06-16
@@ -19,7 +19,7 @@ public interface WxMpCommentService {
    * @param index     多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
    * @throws WxErrorException 异常
    */
-  void open(Integer msgDataId, Integer index) throws WxErrorException;
+  void open(String msgDataId, Integer index) throws WxErrorException;
 
   /**
    * 关闭已群发文章评论.
@@ -29,7 +29,7 @@ public interface WxMpCommentService {
    * @param index     多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
    * @throws WxErrorException 异常
    */
-  void close(Integer msgDataId, Integer index) throws WxErrorException;
+  void close(String msgDataId, Integer index) throws WxErrorException;
 
   /**
    * 查看指定文章的评论数据.
@@ -43,5 +43,5 @@ public interface WxMpCommentService {
    * @return 评论列表数据
    * @throws WxErrorException 异常
    */
-  WxMpCommentListVo list(Integer msgDataId, Integer index, int begin, int count, int type) throws WxErrorException;
+  WxMpCommentListVo list(String msgDataId, Integer index, int begin, int count, int type) throws WxErrorException;
 }

@@ -205,7 +205,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("corpid", corpId);
     jsonObject.addProperty("provider_secret", providerSecret);
-    return WxCpProviderToken.fromJson(this.post(this.configStorage.getApiUrl(GET_PROVIDER_TOKEN), jsonObject.toString()));
+    return WxCpProviderToken.fromJson(this.post(this.configStorage.getApiUrl(Tp.GET_PROVIDER_TOKEN), jsonObject.toString()));
   }
 
   @Override

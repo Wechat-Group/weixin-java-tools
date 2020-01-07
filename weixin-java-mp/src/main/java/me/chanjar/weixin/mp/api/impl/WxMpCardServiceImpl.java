@@ -81,6 +81,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     signParams[optionalSignParam.length + 1] = nonceStr;
     signParams[optionalSignParam.length + 2] = cardApiTicket;
     StringBuilder sb = new StringBuilder();
+    Arrays.sort(signParams);
     for (String a : signParams) {
       sb.append(a);
     }
@@ -348,6 +349,16 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     param.addProperty("need_verify_cod", needVerifyCod);
     param.addProperty("need_remark_amount", needRemarkAmount);
     this.wxMpService.post(WxMpApiUrl.Card.CARD_SELF_CONSUME_CELL_SET, param.toString());
+  }
+
+
+  @Override
+  public WxUserCardListResult getUserCardList(String openId, String cardId) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("openid", openId);
+    param.addProperty("card_id", cardId);
+    String response = this.wxMpService.post(WxMpApiUrl.Card.CARD_USER_CARD_LIST, param.toString());
+    return WxUserCardListResult.fromJson(response);
   }
 
 

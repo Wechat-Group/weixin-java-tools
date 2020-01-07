@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaSubscribeService;
+import cn.binarywang.wx.miniapp.bean.template.WxMaPubTemplateTitleListResult;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -27,18 +28,20 @@ public class WxMaSubscribeServiceImplTest {
 
   @Test
   public void testGetPubTemplateTitleList() throws WxErrorException {
-    this.wxService.getSubscribeService().getPubTemplateTitleList(new Integer[]{578}, 1, 1);
+    WxMaPubTemplateTitleListResult result = this.wxService.getSubscribeService().getPubTemplateTitleList(new String[]{"2", "616"}, 0, 30);
+    System.out.println(result);
+
   }
 
   @Test
   public void testGetPubTemplateKeyWordsById() throws WxErrorException {
-    final List<WxMaSubscribeService.PubTemplateKeyword> result = this.wxService.getSubscribeService().getPubTemplateKeyWordsById("578");
+    final List<WxMaSubscribeService.PubTemplateKeyword> result = this.wxService.getSubscribeService().getPubTemplateKeyWordsById("99");
     System.out.println(result);
   }
 
   @Test
   public void testAddTemplate() throws WxErrorException {
-    final String templateId = this.wxService.getSubscribeService().addTemplate("1", Lists.newArrayList(1), "");
+    final String templateId = this.wxService.getSubscribeService().addTemplate("401", Lists.newArrayList(1, 2), "测试数据");
     System.out.println(templateId);
   }
 

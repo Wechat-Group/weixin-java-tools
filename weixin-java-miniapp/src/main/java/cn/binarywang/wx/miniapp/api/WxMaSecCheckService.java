@@ -33,6 +33,14 @@ public interface WxMaSecCheckService {
   boolean checkImage(File file) throws WxErrorException;
 
   /**
+   * 校验一张图片是否含有违法违规内容
+   * @param fileUrl 文件网络地址
+   * @return 是否违规
+   * @throws WxErrorException .
+   */
+  boolean checkImage(String fileUrl) throws WxErrorException;
+
+  /**
    * <pre>
    * 检查一段文本是否含有违法违规内容。
    * 应用场景举例：

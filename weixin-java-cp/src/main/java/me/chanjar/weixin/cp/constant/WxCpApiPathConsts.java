@@ -21,7 +21,6 @@ public final class WxCpApiPathConsts {
   public static final String BATCH_GET_RESULT = "/cgi-bin/batch/getresult?jobid=";
   public static final String JSCODE_TO_SESSION = "/cgi-bin/miniprogram/jscode2session";
   public static final String GET_TOKEN = "/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
-  public static final String GET_PROVIDER_TOKEN = "/cgi-bin/service/get_provider_token";
 
   public static class Agent {
     public static final String AGENT_GET = "/cgi-bin/agent/get?agentid=%d";
@@ -65,8 +64,11 @@ public final class WxCpApiPathConsts {
   public static class Oa {
     public static final String GET_CHECKIN_DATA = "/cgi-bin/checkin/getcheckindata";
     public static final String GET_CHECKIN_OPTION = "/cgi-bin/checkin/getcheckinoption";
-    public static final String GET_APPROVAL_DATA = "/cgi-bin/corp/getapprovaldata";
+    public static final String GET_APPROVAL_INFO = "/cgi-bin/oa/getapprovalinfo";
+    public static final String GET_APPROVAL_DETAIL = "/cgi-bin/oa/getapprovaldetail";
     public static final String GET_DIAL_RECORD = "/cgi-bin/dial/get_dial_record";
+    @Deprecated
+    public static final String GET_APPROVAL_DATA = "/cgi-bin/corp/getapprovaldata";
   }
 
   public static class Tag {
@@ -88,6 +90,7 @@ public final class WxCpApiPathConsts {
     public static final String GET_CORP_TOKEN = "/cgi-bin/service/get_corp_token";
     public static final String GET_PERMANENT_CODE = "/cgi-bin/service/get_permanent_code";
     public static final String GET_SUITE_TOKEN = "/cgi-bin/service/get_suite_token";
+    public static final String GET_PROVIDER_TOKEN = "/cgi-bin/service/get_provider_token";
   }
 
   public static class User {

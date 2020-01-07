@@ -283,4 +283,15 @@ public interface WxMpCardService {
   void cardSelfConsumeCellSet(String cardId, Boolean isOpen,
                               Boolean needVerifyCod, Boolean needRemarkAmount) throws WxErrorException;
 
+  /**
+   * 获取用户已领取卡券接口
+   * https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#1
+   *
+   * @param openId 需要查询的用户openid
+   * @param cardId 卡券ID。不填写时默认查询当前appid下的卡券
+   * @return
+   * @throws WxErrorException
+   */
+  WxUserCardListResult getUserCardList(String openId, String cardId) throws WxErrorException;
+
 }

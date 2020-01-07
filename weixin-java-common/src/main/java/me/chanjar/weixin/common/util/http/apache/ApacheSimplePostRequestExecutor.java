@@ -36,6 +36,7 @@ public class ApacheSimplePostRequestExecutor extends SimplePostRequestExecutor<C
 
     if (postEntity != null) {
       StringEntity entity = new StringEntity(postEntity, Consts.UTF_8);
+      entity.setContentType("application/json; charset=utf-8");
       httpPost.setEntity(entity);
     }
 

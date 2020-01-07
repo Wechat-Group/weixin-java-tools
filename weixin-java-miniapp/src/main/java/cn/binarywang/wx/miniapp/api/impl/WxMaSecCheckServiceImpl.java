@@ -4,11 +4,16 @@ import cn.binarywang.wx.miniapp.api.WxMaSecCheckService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaMediaAsyncCheckResult;
 import com.google.gson.JsonObject;
-import java.io.File;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * <pre>
@@ -20,15 +25,26 @@ import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
  */
 @AllArgsConstructor
 public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
-
   private WxMaService service;
 
   @Override
   public boolean checkImage(File file) throws WxErrorException {
-    //这里只是借用MediaUploadRequestExecutor，并不使用其返回值WxMediaUploadResult
     WxMediaUploadResult result = this.service.execute(MediaUploadRequestExecutor
       .create(this.service.getRequestHttp()), IMG_SEC_CHECK_URL, file);
     return result != null;
+  }
+
+  @Override
+  public boolean checkImage(String fileUrl) throws WxErrorException {
+    File file = new File(FileUtils.getTempDirectory(), System.currentTimeMillis() + ".tmp");
+    try {
+      URL url = new URL(fileUrl);
+      FileUtils.copyURLToFile(url, file);
+    } catch (IOException e) {
+      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("文件地址读取异常").build(), e);
+    }
+    
+    return this.checkImage(file);
   }
 
   @Override

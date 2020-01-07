@@ -25,12 +25,12 @@
 			</td>
 			<td align="right" valign="middle">
 				<a href="https://mp.weixin.qq.com/s/R30CNEpkELJg4SRkX0mTDA" target="_blank">
-					<img height="120" src="https://github.com/Wechat-Group/WxJava/blob/master/images/banners/planB.jpg?raw=true">
+					<img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/master/images/banners/planB.jpg">
 				</a>
 			</td>
 			<td align="center" valign="middle">
 				<a href="https://www.vultr.com/?ref=7888900-4F" target="_blank">
-					<img height="120" src="https://github.com/Wechat-Group/WxJava/blob/master/images/banners/vultr.jpg?raw=true">
+					<img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/master/images/banners/vultr.jpg">
 				</a>
 			</td>
 			<td align="center" valign="middle">
@@ -120,6 +120,7 @@
 - 360考试宝典
 - 民医台
 - 来一团商家版
+- 史必达（史丹利）
 
 #### 公众号：
 - 中国电信上海网厅（sh_189）
@@ -134,10 +135,12 @@
 - [洽洽食品](https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFM8TwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAycDRPOXBZbVZib2UxMDAwME0wN2gAAgRIu4RbAwQAAAAA)、[洽洽合伙人](https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQFP8jwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyOUpJaU5VcXBlWTAxMDAwME0wN1oAAgSau4RbAwQAAAAA)
 - 民医台
 - YshopMall
+- 好行景区直通车以及全国40多个公众号
 
 #### 企业号/企业微信：
 - 洽洽企业号
 - HTC企业微信
+- 掌上史丹利
 
 #### 其他：
 - 高善人力资源
