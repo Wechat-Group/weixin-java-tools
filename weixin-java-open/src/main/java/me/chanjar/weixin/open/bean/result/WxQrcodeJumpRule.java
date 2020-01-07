@@ -40,4 +40,8 @@ public class WxQrcodeJumpRule {
     //编辑标志位，0表示新增二维码规则，1表示修改已有二维码规则
     @SerializedName("is_edit")
     private String isEdit;
+
+    //发布标志位，1 表示未发布，2 表示已发布
+    @SerializedName("state")
+    private String state;
 }
