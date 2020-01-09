@@ -46,11 +46,11 @@ public class WxOpenStorageAutoConfiguration {
     WxOpenProperties.StorageType type = storage.getType();
 
     if (type == WxOpenProperties.StorageType.redis) {
-      return getWxOpenInJedisConfigStorage();
+      return getWxOpenInRedisConfigStorage();
     }
 
     if (type == WxOpenProperties.StorageType.jedis){
-      return getWxOpenInJedisConfigStorage();
+      return getWxOpenInRedisConfigStorage();
     }
 
     if (type == WxOpenProperties.StorageType.redisson){
@@ -65,7 +65,7 @@ public class WxOpenStorageAutoConfiguration {
     return config;
   }
 
-  private WxOpenInRedisConfigStorage getWxOpenInJedisConfigStorage() {
+  private WxOpenInRedisConfigStorage getWxOpenInRedisConfigStorage() {
     JedisPool poolToUse = jedisPool;
     if (jedisPool == null || StringUtils.isNotEmpty(redisHost)) {
       poolToUse = getJedisPool();
