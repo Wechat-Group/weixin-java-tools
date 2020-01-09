@@ -78,13 +78,6 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     this.componentExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
   }
 
-  //  public void setWxOpenInfo(WxOpenConfigStorage config) {
-//    config.setComponentAppId(properties.getAppId());
-//    config.setComponentAppSecret(properties.getSecret());
-//    config.setComponentToken(properties.getToken());
-//    config.setComponentAesKey(properties.getAesKey());
-//  }
-
   @Override
   public void setWxOpenInfo(String componentAppId, String componentAppSecret, String componentToken, String componentAesKey) {
     setComponentAppId(componentAppId);
