@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,9 @@ public class WxMpStorageAutoConfiguration {
 
   @Autowired(required = false)
   private JedisPool jedisPool;
+
+  @Autowired(required = false)
+  private RedissonClient redissonClient;
 
   @Bean
   @ConditionalOnMissingBean(WxMpConfigStorage.class)

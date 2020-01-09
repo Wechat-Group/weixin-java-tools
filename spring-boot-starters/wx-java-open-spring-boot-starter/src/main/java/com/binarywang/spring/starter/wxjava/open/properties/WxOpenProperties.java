@@ -63,6 +63,14 @@ public class WxOpenProperties {
     /**
      * redis.
      */
-    redis
+    redis,
+    /**
+     * jedis.
+     */
+    jedis,
+    /**
+     * redisson.
+     */
+    redisson
   }
 }

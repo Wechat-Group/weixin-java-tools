@@ -2,6 +2,7 @@ package me.chanjar.weixin.open.api.impl;
 
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import lombok.Data;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.mp.bean.WxMpHostConfig;
@@ -23,6 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author <a href="https://github.com/007gzs">007</a>
  */
+@Data
 public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private String componentAppId;
   private String componentAppSecret;
@@ -43,60 +45,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private Map<String, Token> jsapiTickets = new ConcurrentHashMap<>();
   private Map<String, Token> cardApiTickets = new ConcurrentHashMap<>();
 
-  @Override
-  public String getComponentAppId() {
-    return componentAppId;
-  }
 
-  @Override
-  public void setComponentAppId(String componentAppId) {
-    this.componentAppId = componentAppId;
-  }
-
-  @Override
-  public String getComponentAppSecret() {
-    return componentAppSecret;
-  }
-
-  @Override
-  public void setComponentAppSecret(String componentAppSecret) {
-    this.componentAppSecret = componentAppSecret;
-  }
-
-  @Override
-  public String getComponentToken() {
-    return componentToken;
-  }
-
-  @Override
-  public void setComponentToken(String componentToken) {
-    this.componentToken = componentToken;
-  }
-
-  @Override
-  public String getComponentAesKey() {
-    return componentAesKey;
-  }
-
-  @Override
-  public void setComponentAesKey(String componentAesKey) {
-    this.componentAesKey = componentAesKey;
-  }
-
-  @Override
-  public String getComponentVerifyTicket() {
-    return componentVerifyTicket;
-  }
-
-  @Override
-  public void setComponentVerifyTicket(String componentVerifyTicket) {
-    this.componentVerifyTicket = componentVerifyTicket;
-  }
-
-  @Override
-  public String getComponentAccessToken() {
-    return componentAccessToken;
-  }
 
   @Override
   public boolean isComponentAccessTokenExpired() {
@@ -114,51 +63,6 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   }
 
   @Override
-  public String getHttpProxyHost() {
-    return httpProxyHost;
-  }
-
-  public void setHttpProxyHost(String httpProxyHost) {
-    this.httpProxyHost = httpProxyHost;
-  }
-
-  @Override
-  public int getHttpProxyPort() {
-    return httpProxyPort;
-  }
-
-  public void setHttpProxyPort(int httpProxyPort) {
-    this.httpProxyPort = httpProxyPort;
-  }
-
-  @Override
-  public String getHttpProxyUsername() {
-    return httpProxyUsername;
-  }
-
-  public void setHttpProxyUsername(String httpProxyUsername) {
-    this.httpProxyUsername = httpProxyUsername;
-  }
-
-  @Override
-  public String getHttpProxyPassword() {
-    return httpProxyPassword;
-  }
-
-  public void setHttpProxyPassword(String httpProxyPassword) {
-    this.httpProxyPassword = httpProxyPassword;
-  }
-
-  @Override
-  public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
-    return apacheHttpClientBuilder;
-  }
-
-  public ApacheHttpClientBuilder setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
-    return this.apacheHttpClientBuilder = apacheHttpClientBuilder;
-  }
-
-  @Override
   public WxMpConfigStorage getWxMpConfigStorage(String appId) {
     return new WxOpenInnerConfigStorage(this, appId);
   }
@@ -172,6 +76,21 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   public void updateComponentAccessToken(String componentAccessToken, int expiresInSeconds) {
     this.componentAccessToken = componentAccessToken;
     this.componentExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
+  }
+
+  //  public void setWxOpenInfo(WxOpenConfigStorage config) {
+//    config.setComponentAppId(properties.getAppId());
+//    config.setComponentAppSecret(properties.getSecret());
+//    config.setComponentToken(properties.getToken());
+//    config.setComponentAesKey(properties.getAesKey());
+//  }
+
+  @Override
+  public void setWxOpenInfo(String componentAppId, String componentAppSecret, String componentToken, String componentAesKey) {
+    setComponentAppId(componentAppId);
+    setComponentAppSecret(componentAppSecret);
+    setComponentToken(componentToken);
+    setComponentAesKey(componentAesKey);
   }
 
   @Override
