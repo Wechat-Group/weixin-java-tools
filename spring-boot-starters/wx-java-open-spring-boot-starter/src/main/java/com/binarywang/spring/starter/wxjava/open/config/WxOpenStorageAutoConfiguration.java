@@ -116,10 +116,10 @@ public class WxOpenStorageAutoConfiguration {
     RedisProperties redis = storage.getRedis();
 
     Config config = new Config();
-    config.setTransportMode(TransportMode.EPOLL);
-    config.useClusterServers()
-      .addNodeAddress("redis://" + redis.getHost() + ":" + redis.getPort())
+    config.useSingleServer()
+      .setAddress("redis://" + redis.getHost() + ":" + redis.getPort())
       .setPassword(redis.getPassword());
+    config.setTransportMode(TransportMode.NIO);
     return Redisson.create(config);
   }
 }
