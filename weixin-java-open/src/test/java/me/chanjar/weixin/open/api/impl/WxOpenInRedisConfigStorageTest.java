@@ -4,6 +4,7 @@ import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import redis.clients.jedis.JedisPool;
@@ -12,12 +13,19 @@ public class WxOpenInRedisConfigStorageTest {
 
   private WxOpenConfigStorage wxOpenConfigStorage;
 
+  private JedisPool pool;
+
   @BeforeClass
   public void setWxOpenConfigStorage(){
-    JedisPool pool = new JedisPool("127.0.0.1", 6379);
+    pool = new JedisPool("127.0.0.1", 6379);
     this.wxOpenConfigStorage = new WxOpenInRedisConfigStorage(pool);
     this.wxOpenConfigStorage.setWxOpenInfo("ComponentAppId", "ComponentAppSecret", "ComponentToken","ComponentAesKey");
     this.wxOpenConfigStorage.setComponentVerifyTicket("ComponentVerifyTicket");
+  }
+
+  @AfterClass
+  public void clearResource(){
+    pool.close();
   }
 
   @Test
