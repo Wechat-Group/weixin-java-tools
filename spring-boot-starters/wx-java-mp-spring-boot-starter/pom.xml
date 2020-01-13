@@ -26,7 +26,7 @@
     </dependency>
     <dependency>
       <groupId>org.redisson</groupId>
-      <artifactId>redisson-spring-boot-starter</artifactId>
+      <artifactId>redisson</artifactId>
       <scope>compile</scope>
     </dependency>
   </dependencies>

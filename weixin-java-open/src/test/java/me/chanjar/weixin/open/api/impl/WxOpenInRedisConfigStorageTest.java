@@ -14,7 +14,6 @@ public class WxOpenInRedisConfigStorageTest {
 
   @BeforeClass
   public void setWxOpenConfigStorage(){
-
     JedisPool pool = new JedisPool("127.0.0.1", 6379);
     this.wxOpenConfigStorage = new WxOpenInRedisConfigStorage(pool);
     this.wxOpenConfigStorage.setWxOpenInfo("ComponentAppId", "ComponentAppSecret", "ComponentToken","ComponentAesKey");

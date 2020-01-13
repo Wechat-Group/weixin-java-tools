@@ -244,8 +244,8 @@
       </dependency>
       <dependency>
         <groupId>org.redisson</groupId>
-        <artifactId>redisson-spring-boot-starter</artifactId>
-        <version>3.11.5</version>
+        <artifactId>redisson</artifactId>
+        <version>3.12.0</version>
         <scope>provided</scope>
       </dependency>
       <dependency>

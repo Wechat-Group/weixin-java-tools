@@ -61,7 +61,6 @@ public class WxOpenInRedissonConfigStorageTest {
     String authorizerAccessToken = this.wxOpenConfigStorage.getAuthorizerRefreshToken(appid);
     Assert.assertEquals(authorizerAccessToken, "AuthorizerRefreshToken 1");
 
-
     this.wxOpenConfigStorage.setAuthorizerRefreshToken(appid, "AuthorizerRefreshToken 2");
     authorizerAccessToken = this.wxOpenConfigStorage.getAuthorizerRefreshToken(appid);
     Assert.assertEquals(authorizerAccessToken, "AuthorizerRefreshToken 2");
