@@ -53,6 +53,8 @@ public class WxOpenProperties {
 
     private RedisProperties redis = new RedisProperties();
 
+    private String keyPrefix;
+
   }
 
   public enum StorageType {
