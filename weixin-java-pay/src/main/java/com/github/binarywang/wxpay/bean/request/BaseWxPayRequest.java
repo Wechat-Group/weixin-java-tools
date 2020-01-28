@@ -271,24 +271,6 @@ public abstract class BaseWxPayRequest implements Serializable {
     }
   }
 
-  protected String toFastXml0() {
-    StringBuilder sb = new StringBuilder();
-    String xmlRootTagName = xmlRootTagName();
-    sb.append("<").append(xmlRootTagName).append(">");
-    Map<String, String> signParams = getSignParams();
-    signParams.put("sign", sign);
-    for (Map.Entry<String, String> entry : signParams.entrySet()) {
-      if (entry.getValue() == null) {
-        continue;
-      }
-      sb.append("<").append(entry.getKey()).append(">");
-      sb.append(entry.getValue());
-      sb.append("</").append(entry.getKey()).append(">");
-    }
-    sb.append("</").append(xmlRootTagName).append(">");
-    return sb.toString();
-  }
-
   /**
    * 返回xml结构的根节点名称
    *
