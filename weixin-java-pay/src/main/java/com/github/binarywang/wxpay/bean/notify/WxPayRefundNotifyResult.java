@@ -19,6 +19,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -79,6 +80,11 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
   private String reqInfoString;
 
   private ReqInfo reqInfo;
+
+  @Override
+  protected void loadXML(Document d) {
+    //@TODO
+  }
 
   /**
    * 加密信息字段解密后的内容.

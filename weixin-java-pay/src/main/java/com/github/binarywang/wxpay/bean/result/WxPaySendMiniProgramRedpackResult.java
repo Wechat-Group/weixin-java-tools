@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 import java.io.Serializable;
 
@@ -53,4 +54,13 @@ public class WxPaySendMiniProgramRedpackResult extends BaseWxPayResult implement
   @XStreamAlias("send_listid")
   private String sendListId;
 
+  @Override
+  protected void loadXML(Document d) {
+    mchBillNo = readXMLString(d, "mch_billno");
+    wxAppid = readXMLString(d, "wxappid");
+    reOpenid = readXMLString(d, "re_openid");
+    totalAmount = readXMLInteger(d, "total_amount");
+    packageName = readXMLString(d, "package");
+    sendListId = readXMLString(d, "send_listid");
+  }
 }

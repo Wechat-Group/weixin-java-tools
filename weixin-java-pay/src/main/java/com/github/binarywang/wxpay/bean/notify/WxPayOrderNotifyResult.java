@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import org.w3c.dom.Document;
 
 import java.util.List;
 import java.util.Map;
@@ -347,6 +348,34 @@ public class WxPayOrderNotifyResult extends BaseWxPayResult {
       }
     }
     return resultMap;
+  }
+
+  @Override
+  protected void loadXML(Document d) {
+    promotionDetail = readXMLString(d, "promotion_detail");
+    deviceInfo = readXMLString(d, "device_info");
+    openid = readXMLString(d, "openid");
+    isSubscribe = readXMLString(d, "is_subscribe");
+    subOpenid = readXMLString(d, "sub_openid");
+    subIsSubscribe = readXMLString(d, "sub_is_subscribe");
+    tradeType = readXMLString(d, "trade_type");
+    bankType = readXMLString(d, "bank_type");
+    totalFee = readXMLInteger(d, "total_fee");
+    settlementTotalFee = readXMLInteger(d, "settlement_total_fee");
+    feeType = readXMLString(d, "fee_type");
+    cashFee = readXMLInteger(d, "cash_fee");
+    cashFeeType = readXMLString(d, "cash_fee_type");
+    couponFee = readXMLInteger(d, "coupon_fee");
+    couponCount = readXMLInteger(d, "coupon_count");
+    transactionId = readXMLString(d, "transaction_id");
+    outTradeNo = readXMLString(d, "out_trade_no");
+    attach = readXMLString(d, "attach");
+    timeEnd = readXMLString(d, "time_end");
+    version = readXMLString(d, "version");
+    rateValue = readXMLString(d, "rate_value");
+    signType = readXMLString(d, "sign_type");
+
+    //@TODO set couponList
   }
 
   @Override

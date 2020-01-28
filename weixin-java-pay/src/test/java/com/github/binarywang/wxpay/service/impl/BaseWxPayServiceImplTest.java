@@ -17,6 +17,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
 import com.github.binarywang.wxpay.testbase.XmlWxPayConfig;
+import com.github.binarywang.wxpay.util.XmlConfig;
 import com.google.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -566,8 +567,18 @@ public class BaseWxPayServiceImplTest {
       "   <coupon_fee_1>200</coupon_fee_1>\n" +
       "</xml>";
 
-    WxPayOrderNotifyResult result = this.payService.parseOrderNotifyResult(xmlString);
+    XmlConfig.fastMode = true;
+    WxPayOrderNotifyResult result;
+    try {
+      result = BaseWxPayResult.fromXML(xmlString, WxPayOrderNotifyResult.class);
+      System.out.println(result);
+    } finally {
+      XmlConfig.fastMode = false;
+    }
+
+    result = this.payService.parseOrderNotifyResult(xmlString);
     System.out.println(result);
+
   }
 
   /**

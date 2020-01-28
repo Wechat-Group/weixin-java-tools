@@ -5,11 +5,13 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 import java.io.Serializable;
 
 /**
  * 企业微信红包返回
+ *
  * @author wuyong
  * @date 2019-12-01 11:31
  */
@@ -77,4 +79,15 @@ public class EntPayRedpackResult extends BaseWxPayResult implements Serializable
   @XStreamAlias("sender_header_media_id")
   private String senderHeaderMediaId;
 
+  @Override
+  protected void loadXML(Document d) {
+    mchBillNo = readXMLString(d, "mch_billno");
+    mchId = readXMLString(d, "mch_id");
+    wxAppId = readXMLString(d, "wxappid");
+    reOpenid = readXMLString(d, "re_openid");
+    totalAmount = readXMLString(d, "totalAmount");
+    sendListId = readXMLString(d, "sendListid");
+    senderName = readXMLString(d, "sender_name");
+    senderHeaderMediaId = readXMLString(d, "sender_header_media_id");
+  }
 }

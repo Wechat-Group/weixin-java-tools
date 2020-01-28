@@ -157,8 +157,7 @@ public abstract class BaseWxPayResult implements Serializable {
    *
    * @param d Document
    */
-  protected void loadXML(Document d) {
-  }
+  protected abstract void loadXML(Document d);
 
   /**
    * 从XML文档中加载基础属性

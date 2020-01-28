@@ -6,6 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * @author Wang GuangXin 2019/10/22 14:54
@@ -22,4 +23,9 @@ public class ProfitSharingReceiverResult extends BaseWxPayResult {
    */
   @XStreamAlias("receiver")
   private String receiver;
+
+  @Override
+  protected void loadXML(Document d) {
+    receiver = readXMLString(d, "receiver");
+  }
 }
