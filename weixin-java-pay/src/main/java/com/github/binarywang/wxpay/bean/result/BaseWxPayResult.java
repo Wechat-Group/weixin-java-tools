@@ -110,8 +110,9 @@ public abstract class BaseWxPayResult implements Serializable {
 
   /**
    * xml的Document对象，用于解析xml文本.
+   * make xmlDoc transient to ensure toString() can work.
    */
-  private Document xmlDoc;
+  private transient Document xmlDoc;
 
   /**
    * 将单位分转换成单位圆.
