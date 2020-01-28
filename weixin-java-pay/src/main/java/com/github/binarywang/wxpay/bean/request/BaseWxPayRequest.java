@@ -1,18 +1,9 @@
 package com.github.binarywang.wxpay.bean.request;
 
-import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.github.binarywang.wxpay.util.XmlConfig;
-import lombok.experimental.Accessors;
-import org.apache.commons.lang3.StringUtils;
-
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.util.SignUtils;
+import com.github.binarywang.wxpay.util.XmlConfig;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
@@ -22,20 +13,14 @@ import me.chanjar.weixin.common.util.BeanUtils;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import org.apache.commons.lang3.StringUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.github.binarywang.wxpay.constant.WxPayConstants.SignType.ALL_SIGN_TYPES;
 
@@ -240,33 +225,21 @@ public abstract class BaseWxPayRequest implements Serializable {
    * @return
    */
   private String toFastXml() {
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     try {
-      DocumentBuilder builder = factory.newDocumentBuilder();
-      Document document = builder.newDocument();
-      document.setXmlStandalone(true);
-
-      Element root = document.createElement(xmlRootTagName());
-      document.appendChild(root);
+      Document document = DocumentHelper.createDocument();
+      Element root = document.addElement(xmlRootTagName());
 
       Map<String, String> signParams = getSignParams();
-      signParams.put("sign",sign);
+      signParams.put("sign", sign);
       for (Map.Entry<String, String> entry : signParams.entrySet()) {
         if (entry.getValue() == null) {
           continue;
         }
-        Element elm = document.createElement(entry.getKey());
-        elm.setTextContent(entry.getValue());
-        root.appendChild(elm);
+        Element elm = root.addElement(entry.getKey());
+        elm.addText(entry.getValue());
       }
 
-      TransformerFactory transFactory = TransformerFactory.newInstance();
-      Transformer transformer = transFactory.newTransformer();
-      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-      DOMSource domSource = new DOMSource(document);
-      ByteArrayOutputStream bos = new ByteArrayOutputStream();
-      transformer.transform(domSource, new StreamResult(bos));
-      return bos.toString();
+      return document.asXML();
     } catch (Exception e) {
       throw new RuntimeException("generate xml error", e);
     }
