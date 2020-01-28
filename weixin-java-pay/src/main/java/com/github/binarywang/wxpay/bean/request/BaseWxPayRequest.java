@@ -250,6 +250,7 @@ public abstract class BaseWxPayRequest implements Serializable {
       document.appendChild(root);
 
       Map<String, String> signParams = getSignParams();
+      signParams.put("sign",sign);
       for (Map.Entry<String, String> entry : signParams.entrySet()) {
         if (entry.getValue() == null) {
           continue;
