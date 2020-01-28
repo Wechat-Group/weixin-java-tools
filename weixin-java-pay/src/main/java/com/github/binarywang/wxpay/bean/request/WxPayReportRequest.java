@@ -4,6 +4,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * <pre>
  * 微信支付-交易保障请求参数
@@ -173,5 +175,20 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   @Override
   protected void checkConstraints() {
     //do nothing
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("device_info", deviceInfo);
+    map.put("interface_url", interfaceUrl);
+    map.put("execute_time_", executeTime.toString());
+    map.put("return_code", returnCode);
+    map.put("return_msg", returnMsg);
+    map.put("result_code", resultCode);
+    map.put("err_code", errCode);
+    map.put("err_code_des", errCodeDes);
+    map.put("out_trade_no", outTradeNo);
+    map.put("user_ip", userIp);
+    map.put("time", time);
   }
 }

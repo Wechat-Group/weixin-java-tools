@@ -117,7 +117,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     }
 
     String responseContent = this.post(url, request.toXML(), true);
-    WxPayRefundResult result = WxPayRefundResult.fromXML(responseContent);
+    WxPayRefundResult result = BaseWxPayResult.fromXML(responseContent, WxPayRefundResult.class);
+    result.composeRefundCoupons();
     result.checkResult(this, request.getSignType(), true);
     return result;
   }

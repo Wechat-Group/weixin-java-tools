@@ -10,6 +10,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * <pre>
@@ -165,7 +166,7 @@ public class WxPayRefundRequest extends BaseWxPayRequest {
    * 类型：String(256)
    * 示例值：https://weixin.qq.com/notify/
    * 描述：	异步接收微信支付退款结果通知的回调地址，通知URL必须为外网可访问的url，不允许带参数
-   如果参数中传了notify_url，则商户平台上配置的回调地址将不会生效。
+   * 如果参数中传了notify_url，则商户平台上配置的回调地址将不会生效。
    * </pre>
    */
   @XStreamAlias("notify_url")
@@ -192,6 +193,21 @@ public class WxPayRefundRequest extends BaseWxPayRequest {
     if (StringUtils.isBlank(this.getOutTradeNo()) && StringUtils.isBlank(this.getTransactionId())) {
       throw new WxPayException("transaction_id 和 out_trade_no 不能同时为空，必须提供一个");
     }
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("device_info", deviceInfo);
+    map.put("transaction_id", transactionId);
+    map.put("out_trade_no", outTradeNo);
+    map.put("out_refund_no", outRefundNo);
+    map.put("total_fee", totalFee.toString());
+    map.put("refund_fee", refundFee.toString());
+    map.put("refund_fee_type", refundFeeType);
+    map.put("op_user_id", opUserId);
+    map.put("refund_account", refundAccount);
+    map.put("refund_desc", refundDesc);
+    map.put("notify_url", notifyUrl);
   }
 
 }

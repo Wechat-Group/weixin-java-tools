@@ -5,6 +5,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 /**
  * <pre>
  * 撤销订单请求类
@@ -51,6 +53,12 @@ public class WxPayOrderReverseRequest extends BaseWxPayRequest {
     if (StringUtils.isBlank(transactionId) && StringUtils.isBlank(outTradeNo)) {
       throw new WxPayException("transaction_id 和 out_trade_no不能同时为空！");
     }
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("transaction_id", transactionId);
+    map.put("out_trade_no", outTradeNo);
   }
 
 }

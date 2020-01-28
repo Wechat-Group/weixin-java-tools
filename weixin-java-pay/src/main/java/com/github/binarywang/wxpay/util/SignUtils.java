@@ -65,7 +65,18 @@ public class SignUtils {
    * @return 签名字符串 string
    */
   public static String createSign(Object xmlBean, String signType, String signKey, String[] ignoredParams) {
-    return createSign(xmlBean2Map(xmlBean), signType, signKey, ignoredParams);
+    Map<String, String> map = null;
+
+    if (XmlConfig.fastMode) {
+      if (xmlBean instanceof BaseWxPayRequest) {
+        map = ((BaseWxPayRequest) xmlBean).getSignParams();
+      }
+    }
+    if (map == null) {
+      map = xmlBean2Map(xmlBean);
+    }
+
+    return createSign(map, signType, signKey, ignoredParams);
   }
 
   /**
@@ -91,7 +102,7 @@ public class SignUtils {
 
       if (shouldSign) {
         toSign.append(key).append("=").append(value).append("&");
-    }
+      }
     }
 
     toSign.append("key=").append(signKey);
@@ -104,25 +115,26 @@ public class SignUtils {
 
   /**
    * 企业微信签名
+   *
    * @param signType md5 目前接口要求使用的加密类型
    */
-  public static String createEntSign(String actName,String mchBillNo,String mchId,String nonceStr,
-                                     String reOpenid,Integer totalAmount,String wxAppId,String signKey,
-                                     String signType){
+  public static String createEntSign(String actName, String mchBillNo, String mchId, String nonceStr,
+                                     String reOpenid, Integer totalAmount, String wxAppId, String signKey,
+                                     String signType) {
     Map<String, String> sortedMap = new HashMap<>();
-    sortedMap.put("act_name",actName);
-    sortedMap.put("mch_billno",mchBillNo);
-    sortedMap.put("mch_id",mchId);
-    sortedMap.put("nonce_str",nonceStr);
-    sortedMap.put("re_openid",reOpenid);
+    sortedMap.put("act_name", actName);
+    sortedMap.put("mch_billno", mchBillNo);
+    sortedMap.put("mch_id", mchId);
+    sortedMap.put("nonce_str", nonceStr);
+    sortedMap.put("re_openid", reOpenid);
     sortedMap.put("total_amount", totalAmount + "");
-    sortedMap.put("wxappid",wxAppId);
+    sortedMap.put("wxappid", wxAppId);
 
     Map<String, String> sortParams = new TreeMap<>(sortedMap);
     Set<Map.Entry<String, String>> entries = sortParams.entrySet();
     Iterator<Map.Entry<String, String>> iterator = entries.iterator();
     StringBuilder toSign = new StringBuilder();
-    while(iterator.hasNext()){
+    while (iterator.hasNext()) {
       Map.Entry entry = iterator.next();
       String key = String.valueOf(entry.getKey());
       String value = String.valueOf(entry.getValue());

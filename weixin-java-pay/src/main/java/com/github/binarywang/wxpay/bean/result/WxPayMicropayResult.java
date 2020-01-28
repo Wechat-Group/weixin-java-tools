@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -214,5 +215,29 @@ public class WxPayMicropayResult extends BaseWxPayResult {
    **/
   @XStreamAlias("promotion_detail")
   private String promotionDetail;
+
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXML(Document d) {
+    openid = readXMLString(d, "openid");
+    isSubscribe = readXMLString(d, "is_subscribe");
+    tradeType = readXMLString(d, "trade_type");
+    bankType = readXMLString(d, "bank_type");
+    feeType = readXMLString(d, "fee_type");
+    totalFee = readXMLInteger(d, "total_fee");
+    settlementTotalFee = readXMLInteger(d, "settlement_total_fee");
+    couponFee = readXMLInteger(d, "coupon_fee");
+    cashFeeType = readXMLString(d, "cash_fee_type");
+    cashFee = readXMLInteger(d, "cash_fee");
+    transactionId = readXMLString(d, "transaction_id");
+    outTradeNo = readXMLString(d, "out_trade_no");
+    attach = readXMLString(d, "attach");
+    timeEnd = readXMLString(d, "time_end");
+    promotionDetail = readXMLString(d, "promotion_detail");
+  }
 
 }

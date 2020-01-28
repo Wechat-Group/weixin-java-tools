@@ -3,6 +3,8 @@ package com.github.binarywang.wxpay.bean.request;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 
+import java.util.Map;
+
 /**
  * <pre>
  *   注释中各行对应含义：
@@ -27,8 +29,9 @@ public class WxPayRedpackQueryRequest extends BaseWxPayRequest {
 
   @Override
   protected String[] getIgnoredParamsForSign() {
-    return new String[]{"sub_appid","sub_mch_id","sign_type"};
+    return new String[]{"sub_appid", "sub_mch_id", "sign_type"};
   }
+
   /**
    * 商户订单号
    * mch_billno
@@ -54,5 +57,11 @@ public class WxPayRedpackQueryRequest extends BaseWxPayRequest {
   @Override
   protected void checkConstraints() {
 
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("mch_billno", mchBillNo);
+    map.put("bill_type", billType);
   }
 }

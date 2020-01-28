@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -30,5 +31,15 @@ public class WxPaySandboxSignKeyResult extends BaseWxPayResult {
    */
   @XStreamAlias("sandbox_signkey")
   private String sandboxSignKey;
+
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXML(Document d) {
+    sandboxSignKey = readXMLString(d, "sandbox_signkey");
+  }
 
 }

@@ -1,5 +1,15 @@
 package com.github.binarywang.wxpay.bean.request;
 
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.github.binarywang.wxpay.util.XmlConfig;
+import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
+
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.util.SignUtils;
@@ -15,6 +25,17 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import static com.github.binarywang.wxpay.constant.WxPayConstants.SignType.ALL_SIGN_TYPES;
 
@@ -202,12 +223,79 @@ public abstract class BaseWxPayRequest implements Serializable {
    * @return the string
    */
   public String toXML() {
-    XStream xstream = XStreamInitializer.getInstance();
     //涉及到服务商模式的两个参数，在为空值时置为null，以免在请求时将空值传给微信服务器
     this.setSubAppId(StringUtils.trimToNull(this.getSubAppId()));
     this.setSubMchId(StringUtils.trimToNull(this.getSubMchId()));
+    if (XmlConfig.fastMode) {
+      return toFastXml();
+    }
+    XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(this.getClass());
     return xstream.toXML(this);
+  }
+
+  /**
+   * 使用快速算法组装xml
+   *
+   * @return
+   */
+  private String toFastXml() {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    try {
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      Document document = builder.newDocument();
+      document.setXmlStandalone(true);
+
+      Element root = document.createElement(xmlRootTagName());
+      document.appendChild(root);
+
+      Map<String, String> signParams = getSignParams();
+      for (Map.Entry<String, String> entry : signParams.entrySet()) {
+        if (entry.getValue() == null) {
+          continue;
+        }
+        Element elm = document.createElement(entry.getKey());
+        elm.setTextContent(entry.getValue());
+        root.appendChild(elm);
+      }
+
+      TransformerFactory transFactory = TransformerFactory.newInstance();
+      Transformer transformer = transFactory.newTransformer();
+      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+      DOMSource domSource = new DOMSource(document);
+      ByteArrayOutputStream bos = new ByteArrayOutputStream();
+      transformer.transform(domSource, new StreamResult(bos));
+      return bos.toString();
+    } catch (Exception e) {
+      throw new RuntimeException("generate xml error", e);
+    }
+  }
+
+  protected String toFastXml0() {
+    StringBuilder sb = new StringBuilder();
+    String xmlRootTagName = xmlRootTagName();
+    sb.append("<").append(xmlRootTagName).append(">");
+    Map<String, String> signParams = getSignParams();
+    signParams.put("sign", sign);
+    for (Map.Entry<String, String> entry : signParams.entrySet()) {
+      if (entry.getValue() == null) {
+        continue;
+      }
+      sb.append("<").append(entry.getKey()).append(">");
+      sb.append(entry.getValue());
+      sb.append("</").append(entry.getKey()).append(">");
+    }
+    sb.append("</").append(xmlRootTagName).append(">");
+    return sb.toString();
+  }
+
+  /**
+   * 返回xml结构的根节点名称
+   *
+   * @return 默认返回"xml", 特殊情况可以在子类中覆盖
+   */
+  protected String xmlRootTagName() {
+    return "xml";
   }
 
   /**
@@ -228,14 +316,14 @@ public abstract class BaseWxPayRequest implements Serializable {
     return false;
   }
 
-  protected boolean ignoreSubMchId(){
+  protected boolean ignoreSubMchId() {
     return false;
   }
 
   /**
    * 是否是企业微信字段
    */
-  protected boolean isWxWorkSign(){
+  protected boolean isWxWorkSign() {
     return false;
   }
 
@@ -247,6 +335,32 @@ public abstract class BaseWxPayRequest implements Serializable {
   protected String[] getIgnoredParamsForSign() {
     return new String[0];
   }
+
+  /**
+   * 获取签名时需要的参数.
+   * 注意：不含sign属性
+   */
+  public Map<String, String> getSignParams() {
+    Map<String, String> map = new HashMap<>();
+    map.put("appid", appid);
+    map.put("mch_id", mchId);
+    map.put("sub_appid", subAppId);
+    map.put("sub_mch_id", subMchId);
+    map.put("nonce_str", nonceStr);
+    map.put("sign_type", signType);
+
+    storeMap(map);
+    return map;
+  }
+
+  /**
+   * 将属性组装到一个Map中，供签名和最终发送XML时使用.
+   * 这里需要将所有的属性全部保存进来，签名的时候会自动调用getIgnoredParamsForSign进行忽略，
+   * 不用担心。否则最终生成的XML会缺失。
+   *
+   * @param map 传入的属性Map
+   */
+  abstract protected void storeMap(Map<String, String> map);
 
   /**
    * <pre>

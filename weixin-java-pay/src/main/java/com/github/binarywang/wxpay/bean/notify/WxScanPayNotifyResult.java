@@ -5,6 +5,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -44,5 +45,12 @@ public class WxScanPayNotifyResult extends BaseWxPayResult {
    */
   @XStreamAlias("product_id")
   private String productId;
+
+  @Override
+  protected void loadXML(Document d) {
+    openid = readXMLString(d, "openid");
+    isSubscribe = readXMLString(d, "is_subscribe");
+    productId = readXMLString(d, "product_id");
+  }
 
 }

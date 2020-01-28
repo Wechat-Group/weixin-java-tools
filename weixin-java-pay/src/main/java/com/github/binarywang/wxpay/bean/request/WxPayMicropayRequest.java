@@ -4,6 +4,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * <pre>
  *  提交付款码支付请求对象类
@@ -253,6 +255,24 @@ public class WxPayMicropayRequest extends BaseWxPayRequest {
   @Override
   protected void checkConstraints() {
     //do nothing
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("version", version);
+    map.put("body", body);
+    map.put("detail", detail);
+    map.put("attach", attach);
+    map.put("out_trade_no", outTradeNo);
+    map.put("total_fee", totalFee.toString());
+    map.put("fee_type", feeType);
+    map.put("spbill_create_ip", spbillCreateIp);
+    map.put("goods_tag", goodsTag);
+    map.put("limit_pay", limitPay);
+    map.put("time_start", timeStart);
+    map.put("time_expire", timeExpire);
+    map.put("auth_code", authCode);
+    map.put("scene_info", sceneInfo);
   }
 
 }

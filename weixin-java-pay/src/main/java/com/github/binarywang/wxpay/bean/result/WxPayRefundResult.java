@@ -8,6 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -119,7 +120,7 @@ public class WxPayRefundResult extends BaseWxPayResult implements Serializable {
   /**
    * 组装生成退款代金券信息.
    */
-  private void composeRefundCoupons() {
+  public void composeRefundCoupons() {
     List<WxPayRefundCouponInfo> coupons = Lists.newArrayList();
     Integer refundCount = this.getCouponRefundCount();
     if (refundCount == null) {
@@ -140,9 +141,27 @@ public class WxPayRefundResult extends BaseWxPayResult implements Serializable {
     this.setRefundCoupons(coupons);
   }
 
-  public static WxPayRefundResult fromXML(String xml) {
-    WxPayRefundResult result = BaseWxPayResult.fromXML(xml, WxPayRefundResult.class);
-    result.composeRefundCoupons();
-    return result;
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXML(Document d) {
+    transactionId = readXMLString(d, "transaction_id");
+    outTradeNo = readXMLString(d, "out_trade_no");
+    outRefundNo = readXMLString(d, "out_refund_no");
+    refundId = readXMLString(d, "refund_id");
+    refundFee = readXMLInteger(d, "refund_fee");
+    settlementRefundFee = readXMLInteger(d, "settlement_refund_fee");
+    totalFee = readXMLInteger(d, "total_fee");
+    settlementTotalFee = readXMLInteger(d, "settlement_total_fee");
+    feeType = readXMLString(d, "fee_type");
+    cashFee = readXMLInteger(d, "cash_fee");
+    cashFeeType = readXMLString(d, "cash_fee_type");
+    cashRefundFee = readXMLInteger(d, "cash_refund_fee");
+    couponRefundCount = readXMLInteger(d, "coupon_refund_count");
+    couponRefundFee = readXMLInteger(d, "coupon_refund_fee");
   }
+
 }

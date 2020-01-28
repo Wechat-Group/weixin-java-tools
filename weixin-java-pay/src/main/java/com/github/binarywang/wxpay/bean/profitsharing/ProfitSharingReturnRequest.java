@@ -8,6 +8,8 @@ import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 /**
  * @author Wang GuangXin 2019/10/23 14:27
  * @version 1.0
@@ -129,5 +131,16 @@ public class ProfitSharingReturnRequest extends BaseWxPayRequest {
       throw new WxPayException("order_id 和 outOrderNo 必须有一个存在");
     }
     this.setSignType(WxPayConstants.SignType.HMAC_SHA256);
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("order_id", orderId);
+    map.put("out_order_no", outOrderNo);
+    map.put("out_return_no", outReturnNo);
+    map.put("return_account_type", returnAccountType);
+    map.put("return_account", returnAccount);
+    map.put("return_amount", returnAmount.toString());
+    map.put("description", description);
   }
 }

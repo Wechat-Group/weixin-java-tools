@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -12,4 +13,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  */
 @XStreamAlias("xml")
 public class WxPayCommonResult extends BaseWxPayResult {
+  @Override
+  protected void loadXML(Document d) {
+  }
 }

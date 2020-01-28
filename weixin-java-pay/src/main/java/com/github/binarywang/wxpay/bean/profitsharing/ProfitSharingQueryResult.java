@@ -8,6 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * @author Wang GuangXin 2019/10/22 15:51
@@ -65,6 +66,18 @@ public class ProfitSharingQueryResult extends BaseWxPayResult {
     gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
     Gson gson = gsonBuilder.create();
     return gson.fromJson(receivers, Receivers.class);
+  }
+
+  @Override
+  protected void loadXML(Document d) {
+    transactionId = readXMLString(d, "transaction_id");
+    outOrderNo = readXMLString(d, "out_order_no");
+    orderId = readXMLString(d, "orderId");
+    status = readXMLString(d, "status");
+    closeReason = readXMLString(d, "close_reason");
+    receivers = readXMLString(d, "receivers");
+    amount = readXMLInteger(d, "amount");
+    description = readXMLString(d, "description");
   }
 
   @Data

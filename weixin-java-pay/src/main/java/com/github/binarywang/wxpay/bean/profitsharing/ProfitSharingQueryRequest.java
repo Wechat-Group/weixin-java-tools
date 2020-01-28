@@ -7,6 +7,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * @author Wang GuangXin 2019/10/22 15:44
  * @version 1.0
@@ -55,5 +57,11 @@ public class ProfitSharingQueryRequest extends BaseWxPayRequest {
   @Override
   public boolean ignoreAppid() {
     return true;
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("transaction_id", transactionId);
+    map.put("out_order_no", outOrderNo);
   }
 }

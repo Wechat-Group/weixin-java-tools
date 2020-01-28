@@ -4,6 +4,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * <pre>
  *  获取微信刷脸调用凭证请求对象类
@@ -121,6 +123,17 @@ public class WxPayFaceAuthInfoRequest extends BaseWxPayRequest {
   @Override
   protected void checkConstraints() {
     //do nothing
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("store_id", storeId);
+    map.put("store_name", storeName);
+    map.put("device_id", deviceId);
+    map.put("attach", attach);
+    map.put("rawdata", rawdata);
+    map.put("now", now);
+    map.put("version", version);
   }
 
 }

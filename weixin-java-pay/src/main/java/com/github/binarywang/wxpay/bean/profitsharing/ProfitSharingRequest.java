@@ -7,6 +7,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * @author Wang GuangXin 2019/10/21 17:57
  * @version 1.0
@@ -80,5 +82,12 @@ public class ProfitSharingRequest extends BaseWxPayRequest {
   protected void checkConstraints() throws WxPayException {
     // 目前仅支持HMAC-SHA256.
     this.setSignType(WxPayConstants.SignType.HMAC_SHA256);
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("transaction_id", transactionId);
+    map.put("out_order_no", outOrderNo);
+    map.put("receivers", receivers);
   }
 }

@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -31,5 +32,15 @@ public class WxPayOrderReverseResult extends BaseWxPayResult {
    **/
   @XStreamAlias("recall")
   private String isRecall;
+
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXML(Document d) {
+    isRecall = readXMLString(d, "recall");
+  }
 
 }

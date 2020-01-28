@@ -3,6 +3,8 @@ package com.github.binarywang.wxpay.bean.request;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 
+import java.util.Map;
+
 /**
  * <pre>
  * 授权码查询openid接口请求对象类
@@ -35,4 +37,10 @@ public class WxPayAuthcode2OpenidRequest extends BaseWxPayRequest {
   protected void checkConstraints() {
     // nothing to do
   }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("auth_code", authCode);
+  }
+
 }

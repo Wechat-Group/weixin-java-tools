@@ -9,6 +9,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * <pre>
@@ -95,4 +96,13 @@ public class WxPayDownloadBillRequest extends BaseWxPayRequest {
         Arrays.toString(BILL_TYPES), this.getBillType()));
     }
   }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("device_info", deviceInfo);
+    map.put("bill_type", billType);
+    map.put("bill_date", billDate);
+    map.put("tar_type", tarType);
+  }
+
 }

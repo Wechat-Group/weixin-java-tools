@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -32,7 +33,7 @@ import lombok.NoArgsConstructor;
 @XStreamAlias("xml")
 public class WxPayOrderQueryResult extends BaseWxPayResult {
   private static final long serialVersionUID = 8241891654782412789L;
-  
+
   /**
    * <pre>
    * 字段名：营销详情.
@@ -291,6 +292,29 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
   }
 
   /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXML(Document d) {
+    promotionDetail = readXMLString(d, "promotion_detail");
+    deviceInfo = readXMLString(d, "device_info");
+    openid = readXMLString(d, "openid");
+    isSubscribe = readXMLString(d, "is_subscribe");
+    tradeType = readXMLString(d, "trade_type");
+    tradeState = readXMLString(d, "trade_state");
+    bankType = readXMLString(d, "bank_type");
+    totalFee = readXMLInteger(d, "total_fee");
+    settlementTotalFee = readXMLInteger(d, "settlement_total_fee");
+    feeType = readXMLString(d, "fee_type");
+    cashFee = readXMLInteger(d, "cash_fee");
+    cashFeeType = readXMLString(d, "cash_fee_type");
+    couponFee = readXMLInteger(d, "coupon_fee");
+    couponCount = readXMLInteger(d, "coupon_count");
+  }
+
+  /**
    * The type Coupon.
    */
   @Data
@@ -338,4 +362,5 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
     private Integer couponFee;
 
   }
+
 }

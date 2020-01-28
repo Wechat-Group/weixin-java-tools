@@ -6,8 +6,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * 发送企业红包
+ *
  * @author wuyong
  * @date 2019-12-1
  */
@@ -143,5 +146,20 @@ public class EntPayRedpackRequest extends BaseWxPayRequest {
   @Override
   protected boolean isWxWorkSign() {
     return true;
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("mch_billno", mchBillNo);
+    map.put("wxappid", wxAppId);
+    map.put("sender_name", senderName);
+    map.put("agentid", agentId);
+    map.put("sender_header_media_id", senderHeaderMediaId);
+    map.put("re_openid", reOpenid);
+    map.put("total_amount", totalAmount.toString());
+    map.put("wishing", wishing);
+    map.put("act_name", actName);
+    map.put("remark", remark);
+    map.put("scene_id", sceneId);
   }
 }

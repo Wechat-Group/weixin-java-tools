@@ -3,6 +3,8 @@ package com.github.binarywang.wxpay.bean.request;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 
+import java.util.Map;
+
 /**
  * <pre>
  * 转换短链接请求对象类
@@ -34,5 +36,10 @@ public class WxPayShorturlRequest extends BaseWxPayRequest {
   @Override
   protected void checkConstraints() {
     //do nothing
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("long_url", longUrl);
   }
 }

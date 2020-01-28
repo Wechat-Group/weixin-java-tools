@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.annotation.Required;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
+import java.util.Map;
+
 /**
  * <pre>
  * 企业付款请求对象.
@@ -194,5 +196,19 @@ public class EntPayRequest extends BaseWxPayRequest {
   @Override
   protected String[] getIgnoredParamsForSign() {
     return new String[]{"sign_type"};
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("mch_appid", mchAppid);
+    map.put("mchid", mchId);
+    map.put("device_info", deviceInfo);
+    map.put("partner_trade_no", partnerTradeNo);
+    map.put("openid", openid);
+    map.put("check_name", checkName);
+    map.put("re_user_name", reUserName);
+    map.put("amount", amount.toString());
+    map.put("desc", description);
+    map.put("spbill_create_ip", spbillCreateIp);
   }
 }

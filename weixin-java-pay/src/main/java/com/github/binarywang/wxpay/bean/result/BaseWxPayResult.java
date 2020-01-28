@@ -11,6 +11,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import com.github.binarywang.wxpay.util.XmlConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+
+import org.w3c.dom.*;
 
 /**
  * <pre>
@@ -129,11 +132,88 @@ public abstract class BaseWxPayResult implements Serializable {
    * @return the t
    */
   public static <T extends BaseWxPayResult> T fromXML(String xmlString, Class<T> clz) {
+    if (XmlConfig.fastMode) {
+      try {
+        BaseWxPayResult t = clz.newInstance();
+        t.setXmlString(xmlString);
+        Document doc = t.getXmlDoc();
+        t.loadBasicXML(doc);
+        t.loadXML(doc);
+        return (T) t;
+      } catch (Exception e) {
+        throw new RuntimeException("parse xml error", e);
+      }
+    }
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(clz);
     T result = (T) xstream.fromXML(xmlString);
     result.setXmlString(xmlString);
     return result;
+  }
+
+  /**
+   * 从XML文档中加载属性,供子类覆盖加载额外的属性
+   *
+   * @param d Document
+   */
+  protected void loadXML(Document d) {
+  }
+
+  /**
+   * 从XML文档中加载基础属性
+   *
+   * @param d Document
+   */
+  private void loadBasicXML(Document d) {
+    returnCode = readXMLString(d, "return_code");
+    returnMsg = readXMLString(d, "return_msg");
+    resultCode = readXMLString(d, "result_code");
+    errCode = readXMLString(d, "err_code");
+    errCodeDes = readXMLString(d, "err_code_des");
+    appid = readXMLString(d, "appid");
+    mchId = readXMLString(d, "mch_id");
+    subAppId = readXMLString(d, "sub_appid");
+    subMchId = readXMLString(d, "sub_mch_id");
+    nonceStr = readXMLString(d, "nonce_str");
+    sign = readXMLString(d, "sign");
+  }
+
+  protected Integer readXMLInteger(Node d, String tagName) {
+    String content = readXMLString(d, tagName);
+    if (content == null || content.trim().length() == 0) return null;
+    return Integer.parseInt(content);
+  }
+
+  protected String readXMLString(Node d, String tagName) {
+    if (!d.hasChildNodes()) return null;
+    NodeList childNodes = d.getChildNodes();
+    for (int i = 0, j = childNodes.getLength(); i < j; i++) {
+      Node node = childNodes.item(i);
+      if (tagName.equals(node.getNodeName())) {
+        if (!node.hasChildNodes()) return null;
+        return node.getFirstChild().getNodeValue();
+      }
+    }
+    return null;
+  }
+
+  protected String readXMLString(Document d, String tagName) {
+    NodeList elements = d.getElementsByTagName(tagName);
+    if (elements == null || elements.getLength() == 0) {
+      return null;
+    }
+
+    Node node = elements.item(0).getFirstChild();
+    if (node == null) {
+      return null;
+    }
+    return node.getNodeValue();
+  }
+
+  protected Integer readXMLInteger(Document d, String tagName) {
+    String content = readXMLString(d, tagName);
+    if (content == null || content.trim().length() == 0) return null;
+    return Integer.parseInt(content);
   }
 
   /**

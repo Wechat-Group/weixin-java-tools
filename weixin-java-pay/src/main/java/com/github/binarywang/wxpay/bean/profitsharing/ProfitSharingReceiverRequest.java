@@ -7,6 +7,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * 添加/删除分账接受方请求对象
  *
@@ -43,5 +45,10 @@ public class ProfitSharingReceiverRequest extends BaseWxPayRequest {
   @Override
   protected void checkConstraints() throws WxPayException {
     this.setSignType(WxPayConstants.SignType.HMAC_SHA256);
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("receiver", receiver);
   }
 }

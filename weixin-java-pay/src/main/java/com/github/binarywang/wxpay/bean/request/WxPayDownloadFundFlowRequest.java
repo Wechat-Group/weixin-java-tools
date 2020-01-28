@@ -9,6 +9,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * <pre>
@@ -86,5 +87,12 @@ public class WxPayDownloadFundFlowRequest extends BaseWxPayRequest {
      * 目前仅支持HMAC-SHA256
      */
     this.setSignType(SIGN_TYPE_HMAC_SHA256);
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("bill_date", billDate);
+    map.put("account_type", accountType);
+    map.put("tar_type", tarType);
   }
 }
