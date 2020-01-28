@@ -1,5 +1,7 @@
 package com.github.binarywang.wxpay.bean.notify;
 
+import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
+import com.github.binarywang.wxpay.util.XmlConfig;
 import org.testng.*;
 import org.testng.annotations.*;
 
@@ -57,6 +59,27 @@ public class WxPayOrderNotifyResultTest {
 
     Assert.assertEquals(result.getCouponList().get(0).getCouponId(), "10000");
     Assert.assertEquals(result.getCouponList().get(1).getCouponId(), "10001");
+
+    //fast mode test
+    XmlConfig.fastMode = true;
+    try {
+      result = BaseWxPayResult.fromXML(xmlString, WxPayOrderNotifyResult.class);
+
+      Assert.assertEquals(result.getCouponCount().intValue(), 2);
+      Assert.assertNotNull(result.getCouponList());
+      Assert.assertEquals(result.getCouponList().size(), 2);
+
+      Assert.assertEquals(result.getCouponList().get(0).getCouponFee().intValue(), 100);
+      Assert.assertEquals(result.getCouponList().get(1).getCouponFee().intValue(), 200);
+
+      Assert.assertEquals(result.getCouponList().get(0).getCouponType(), "CASH");
+      Assert.assertEquals(result.getCouponList().get(1).getCouponType(), "NO_CASH");
+
+      Assert.assertEquals(result.getCouponList().get(0).getCouponId(), "10000");
+      Assert.assertEquals(result.getCouponList().get(1).getCouponId(), "10001");
+    } finally {
+      XmlConfig.fastMode = false;
+    }
   }
 
 }

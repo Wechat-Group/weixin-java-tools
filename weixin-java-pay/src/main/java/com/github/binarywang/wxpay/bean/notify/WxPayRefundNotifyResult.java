@@ -81,9 +81,43 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
 
   private ReqInfo reqInfo;
 
+  // 解密后的reqInfo 字符串
+  private transient String decryptedReqInfo;
+
   @Override
   protected void loadXML(Document d) {
-    //@TODO
+    reqInfoString = readXMLString(d, "req_info");
+  }
+
+  /**
+   * 解密并解析reqInfo
+   *
+   * @param mchKey
+   * @throws WxPayException
+   */
+  public void decryptReqInfo(String mchKey) throws WxPayException {
+    //如果是失败，直接返回，不用解析
+    if (WxPayConstants.ResultCode.FAIL.equals(getReturnCode())) {
+      return;
+    }
+    try {
+      final String keyMd5String = DigestUtils.md5Hex(mchKey).toLowerCase();
+      SecretKeySpec key = new SecretKeySpec(keyMd5String.getBytes(StandardCharsets.UTF_8), "AES");
+
+      Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+      cipher.init(Cipher.DECRYPT_MODE, key);
+      decryptedReqInfo = new String(cipher.doFinal(Base64.decodeBase64(reqInfoString)), StandardCharsets.UTF_8);
+      loadReqInfo(decryptedReqInfo);
+    } catch (Exception e) {
+      throw new WxPayException("解密退款通知加密信息时出错", e);
+    }
+  }
+
+  // 本方法独立出来方便测试
+  protected void loadReqInfo(String decryptedReqInfo) {
+    Document document = openXML(decryptedReqInfo);
+    reqInfo = new ReqInfo();
+    reqInfo.loadXML(document);
   }
 
   /**
@@ -278,6 +312,23 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
       xstream.processAnnotations(ReqInfo.class);
       return (ReqInfo) xstream.fromXML(xmlString);
     }
+
+    public void loadXML(Document d) {
+      transactionId = readXMLString(d, "transaction_id");
+      outTradeNo = readXMLString(d, "out_trade_no");
+      refundId = readXMLString(d, "refund_id");
+      outRefundNo = readXMLString(d, "out_refund_no");
+      totalFee = readXMLInteger(d, "total_fee");
+      settlementTotalFee = readXMLInteger(d, "settlement_total_fee");
+      refundFee = readXMLInteger(d, "refund_fee");
+      settlementRefundFee = readXMLInteger(d, "settlement_refund_fee");
+      refundStatus = readXMLString(d, "refund_status");
+      successTime = readXMLString(d, "success_time");
+      refundRecvAccout = readXMLString(d, "refund_recv_accout");
+      refundAccount = readXMLString(d, "refund_account");
+      refundRequestSource = readXMLString(d, "refund_request_source");
+    }
   }
+
 
 }

@@ -15,6 +15,7 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import org.w3c.dom.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -375,7 +376,24 @@ public class WxPayOrderNotifyResult extends BaseWxPayResult {
     rateValue = readXMLString(d, "rate_value");
     signType = readXMLString(d, "sign_type");
 
-    //@TODO set couponList
+    composeCoupons();
+  }
+
+  /**
+   * 通过xml组装couponList属性内容.
+   */
+  protected void composeCoupons() {
+    if (this.couponCount == null || this.couponCount == 0) {
+      return;
+    }
+    this.couponList = new ArrayList(couponCount);
+    for (int i = 0; i < this.couponCount; i++) {
+      WxPayOrderNotifyCoupon coupon = new WxPayOrderNotifyCoupon();
+      coupon.setCouponId(this.getXmlValue("xml/coupon_id_" + i));
+      coupon.setCouponType(this.getXmlValue("xml/coupon_type_" + i));
+      coupon.setCouponFee(this.getXmlValueAsInt("xml/coupon_fee_" + i));
+      couponList.add(coupon);
+    }
   }
 
   @Override

@@ -178,13 +178,13 @@ public abstract class BaseWxPayResult implements Serializable {
     sign = readXMLString(d, "sign");
   }
 
-  protected Integer readXMLInteger(Node d, String tagName) {
+  public static Integer readXMLInteger(Node d, String tagName) {
     String content = readXMLString(d, tagName);
     if (content == null || content.trim().length() == 0) return null;
     return Integer.parseInt(content);
   }
 
-  protected String readXMLString(Node d, String tagName) {
+  public static String readXMLString(Node d, String tagName) {
     if (!d.hasChildNodes()) return null;
     NodeList childNodes = d.getChildNodes();
     for (int i = 0, j = childNodes.getLength(); i < j; i++) {
@@ -197,7 +197,7 @@ public abstract class BaseWxPayResult implements Serializable {
     return null;
   }
 
-  protected String readXMLString(Document d, String tagName) {
+  public static String readXMLString(Document d, String tagName) {
     NodeList elements = d.getElementsByTagName(tagName);
     if (elements == null || elements.getLength() == 0) {
       return null;
@@ -210,7 +210,7 @@ public abstract class BaseWxPayResult implements Serializable {
     return node.getNodeValue();
   }
 
-  protected Integer readXMLInteger(Document d, String tagName) {
+  public static Integer readXMLInteger(Document d, String tagName) {
     String content = readXMLString(d, tagName);
     if (content == null || content.trim().length() == 0) return null;
     return Integer.parseInt(content);
@@ -265,18 +265,19 @@ public abstract class BaseWxPayResult implements Serializable {
     if (this.xmlDoc != null) {
       return this.xmlDoc;
     }
+    xmlDoc = openXML(xmlString);
+    return xmlDoc;
+  }
 
+  protected Document openXML(String content) {
     try {
       final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       factory.setExpandEntityReferences(false);
       factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-      this.xmlDoc = factory.newDocumentBuilder()
-        .parse(new ByteArrayInputStream(this.xmlString.getBytes(StandardCharsets.UTF_8)));
-      return xmlDoc;
+      return factory.newDocumentBuilder().parse(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
     } catch (Exception e) {
       throw new RuntimeException("非法的xml文本内容：\n" + this.xmlString, e);
     }
-
   }
 
   /**
@@ -285,7 +286,7 @@ public abstract class BaseWxPayResult implements Serializable {
    * @param path the path
    * @return the xml value
    */
-  String getXmlValue(String... path) {
+  protected String getXmlValue(String... path) {
     Document doc = this.getXmlDoc();
     String expression = String.format("/%s//text()", Joiner.on("/").join(path));
     try {
@@ -305,7 +306,7 @@ public abstract class BaseWxPayResult implements Serializable {
    * @param path the path
    * @return the xml value as int
    */
-  Integer getXmlValueAsInt(String... path) {
+  protected Integer getXmlValueAsInt(String... path) {
     String result = this.getXmlValue(path);
     if (StringUtils.isBlank(result)) {
       return null;

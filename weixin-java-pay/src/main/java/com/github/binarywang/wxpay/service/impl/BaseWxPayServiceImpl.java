@@ -21,6 +21,7 @@ import com.github.binarywang.wxpay.service.ProfitSharingService;
 import com.github.binarywang.wxpay.service.RedpackService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.util.SignUtils;
+import com.github.binarywang.wxpay.util.XmlConfig;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import jodd.io.ZipUtil;
@@ -166,7 +167,13 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   public WxPayRefundNotifyResult parseRefundNotifyResult(String xmlData) throws WxPayException {
     try {
       log.debug("微信支付退款异步通知参数：{}", xmlData);
-      WxPayRefundNotifyResult result = WxPayRefundNotifyResult.fromXML(xmlData, this.getConfig().getMchKey());
+      WxPayRefundNotifyResult result;
+      if (XmlConfig.fastMode) {
+        result = BaseWxPayResult.fromXML(xmlData, WxPayRefundNotifyResult.class);
+        result.decryptReqInfo(this.getConfig().getMchKey());
+      } else {
+        result = WxPayRefundNotifyResult.fromXML(xmlData, this.getConfig().getMchKey());
+      }
       log.debug("微信支付退款异步通知解析后的对象：{}", result);
       return result;
     } catch (Exception e) {
