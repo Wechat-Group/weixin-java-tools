@@ -99,6 +99,7 @@
   </scm>
 
   <modules>
+    <module>weixin-graal</module>
     <module>weixin-java-common</module>
     <module>weixin-java-cp</module>
     <module>weixin-java-mp</module>
@@ -331,6 +332,14 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>native-image</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+    </profile>
+
   </profiles>
 
   <build>
