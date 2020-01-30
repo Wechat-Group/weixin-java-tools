@@ -80,12 +80,12 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>
- 	<dependency>
-	  <groupId>com.github.jedis-lock</groupId>
-	  <artifactId>jedis-lock</artifactId>
-	  <version>1.0.0</version>
-	  <optional>true</optional>
-	</dependency>
+    <dependency>
+      <groupId>com.github.jedis-lock</groupId>
+      <artifactId>jedis-lock</artifactId>
+      <version>1.0.0</version>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
   <build>
@@ -101,5 +101,36 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>native-image</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.5.1</version>
+            <configuration>
+              <annotationProcessors>
+                cn.binarywang.wx.graal.GraalProcessor,lombok.launch.AnnotationProcessorHider$AnnotationProcessor,lombok.launch.AnnotationProcessorHider$ClaimingProcessor
+              </annotationProcessors>
+              <annotationProcessorPaths>
+                <path>
+                  <groupId>com.github.binarywang</groupId>
+                  <artifactId>weixin-graal</artifactId>
+                  <version>${project.version}</version>
+                </path>
+              </annotationProcessorPaths>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>

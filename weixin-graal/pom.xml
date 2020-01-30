@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.github.binarywang</groupId>
+    <artifactId>wx-java</artifactId>
+    <version>3.6.7.B</version>
+  </parent>
+
+  <artifactId>weixin-graal</artifactId>
+  <name>WxJava - Graal</name>
+  <description>微信开发Java内部配合graal以产生native-image配置的辅助工具, 可以通过项目的 native-image Profile 来启用: mvn -P native-image ...
+  </description>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <proc>none</proc>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
