@@ -280,8 +280,9 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
        */
       if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001 || error.getErrorCode() == 40014) {
         // 强制设置wxCpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
+        // 获取token 超时，无效，不合法 由重试机制处理
         this.configStorage.expireAccessToken();
-        return execute(executor, uri, data);
+        //return execute(executor, uri, data);
       }
 
       if (error.getErrorCode() != 0) {
