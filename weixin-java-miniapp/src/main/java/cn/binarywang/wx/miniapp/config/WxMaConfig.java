@@ -108,7 +108,9 @@ public interface WxMaConfig {
 
   /**
    * 是否自动刷新token
+   * 在出现超时，无效，不合法 强制将access token过期掉 不进行 刷新token(2020年02月20日废弃)
    */
+  @Deprecated
   boolean autoRefreshToken();
 
 }
