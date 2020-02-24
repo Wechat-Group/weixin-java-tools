@@ -23,6 +23,14 @@ public class WxMaSubscribeMessageGsonAdapter implements JsonSerializer<WxMaSubsc
       messageJson.addProperty("page", message.getPage());
     }
 
+    if (message.getMiniprogramState() != null) {
+      messageJson.addProperty("miniprogram_state", message.getMiniprogramState());
+    }
+
+    if (message.getLang() != null) {
+      messageJson.addProperty("lang", message.getLang());
+    }
+
     JsonObject data = new JsonObject();
     messageJson.add("data", data);
 

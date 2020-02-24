@@ -2,6 +2,10 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.*;
+import cn.binarywang.wx.miniapp.constant.WxMaConstants;
+import org.testng.annotations.*;
+
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.test.TestConfig;
 import com.google.common.collect.Lists;
@@ -68,6 +72,8 @@ public class WxMaMsgServiceImplTest {
     WxMaSubscribeMessage message = new WxMaSubscribeMessage();
     message.setTemplateId(config.getTemplateId());
     message.setToUser(config.getOpenid());
+    message.setLang(WxMaConstants.MiniprogramLang.ZH_CN);
+    message.setMiniprogramState(WxMaConstants.MiniprogramState.FORMAT);
     message.addData(new WxMaSubscribeMessage.Data("thing1", "苹果到货啦"));
     message.addData(new WxMaSubscribeMessage.Data("amount3", "¥5"));
     message.addData(new WxMaSubscribeMessage.Data("thing5", "记得领取哦"));
