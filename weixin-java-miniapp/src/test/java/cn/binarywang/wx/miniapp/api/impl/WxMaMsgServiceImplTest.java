@@ -73,7 +73,7 @@ public class WxMaMsgServiceImplTest {
     message.setTemplateId(config.getTemplateId());
     message.setToUser(config.getOpenid());
     message.setLang(WxMaConstants.MiniprogramLang.ZH_CN);
-    message.setMiniprogramState(WxMaConstants.MiniprogramState.FORMAT);
+    message.setMiniprogramState(WxMaConstants.MiniprogramState.FORMAL);
     message.addData(new WxMaSubscribeMessage.Data("thing1", "苹果到货啦"));
     message.addData(new WxMaSubscribeMessage.Data("amount3", "¥5"));
     message.addData(new WxMaSubscribeMessage.Data("thing5", "记得领取哦"));
