@@ -158,7 +158,7 @@ public class WxMaConstants {
     /**
      * 正式版
      */
-    public static final String FORMAT = "formal";
+    public static final String FORMAL = "formal";
   }
 
 
