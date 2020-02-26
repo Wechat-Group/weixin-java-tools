@@ -69,6 +69,8 @@ public final class WxCpApiPathConsts {
     public static final String GET_DIAL_RECORD = "/cgi-bin/dial/get_dial_record";
     @Deprecated
     public static final String GET_APPROVAL_DATA = "/cgi-bin/corp/getapprovaldata";
+    public static final String GET_TEMPLATE_DETAIL = "/cgi-bin/oa/gettemplatedetail";
+    public static final String APPLY_EVENT="/cgi-bin/oa/applyevent";
   }
 
   public static class Tag {

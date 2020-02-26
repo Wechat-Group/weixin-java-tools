@@ -94,6 +94,11 @@ public class WxCpConsts {
      */
     public static final String CHANGE_EXTERNAL_CONTACT = "change_external_contact";
 
+    /**
+     * 企业微信审批事件推送
+     */
+    public static final String OPEN_APPROVAL_CHANGE = "open_approval_change";
+
 
   }
 

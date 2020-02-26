@@ -209,4 +209,13 @@ public class WxCpOaServiceImpl implements WxCpOaService {
       }.getType()
     );
   }
+
+  @Override
+  public WxCpTemplateResult getTemplateDetail(@NonNull String templateId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("template_id",templateId);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_TEMPLATE_DETAIL);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return WxCpGsonBuilder.create().fromJson(responseContent,WxCpTemplateResult.class);
+  }
 }

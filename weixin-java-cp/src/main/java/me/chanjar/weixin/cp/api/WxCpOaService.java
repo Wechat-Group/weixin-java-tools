@@ -124,4 +124,12 @@ public interface WxCpOaService {
   List<WxCpDialRecord> getDialRecord(Date startTime, Date endTime, Integer offset,
                                      Integer limit) throws WxErrorException;
 
+  /**
+   * 获取审批模板详情
+   * @param templateId 模板ID
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpTemplateResult getTemplateDetail(@NonNull String templateId)throws WxErrorException;
+
 }

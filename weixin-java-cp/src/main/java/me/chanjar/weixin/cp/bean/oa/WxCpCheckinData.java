@@ -47,4 +47,8 @@ public class WxCpCheckinData implements Serializable {
 
   @SerializedName("mediaids")
   private List<String> mediaIds;
+
+  private Integer lat;
+
+  private Integer lng;
 }
