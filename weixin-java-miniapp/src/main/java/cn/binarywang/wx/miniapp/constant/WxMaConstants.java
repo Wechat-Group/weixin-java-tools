@@ -137,4 +137,54 @@ public class WxMaConstants {
      */
     public static final int DEFAULT_INSURED_VALUE = 0;
   }
+
+
+  /**
+   * 小程序订阅消息跳转小程序类型
+   *
+   * developer为开发版；trial为体验版；formal为正式版；默认为正式版
+   */
+  public static final class MiniprogramState{
+    /**
+     * 开发版
+     */
+    public static final String DEVELOPER = "developer";
+
+    /**
+     * 体验版
+     */
+    public static final String TRIAL = "trial";
+
+    /**
+     * 正式版
+     */
+    public static final String FORMAL = "formal";
+  }
+
+
+  /**
+   * 进入小程序查看的语言类型
+   * 支持zh_CN(简体中文)、en_US(英文)、zh_HK(繁体中文)、zh_TW(繁体中文)，默认为zh_CN
+   */
+  public static final class MiniprogramLang{
+    /**
+     * 简体中文
+     */
+    public static final String ZH_CN = "zh_CN";
+
+    /**
+     * 英文
+     */
+    public static final String EN_US = "en_US";
+
+    /**
+     * 繁体中文
+     */
+    public static final String ZH_HK = "zh_HK";
+
+    /**
+     * 繁体中文
+     */
+    public static final String ZH_TW = "zh_TW";
+  }
 }
