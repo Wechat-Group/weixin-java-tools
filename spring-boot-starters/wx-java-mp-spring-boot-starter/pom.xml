@@ -28,6 +28,7 @@
       <groupId>org.redisson</groupId>
       <artifactId>redisson</artifactId>
       <scope>compile</scope>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 

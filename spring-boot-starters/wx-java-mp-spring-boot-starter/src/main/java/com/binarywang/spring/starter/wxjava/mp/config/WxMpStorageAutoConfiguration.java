@@ -6,9 +6,8 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
-import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.JedisPool;
@@ -22,13 +21,9 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 @RequiredArgsConstructor
 public class WxMpStorageAutoConfiguration {
+
   private final WxMpProperties properties;
-
-  @Autowired(required = false)
-  private JedisPool jedisPool;
-
-  @Autowired(required = false)
-  private RedissonClient redissonClient;
+  private final ApplicationContext applicationContext;
 
   @Bean
   @ConditionalOnMissingBean(WxMpConfigStorage.class)
@@ -49,13 +44,21 @@ public class WxMpStorageAutoConfiguration {
   }
 
   private WxMpRedisConfigImpl getWxMpInRedisConfigStorage() {
-    JedisPool poolToUse = jedisPool;
-    if (poolToUse == null) {
-      poolToUse = getJedisPool();
+    RedisProperties.ImplType implType = properties.getConfigStorage().getRedis().getImpl();
+    boolean reuseBean = properties.getConfigStorage().getRedis().isReuseBean();
+    if (implType == RedisProperties.ImplType.jedis) {
+      JedisPool pool = null;
+      if (reuseBean) {
+        pool = getBean(JedisPool.class);
+      }
+      if (pool == null) {
+        pool = getJedisPool();
+      }
+      WxMpRedisConfigImpl config = new WxMpRedisConfigImpl(pool);
+      setWxMpInfo(config);
+      return config;
     }
-    WxMpRedisConfigImpl config = new WxMpRedisConfigImpl(poolToUse);
-    setWxMpInfo(config);
-    return config;
+    throw new UnsupportedOperationException();
   }
 
   private void setWxMpInfo(WxMpDefaultConfigImpl config) {
@@ -85,8 +88,14 @@ public class WxMpStorageAutoConfiguration {
     config.setTestOnBorrow(true);
     config.setTestWhileIdle(true);
 
-    JedisPool pool = new JedisPool(config, redis.getHost(), redis.getPort(),
-      redis.getTimeout(), redis.getPassword(), redis.getDatabase());
-    return pool;
+    return new JedisPool(config, redis.getHost(), redis.getPort(), redis.getTimeout(), redis.getPassword(),
+      redis.getDatabase());
+  }
+
+  private <T> T getBean(Class<T> clazz) {
+    if (this.applicationContext.getBeanNamesForType(clazz, false, false).length > 0) {
+      return this.applicationContext.getBean(clazz);
+    }
+    return null;
   }
 }
