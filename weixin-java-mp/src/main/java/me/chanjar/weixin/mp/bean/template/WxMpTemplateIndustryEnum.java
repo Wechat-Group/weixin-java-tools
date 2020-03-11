@@ -198,7 +198,7 @@ public enum WxMpTemplateIndustryEnum {
    */
   public static WxMpTemplateIndustryEnum findBySecondary(String industry) {
     for (WxMpTemplateIndustryEnum industryEnum : WxMpTemplateIndustryEnum.values()) {
-      if (industryEnum.secondClass.equals(industry)) {
+      if (industryEnum.secondClass.contains(industry)) {
         return industryEnum;
       }
     }

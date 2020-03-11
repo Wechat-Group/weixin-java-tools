@@ -15,7 +15,7 @@ public class WxMpTemplateIndustryTest {
 
     @Test
     public void testFromJson() {
-      String json="{\"primary_industry\":{\"first_class\":\"IT科技\",\"second_class\":\"IT软件与服务\"},\"secondary_industry\":{\"first_class\":\"房地产\",\"second_class\":\"房地产|建筑\"}}";
+      String json="{\"primary_industry\":{\"first_class\":\"IT科技\",\"second_class\":\"互联网|电子商务\"},\"secondary_industry\":{\"first_class\":\"房地产\",\"second_class\":\"房地产|建筑\"}}";
       final WxMpTemplateIndustry industry = WxMpTemplateIndustry.fromJson(json);
       assertThat(industry).isNotNull();
       System.out.println(industry);
