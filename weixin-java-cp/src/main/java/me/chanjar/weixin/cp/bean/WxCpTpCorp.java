@@ -30,7 +30,9 @@ public class WxCpTpCorp implements Serializable {
   private String corpUserMax;
   @SerializedName("permanent_code")
   private String permanentCode;
-  
+  @SerializedName("auth_info")
+  private String authInfo;
+
   public static WxCpTpCorp fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpTpCorp.class);
   }

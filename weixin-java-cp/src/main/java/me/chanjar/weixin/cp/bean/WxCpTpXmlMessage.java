@@ -36,7 +36,7 @@ public class WxCpTpXmlMessage implements Serializable {
    * 使用dom4j解析的存放所有xml属性和值的map.
    */
   private Map<String, Object> allFieldsMap;
-  
+
   @XStreamAlias("SuiteId")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String suiteId;
@@ -48,14 +48,18 @@ public class WxCpTpXmlMessage implements Serializable {
   @XStreamAlias("TimeStamp")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String timeStamp;
-  
+
   @XStreamAlias("SuiteTicket")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String suiteTicket;
-  
+
   @XStreamAlias("AuthCode")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String authCode;
+
+  @XStreamAlias("AuthCorpId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  protected String authCorpId;
 
   public static WxCpTpXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
