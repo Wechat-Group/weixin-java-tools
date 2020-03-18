@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpTpService;
 import me.chanjar.weixin.cp.bean.WxCpTpCorp;
+import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.config.impl.WxCpTpDefaultConfigImpl;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
@@ -128,6 +129,10 @@ public class BaseWxCpTpServiceImplTest {
 
     final WxCpTpCorp tpCorp = tpService.getPermanentCode(authCode);
     assertThat(tpCorp.getPermanentCode()).isEqualTo("xxxx");
+
+    final WxCpTpPermanentCodeInfo tpPermanentCodeInfo = tpService.getPermanentCodeInfo(authCode);
+    assertThat(tpPermanentCodeInfo.getAuthInfo().getAgent().get(0).getAgentid()).isEqualTo(1);
+
   }
 
   @Test

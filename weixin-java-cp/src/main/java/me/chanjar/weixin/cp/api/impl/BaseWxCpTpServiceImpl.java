@@ -17,6 +17,7 @@ import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.cp.api.WxCpTpService;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpTpCorp;
+import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 
 import java.io.File;
@@ -121,6 +122,14 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     WxCpTpCorp wxCpTpCorp = WxCpTpCorp.fromJson(jsonObject.get("auth_corp_info").getAsJsonObject().toString());
     wxCpTpCorp.setPermanentCode(jsonObject.get("permanent_code").getAsString());
     return wxCpTpCorp;
+  }
+
+  @Override
+  public WxCpTpPermanentCodeInfo getPermanentCodeInfo(String authCode) throws WxErrorException{
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("auth_code", authCode);
+    String result = post(configStorage.getApiUrl(GET_PERMANENT_CODE), jsonObject.toString());
+    return WxCpTpPermanentCodeInfo.fromJson(result);
   }
 
   @Override
