@@ -1,6 +1,6 @@
 ## 如何使用 `WxJava` 进行小程序云开发
 
-[云开发（CloudBase）](https://tencentcloudbase.github.io/)是基于Serverless架构构建的一站式后端云服务，涵盖函数、数据库、存储、CDN等服务，免后端运维，支持小程序、Web和APP开发。
+[云开发（CloudBase）](https://www.cloudbase.net/)是基于Serverless架构构建的一站式后端云服务，涵盖函数、数据库、存储、CDN等服务，免后端运维，支持小程序、Web和APP开发。
 其中，小程序·云开发是微信和腾讯云联合推出的云端一体化解决方案，基于云开发可以免鉴权调用微信所有开放能力，在微信开发者工具中即可开通使用。
 
 ### 一、  引入`maven`依赖
