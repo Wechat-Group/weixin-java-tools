@@ -3,6 +3,7 @@ package me.chanjar.weixin.cp.api.impl;
 import com.google.common.base.Joiner;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
@@ -18,10 +19,13 @@ import me.chanjar.weixin.cp.api.WxCpTpService;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpTpCorp;
 import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
+import me.chanjar.weixin.cp.bean.WxCpTpPreauthCode;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -130,6 +134,18 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     jsonObject.addProperty("auth_code", authCode);
     String result = post(configStorage.getApiUrl(GET_PERMANENT_CODE), jsonObject.toString());
     return WxCpTpPermanentCodeInfo.fromJson(result);
+  }
+
+  @Override
+  @SneakyThrows
+  public String getPreAuthUrl(String redirectUri,String state) throws WxErrorException{
+    String result = get(configStorage.getApiUrl(GET_PREAUTH_CODE),null);
+    WxCpTpPreauthCode preauthCode = WxCpTpPreauthCode.fromJson(result);
+    String preAuthUrl = "https://open.work.weixin.qq.com/3rdapp/install?suite_id="+configStorage.getSuiteId()+
+      "&pre_auth_code="+preauthCode.getPreAuthCode()+"&redirect_uri="+ URLEncoder.encode(redirectUri,"utf-8");
+    if(StringUtils.isNotBlank(state))
+      preAuthUrl += "&state="+state;
+    return preAuthUrl;
   }
 
   @Override

@@ -61,6 +61,9 @@ public class WxCpTpPermanentCodeInfo extends WxCpBaseResp {
     @SerializedName("corp_square_logo_url")
     private String corpSquareLogoUrl;
 
+    @SerializedName("corp_round_logo_url")
+    private String corpRoundLogoUrl;
+
     @SerializedName("corp_user_max")
     private String corpUserMax;
 

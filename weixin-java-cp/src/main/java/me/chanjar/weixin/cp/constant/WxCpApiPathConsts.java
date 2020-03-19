@@ -93,6 +93,7 @@ public final class WxCpApiPathConsts {
     public static final String GET_PERMANENT_CODE = "/cgi-bin/service/get_permanent_code";
     public static final String GET_SUITE_TOKEN = "/cgi-bin/service/get_suite_token";
     public static final String GET_PROVIDER_TOKEN = "/cgi-bin/service/get_provider_token";
+    public static final String GET_PREAUTH_CODE = "/cgi-bin/service/get_pre_auth_code";
   }
 
   public static class User {

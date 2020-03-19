@@ -109,6 +109,17 @@ public interface WxCpTpService {
   WxCpTpPermanentCodeInfo getPermanentCodeInfo(String authCode) throws WxErrorException;
 
   /**
+   * <pre>
+   *   获取预授权链接
+   * </pre>
+   * @param redirectUri 授权完成后的回调网址
+   * @param state a-zA-Z0-9的参数值（不超过128个字节），用于第三方自行校验session，防止跨域攻击
+   * @return
+   * @throws WxErrorException
+   */
+  String getPreAuthUrl(String redirectUri,String state) throws WxErrorException;
+
+  /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求.
    *
    * @param url        接口地址
