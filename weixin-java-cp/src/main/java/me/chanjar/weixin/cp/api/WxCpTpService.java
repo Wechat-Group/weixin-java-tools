@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
+import me.chanjar.weixin.cp.bean.WxCpTpAuthInfo;
 import me.chanjar.weixin.cp.bean.WxCpTpCorp;
 import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
@@ -118,6 +119,16 @@ public interface WxCpTpService {
    * @throws WxErrorException
    */
   String getPreAuthUrl(String redirectUri,String state) throws WxErrorException;
+
+  /**
+   * 获取企业的授权信息
+   *
+   * @param authCorpId 授权企业的corpId
+   * @param permanentCode 授权企业的永久授权码
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpTpAuthInfo getAuthInfo(String authCorpId,String permanentCode) throws WxErrorException;
 
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求.

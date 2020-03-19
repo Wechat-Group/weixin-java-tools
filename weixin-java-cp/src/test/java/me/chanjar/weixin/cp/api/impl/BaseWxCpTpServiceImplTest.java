@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpTpService;
+import me.chanjar.weixin.cp.bean.WxCpTpAuthInfo;
 import me.chanjar.weixin.cp.bean.WxCpTpCorp;
 import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
@@ -11,6 +12,7 @@ import me.chanjar.weixin.cp.config.impl.WxCpTpDefaultConfigImpl;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import org.testng.annotations.Test;
 
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_AUTH_INFO;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_PERMANENT_CODE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -194,6 +196,77 @@ public class BaseWxCpTpServiceImplTest {
     assertThat(tpPermanentCodeInfo.getAuthInfo().getAgent().get(0).getAgentid()).isEqualTo(1000012);
     assertNotNull(tpPermanentCodeInfo.getAuthInfo().getAgent().get(0).getSquareLogoUrl());
     assertNotNull(tpPermanentCodeInfo.getAuthCorpInfo().getCorpSquareLogoUrl());
+  }
+
+  @Test
+  public void testGetAuthInfo() throws WxErrorException{
+    String returnJson = "{\n" +
+      "    \"errcode\":0 ,\n" +
+      "    \"errmsg\":\"ok\" ,\n" +
+      "    \"dealer_corp_info\": \n" +
+      "    {\n" +
+      "        \"corpid\": \"xxxx\",\n" +
+      "        \"corp_name\": \"name\"\n" +
+      "    },\n" +
+      "    \"auth_corp_info\": \n" +
+      "    {\n" +
+      "        \"corpid\": \"xxxx\",\n" +
+      "        \"corp_name\": \"name\",\n" +
+      "        \"corp_type\": \"verified\",\n" +
+      "        \"corp_square_logo_url\": \"yyyyy\",\n" +
+      "        \"corp_user_max\": 50,\n" +
+      "        \"corp_agent_max\": 30,\n" +
+      "        \"corp_full_name\":\"full_name\",\n" +
+      "        \"verified_end_time\":1431775834,\n" +
+      "        \"subject_type\": 1,\n" +
+      "        \"corp_wxqrcode\": \"zzzzz\",\n" +
+      "        \"corp_scale\": \"1-50人\",\n" +
+      "        \"corp_industry\": \"IT服务\",\n" +
+      "        \"corp_sub_industry\": \"计算机软件/硬件/信息服务\",\n" +
+      "        \"location\":\"广东省广州市\"\n" +
+      "    },\n" +
+      "    \"auth_info\":\n" +
+      "    {\n" +
+      "        \"agent\" :\n" +
+      "        [\n" +
+      "            {\n" +
+      "                \"agentid\":1,\n" +
+      "                \"name\":\"NAME\",\n" +
+      "                \"round_logo_url\":\"xxxxxx\",\n" +
+      "                \"square_logo_url\":\"yyyyyy\",\n" +
+      "                \"appid\":1,\n" +
+      "                \"privilege\":\n" +
+      "                {\n" +
+      "                    \"level\":1,\n" +
+      "                    \"allow_party\":[1,2,3],\n" +
+      "                    \"allow_user\":[\"zhansan\",\"lisi\"],\n" +
+      "                    \"allow_tag\":[1,2,3],\n" +
+      "                    \"extra_party\":[4,5,6],\n" +
+      "                    \"extra_user\":[\"wangwu\"],\n" +
+      "                    \"extra_tag\":[4,5,6]\n" +
+      "                }\n" +
+      "            },\n" +
+      "            {\n" +
+      "                \"agentid\":2,\n" +
+      "                \"name\":\"NAME2\",\n" +
+      "                \"round_logo_url\":\"xxxxxx\",\n" +
+      "                \"square_logo_url\":\"yyyyyy\",\n" +
+      "                \"appid\":5\n" +
+      "            }\n" +
+      "        ]\n" +
+      "    }\n" +
+      "}\n";
+
+    final WxCpTpConfigStorage configStorage = new WxCpTpDefaultConfigImpl();
+    tpService.setWxCpTpConfigStorage(configStorage);
+    JsonObject jsonObject = new JsonObject();
+    String authCorpId = "xxxxx";
+    String permanentCode = "xxxxx";
+    jsonObject.addProperty("auth_corpid", authCorpId);
+    jsonObject.addProperty("permanent_code", permanentCode);
+    doReturn(returnJson).when(tpService).post(configStorage.getApiUrl(GET_AUTH_INFO), jsonObject.toString());
+    WxCpTpAuthInfo authInfo = tpService.getAuthInfo(authCorpId,permanentCode);
+    assertNotNull(authInfo.getAuthCorpInfo().getCorpId());
   }
 
   @Test

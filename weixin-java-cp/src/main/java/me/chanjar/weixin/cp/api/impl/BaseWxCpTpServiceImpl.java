@@ -16,10 +16,7 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.cp.api.WxCpTpService;
-import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
-import me.chanjar.weixin.cp.bean.WxCpTpCorp;
-import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
-import me.chanjar.weixin.cp.bean.WxCpTpPreauthCode;
+import me.chanjar.weixin.cp.bean.*;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 
@@ -146,6 +143,15 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     if(StringUtils.isNotBlank(state))
       preAuthUrl += "&state="+state;
     return preAuthUrl;
+  }
+
+  @Override
+  public WxCpTpAuthInfo getAuthInfo(String authCorpId, String permanentCode) throws WxErrorException{
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("auth_corpid", authCorpId);
+    jsonObject.addProperty("permanent_code", permanentCode);
+    String result = post(configStorage.getApiUrl(GET_AUTH_INFO), jsonObject.toString());
+    return WxCpTpAuthInfo.fromJson(result);
   }
 
   @Override

@@ -8,24 +8,21 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import java.util.List;
 
 /**
- * 服务商模式获取永久授权码信息
+ * 服务商模式获取授权信息
  *
  * @author Daniel Qian
  */
 @Getter
 @Setter
-public class WxCpTpPermanentCodeInfo extends WxCpBaseResp {
+public class WxCpTpAuthInfo extends WxCpBaseResp {
 
   private static final long serialVersionUID = -5028321625140879571L;
 
-  @SerializedName("access_token")
-  private String accessToken;
-
-  @SerializedName("expires_in")
-  private Long ExpiresIn;
-
-  @SerializedName("permanent_code")
-  private String permanentCode;
+  /**
+   * 服务商信息
+   */
+  @SerializedName("dealer_corp_info")
+  private DealerCorpInfo dealerCorpInfo;
 
   /**
    * 授权企业信息
@@ -39,12 +36,15 @@ public class WxCpTpPermanentCodeInfo extends WxCpBaseResp {
   @SerializedName("auth_info")
   private AuthInfo authInfo;
 
-  /**
-   * 授权用户信息
-   */
-  @SerializedName("auth_user_info")
-  private AuthUserInfo authUserInfo;
+  @Getter
+  @Setter
+  public static class DealerCorpInfo {
+    @SerializedName("corpid")
+    private String corpId;
 
+    @SerializedName("corp_name")
+    private String corpName;
+  }
 
   @Getter
   @Setter
@@ -154,22 +154,6 @@ public class WxCpTpPermanentCodeInfo extends WxCpBaseResp {
   }
 
   /**
-   * 授权人员信息
-   */
-  @Getter
-  @Setter
-  public static class AuthUserInfo {
-    @SerializedName("userid")
-    private String userid;
-
-    @SerializedName("name")
-    private String name;
-
-    @SerializedName("avatar")
-    private String avatar;
-  }
-
-  /**
    * 应用对应的权限
    */
   @Getter
@@ -209,8 +193,8 @@ public class WxCpTpPermanentCodeInfo extends WxCpBaseResp {
   }
 
 
-  public static WxCpTpPermanentCodeInfo fromJson(String json) {
-    return WxCpGsonBuilder.create().fromJson(json, WxCpTpPermanentCodeInfo.class);
+  public static WxCpTpAuthInfo fromJson(String json) {
+    return WxCpGsonBuilder.create().fromJson(json, WxCpTpAuthInfo.class);
   }
 
   public String toJson() {
