@@ -51,7 +51,7 @@ public class WxMaJsapiServiceImpl implements WxMaJsapiService {
     } finally {
       lock.unlock();
     }
-    return this.wxMaService.getWxMaConfig().getJsapiTicket();
+    return this.wxMaService.getWxMaConfig().getCardApiTicket();
   }
 
   @Override

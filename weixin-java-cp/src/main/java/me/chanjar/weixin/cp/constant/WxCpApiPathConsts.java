@@ -93,6 +93,7 @@ public final class WxCpApiPathConsts {
     public static final String GET_PERMANENT_CODE = "/cgi-bin/service/get_permanent_code";
     public static final String GET_SUITE_TOKEN = "/cgi-bin/service/get_suite_token";
     public static final String GET_PROVIDER_TOKEN = "/cgi-bin/service/get_provider_token";
+    public static final String GET_PREAUTH_CODE = "/cgi-bin/service/get_pre_auth_code";
   }
 
   public static class User {
@@ -114,10 +115,15 @@ public final class WxCpApiPathConsts {
   public static class ExternalContact {
     @Deprecated
     public static final String GET_EXTERNAL_CONTACT = "/cgi-bin/crm/get_external_contact?external_userid=";
-    @Deprecated
-    public static final String GET_FOLLOW_USER_LIST = "/cgi-bin/externalcontact/get_follow_user_list";
 
+    public static final String GET_FOLLOW_USER_LIST = "/cgi-bin/externalcontact/get_follow_user_list";
     public static final String GET_CONTACT_DETAIL = "/cgi-bin/externalcontact/get?external_userid=";
     public static final String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";
+    public static final String LIST_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/get_unassigned_list";
+    public static final String TRANSFER_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/transfer";
+    public static final String GROUP_CHAT_LIST = "/cgi-bin/externalcontact/groupchat/list";
+    public static final String GROUP_CHAT_INFO = "/cgi-bin/externalcontact/groupchat/get";
+    public static final String LIST_USER_BEHAVIOR_DATA = "/cgi-bin/externalcontact/get_user_behavior_data";
+    public static final String LIST_GROUP_CHAT_DATA = "/cgi-bin/externalcontact/groupchat/statistic";
   }
 }

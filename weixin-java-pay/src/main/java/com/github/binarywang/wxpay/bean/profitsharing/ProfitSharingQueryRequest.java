@@ -5,6 +5,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
+import lombok.experimental.Accessors;
 import me.chanjar.weixin.common.annotation.Required;
 
 import java.util.Map;
@@ -16,6 +17,7 @@ import java.util.Map;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder(builderMethodName = "newBuilder")
+@Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")

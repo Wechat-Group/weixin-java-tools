@@ -3,6 +3,7 @@ package cn.binarywang.wx.miniapp.message;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaMessage;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import lombok.Data;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.api.WxMessageDuplicateChecker;
 import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
@@ -11,6 +12,7 @@ import me.chanjar.weixin.common.session.InternalSessionManager;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.LogExceptionHandler;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import java.util.concurrent.*;
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Data
 public class WxMaMessageRouter {
   private static final int DEFAULT_THREAD_POOL_SIZE = 100;
   private final Logger log = LoggerFactory.getLogger(WxMaMessageRouter.class);
@@ -36,6 +39,8 @@ public class WxMaMessageRouter {
 
   private WxErrorExceptionHandler exceptionHandler;
 
+  private WxMessageDuplicateChecker messageDuplicateChecker;
+
   public WxMaMessageRouter(WxMaService wxMaService) {
     this.wxMaService = wxMaService;
     ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxMaMessageRouter-pool-%d").build();
@@ -43,40 +48,7 @@ public class WxMaMessageRouter {
       0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), namedThreadFactory);
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
-  }
-
-  /**
-   * <pre>
-   * 设置自定义的 {@link ExecutorService}
-   * 如果不调用该方法，默认使用 Executors.newFixedThreadPool(100)
-   * </pre>
-   */
-  public void setExecutorService(ExecutorService executorService) {
-    this.executorService = executorService;
-  }
-
-  /**
-   * <pre>
-   * 设置自定义的{@link me.chanjar.weixin.common.session.WxSessionManager}
-   * 如果不调用该方法，默认使用 {@link me.chanjar.weixin.common.session.StandardSessionManager}
-   * </pre>
-   */
-  public void setSessionManager(WxSessionManager sessionManager) {
-    this.sessionManager = sessionManager;
-  }
-
-  /**
-   * <pre>
-   * 设置自定义的{@link me.chanjar.weixin.common.api.WxErrorExceptionHandler}
-   * 如果不调用该方法，默认使用 {@link me.chanjar.weixin.common.util.LogExceptionHandler}
-   * </pre>
-   */
-  public void setExceptionHandler(WxErrorExceptionHandler exceptionHandler) {
-    this.exceptionHandler = exceptionHandler;
-  }
-
-  List<WxMaMessageRouterRule> getRules() {
-    return this.rules;
+    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
   }
 
   /**
@@ -90,6 +62,11 @@ public class WxMaMessageRouter {
    * 处理微信消息.
    */
   private WxMaXmlOutMessage route(final WxMaMessage wxMessage, final Map<String, Object> context) {
+    if (isMsgDuplicated(wxMessage)) {
+      // 如果是重复消息，那么就不做处理
+      return null;
+    }
+
     final List<WxMaMessageRouterRule> matchRules = new ArrayList<>();
     // 收集匹配的规则
     for (final WxMaMessageRouterRule rule : this.rules) {
@@ -147,7 +124,26 @@ public class WxMaMessageRouter {
   }
 
   public WxMaXmlOutMessage route(final WxMaMessage wxMessage) {
-   return this.route(wxMessage, new HashMap<String, Object>(2));
+    return this.route(wxMessage, new HashMap<String, Object>(2));
+  }
+
+  private boolean isMsgDuplicated(WxMaMessage wxMessage) {
+    StringBuilder messageId = new StringBuilder();
+    if (wxMessage.getMsgId() == null) {
+      messageId.append(wxMessage.getCreateTime())
+        .append("-").append(wxMessage.getFromUser())
+        .append("-").append(StringUtils.trimToEmpty(wxMessage.getEvent()));
+    } else {
+      messageId.append(wxMessage.getMsgId())
+        .append("-").append(wxMessage.getCreateTime())
+        .append("-").append(wxMessage.getFromUser());
+    }
+
+    if (StringUtils.isNotEmpty(wxMessage.getToUser())) {
+      messageId.append("-").append(wxMessage.getToUser());
+    }
+
+    return this.messageDuplicateChecker.isDuplicate(messageId.toString());
   }
 
   /**

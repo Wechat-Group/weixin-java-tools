@@ -20,6 +20,8 @@ import org.w3c.dom.Document;
 @NoArgsConstructor
 @XStreamAlias("xml")
 public class EntPayResult extends BaseWxPayResult {
+  private static final long serialVersionUID = 8523569987269603097L;
+
   /**
    * 商户号.
    */

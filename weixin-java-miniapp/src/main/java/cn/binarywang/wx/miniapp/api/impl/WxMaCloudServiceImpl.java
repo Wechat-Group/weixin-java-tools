@@ -133,7 +133,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
       fileList.add(ImmutableMap.of("fileid", fileId, "max_age", (Serializable) maxAges[i++]));
     }
 
-    String response = this.wxMaService.post(GET_QCLOUD_TOKEN_URL, ImmutableMap.of("env", env, "file_list", fileList));
+    String response = this.wxMaService.post(BATCH_DOWNLOAD_FILE_URL, ImmutableMap.of("env", env, "file_list", fileList));
     return WxGsonBuilder.create().fromJson(response, WxCloudBatchDownloadFileResult.class);
   }
 

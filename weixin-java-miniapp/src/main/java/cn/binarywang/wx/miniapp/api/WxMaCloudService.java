@@ -19,6 +19,7 @@ public interface WxMaCloudService {
   String DATABASE_COLLECTION_ADD_URL = "https://api.weixin.qq.com/tcb/databasecollectionadd";
   String GET_QCLOUD_TOKEN_URL = "https://api.weixin.qq.com/tcb/getqcloudtoken";
   String BATCH_DELETE_FILE_URL = "https://api.weixin.qq.com/tcb/batchdeletefile";
+  String BATCH_DOWNLOAD_FILE_URL = "https://api.weixin.qq.com/tcb/batchdownloadfile";
   String UPLOAD_FILE_URL = "https://api.weixin.qq.com/tcb/uploadfile";
   String DATABASE_MIGRATE_QUERY_INFO_URL = "https://api.weixin.qq.com/tcb/databasemigratequeryinfo";
   String DATABASE_MIGRATE_EXPORT_URL = "https://api.weixin.qq.com/tcb/databasemigrateexport";

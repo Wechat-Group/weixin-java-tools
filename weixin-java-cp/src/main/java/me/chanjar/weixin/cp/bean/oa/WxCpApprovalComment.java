@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Data
 public class WxCpApprovalComment implements Serializable {
-
   private static final long serialVersionUID = -5430367411926856292L;
 
   /**

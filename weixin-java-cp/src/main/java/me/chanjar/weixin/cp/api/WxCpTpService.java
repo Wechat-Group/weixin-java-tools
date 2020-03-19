@@ -7,6 +7,7 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpTpCorp;
+import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 
 /**
@@ -88,7 +89,35 @@ public interface WxCpTpService {
    * @param authCode .
    * @return .
    */
+  @Deprecated
   WxCpTpCorp getPermanentCode(String authCode) throws WxErrorException;
+
+  /**
+   * 获取企业永久授权码信息
+   * <pre>
+   *   原来的方法实现不全
+   * </pre>
+   *
+   * @param authCode
+   * @return
+   *
+   * @author yuan
+   * @since 2020-03-18
+   *
+   * @throws WxErrorException
+   */
+  WxCpTpPermanentCodeInfo getPermanentCodeInfo(String authCode) throws WxErrorException;
+
+  /**
+   * <pre>
+   *   获取预授权链接
+   * </pre>
+   * @param redirectUri 授权完成后的回调网址
+   * @param state a-zA-Z0-9的参数值（不超过128个字节），用于第三方自行校验session，防止跨域攻击
+   * @return
+   * @throws WxErrorException
+   */
+  String getPreAuthUrl(String redirectUri,String state) throws WxErrorException;
 
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求.

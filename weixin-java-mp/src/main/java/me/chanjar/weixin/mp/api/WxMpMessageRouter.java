@@ -153,6 +153,13 @@ public class WxMpMessageRouter {
   }
 
   /**
+   * 处理不同appid微信消息
+   */
+  public WxMpXmlOutMessage route(final String appid, final WxMpXmlMessage wxMessage, final Map<String, Object> context) {
+    return route(wxMessage, context, this.wxMpService.switchoverTo(appid));
+  }
+
+  /**
    * 处理微信消息.
    */
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context, WxMpService wxMpService) {
@@ -226,6 +233,10 @@ public class WxMpMessageRouter {
 
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage) {
     return this.route(wxMessage, new HashMap<String, Object>(2));
+  }
+
+  public WxMpXmlOutMessage route(String appid, final WxMpXmlMessage wxMessage) {
+    return this.route(appid, wxMessage, new HashMap<String, Object>(2));
   }
 
   private boolean isMsgDuplicated(WxMpXmlMessage wxMessage) {

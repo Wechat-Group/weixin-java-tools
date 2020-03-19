@@ -2,6 +2,7 @@ package com.binarywang.spring.starter.wxjava.mp.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
 
@@ -42,7 +43,7 @@ public class WxMpProperties {
   /**
    * 存储策略, memory, redis.
    */
-  private ConfigStorage configStorage = new ConfigStorage();
+  private final ConfigStorage configStorage = new ConfigStorage();
 
 
   @Data
@@ -51,8 +52,8 @@ public class WxMpProperties {
 
     private StorageType type = memory;
 
-    private RedisProperties redis = new RedisProperties();
-
+    @NestedConfigurationProperty
+    private final RedisProperties redis = new RedisProperties();
   }
 
   public enum StorageType {

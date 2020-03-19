@@ -28,6 +28,7 @@ import me.chanjar.weixin.cp.bean.WxCpDepart;
 public class WxCpDepartGsonAdapter implements JsonSerializer<WxCpDepart>, JsonDeserializer<WxCpDepart> {
   private static final String ID = "id";
   private static final String NAME = "name";
+  private static final String EN_NAME = "name_en";
   private static final String PARENT_ID = "parentid";
   private static final String ORDER = "order";
 
@@ -39,6 +40,9 @@ public class WxCpDepartGsonAdapter implements JsonSerializer<WxCpDepart>, JsonDe
     }
     if (group.getName() != null) {
       json.addProperty(NAME, group.getName());
+    }
+    if (group.getEnName() != null) {
+      json.addProperty(EN_NAME, group.getEnName());
     }
     if (group.getParentId() != null) {
       json.addProperty(PARENT_ID, group.getParentId());
@@ -59,6 +63,9 @@ public class WxCpDepartGsonAdapter implements JsonSerializer<WxCpDepart>, JsonDe
     }
     if (departJson.get(NAME) != null && !departJson.get(NAME).isJsonNull()) {
       depart.setName(GsonHelper.getAsString(departJson.get(NAME)));
+    }
+    if (departJson.get(EN_NAME) != null && !departJson.get(EN_NAME).isJsonNull()) {
+      depart.setEnName(GsonHelper.getAsString(departJson.get(EN_NAME)));
     }
     if (departJson.get(ORDER) != null && !departJson.get(ORDER).isJsonNull()) {
       depart.setOrder(GsonHelper.getAsLong(departJson.get(ORDER)));

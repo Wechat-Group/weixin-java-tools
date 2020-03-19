@@ -399,9 +399,6 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void addConfigStorage(String mpId, WxMpConfigStorage configStorages) {
     synchronized (this) {
-      if (this.configStorageMap.containsKey(mpId)) {
-        throw new RuntimeException("该公众号标识已存在，请更换其他标识！");
-      }
       this.configStorageMap.put(mpId, configStorages);
     }
   }

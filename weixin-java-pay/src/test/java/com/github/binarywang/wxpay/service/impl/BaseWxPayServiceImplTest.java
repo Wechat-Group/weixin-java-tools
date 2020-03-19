@@ -63,12 +63,13 @@ public class BaseWxPayServiceImplTest {
       .notifyUrl("111111")
       .tradeType(TradeType.JSAPI)
       .openid(((XmlWxPayConfig) this.payService.getConfig()).getOpenid())
-      .outTradeNo("1111112")
+      .outTradeNo("111111826")
+      .attach("#*#{\"pn\":\"粤B87965\",\"aid\":\"wx123\"}#*#")
       .build();
     request.setSignType(SignType.HMAC_SHA256);
     WxPayUnifiedOrderResult result = this.payService.unifiedOrder(request);
     log.info(result.toString());
-    log.warn(this.payService.getWxApiData().toString());
+//    log.warn(this.payService.getWxApiData().toString());
   }
 
   /**

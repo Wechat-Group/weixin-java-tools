@@ -50,14 +50,13 @@ public class BeanUtils {
           }
         }
         field.setAccessible(isAccessible);
-      } catch (SecurityException | IllegalArgumentException
-        | IllegalAccessException e) {
+      } catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
         log.error(e.getMessage(), e);
       }
     }
 
     if (!requiredFields.isEmpty()) {
-      String msg = "必填字段 " + requiredFields + " 必须提供值";
+      String msg = String.format("必填字段【%s】必须提供值！", requiredFields);
       log.debug(msg);
       throw new WxErrorException(WxError.builder().errorMsg(msg).build());
     }

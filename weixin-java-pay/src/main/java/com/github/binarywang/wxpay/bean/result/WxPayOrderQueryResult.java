@@ -77,7 +77,7 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
    * <pre>
    * 是否关注公众账号.
    * is_subscribe
-   * 否
+   * 是
    * String(1)
    * Y
    * 用户是否关注公众账号，Y-关注，N-未关注，仅在公众账号类型支付有效
@@ -85,6 +85,32 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
    */
   @XStreamAlias("is_subscribe")
   private String isSubscribe;
+
+  /**
+   * <pre>
+   * 用户子标识	.
+   * sub_openid
+   * 否
+   * String(128)
+   * oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
+   * 用户在子商户appid下的唯一标识
+   * </pre>
+   */
+  @XStreamAlias("sub_openid")
+  private String subOpenid;
+
+  /**
+   * <pre>
+   * 是否关注子公众账号.
+   * sub_is_subscribe
+   * 否
+   * String(1)
+   * Y
+   * 用户是否关注子公众账号，Y-关注，N-未关注（机构商户不返回）
+   * </pre>
+   */
+  @XStreamAlias("sub_is_subscribe")
+  private String isSubscribeSub;
 
   /**
    * <pre>
@@ -127,6 +153,25 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
+   * 商品详情.
+   * detail
+   * 否
+   * String(8192)
+   * 商品详细列表，使用Json格式，传输签名前请务必使用CDATA标签将JSON文本串保护起来。如果使用了单品优惠，会有单品优惠信息返回
+   *
+   * discount_detail []：
+   * └ goods_id String 必填 32 商品的编号
+   * └ goods_name String 必填 256 商品名称
+   * └ coupon_batch_id String 必填 代金券批次ID
+   * └ coupon_id String 必填 代金卷ID
+   * └ coupon_fee Int 必填 代金券支付金额，单位为分
+   * </pre>
+   **/
+  @XStreamAlias("detail")
+  private String detail;
+
+  /**
+   * <pre>
    * 订单金额.
    * total_fee
    * 是
@@ -140,19 +185,6 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 应结订单金额.
-   * settlement_total_fee
-   * 否
-   * Int
-   * 100
-   * 应结订单金额=订单金额-非充值代金券金额，应结订单金额<=订单金额。
-   * </pre>
-   */
-  @XStreamAlias("settlement_total_fee")
-  private Integer settlementTotalFee;
-
-  /**
-   * <pre>
    * 货币种类.
    * fee_type
    * 否
@@ -163,6 +195,19 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
    */
   @XStreamAlias("fee_type")
   private String feeType;
+
+  /**
+   * <pre>
+   * 应结订单金额.
+   * settlement_total_fee
+   * 否
+   * Int
+   * 100
+   * 应结订单金额=订单金额-非充值代金券金额，应结订单金额<=订单金额。
+   * </pre>
+   */
+  @XStreamAlias("settlement_total_fee")
+  private Integer settlementTotalFee;
 
   /**
    * <pre>
@@ -240,6 +285,7 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
    */
   @XStreamAlias("out_trade_no")
   private String outTradeNo;
+
   /**
    * <pre>
    * 附加数据.
@@ -252,6 +298,7 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
    */
   @XStreamAlias("attach")
   private String attach;
+
   /**
    * <pre>
    * 支付完成时间.
@@ -264,6 +311,7 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
    */
   @XStreamAlias("time_end")
   private String timeEnd;
+
   /**
    * <pre>
    * 交易状态描述.

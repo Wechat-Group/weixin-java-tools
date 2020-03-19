@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Data
 public class WxCpApprovalDetail implements Serializable {
-
   private static final long serialVersionUID = 1353393306564207170L;
 
   /**
@@ -49,19 +48,20 @@ public class WxCpApprovalDetail implements Serializable {
   /**
    * 申请人信息
    */
-  private WxCpApprovalApplyer applyer;
+  @SerializedName("applyer")
+  private WxCpApprovalApplyer applier;
 
   /**
    * 审批流程信息，可能有多个审批节点
    */
   @SerializedName("sp_record")
-  private WxCpApprovalRecord spRecord;
+  private WxCpApprovalRecord[] spRecords;
 
   /**
    * 抄送信息，可能有多个抄送节点
    */
   @SerializedName("notifyer")
-  private WxCpOperator notifyer;
+  private WxCpOperator[] notifiers;
 
   /**
    * 审批申请数据
