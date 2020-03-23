@@ -1,6 +1,5 @@
 package com.github.binarywang.wxpay.bean.request;
 
-import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
@@ -138,13 +137,4 @@ public class WxPayFaceAuthInfoRequest extends BaseWxPayRequest {
   }
 
 
-  /**
-   * 增加设置setSignType方法，目前微信些接口，些字段为必传
-   * @param signType 签名类型
-   * @return  String 默认 MD5
-   */
-  @Override
-  public BaseWxPayRequest setSignType(String signType) {
-    return super.setSignType(WxPayConstants.SignType.MD5);
-  }
 }
