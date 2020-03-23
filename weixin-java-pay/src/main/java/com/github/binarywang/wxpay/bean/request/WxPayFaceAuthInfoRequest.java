@@ -127,13 +127,13 @@ public class WxPayFaceAuthInfoRequest extends BaseWxPayRequest {
 
   @Override
   protected void storeMap(Map<String, String> map) {
+    map.put("now", now);
+    map.put("version", version);
+    map.put("rawdata", rawdata);
     map.put("store_id", storeId);
     map.put("store_name", storeName);
     map.put("device_id", deviceId);
     map.put("attach", attach);
-    map.put("rawdata", rawdata);
-    map.put("now", now);
-    map.put("version", version);
   }
 
 }

@@ -205,7 +205,6 @@ public class WxPayMicropayRequest extends BaseWxPayRequest {
    * 描述：Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
    * </pre>
    **/
-  @Required
   @XStreamAlias("receipt")
   private String receipt;
 
