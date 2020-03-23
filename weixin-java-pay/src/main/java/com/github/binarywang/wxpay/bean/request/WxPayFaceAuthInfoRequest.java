@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.bean.request;
 
+import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
@@ -136,4 +137,8 @@ public class WxPayFaceAuthInfoRequest extends BaseWxPayRequest {
     map.put("attach", attach);
   }
 
+  @Override
+  public BaseWxPayRequest setSignType(String signType) {
+    return super.setSignType(WxPayConstants.SignType.MD5);
+  }
 }
