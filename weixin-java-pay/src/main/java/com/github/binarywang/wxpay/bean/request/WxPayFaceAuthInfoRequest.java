@@ -137,10 +137,11 @@ public class WxPayFaceAuthInfoRequest extends BaseWxPayRequest {
     map.put("attach", attach);
   }
 
+
   /**
    * 增加设置setSignType方法，目前微信些接口，些字段为必传
    * @param signType 签名类型
-   * @return  String MD5
+   * @return  String 默认 MD5
    */
   @Override
   public BaseWxPayRequest setSignType(String signType) {
