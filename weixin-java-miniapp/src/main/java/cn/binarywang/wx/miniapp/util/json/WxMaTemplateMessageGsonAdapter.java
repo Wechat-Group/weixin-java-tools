@@ -1,12 +1,13 @@
 package cn.binarywang.wx.miniapp.util.json;
 
+import java.lang.reflect.Type;
+
+import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateMessage;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-
-import java.lang.reflect.Type;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -26,14 +27,6 @@ public class WxMaTemplateMessageGsonAdapter implements JsonSerializer<WxMaTempla
       messageJson.addProperty("form_id", message.getFormId());
     }
 
-    if (message.getPage() != null) {
-      messageJson.addProperty("page", message.getPage());
-    }
-
-    if (message.getColor() != null) {
-      messageJson.addProperty("color", message.getColor());
-    }
-
     if (message.getEmphasisKeyword() != null) {
       messageJson.addProperty("emphasis_keyword", message.getEmphasisKeyword());
     }
@@ -45,12 +38,9 @@ public class WxMaTemplateMessageGsonAdapter implements JsonSerializer<WxMaTempla
       return messageJson;
     }
 
-    for (WxMaTemplateMessage.Data datum : message.getData()) {
+    for (WxMaTemplateData datum : message.getData()) {
       JsonObject dataJson = new JsonObject();
       dataJson.addProperty("value", datum.getValue());
-      if (datum.getColor() != null) {
-        dataJson.addProperty("color", datum.getColor());
-      }
       data.add(datum.getName(), dataJson);
     }
 

@@ -1,6 +1,6 @@
 package me.chanjar.weixin.mp.api;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.subscribe.WxMpSubscribeMessage;
 
 /**
@@ -13,7 +13,6 @@ import me.chanjar.weixin.mp.bean.subscribe.WxMpSubscribeMessage;
  * @date 2018-01-22 上午11:07
  */
 public interface WxMpSubscribeMsgService {
-
   /**
    * <pre>
    * 构造用户订阅一条模板消息授权的url连接

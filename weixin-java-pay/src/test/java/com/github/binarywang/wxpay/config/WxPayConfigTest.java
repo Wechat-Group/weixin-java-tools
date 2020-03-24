@@ -15,9 +15,16 @@ public class WxPayConfigTest {
   private WxPayConfig payConfig = new WxPayConfig();
 
   @Test
-  public void testInitSSLContext() throws Exception {
+  public void testInitSSLContext_classpath() throws Exception {
     payConfig.setMchId("123");
     payConfig.setKeyPath("classpath:/abc.p12");
+    payConfig.initSSLContext();
+  }
+
+  @Test
+  public void testInitSSLContext_http() throws Exception {
+    payConfig.setMchId("123");
+    payConfig.setKeyPath("https://www.baidu.com");
     payConfig.initSSLContext();
   }
 

@@ -1,12 +1,12 @@
 package me.chanjar.weixin.mp.bean.menu;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * <pre>
@@ -27,7 +27,7 @@ public class WxMpSelfMenuInfo implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   @Data
@@ -43,13 +43,13 @@ public class WxMpSelfMenuInfo implements Serializable {
     @SerializedName("type")
     private String type;
     /**
-     * 菜单名称
+     * 菜单名称.
      */
     @SerializedName("name")
     private String name;
     /**
      * <pre>
-     * 对于不同的菜单类型，value的值意义不同。
+     * 对于不同的菜单类型，value的值意义不同.
      * 官网上设置的自定义菜单：
      *  <li>Text:保存文字到value；
      *  <li>Img、voice：保存mediaID到value；
@@ -58,36 +58,59 @@ public class WxMpSelfMenuInfo implements Serializable {
      *  <li>View：保存链接到url。</li>
      *
      * 使用API设置的自定义菜单：
-     *  <li>click、scancode_push、scancode_waitmsg、pic_sysphoto、pic_photo_or_album、	pic_weixin、location_select：保存值到key；
+     *  <li>click、scancode_push、scancode_waitmsg、pic_sysphoto、pic_photo_or_album、pic_weixin、location_select：保存值到key；
      *  <li>view：保存链接到url
      *  </pre>
      */
     @SerializedName("key")
     private String key;
     /**
+     * .
+     *
      * @see #key
      */
     @SerializedName("url")
     private String url;
+
     /**
+     * .
+     *
      * @see #key
      */
     @SerializedName("value")
     private String value;
+
     /**
-     * 子菜单信息
+     * <pre>
+     * 小程序的appid.
+     * miniprogram类型必须
+     * </pre>
+     */
+    @SerializedName("appid")
+    private String appId;
+
+    /**
+     * <pre>
+     * 小程序的页面路径.
+     * miniprogram类型必须
+     * </pre>
+     */
+    @SerializedName("pagepath")
+    private String pagePath;
+    /**
+     * 子菜单信息.
      */
     @SerializedName("sub_button")
     private SubButtons subButtons;
     /**
-     * 图文消息的信息
+     * 图文消息的信息.
      */
     @SerializedName("news_info")
     private NewsInfo newsInfo;
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxMpGsonBuilder.create().toJson(this);
     }
 
     @Data
@@ -99,7 +122,7 @@ public class WxMpSelfMenuInfo implements Serializable {
 
       @Override
       public String toString() {
-        return ToStringUtils.toSimpleString(this);
+        return WxMpGsonBuilder.create().toJson(this);
       }
     }
 
@@ -112,55 +135,53 @@ public class WxMpSelfMenuInfo implements Serializable {
 
       @Override
       public String toString() {
-        return ToStringUtils.toSimpleString(this);
+        return WxMpGsonBuilder.create().toJson(this);
       }
 
       @Data
-      public static class NewsInButton  implements Serializable {
+      public static class NewsInButton implements Serializable {
         private static final long serialVersionUID = 8701455967664912972L;
 
         /**
-         * 图文消息的标题
+         * 图文消息的标题.
          */
         @SerializedName("title")
         private String title;
         /**
-         * 摘要
+         * 摘要.
          */
         @SerializedName("digest")
         private String digest;
         /**
-         * 作者
+         * 作者.
          */
         @SerializedName("author")
         private String author;
         /**
-         * show_cover
-         * 是否显示封面，0为不显示，1为显示
+         * 是否显示封面，0为不显示，1为显示.
          */
         @SerializedName("show_cover")
         private Integer showCover;
         /**
-         * 封面图片的URL
+         * 封面图片的URL.
          */
         @SerializedName("cover_url")
         private String coverUrl;
         /**
-         * 正文的URL
+         * 正文的URL.
          */
         @SerializedName("content_url")
         private String contentUrl;
         /**
-         * 原文的URL，若置空则无查看原文入口
+         * 原文的URL，若置空则无查看原文入口.
          */
         @SerializedName("source_url")
         private String sourceUrl;
 
         @Override
         public String toString() {
-          return ToStringUtils.toSimpleString(this);
+          return WxMpGsonBuilder.create().toJson(this);
         }
-
       }
     }
   }

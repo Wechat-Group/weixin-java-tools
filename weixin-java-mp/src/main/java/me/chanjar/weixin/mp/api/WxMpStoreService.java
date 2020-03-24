@@ -1,6 +1,6 @@
 package me.chanjar.weixin.mp.api;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreInfo;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreListResult;
@@ -8,20 +8,12 @@ import me.chanjar.weixin.mp.bean.store.WxMpStoreListResult;
 import java.util.List;
 
 /**
- * 门店管理的相关接口代码
- * <p>
+ * 门店管理的相关接口代码.
  * Created by Binary Wang on 2016-09-23.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMpStoreService<H, P> {
-  String POI_GET_WX_CATEGORY_URL = "https://api.weixin.qq.com/cgi-bin/poi/getwxcategory";
-  String POI_UPDATE_URL = "https://api.weixin.qq.com/cgi-bin/poi/updatepoi";
-  String POI_LIST_URL = "https://api.weixin.qq.com/cgi-bin/poi/getpoilist";
-  String POI_DEL_URL = "https://api.weixin.qq.com/cgi-bin/poi/delpoi";
-  String POI_GET_URL = "https://api.weixin.qq.com/cgi-bin/poi/getpoi";
-  String POI_ADD_URL = "https://api.weixin.qq.com/cgi-bin/poi/addpoi";
-
   /**
    * <pre>
    * 创建门店

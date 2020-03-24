@@ -1,10 +1,12 @@
 package me.chanjar.weixin.mp.api;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.device.*;
 
 /**
  * Created by keungtung on 10/12/2016.
+ *
+ * @author keungtung
  */
 public interface WxMpDeviceService {
   /**

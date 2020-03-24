@@ -1,7 +1,8 @@
 package me.chanjar.weixin.open.api.impl;
 
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.WxType;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
@@ -16,8 +17,8 @@ import java.io.IOException;
  * @author <a href="https://github.com/007gzs">007</a>
  */
 public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, RequestHttp<H, P> {
-  protected final Logger log = LoggerFactory.getLogger(this.getClass());
-  protected WxOpenComponentService wxOpenComponentService = new WxOpenComponentServiceImpl(this);
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
+  private WxOpenComponentService wxOpenComponentService = new WxOpenComponentServiceImpl(this);
   private WxOpenConfigStorage wxOpenConfigStorage;
 
   @Override
@@ -33,11 +34,17 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
   @Override
   public void setWxOpenConfigStorage(WxOpenConfigStorage wxOpenConfigStorage) {
     this.wxOpenConfigStorage = wxOpenConfigStorage;
+    this.initHttp();
   }
+
+  /**
+   * 初始化 RequestHttp.
+   */
+  public abstract void initHttp();
 
   protected synchronized <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
     try {
-      T result = executor.execute(uri, data);
+      T result = executor.execute(uri, data, WxType.Open);
       this.log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uri, data, result);
       return result;
     } catch (WxErrorException e) {

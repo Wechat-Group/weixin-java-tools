@@ -5,6 +5,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -93,4 +94,17 @@ public class EntPayBankQueryResult extends BaseWxPayResult {
   @XStreamAlias("reason")
   private String failReason;
 
+  @Override
+  protected void loadXML(Document d) {
+    partnerTradeNo = readXMLString(d, "partner_trade_no");
+    paymentNo = readXMLString(d, "payment_no");
+    bankNoMd5 = readXMLString(d, "bank_no_md5");
+    trueNameMd5 = readXMLString(d, "true_name_md5");
+    amount = readXMLInteger(d, "amount");
+    status = readXMLString(d, "status");
+    cmmsAmount = readXMLInteger(d, "cmms_amt");
+    createTime = readXMLString(d, "create_time");
+    paySuccessTime = readXMLString(d, "pay_succ_time");
+    failReason = readXMLString(d, "reason");
+  }
 }

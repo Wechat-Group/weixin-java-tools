@@ -1,7 +1,7 @@
 package me.chanjar.weixin.open.api.impl;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
@@ -9,7 +9,7 @@ import me.chanjar.weixin.open.api.WxOpenComponentService;
 /**
  * @author <a href="https://github.com/007gzs">007</a>
  */
-/* package */ class WxOpenMpServiceImpl extends WxMpServiceImpl {
+public class WxOpenMpServiceImpl extends WxMpServiceImpl {
   private WxOpenComponentService wxOpenComponentService;
   private WxMpConfigStorage wxMpConfigStorage;
   private String appId;

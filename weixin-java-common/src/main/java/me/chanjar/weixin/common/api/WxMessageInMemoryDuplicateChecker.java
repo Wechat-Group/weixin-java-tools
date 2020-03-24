@@ -9,6 +9,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * 默认消息重复检查器.
  * 将每个消息id保存在内存里，每隔5秒清理已经过期的消息id，每个消息id的过期时间是15秒
  * </pre>
+ *
+ * @author Daniel Qian
  */
 public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChecker {
 
@@ -74,7 +76,7 @@ public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChec
             }
           }
         } catch (InterruptedException e) {
-          e.printStackTrace();
+          Thread.currentThread().interrupt();
         }
       }
     });

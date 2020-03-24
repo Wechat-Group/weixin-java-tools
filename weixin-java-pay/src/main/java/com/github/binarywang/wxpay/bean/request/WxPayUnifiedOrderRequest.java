@@ -5,8 +5,11 @@ import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
+import lombok.experimental.Accessors;
 import me.chanjar.weixin.common.annotation.Required;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Map;
 
 /**
  * <pre>
@@ -23,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
+@Accessors(chain = true)
 public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
   private static final long serialVersionUID = 4611350167813931828L;
 
@@ -304,6 +308,19 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
 
   /**
    * <pre>
+   * 字段名：电子发票入口开放标识.
+   * 变量名：	receipt
+   * 是否必填：否
+   * 类型：String(8)
+   * 示例值：Y
+   * 描述：Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
+   * </pre>
+   */
+  @XStreamAlias("receipt")
+  private String receipt;
+
+  /**
+   * <pre>
    * 字段名：场景信息.
    * 变量名：scene_info
    * 是否必填：否，对H5支付来说是必填
@@ -331,6 +348,17 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
    */
   @XStreamAlias("fingerprint")
   private String fingerprint;
+  /**
+   * <pre>
+   * 字段名：是否指定服务商分账.
+   * 变量名：profit_sharing
+   * 是否必填：否
+   * 详情：Y-是，需要分账  N-否，不分账，字母要求大写，不传默认不分账
+   * 详细参考 https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=24_3&index=3
+   * </pre>
+   */
+  @XStreamAlias("profit_sharing")
+  private String profitSharing;
 
   /**
    * 如果配置中已经设置，可以不设置值.
@@ -368,6 +396,32 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
     }
 
     super.checkAndSign(config);
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("version", version);
+    map.put("device_info", deviceInfo);
+    map.put("body", body);
+    map.put("detail", detail);
+    map.put("attach", attach);
+    map.put("out_trade_no", outTradeNo);
+    map.put("fee_type", feeType);
+    map.put("total_fee", totalFee.toString());
+    map.put("spbill_create_ip", spbillCreateIp);
+    map.put("time_start", timeStart);
+    map.put("time_expire", timeExpire);
+    map.put("goods_tag", goodsTag);
+    map.put("notify_url", notifyUrl);
+    map.put("trade_type", tradeType);
+    map.put("product_id", productId);
+    map.put("limit_pay", limitPay);
+    map.put("openid", openid);
+    map.put("sub_openid", subOpenid);
+    map.put("receipt", receipt);
+    map.put("scene_info", sceneInfo);
+    map.put("fingerprint", fingerprint);
+    map.put("profit_sharing", profitSharing);
   }
 
 }

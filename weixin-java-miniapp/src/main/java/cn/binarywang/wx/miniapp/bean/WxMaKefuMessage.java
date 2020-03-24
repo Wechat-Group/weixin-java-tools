@@ -4,7 +4,7 @@ import cn.binarywang.wx.miniapp.builder.ImageMessageBuilder;
 import cn.binarywang.wx.miniapp.builder.LinkMessageBuilder;
 import cn.binarywang.wx.miniapp.builder.MaPageMessageBuilder;
 import cn.binarywang.wx.miniapp.builder.TextMessageBuilder;
-import com.google.gson.GsonBuilder;
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,20 +41,26 @@ public class WxMaKefuMessage implements Serializable {
 
   @Data
   @AllArgsConstructor
-  public static class KfText {
+  public static class KfText implements Serializable {
+    private static final long serialVersionUID = 151122958720941270L;
+
     private String content;
   }
 
   @Data
   @AllArgsConstructor
-  public static class KfImage {
+  public static class KfImage implements Serializable {
+    private static final long serialVersionUID = -5409342945117300782L;
+
     @SerializedName("media_id")
     private String mediaId;
   }
 
   @Data
   @Builder
-  public static class KfLink {
+  public static class KfLink implements Serializable {
+    private static final long serialVersionUID = -6728776817556127413L;
+
     private String title;
     private String description;
     private String url;
@@ -65,7 +71,9 @@ public class WxMaKefuMessage implements Serializable {
 
   @Data
   @Builder
-  public static class KfMaPage {
+  public static class KfMaPage implements Serializable {
+    private static final long serialVersionUID = -5633492281871634466L;
+
     private String title;
 
     @SerializedName("pagepath")
@@ -104,7 +112,7 @@ public class WxMaKefuMessage implements Serializable {
   }
 
   public String toJson() {
-    return new GsonBuilder().create().toJson(this);
+    return WxMaGsonBuilder.create().toJson(this);
   }
 
 }

@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -42,5 +43,18 @@ public class WxPayUnifiedOrderResult extends BaseWxPayResult {
    */
   @XStreamAlias("code_url")
   private String codeURL;
+
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXML(Document d) {
+    prepayId = readXMLString(d, "prepay_id");
+    tradeType = readXMLString(d, "trade_type");
+    mwebUrl = readXMLString(d, "mweb_url");
+    codeURL = readXMLString(d, "code_url");
+  }
 
 }

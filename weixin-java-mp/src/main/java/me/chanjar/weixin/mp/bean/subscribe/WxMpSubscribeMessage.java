@@ -1,13 +1,12 @@
 package me.chanjar.weixin.mp.bean.subscribe;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
-import java.io.Serializable;
 
 /**
  * @author Mklaus
@@ -67,7 +66,7 @@ public class WxMpSubscribeMessage {
 
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   @Data
@@ -78,5 +77,11 @@ public class WxMpSubscribeMessage {
 
     private String appid;
     private String pagePath;
+
+    /**
+     * 是否使用path，否则使用pagepath.
+     * 加入此字段是基于微信官方接口变化多端的考虑
+     */
+    private boolean usePath = false;
   }
 }

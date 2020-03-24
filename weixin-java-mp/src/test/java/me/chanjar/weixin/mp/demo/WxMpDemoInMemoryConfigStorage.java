@@ -1,18 +1,19 @@
 package me.chanjar.weixin.mp.demo;
 
+import java.io.InputStream;
+import java.util.concurrent.locks.ReentrantLock;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
-import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
-
-import java.io.InputStream;
-import java.util.concurrent.locks.ReentrantLock;
+import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 
 /**
  * @author Daniel Qian
  */
 @XStreamAlias("xml")
-class WxMpDemoInMemoryConfigStorage extends WxMpInMemoryConfigStorage {
+class WxMpDemoInMemoryConfigStorage extends WxMpDefaultConfigImpl {
+  private static final long serialVersionUID = -3706236839197109704L;
 
   public static WxMpDemoInMemoryConfigStorage fromXml(InputStream is) {
     XStream xstream = XStreamInitializer.getInstance();
@@ -22,12 +23,6 @@ class WxMpDemoInMemoryConfigStorage extends WxMpInMemoryConfigStorage {
     wxMpDemoInMemoryConfigStorage.cardApiTicketLock = new ReentrantLock();
     wxMpDemoInMemoryConfigStorage.jsapiTicketLock = new ReentrantLock();
     return wxMpDemoInMemoryConfigStorage;
-  }
-
-  @Override
-  public String toString() {
-    return "SimpleWxConfigProvider [appId=" + this.appId + ", secret=" + this.secret + ", accessToken=" + this.accessToken
-      + ", expiresTime=" + this.expiresTime + ", token=" + this.token + ", aesKey=" + this.aesKey + ", templateId=" + this.templateId + "]";
   }
 
 }

@@ -1,19 +1,26 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import java.io.File;
+import java.util.Date;
+
+import org.joda.time.DateTime;
+import org.testng.annotations.*;
+
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConfigStorage;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.kefu.request.WxMpKfAccountRequest;
-import me.chanjar.weixin.mp.bean.kefu.result.*;
-import org.joda.time.DateTime;
-import org.testng.annotations.*;
-
-import java.io.File;
-import java.util.Date;
+import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfInfo;
+import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfList;
+import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfMsgList;
+import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfOnlineList;
+import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfSessionGetResult;
+import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfSessionList;
+import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfSessionWaitCaseList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -134,8 +141,7 @@ public class WxMpKefuServiceImplTest {
   }
 
   @Test(dataProvider = "getKfAccountAndOpenid")
-  public void testKfSessionClose(String kfAccount, String openid)
-    throws WxErrorException {
+  public void testKfSessionClose(String kfAccount, String openid) throws WxErrorException {
     boolean result = this.wxService.getKefuService().kfSessionClose(openid, kfAccount);
     assertThat(result).isTrue();
   }
@@ -177,5 +183,12 @@ public class WxMpKefuServiceImplTest {
     WxMpKfMsgList result = this.wxService.getKefuService().kfMsgList(startTime, endTime);
     assertThat(result).isNotNull();
     System.err.println(result);
+  }
+
+  @Test
+  public void testSendKfTypingState() throws WxErrorException {
+    TestConfigStorage configStorage = (TestConfigStorage) this.wxService.getWxMpConfigStorage();
+    boolean result = this.wxService.getKefuService().sendKfTypingState(configStorage.getOpenid(), "Typing");
+    assertThat(result).isTrue();
   }
 }

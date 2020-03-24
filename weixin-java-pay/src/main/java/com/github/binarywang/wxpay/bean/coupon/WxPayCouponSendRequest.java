@@ -5,6 +5,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * <pre>
  * 发送代金券请求对象类
@@ -13,7 +15,6 @@ import me.chanjar.weixin.common.annotation.Required;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder(builderMethodName = "newBuilder")
@@ -132,5 +133,17 @@ public class WxPayCouponSendRequest extends BaseWxPayRequest {
   @Override
   protected void checkConstraints() {
     //do nothing
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("coupon_stock_id", couponStockId);
+    map.put("openid_count", openidCount.toString());
+    map.put("partner_trade_no", partnerTradeNo);
+    map.put("openid", openid);
+    map.put("op_user_id", opUserId);
+    map.put("device_info", deviceInfo);
+    map.put("version", version);
+    map.put("type", type);
   }
 }

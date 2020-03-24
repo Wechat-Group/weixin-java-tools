@@ -1,15 +1,19 @@
 package cn.binarywang.wx.miniapp.bean;
 
-import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
-import lombok.*;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * 模板消息.
- * 参考 https://mp.weixin.qq.com/debug/wxadoc/dev/api/notice.html#接口说明  模板消息部分
+ * 参考 https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.send.html
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
@@ -69,17 +73,7 @@ public class WxMaTemplateMessage implements Serializable {
    * 描述： 模板内容，不填则下发空模板
    * </pre>
    */
-  private List<Data> data;
-
-  /**
-   * 模板内容字体的颜色，不填默认黑色.
-   * <pre>
-   * 参数：color
-   * 是否必填： 否
-   * 描述： 模板内容字体的颜色，不填默认黑色
-   * </pre>
-   */
-  private String color;
+  private List<WxMaTemplateData> data;
 
   /**
    * 模板需要放大的关键词，不填则默认无放大.
@@ -91,7 +85,7 @@ public class WxMaTemplateMessage implements Serializable {
    */
   private String emphasisKeyword;
 
-  public WxMaTemplateMessage addData(Data datum) {
+  public WxMaTemplateMessage addData(WxMaTemplateData datum) {
     if (this.data == null) {
       this.data = new ArrayList<>();
     }
@@ -102,25 +96,6 @@ public class WxMaTemplateMessage implements Serializable {
 
   public String toJson() {
     return WxMaGsonBuilder.create().toJson(this);
-  }
-
-  @lombok.Data
-  public static class Data {
-    private String name;
-    private String value;
-    private String color;
-
-    public Data(String name, String value) {
-      this.name = name;
-      this.value = value;
-    }
-
-    public Data(String name, String value, String color) {
-      this.name = name;
-      this.value = value;
-      this.color = color;
-    }
-
   }
 
 }

@@ -6,13 +6,13 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.binarywang</groupId>
-    <artifactId>weixin-java-parent</artifactId>
-    <version>3.0.0</version>
+    <artifactId>wx-java</artifactId>
+    <version>3.7.0</version>
   </parent>
 
   <artifactId>weixin-java-cp</artifactId>
-  <name>Weixin Java Tools - CP</name>
-  <description>微信企业号Java SDK</description>
+  <name>WxJava - CP Java SDK</name>
+  <description>微信企业号/企业微信 Java SDK</description>
 
   <dependencies>
     <dependency>
@@ -94,5 +94,37 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>native-image</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.5.1</version>
+            <configuration>
+              <annotationProcessors>
+                cn.binarywang.wx.graal.GraalProcessor,lombok.launch.AnnotationProcessorHider$AnnotationProcessor,lombok.launch.AnnotationProcessorHider$ClaimingProcessor
+              </annotationProcessors>
+              <annotationProcessorPaths>
+                <path>
+                  <groupId>com.github.binarywang</groupId>
+                  <artifactId>weixin-graal</artifactId>
+                  <version>${project.version}</version>
+                </path>
+              </annotationProcessorPaths>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+
+    </profile>
+  </profiles>
 
 </project>

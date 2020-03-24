@@ -2,19 +2,23 @@ package me.chanjar.weixin.mp.api.impl;
 
 import jodd.http.*;
 import jodd.http.net.SocketHttpConnectionProvider;
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
-import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 
 import java.util.concurrent.locks.Lock;
 
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_ACCESS_TOKEN_URL;
+
 /**
- * jodd-http方式实现
+ * jodd-http方式实现.
+ *
+ * @author someone
  */
-public class WxMpServiceJoddHttpImpl extends WxMpServiceBaseImpl<HttpConnectionProvider, ProxyInfo> {
+public class WxMpServiceJoddHttpImpl extends BaseWxMpServiceImpl<HttpConnectionProvider, ProxyInfo> {
   private HttpConnectionProvider httpClient;
   private ProxyInfo httpProxy;
 
@@ -47,36 +51,40 @@ public class WxMpServiceJoddHttpImpl extends WxMpServiceBaseImpl<HttpConnectionP
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+    final WxMpConfigStorage config = this.getWxMpConfigStorage();
+    if (!config.isAccessTokenExpired() && !forceRefresh) {
+      return config.getAccessToken();
+    }
+
+    Lock lock = config.getAccessTokenLock();
+    lock.lock();
     try {
-      lock.lock();
-
-      if (this.getWxMpConfigStorage().isAccessTokenExpired() || forceRefresh) {
-        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
-          this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
-
-        HttpRequest request = HttpRequest.get(url);
-
-        if (this.getRequestHttpProxy() != null) {
-          SocketHttpConnectionProvider provider = new SocketHttpConnectionProvider();
-          provider.useProxy(getRequestHttpProxy());
-
-          request.withConnectionProvider(provider);
-        }
-        HttpResponse response = request.send();
-        String resultContent = response.bodyText();
-        WxError error = WxError.fromJson(resultContent);
-        if (error.getErrorCode() != 0) {
-          throw new WxErrorException(error);
-        }
-        WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-        this.getWxMpConfigStorage().updateAccessToken(accessToken.getAccessToken(),
-          accessToken.getExpiresIn());
+      if (!config.isAccessTokenExpired() && !forceRefresh) {
+        return config.getAccessToken();
       }
+      String url = String.format(GET_ACCESS_TOKEN_URL.getUrl(config), config.getAppId(), config.getSecret());
+
+      HttpRequest request = HttpRequest.get(url);
+
+      if (this.getRequestHttpProxy() != null) {
+        SocketHttpConnectionProvider provider = new SocketHttpConnectionProvider();
+        provider.useProxy(getRequestHttpProxy());
+
+        request.withConnectionProvider(provider);
+      }
+      HttpResponse response = request.send();
+      String resultContent = response.bodyText();
+      WxError error = WxError.fromJson(resultContent, WxType.MP);
+      if (error.getErrorCode() != 0) {
+        throw new WxErrorException(error);
+      }
+      WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+      config.updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
+
+      return config.getAccessToken();
     } finally {
       lock.unlock();
     }
-    return this.getWxMpConfigStorage().getAccessToken();
   }
 
 }

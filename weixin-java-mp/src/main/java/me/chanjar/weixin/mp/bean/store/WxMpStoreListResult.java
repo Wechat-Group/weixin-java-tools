@@ -1,12 +1,11 @@
 package me.chanjar.weixin.mp.bean.store;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * <pre>
@@ -21,22 +20,22 @@ public class WxMpStoreListResult implements Serializable {
   private static final long serialVersionUID = 5388907559949538663L;
 
   /**
-   * 错误码，0为正常
+   * 错误码，0为正常.
    */
   @SerializedName("errcode")
   private Integer errCode;
   /**
-   * 错误信息
+   * 错误信息.
    */
   @SerializedName("errmsg")
   private String errMsg;
   /**
-   * 门店信息列表
+   * 门店信息列表.
    */
   @SerializedName("business_list")
   private List<WxMpStoreInfo> businessList;
   /**
-   * 门店信息总数
+   * 门店信息总数.
    */
   @SerializedName("total_count")
   private Integer totalCount;
@@ -47,7 +46,7 @@ public class WxMpStoreListResult implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

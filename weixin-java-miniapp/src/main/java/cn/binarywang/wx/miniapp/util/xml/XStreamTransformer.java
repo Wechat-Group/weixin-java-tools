@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.binarywang.wx.miniapp.bean.WxMaMessage;
+import cn.binarywang.wx.miniapp.message.WxMaXmlOutMessage;
 import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 
@@ -19,6 +20,7 @@ public class XStreamTransformer {
 
   static {
     registerClass(WxMaMessage.class);
+    registerClass(WxMaXmlOutMessage.class);
   }
 
   /**
@@ -60,7 +62,6 @@ public class XStreamTransformer {
    */
   private static void registerClass(Class<?> clz) {
     XStream xstream = XStreamInitializer.getInstance();
-    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
 
     xstream.processAnnotations(clz);
     xstream.processAnnotations(getInnerClasses(clz));

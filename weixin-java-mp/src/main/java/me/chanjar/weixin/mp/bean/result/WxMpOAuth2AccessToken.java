@@ -1,10 +1,9 @@
 package me.chanjar.weixin.mp.bean.result;
 
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
+
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
@@ -35,6 +34,6 @@ public class WxMpOAuth2AccessToken implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 }

@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.test;
 
-import cn.binarywang.wx.miniapp.config.WxMaInMemoryConfig;
+import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
@@ -13,7 +13,7 @@ import java.util.concurrent.locks.Lock;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @XStreamAlias("xml")
-public class TestConfig extends WxMaInMemoryConfig {
+public class TestConfig extends WxMaDefaultConfigImpl {
 
   private String openid;
   private String kfAccount;
@@ -54,6 +54,7 @@ public class TestConfig extends WxMaInMemoryConfig {
     this.templateId = templateId;
   }
 
+  @Override
   public void setAccessTokenLock(Lock lock) {
     super.accessTokenLock = lock;
   }

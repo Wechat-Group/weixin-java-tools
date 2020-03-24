@@ -4,9 +4,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * <pre>
- *  提交刷卡支付请求对象类
+ *  提交付款码支付请求对象类
  * Created by Binary Wang on 2017-3-23.
  * </pre>
  *
@@ -19,6 +21,19 @@ import me.chanjar.weixin.common.annotation.Required;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayMicropayRequest extends BaseWxPayRequest {
+  /**
+   * <pre>
+   * 字段名：设备号.
+   * 变量名：device_info
+   * 是否必填：否
+   * 类型：String(32)
+   * 示例值：013467007045764
+   * 描述：终端设备号(商户自定义，如门店编号)
+   * </pre>
+   */
+  @XStreamAlias("device_info")
+  private String deviceInfo;
+
   /**
    * <pre>
    * 字段名：接口版本号.
@@ -155,6 +170,47 @@ public class WxPayMicropayRequest extends BaseWxPayRequest {
 
   /**
    * <pre>
+   * 字段名：交易起始时间.
+   * 变量名：time_start
+   * 是否必填：否
+   * 类型：String(14)
+   * 示例值：20091225091010
+   * 描述：订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
+   * </pre>
+   */
+  @XStreamAlias("time_start")
+  private String timeStart;
+
+  /**
+   * <pre>
+   * 字段名：交易结束时间.
+   * 变量名：time_expire
+   * 是否必填：否
+   * 类型：String(14)
+   * 示例值：20091227091010
+   * 描述：订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。其他详见时间规则
+   * 注意：最短失效时间间隔必须大于5分钟
+   * </pre>
+   */
+  @XStreamAlias("time_expire")
+  private String timeExpire;
+
+  /**
+   * <pre>
+   * 字段名：电子发票入口开放标识	.
+   * 变量名：receipt
+   * 是否必填：否
+   * 类型：String(8)
+   * 示例值：Y
+   * 描述：Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
+   * </pre>
+   **/
+  @Required
+  @XStreamAlias("receipt")
+  private String receipt;
+
+  /**
+   * <pre>
    * 字段名：授权码.
    * 变量名：auth_code
    * 是否必填：是
@@ -167,9 +223,56 @@ public class WxPayMicropayRequest extends BaseWxPayRequest {
   @XStreamAlias("auth_code")
   private String authCode;
 
+  /**
+   * <pre>
+   * 字段名：场景信息.
+   * 变量名：scene_info
+   * 是否必填：否
+   * 类型：String(256)
+   * 示例值：{"store_info" : {
+   * "id": "SZTX001",
+   * "name": "腾大餐厅",
+   * "area_code": "440305",
+   * "address": "科技园中一路腾讯大厦" }}
+   * 描述：该字段用于上报场景信息，目前支持上报实际门店信息。该字段为JSON对象数据，对象格式为{"store_info":{"id": "门店ID","name": "名称","area_code": "编码","address": "地址" }}
+   * </pre>
+   */
+  @XStreamAlias("scene_info")
+  private String sceneInfo;
+
+  /**
+   * <pre>
+   * 字段名：是否指定服务商分账.
+   * 变量名：profit_sharing
+   * 是否必填：否
+   * 详情：Y-是，需要分账  N-否，不分账，字母要求大写，不传默认不分账
+   * 详细参考 https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=24_3&index=3
+   * </pre>
+   */
+  @XStreamAlias("profit_sharing")
+  private String profitSharing;
+
   @Override
   protected void checkConstraints() {
     //do nothing
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("version", version);
+    map.put("body", body);
+    map.put("detail", detail);
+    map.put("attach", attach);
+    map.put("out_trade_no", outTradeNo);
+    map.put("total_fee", totalFee.toString());
+    map.put("fee_type", feeType);
+    map.put("spbill_create_ip", spbillCreateIp);
+    map.put("goods_tag", goodsTag);
+    map.put("limit_pay", limitPay);
+    map.put("time_start", timeStart);
+    map.put("time_expire", timeExpire);
+    map.put("auth_code", authCode);
+    map.put("scene_info", sceneInfo);
   }
 
 }

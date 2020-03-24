@@ -1,15 +1,14 @@
 package me.chanjar.weixin.common.bean.menu;
 
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Data;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
  * 菜单（公众号和企业号共用的）.
@@ -47,7 +46,7 @@ public class WxMenu implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return this.toJson();
   }
 
 }

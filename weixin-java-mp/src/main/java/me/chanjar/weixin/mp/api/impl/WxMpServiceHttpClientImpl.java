@@ -1,13 +1,13 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
-import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -18,10 +18,14 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import java.io.IOException;
 import java.util.concurrent.locks.Lock;
 
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_ACCESS_TOKEN_URL;
+
 /**
  * apache http client方式实现.
+ *
+ * @author someone
  */
-public class WxMpServiceHttpClientImpl extends WxMpServiceBaseImpl<CloseableHttpClient, HttpHost> {
+public class WxMpServiceHttpClientImpl extends BaseWxMpServiceImpl<CloseableHttpClient, HttpHost> {
   private CloseableHttpClient httpClient;
   private HttpHost httpProxy;
 
@@ -62,37 +66,41 @@ public class WxMpServiceHttpClientImpl extends WxMpServiceBaseImpl<CloseableHttp
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+    final WxMpConfigStorage config = this.getWxMpConfigStorage();
+    if (!config.isAccessTokenExpired() && !forceRefresh) {
+      return config.getAccessToken();
+    }
+
+    Lock lock = config.getAccessTokenLock();
+    lock.lock();
     try {
-      lock.lock();
-      if (this.getWxMpConfigStorage().isAccessTokenExpired() || forceRefresh) {
-        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
-          this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
-        try {
-          HttpGet httpGet = new HttpGet(url);
-          if (this.getRequestHttpProxy() != null) {
-            RequestConfig config = RequestConfig.custom().setProxy(this.getRequestHttpProxy()).build();
-            httpGet.setConfig(config);
-          }
-          try (CloseableHttpResponse response = getRequestHttpClient().execute(httpGet)) {
-            String resultContent = new BasicResponseHandler().handleResponse(response);
-            WxError error = WxError.fromJson(resultContent);
-            if (error.getErrorCode() != 0) {
-              throw new WxErrorException(error);
-            }
-            WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-            this.getWxMpConfigStorage().updateAccessToken(accessToken.getAccessToken(),
-              accessToken.getExpiresIn());
-          } finally {
-            httpGet.releaseConnection();
-          }
-        } catch (IOException e) {
-          throw new RuntimeException(e);
+      if (!config.isAccessTokenExpired() && !forceRefresh) {
+        return config.getAccessToken();
+      }
+      String url = String.format(GET_ACCESS_TOKEN_URL.getUrl(config), config.getAppId(), config.getSecret());
+      try {
+        HttpGet httpGet = new HttpGet(url);
+        if (this.getRequestHttpProxy() != null) {
+          RequestConfig requestConfig = RequestConfig.custom().setProxy(this.getRequestHttpProxy()).build();
+          httpGet.setConfig(requestConfig);
         }
+        try (CloseableHttpResponse response = getRequestHttpClient().execute(httpGet)) {
+          String resultContent = new BasicResponseHandler().handleResponse(response);
+          WxError error = WxError.fromJson(resultContent, WxType.MP);
+          if (error.getErrorCode() != 0) {
+            throw new WxErrorException(error);
+          }
+          WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+          config.updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
+          return config.getAccessToken();
+        } finally {
+          httpGet.releaseConnection();
+        }
+      } catch (IOException e) {
+        throw new RuntimeException(e);
       }
     } finally {
       lock.unlock();
     }
-    return this.getWxMpConfigStorage().getAccessToken();
   }
 }

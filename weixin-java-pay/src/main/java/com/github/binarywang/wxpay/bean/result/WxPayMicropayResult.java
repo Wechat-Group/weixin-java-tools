@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -18,9 +19,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @XStreamAlias("xml")
 public class WxPayMicropayResult extends BaseWxPayResult {
+  private static final long serialVersionUID = 529670965722059189L;
+
   /**
    * <pre>
-   * 用户标识
+   * 用户标识.
    * openid
    * 是
    * String(128)
@@ -33,7 +36,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 是否关注公众账号
+   * 是否关注公众账号.
    * is_subscribe
    * 是
    * String(1)
@@ -46,7 +49,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 交易类型
+   * 交易类型.
    * trade_type
    * 是
    * String(16)
@@ -59,7 +62,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 付款银行
+   * 付款银行.
    * bank_type
    * 是
    * String(32)
@@ -72,7 +75,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 货币类型
+   * 货币类型.
    * fee_type
    * 否
    * String(16)
@@ -85,7 +88,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 订单金额
+   * 订单金额.
    * total_fee
    * 是
    * Int
@@ -94,11 +97,11 @@ public class WxPayMicropayResult extends BaseWxPayResult {
    * </pre>
    **/
   @XStreamAlias("total_fee")
-  private String totalFee;
+  private Integer totalFee;
 
   /**
    * <pre>
-   * 应结订单金额
+   * 应结订单金额.
    * settlement_total_fee
    * 否
    * Int
@@ -111,7 +114,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 代金券金额
+   * 代金券金额.
    * coupon_fee
    * 否
    * Int
@@ -124,7 +127,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 现金支付货币类型
+   * 现金支付货币类型.
    * cash_fee_type
    * 否
    * String(16)
@@ -137,7 +140,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 现金支付金额
+   * 现金支付金额.
    * cash_fee
    * 是
    * Int
@@ -150,7 +153,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 微信支付订单号
+   * 微信支付订单号.
    * transaction_id
    * 是
    * String(32)
@@ -163,7 +166,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 商户订单号
+   * 商户订单号.
    * out_trade_no
    * 是
    * String(32)
@@ -176,7 +179,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 商家数据包
+   * 商家数据包.
    * attach
    * 否
    * String(128)
@@ -189,7 +192,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 支付完成时间
+   * 支付完成时间.
    * time_end
    * 是
    * String(14)
@@ -202,7 +205,7 @@ public class WxPayMicropayResult extends BaseWxPayResult {
 
   /**
    * <pre>
-   * 营销详情
+   * 营销详情.
    * promotion_detail
    * 否
    * String(6000)
@@ -212,5 +215,29 @@ public class WxPayMicropayResult extends BaseWxPayResult {
    **/
   @XStreamAlias("promotion_detail")
   private String promotionDetail;
+
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXML(Document d) {
+    openid = readXMLString(d, "openid");
+    isSubscribe = readXMLString(d, "is_subscribe");
+    tradeType = readXMLString(d, "trade_type");
+    bankType = readXMLString(d, "bank_type");
+    feeType = readXMLString(d, "fee_type");
+    totalFee = readXMLInteger(d, "total_fee");
+    settlementTotalFee = readXMLInteger(d, "settlement_total_fee");
+    couponFee = readXMLInteger(d, "coupon_fee");
+    cashFeeType = readXMLString(d, "cash_fee_type");
+    cashFee = readXMLInteger(d, "cash_fee");
+    transactionId = readXMLString(d, "transaction_id");
+    outTradeNo = readXMLString(d, "out_trade_no");
+    attach = readXMLString(d, "attach");
+    timeEnd = readXMLString(d, "time_end");
+    promotionDetail = readXMLString(d, "promotion_detail");
+  }
 
 }

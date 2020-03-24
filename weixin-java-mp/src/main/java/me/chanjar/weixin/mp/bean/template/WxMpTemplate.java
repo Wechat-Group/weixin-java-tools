@@ -1,14 +1,13 @@
 package me.chanjar.weixin.mp.bean.template;
 
+import java.io.Serializable;
+import java.util.List;
+
 import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * <pre>
@@ -24,37 +23,37 @@ public class WxMpTemplate implements Serializable {
   private static final long serialVersionUID = -7366474522571199372L;
 
   /**
-   * template_id
+   * template_id.
    * 模板ID
    */
   @SerializedName("template_id")
   private String templateId;
   /**
-   * title
+   * title.
    * 模板标题
    */
   @SerializedName("title")
   private String title;
   /**
-   * primary_industry
+   * primary_industry.
    * 模板所属行业的一级行业
    */
   @SerializedName("primary_industry")
   private String primaryIndustry;
   /**
-   * deputy_industry
+   * deputy_industry.
    * 模板所属行业的二级行业
    */
   @SerializedName("deputy_industry")
   private String deputyIndustry;
   /**
-   * content
+   * content.
    * 模板内容
    */
   @SerializedName("content")
   private String content;
   /**
-   * example
+   * example.
    * 模板示例
    */
   @SerializedName("example")
@@ -68,7 +67,7 @@ public class WxMpTemplate implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

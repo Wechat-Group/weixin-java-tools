@@ -8,6 +8,8 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import org.testng.*;
 import org.testng.annotations.*;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.Map;
 
 /**
@@ -67,8 +69,22 @@ public class WxMpMessageRouterTest {
     prepare(true, sb, router);
     router.route(message);
     Thread.sleep(500);
+    router.shutDownExecutorService();
     Assert.assertEquals(sb.toString(), expected);
   }
+
+  @Test(dataProvider = "messages-1")
+  public void testExternalExcutorService(WxMpXmlMessage message, String expected) throws InterruptedException {
+    StringBuffer sb = new StringBuffer();
+    ExecutorService executorService = Executors.newFixedThreadPool(100);
+    WxMpMessageRouter router = new WxMpMessageRouter(null, executorService);
+    prepare(true, sb, router);
+    router.route(message);
+    Thread.sleep(500);
+    executorService.shutdown();
+    Assert.assertEquals(sb.toString(), expected);
+  }
+
 
   public void testConcurrency() throws InterruptedException {
     final WxMpMessageRouter router = new WxMpMessageRouter(null);

@@ -1,19 +1,23 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import com.google.inject.Inject;
-import me.chanjar.weixin.cp.api.ApiTestModule;
-import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.WxCpUser;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
-
 import java.util.List;
 import java.util.Map;
 
-import static org.testng.Assert.assertNotEquals;
-import static org.testng.Assert.assertNotNull;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.testng.annotations.*;
+
+import com.google.common.collect.Lists;
+import com.google.inject.Inject;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.cp.api.ApiTestModule;
+import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.bean.Gender;
+import me.chanjar.weixin.cp.bean.WxCpInviteResult;
+import me.chanjar.weixin.cp.bean.WxCpUser;
+import me.chanjar.weixin.cp.bean.WxCpUserExternalContactInfo;
+
+import static org.testng.Assert.*;
 
 /**
  * <pre>
@@ -38,9 +42,9 @@ public class WxCpUserServiceImplTest {
     WxCpUser user = new WxCpUser();
     user.setUserId(userId);
     user.setName("Some Woman");
-    user.setDepartIds(new Integer[]{2});
+    user.setDepartIds(new Long[]{2L});
     user.setEmail("none@none.com");
-    user.setGender(WxCpUser.Gender.FEMALE);
+    user.setGender(Gender.FEMALE);
     user.setMobile("13560084979");
     user.setPosition("woman");
     user.setTelephone("3300393");
@@ -70,7 +74,7 @@ public class WxCpUserServiceImplTest {
 
   @Test
   public void testListByDepartment() throws Exception {
-    List<WxCpUser> users = this.wxCpService.getUserService().listByDepartment(1, true, 0);
+    List<WxCpUser> users = this.wxCpService.getUserService().listByDepartment(1L, true, 0);
     assertNotEquals(users.size(), 0);
     for (WxCpUser user : users) {
       System.out.println(ToStringBuilder.reflectionToString(user, ToStringStyle.MULTI_LINE_STYLE));
@@ -79,7 +83,7 @@ public class WxCpUserServiceImplTest {
 
   @Test
   public void testListSimpleByDepartment() throws Exception {
-    List<WxCpUser> users = this.wxCpService.getUserService().listSimpleByDepartment(1, true, 0);
+    List<WxCpUser> users = this.wxCpService.getUserService().listSimpleByDepartment(1L, true, 0);
     assertNotEquals(users.size(), 0);
     for (WxCpUser user : users) {
       System.out.println(ToStringBuilder.reflectionToString(user, ToStringStyle.MULTI_LINE_STYLE));
@@ -87,9 +91,9 @@ public class WxCpUserServiceImplTest {
   }
 
   @Test
-  @Deprecated
   public void testInvite() throws Exception {
-    int result = this.wxCpService.getUserService().invite(userId, "");
+    WxCpInviteResult result = this.wxCpService.getUserService().invite(
+      Lists.newArrayList(userId), null, null);
     System.out.println(result);
   }
 
@@ -105,5 +109,17 @@ public class WxCpUserServiceImplTest {
     String result = this.wxCpService.getUserService().openid2UserId(userId);
     System.out.println(result);
     assertNotNull(result);
+  }
+
+
+  @Test
+  public void testGetUserId() throws WxErrorException {
+    String result = this.wxCpService.getUserService().getUserId("xxx");
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testGetExternalContact() {
   }
 }

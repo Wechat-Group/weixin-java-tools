@@ -1,6 +1,6 @@
 package me.chanjar.weixin.mp.api;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 
 import java.io.File;
@@ -14,7 +14,6 @@ import java.io.File;
  * @author Binary Wang
  */
 public interface WxMpQrcodeService {
-
   /**
    * <pre>
    * 换取临时二维码ticket

@@ -1,6 +1,6 @@
 package me.chanjar.weixin.mp.api;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.tag.WxTagListUser;
 import me.chanjar.weixin.mp.bean.tag.WxUserTag;
 
@@ -13,7 +13,6 @@ import java.util.List;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMpUserTagService {
-
   /**
    * <pre>
    * 创建标签

@@ -1,0 +1,127 @@
+package com.github.binarywang.wxpay.bean.profitsharing;
+
+import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
+
+/**
+ * @author Wang GuangXin 2019/10/22 15:51
+ * @version 1.0
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@XStreamAlias("xml")
+public class ProfitSharingQueryResult extends BaseWxPayResult {
+  private static final long serialVersionUID = 2548673608075775067L;
+  /**
+   * 微信订单号
+   */
+  @XStreamAlias("transaction_id")
+  private String transactionId;
+  /**
+   * 商户分账单号
+   */
+  @XStreamAlias("out_order_no")
+  private String outOrderNo;
+  /**
+   * 微信分账单号
+   */
+  @XStreamAlias("orderId")
+  private String orderId;
+  /**
+   * 分账单状态
+   */
+  @XStreamAlias("status")
+  private String status;
+  /**
+   * 关单原因
+   */
+  @XStreamAlias("close_reason")
+  private String closeReason;
+  /**
+   * 分账接收方列表
+   */
+  @XStreamAlias("receivers")
+  private String receivers;
+  /**
+   * 分账金额
+   */
+  @XStreamAlias("amount")
+  private Integer amount;
+  /**
+   * 分账描述
+   */
+  @XStreamAlias("description")
+  private String description;
+
+  public ProfitSharingQueryResult.Receivers formatReceivers() {
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+    Gson gson = gsonBuilder.create();
+    return gson.fromJson(receivers, Receivers.class);
+  }
+
+  @Override
+  protected void loadXML(Document d) {
+    transactionId = readXMLString(d, "transaction_id");
+    outOrderNo = readXMLString(d, "out_order_no");
+    orderId = readXMLString(d, "orderId");
+    status = readXMLString(d, "status");
+    closeReason = readXMLString(d, "close_reason");
+    receivers = readXMLString(d, "receivers");
+    amount = readXMLInteger(d, "amount");
+    description = readXMLString(d, "description");
+  }
+
+  @Data
+  public class Receivers {
+    /**
+     * 分账接收方类型
+     */
+    private String type;
+    /**
+     * 分账接收方帐号
+     */
+    private String account;
+    /**
+     * 分账金额
+     */
+    private Integer amount;
+    /**
+     * 分账描述
+     */
+    private String description;
+    /**
+     * 分账结果
+     */
+    private String result;
+    /**
+     * 分账完成时间
+     */
+    private String finishTime;
+    /**
+     * 分账失败原因
+     */
+    private String failReason;
+
+    @Override
+    public String toString() {
+      return "Receivers{" +
+        "type='" + type + '\'' +
+        ", account='" + account + '\'' +
+        ", amount=" + amount +
+        ", description='" + description + '\'' +
+        ", result='" + result + '\'' +
+        ", finishTime='" + finishTime + '\'' +
+        ", failReason='" + failReason + '\'' +
+        '}';
+    }
+  }
+}

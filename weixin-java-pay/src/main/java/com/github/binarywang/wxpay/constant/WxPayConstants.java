@@ -1,11 +1,10 @@
 package com.github.binarywang.wxpay.constant;
 
-import java.text.Format;
-import java.util.List;
-
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.time.FastDateFormat;
 
-import com.google.common.collect.Lists;
+import java.text.Format;
+import java.util.List;
 
 /**
  * <pre>
@@ -20,7 +19,7 @@ public class WxPayConstants {
   /**
    * 拉取订单评价数据接口的参数中日期格式.
    */
-  public static final Format QUERY_COMMENT_DATE_FORMAT =  FastDateFormat.getInstance("yyyyMMddHHmmss");
+  public static final Format QUERY_COMMENT_DATE_FORMAT = FastDateFormat.getInstance("yyyyMMddHHmmss");
 
   /**
    * 校验用户姓名选项，企业付款时使用.
@@ -90,7 +89,7 @@ public class WxPayConstants {
     public static final String APP = "APP";
 
     /**
-     * 公众号支付.
+     * 公众号支付/小程序支付.
      */
     public static final String JSAPI = "JSAPI";
 
@@ -107,11 +106,38 @@ public class WxPayConstants {
   }
 
   /**
+   * 账户类型
+   */
+  public static class AccountType {
+    /**
+     * 基本账户
+     */
+    public static final String BASIC = "Basic";
+    /**
+     * 运营账户
+     */
+    public static final String OPERATION = "Operation";
+    /**
+     * Fees
+     */
+    public static final String FEES = "Fees";
+  }
+
+  /**
    * 签名类型.
    */
   public static class SignType {
+    /**
+     * The constant HMAC_SHA256.
+     */
     public static final String HMAC_SHA256 = "HMAC-SHA256";
+    /**
+     * The constant MD5.
+     */
     public static final String MD5 = "MD5";
+    /**
+     * The constant ALL_SIGN_TYPES.
+     */
     public static final List<String> ALL_SIGN_TYPES = Lists.newArrayList(HMAC_SHA256, MD5);
   }
 
@@ -247,48 +273,22 @@ public class WxPayConstants {
     public static final String CHANGE = "CHANGE";
   }
 
-  /**
-   * 关闭订单结果错误代码.
-   */
-  public static class OrderCloseResultErrorCode {
+  public static class ReceiverType {
     /**
-     * 订单已支付.
+     * 商户id
      */
-    public static final String ORDER_PAID = "ORDERPAID";
-
+    public static final String MERCHANT_ID = "MERCHANT_ID";
     /**
-     * 系统错误.
+     * 个人微信号
      */
-    public static final String SYSTEM_ERROR = "SYSTEMERROR";
-
+    public static final String PERSONAL_WECHATID = "PERSONAL_WECHATID";
     /**
-     * 订单不存在.
+     * 个人openid
      */
-    public static final String ORDER_NOT_EXIST = "ORDERNOTEXIST";
-
+    public static final String PERSONAL_OPENID = "PERSONAL_OPENID";
     /**
-     * 订单已关闭.
+     * 个人sub_openid
      */
-    public static final String ORDER_CLOSED = "ORDERCLOSED";
-
-    /**
-     * 签名错误.
-     */
-    public static final String SIGN_ERROR = "SIGNERROR";
-
-    /**
-     * 未使用POST传递参数.
-     */
-    public static final String REQUIRE_POST_METHOD = "REQUIRE_POST_METHOD";
-
-    /**
-     * XML格式错误.
-     */
-    public static final String XML_FORMAT_ERROR = "XML_FORMAT_ERROR";
-
-    /**
-     * 订单状态错误.
-     */
-    public static final String TRADE_STATE_ERROR = "TRADE_STATE_ERROR";
+    public static final String PERSONAL_SUB_OPENID = "PERSONAL_SUB_OPENID";
   }
 }

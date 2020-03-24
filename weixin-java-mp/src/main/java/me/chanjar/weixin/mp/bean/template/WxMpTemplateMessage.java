@@ -55,7 +55,8 @@ public class WxMpTemplateMessage implements Serializable {
   /**
    * 模板数据.
    */
-  private List<WxMpTemplateData> data;
+  @Builder.Default
+  private List<WxMpTemplateData> data = new ArrayList<>();
 
   public WxMpTemplateMessage addData(WxMpTemplateData datum) {
     if (this.data == null) {
@@ -66,7 +67,7 @@ public class WxMpTemplateMessage implements Serializable {
   }
 
   public String toJson() {
-    return WxMpGsonBuilder.INSTANCE.create().toJson(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   @Data
@@ -76,7 +77,13 @@ public class WxMpTemplateMessage implements Serializable {
     private static final long serialVersionUID = -7945254706501974849L;
 
     private String appid;
-    private String path;
+    private String pagePath;
+
+    /**
+     * 是否使用path，否则使用pagepath.
+     * 加入此字段是基于微信官方接口变化多端的考虑
+     */
+    private boolean usePath = false;
   }
 
 }

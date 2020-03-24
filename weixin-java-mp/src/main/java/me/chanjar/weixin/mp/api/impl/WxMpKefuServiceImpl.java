@@ -1,9 +1,11 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonObject;
-import me.chanjar.weixin.common.bean.result.WxError;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.mp.api.WxMpKefuService;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -11,22 +13,19 @@ import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.kefu.request.WxMpKfAccountRequest;
 import me.chanjar.weixin.mp.bean.kefu.request.WxMpKfSessionRequest;
 import me.chanjar.weixin.mp.bean.kefu.result.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Date;
 
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Kefu.*;
+
 /**
  * @author Binary Wang
  */
+@Slf4j
+@RequiredArgsConstructor
 public class WxMpKefuServiceImpl implements WxMpKefuService {
-  protected final Logger log = LoggerFactory.getLogger(this.getClass());
-  private WxMpService wxMpService;
-
-  public WxMpKefuServiceImpl(WxMpService wxMpService) {
-    this.wxMpService = wxMpService;
-  }
+  private final WxMpService wxMpService;
 
   @Override
   public boolean sendKefuMessage(WxMpKefuMessage message) throws WxErrorException {
@@ -67,13 +66,15 @@ public class WxMpKefuServiceImpl implements WxMpKefuService {
   @Override
   public boolean kfAccountUploadHeadImg(String kfAccount, File imgFile) throws WxErrorException {
     WxMediaUploadResult responseContent = this.wxMpService
-      .execute(MediaUploadRequestExecutor.create(this.wxMpService.getRequestHttp()), String.format(KFACCOUNT_UPLOAD_HEAD_IMG, kfAccount), imgFile);
+      .execute(MediaUploadRequestExecutor.create(this.wxMpService.getRequestHttp()),
+        String.format(KFACCOUNT_UPLOAD_HEAD_IMG.getUrl(this.wxMpService.getWxMpConfigStorage()), kfAccount), imgFile);
     return responseContent != null;
   }
 
   @Override
   public boolean kfAccountDel(String kfAccount) throws WxErrorException {
-    String responseContent = this.wxMpService.get(String.format(KFACCOUNT_DEL, kfAccount), null);
+    String responseContent = this.wxMpService.get(String.format(KFACCOUNT_DEL.getUrl(this.wxMpService.getWxMpConfigStorage()),
+      kfAccount), null);
     return responseContent != null;
   }
 
@@ -93,13 +94,15 @@ public class WxMpKefuServiceImpl implements WxMpKefuService {
 
   @Override
   public WxMpKfSessionGetResult kfSessionGet(String openid) throws WxErrorException {
-    String responseContent = this.wxMpService.get(String.format(KFSESSION_GET_SESSION, openid), null);
+    String responseContent = this.wxMpService.get(String.format(KFSESSION_GET_SESSION
+      .getUrl(this.wxMpService.getWxMpConfigStorage()), openid), null);
     return WxMpKfSessionGetResult.fromJson(responseContent);
   }
 
   @Override
   public WxMpKfSessionList kfSessionList(String kfAccount) throws WxErrorException {
-    String responseContent = this.wxMpService.get(String.format(KFSESSION_GET_SESSION_LIST, kfAccount), null);
+    String responseContent = this.wxMpService.get(String.format(KFSESSION_GET_SESSION_LIST
+      .getUrl(this.wxMpService.getWxMpConfigStorage()), kfAccount), null);
     return WxMpKfSessionList.fromJson(responseContent);
   }
 
@@ -120,12 +123,12 @@ public class WxMpKefuServiceImpl implements WxMpKefuService {
     }
 
     JsonObject param = new JsonObject();
-    param.addProperty("starttime", startTime.getTime() / 1000); //starttime	起始时间，unix时间戳
-    param.addProperty("endtime", endTime.getTime() / 1000); //endtime	结束时间，unix时间戳，每次查询时段不能超过24小时
-    param.addProperty("msgid", msgId); //msgid	消息id顺序从小到大，从1开始
-    param.addProperty("number", number); //number	每次获取条数，最多10000条
+    param.addProperty("starttime", startTime.getTime() / 1000);
+    param.addProperty("endtime", endTime.getTime() / 1000);
+    param.addProperty("msgid", msgId);
+    param.addProperty("number", number);
 
-    String responseContent = this.wxMpService.post(MSGRECORD_GET_MSG_LIST, param.toString());
+    String responseContent = this.wxMpService.post(MSG_RECORD_LIST, param.toString());
 
     return WxMpKfMsgList.fromJson(responseContent);
   }
@@ -147,6 +150,15 @@ public class WxMpKefuServiceImpl implements WxMpKefuService {
     }
 
     return result;
+  }
+
+  @Override
+  public boolean sendKfTypingState(String openid, String command) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("touser", openid);
+    params.addProperty("command", command);
+    String responseContent = this.wxMpService.post(CUSTOM_TYPING, params.toString());
+    return responseContent != null;
   }
 
 }

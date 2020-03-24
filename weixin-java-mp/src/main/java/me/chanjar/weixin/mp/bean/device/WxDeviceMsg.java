@@ -3,7 +3,7 @@ package me.chanjar.weixin.mp.bean.device;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import me.chanjar.weixin.common.util.ToStringUtils;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * @author keungtung.
@@ -24,6 +24,6 @@ public class WxDeviceMsg extends AbstractDeviceBean {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 }

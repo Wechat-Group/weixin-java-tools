@@ -1,10 +1,15 @@
 package com.github.binarywang.wxpay.bean.result;
 
+import java.util.List;
+
 import com.google.common.collect.Lists;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import lombok.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -151,10 +156,10 @@ public class WxPayRefundQueryResult extends BaseWxPayResult {
           continue;
         }
 
-        List<RefundRecord.RefundCoupon> coupons = Lists.newArrayList();
+        List<WxPayRefundCouponInfo> coupons = Lists.newArrayList();
         for (int j = 0; j < refundRecord.getCouponRefundCount(); j++) {
           coupons.add(
-            new RefundRecord.RefundCoupon(
+            new WxPayRefundCouponInfo(
               this.getXmlValue("xml/coupon_refund_id_" + i + "_" + j),
               this.getXmlValueAsInt("xml/coupon_refund_fee_" + i + "_" + j),
               this.getXmlValue("xml/coupon_type_" + i + "_" + j)
@@ -168,6 +173,26 @@ public class WxPayRefundQueryResult extends BaseWxPayResult {
     }
   }
 
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXML(Document d) {
+    deviceInfo = readXMLString(d, "device_info");
+    transactionId = readXMLString(d, "transaction_id");
+    outTradeNo = readXMLString(d, "out_trade_no");
+    totalFee = readXMLInteger(d, "total_fee");
+    settlementTotalFee = readXMLInteger(d, "settlement_total_fee");
+    feeType = readXMLString(d, "fee_type");
+    cashFee = readXMLInteger(d, "cash_fee");
+    refundCount = readXMLInteger(d, "refund_count");
+  }
+
+  /**
+   * The type Refund record.
+   */
   @Data
   @Builder(builderMethodName = "newBuilder")
   @NoArgsConstructor
@@ -277,7 +302,7 @@ public class WxPayRefundQueryResult extends BaseWxPayResult {
     @XStreamAlias("coupon_refund_count")
     private Integer couponRefundCount;
 
-    private List<RefundCoupon> refundCoupons;
+    private List<WxPayRefundCouponInfo> refundCoupons;
 
     /**
      * <pre>
@@ -322,54 +347,6 @@ public class WxPayRefundQueryResult extends BaseWxPayResult {
      */
     @XStreamAlias("refund_success_time")
     private String refundSuccessTime;
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class RefundCoupon {
-      /**
-       * <pre>
-       * 字段名：退款代金券ID.
-       * 变量名：coupon_refund_id_$n_$m
-       * 是否必填：否
-       * 类型：String(20)
-       * 示例值：10000
-       * 描述：退款代金券ID, $n为下标，$m为下标，从0开始编号
-       * </pre>
-       */
-      @XStreamAlias("coupon_refund_id")
-      private String couponRefundId;
-
-      /**
-       * <pre>
-       * 字段名：单个退款代金券支付金额.
-       * 变量名：coupon_refund_fee_$n_$m
-       * 是否必填：否
-       * 类型：Int
-       * 示例值：100
-       * 描述：单个退款代金券支付金额, $n为下标，$m为下标，从0开始编号
-       * </pre>
-       */
-      @XStreamAlias("coupon_refund_fee")
-      private Integer couponRefundFee;
-
-      /**
-       * <pre>
-       * 字段名：代金券类型.
-       * 变量名：coupon_type_$n_$m
-       * 是否必填：否
-       * 类型：String(8)
-       * 示例值：CASH
-       * 描述：CASH--充值代金券 , NO_CASH---非充值代金券。
-       * 开通免充值券功能，并且订单使用了优惠券后有返回（取值：CASH、NO_CASH）。
-       * $n为下标,$m为下标,从0开始编号，举例：coupon_type_$0_$1
-       * </pre>
-       */
-      @XStreamAlias("coupon_type")
-      private String couponType;
-
-
-    }
 
   }
 

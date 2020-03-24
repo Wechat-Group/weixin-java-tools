@@ -1,14 +1,18 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import org.testng.annotations.*;
-
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
+import cn.binarywang.wx.miniapp.test.TestConfig;
+import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
+import me.chanjar.weixin.common.error.WxErrorException;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * 测试用户相关的接口
@@ -53,5 +57,18 @@ public class WxMaUserServiceImplTest {
       "r7BXXKkLb8qrSNn05n0qiA==");
     assertNotNull(phoneNoInfo);
     System.out.println(phoneNoInfo.toString());
+  }
+
+  @Test
+  public void testGetSessionInfo() {
+  }
+
+  /**
+   *  TODO 测试数据有问题，需要替换为正确的数据
+   */
+  @Test
+  public void testSetUserStorage() throws WxErrorException {
+    this.wxService.getUserService().setUserStorage(ImmutableMap.of("1","2"),
+      "r7BXXKkLb8qrSNn05n0qiA",((TestConfig)this.wxService.getWxMaConfig()).getOpenid());
   }
 }

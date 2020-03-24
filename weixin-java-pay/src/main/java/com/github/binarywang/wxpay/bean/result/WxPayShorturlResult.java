@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -30,5 +31,15 @@ public class WxPayShorturlResult extends BaseWxPayResult {
    */
   @XStreamAlias("short_url")
   private String shortUrl;
+
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXML(Document d) {
+    shortUrl = readXMLString(d, "short_url");
+  }
 
 }

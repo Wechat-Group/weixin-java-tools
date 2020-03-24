@@ -1,24 +1,21 @@
 package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
-import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.cp.bean.*;
+import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
+import me.chanjar.weixin.cp.bean.WxCpMessage;
+import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
+import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
 /**
- * 微信API的Service
+ * 微信API的Service.
+ *
  * @author chanjaster
  */
 public interface WxCpService {
@@ -75,6 +72,34 @@ public interface WxCpService {
   String getJsapiTicket(boolean forceRefresh) throws WxErrorException;
 
   /**
+   * 获得jsapi_ticket,不强制刷新jsapi_ticket
+   * 应用的jsapi_ticket用于计算agentConfig（参见“通过agentConfig注入应用的权限”）的签名，签名计算方法与上述介绍的config的签名算法完全相同，但需要注意以下区别：
+   * <p>
+   * 签名的jsapi_ticket必须使用以下接口获取。且必须用wx.agentConfig中的agentid对应的应用secret去获取access_token。
+   * 签名用的noncestr和timestamp必须与wx.agentConfig中的nonceStr和timestamp相同。
+   *
+   * @see #getJsapiTicket(boolean)
+   */
+  String getAgentJsapiTicket() throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取应用的jsapi_ticket
+   * 应用的jsapi_ticket用于计算agentConfig（参见“通过agentConfig注入应用的权限”）的签名，签名计算方法与上述介绍的config的签名算法完全相同，但需要注意以下区别：
+   *
+   * 签名的jsapi_ticket必须使用以下接口获取。且必须用wx.agentConfig中的agentid对应的应用secret去获取access_token。
+   * 签名用的noncestr和timestamp必须与wx.agentConfig中的nonceStr和timestamp相同。
+   *
+   * 获得时会检查jsapiToken是否过期，如果过期了，那么就刷新一下，否则就什么都不干
+   *
+   * 详情请见：https://work.weixin.qq.com/api/doc#10029/%E8%8E%B7%E5%8F%96%E5%BA%94%E7%94%A8%E7%9A%84jsapi_ticket
+   * </pre>
+   *
+   * @param forceRefresh 强制刷新
+   */
+  String getAgentJsapiTicket(boolean forceRefresh) throws WxErrorException;
+
+  /**
    * <pre>
    * 创建调用jsapi时所需要的签名
    *
@@ -96,6 +121,13 @@ public interface WxCpService {
   WxCpMessageSendResult messageSend(WxCpMessage message) throws WxErrorException;
 
   /**
+   * 小程序登录凭证校验
+   *
+   * @param jsCode 登录时获取的 code
+   */
+  WxCpMaJsCode2SessionResult jsCode2Session(String jsCode) throws WxErrorException;
+
+  /**
    * <pre>
    * 获取微信服务器的ip段
    * http://qydev.weixin.qq.com/wiki/index.php?title=回调模式#.E8.8E.B7.E5.8F.96.E5.BE.AE.E4.BF.A1.E6.9C.8D.E5.8A.A1.E5.99.A8.E7.9A.84ip.E6.AE.B5
@@ -104,6 +136,26 @@ public interface WxCpService {
    * @return { "ip_list": ["101.226.103.*", "101.226.62.*"] }
    */
   String[] getCallbackIp() throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取服务商凭证
+   * 文档地址：https://work.weixin.qq.com/api/doc#90001/90143/91200
+   * 请求方式：POST（HTTPS）
+   * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/service/get_provider_token
+   * </pre>
+   *
+   * @param corpId         服务商的corpid
+   * @param providerSecret 服务商的secret，在服务商管理后台可见
+   * @return {
+   * "errcode":0 ,
+   * "errmsg":"ok" ,
+   * "provider_access_token":"enLSZ5xxxxxxJRL",
+   * "expires_in":7200
+   * }
+   * @throws WxErrorException .
+   */
+  WxCpProviderToken getProviderToken(String corpId, String providerSecret) throws WxErrorException;
 
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求
@@ -170,6 +222,13 @@ public interface WxCpService {
    * @param create 是否新建
    */
   WxSession getSession(String id, boolean create);
+
+  /**
+   * 获取WxSessionManager 对象
+   *
+   * @return WxSessionManager
+   */
+  WxSessionManager getSessionManager();
 
   /**
    * <pre>
@@ -249,10 +308,30 @@ public interface WxCpService {
    */
   WxCpUserService getUserService();
 
+  WxCpExternalContactService getExternalContactService();
+
+  /**
+   * 获取群聊服务
+   *
+   * @return 群聊服务
+   */
+  WxCpChatService getChatService();
+
+  /**
+   * 获取任务卡片服务
+   *
+   * @return 任务卡片服务
+   */
+  WxCpTaskCardService getTaskCardService();
+
+  WxCpAgentService getAgentService();
+
+  WxCpOaService getOAService();
+
   /**
    * http请求对象
    */
-  RequestHttp getRequestHttp();
+  RequestHttp<?, ?> getRequestHttp();
 
   void setUserService(WxCpUserService userService);
 

@@ -1,10 +1,9 @@
 package com.github.binarywang.wxpay.bean.entpay;
 
-import com.github.binarywang.wxpay.bean.request.BaseWxPayRequest;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import lombok.*;
-import me.chanjar.weixin.common.annotation.Required;
-import me.chanjar.weixin.common.util.ToStringUtils;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>

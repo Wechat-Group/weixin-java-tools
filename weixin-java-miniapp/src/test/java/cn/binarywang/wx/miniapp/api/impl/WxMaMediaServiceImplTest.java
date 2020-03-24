@@ -4,7 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 

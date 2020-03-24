@@ -56,7 +56,7 @@ public class WxDataCubeInterfaceResult extends WxDataCubeBaseResult {
   private Integer maxTimeCost;
 
   public static List<WxDataCubeInterfaceResult> fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(
+    return WxMpGsonBuilder.create().fromJson(
       JSON_PARSER.parse(json).getAsJsonObject().get("list"),
       new TypeToken<List<WxDataCubeInterfaceResult>>() {
       }.getType());

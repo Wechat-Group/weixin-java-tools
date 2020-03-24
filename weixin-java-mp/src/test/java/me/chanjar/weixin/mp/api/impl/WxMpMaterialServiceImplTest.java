@@ -3,22 +3,22 @@ package me.chanjar.weixin.mp.api.impl;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConstants;
 import me.chanjar.weixin.mp.bean.material.*;
-import org.testng.annotations.*;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 /**
  * 素材管理相关接口的测试
@@ -27,7 +27,7 @@ import static org.testng.Assert.assertTrue;
  * @author codepiano
  * @author Binary Wang
  */
-@Test(groups = "materialAPI")
+@Test
 @Guice(modules = ApiTestModule.class)
 public class WxMpMaterialServiceImplTest {
   @Inject
@@ -44,6 +44,8 @@ public class WxMpMaterialServiceImplTest {
   private WxMpMaterialCountResult wxMaterialCountResultBeforeTest;
   // 以下为media接口的测试
   private List<String> mediaIdsToDownload = new ArrayList<>();
+  // 以下为高清语音接口的测试
+  private List<String> voiceMediaIdsToDownload = new ArrayList<>();
 
   @DataProvider
   public Object[][] mediaFiles() {
@@ -175,7 +177,7 @@ public class WxMpMaterialServiceImplTest {
     }
   }
 
-  @Test(dependsOnMethods = {"testAddNews","testUploadMaterial"})
+  @Test(dependsOnMethods = {"testAddNews", "testUploadMaterial"})
   public void testGetNewsInfo() throws WxErrorException {
     WxMpMaterialNews wxMpMaterialNewsSingle = this.wxService
       .getMaterialService().materialNewsInfo(this.singleNewsMediaId);
@@ -243,6 +245,15 @@ public class WxMpMaterialServiceImplTest {
 
   @Test(dependsOnMethods = {"testMaterialFileList"}, dataProvider = "allTestMaterial")
   public void testDeleteMaterial(String mediaId) throws WxErrorException {
+    this.delete(mediaId);
+  }
+
+  @Test
+  public void testDeleteMaterialDirectly() throws WxErrorException {
+    this.delete("abc");
+  }
+
+  public void delete(String mediaId) throws WxErrorException {
     boolean result = this.wxService.getMaterialService().materialDelete(mediaId);
     assertTrue(result);
   }
@@ -280,6 +291,11 @@ public class WxMpMaterialServiceImplTest {
       if (res.getMediaId() != null && !mediaType.equals(WxConsts.MediaFileType.VIDEO)) {
         //video 不支持下载，所以不加入
         this.mediaIdsToDownload.add(res.getMediaId());
+
+        // 音频media, 用于测试下载高清语音接口
+        if (mediaType.equals(WxConsts.MediaFileType.VOICE)) {
+          this.voiceMediaIdsToDownload.add(res.getMediaId());
+        }
       }
 
       if (res.getThumbMediaId() != null) {
@@ -299,9 +315,25 @@ public class WxMpMaterialServiceImplTest {
     return params;
   }
 
+  @DataProvider
+  public Object[][] downloadJssdkMedia() {
+    Object[][] params = new Object[this.voiceMediaIdsToDownload.size()][];
+    for (int i = 0; i < this.voiceMediaIdsToDownload.size(); i++) {
+      params[i] = new Object[]{this.voiceMediaIdsToDownload.get(i)};
+    }
+    return params;
+  }
+
   @Test(dependsOnMethods = {"testUploadMedia"}, dataProvider = "downloadMedia")
   public void testDownloadMedia(String mediaId) throws WxErrorException {
     File file = this.wxService.getMaterialService().mediaDownload(mediaId);
+    assertNotNull(file);
+    System.out.println(file.getAbsolutePath());
+  }
+
+  @Test(dependsOnMethods = {"testUploadMedia"}, dataProvider = "downloadJssdkMedia")
+  public void testDownloadJssdkMedia(String mediaId) throws WxErrorException {
+    File file = this.wxService.getMaterialService().jssdkMediaDownload(mediaId);
     assertNotNull(file);
     System.out.println(file.getAbsolutePath());
   }

@@ -5,6 +5,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 /**
  * <pre>
  * 订单查询请求对象
@@ -76,4 +78,12 @@ public class WxPayOrderQueryRequest extends BaseWxPayRequest {
       throw new WxPayException("transaction_id 和 out_trade_no 不能同时存在或同时为空，必须二选一");
     }
   }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("version", version);
+    map.put("transaction_id", transactionId);
+    map.put("out_trade_no", outTradeNo);
+  }
+
 }

@@ -1,15 +1,14 @@
 package me.chanjar.weixin.mp.bean.result;
 
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
-import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.util.List;
 
 /**
  * 微信用户信息.
@@ -56,21 +55,38 @@ public class WxMpUser implements Serializable {
    */
   private String[] privileges;
 
+  /**
+   * subscribe_scene 返回用户关注的渠道来源.
+   * ADD_SCENE_SEARCH 公众号搜索，ADD_SCENE_ACCOUNT_MIGRATION 公众号迁移，ADD_SCENE_PROFILE_CARD 名片分享，ADD_SCENE_QR_CODE 扫描二维码，ADD_SCENEPROFILE LINK 图文页内名称点击，ADD_SCENE_PROFILE_ITEM 图文页右上角菜单，ADD_SCENE_PAID 支付后关注，ADD_SCENE_OTHERS 其他
+   */
+  private String subscribeScene;
+
+  /**
+   * qr_scene 二维码扫码场景（开发者自定义）.
+   */
+  private String qrScene;
+
+  /**
+   * qr_scene_str 二维码扫码场景描述（开发者自定义）.
+   */
+  private String qrSceneStr;
+
+
   public static WxMpUser fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpUser.class);
+    return WxMpGsonBuilder.create().fromJson(json, WxMpUser.class);
   }
 
   public static List<WxMpUser> fromJsonList(String json) {
     Type collectionType = new TypeToken<List<WxMpUser>>() {
     }.getType();
-    Gson gson = WxMpGsonBuilder.INSTANCE.create();
+    Gson gson = WxMpGsonBuilder.create();
     JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
     return gson.fromJson(jsonObject.get("user_info_list"), collectionType);
   }
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

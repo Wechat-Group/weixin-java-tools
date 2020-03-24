@@ -1,5 +1,24 @@
 package com.github.binarywang.wxpay.bean.result;
 
+import java.io.ByteArrayInputStream;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
+import com.github.binarywang.wxpay.util.XmlConfig;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.util.SignUtils;
@@ -9,26 +28,10 @@ import com.google.common.collect.Maps;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
+import org.w3c.dom.*;
 
 /**
  * <pre>
@@ -107,22 +110,41 @@ public abstract class BaseWxPayResult implements Serializable {
 
   /**
    * xml的Document对象，用于解析xml文本.
+   * make xmlDoc transient to ensure toString() can work.
    */
-  private Document xmlDoc;
+  private transient Document xmlDoc;
 
   /**
    * 将单位分转换成单位圆.
    *
-   * @param fee 将要被转换为元的分的数值
+   * @param fen 将要被转换为元的分的数值
+   * @return the string
    */
-  public static String feeToYuan(Integer fee) {
-    return new BigDecimal(Double.valueOf(fee) / 100).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+  public static String fenToYuan(Integer fen) {
+    return BigDecimal.valueOf(Double.valueOf(fen) / 100).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
   }
 
   /**
    * 从xml字符串创建bean对象.
+   *
+   * @param <T>       the type parameter
+   * @param xmlString the xml string
+   * @param clz       the clz
+   * @return the t
    */
   public static <T extends BaseWxPayResult> T fromXML(String xmlString, Class<T> clz) {
+    if (XmlConfig.fastMode) {
+      try {
+        BaseWxPayResult t = clz.newInstance();
+        t.setXmlString(xmlString);
+        Document doc = t.getXmlDoc();
+        t.loadBasicXML(doc);
+        t.loadXML(doc);
+        return (T) t;
+      } catch (Exception e) {
+        throw new RuntimeException("parse xml error", e);
+      }
+    }
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(clz);
     T result = (T) xstream.fromXML(xmlString);
@@ -130,17 +152,88 @@ public abstract class BaseWxPayResult implements Serializable {
     return result;
   }
 
+  /**
+   * 从XML文档中加载属性,供子类覆盖加载额外的属性
+   *
+   * @param d Document
+   */
+  protected abstract void loadXML(Document d);
+
+  /**
+   * 从XML文档中加载基础属性
+   *
+   * @param d Document
+   */
+  private void loadBasicXML(Document d) {
+    returnCode = readXMLString(d, "return_code");
+    returnMsg = readXMLString(d, "return_msg");
+    resultCode = readXMLString(d, "result_code");
+    errCode = readXMLString(d, "err_code");
+    errCodeDes = readXMLString(d, "err_code_des");
+    appid = readXMLString(d, "appid");
+    mchId = readXMLString(d, "mch_id");
+    subAppId = readXMLString(d, "sub_appid");
+    subMchId = readXMLString(d, "sub_mch_id");
+    nonceStr = readXMLString(d, "nonce_str");
+    sign = readXMLString(d, "sign");
+  }
+
+  public static Integer readXMLInteger(Node d, String tagName) {
+    String content = readXMLString(d, tagName);
+    if (content == null || content.trim().length() == 0) return null;
+    return Integer.parseInt(content);
+  }
+
+  public static String readXMLString(Node d, String tagName) {
+    if (!d.hasChildNodes()) return null;
+    NodeList childNodes = d.getChildNodes();
+    for (int i = 0, j = childNodes.getLength(); i < j; i++) {
+      Node node = childNodes.item(i);
+      if (tagName.equals(node.getNodeName())) {
+        if (!node.hasChildNodes()) return null;
+        return node.getFirstChild().getNodeValue();
+      }
+    }
+    return null;
+  }
+
+  public static String readXMLString(Document d, String tagName) {
+    NodeList elements = d.getElementsByTagName(tagName);
+    if (elements == null || elements.getLength() == 0) {
+      return null;
+    }
+
+    Node node = elements.item(0).getFirstChild();
+    if (node == null) {
+      return null;
+    }
+    return node.getNodeValue();
+  }
+
+  public static Integer readXMLInteger(Document d, String tagName) {
+    String content = readXMLString(d, tagName);
+    if (content == null || content.trim().length() == 0) return null;
+    return Integer.parseInt(content);
+  }
+
+  /**
+   * Gets logger.
+   *
+   * @return the logger
+   */
   protected Logger getLogger() {
     return LoggerFactory.getLogger(this.getClass());
   }
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxGsonBuilder.create().toJson(this);
   }
 
   /**
    * 将bean通过保存的xml字符串转换成map.
+   *
+   * @return the map
    */
   public Map<String, String> toMap() {
     if (StringUtils.isBlank(this.xmlString)) {
@@ -172,23 +265,28 @@ public abstract class BaseWxPayResult implements Serializable {
     if (this.xmlDoc != null) {
       return this.xmlDoc;
     }
+    xmlDoc = openXML(xmlString);
+    return xmlDoc;
+  }
 
+  protected Document openXML(String content) {
     try {
-      this.xmlDoc = DocumentBuilderFactory
-        .newInstance()
-        .newDocumentBuilder()
-        .parse(new ByteArrayInputStream(this.xmlString.getBytes("UTF-8")));
-      return xmlDoc;
-    } catch (SAXException | IOException | ParserConfigurationException e) {
-      throw new RuntimeException("非法的xml文本内容：" + this.xmlString);
+      final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      factory.setExpandEntityReferences(false);
+      factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      return factory.newDocumentBuilder().parse(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
+    } catch (Exception e) {
+      throw new RuntimeException("非法的xml文本内容：\n" + this.xmlString, e);
     }
-
   }
 
   /**
    * 获取xml中元素的值.
+   *
+   * @param path the path
+   * @return the xml value
    */
-  String getXmlValue(String... path) {
+  protected String getXmlValue(String... path) {
     Document doc = this.getXmlDoc();
     String expression = String.format("/%s//text()", Joiner.on("/").join(path));
     try {
@@ -204,8 +302,11 @@ public abstract class BaseWxPayResult implements Serializable {
 
   /**
    * 获取xml中元素的值，作为int值返回.
+   *
+   * @param path the path
+   * @return the xml value as int
    */
-  Integer getXmlValueAsInt(String... path) {
+  protected Integer getXmlValueAsInt(String... path) {
     String result = this.getXmlValue(path);
     if (StringUtils.isBlank(result)) {
       return null;
@@ -217,8 +318,10 @@ public abstract class BaseWxPayResult implements Serializable {
   /**
    * 校验返回结果签名.
    *
+   * @param wxPayService the wx pay service
    * @param signType     签名类型
    * @param checkSuccess 是否同时检查结果是否成功
+   * @throws WxPayException the wx pay exception
    */
   public void checkResult(WxPayService wxPayService, String signType, boolean checkSuccess) throws WxPayException {
     //校验返回结果签名
@@ -230,7 +333,7 @@ public abstract class BaseWxPayResult implements Serializable {
 
     //校验结果是否成功
     if (checkSuccess) {
-      List<String> successStrings = Lists.newArrayList("SUCCESS", "");
+      List<String> successStrings = Lists.newArrayList(WxPayConstants.ResultCode.SUCCESS, "");
       if (!successStrings.contains(StringUtils.trimToEmpty(getReturnCode()).toUpperCase())
         || !successStrings.contains(StringUtils.trimToEmpty(getResultCode()).toUpperCase())) {
         StringBuilder errorMsg = new StringBuilder();

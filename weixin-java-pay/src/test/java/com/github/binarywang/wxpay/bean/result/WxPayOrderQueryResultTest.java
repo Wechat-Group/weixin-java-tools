@@ -6,10 +6,14 @@ import org.testng.annotations.*;
 /**
  * <pre>
  * Created by Binary Wang on 2017-01-04.
+ *  </pre>
+ *
  * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- * </pre>
  */
 public class WxPayOrderQueryResultTest {
+  /**
+   * Test compose coupons.
+   */
   @Test
   public void testComposeCoupons() {
     /*

@@ -1,17 +1,16 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 
 /**
- * 菜单相关操作接口
+ * 菜单相关操作接口.
  *
  * @author Binary Wang
  */
 public interface WxMpMenuService {
-
   /**
    * <pre>
    * 自定义菜单创建接口

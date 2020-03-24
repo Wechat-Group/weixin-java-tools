@@ -3,9 +3,13 @@ package me.chanjar.weixin.mp.util.json;
 import com.google.gson.*;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
 
+/**
+ * @author someone
+ */
 public class WxMpMassOpenIdsMessageGsonAdapter implements JsonSerializer<WxMpMassOpenIdsMessage> {
 
   @Override
@@ -45,6 +49,11 @@ public class WxMpMassOpenIdsMessageGsonAdapter implements JsonSerializer<WxMpMas
     }
     messageJson.addProperty("msgtype", message.getMsgType());
     messageJson.addProperty("send_ignore_reprint", message.isSendIgnoreReprint() ? 0 : 1);
+
+    if(StringUtils.isNotEmpty(message.getClientMsgId())){
+      messageJson.addProperty("clientmsgid", message.getClientMsgId());
+    }
+
     return messageJson;
   }
 

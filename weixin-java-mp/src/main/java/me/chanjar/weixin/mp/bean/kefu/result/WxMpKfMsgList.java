@@ -1,12 +1,11 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  *
@@ -27,11 +26,11 @@ public class WxMpKfMsgList implements Serializable {
   private Long msgId;
 
   public static WxMpKfMsgList fromJson(String responseContent) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(responseContent, WxMpKfMsgList.class);
+    return WxMpGsonBuilder.create().fromJson(responseContent, WxMpKfMsgList.class);
   }
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 }

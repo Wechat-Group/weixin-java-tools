@@ -1,6 +1,16 @@
 package me.chanjar.weixin.cp.demo;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
+import me.chanjar.weixin.cp.constant.WxCpConsts;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
@@ -9,13 +19,6 @@ import me.chanjar.weixin.cp.bean.WxCpXmlOutTextMessage;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.message.WxCpMessageHandler;
 import me.chanjar.weixin.cp.message.WxCpMessageRouter;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
 
 public class WxCpDemoServer {
 
@@ -78,9 +81,26 @@ public class WxCpDemoServer {
       };
 
       wxCpMessageRouter = new WxCpMessageRouter(wxCpService);
-      wxCpMessageRouter.rule().async(false).content("哈哈") // 拦截内容为“哈哈”的消息
-        .handler(handler).end().rule().async(false).content("oauth")
-        .handler(oauth2handler).end();
+      wxCpMessageRouter.rule()
+        .async(false)
+        .content("哈哈") // 拦截内容为“哈哈”的消息
+        .handler(handler)
+        .end()
+        .rule()
+        .async(false)
+        .content("oauth")
+        .handler(oauth2handler)
+        .end()
+        .rule()
+        .event(WxCpConsts.EventType.CHANGE_CONTACT)
+        .handler(new WxCpMessageHandler() {
+          @Override
+          public WxCpXmlOutMessage handle(WxCpXmlMessage wxMessage, Map<String, Object> context, WxCpService wxCpService, WxSessionManager sessionManager) throws WxErrorException {
+            System.out.println("通讯录发生变更");
+            return null;
+          }
+        })
+        .end();
 
     }
   }

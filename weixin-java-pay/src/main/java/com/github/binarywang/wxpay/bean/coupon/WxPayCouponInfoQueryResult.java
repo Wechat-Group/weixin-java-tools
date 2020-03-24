@@ -5,6 +5,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -74,15 +75,15 @@ public class WxPayCouponInfoQueryResult extends BaseWxPayResult {
   /**
    * <pre>
    * 字段名：代金券使用门槛.
-   * 变量名：coupon_mininum
+   * 变量名：coupon_minimum 微信文档有误
    * 是否必填：是
    * 示例值：10
    * 类型：Unsinged int
    * 说明：代金券使用最低限额,单位是分
    * </pre>
    */
-  @XStreamAlias("coupon_mininum")
-  private Integer couponMininum;
+  @XStreamAlias("coupon_minimum")
+  private Integer couponMinimum;
 
   /**
    * <pre>
@@ -227,4 +228,23 @@ public class WxPayCouponInfoQueryResult extends BaseWxPayResult {
   @XStreamAlias("is_partial_use")
   private String isPartialUse;
 
+  @Override
+  protected void loadXML(Document d) {
+    deviceInfo = readXMLString(d, "device_info");
+    couponStockId = readXMLString(d, "coupon_stock_id");
+    couponId = readXMLString(d, "coupon_id");
+    couponValue = readXMLInteger(d, "coupon_value");
+    couponMinimum = readXMLInteger(d, "coupon_minimum");
+    couponName = readXMLString(d, "coupon_name");
+    couponState = readXMLString(d, "coupon_state");
+    couponDesc = readXMLString(d, "coupon_desc");
+    couponUseValue = readXMLInteger(d, "coupon_use_value");
+    couponRemainValue = readXMLInteger(d, "coupon_remain_value");
+    beginTime = readXMLString(d, "begin_time");
+    endTime = readXMLString(d, "end_time");
+    sendTime = readXMLString(d, "send_time");
+    consumerMchId = readXMLString(d, "consumer_mch_id");
+    sendSource = readXMLString(d, "send_source");
+    isPartialUse = readXMLString(d, "is_partial_use");
+  }
 }

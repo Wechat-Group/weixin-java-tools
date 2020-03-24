@@ -4,6 +4,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * <pre>
  * 微信支付-交易保障请求参数
@@ -25,9 +27,11 @@ import me.chanjar.weixin.common.annotation.Required;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayReportRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = 2667579776376527663L;
+
   /**
    * <pre>
-   * 设备号
+   * 设备号.
    * device_info
    * 否
    * String(32)
@@ -40,7 +44,7 @@ public class WxPayReportRequest extends BaseWxPayRequest {
 
   /**
    * <pre>
-   * 接口URL
+   * 接口URL.
    * interface_url
    * 是
    * String(127)
@@ -57,7 +61,7 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   private String interfaceUrl;
   /**
    * <pre>
-   * 接口耗时
+   * 接口耗时.
    * execute_time
    * 是
    * Int
@@ -70,7 +74,7 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   private Integer executeTime;
   /**
    * <pre>
-   * 返回状态码
+   * 返回状态码.
    * return_code
    * 是
    * String(16)
@@ -83,7 +87,7 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   private String returnCode;
   /**
    * <pre>
-   * 返回信息
+   * 返回信息.
    * return_msg
    * 否
    * String(128)
@@ -95,7 +99,7 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   private String returnMsg;
   /**
    * <pre>
-   * 业务结果
+   * 业务结果.
    * result_code
    * 是
    * String(16)
@@ -108,7 +112,7 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   private String resultCode;
   /**
    * <pre>
-   * 错误代码
+   * 错误代码.
    * err_code
    * 否
    * String(32)
@@ -120,7 +124,7 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   private String errCode;
   /**
    * <pre>
-   * 错误代码描述
+   * 错误代码描述.
    * err_code_des
    * 否
    * String(128)
@@ -132,7 +136,7 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   private String errCodeDes;
   /**
    * <pre>
-   * 商户订单号
+   * 商户订单号.
    * out_trade_no
    * 否
    * String(32)
@@ -144,7 +148,7 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   private String outTradeNo;
   /**
    * <pre>
-   * 访问接口IP
+   * 访问接口IP.
    * user_ip
    * 是
    * String(16)
@@ -157,7 +161,7 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   private String userIp;
   /**
    * <pre>
-   * 商户上报时间
+   * 商户上报时间.
    * time
    * 否
    * String(14)
@@ -171,5 +175,20 @@ public class WxPayReportRequest extends BaseWxPayRequest {
   @Override
   protected void checkConstraints() {
     //do nothing
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("device_info", deviceInfo);
+    map.put("interface_url", interfaceUrl);
+    map.put("execute_time_", executeTime.toString());
+    map.put("return_code", returnCode);
+    map.put("return_msg", returnMsg);
+    map.put("result_code", resultCode);
+    map.put("err_code", errCode);
+    map.put("err_code_des", errCodeDes);
+    map.put("out_trade_no", outTradeNo);
+    map.put("user_ip", userIp);
+    map.put("time", time);
   }
 }
