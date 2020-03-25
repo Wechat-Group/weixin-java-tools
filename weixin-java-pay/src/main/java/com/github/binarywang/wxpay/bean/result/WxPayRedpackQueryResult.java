@@ -1,9 +1,5 @@
 package com.github.binarywang.wxpay.bean.result;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,6 +7,10 @@ import lombok.NoArgsConstructor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -241,6 +241,7 @@ public class WxPayRedpackQueryResult extends BaseWxPayResult {
     hbType = readXMLString(d, "hb_type");
     totalNum = readXMLInteger(d, "total_num");
     totalAmount = readXMLInteger(d, "total_amount");
+    reason = readXMLString(d, "reason");
     sendTime = readXMLString(d, "send_time");
     refundTime = readXMLString(d, "refund_time");
     refundAmount = readXMLInteger(d, "refund_amount");
