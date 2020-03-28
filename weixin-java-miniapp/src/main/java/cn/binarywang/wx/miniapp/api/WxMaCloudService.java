@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 云开发相关接口.
@@ -32,6 +33,8 @@ public interface WxMaCloudService {
   String DATABASE_DELETE_URL = "https://api.weixin.qq.com/tcb/databasedelete";
   String DATABASE_ADD_URL = "https://api.weixin.qq.com/tcb/databaseadd";
 
+  String invokeCloudFunction(String name, String body) throws WxErrorException;
+
   /**
    * <pre>
    * 触发云函数。注意：HTTP API 途径触发云函数不包含用户信息。
@@ -50,6 +53,12 @@ public interface WxMaCloudService {
    */
   String invokeCloudFunction(String env, String name, String body) throws WxErrorException;
 
+  List<String> add(String collection, List list) throws WxErrorException;
+
+  String add(String collection, Object obj) throws WxErrorException;
+
+  JsonArray databaseAdd(String query) throws WxErrorException;
+
   /**
    * <pre>
    * 数据库插入记录
@@ -65,6 +74,10 @@ public interface WxMaCloudService {
    */
   JsonArray databaseAdd(String env, String query) throws WxErrorException;
 
+  Integer delete(String collection, String whereJson) throws WxErrorException;
+
+  int databaseDelete(String query) throws WxErrorException;
+
   /**
    * <pre>
    * 数据库删除记录
@@ -79,6 +92,10 @@ public interface WxMaCloudService {
    * @throws WxErrorException .
    */
   int databaseDelete(String env, String query) throws WxErrorException;
+
+  WxCloudDatabaseUpdateResult update(String collection, String whereJson, String updateJson) throws WxErrorException;
+
+  WxCloudDatabaseUpdateResult databaseUpdate(String query) throws WxErrorException;
 
   /**
    * <pre>
@@ -96,6 +113,29 @@ public interface WxMaCloudService {
   WxCloudDatabaseUpdateResult databaseUpdate(String env, String query) throws WxErrorException;
 
   /**
+   * db.collection('geo')
+   *   .where({
+   *     price: _.gt(10)
+   *   })
+   *   .orderBy('_id', 'asc')
+   *   .orderBy('price', 'desc')
+   *   .skip(1)
+   *   .limit(10)
+   *   .get()
+   * @param collection
+   * @param whereJson
+   * @param orderBy
+   * @param skip
+   * @param limit
+   * @return
+   * @throws WxErrorException
+   */
+  WxCloudDatabaseQueryResult query(String collection, String whereJson, Map<String, String> orderBy,
+                                   Integer skip, Integer limit) throws WxErrorException;
+
+  WxCloudDatabaseQueryResult databaseQuery(String query) throws WxErrorException;
+
+  /**
    * <pre>
    * 数据库查询记录
    *
@@ -109,6 +149,8 @@ public interface WxMaCloudService {
    * @throws WxErrorException .
    */
   WxCloudDatabaseQueryResult databaseQuery(String env, String query) throws WxErrorException;
+
+  JsonArray databaseAggregate(String query) throws WxErrorException;
 
   /**
    * <pre>
@@ -125,6 +167,10 @@ public interface WxMaCloudService {
    */
   JsonArray databaseAggregate(String env, String query) throws WxErrorException;
 
+  Long count(String collection, String whereJson) throws WxErrorException;
+
+  Long databaseCount(String query) throws WxErrorException;
+
   /**
    * <pre>
    * 统计集合记录数或统计查询语句对应的结果记录数
@@ -139,6 +185,9 @@ public interface WxMaCloudService {
    * @throws WxErrorException .
    */
   Long databaseCount(String env, String query) throws WxErrorException;
+
+  void updateIndex(String collectionName, List<WxCloudDatabaseCreateIndexRequest> createIndexes,
+                   List<String> dropIndexNames) throws WxErrorException;
 
   /**
    * <pre>
@@ -157,11 +206,15 @@ public interface WxMaCloudService {
   void updateIndex(String env, String collectionName, List<WxCloudDatabaseCreateIndexRequest> createIndexes,
                    List<String> dropIndexNames) throws WxErrorException;
 
+  Long databaseMigrateImport(String collectionName, String filePath, int fileType,
+                             boolean stopOnError, int conflictMode) throws WxErrorException;
+
   /**
    * <pre>
    * 数据库导入
    *
-   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/databaseMigrateImport.html
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/databaseMigrateImport
+   * .html
    * 请求地址： POST https://api.weixin.qq.com/tcb/databasemigrateimport?access_token=ACCESS_TOKEN
    * </pre>
    *
@@ -177,11 +230,14 @@ public interface WxMaCloudService {
   Long databaseMigrateImport(String env, String collectionName, String filePath, int fileType, boolean stopOnError,
                              int conflictMode) throws WxErrorException;
 
+  Long databaseMigrateExport(String filePath, int fileType, String query) throws WxErrorException;
+
   /**
    * <pre>
    * 数据库导出
    *
-   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/databaseMigrateExport.html
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/databaseMigrateExport
+   * .html
    * 请求地址： POST https://api.weixin.qq.com/tcb/databasemigrateexport?access_token=ACCESS_TOKEN
    * </pre>
    *
@@ -194,11 +250,14 @@ public interface WxMaCloudService {
    */
   Long databaseMigrateExport(String env, String filePath, int fileType, String query) throws WxErrorException;
 
+  WxCloudCloudDatabaseMigrateQueryInfoResult databaseMigrateQueryInfo(Long jobId) throws WxErrorException;
+
   /**
    * <pre>
    *   数据库迁移状态查询
    *
-   *  文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/databaseMigrateQueryInfo.html
+   *  文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database
+   *  /databaseMigrateQueryInfo.html
    *  请求地址：POST https://api.weixin.qq.com/tcb/databasemigratequeryinfo?access_token=ACCESS_TOKEN
    * </pre>
    *
@@ -208,6 +267,8 @@ public interface WxMaCloudService {
    * @throws WxErrorException .
    */
   WxCloudCloudDatabaseMigrateQueryInfoResult databaseMigrateQueryInfo(String env, Long jobId) throws WxErrorException;
+
+  WxCloudUploadFileResult uploadFile(String path) throws WxErrorException;
 
   /**
    * <pre>
@@ -225,6 +286,8 @@ public interface WxMaCloudService {
    */
   WxCloudUploadFileResult uploadFile(String env, String path) throws WxErrorException;
 
+  WxCloudBatchDownloadFileResult batchDownloadFile(String[] fileIds, long[] maxAges) throws WxErrorException;
+
   /**
    * <pre>
    * 获取文件下载链接
@@ -241,6 +304,8 @@ public interface WxMaCloudService {
    * @throws WxErrorException .
    */
   WxCloudBatchDownloadFileResult batchDownloadFile(String env, String[] fileIds, long[] maxAges) throws WxErrorException;
+
+  WxCloudBatchDeleteFileResult batchDeleteFile(String[] fileIds) throws WxErrorException;
 
   /**
    * <pre>
@@ -272,11 +337,14 @@ public interface WxMaCloudService {
    */
   WxCloudGetQcloudTokenResult getQcloudToken(long lifeSpan) throws WxErrorException;
 
+  void databaseCollectionAdd(String collectionName) throws WxErrorException;
+
   /**
    * <pre>
    * 新增集合
    *
-   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/databaseCollectionAdd.html
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/databaseCollectionAdd
+   * .html
    * 请求地址：POST https://api.weixin.qq.com/tcb/databasecollectionadd?access_token=ACCESS_TOKEN
    * </pre>
    *
@@ -286,11 +354,14 @@ public interface WxMaCloudService {
    */
   void databaseCollectionAdd(String env, String collectionName) throws WxErrorException;
 
+  void databaseCollectionDelete(String collectionName) throws WxErrorException;
+
   /**
    * <pre>
    * 删除集合
    *
-   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/databaseCollectionDelete.html
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database
+   * /databaseCollectionDelete.html
    * 请求地址：POST https://api.weixin.qq.com/tcb/databasecollectionadd?access_token=ACCESS_TOKEN
    * </pre>
    *
@@ -300,17 +371,20 @@ public interface WxMaCloudService {
    */
   void databaseCollectionDelete(String env, String collectionName) throws WxErrorException;
 
+  WxCloudDatabaseCollectionGetResult databaseCollectionGet(Long limit, Long offset) throws WxErrorException;
+
   /**
    * <pre>
    * 获取特定云环境下集合信息
    *
-   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/databaseCollectionGet.html
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/databaseCollectionGet
+   * .html
    * 请求地址：POST https://api.weixin.qq.com/tcb/databasecollectionget?access_token=ACCESS_TOKEN
    * </pre>
    *
-   * @param env            云环境ID
-   * @param limit          获取数量限制，默认值：10
-   * @param offset         偏移量,默认值：0
+   * @param env    云环境ID
+   * @param limit  获取数量限制，默认值：10
+   * @param offset 偏移量,默认值：0
    * @return .
    * @throws WxErrorException .
    */

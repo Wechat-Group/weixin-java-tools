@@ -4,6 +4,7 @@
   <secret>secret</secret>
   <token>Token</token>
   <aesKey>EncodingAESKey</aesKey>
+  <cloudEnv>云环境</cloudEnv>
   <accessToken>可以不填写</accessToken>
   <expiresTime>可以不填写</expiresTime>
   <openid>某个用户的openId</openid>
