@@ -1,8 +1,12 @@
 package me.chanjar.weixin.mp.config.impl;
 
+import me.chanjar.weixin.common.util.locks.JedisDistributedLock;
 import me.chanjar.weixin.mp.enums.TicketType;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 基于Redis的微信配置provider.
@@ -17,6 +21,7 @@ import redis.clients.jedis.JedisPool;
 @SuppressWarnings("hiding")
 public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
   private static final String ACCESS_TOKEN_KEY = "wx:access_token:";
+  private static final String LOCK_KEY = "wx:lock:";
 
   /**
    * 使用连接池保证线程安全.
@@ -24,6 +29,7 @@ public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
   private final JedisPool jedisPool;
 
   private String accessTokenKey;
+  private String lockKey;
 
   public WxMpRedisConfigImpl(JedisPool jedisPool) {
     this.jedisPool = jedisPool;
@@ -36,6 +42,11 @@ public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
   public void setAppId(String appId) {
     super.setAppId(appId);
     this.accessTokenKey = ACCESS_TOKEN_KEY.concat(appId);
+    this.lockKey = ACCESS_TOKEN_KEY.concat(appId).concat(":");
+    accessTokenLock = new JedisDistributedLock(jedisPool, lockKey.concat("accessTokenLock"));
+    jsapiTicketLock = new JedisDistributedLock(jedisPool, lockKey.concat("jsapiTicketLock"));
+    sdkTicketLock = new JedisDistributedLock(jedisPool, lockKey.concat("sdkTicketLock"));
+    cardApiTicketLock = new JedisDistributedLock(jedisPool, lockKey.concat("cardApiTicketLock"));
   }
 
   private String getTicketRedisKey(TicketType type) {

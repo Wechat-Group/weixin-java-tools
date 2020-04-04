@@ -351,7 +351,17 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
        */
       if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001 || error.getErrorCode() == 40014) {
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
-        this.getWxMpConfigStorage().expireAccessToken();
+        Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+        lock.lock();
+        try{
+          if(StringUtils.equals(this.getWxMpConfigStorage().getAccessToken(), accessToken)){
+            this.getWxMpConfigStorage().expireAccessToken();
+          }
+        } catch (Exception ex){
+          this.getWxMpConfigStorage().expireAccessToken();
+        } finally {
+          lock.unlock();
+        }
         if (this.getWxMpConfigStorage().autoRefreshToken()) {
           return this.execute(executor, uri, data);
         }

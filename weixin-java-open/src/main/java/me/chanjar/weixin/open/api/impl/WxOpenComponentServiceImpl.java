@@ -155,7 +155,18 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
        */
       if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001 || error.getErrorCode() == 40014) {
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
-        this.getWxOpenConfigStorage().expireComponentAccessToken();
+        Lock lock = this.getWxOpenConfigStorage().getComponentAccessTokenLock();
+        lock.lock();
+        try {
+          if (StringUtils.equals(componentAccessToken, this.getWxOpenConfigStorage().getComponentAccessToken()){
+            this.getWxOpenConfigStorage().expireComponentAccessToken();
+          }
+        } catch (Exception ex) {
+          this.getWxOpenConfigStorage().expireComponentAccessToken();
+        }finally {
+          lock.unlock();
+        }
+
         if (this.getWxOpenConfigStorage().autoRefreshToken()) {
           return this.post(uri, postData, accessTokenKey);
         }
@@ -188,7 +199,17 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
        */
       if (error.getErrorCode() == 42001 || error.getErrorCode() == 40001 || error.getErrorCode() == 40014) {
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
-        this.getWxOpenConfigStorage().expireComponentAccessToken();
+        Lock lock = this.getWxOpenConfigStorage().getComponentAccessTokenLock();
+        lock.lock();
+        try {
+          if (StringUtils.equals(componentAccessToken, this.getWxOpenConfigStorage().getComponentAccessToken()){
+            this.getWxOpenConfigStorage().expireComponentAccessToken();
+          }
+        } catch (Exception ex) {
+          this.getWxOpenConfigStorage().expireComponentAccessToken();
+        }finally {
+          lock.unlock();
+        }
         if (this.getWxOpenConfigStorage().autoRefreshToken()) {
           return this.get(uri, accessTokenKey);
         }

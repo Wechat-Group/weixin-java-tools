@@ -288,7 +288,17 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
         || error.getErrorCode() == ERR_42001
         || error.getErrorCode() == ERR_40014) {
         // 强制设置WxMaConfig的access token过期了，这样在下一次请求里就会刷新access token
-        this.getWxMaConfig().expireAccessToken();
+        Lock lock = this.getWxMaConfig().getAccessTokenLock();
+        lock.lock();
+        try {
+          if(StringUtils.equals(this.getWxMaConfig().getAccessToken(), accessToken)){
+            this.getWxMaConfig().expireAccessToken();
+          }
+        } catch (Exception ex){
+          this.getWxMaConfig().expireAccessToken();
+        }finally {
+          lock.unlock();
+        }
         if (this.getWxMaConfig().autoRefreshToken()) {
           return this.execute(executor, uri, data);
         }
