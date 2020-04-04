@@ -44,6 +44,9 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private Map<String, Token> authorizerAccessTokens = new ConcurrentHashMap<>();
   private Map<String, Token> jsapiTickets = new ConcurrentHashMap<>();
   private Map<String, Token> cardApiTickets = new ConcurrentHashMap<>();
+  private Map<String, Lock> locks = new ConcurrentHashMap<>();
+
+  private Lock componentAccessTokenLock = getLockByKey("componentAccessTokenLock");
 
 
   @Override
@@ -61,6 +64,21 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     updateComponentAccessToken(componentAccessToken.getComponentAccessToken(), componentAccessToken.getExpiresIn());
   }
 
+  @Override
+  public Lock getLockByKey(String key){
+    Lock lock = locks.get(key);
+    if (lock == null) {
+      synchronized (WxOpenInMemoryConfigStorage.class){
+        lock = locks.get(key);
+        if (lock == null) {
+          lock = new ReentrantLock();
+          locks.put(key, lock);
+        }
+      }
+    }
+    return lock;
+  }
+  
   @Override
   public WxMpConfigStorage getWxMpConfigStorage(String appId) {
     return new WxOpenInnerConfigStorage(this, appId);
@@ -211,13 +229,16 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
      * 云环境ID
      */
     private volatile String cloudEnv;
-    private Lock accessTokenLock = new ReentrantLock();
-    private Lock jsapiTicketLock = new ReentrantLock();
-    private Lock cardApiTicketLock = new ReentrantLock();
+    private final Lock accessTokenLock;
+    private final Lock jsapiTicketLock;
+    private final Lock cardApiTicketLock;
 
     private WxOpenInnerConfigStorage(WxOpenConfigStorage wxOpenConfigStorage, String appId) {
       this.wxOpenConfigStorage = wxOpenConfigStorage;
       this.appId = appId;
+      this.accessTokenLock = wxOpenConfigStorage.getLockByKey(appId + ":accessTokenLock");
+      this.jsapiTicketLock = wxOpenConfigStorage.getLockByKey(appId + ":jsapiTicketLock");
+      this.cardApiTicketLock = wxOpenConfigStorage.getLockByKey(appId + ":cardApiTicketLock");
     }
 
     @Override

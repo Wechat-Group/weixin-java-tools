@@ -1,8 +1,11 @@
 package me.chanjar.weixin.open.api.impl;
 
+import me.chanjar.weixin.common.util.locks.JedisDistributedLock;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.util.Pool;
+
+import java.util.concurrent.locks.Lock;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
@@ -162,5 +165,10 @@ public class WxOpenInRedisConfigStorage extends AbstractWxOpenInRedisConfigStora
     try (Jedis jedis = this.jedisPool.getResource()) {
       jedis.setex(this.getKey(this.cardApiTicket, appId), expiresInSeconds - 200, cardApiTicket);
     }
+  }
+
+  @Override
+  public Lock getLockByKey(String key) {
+    return new JedisDistributedLock(jedisPool, getKey(lockKey, key));
   }
 }

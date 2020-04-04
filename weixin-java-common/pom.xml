@@ -118,6 +118,15 @@
       <artifactId>dom4j</artifactId>
       <version>2.1.1</version>
     </dependency>
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.jedis-lock</groupId>
+      <artifactId>jedis-lock</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

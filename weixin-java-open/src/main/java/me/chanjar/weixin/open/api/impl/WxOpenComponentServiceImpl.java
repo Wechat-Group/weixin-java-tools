@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -109,8 +110,16 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public String getComponentAccessToken(boolean forceRefresh) throws WxErrorException {
-
-    if (this.getWxOpenConfigStorage().isComponentAccessTokenExpired() || forceRefresh) {
+    final WxOpenConfigStorage config = this.getWxOpenConfigStorage();
+    if (!config.isComponentAccessTokenExpired() && !forceRefresh) {
+      return config.getComponentAccessToken();
+    }
+    Lock lock = config.getComponentAccessTokenLock();
+    lock.lock();
+    try {
+      if (!config.isComponentAccessTokenExpired() && !forceRefresh) {
+        return config.getComponentAccessToken();
+      }
       JsonObject jsonObject = new JsonObject();
       jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
       jsonObject.addProperty("component_appsecret", getWxOpenConfigStorage().getComponentAppSecret());
@@ -118,9 +127,11 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
       String responseContent = this.getWxOpenService().post(API_COMPONENT_TOKEN_URL, jsonObject.toString());
       WxOpenComponentAccessToken componentAccessToken = WxOpenComponentAccessToken.fromJson(responseContent);
-      getWxOpenConfigStorage().updateComponentAccessToken(componentAccessToken);
+      config.updateComponentAccessToken(componentAccessToken);
+      return config.getComponentAccessToken();
+    } finally {
+      lock.unlock();
     }
-    return this.getWxOpenConfigStorage().getComponentAccessToken();
   }
 
   @Override
