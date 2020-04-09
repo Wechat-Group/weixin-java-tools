@@ -81,6 +81,7 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 
     String responseContent = this.payService.post(url, request.toXML(), true);
     ProfitSharingQueryResult result = BaseWxPayResult.fromXML(responseContent, ProfitSharingQueryResult.class);
+    result.formatReceivers();
     result.checkResult(this.payService, request.getSignType(), true);
     return result;
   }

@@ -1,9 +1,9 @@
 package me.chanjar.weixin.common.util;
 
+import org.testng.annotations.Test;
+
 import java.util.List;
 import java.util.Map;
-
-import org.testng.annotations.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,6 +16,17 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class XmlUtilsTest {
+
+  @Test(expectedExceptions = {RuntimeException.class})
+  public void testXml2Map_xxe() {
+    String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+      "<!DOCTYPE test [\n" +
+      "<!ENTITY xxe SYSTEM \"file:///etc/passwd\">\n" +
+      "<!ENTITY xxe2 SYSTEM \"http://localhost/test.php\">\n" +
+      "]>\n" +
+      "<xml></xml>";
+    XmlUtils.xml2Map(xml);
+  }
 
   @Test
   public void testXml2Map() {

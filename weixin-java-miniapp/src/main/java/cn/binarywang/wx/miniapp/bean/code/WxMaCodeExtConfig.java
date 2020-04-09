@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 上传代码需要用到的第三方自定义的配置
@@ -16,6 +18,8 @@ import lombok.Data;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WxMaCodeExtConfig implements Serializable {
   private static final long serialVersionUID = -7666911367458178753L;
   /**

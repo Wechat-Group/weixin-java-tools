@@ -1,5 +1,10 @@
 package com.github.binarywang.wxpay.constant;
 
+import com.github.binarywang.wxpay.bean.order.WxPayAppOrderResult;
+import com.github.binarywang.wxpay.bean.order.WxPayMpOrderResult;
+import com.github.binarywang.wxpay.bean.order.WxPayMwebOrderResult;
+import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
+import com.github.binarywang.wxpay.bean.result.WxPayMicropayResult;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.time.FastDateFormat;
 
@@ -103,6 +108,55 @@ public class WxPayConstants {
      * 刷卡支付有单独的支付接口，不调用统一下单接口
      */
     public static final String MICROPAY = "MICROPAY";
+
+    @SuppressWarnings("unused")
+    public abstract static class Specific<R> {
+
+      public abstract String getType();
+
+      private Specific() {
+      }
+
+      public static Specific<WxPayNativeOrderResult> NATIVE =
+        new Specific<WxPayNativeOrderResult>() {
+          @Override
+          public String getType() {
+            return TradeType.NATIVE;
+          }
+        };
+
+      public static Specific<WxPayAppOrderResult> APP =
+        new Specific<WxPayAppOrderResult>() {
+          @Override
+          public String getType() {
+            return TradeType.APP;
+          }
+        };
+
+      public static Specific<WxPayMpOrderResult> JSAPI =
+        new Specific<WxPayMpOrderResult>() {
+          @Override
+          public String getType() {
+            return TradeType.JSAPI;
+          }
+        };
+
+      public static Specific<WxPayMwebOrderResult> MWEB =
+        new Specific<WxPayMwebOrderResult>() {
+          @Override
+          public String getType() {
+            return TradeType.MWEB;
+          }
+        };
+
+      public static Specific<WxPayMicropayResult> MICROPAY =
+        new Specific<WxPayMicropayResult>() {
+          @Override
+          public String getType() {
+            return TradeType.MICROPAY;
+          }
+        };
+    }
   }
 
   /**

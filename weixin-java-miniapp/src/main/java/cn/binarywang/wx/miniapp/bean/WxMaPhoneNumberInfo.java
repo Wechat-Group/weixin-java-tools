@@ -1,12 +1,13 @@
 package cn.binarywang.wx.miniapp.bean;
 
-import java.io.Serializable;
-
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 微信用户绑定的手机号相关信息
+ *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Data
@@ -23,7 +24,9 @@ public class WxMaPhoneNumberInfo implements Serializable {
   }
 
   @Data
-  public static class Watermark {
+  public static class Watermark implements Serializable {
+    private static final long serialVersionUID = 2375642809946928650L;
+    
     private String timestamp;
     private String appid;
   }

@@ -1,12 +1,17 @@
 package cn.binarywang.wx.miniapp.bean.template;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author ArBing
+ */
 @Data
 public class WxMaTemplateLibraryListResult implements Serializable{
   private static final long serialVersionUID = -2780782521447602209L;

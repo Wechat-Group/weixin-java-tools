@@ -1,17 +1,15 @@
 package me.chanjar.weixin.cp.bean.oa.templatedata;
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
-import me.chanjar.weixin.cp.bean.oa.WxCpTemplateResult;
-import me.chanjar.weixin.cp.bean.oa.templatedata.control.TemplateContact;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author gyv12345@163.com
  */
+@Data
 public class TemplateProperty implements Serializable {
 
   private static final long serialVersionUID = -3429251158540167453L;

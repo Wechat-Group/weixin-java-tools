@@ -2,8 +2,10 @@ package cn.binarywang.wx.miniapp.bean.express.request;
 
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -16,8 +18,9 @@ import java.io.Serializable;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WxMaExpressTestUpdateOrderRequest implements Serializable {
-
   private static final long serialVersionUID = -3701602332580704140L;
 
   /**

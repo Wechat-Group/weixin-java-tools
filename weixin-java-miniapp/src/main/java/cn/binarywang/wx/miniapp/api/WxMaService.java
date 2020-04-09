@@ -23,11 +23,32 @@ public interface WxMaService {
   String GET_PAID_UNION_ID_URL = "https://api.weixin.qq.com/wxa/getpaidunionid";
 
   /**
+   * 导入抽样数据
+   */
+  String SET_DYNAMIC_DATA_URL = "https://api.weixin.qq.com/wxa/setdynamicdata";
+
+  /**
    * 获取登录后的session信息.
    *
    * @param jsCode 登录时获取的 code
    */
   WxMaJscode2SessionResult jsCode2SessionInfo(String jsCode) throws WxErrorException;
+
+  /**
+   * 导入抽样数据
+   * <pre>
+   * 第三方通过调用微信API，将数据写入到setdynamicdata这个API。每个Post数据包不超过5K，若数据过多可开多进（线）程并发导入数据（例如：数据量为十万量级可以开50个线程并行导数据）。
+   * 文档地址：https://wsad.weixin.qq.com/wsad/zh_CN/htmledition/widget-docs-v3/html/custom/quickstart/implement/import/index.html
+   * http请求方式：POST http(s)://api.weixin.qq.com/wxa/setdynamicdata?access_token=ACCESS_TOKEN
+   * </pre>
+   *
+   * @param data     推送到微信后台的数据列表，该数据被微信用于流量分配，注意该字段为string类型而不是object
+   * @param lifespan 数据有效时间，秒为单位，一般为86400，一天一次导入的频率
+   * @param scene    1代表用于搜索的数据
+   * @param type     用于标识数据所属的服务类目
+   * @throws WxErrorException .
+   */
+  void setDynamicData(int lifespan, String type, int scene, String data) throws WxErrorException;
 
   /**
    * <pre>
@@ -73,6 +94,8 @@ public interface WxMaService {
    * @param transactionId 非必填 微信支付订单号
    * @param mchId         非必填 微信支付分配的商户号，和商户订单号配合使用
    * @param outTradeNo    非必填  微信支付商户订单号，和商户号配合使用
+   * @return UnionId.
+   * @throws WxErrorException .
    */
   String getPaidUnionId(String openid, String transactionId, String mchId, String outTradeNo) throws WxErrorException;
 
@@ -97,6 +120,13 @@ public interface WxMaService {
    * 比{@link #get}和{@link #post}方法更灵活，可以自己构造RequestExecutor用来处理不同的参数和不同的返回类型。
    * 可以参考，{@link MediaUploadRequestExecutor}的实现方法
    * </pre>
+   *
+   * @param <E>      .
+   * @param <T>      .
+   * @param data     参数或请求数据
+   * @param executor 执行器
+   * @param uri      接口请求地址
+   * @return .
    */
   <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException;
 
@@ -105,6 +135,8 @@ public interface WxMaService {
    * 设置当微信系统响应系统繁忙时，要等待多少 retrySleepMillis(ms) * 2^(重试次数 - 1) 再发起重试.
    * 默认：1000ms
    * </pre>
+   *
+   * @param retrySleepMillis 重试等待毫秒数
    */
   void setRetrySleepMillis(int retrySleepMillis);
 
@@ -113,6 +145,8 @@ public interface WxMaService {
    * 设置当微信系统响应系统繁忙时，最大重试次数.
    * 默认：5次
    * </pre>
+   *
+   * @param maxRetryTimes 最大重试次数
    */
   void setMaxRetryTimes(int maxRetryTimes);
 
@@ -125,6 +159,8 @@ public interface WxMaService {
 
   /**
    * 注入 {@link WxMaConfig} 的实现.
+   *
+   * @param wxConfigProvider config
    */
   void setWxMaConfig(WxMaConfig wxConfigProvider);
 
@@ -233,18 +269,29 @@ public interface WxMaService {
 
   /**
    * 请求http请求相关信息.
+   *
+   * @return .
    */
   RequestHttp getRequestHttp();
 
   /**
    * 获取物流助手接口服务对象
    *
-   * @return
+   * @return .
    */
   WxMaExpressService getExpressService();
 
   /**
    * 获取云开发接口服务对象
+   *
+   * @return .
    */
   WxMaCloudService getCloudService();
+
+  /**
+   * 获取直播接口服务对象
+   *
+   * @return .
+   */
+  WxMaLiveService getLiveService();
 }

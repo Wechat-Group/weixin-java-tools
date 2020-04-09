@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 @Data
 public final class MemberCardUpdate implements Serializable {
+  private static final long serialVersionUID = -4755309390784904858L;
 
   //以下字段顺序根据微信官方文档顺序相同，不能传入非文档之外的字段
   //https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1466494654_K9rNz

@@ -35,18 +35,31 @@ public class WxCpUserGsonAdapterTest {
       "    \"enable\": 1,\n" +
       "    \"alias\": \"jackzhang\",\n" +
       "    \"extattr\": {\n" +
-      "        \"attrs\": [{\n" +
-      "            \"name\": \"爱好\",\n" +
-      "            \"value\": \"旅游\"\n" +
-      "        }, {\n" +
-      "            \"name\": \"卡号\",\n" +
-      "            \"value\": \"1234567234\"\n" +
-      "        }]\n" +
-      "    },\n" +
+      "        \"attrs\": [\n" +
+      "            {\n" +
+      "                \"type\": 0,\n" +
+      "                \"name\": \"文本名称\",\n" +
+      "                \"text\": {\n" +
+      "                    \"value\": \"文本\"\n" +
+      "                }\n" +
+      "            },\n" +
+      "            {\n" +
+      "                \"type\": 1,\n" +
+      "                \"name\": \"网页名称\",\n" +
+      "                \"web\": {\n" +
+      "                    \"url\": \"http://www.test.com\",\n" +
+      "                    \"title\": \"标题\"\n" +
+      "                }\n" +
+      "            }\n" +
+      "        ]\n" +
+      "    }," +
       "    \"status\": 1,\n" +
       "    \"qr_code\": \"https://open.work.weixin.qq.com/wwopen/userQRCode?vcode=xxx\",\n" +
+      "    \"external_position\": \"高级产品经理\",\n" +
       "    \"external_profile\": {\n" +
-      "        \"external_attr\": [{\n" +
+      "        \"external_corp_name\": \"企业简称\",\n" +
+      "        \"external_attr\": [\n" +
+      "            {\n" +
       "                \"type\": 0,\n" +
       "                \"name\": \"文本名称\",\n" +
       "                \"text\": {\n" +
@@ -65,13 +78,13 @@ public class WxCpUserGsonAdapterTest {
       "                \"type\": 2,\n" +
       "                \"name\": \"测试app\",\n" +
       "                \"miniprogram\": {\n" +
-      "                    \"appid\": \"wx8bd80126147df384\",\n" +
+      "                    \"appid\": \"wx8bd8012614784fake\",\n" +
       "                    \"pagepath\": \"/index\",\n" +
       "                    \"title\": \"my miniprogram\"\n" +
       "                }\n" +
       "            }\n" +
       "        ]\n" +
-      "    }\n" +
+      "    }" +
       "}";
 
     final WxCpUser user = WxCpUser.fromJson(userJson);
@@ -84,6 +97,23 @@ public class WxCpUserGsonAdapterTest {
 
     assertThat(user.getAddress()).isEqualTo("广州市海珠区新港中路");
     assertThat(user.getAlias()).isEqualTo("jackzhang");
+
+    assertThat(user.getExtAttrs()).isNotEmpty();
+
+    final WxCpUser.Attr extraAttr1 = user.getExtAttrs().get(0);
+    assertThat(extraAttr1.getType()).isEqualTo(0);
+    assertThat(extraAttr1.getName()).isEqualTo("文本名称");
+    assertThat(extraAttr1.getTextValue()).isEqualTo("文本");
+
+    final WxCpUser.Attr extraAttr2 = user.getExtAttrs().get(1);
+    assertThat(extraAttr2.getType()).isEqualTo(1);
+    assertThat(extraAttr2.getName()).isEqualTo("网页名称");
+    assertThat(extraAttr2.getWebTitle()).isEqualTo("标题");
+    assertThat(extraAttr2.getWebUrl()).isEqualTo("http://www.test.com");
+
+    assertThat(user.getExternalPosition()).isEqualTo("高级产品经理");
+    assertThat(user.getExternalCorpName()).isEqualTo("企业简称");
+
     assertThat(user.getExternalAttrs()).isNotEmpty();
 
     final WxCpUser.ExternalAttribute externalAttr1 = user.getExternalAttrs().get(0);
@@ -100,7 +130,7 @@ public class WxCpUserGsonAdapterTest {
     final WxCpUser.ExternalAttribute externalAttr3 = user.getExternalAttrs().get(2);
     assertThat(externalAttr3.getType()).isEqualTo(2);
     assertThat(externalAttr3.getName()).isEqualTo("测试app");
-    assertThat(externalAttr3.getAppid()).isEqualTo("wx8bd80126147df384");
+    assertThat(externalAttr3.getAppid()).isEqualTo("wx8bd8012614784fake");
     assertThat(externalAttr3.getPagePath()).isEqualTo("/index");
     assertThat(externalAttr3.getTitle()).isEqualTo("my miniprogram");
 

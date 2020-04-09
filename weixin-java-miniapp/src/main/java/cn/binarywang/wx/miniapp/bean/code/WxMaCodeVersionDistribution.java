@@ -1,7 +1,9 @@
 package cn.binarywang.wx.miniapp.bean.code;
 
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
@@ -12,6 +14,8 @@ import java.util.Map;
  * @since 2018-04-26 19:45
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class WxMaCodeVersionDistribution {
   /**
    * 当前版本

@@ -188,7 +188,7 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
         dateInfoType.getDescription()));
     }
 
-    if (!baseInfo.isUseAllLocations() && StringUtils.isBlank(baseInfo.getLocationIdList())) {
+    if (!baseInfo.isUseAllLocations() && baseInfo.getLocationIdList().isEmpty()) {
       return WxMpCardCreateResult.failure("会员卡基本信息的门店使用范围选择指定门店,门店列表:locationIdList不能为空");
     }
 

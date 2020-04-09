@@ -4,11 +4,14 @@ import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.w3c.dom.Document;
+
+import java.util.List;
 
 /**
  * @author Wang GuangXin 2019/10/22 15:51
@@ -33,7 +36,7 @@ public class ProfitSharingQueryResult extends BaseWxPayResult {
   /**
    * 微信分账单号
    */
-  @XStreamAlias("orderId")
+  @XStreamAlias("order_id")
   private String orderId;
   /**
    * 分账单状态
@@ -49,7 +52,11 @@ public class ProfitSharingQueryResult extends BaseWxPayResult {
    * 分账接收方列表
    */
   @XStreamAlias("receivers")
-  private String receivers;
+  private String receiversJson;
+  /**
+   * 分账接收方列表json转换后的对象
+   */
+  private List<Receiver> receivers;
   /**
    * 分账金额
    */
@@ -61,27 +68,30 @@ public class ProfitSharingQueryResult extends BaseWxPayResult {
   @XStreamAlias("description")
   private String description;
 
-  public ProfitSharingQueryResult.Receivers formatReceivers() {
+  public List<Receiver> formatReceivers() {
     GsonBuilder gsonBuilder = new GsonBuilder();
     gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
     Gson gson = gsonBuilder.create();
-    return gson.fromJson(receivers, Receivers.class);
+    final List<Receiver> receivers = gson.fromJson(receiversJson, new TypeToken<List<Receiver>>() {
+    }.getType());
+    this.receivers = receivers;
+    return receivers;
   }
 
   @Override
   protected void loadXML(Document d) {
     transactionId = readXMLString(d, "transaction_id");
     outOrderNo = readXMLString(d, "out_order_no");
-    orderId = readXMLString(d, "orderId");
+    orderId = readXMLString(d, "order_id");
     status = readXMLString(d, "status");
     closeReason = readXMLString(d, "close_reason");
-    receivers = readXMLString(d, "receivers");
+    receiversJson = readXMLString(d, "receivers");
     amount = readXMLInteger(d, "amount");
     description = readXMLString(d, "description");
   }
 
   @Data
-  public class Receivers {
+  public class Receiver {
     /**
      * 分账接收方类型
      */

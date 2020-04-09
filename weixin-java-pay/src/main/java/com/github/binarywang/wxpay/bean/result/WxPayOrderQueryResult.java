@@ -1,16 +1,12 @@
 package com.github.binarywang.wxpay.bean.result;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.w3c.dom.Document;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -360,6 +356,11 @@ public class WxPayOrderQueryResult extends BaseWxPayResult {
     cashFeeType = readXMLString(d, "cash_fee_type");
     couponFee = readXMLInteger(d, "coupon_fee");
     couponCount = readXMLInteger(d, "coupon_count");
+    this.transactionId = readXMLString(d, "transaction_id");
+    this.outTradeNo = readXMLString(d, "out_trade_no");
+    this.attach = readXMLString(d, "attach");
+    this.timeEnd = readXMLString(d, "time_end");
+    this.tradeStateDesc = readXMLString(d, "trade_state_desc");
   }
 
   /**

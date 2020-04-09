@@ -1,21 +1,21 @@
 package me.chanjar.weixin.common.util;
 
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.dom4j.tree.DefaultText;
+import org.xml.sax.SAXException;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <pre>
@@ -31,13 +31,18 @@ public class XmlUtils {
     Map<String, Object> map = new HashMap<>(16);
     try {
       SAXReader saxReader = new SAXReader();
+      saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      saxReader.setFeature("http://javax.xml.XMLConstants/feature/secure-processing", true);
+      saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+      saxReader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+      saxReader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
       Document doc = saxReader.read(new StringReader(xmlString));
       Element root = doc.getRootElement();
       List<Element> elements = root.elements();
       for (Element element : elements) {
-          map.put(element.getName(), element2MapOrString(element));
+        map.put(element.getName(), element2MapOrString(element));
       }
-    } catch (DocumentException e) {
+    } catch (DocumentException | SAXException e) {
       throw new RuntimeException(e);
     }
 

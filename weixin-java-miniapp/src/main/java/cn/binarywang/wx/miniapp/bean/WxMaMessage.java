@@ -135,6 +135,15 @@ public class WxMaMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String statusCode;
 
+  @SerializedName("Scene")
+  @XStreamAlias("Scene")
+  private Integer scene;
+
+  @SerializedName("Query")
+  @XStreamAlias("Query")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String query;
+
   public static WxMaMessage fromXml(String xml) {
     return XStreamTransformer.fromXml(WxMaMessage.class, xml);
   }

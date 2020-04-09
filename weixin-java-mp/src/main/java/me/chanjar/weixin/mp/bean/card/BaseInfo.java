@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.bean.card;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
@@ -104,7 +105,7 @@ public class BaseInfo implements Serializable {
    * 门店位置ID,调用 POI门店管理接口 获取门店位置ID.
    */
   @SerializedName("location_id_list")
-  private String locationIdList;
+  private List<String> locationIdList;
 
   /**
    * 会员卡是否支持全部门店,填写后商户门店更新时会自动同步至卡券.

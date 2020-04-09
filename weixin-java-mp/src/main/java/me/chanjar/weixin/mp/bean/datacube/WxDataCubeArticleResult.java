@@ -108,7 +108,8 @@ public class WxDataCubeArticleResult extends WxDataCubeBaseResult {
 
   /**
    * user_source
-   * 在获取图文阅读分时数据时才有该字段，代表用户从哪里进入来阅读该图文。0:会话;1.好友;2.朋友圈;3.腾讯微博;4.历史消息页;5.其他
+   * 在获取图文统计数据、图文阅读分时数据时才有该字段，代表用户从哪里进入来阅读该图文。
+   * 99999999.全部；0:会话;1.好友;2.朋友圈;3.腾讯微博;4.历史消息页;5.其他;6.看一看;7.搜一搜；
    */
   @SerializedName("user_source")
   private Integer userSource;

@@ -28,12 +28,19 @@ public interface WxMpService {
    * 验证消息的确来自微信服务器.
    * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319&token=&lang=zh_CN
    * </pre>
+   *
+   * @param nonce     随机串
+   * @param signature 签名
+   * @param timestamp 时间戳
+   * @return 是否验证通过
    */
   boolean checkSignature(String timestamp, String nonce, String signature);
 
   /**
    * 获取access_token, 不强制刷新access_token.
    *
+   * @return token
+   * @throws WxErrorException .
    * @see #getAccessToken(boolean)
    */
   String getAccessToken() throws WxErrorException;
@@ -50,13 +57,18 @@ public interface WxMpService {
    * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140183&token=&lang=zh_CN
    * </pre>
    *
-   * @param forceRefresh 强制刷新
+   * @param forceRefresh 是否强制刷新
+   * @return token
+   * @throws WxErrorException .
    */
   String getAccessToken(boolean forceRefresh) throws WxErrorException;
 
   /**
    * 获得ticket,不强制刷新ticket.
    *
+   * @param type ticket 类型
+   * @return ticket
+   * @throws WxErrorException .
    * @see #getTicket(TicketType, boolean)
    */
   String getTicket(TicketType type) throws WxErrorException;
@@ -68,12 +80,17 @@ public interface WxMpService {
    * </pre>
    *
    * @param forceRefresh 强制刷新
+   * @param type         ticket类型
+   * @return ticket
+   * @throws WxErrorException .
    */
   String getTicket(TicketType type, boolean forceRefresh) throws WxErrorException;
 
   /**
    * 获得jsapi_ticket,不强制刷新jsapi_ticket.
    *
+   * @return jsapi ticket
+   * @throws WxErrorException .
    * @see #getJsapiTicket(boolean)
    */
   String getJsapiTicket() throws WxErrorException;
@@ -87,6 +104,8 @@ public interface WxMpService {
    * </pre>
    *
    * @param forceRefresh 强制刷新
+   * @return jsapi ticket
+   * @throws WxErrorException .
    */
   String getJsapiTicket(boolean forceRefresh) throws WxErrorException;
 
@@ -96,6 +115,10 @@ public interface WxMpService {
    *
    * 详情请见：http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115&token=&lang=zh_CN
    * </pre>
+   *
+   * @param url 地址
+   * @return 生成的签名对象
+   * @throws WxErrorException .
    */
   WxJsapiSignature createJsapiSignature(String url) throws WxErrorException;
 
@@ -104,6 +127,10 @@ public interface WxMpService {
    * 长链接转短链接接口.
    * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=长链接转短链接接口
    * </pre>
+   *
+   * @param longUrl 长url
+   * @return 生成的短地址
+   * @throws WxErrorException .
    */
   String shortUrl(String longUrl) throws WxErrorException;
 
@@ -112,6 +139,10 @@ public interface WxMpService {
    * 语义查询接口.
    * 详情请见：http://mp.weixin.qq.com/wiki/index.php?title=语义理解
    * </pre>
+   *
+   * @param semanticQuery 查询条件
+   * @return 查询结果
+   * @throws WxErrorException .
    */
   WxMpSemanticQueryResult semanticQuery(WxMpSemanticQuery semanticQuery) throws WxErrorException;
 
@@ -136,6 +167,8 @@ public interface WxMpService {
    * </pre>
    *
    * @param redirectURI 用户授权完成后的重定向链接，无需urlencode, 方法内会进行encode
+   * @param scope       scope
+   * @param state       state
    * @return url
    */
   String oauth2buildAuthorizationUrl(String redirectURI, String scope, String state);
@@ -145,6 +178,10 @@ public interface WxMpService {
    * 用code换取oauth2的access token.
    * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=网页授权获取用户基本信息
    * </pre>
+   *
+   * @param code code
+   * @return token对象
+   * @throws WxErrorException .
    */
   WxMpOAuth2AccessToken oauth2getAccessToken(String code) throws WxErrorException;
 
@@ -152,6 +189,10 @@ public interface WxMpService {
    * <pre>
    * 刷新oauth2的access token.
    * </pre>
+   *
+   * @param refreshToken 刷新token
+   * @return 新的token对象
+   * @throws WxErrorException .
    */
   WxMpOAuth2AccessToken oauth2refreshAccessToken(String refreshToken) throws WxErrorException;
 
@@ -160,7 +201,10 @@ public interface WxMpService {
    * 用oauth2获取用户信息, 当前面引导授权时的scope是snsapi_userinfo的时候才可以.
    * </pre>
    *
-   * @param lang zh_CN, zh_TW, en
+   * @param oAuth2AccessToken token对象
+   * @param lang              zh_CN, zh_TW, en
+   * @return 用户对象
+   * @throws WxErrorException .
    */
   WxMpUser oauth2getUserInfo(WxMpOAuth2AccessToken oAuth2AccessToken, String lang) throws WxErrorException;
 
@@ -168,6 +212,9 @@ public interface WxMpService {
    * <pre>
    * 验证oauth2的access token是否有效.
    * </pre>
+   *
+   * @param oAuth2AccessToken token对象
+   * @return 是否有效
    */
   boolean oauth2validateAccessToken(WxMpOAuth2AccessToken oAuth2AccessToken);
 
@@ -176,6 +223,9 @@ public interface WxMpService {
    * 获取微信服务器IP地址
    * http://mp.weixin.qq.com/wiki/0/2ad4b6bfd29f30f71d39616c2a0fcedc.html
    * </pre>
+   *
+   * @return 微信服务器ip地址数组
+   * @throws WxErrorException .
    */
   String[] getCallbackIP() throws WxErrorException;
 
@@ -188,6 +238,7 @@ public interface WxMpService {
    *
    * @param action   执行的检测动作
    * @param operator 指定平台从某个运营商进行检测
+   * @return 检测结果
    * @throws WxErrorException .
    */
   WxNetCheckResult netCheck(String action, String operator) throws WxErrorException;
@@ -195,7 +246,7 @@ public interface WxMpService {
   /**
    * <pre>
    * 获取公众号的自动回复规则.
-   * http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751299&token=&lang=zh_CN
+   * https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Getting_Rules_for_Auto_Replies.html
    * 开发者可以通过该接口，获取公众号当前使用的自动回复规则，包括关注后自动回复、消息自动回复（60分钟内触发一次）、关键词自动回复。
    * 请注意：
    * 1、第三方平台开发者可以通过本接口，在旗下公众号将业务授权给你后，立即通过本接口检测公众号的自动回复配置，并通过接口再次给公众号设置好自动回复规则，以提升公众号运营者的业务体验。
@@ -207,6 +258,9 @@ public interface WxMpService {
    * http请求方式: GET（请使用https协议）
    * https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=ACCESS_TOKEN
    * </pre>
+   *
+   * @return 公众号的自动回复规则
+   * @throws WxErrorException .
    */
   WxMpCurrentAutoReplyInfo getCurrentAutoReplyInfo() throws WxErrorException;
 
@@ -524,6 +578,7 @@ public interface WxMpService {
 
   /**
    * 返回图像处理接口的实现类对象，以方便调用其各个接口.
+   *
    * @return WxMpImgProcService
    */
   WxMpImgProcService getImgProcService();

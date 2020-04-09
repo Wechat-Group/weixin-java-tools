@@ -7,9 +7,11 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author ArBing
+ */
 @Data
-public class WxMaTemplateLibraryGetResult implements Serializable{
-
+public class WxMaTemplateLibraryGetResult implements Serializable {
   private static final long serialVersionUID = -190847592776636744L;
   private String id;
   private String title;
@@ -17,7 +19,7 @@ public class WxMaTemplateLibraryGetResult implements Serializable{
   private List<KeywordInfo> keywordList;
 
   @Data
-  public static class KeywordInfo{
+  public static class KeywordInfo {
 
     @SerializedName("keyword_id")
     private int keywordId;
@@ -25,7 +27,7 @@ public class WxMaTemplateLibraryGetResult implements Serializable{
     private String example;
   }
 
-  public static WxMaTemplateLibraryGetResult fromJson(String json){
+  public static WxMaTemplateLibraryGetResult fromJson(String json) {
     return WxGsonBuilder.create().fromJson(json, WxMaTemplateLibraryGetResult.class);
   }
 }

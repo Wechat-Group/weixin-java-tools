@@ -62,6 +62,11 @@ public class ProfitSharingQueryRequest extends BaseWxPayRequest {
   }
 
   @Override
+  protected boolean ignoreSubAppId() {
+    return true;
+  }
+
+  @Override
   protected void storeMap(Map<String, String> map) {
     map.put("transaction_id", transactionId);
     map.put("out_order_no", outOrderNo);

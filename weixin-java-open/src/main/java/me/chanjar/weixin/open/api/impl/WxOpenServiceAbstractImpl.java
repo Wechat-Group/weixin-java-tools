@@ -42,7 +42,7 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
    */
   public abstract void initHttp();
 
-  protected synchronized <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  protected <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
     try {
       T result = executor.execute(uri, data, WxType.Open);
       this.log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uri, data, result);

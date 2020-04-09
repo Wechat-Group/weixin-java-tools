@@ -8,6 +8,7 @@ import com.github.binarywang.wxpay.bean.notify.WxScanPayNotifyResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
+import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 import java.io.File;
@@ -165,6 +166,17 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   <T> T createOrder(WxPayUnifiedOrderRequest request) throws WxPayException;
+
+  /**
+   * 调用统一下单接口，并组装生成支付所需参数对象.
+   *
+   * @see WxPayService#createOrder(WxPayUnifiedOrderRequest)
+   * @param specificTradeType 将使用的交易方式，不能为 null
+   * @param request 统一下单请求参数，设定的 tradeType 及配置里的 tradeType 将被忽略，转而使用 specificTradeType
+   * @return 返回 {@link WxPayConstants.TradeType.Specific} 指定的类
+   * @throws WxPayException the wx pay exception
+   */
+  <T> T createOrder(WxPayConstants.TradeType.Specific<T> specificTradeType, WxPayUnifiedOrderRequest request) throws WxPayException;
 
   /**
    * 统一下单(详见https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1)

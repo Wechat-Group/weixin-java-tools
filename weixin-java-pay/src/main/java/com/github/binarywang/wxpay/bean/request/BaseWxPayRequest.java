@@ -221,8 +221,6 @@ public abstract class BaseWxPayRequest implements Serializable {
 
   /**
    * 使用快速算法组装xml
-   *
-   * @return
    */
   private String toFastXml() {
     try {
@@ -297,7 +295,7 @@ public abstract class BaseWxPayRequest implements Serializable {
    * 注意：不含sign属性
    */
   public Map<String, String> getSignParams() {
-    Map<String, String> map = new HashMap<>();
+    Map<String, String> map = new HashMap<>(8);
     map.put("appid", appid);
     map.put("mch_id", mchId);
     map.put("sub_appid", subAppId);

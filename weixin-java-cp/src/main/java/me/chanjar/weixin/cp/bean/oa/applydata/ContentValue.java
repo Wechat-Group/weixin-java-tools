@@ -33,6 +33,8 @@ public class ContentValue implements Serializable {
 
   private List<ContentValue.Child> children;
 
+  private Attendance attendance;
+
   @Data
   public static class Date implements Serializable {
     private static final long serialVersionUID = -6181554080062231138L;
@@ -90,5 +92,28 @@ public class ContentValue implements Serializable {
     private static final long serialVersionUID = -3500102073821161558L;
     private List<Content> list;
   }
+
+
+  @Data
+  public static class Attendance implements Serializable {
+    private static final long serialVersionUID = -6627566040706594166L;
+    @SerializedName("date_range")
+    private DataRange dateRange;
+    private Integer type;
+
+    @Data
+    public static class DataRange implements Serializable {
+      private static final long serialVersionUID = -3411836592583718255L;
+      private String type;
+      @SerializedName("new_begin")
+      private Long begin;
+      @SerializedName("new_end")
+      private Long end;
+      @SerializedName("new_duration")
+      private Long duration;
+    }
+  }
+
+
 
 }

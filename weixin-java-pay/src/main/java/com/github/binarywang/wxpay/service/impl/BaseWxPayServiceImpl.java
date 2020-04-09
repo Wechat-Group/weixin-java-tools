@@ -13,6 +13,7 @@ import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
+import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -154,7 +155,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       log.debug("微信支付异步通知请求参数：{}", xmlData);
       WxPayOrderNotifyResult result = WxPayOrderNotifyResult.fromXML(xmlData);
       log.debug("微信支付异步通知请求解析后的对象：{}", result);
-      result.checkResult(this, this.getConfig().getSignType(), false);
+      result.checkResult(this, result.getSignType(), false);
       return result;
     } catch (WxPayException e) {
       throw e;
@@ -349,6 +350,15 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       }
     }
 
+  }
+
+  @Override
+  public <T> T createOrder(TradeType.Specific<T> specificTradeType, WxPayUnifiedOrderRequest request) throws WxPayException {
+    if (specificTradeType == null) {
+      throw new IllegalArgumentException("specificTradeType 不能为 null");
+    }
+    request.setTradeType(specificTradeType.getType());
+    return createOrder(request);
   }
 
   @Override
@@ -795,6 +805,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public WxPayFaceAuthInfoResult getWxPayFaceAuthInfo(WxPayFaceAuthInfoRequest request) throws WxPayException {
+    if (StringUtils.isEmpty(request.getSignType())) {
+      request.setSignType(WxPayConstants.SignType.MD5);
+    }
+
     request.checkAndSign(this.getConfig());
     String url = "https://payapp.weixin.qq.com/face/get_wxpayface_authinfo";
     String responseContent = this.post(url, request.toXML(), false);

@@ -44,7 +44,9 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private Map<String, Token> authorizerAccessTokens = new ConcurrentHashMap<>();
   private Map<String, Token> jsapiTickets = new ConcurrentHashMap<>();
   private Map<String, Token> cardApiTickets = new ConcurrentHashMap<>();
+  private Map<String, Lock> locks = new ConcurrentHashMap<>();
 
+  private Lock componentAccessTokenLock = getLockByKey("componentAccessTokenLock");
 
 
   @Override
@@ -63,6 +65,21 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   }
 
   @Override
+  public Lock getLockByKey(String key){
+    Lock lock = locks.get(key);
+    if (lock == null) {
+      synchronized (WxOpenInMemoryConfigStorage.class){
+        lock = locks.get(key);
+        if (lock == null) {
+          lock = new ReentrantLock();
+          locks.put(key, lock);
+        }
+      }
+    }
+    return lock;
+  }
+  
+  @Override
   public WxMpConfigStorage getWxMpConfigStorage(String appId) {
     return new WxOpenInnerConfigStorage(this, appId);
   }
@@ -79,7 +96,8 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   }
 
   @Override
-  public void setWxOpenInfo(String componentAppId, String componentAppSecret, String componentToken, String componentAesKey) {
+  public void setWxOpenInfo(String componentAppId, String componentAppSecret, String componentToken,
+                            String componentAesKey) {
     setComponentAppId(componentAppId);
     setComponentAppSecret(componentAppSecret);
     setComponentToken(componentToken);
@@ -146,7 +164,8 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
   @Override
   public void updateAuthorizerAccessToken(String appId, WxOpenAuthorizerAccessToken authorizerAccessToken) {
-    updateAuthorizerAccessToken(appId, authorizerAccessToken.getAuthorizerAccessToken(), authorizerAccessToken.getExpiresIn());
+    updateAuthorizerAccessToken(appId, authorizerAccessToken.getAuthorizerAccessToken(),
+      authorizerAccessToken.getExpiresIn());
   }
 
   @Override
@@ -202,13 +221,24 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private static class WxOpenInnerConfigStorage implements WxMpConfigStorage, WxMaConfig {
     private WxOpenConfigStorage wxOpenConfigStorage;
     private String appId;
-    private Lock accessTokenLock = new ReentrantLock();
-    private Lock jsapiTicketLock = new ReentrantLock();
-    private Lock cardApiTicketLock = new ReentrantLock();
+    /**
+     * 小程序原始ID
+     */
+    private volatile String originalId;
+    /**
+     * 云环境ID
+     */
+    private volatile String cloudEnv;
+    private final Lock accessTokenLock;
+    private final Lock jsapiTicketLock;
+    private final Lock cardApiTicketLock;
 
     private WxOpenInnerConfigStorage(WxOpenConfigStorage wxOpenConfigStorage, String appId) {
       this.wxOpenConfigStorage = wxOpenConfigStorage;
       this.appId = appId;
+      this.accessTokenLock = wxOpenConfigStorage.getLockByKey(appId + ":accessTokenLock");
+      this.jsapiTicketLock = wxOpenConfigStorage.getLockByKey(appId + ":jsapiTicketLock");
+      this.cardApiTicketLock = wxOpenConfigStorage.getLockByKey(appId + ":cardApiTicketLock");
     }
 
     @Override
@@ -323,6 +353,24 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     @Override
     public String getAppid() {
       return this.appId;
+    }
+
+    @Override
+    public String getOriginalId() {
+      return originalId;
+    }
+
+    public void setOriginalId(String originalId) {
+      this.originalId = originalId;
+    }
+
+    @Override
+    public String getCloudEnv() {
+      return this.cloudEnv;
+    }
+
+    public void setCloudEnv(String cloudEnv) {
+      this.cloudEnv = cloudEnv;
     }
 
     @Override

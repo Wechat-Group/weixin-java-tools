@@ -5,7 +5,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +20,8 @@ import java.util.List;
  * @since 2019-11-26
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class WxMaExpressAccount implements Serializable {
 
   private static final JsonParser JSON_PARSER = new JsonParser();

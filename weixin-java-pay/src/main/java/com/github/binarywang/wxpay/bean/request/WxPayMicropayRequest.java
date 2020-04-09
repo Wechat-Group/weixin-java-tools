@@ -21,6 +21,8 @@ import java.util.Map;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class WxPayMicropayRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = 100577773033376092L;
+
   /**
    * <pre>
    * 字段名：设备号.
@@ -205,7 +207,6 @@ public class WxPayMicropayRequest extends BaseWxPayRequest {
    * 描述：Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
    * </pre>
    **/
-  @Required
   @XStreamAlias("receipt")
   private String receipt;
 
@@ -273,6 +274,7 @@ public class WxPayMicropayRequest extends BaseWxPayRequest {
     map.put("time_expire", timeExpire);
     map.put("auth_code", authCode);
     map.put("scene_info", sceneInfo);
+    map.put("profit_sharing",profitSharing);
   }
 
 }

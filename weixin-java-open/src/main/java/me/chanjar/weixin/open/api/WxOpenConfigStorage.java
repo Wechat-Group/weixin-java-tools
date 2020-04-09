@@ -6,6 +6,8 @@ import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
 
+import java.util.concurrent.locks.Lock;
+
 /**
  * @author <a href="https://github.com/007gzs">007</a>
  */
@@ -52,6 +54,10 @@ public interface WxOpenConfigStorage {
   WxMpConfigStorage getWxMpConfigStorage(String appId);
 
   WxMaConfig getWxMaConfig(String appId);
+
+  Lock getComponentAccessTokenLock();
+
+  Lock getLockByKey(String key);
 
   /**
    * 应该是线程安全的

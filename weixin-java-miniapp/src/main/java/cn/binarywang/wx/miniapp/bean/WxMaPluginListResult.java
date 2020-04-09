@@ -9,7 +9,6 @@ import java.util.List;
 
 @Data
 public class WxMaPluginListResult implements Serializable {
-
   private static final long serialVersionUID = -5898572369543593656L;
 
   @SerializedName("plugin_list")

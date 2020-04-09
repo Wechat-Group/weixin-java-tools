@@ -4,7 +4,9 @@ import cn.binarywang.wx.miniapp.api.*;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.WxType;
@@ -58,6 +60,7 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   private WxMaExpressService expressService = new WxMaExpressServiceImpl(this);
   private WxMaSubscribeService subscribeService = new WxMaSubscribeServiceImpl(this);
   private WxMaCloudService cloudService = new WxMaCloudServiceImpl(this);
+  private WxMaLiveService liveService = new WxMaLiveServiceImpl(this);
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -184,6 +187,17 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   }
 
   @Override
+  public void setDynamicData(int lifespan, String type, int scene, String data) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("lifespan", lifespan);
+    jsonObject.addProperty("query", WxGsonBuilder.create().toJson(ImmutableMap.of("type", type)));
+    jsonObject.addProperty("data", data);
+    jsonObject.addProperty("scene", scene);
+
+    this.post(SET_DYNAMIC_DATA_URL, jsonObject.toString());
+  }
+
+  @Override
   public boolean checkSignature(String timestamp, String nonce, String signature) {
     try {
       return SHA1.gen(this.getWxMaConfig().getToken(), timestamp, nonce).equals(signature);
@@ -226,7 +240,10 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
         if (retryTimes + 1 > this.maxRetryTimes) {
           log.warn("重试达到最大次数【{}】", maxRetryTimes);
           //最后一次重试失败后，直接抛出异常，不再等待
-          throw new RuntimeException("微信服务端异常，超出重试次数");
+          throw new WxErrorException(WxError.builder()
+            .errorCode(e.getError().getErrorCode())
+            .errorMsg("微信服务端异常，超出重试次数！")
+            .build());
         }
 
         WxError error = e.getError();
@@ -272,7 +289,17 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
         || error.getErrorCode() == ERR_42001
         || error.getErrorCode() == ERR_40014) {
         // 强制设置WxMaConfig的access token过期了，这样在下一次请求里就会刷新access token
-        this.getWxMaConfig().expireAccessToken();
+        Lock lock = this.getWxMaConfig().getAccessTokenLock();
+        lock.lock();
+        try {
+          if (StringUtils.equals(this.getWxMaConfig().getAccessToken(), accessToken)) {
+            this.getWxMaConfig().expireAccessToken();
+          }
+        } catch (Exception ex) {
+          this.getWxMaConfig().expireAccessToken();
+        } finally {
+          lock.unlock();
+        }
         if (this.getWxMaConfig().autoRefreshToken()) {
           return this.execute(executor, uri, data);
         }
@@ -388,5 +415,10 @@ public class WxMaServiceImpl implements WxMaService, RequestHttp<CloseableHttpCl
   @Override
   public WxMaCloudService getCloudService() {
     return this.cloudService;
+  }
+
+  @Override
+  public WxMaLiveService getLiveService() {
+    return this.liveService;
   }
 }

@@ -87,6 +87,10 @@ public interface WxMaConfig {
 
   String getAesKey();
 
+  String getOriginalId();
+
+  String getCloudEnv();
+
   String getMsgDataFormat();
 
   long getExpiresTime();

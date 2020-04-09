@@ -1,5 +1,5 @@
-
 ## `Demo` 项目
+
 ### 说明
 1. 在码云和 `GitHub` 上均可访问，会尽量保持同步，请根据自己情况选用。
 1. 一般来说，`Github`上的版本应该是最新的，但也有可能没及时同步，此种情况下请以 `Github` 上的版本为准，有问题也请在 `Github` 对应项目 `Issues` 页面提问）。
@@ -19,3 +19,4 @@
 	- 使用 `Spring MVC` 实现的公众号 Demo：[GitHub](http://github.com/binarywang/weixin-java-mp-demo-springmvc)、[码云](https://gitee.com/binary/weixin-java-mp-demo) [![Build Status](https://travis-ci.org/binarywang/weixin-java-mp-demo-springmvc.svg?branch=master)](https://travis-ci.org/binarywang/weixin-java-mp-demo-springmvc)
 	- 使用 `Spring Boot` 实现的公众号 Demo（支持多公众号）：[GitHub](http://github.com/binarywang/weixin-java-mp-demo-springboot)、[码云](http://gitee.com/binary/weixin-java-mp-demo-springboot) [![Build Status](https://travis-ci.org/binarywang/weixin-java-mp-demo-springboot.svg?branch=master)](https://travis-ci.org/binarywang/weixin-java-mp-demo-springboot)
 	- 含公众号和部分微信支付代码的 Demo：[GitHub](http://github.com/Wechat-Group/weixin-java-demo-springmvc)、[码云](http://gitee.com/binary/weixin-java-tools-springmvc) [![Build Status](https://travis-ci.org/Wechat-Group/weixin-java-demo-springmvc.svg?branch=master)](https://travis-ci.org/Wechat-Group/weixin-java-demo-springmvc)
+  
