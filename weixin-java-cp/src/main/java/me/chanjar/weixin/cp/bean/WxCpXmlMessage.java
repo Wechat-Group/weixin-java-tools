@@ -396,6 +396,12 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamAlias("SendLocationInfo")
   private SendLocationInfo sendLocationInfo = new SendLocationInfo();
 
+
+  @XStreamAlias("ApprovalInfo")
+  private ApprovalInfo approvalInfo=new ApprovalInfo();
+
+
+
   protected static WxCpXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
     xml = xml.replace("</PicList><PicList>", "");
@@ -512,6 +518,59 @@ public class WxCpXmlMessage implements Serializable {
     @XStreamAlias("Poiname")
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String poiName;
+
+  }
+
+  @XStreamAlias("ApprovalInfo")
+  @Data
+  public static class ApprovalInfo {
+
+    /**
+     * 审批编号
+     */
+    @XStreamAlias("SpNo")
+    private String spNo;
+    /**
+     * 审批申请类型名称（审批模板名称）
+     */
+    @XStreamAlias("SpName")
+    private String spName;
+    /**
+     * 申请单状态：1-审批中；2-已通过；3-已驳回；4-已撤销；6-通过后撤销；7-已删除；10-已支付
+     */
+    @XStreamAlias("SpStatus")
+    private Integer spStatus;
+
+    /**
+     * 审批模板id。
+     */
+    @XStreamAlias("templateId")
+    private String templateId;
+    /**
+     * 审批申请提交时间,Unix时间戳
+     */
+    @XStreamAlias("ApplyTime")
+    private Integer applyTime;
+
+    /**
+     * 申请人信息
+     */
+    @XStreamAlias("Applyer")
+    private Applyer applyer;
+    /**
+     * 审批申请单变化类型
+     */
+    @XStreamAlias("StatuChangeEvent")
+    private Integer statuChangeEvent;
+
+    @XStreamAlias("Applyer")
+    @Data
+    public static class Applyer {
+      @XStreamAlias("Applyer")
+      private String UserId;
+      @XStreamAlias("Party")
+      private String party;
+    }
 
   }
 
