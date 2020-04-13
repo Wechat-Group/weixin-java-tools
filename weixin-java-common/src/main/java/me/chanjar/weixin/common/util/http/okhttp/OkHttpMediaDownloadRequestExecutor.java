@@ -58,8 +58,13 @@ public class OkHttpMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
       return null;
     }
 
+    String baseName = FilenameUtils.getBaseName(fileName);
+    if (StringUtils.isBlank(fileName) || baseName.length() < 3) {
+      baseName = String.valueOf(System.currentTimeMillis());
+    }
+
     File file = File.createTempFile(
-      FilenameUtils.getBaseName(fileName), "." + FilenameUtils.getExtension(fileName), super.tmpDirFile
+      baseName, "." + FilenameUtils.getExtension(fileName), super.tmpDirFile
     );
 
     try (BufferedSink sink = Okio.buffer(Okio.sink(file))) {
