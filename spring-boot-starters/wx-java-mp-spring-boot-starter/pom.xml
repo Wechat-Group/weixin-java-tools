@@ -25,10 +25,10 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.redisson</groupId>
-      <artifactId>redisson</artifactId>
-      <scope>compile</scope>
-      <optional>true</optional>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <version>${spring.boot.version}</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
