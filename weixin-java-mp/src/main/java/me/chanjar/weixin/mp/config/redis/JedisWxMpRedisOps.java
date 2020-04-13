@@ -24,16 +24,16 @@ public class JedisWxMpRedisOps implements WxMpRedisOps {
   }
 
   @Override
-  public Long getExpire(String key) {
+  public void setValue(String key, String value, int expire, TimeUnit timeUnit) {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      return jedis.ttl(key);
+      jedis.psetex(key, timeUnit.toMillis(expire), value);
     }
   }
 
   @Override
-  public void setValue(String key, String value, int expire, TimeUnit timeUnit) {
+  public Long getExpire(String key) {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      jedis.psetex(key, timeUnit.toMillis(expire), value);
+      return jedis.ttl(key);
     }
   }
 

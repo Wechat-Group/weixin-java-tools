@@ -5,6 +5,8 @@ import java.util.concurrent.locks.Lock;
 
 /**
  * 微信公众号redis操作基本类
+ * <p>
+ * 非内置实现redis相关操作, 请实现该类
  */
 public class BaseWxMpRedisOps implements WxMpRedisOps {
 
@@ -14,12 +16,12 @@ public class BaseWxMpRedisOps implements WxMpRedisOps {
   }
 
   @Override
-  public Long getExpire(String key) {
+  public void setValue(String key, String value, int expire, TimeUnit timeUnit) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public void setValue(String key, String value, int expire, TimeUnit timeUnit) {
+  public Long getExpire(String key) {
     throw new UnsupportedOperationException();
   }
 
