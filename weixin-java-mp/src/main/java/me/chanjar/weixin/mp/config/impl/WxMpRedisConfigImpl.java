@@ -20,20 +20,23 @@ import java.util.concurrent.TimeUnit;
  */
 @SuppressWarnings("hiding")
 public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
-  private static final String ACCESS_TOKEN_KEY = "wx:access_token:";
-  private static final String LOCK_KEY = "wx:lock:";
+  private static final String ACCESS_TOKEN_KEY_TPL = "%s:access_token:%s";
+  private static final String TICKET_KEY_TPL = "%s:ticket:key:%s:%s";
+  private static final String LOCK_KEY_TPL = "%s:lock:%s:";
 
   private final WxMpRedisOps redisOps;
+  private final String keyPrefix;
 
   private String accessTokenKey;
   private String lockKey;
 
   public WxMpRedisConfigImpl(@NotNull JedisPool jedisPool) {
-    this(new JedisWxMpRedisOps(jedisPool));
+    this(new JedisWxMpRedisOps(jedisPool), "wx");
   }
 
-  public WxMpRedisConfigImpl(@NotNull WxMpRedisOps redisOps) {
+  public WxMpRedisConfigImpl(@NotNull WxMpRedisOps redisOps, @NotNull String keyPrefix) {
     this.redisOps = redisOps;
+    this.keyPrefix = keyPrefix;
   }
 
   /**
@@ -42,8 +45,8 @@ public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
   @Override
   public void setAppId(String appId) {
     super.setAppId(appId);
-    this.accessTokenKey = ACCESS_TOKEN_KEY.concat(appId);
-    this.lockKey = ACCESS_TOKEN_KEY.concat(appId).concat(":");
+    this.accessTokenKey = String.format(ACCESS_TOKEN_KEY_TPL, this.keyPrefix, appId);
+    this.lockKey = String.format(LOCK_KEY_TPL, this.keyPrefix, appId);
     accessTokenLock = this.redisOps.getLock(lockKey.concat("accessTokenLock"));
     jsapiTicketLock = this.redisOps.getLock(lockKey.concat("jsapiTicketLock"));
     sdkTicketLock = this.redisOps.getLock(lockKey.concat("sdkTicketLock"));
@@ -51,7 +54,7 @@ public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
   }
 
   private String getTicketRedisKey(TicketType type) {
-    return String.format("wx:ticket:key:%s:%s", this.appId, type.getCode());
+    return String.format(TICKET_KEY_TPL, this.keyPrefix, appId, type.getCode());
   }
 
   @Override
