@@ -40,10 +40,18 @@ public class WxMpMemberCardUpdateMessage implements Serializable {
    */
   private Integer bonus;
   /**
+   * 本次积分变动值，传负数代表减少，错误单词，只是为了保持兼容
+   */
+  @Deprecated
+  @SerializedName("add_bonus")
+  private Integer addBounus;
+
+
+  /**
    * 本次积分变动值，传负数代表减少
    */
   @SerializedName("add_bonus")
-  private Integer addBounus;
+  private Integer addBonus;
   /**
    * 商家自定义积分消耗记录，不超过14个汉字
    */
