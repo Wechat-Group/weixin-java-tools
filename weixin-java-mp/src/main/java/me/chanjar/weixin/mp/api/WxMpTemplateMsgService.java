@@ -44,6 +44,7 @@ public interface WxMpTemplateMsgService {
   /**
    * <pre>
    * 发送模板消息
+   * @author yjwang 2020-04-16 新增<br/>回车换行
    * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277&token=&lang=zh_CN
    * </pre>
    *

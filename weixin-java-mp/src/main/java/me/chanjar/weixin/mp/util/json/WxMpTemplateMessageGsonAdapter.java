@@ -40,7 +40,7 @@ public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTempla
 
     for (WxMpTemplateData datum : message.getData()) {
       JsonObject dataJson = new JsonObject();
-      dataJson.addProperty("value", datum.getValue());
+      dataJson.addProperty("value", datum.getValue().replaceAll("<br/>","\r\n"));
       if (datum.getColor() != null) {
         dataJson.addProperty("color", datum.getColor());
       }

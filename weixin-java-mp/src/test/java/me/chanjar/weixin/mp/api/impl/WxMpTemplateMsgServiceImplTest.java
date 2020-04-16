@@ -38,7 +38,7 @@ public class WxMpTemplateMsgServiceImplTest {
       .build();
 
     templateMessage.addData(new WxMpTemplateData("first", dateFormat.format(new Date()), "#FF00FF"))
-      .addData(new WxMpTemplateData("remark", RandomStringUtils.randomAlphanumeric(100), "#FF00FF"));
+      .addData(new WxMpTemplateData("remark", RandomStringUtils.randomAlphanumeric(100)+"<br/>回车换行测试", "#FF00FF"));
     String msgId = this.wxService.getTemplateMsgService().sendTemplateMsg(templateMessage);
     Assert.assertNotNull(msgId);
     System.out.println(msgId);
