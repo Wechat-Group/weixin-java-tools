@@ -81,10 +81,18 @@ public class WxMpStorageAutoConfiguration {
 
   private void setWxMpInfo(WxMpDefaultConfigImpl config) {
     WxMpProperties properties = wxMpProperties;
+    WxMpProperties.ConfigStorage configStorageProperties = properties.getConfigStorage();
     config.setAppId(properties.getAppId());
     config.setSecret(properties.getSecret());
     config.setToken(properties.getToken());
     config.setAesKey(properties.getAesKey());
+
+    config.setHttpProxyHost(configStorageProperties.getHttpProxyHost());
+    config.setHttpProxyUsername(configStorageProperties.getHttpProxyUsername());
+    config.setHttpProxyPassword(configStorageProperties.getHttpProxyPassword());
+    if (configStorageProperties.getHttpProxyPort() != null) {
+      config.setHttpProxyPort(configStorageProperties.getHttpProxyPort());
+    }
   }
 
   private JedisPool getJedisPool() {
