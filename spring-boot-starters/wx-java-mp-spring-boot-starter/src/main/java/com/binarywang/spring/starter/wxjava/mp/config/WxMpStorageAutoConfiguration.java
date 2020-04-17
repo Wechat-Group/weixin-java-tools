@@ -44,7 +44,7 @@ public class WxMpStorageAutoConfiguration {
     WxMpConfigStorage config;
     if (type == WxMpProperties.StorageType.redis || type == WxMpProperties.StorageType.jedis) {
       config = wxMpInJedisConfigStorage();
-    } else if (type == WxMpProperties.StorageType.redis_template) {
+    } else if (type == WxMpProperties.StorageType.redistemplate) {
       config = wxMpInRedisTemplateConfigStorage();
     } else {
       config = wxMpInMemoryConfigStorage();

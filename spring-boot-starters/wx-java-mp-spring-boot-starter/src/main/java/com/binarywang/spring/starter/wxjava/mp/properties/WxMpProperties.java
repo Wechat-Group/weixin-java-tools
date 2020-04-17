@@ -49,81 +49,79 @@ public class WxMpProperties {
     private static final long serialVersionUID = 4815731027000065434L;
 
     /**
-     * 存储类型
+     * 存储类型.
      */
     private StorageType type = memory;
 
     /**
-     * 指定key前缀
+     * 指定key前缀.
      */
     private String keyPrefix = "wx";
 
     /**
-     * redis连接配置
+     * redis连接配置.
      */
     private RedisProperties redis = new RedisProperties();
 
     /**
-     * http客户端类型
+     * http客户端类型.
      */
     private HttpClientType httpClientType = HttpClientType.httpclient;
 
     /**
-     * http代理主机
+     * http代理主机.
      */
     private String httpProxyHost;
 
     /**
-     * http代理端口
+     * http代理端口.
      */
     private Integer httpProxyPort;
 
     /**
-     * http代理用户名
+     * http代理用户名.
      */
     private String httpProxyUsername;
 
     /**
-     * http代理密码
+     * http代理密码.
      */
     private String httpProxyPassword;
 
   }
 
-  public static enum StorageType {
+  public enum StorageType {
     /**
-     * 内存
+     * 内存.
      */
     memory,
     /**
-     * jedis
+     * jedis.
      */
     redis,
     /**
-     * redis(JedisClient)
+     * redis(JedisClient).
      */
     jedis,
     /**
-     * redis(RedisTemplate)
+     * redis(RedisTemplate).
      */
-    redis_template,
-    ;
+    redistemplate
   }
 
-  public static enum HttpClientType {
+  public enum HttpClientType {
     /**
-     * HttpClient
+     * HttpClient.
      */
     httpclient,
     /**
-     * OkHttp
+     * OkHttp.
      */
     okhttp,
     /**
-     * JoddHttp
+     * JoddHttp.
      */
-    joddhttp,
-    ;
+    joddhttp
   }
 
   @Data
