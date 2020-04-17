@@ -120,6 +120,19 @@ public final class MemberCardUpdate implements Serializable {
   private CustomCell1 customCell1;
 
   /**
+   * 自定义会员信息类目，会员卡激活后显示.
+   */
+  @SerializedName("custom_cell2")
+  private CustomCell1 customCell2;
+
+
+  /**
+   * 自定义会员信息类目，会员卡激活后显示.
+   */
+  @SerializedName("custom_cell3")
+  private CustomCell1 customCell3;
+
+  /**
    * 积分规则,JSON结构积分规则.
    */
   @SerializedName("bonus_rule")
