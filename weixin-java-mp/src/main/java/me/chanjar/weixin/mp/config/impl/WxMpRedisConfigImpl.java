@@ -1,6 +1,5 @@
 package me.chanjar.weixin.mp.config.impl;
 
-import com.sun.istack.internal.NotNull;
 import me.chanjar.weixin.mp.config.redis.JedisWxMpRedisOps;
 import me.chanjar.weixin.mp.config.redis.WxMpRedisOps;
 import me.chanjar.weixin.mp.enums.TicketType;
@@ -30,11 +29,11 @@ public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
   private String accessTokenKey;
   private String lockKey;
 
-  public WxMpRedisConfigImpl(@NotNull JedisPool jedisPool) {
+  public WxMpRedisConfigImpl(JedisPool jedisPool) {
     this(new JedisWxMpRedisOps(jedisPool), "wx");
   }
 
-  public WxMpRedisConfigImpl(@NotNull WxMpRedisOps redisOps, @NotNull String keyPrefix) {
+  public WxMpRedisConfigImpl(WxMpRedisOps redisOps, String keyPrefix) {
     this.redisOps = redisOps;
     this.keyPrefix = keyPrefix;
   }

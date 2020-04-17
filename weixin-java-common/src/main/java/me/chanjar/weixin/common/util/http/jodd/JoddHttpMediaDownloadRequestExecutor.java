@@ -60,9 +60,14 @@ public class JoddHttpMediaDownloadRequestExecutor extends BaseMediaDownloadReque
       return null;
     }
 
+    String baseName = FilenameUtils.getBaseName(fileName);
+    if (StringUtils.isBlank(fileName) || baseName.length() < 3) {
+      baseName = String.valueOf(System.currentTimeMillis());
+    }
+
     try (InputStream inputStream = new ByteArrayInputStream(response.bodyBytes())) {
       return FileUtils.createTmpFile(inputStream,
-        FilenameUtils.getBaseName(fileName),
+        baseName,
         FilenameUtils.getExtension(fileName),
         super.tmpDirFile);
     }

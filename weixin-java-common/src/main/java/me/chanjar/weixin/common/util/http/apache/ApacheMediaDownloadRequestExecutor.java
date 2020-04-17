@@ -63,7 +63,12 @@ public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
         fileName = String.valueOf(System.currentTimeMillis());
       }
 
-      return FileUtils.createTmpFile(inputStream, FilenameUtils.getBaseName(fileName), FilenameUtils.getExtension(fileName),
+      String baseName = FilenameUtils.getBaseName(fileName);
+      if (StringUtils.isBlank(fileName) || baseName.length() < 3) {
+        baseName = String.valueOf(System.currentTimeMillis());
+      }
+
+      return FileUtils.createTmpFile(inputStream, baseName, FilenameUtils.getExtension(fileName),
         super.tmpDirFile);
 
     } finally {
