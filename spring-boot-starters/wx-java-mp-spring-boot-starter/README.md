@@ -1,4 +1,4 @@
-# wx-java-mp-starter
+# wx-java-mp-spring-boot-starter
 ## 快速开始
 1. 引入依赖
     ```xml
@@ -27,9 +27,9 @@
     wx.mp.config-storage.http-proxy-username=
     wx.mp.config-storage.http-proxy-password=
     ```
-3. 支持自动注入的类型
-
-`WxMpService`以及~~相关的服务类, 比如: `wxMpService.getXxxService`。~~
+3. 自动注入的类型
+- `WxMpService`以及~~相关的服务类, 比如: `wxMpService.getXxxService`。~~
+- `WxMpConfigStorage`
 
 
 
