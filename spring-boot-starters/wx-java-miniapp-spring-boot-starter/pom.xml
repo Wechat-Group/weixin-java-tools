@@ -19,6 +19,17 @@
       <artifactId>weixin-java-miniapp</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <version>${spring.boot.version}</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
