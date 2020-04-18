@@ -1,8 +1,8 @@
 package cn.binarywang.wx.miniapp.config.impl;
 
-import cn.binarywang.wx.miniapp.config.redis.JedisWxMaRedisOps;
-import cn.binarywang.wx.miniapp.config.redis.WxMaRedisOps;
 import cn.binarywang.wx.miniapp.constant.TicketType;
+import me.chanjar.weixin.common.redis.JedisWxRedisOps;
+import me.chanjar.weixin.common.redis.WxRedisOps;
 import redis.clients.jedis.JedisPool;
 
 import java.util.concurrent.TimeUnit;
@@ -15,17 +15,17 @@ public class WxMaRedisBetterConfigImpl extends WxMaDefaultConfigImpl {
   private static final String TICKET_KEY_TPL = "%s:ticket:key:%s:%s";
   private static final String LOCK_KEY_TPL = "%s:lock:%s:";
 
-  private final WxMaRedisOps redisOps;
+  private final WxRedisOps redisOps;
   private final String keyPrefix;
 
   private volatile String accessTokenKey;
   private volatile String lockKey;
 
   public WxMaRedisBetterConfigImpl(JedisPool jedisPool) {
-    this(new JedisWxMaRedisOps(jedisPool), "wa");
+    this(new JedisWxRedisOps(jedisPool), "wa");
   }
 
-  public WxMaRedisBetterConfigImpl(WxMaRedisOps redisOps, String keyPrefix) {
+  public WxMaRedisBetterConfigImpl(WxRedisOps redisOps, String keyPrefix) {
     this.redisOps = redisOps;
     this.keyPrefix = keyPrefix;
   }

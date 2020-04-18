@@ -1,6 +1,6 @@
-package me.chanjar.weixin.mp.config.redis;
+package me.chanjar.weixin.common.redis;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.util.locks.JedisDistributedLock;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -8,13 +8,10 @@ import redis.clients.jedis.JedisPool;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
-/**
- * Jedis实现相关操作
- */
-@AllArgsConstructor
-public class JedisWxMpRedisOps implements WxMpRedisOps {
+@RequiredArgsConstructor
+public class JedisWxRedisOps implements WxRedisOps {
 
-  private JedisPool jedisPool;
+  private final JedisPool jedisPool;
 
   @Override
   public String getValue(String key) {

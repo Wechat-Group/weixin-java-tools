@@ -253,6 +253,14 @@
         <groupId>org.redisson</groupId>
         <artifactId>redisson</artifactId>
         <version>3.12.0</version>
+        <optional>true</optional>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-redis</artifactId>
+        <version>1.8.23.RELEASE</version>
+        <optional>true</optional>
         <scope>provided</scope>
       </dependency>
       <dependency>

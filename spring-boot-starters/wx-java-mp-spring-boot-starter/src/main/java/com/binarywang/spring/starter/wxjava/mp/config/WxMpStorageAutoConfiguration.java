@@ -1,13 +1,13 @@
 package com.binarywang.spring.starter.wxjava.mp.config;
 
-import com.binarywang.spring.starter.wxjava.mp.extend.RedisTemplateWxMpRedisOps;
 import com.binarywang.spring.starter.wxjava.mp.properties.WxMpProperties;
 import lombok.RequiredArgsConstructor;
+import me.chanjar.weixin.common.redis.JedisWxRedisOps;
+import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
+import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
-import me.chanjar.weixin.mp.config.redis.JedisWxMpRedisOps;
-import me.chanjar.weixin.mp.config.redis.WxMpRedisOps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -65,7 +65,7 @@ public class WxMpStorageAutoConfiguration {
     } else {
       jedisPool = applicationContext.getBean(JedisPool.class);
     }
-    WxMpRedisOps redisOps = new JedisWxMpRedisOps(jedisPool);
+    WxRedisOps redisOps = new JedisWxRedisOps(jedisPool);
     WxMpRedisConfigImpl wxMpRedisConfig = new WxMpRedisConfigImpl(redisOps, wxMpProperties.getConfigStorage().getKeyPrefix());
     setWxMpInfo(wxMpRedisConfig);
     return wxMpRedisConfig;
@@ -73,7 +73,7 @@ public class WxMpStorageAutoConfiguration {
 
   private WxMpConfigStorage wxMpInRedisTemplateConfigStorage() {
     StringRedisTemplate redisTemplate = applicationContext.getBean(StringRedisTemplate.class);
-    WxMpRedisOps redisOps = new RedisTemplateWxMpRedisOps(redisTemplate);
+    WxRedisOps redisOps = new RedisTemplateWxRedisOps(redisTemplate);
     WxMpRedisConfigImpl wxMpRedisConfig = new WxMpRedisConfigImpl(redisOps, wxMpProperties.getConfigStorage().getKeyPrefix());
     setWxMpInfo(wxMpRedisConfig);
     return wxMpRedisConfig;

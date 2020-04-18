@@ -5,11 +5,11 @@ import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.config.impl.WxMaRedisBetterConfigImpl;
-import cn.binarywang.wx.miniapp.config.redis.JedisWxMaRedisOps;
-import cn.binarywang.wx.miniapp.config.redis.WxMaRedisOps;
-import com.binarywang.spring.starter.wxjava.miniapp.extend.RedisTemplateWxMaRedisOps;
 import com.binarywang.spring.starter.wxjava.miniapp.properties.WxMaProperties;
 import lombok.AllArgsConstructor;
+import me.chanjar.weixin.common.redis.JedisWxRedisOps;
+import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
+import me.chanjar.weixin.common.redis.WxRedisOps;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -93,14 +93,14 @@ public class WxMaAutoConfiguration {
     } else {
       jedisPool = applicationContext.getBean(JedisPool.class);
     }
-    WxMaRedisOps redisOps = new JedisWxMaRedisOps(jedisPool);
+    WxRedisOps redisOps = new JedisWxRedisOps(jedisPool);
     WxMaRedisBetterConfigImpl wxMaRedisConfig = new WxMaRedisBetterConfigImpl(redisOps, wxMaProperties.getConfigStorage().getKeyPrefix());
     return wxMaRedisConfig;
   }
 
   private WxMaDefaultConfigImpl wxMaInRedisTemplateConfigStorage() {
     StringRedisTemplate redisTemplate = applicationContext.getBean(StringRedisTemplate.class);
-    WxMaRedisOps redisOps = new RedisTemplateWxMaRedisOps(redisTemplate);
+    WxRedisOps redisOps = new RedisTemplateWxRedisOps(redisTemplate);
     WxMaRedisBetterConfigImpl wxMaRedisConfig = new WxMaRedisBetterConfigImpl(redisOps, wxMaProperties.getConfigStorage().getKeyPrefix());
     return wxMaRedisConfig;
   }

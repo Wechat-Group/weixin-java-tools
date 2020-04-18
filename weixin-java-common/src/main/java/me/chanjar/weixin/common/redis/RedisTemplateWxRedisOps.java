@@ -1,7 +1,6 @@
-package com.binarywang.spring.starter.wxjava.mp.extend;
+package me.chanjar.weixin.common.redis;
 
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.mp.config.redis.BaseWxMpRedisOps;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.concurrent.TimeUnit;
@@ -9,7 +8,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @RequiredArgsConstructor
-public class RedisTemplateWxMpRedisOps extends BaseWxMpRedisOps {
+public class RedisTemplateWxRedisOps implements WxRedisOps {
 
   private final StringRedisTemplate redisTemplate;
 

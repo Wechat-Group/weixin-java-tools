@@ -1,8 +1,8 @@
 package me.chanjar.weixin.mp.config.impl;
 
 import lombok.Data;
-import me.chanjar.weixin.mp.config.redis.JedisWxMpRedisOps;
-import me.chanjar.weixin.mp.config.redis.WxMpRedisOps;
+import me.chanjar.weixin.common.redis.JedisWxRedisOps;
+import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.mp.enums.TicketType;
 import redis.clients.jedis.JedisPool;
 
@@ -22,22 +22,22 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("hiding")
 public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
   private static final long serialVersionUID = -988502871997239733L;
-  
+
   private static final String ACCESS_TOKEN_KEY_TPL = "%s:access_token:%s";
   private static final String TICKET_KEY_TPL = "%s:ticket:key:%s:%s";
   private static final String LOCK_KEY_TPL = "%s:lock:%s:";
 
-  private final WxMpRedisOps redisOps;
+  private final WxRedisOps redisOps;
   private final String keyPrefix;
 
   private String accessTokenKey;
   private String lockKey;
 
   public WxMpRedisConfigImpl(JedisPool jedisPool) {
-    this(new JedisWxMpRedisOps(jedisPool), "wx");
+    this(new JedisWxRedisOps(jedisPool), "wx");
   }
 
-  public WxMpRedisConfigImpl(WxMpRedisOps redisOps, String keyPrefix) {
+  public WxMpRedisConfigImpl(WxRedisOps redisOps, String keyPrefix) {
     this.redisOps = redisOps;
     this.keyPrefix = keyPrefix;
   }
