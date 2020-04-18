@@ -40,7 +40,7 @@ public class WxOpenProperties {
   private String aesKey;
 
   /**
-   * 存储策略, memory, redis.
+   * 存储策略.
    */
   private ConfigStorage configStorage = new ConfigStorage();
 
@@ -49,11 +49,45 @@ public class WxOpenProperties {
   public static class ConfigStorage implements Serializable {
     private static final long serialVersionUID = 4815731027000065434L;
 
+    /**
+     * 存储类型.
+     */
     private StorageType type = memory;
 
+    /**
+     * 指定key前缀.
+     */
+    private String keyPrefix = "wx";
+
+    /**
+     * redis连接配置.
+     */
     private RedisProperties redis = new RedisProperties();
 
-    private String keyPrefix;
+    /**
+     * http客户端类型.
+     */
+    private HttpClientType httpClientType = HttpClientType.httpclient;
+
+    /**
+     * http代理主机.
+     */
+    private String httpProxyHost;
+
+    /**
+     * http代理端口.
+     */
+    private Integer httpProxyPort;
+
+    /**
+     * http代理用户名.
+     */
+    private String httpProxyUsername;
+
+    /**
+     * http代理密码.
+     */
+    private String httpProxyPassword;
 
   }
 
@@ -73,6 +107,17 @@ public class WxOpenProperties {
     /**
      * redisson.
      */
-    redisson
+    redisson,
+    /**
+     * redistemplate
+     */
+    redistemplate
+  }
+
+  public enum HttpClientType {
+    /**
+     * HttpClient.
+     */
+    httpclient
   }
 }
