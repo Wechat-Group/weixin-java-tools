@@ -23,11 +23,7 @@ public class JedisWxRedisOps implements WxRedisOps {
   @Override
   public void setValue(String key, String value, int expire, TimeUnit timeUnit) {
     try (Jedis jedis = this.jedisPool.getResource()) {
-      if (expire > 0) {
-        jedis.psetex(key, timeUnit.toMillis(expire), value);
-      } else {
-        jedis.set(key, value);
-      }
+      jedis.psetex(key, timeUnit.toMillis(expire), value);
     }
   }
 
