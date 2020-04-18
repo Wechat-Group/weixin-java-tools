@@ -46,8 +46,8 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
    */
   private volatile String cardApiTicket;
   private volatile long cardApiTicketExpiresTime;
-  private Lock jsapiTicketLock = new ReentrantLock();
-  private Lock cardApiTicketLock = new ReentrantLock();
+  protected volatile Lock jsapiTicketLock = new ReentrantLock();
+  protected volatile Lock cardApiTicketLock = new ReentrantLock();
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
 
   /**
