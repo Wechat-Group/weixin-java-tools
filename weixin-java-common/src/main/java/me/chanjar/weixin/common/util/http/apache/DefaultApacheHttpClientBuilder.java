@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
   protected final Logger log = LoggerFactory.getLogger(DefaultApacheHttpClientBuilder.class);
   private final AtomicBoolean prepared = new AtomicBoolean(false);
-  private int connectionRequestTimeout = 3000;
+  private int connectionRequestTimeout = -1;
   private int connectionTimeout = 5000;
   private int soTimeout = 5000;
   private int idleConnTimeout = 60000;
