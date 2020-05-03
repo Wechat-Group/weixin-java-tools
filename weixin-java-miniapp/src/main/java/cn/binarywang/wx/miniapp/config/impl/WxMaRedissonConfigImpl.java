@@ -61,10 +61,6 @@ public class WxMaRedissonConfigImpl extends WxMaDefaultConfigImpl {
     cardApiTicketKey = prefix + MA_CARD_API_TICKET_KEY.concat(appid);
   }
 
-  protected String getKey(String prefix) {
-    return prefix.endsWith(":") ? prefix.concat(getAppid()) : prefix.concat(":").concat(getAppid());
-  }
-
   protected Lock getLockByKey(String key) {
     return redisOps.getLock(key);
   }
@@ -87,71 +83,71 @@ public class WxMaRedissonConfigImpl extends WxMaDefaultConfigImpl {
 
   @Override
   public String getAccessToken() {
-    return redisOps.getValue(this.getKey(this.accessTokenKey));
+    return redisOps.getValue(this.accessTokenKey);
   }
 
   @Override
   public boolean isAccessTokenExpired() {
-    Long expire = redisOps.getExpire(this.getKey(this.accessTokenKey));
+    Long expire = redisOps.getExpire(this.accessTokenKey);
     return expire == null || expire < 2;
   }
 
   @Override
   public void updateAccessToken(WxAccessToken accessToken) {
-    redisOps.setValue(this.getKey(this.accessTokenKey), accessToken.getAccessToken(), accessToken.getExpiresIn(), TimeUnit.SECONDS);
+    redisOps.setValue(this.accessTokenKey, accessToken.getAccessToken(), accessToken.getExpiresIn(), TimeUnit.SECONDS);
   }
 
   @Override
   public void updateAccessToken(String accessToken, int expiresInSeconds) {
-    redisOps.setValue(this.getKey(this.accessTokenKey), accessToken, expiresInSeconds, TimeUnit.SECONDS);
+    redisOps.setValue(this.accessTokenKey, accessToken, expiresInSeconds, TimeUnit.SECONDS);
   }
 
   @Override
   public String getJsapiTicket() {
-    return redisOps.getValue(this.getKey(this.jsapiTicketKey));
+    return redisOps.getValue(this.jsapiTicketKey);
   }
 
   @Override
   public boolean isJsapiTicketExpired() {
-    Long expire = redisOps.getExpire(this.getKey(this.jsapiTicketKey));
+    Long expire = redisOps.getExpire(this.jsapiTicketKey);
     return expire == null || expire < 2;
   }
 
   @Override
   public void expireJsapiTicket() {
-    redisOps.expire(this.getKey(this.jsapiTicketKey), 0, TimeUnit.SECONDS);
+    redisOps.expire(this.jsapiTicketKey, 0, TimeUnit.SECONDS);
   }
 
   @Override
   public void updateJsapiTicket(String jsapiTicket, int expiresInSeconds) {
-    redisOps.setValue(this.getKey(this.jsapiTicketKey), jsapiTicket, expiresInSeconds, TimeUnit.SECONDS);
+    redisOps.setValue(this.jsapiTicketKey, jsapiTicket, expiresInSeconds, TimeUnit.SECONDS);
 
   }
 
   @Override
   public String getCardApiTicket() {
-    return redisOps.getValue(this.getKey(cardApiTicketKey));
+    return redisOps.getValue(cardApiTicketKey);
   }
 
   @Override
   public boolean isCardApiTicketExpired() {
-    Long expire = redisOps.getExpire(this.getKey(this.cardApiTicketKey));
+    Long expire = redisOps.getExpire(this.cardApiTicketKey);
     return expire == null || expire < 2;
   }
 
   @Override
   public void expireCardApiTicket() {
-    redisOps.expire(this.getKey(this.cardApiTicketKey), 0, TimeUnit.SECONDS);
+    redisOps.expire(this.cardApiTicketKey, 0, TimeUnit.SECONDS);
   }
 
   @Override
   public void updateCardApiTicket(String cardApiTicket, int expiresInSeconds) {
-    redisOps.setValue(this.getKey(this.cardApiTicketKey), cardApiTicket, expiresInSeconds, TimeUnit.SECONDS);
+    redisOps.setValue(this.cardApiTicketKey, cardApiTicket, expiresInSeconds, TimeUnit.SECONDS);
   }
 
   @Override
   public void expireAccessToken() {
-    redisOps.expire(this.getKey(this.accessTokenKey), 0, TimeUnit.SECONDS);
+    redisOps.expire(this.accessTokenKey, 0, TimeUnit.SECONDS);
   }
 
 }
