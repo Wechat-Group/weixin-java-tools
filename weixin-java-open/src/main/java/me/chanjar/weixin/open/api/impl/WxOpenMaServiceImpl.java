@@ -195,6 +195,20 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   /**
+   * 解除绑定小程序体验者
+   * @param userstr 人员对应的唯一字符串， 可通过获取已绑定的体验者列表获取人员对应的字符串
+   * @return
+   * @throws WxErrorException
+   */
+  @Override
+  public WxOpenResult unbindTesterByUserstr(String userstr) throws WxErrorException {
+    JsonObject paramJson = new JsonObject();
+    paramJson.addProperty("userstr", userstr);
+    String response = post(API_UNBIND_TESTER, GSON.toJson(paramJson));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  /**
    * 获得体验者列表
    *
    * @return

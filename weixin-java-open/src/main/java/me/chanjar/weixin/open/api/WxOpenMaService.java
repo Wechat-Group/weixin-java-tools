@@ -296,6 +296,14 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenResult unbindTester(String wechatid) throws WxErrorException;
 
   /**
+   * 解除绑定小程序体验者，其他平台绑定的体验者无法获取到wechatid，可用此方法解绑，详见文档
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/unbind_tester.html
+   *
+   * @param userstr 人员对应的唯一字符串， 可通过获取已绑定的体验者列表获取人员对应的字符串
+   */
+  WxOpenResult unbindTesterByUserstr(String userstr) throws WxErrorException;
+
+  /**
    * 获得体验者列表
    */
   WxOpenMaTesterListResult getTesterList() throws WxErrorException;
