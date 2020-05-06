@@ -48,7 +48,7 @@ public class QrcodeRequestExecutor implements RequestExecutor<File, AbstractWxMa
       );
     }
 
-    httpPost.setEntity(new StringEntity(qrcodeWrapper.toJson()));
+    httpPost.setEntity(new StringEntity(qrcodeWrapper.toJson(), ContentType.APPLICATION_JSON));
 
     try (final CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost);
          final InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response)) {
