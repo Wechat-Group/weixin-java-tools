@@ -60,4 +60,31 @@ public class WxPayNotifyResponse {
     return xstream.toXML(response).replace("\n", "").replace("  ", "");
   }
 
+  /**
+   * Fail string.
+   *
+   * @param msg the msg
+   * @return the string
+   */
+  public static String failResp(String msg) {
+    return generateXml(FAIL, msg);
+  }
+
+  /**
+   * Success string.
+   *
+   * @param msg the msg
+   * @return the string
+   */
+  public static String successResp(String msg) {
+    return generateXml(SUCCESS, msg);
+  }
+
+
+  /**
+   * 使用格式化字符串生成xml字符串
+   */
+  private static String generateXml(String code, String msg) {
+    return String.format("<xml><return_code><![CDATA[%s]]></return_code><return_msg><![CDATA[%s]]></return_msg></xml>", code, msg);
+  }
 }
