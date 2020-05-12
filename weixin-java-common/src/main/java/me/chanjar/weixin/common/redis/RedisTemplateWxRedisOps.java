@@ -19,7 +19,11 @@ public class RedisTemplateWxRedisOps implements WxRedisOps {
 
   @Override
   public void setValue(String key, String value, int expire, TimeUnit timeUnit) {
-    redisTemplate.opsForValue().set(key, value, expire, timeUnit);
+    if (expire <= 0) {
+      redisTemplate.opsForValue().set(key, value);
+    } else {
+      redisTemplate.opsForValue().set(key, value, expire, timeUnit);
+    }
   }
 
   @Override

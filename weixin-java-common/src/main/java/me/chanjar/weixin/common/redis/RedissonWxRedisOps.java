@@ -19,12 +19,20 @@ public class RedissonWxRedisOps implements WxRedisOps {
 
   @Override
   public void setValue(String key, String value, int expire, TimeUnit timeUnit) {
-    redissonClient.getBucket(key).set(value, expire, timeUnit);
+    if (expire <= 0) {
+      redissonClient.getBucket(key).set(value);
+    } else {
+      redissonClient.getBucket(key).set(value, expire, timeUnit);
+    }
   }
 
   @Override
   public Long getExpire(String key) {
-    return redissonClient.getBucket(key).remainTimeToLive();
+    long expire = redissonClient.getBucket(key).remainTimeToLive();
+    if (expire > 0) {
+      expire = expire / 1000;
+    }
+    return expire;
   }
 
   @Override
