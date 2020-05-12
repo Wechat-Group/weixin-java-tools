@@ -126,4 +126,19 @@ public class WxMpEventConstants {
     public static final String VERIFY_EXPIRED = "verify_expired";
   }
 
+  /**
+   * 电子发票.
+   */
+  public static class Invoice {
+    /**
+     * 用户授权事件.
+     */
+    public static final String USER_AUTHORIZE_INVOICE = "user_authorize_invoice";
+
+    /**
+     * 统一开票接口-异步通知开票结果.
+     */
+    public static final String CLOUD_INVOICE_INVOICERESULT_EVENT = "cloud_invoice_invoiceresult_event";
+  }
+
 }
