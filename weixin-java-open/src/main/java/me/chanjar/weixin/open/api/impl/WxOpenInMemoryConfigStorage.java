@@ -4,10 +4,10 @@ package me.chanjar.weixin.open.api.impl;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import lombok.Data;
 import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.mp.bean.WxMpHostConfig;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
-import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
@@ -46,9 +46,6 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private Map<String, Token> cardApiTickets = new ConcurrentHashMap<>();
   private Map<String, Lock> locks = new ConcurrentHashMap<>();
 
-  private Lock componentAccessTokenLock = getLockByKey("componentAccessTokenLock");
-
-
   @Override
   public boolean isComponentAccessTokenExpired() {
     return System.currentTimeMillis() > componentExpiresTime;
@@ -64,11 +61,25 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     updateComponentAccessToken(componentAccessToken.getComponentAccessToken(), componentAccessToken.getExpiresIn());
   }
 
+  private Lock accessTokenLockInstance;
+
   @Override
-  public Lock getLockByKey(String key){
+  public Lock getComponentAccessTokenLock() {
+    if (this.accessTokenLockInstance == null) {
+      synchronized (this) {
+        if (this.accessTokenLockInstance == null) {
+          this.accessTokenLockInstance = getLockByKey("componentAccessTokenLock");
+        }
+      }
+    }
+    return this.accessTokenLockInstance;
+  }
+
+  @Override
+  public Lock getLockByKey(String key) {
     Lock lock = locks.get(key);
     if (lock == null) {
-      synchronized (WxOpenInMemoryConfigStorage.class){
+      synchronized (this) {
         lock = locks.get(key);
         if (lock == null) {
           lock = new ReentrantLock();
