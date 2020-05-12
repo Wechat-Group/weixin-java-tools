@@ -1082,4 +1082,78 @@ public interface WxMpApiUrl {
     }
   }
 
+  @AllArgsConstructor
+  enum Invoice implements WxMpApiUrl {
+
+    /**
+     * 获取用户开票授权地址
+     */
+    GET_AUTH_URL(API_DEFAULT_HOST_URL, "/card/invoice/getauthurl"),
+
+    /**
+     * 获取用户开票授权信息
+     */
+    GET_AUTH_DATA(API_DEFAULT_HOST_URL, "/card/invoice/getauthdata"),
+
+    /**
+     * 拒绝为用户开票
+     */
+    REJECT_INSERT(API_DEFAULT_HOST_URL, "/card/invoice/rejectinsert"),
+
+    /**
+     * 开票
+     */
+    MAKE_OUT_INVOICE(API_DEFAULT_HOST_URL, "/card/invoice/makeoutinvoice"),
+
+    /**
+     * 发票冲红
+     */
+    CLEAR_OUT_INVOICE(API_DEFAULT_HOST_URL, "/card/invoice/clearoutinvoice"),
+
+    /**
+     * 查询发票信息
+     */
+    QUERY_INVOICE_INFO(API_DEFAULT_HOST_URL, "/card/invoice/queryinvoceinfo"),
+
+    /**
+     * 设置商户信息联系
+     */
+    SET_CONTACT_SET_BIZ_ATTR(API_DEFAULT_HOST_URL, "/card/invoice/setbizattr?action=set_contact"),
+
+    /**
+     * 获取商户联系信息
+     */
+    GET_CONTACT_SET_BIZ_ATTR(API_DEFAULT_HOST_URL, "/card/invoice/setbizattr?action=get_contact"),
+
+    /**
+     * 设置授权页面字段
+     */
+    SET_AUTH_FIELD_SET_BIZ_ATTR(API_DEFAULT_HOST_URL, "/card/invoice/setbizattr?action=set_auth_field"),
+
+    /**
+     * 获取授权页面字段
+     */
+    GET_AUTH_FIELD_SET_BIZ_ATTR(API_DEFAULT_HOST_URL, "/card/invoice/setbizattr?action=get_auth_field"),
+
+    /**
+     * 设置关联商户
+     */
+    SET_PAY_MCH_SET_BIZ_ATTR(API_DEFAULT_HOST_URL, "/card/invoice/setbizattr?action=set_pay_mch"),
+
+    /**
+     * 获取关联商户
+     */
+    GET_PAY_MCH_SET_BIZ_ATTR(API_DEFAULT_HOST_URL, "/card/invoice/setbizattr?action=get_pay_mch"),
+    ;
+    private String prefix;
+    private String path;
+
+    @Override
+    public String getUrl(WxMpConfigStorage config) {
+      if (null == config) {
+        return buildUrl(null, prefix, path);
+      }
+      return buildUrl(config.getHostConfig(), prefix, path);
+    }
+  }
 }

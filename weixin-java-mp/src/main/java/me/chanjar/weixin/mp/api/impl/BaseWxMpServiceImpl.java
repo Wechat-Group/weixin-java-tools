@@ -6,10 +6,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.bean.WxNetCheckResult;
+import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.StandardSessionManager;
@@ -26,7 +29,6 @@ import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
-import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
@@ -69,6 +71,10 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpCommentService commentService = new WxMpCommentServiceImpl(this);
   private WxMpOcrService ocrService = new WxMpOcrServiceImpl(this);
   private WxMpImgProcService imgProcService = new WxMpImgProcServiceImpl(this);
+
+  @Getter
+  @Setter
+  private WxMpMerchantInvoiceService merchantInvoiceService = new WxMpMerchantInvoiceServiceImpl(this, this.cardService);
 
   private Map<String, WxMpConfigStorage> configStorageMap;
 
@@ -359,11 +365,11 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
         // 强制设置wxMpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
         Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
         lock.lock();
-        try{
-          if(StringUtils.equals(this.getWxMpConfigStorage().getAccessToken(), accessToken)){
+        try {
+          if (StringUtils.equals(this.getWxMpConfigStorage().getAccessToken(), accessToken)) {
             this.getWxMpConfigStorage().expireAccessToken();
           }
-        } catch (Exception ex){
+        } catch (Exception ex) {
           this.getWxMpConfigStorage().expireAccessToken();
         } finally {
           lock.unlock();
