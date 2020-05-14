@@ -17,10 +17,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
 import com.github.binarywang.wxpay.exception.WxPayException;
-import com.github.binarywang.wxpay.service.EntPayService;
-import com.github.binarywang.wxpay.service.ProfitSharingService;
-import com.github.binarywang.wxpay.service.RedpackService;
-import com.github.binarywang.wxpay.service.WxPayService;
+import com.github.binarywang.wxpay.service.*;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.github.binarywang.wxpay.util.XmlConfig;
 import com.google.common.base.Joiner;
@@ -64,6 +61,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private EntPayService entPayService = new EntPayServiceImpl(this);
   private ProfitSharingService profitSharingService = new ProfitSharingServiceImpl(this);
   private RedpackService redpackService = new RedpackServiceImpl(this);
+  private PayScoreService payScoreService = new PayScoreServiceImpl(this);
 
   /**
    * The Config.
@@ -78,6 +76,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public ProfitSharingService getProfitSharingService() {
     return profitSharingService;
+  }
+
+  @Override
+  public PayScoreService getPayScoreService() {
+    return payScoreService;
   }
 
   @Override

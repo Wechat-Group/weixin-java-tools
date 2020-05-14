@@ -55,6 +55,16 @@ public interface WxPayService {
   String post(String url, String requestStr, boolean useKey) throws WxPayException;
 
   /**
+   * 发送post请求，得到响应字符串.
+   *
+   * @param url        请求地址
+   * @param requestStr 请求信息
+   * @return 返回请求结果字符串 string
+   * @throws WxPayException the wx pay exception
+   */
+  String postV3(String url, String requestStr) throws WxPayException;
+
+  /**
    * 获取企业付款服务类.
    *
    * @return the ent pay service
@@ -74,6 +84,14 @@ public interface WxPayService {
    * @return the ent pay service
    */
   ProfitSharingService getProfitSharingService();
+
+
+  /**
+   * 获取支付分服务类.
+   *
+   * @return the ent pay service
+   */
+  PayScoreService getPayScoreService();
 
   /**
    * 设置企业付款服务类，允许开发者自定义实现类.
