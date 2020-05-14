@@ -22,6 +22,7 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -98,6 +99,8 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   public String postV3(String url, String requestStr) throws WxPayException {
     CloseableHttpClient httpClient = this.createApiV3HttpClient();
     HttpPost httpPost = this.createHttpPost(url, requestStr);
+    httpPost.addHeader("Accept", "application/json");
+    httpPost.addHeader("Content-Type", "application/json");
     try (CloseableHttpResponse response = httpClient.execute(httpPost)){
       //v3已经改为通过状态码判断200 204 成功
       int statusCode = response.getStatusLine().getStatusCode();
@@ -119,6 +122,35 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     }
 
 
+
+
+  }
+
+  @Override
+  public String getV3(String url) throws WxPayException {
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
+    HttpGet httpGet = new HttpGet(url);
+    httpGet.addHeader("Accept", "application/json");
+    httpGet.addHeader("Content-Type", "application/json");
+    try (CloseableHttpResponse response = httpClient.execute(httpGet)){
+      //v3已经改为通过状态码判断200 204 成功
+      int statusCode = response.getStatusLine().getStatusCode();
+      String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+      if (HttpStatus.SC_OK==statusCode || HttpStatus.SC_NO_CONTENT==statusCode){
+        this.log.info("\n【请求地址】：{}\n【响应数据】：{}", url , responseString);
+        return responseString;
+      }else {
+        //有错误提示信息返回
+        JSONObject jsonObject = JSONObject.parseObject(responseString);
+        String message = jsonObject.getString("message");
+        throw new WxPayException(message);
+      }
+    } catch (Exception e) {
+      this.log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
+      throw new WxPayException(e.getMessage(), e);
+    } finally {
+      httpGet.releaseConnection();
+    }
 
 
   }

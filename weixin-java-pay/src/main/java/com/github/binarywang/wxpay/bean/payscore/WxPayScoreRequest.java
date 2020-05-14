@@ -12,7 +12,7 @@ import java.util.List;
  */
 @NoArgsConstructor
 @Data
-public class WxPayScoreCreateRequest implements Serializable {
+public class WxPayScoreRequest implements Serializable {
 
 
   private static final long serialVersionUID = 364764508076146082L;
@@ -43,8 +43,22 @@ public class WxPayScoreCreateRequest implements Serializable {
     private String notify_url;
     private String openid;
     private boolean need_user_confirm;
+    private boolean profit_sharing;
     private List<PostPayments> post_payments;
     private List<PostDiscounts> post_discounts;
+    private int total_amount;
+    private String reason;
+    private String goods_tag;
+    private String type;
+    private Detail detail;
+
+  @NoArgsConstructor
+  @Data
+  public static class Detail {
+    private String paid_time;
+  }
+
+
 
     @NoArgsConstructor
     @Data
@@ -110,5 +124,7 @@ public class WxPayScoreCreateRequest implements Serializable {
 
         private String name;
         private String description;
+        private int count;
+        private int amount;
     }
 }

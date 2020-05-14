@@ -232,7 +232,7 @@ public class WxPayConfig {
   /**
    * @Author doger.wang
    * @Description 初始化api v3请求头 自动签名验签
-   * 方放参照微信官方https://github.com/wechatpay-apiv3/wechatpay-apache-httpclient
+   * 方法参照微信官方https://github.com/wechatpay-apiv3/wechatpay-apache-httpclient
    * @Date  2020/5/14 10:10
    * @Param []
    * @return org.apache.http.impl.client.CloseableHttpClient

@@ -64,6 +64,17 @@ public interface WxPayService {
    */
   String postV3(String url, String requestStr) throws WxPayException;
 
+
+  /**
+   * 发送get V3请求，得到响应字符串.
+   *
+   * @param url        请求地址
+   * @param param 请求信息
+   * @return 返回请求结果字符串 string
+   * @throws WxPayException the wx pay exception
+   */
+  String getV3(String url) throws WxPayException;
+
   /**
    * 获取企业付款服务类.
    *
@@ -746,5 +757,6 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayFacepayResult facepay(WxPayFacepayRequest request) throws WxPayException;
+
 
 }

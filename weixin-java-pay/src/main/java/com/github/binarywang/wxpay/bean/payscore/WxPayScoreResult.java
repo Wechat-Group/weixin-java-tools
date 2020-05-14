@@ -13,7 +13,7 @@ import java.util.List;
  */
 @NoArgsConstructor
 @Data
-public class WxPayScoreCreateResult implements Serializable {
+public class WxPayScoreResult implements Serializable {
 
 
   private static final long serialVersionUID = 8809250065540275770L;
@@ -53,6 +53,10 @@ public class WxPayScoreCreateResult implements Serializable {
     private String packageX;
     private List<PostPayments> post_payments;
     private List<PostDiscounts> post_discounts;
+  private boolean need_collection;
+  private Collection collection;
+  //用于小程序跳转的sign，已经计算好直接可取
+  private String sign;
 
     @NoArgsConstructor
     @Data
@@ -119,4 +123,40 @@ public class WxPayScoreCreateResult implements Serializable {
         private String name;
         private String description;
     }
+
+  @NoArgsConstructor
+  @Data
+  public static class Collection {
+    /**
+     * state : USER_PAID
+     * total_amount : 3900
+     * paying_amount : 3000
+     * paid_amount : 900
+     * details : [{"seq":1,"amount":900,"paid_type":"NEWTON","paid_time":"20091225091210","transaction_id":"15646546545165651651"}]
+     */
+
+    private String state;
+    private int total_amount;
+    private int paying_amount;
+    private int paid_amount;
+    private List<Details> details;
+
+    @NoArgsConstructor
+    @Data
+    public static class Details {
+      /**
+       * seq : 1
+       * amount : 900
+       * paid_type : NEWTON
+       * paid_time : 20091225091210
+       * transaction_id : 15646546545165651651
+       */
+
+      private int seq;
+      private int amount;
+      private String paid_type;
+      private String paid_time;
+      private String transaction_id;
+    }
+  }
 }
