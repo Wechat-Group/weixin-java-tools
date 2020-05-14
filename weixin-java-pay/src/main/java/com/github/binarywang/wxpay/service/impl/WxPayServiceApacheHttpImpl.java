@@ -26,6 +26,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -165,13 +166,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
 
   private StringEntity createEntry(String requestStr) {
-    try {
-      return new StringEntity(new String(requestStr.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
-    } catch (UnsupportedEncodingException e) {
-      //cannot happen
-      this.log.error(e.getMessage(), e);
-      return null;
-    }
+
+      return new StringEntity(requestStr, ContentType.create("application/json", "utf-8"));
+      //return new StringEntity(new String(requestStr.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
+
+
   }
 
   private HttpClientBuilder createHttpClientBuilder(boolean useKey) throws WxPayException {
