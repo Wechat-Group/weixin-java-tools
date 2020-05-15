@@ -1,6 +1,8 @@
 package com.github.binarywang.wxpay.bean.payscore;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -49,7 +51,7 @@ public class WxPayScoreResult implements Serializable {
     private String attach;
     private String notify_url;
     private String order_id;
-    @JsonAlias("package")
+    @JSONField(name = "package")
     private String packageX;
     private List<PostPayments> post_payments;
     private List<PostDiscounts> post_discounts;
