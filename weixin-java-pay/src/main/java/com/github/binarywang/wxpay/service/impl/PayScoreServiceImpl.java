@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
@@ -70,8 +71,8 @@ public class PayScoreServiceImpl implements PayScoreService {
     }
     uriBuilder.setParameter("service_id", config.getServiceId());
     uriBuilder.setParameter("appid", config.getAppId());
-
-    String result = payService.getV3(url);
+    URI build = uriBuilder.build();
+    String result = payService.getV3(build);
     WxPayScoreResult wxPayScoreCreateResult = JSONObject.parseObject(result, WxPayScoreResult.class);
     return wxPayScoreCreateResult;
 

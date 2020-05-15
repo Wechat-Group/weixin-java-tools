@@ -2,6 +2,7 @@ package com.github.binarywang.wxpay.service.impl;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import javax.net.ssl.SSLContext;
 
@@ -128,7 +129,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   }
 
   @Override
-  public String getV3(String url) throws WxPayException {
+  public String getV3(URI url) throws WxPayException {
     CloseableHttpClient httpClient = this.createApiV3HttpClient();
     HttpGet httpGet = new HttpGet(url);
     httpGet.addHeader("Accept", "application/json");

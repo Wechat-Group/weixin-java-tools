@@ -12,6 +12,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 import java.io.File;
+import java.net.URI;
 import java.util.Date;
 import java.util.Map;
 
@@ -73,7 +74,7 @@ public interface WxPayService {
    * @return 返回请求结果字符串 string
    * @throws WxPayException the wx pay exception
    */
-  String getV3(String url) throws WxPayException;
+  String getV3(URI url) throws WxPayException;
 
   /**
    * 获取企业付款服务类.

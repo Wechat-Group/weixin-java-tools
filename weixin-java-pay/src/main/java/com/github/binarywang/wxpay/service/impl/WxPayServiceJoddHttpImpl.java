@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.service.impl;
 
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import javax.net.ssl.SSLContext;
 
@@ -73,7 +74,7 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
   }
 
   @Override
-  public String getV3(String url) throws WxPayException {
+  public String getV3(URI url) throws WxPayException {
     return null;
   }
 
