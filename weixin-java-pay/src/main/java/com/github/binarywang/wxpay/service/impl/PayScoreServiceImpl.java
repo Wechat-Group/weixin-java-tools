@@ -59,7 +59,7 @@ public class PayScoreServiceImpl implements PayScoreService {
     WxPayConfig config = this.payService.getConfig();
     String url = this.payService.getPayBaseUrl() + "/v3/payscore/serviceorder";
     URIBuilder uriBuilder =   new URIBuilder(url);
-    if (StringUtils.isAllEmpty(out_order_no,query_id) || !StringUtils.isAllEmpty(out_order_no,query_id)){
+    if (StringUtils.isAllEmpty(out_order_no,query_id) || !StringUtils.isAnyEmpty(out_order_no,query_id)){
       throw new WxPayException("out_order_no,query_id不允许都填写或都不填写");
     }
     if (StringUtils.isNotEmpty(out_order_no)){
@@ -76,6 +76,8 @@ public class PayScoreServiceImpl implements PayScoreService {
     return wxPayScoreCreateResult;
 
   }
+
+
 
   @Override
   public WxPayScoreResult cancelServiceOrder(String out_order_no, String reason) throws WxPayException {
