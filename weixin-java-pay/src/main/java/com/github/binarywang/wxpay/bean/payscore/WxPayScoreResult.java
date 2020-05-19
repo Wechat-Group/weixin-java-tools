@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author doger.wang
@@ -57,8 +58,8 @@ public class WxPayScoreResult implements Serializable {
     private List<PostDiscounts> post_discounts;
   private boolean need_collection;
   private Collection collection;
-  //用于小程序跳转的sign，已经计算好直接可取
-  private String sign;
+  //用于跳转的sign，已经计算好直接可取
+  private Map<String, String> payScoreSignInfo;
 
     @NoArgsConstructor
     @Data

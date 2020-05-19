@@ -51,7 +51,8 @@ public class PayScoreServiceImpl implements PayScoreService {
     signMap.put("nonce_str", currentTimeMillis);
     signMap.put("sign_type", "HMAC-SHA256");
     String sign = AesUtil.createSign(signMap, config.getMchKey());
-    wxPayScoreCreateResult.setSign(sign);
+    signMap.put("sign", sign);
+    wxPayScoreCreateResult.setPayScoreSignInfo(signMap);
     return wxPayScoreCreateResult;
   }
 
@@ -74,6 +75,18 @@ public class PayScoreServiceImpl implements PayScoreService {
     URI build = uriBuilder.build();
     String result = payService.getV3(build);
     WxPayScoreResult wxPayScoreCreateResult = JSONObject.parseObject(result, WxPayScoreResult.class);
+    //补充一下加密跳转信息
+    String currentTimeMillis = System.currentTimeMillis() + "";
+    Map<String, String> signMap = new HashMap();
+    signMap.put("mch_id", config.getMchId());
+    signMap.put("service_id", config.getServiceId());
+    signMap.put("out_order_no", out_order_no);
+    signMap.put("timestamp", currentTimeMillis);
+    signMap.put("nonce_str", currentTimeMillis);
+    signMap.put("sign_type", "HMAC-SHA256");
+    String sign = AesUtil.createSign(signMap, config.getMchKey());
+    signMap.put("sign", sign);
+    wxPayScoreCreateResult.setPayScoreSignInfo(signMap);
     return wxPayScoreCreateResult;
 
   }
