@@ -6,7 +6,7 @@ import com.github.binarywang.wxpay.v3.auth.AutoUpdateCertificatesVerifier;
 import com.github.binarywang.wxpay.v3.auth.PrivateKeySigner;
 import com.github.binarywang.wxpay.v3.auth.WechatPay2Credentials;
 import com.github.binarywang.wxpay.v3.auth.WechatPay2Validator;
-import com.github.binarywang.wxpay.v3.util.PemUtil;
+import com.github.binarywang.wxpay.v3.util.PemUtils;
 import lombok.Data;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -283,8 +283,8 @@ public class WxPayConfig {
         CloseableHttpClient httpClient = null;
         try {
           WechatPayHttpClientBuilder builder = WechatPayHttpClientBuilder.create();
-          PrivateKey merchantPrivateKey = PemUtil.loadPrivateKey(keyinputStream);
-          X509Certificate x509Certificate = PemUtil.loadCertificate(certinputStream);
+          PrivateKey merchantPrivateKey = PemUtils.loadPrivateKey(keyinputStream);
+          X509Certificate x509Certificate = PemUtils.loadCertificate(certinputStream);
           ArrayList<X509Certificate> certificates = new ArrayList<>();
           certificates.add(x509Certificate);
           builder.withMerchant(mchId, certSerialNo, merchantPrivateKey);

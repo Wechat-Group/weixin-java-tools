@@ -17,8 +17,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.binarywang.wxpay.v3.Credentials;
 import com.github.binarywang.wxpay.v3.WechatPayHttpClientBuilder;
-import com.github.binarywang.wxpay.v3.util.AesUtil;
-import com.github.binarywang.wxpay.v3.util.PemUtil;
+import com.github.binarywang.wxpay.v3.util.AesUtils;
+import com.github.binarywang.wxpay.v3.util.PemUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -131,7 +131,7 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
    */
   private List<X509Certificate> deserializeToCerts(byte[] apiV3Key, String body)
       throws GeneralSecurityException, IOException {
-    AesUtil decryptor = new AesUtil(apiV3Key);
+    AesUtils decryptor = new AesUtils(apiV3Key);
     ObjectMapper mapper = new ObjectMapper();
     JsonNode dataNode = mapper.readTree(body).get("data");
     List<X509Certificate> newCertList = new ArrayList<>();
@@ -146,7 +146,7 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
                 .getBytes("utf-8"),
             encryptCertificateNode.get("ciphertext").toString().replaceAll("\"", ""));
 
-        X509Certificate x509Cert = PemUtil
+        X509Certificate x509Cert = PemUtils
             .loadCertificate(new ByteArrayInputStream(cert.getBytes("utf-8")));
         try {
           x509Cert.checkValidity();

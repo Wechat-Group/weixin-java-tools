@@ -17,13 +17,13 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class AesUtil {
+public class AesUtils {
 
   static final int KEY_LENGTH_BYTE = 32;
   static final int TAG_LENGTH_BIT = 128;
   private final byte[] aesKey;
 
-  public AesUtil(byte[] key) {
+  public AesUtils(byte[] key) {
     if (key.length != KEY_LENGTH_BYTE) {
       throw new IllegalArgumentException("无效的ApiV3Key，长度必须为32个字节");
     }

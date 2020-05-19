@@ -15,7 +15,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 
-public class PemUtil {
+public class PemUtils {
 
   public static PrivateKey loadPrivateKey(InputStream inputStream) {
     try {

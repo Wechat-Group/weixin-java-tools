@@ -8,7 +8,7 @@ import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.PayScoreService;
 import com.github.binarywang.wxpay.service.WxPayService;
-import com.github.binarywang.wxpay.v3.util.AesUtil;
+import com.github.binarywang.wxpay.v3.util.AesUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 
@@ -56,7 +56,7 @@ public class PayScoreServiceImpl implements PayScoreService {
     signMap.put("timestamp", currentTimeMillis);
     signMap.put("nonce_str", currentTimeMillis);
     signMap.put("sign_type", "HMAC-SHA256");
-    String sign = AesUtil.createSign(signMap, config.getMchKey());
+    String sign = AesUtils.createSign(signMap, config.getMchKey());
     signMap.put("sign", sign);
     wxPayScoreCreateResult.setPayScoreSignInfo(signMap);
     return wxPayScoreCreateResult;
@@ -180,7 +180,7 @@ public class PayScoreServiceImpl implements PayScoreService {
     String nonce = resource.getNonce();
     String apiv3Key = this.payService.getConfig().getApiv3Key();
     try {
-      String s = AesUtil.decryptToString(associated_data, nonce, ciphertext, apiv3Key);
+      String s = AesUtils.decryptToString(associated_data, nonce, ciphertext, apiv3Key);
       WxPayScoreResult wxPayScoreCreateResult = JSONObject.parseObject(s, WxPayScoreResult.class);
       return wxPayScoreCreateResult;
     } catch (GeneralSecurityException e) {

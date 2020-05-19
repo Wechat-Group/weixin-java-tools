@@ -58,7 +58,7 @@ public class WxPayScoreResult implements Serializable {
     private List<PostDiscounts> post_discounts;
   private boolean need_collection;
   private Collection collection;
-  //用于跳转的sign注意区分需确认模式和无限确认模式的数据差别。创单接口会返回，查询请自行组装
+  //用于跳转的sign注意区分需确认模式和无需确认模式的数据差别。创单接口会返回，查询请自行组装
   private Map<String, String> payScoreSignInfo;
 
     @NoArgsConstructor
