@@ -34,6 +34,7 @@ public class PayScoreServiceImpl implements PayScoreService {
 
   @Override
   public WxPayScoreResult createServiceOrder(WxPayScoreRequest request) throws WxPayException {
+    boolean need_user_confirm = request.isNeed_user_confirm();
     WxPayConfig config = this.payService.getConfig();
     String url = this.payService.getPayBaseUrl() + "/v3/payscore/serviceorder";
     request.setAppid(config.getAppId());
@@ -41,12 +42,17 @@ public class PayScoreServiceImpl implements PayScoreService {
     request.setNotify_url(config.getPayScoreNotifyUrl());
     String result = payService.postV3(url, JSONObject.toJSONString(request));
     WxPayScoreResult wxPayScoreCreateResult = JSONObject.parseObject(result, WxPayScoreResult.class);
+
     //补充算一下签名给小程序跳转用
     String currentTimeMillis = System.currentTimeMillis() + "";
     Map<String, String> signMap = new HashMap<>();
     signMap.put("mch_id", config.getMchId());
-    signMap.put("service_id", config.getServiceId());
-    signMap.put("out_order_no", request.getOut_order_no());
+    if (need_user_confirm){
+      signMap.put("package", wxPayScoreCreateResult.getPackageX());
+    }else {
+      signMap.put("service_id", config.getServiceId());
+      signMap.put("out_order_no", request.getOut_order_no());
+    }
     signMap.put("timestamp", currentTimeMillis);
     signMap.put("nonce_str", currentTimeMillis);
     signMap.put("sign_type", "HMAC-SHA256");
@@ -76,7 +82,7 @@ public class PayScoreServiceImpl implements PayScoreService {
     String result = payService.getV3(build);
     WxPayScoreResult wxPayScoreCreateResult = JSONObject.parseObject(result, WxPayScoreResult.class);
     //补充一下加密跳转信息
-    String currentTimeMillis = System.currentTimeMillis() + "";
+/*    String currentTimeMillis = System.currentTimeMillis() + "";
     Map<String, String> signMap = new HashMap();
     signMap.put("mch_id", config.getMchId());
     signMap.put("service_id", config.getServiceId());
@@ -86,7 +92,7 @@ public class PayScoreServiceImpl implements PayScoreService {
     signMap.put("sign_type", "HMAC-SHA256");
     String sign = AesUtil.createSign(signMap, config.getMchKey());
     signMap.put("sign", sign);
-    wxPayScoreCreateResult.setPayScoreSignInfo(signMap);
+    wxPayScoreCreateResult.setPayScoreSignInfo(signMap);*/
     return wxPayScoreCreateResult;
 
   }
