@@ -43,4 +43,35 @@ public class WxPayProperties {
    * apiclient_cert.p12文件的绝对路径，或者如果放在项目中，请以classpath:开头指定.
    */
   private String keyPath;
+
+  /**
+   * 微信支付分serviceId
+   */
+  private String serviceId;
+
+  /**
+   * 证书序列号
+   */
+  private String certSerialNo;
+
+  /**
+   * apiV3秘钥
+   */
+  private String apiv3Key;
+
+  /**
+   * 微信支付分回调地址
+   */
+  private String payScoreNotifyUrl;
+
+  /**
+   * apiv3 商户apiclient_key.pem
+   */
+  private String privateKeyPath;
+
+  /**
+   * apiv3 商户apiclient_cert.pem
+   */
+  private String privateCertPath;
+
 }
