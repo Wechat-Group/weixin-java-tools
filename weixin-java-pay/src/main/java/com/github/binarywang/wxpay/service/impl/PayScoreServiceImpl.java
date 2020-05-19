@@ -120,6 +120,7 @@ public class PayScoreServiceImpl implements PayScoreService {
     String url = this.payService.getPayBaseUrl() + "/v3/payscore/serviceorder/"+out_order_no+"/modify";
     request.setAppid(config.getAppId());
     request.setService_id(config.getServiceId());
+    request.setOut_order_no(null);
     //request.setNotify_url(config.getPayScoreNotifyUrl());
     String result = payService.postV3(url, JSONObject.toJSONString(request));
     WxPayScoreResult wxPayScoreCreateResult = JSONObject.parseObject(result, WxPayScoreResult.class);
@@ -136,6 +137,7 @@ public class PayScoreServiceImpl implements PayScoreService {
     request.setAppid(config.getAppId());
     request.setService_id(config.getServiceId());
     //request.setNotify_url(config.getPayScoreNotifyUrl());
+    request.setOut_order_no(null);
     String result = payService.postV3(url, JSONObject.toJSONString(request));
     WxPayScoreResult wxPayScoreCreateResult = JSONObject.parseObject(result, WxPayScoreResult.class);
     return wxPayScoreCreateResult;
@@ -162,6 +164,7 @@ public class PayScoreServiceImpl implements PayScoreService {
     String url = this.payService.getPayBaseUrl() + "/v3/payscore/serviceorder/"+out_order_no+"/sync";
     request.setAppid(config.getAppId());
     request.setService_id(config.getServiceId());
+    request.setOut_order_no(null);
     //request.setNotify_url(config.getPayScoreNotifyUrl());
     String result = payService.postV3(url, JSONObject.toJSONString(request));
     WxPayScoreResult wxPayScoreCreateResult = JSONObject.parseObject(result, WxPayScoreResult.class);
