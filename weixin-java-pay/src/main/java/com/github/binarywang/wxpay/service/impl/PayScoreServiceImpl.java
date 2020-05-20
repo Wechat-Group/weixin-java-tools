@@ -139,7 +139,13 @@ public class PayScoreServiceImpl implements PayScoreService {
   }
 
   @Override
-  public WxPayScoreResult parseNotifyData(PayScoreNotifyData data) throws WxPayException {
+  public PayScoreNotifyData parseNotifyData(String data){
+    return GSON.fromJson(data, PayScoreNotifyData.class);
+
+  }
+
+  @Override
+  public WxPayScoreResult decryptNotifyDataResource(PayScoreNotifyData data) throws WxPayException {
     PayScoreNotifyData.Resource resource = data.getResource();
     String cipherText = resource.getCipherText();
     String associatedData = resource.getAssociatedData();

@@ -125,6 +125,19 @@ public interface PayScoreService {
    * @return the wx pay score result
    * @throws WxPayException the wx pay exception
    */
-  WxPayScoreResult parseNotifyData(PayScoreNotifyData data) throws WxPayException;
+  PayScoreNotifyData parseNotifyData(String data);
+
+
+  /**
+   * <pre>
+   * 支付分回调NotifyData解密resource
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_2.shtml
+   * </pre>
+   *
+   * @param data the data
+   * @return the wx pay score result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayScoreResult decryptNotifyDataResource(PayScoreNotifyData data) throws WxPayException;
 
 }
