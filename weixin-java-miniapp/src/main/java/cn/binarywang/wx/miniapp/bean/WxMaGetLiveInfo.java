@@ -44,6 +44,8 @@ public class WxMaGetLiveInfo implements Serializable {
     private Integer roomid;
     @SerializedName("cover_img")
     private String coverImg;
+    @SerializedName("share_img")
+    private String shareImg;
     @SerializedName("live_status")
     private Integer liveStatus;
     @SerializedName("start_time")
