@@ -31,6 +31,7 @@ public class WxCpUser implements Serializable {
   private String email;
   private String avatar;
   private String thumbAvatar;
+  private String mainDepartment;
 
   /**
    * 地址。长度最大128个字符
