@@ -244,6 +244,9 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     if (user.getToInvite() != null) {
       o.addProperty("to_invite", user.getToInvite());
     }
+    if (user.getMainDepartment() != null) {
+      o.addProperty("main_department", user.getMainDepartment());
+    }
 
     if (user.getExtAttrs().size() > 0) {
       JsonArray attrsJsonArray = new JsonArray();
