@@ -1,11 +1,12 @@
 package me.chanjar.weixin.common.redis;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import me.chanjar.weixin.common.util.locks.RedisTemplateSimpleDistributedLock;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 @RequiredArgsConstructor
 public class RedisTemplateWxRedisOps implements WxRedisOps {
@@ -37,7 +38,7 @@ public class RedisTemplateWxRedisOps implements WxRedisOps {
   }
 
   @Override
-  public Lock getLock(String key) {
-    return new ReentrantLock();
+  public Lock getLock(@NonNull String key) {
+    return new RedisTemplateSimpleDistributedLock(redisTemplate, key, 60 * 1000);
   }
 }
