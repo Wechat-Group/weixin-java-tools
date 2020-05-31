@@ -1,5 +1,6 @@
 package me.chanjar.weixin.open.api.impl;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
@@ -196,6 +197,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
 
   /**
    * 解除绑定小程序体验者
+   *
    * @param userstr 人员对应的唯一字符串， 可通过获取已绑定的体验者列表获取人员对应的字符串
    * @return
    * @throws WxErrorException
@@ -306,7 +308,8 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   public File getTestQrcode(String pagePath, Map<String, String> params) throws WxErrorException {
     WxMaQrcodeParam qrcodeParam = WxMaQrcodeParam.create(pagePath);
     qrcodeParam.addPageParam(params);
-    return execute(MaQrCodeRequestExecutor.create(getRequestHttp()), API_TEST_QRCODE, qrcodeParam);
+    WxMaService wxMaService = this;
+    return wxMaService.execute(MaQrCodeRequestExecutor.create(getRequestHttp()), API_TEST_QRCODE, qrcodeParam);
   }
 
   /**
@@ -547,7 +550,6 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
 
-
   /**
    * 加急审核申请
    * 有加急次数的第三方可以通过该接口，对已经提审的小程序进行加急操作，加急后的小程序预计2-12小时内审完。
@@ -564,6 +566,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
 
   /**
    * (1)增加或修改二维码规则
+   *
    * @param wxQrcodeJumpRule
    * @return
    * @throws WxErrorException
@@ -576,6 +579,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
 
   /**
    * (2)获取已设置的二维码规则
+   *
    * @return
    * @throws WxErrorException
    */
@@ -587,6 +591,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
 
   /**
    * (3)获取校验文件名称及内容
+   *
    * @return
    * @throws WxErrorException
    */
@@ -598,6 +603,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
 
   /**
    * (4)删除已设置的二维码规则
+   *
    * @param prefix
    * @return
    * @throws WxErrorException
@@ -612,6 +618,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
 
   /**
    * (5)发布已设置的二维码规则
+   *
    * @param prefix
    * @return
    * @throws WxErrorException
