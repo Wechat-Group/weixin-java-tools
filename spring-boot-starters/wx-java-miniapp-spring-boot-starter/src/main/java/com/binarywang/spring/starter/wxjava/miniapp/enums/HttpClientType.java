@@ -10,5 +10,13 @@ public enum HttpClientType {
   /**
    * HttpClient.
    */
-  HttpClient
+  HttpClient,
+  /**
+   * OkHttp.
+   */
+  OkHttp,
+  /**
+   * JoddHttp.
+   */
+  JoddHttp,
 }

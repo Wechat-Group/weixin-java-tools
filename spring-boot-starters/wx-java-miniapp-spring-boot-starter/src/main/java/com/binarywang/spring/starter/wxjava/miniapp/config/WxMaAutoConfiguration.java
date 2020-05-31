@@ -1,11 +1,14 @@
 package com.binarywang.spring.starter.wxjava.miniapp.config;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceHttpClientImpl;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceJoddHttpImpl;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceOkHttpImpl;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.config.impl.WxMaRedisBetterConfigImpl;
-import com.binarywang.spring.starter.wxjava.miniapp.enums.StorageType;
+import com.binarywang.spring.starter.wxjava.miniapp.enums.HttpClientType;
 import com.binarywang.spring.starter.wxjava.miniapp.properties.ConfigStorage;
 import com.binarywang.spring.starter.wxjava.miniapp.properties.RedisProperties;
 import com.binarywang.spring.starter.wxjava.miniapp.properties.WxMaProperties;
@@ -49,9 +52,19 @@ public class WxMaAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean(WxMaService.class)
   public WxMaService service(WxMaConfig wxMaConfig) {
-    final WxMaServiceImpl service = new WxMaServiceImpl();
-    service.setWxMaConfig(wxMaConfig);
-    return service;
+    HttpClientType httpClientType = wxMaProperties.getConfigStorage().getHttpClientType();
+    WxMaService wxMaService;
+    if (httpClientType == HttpClientType.OkHttp) {
+      wxMaService = new WxMaServiceOkHttpImpl();
+    } else if (httpClientType == HttpClientType.JoddHttp) {
+      wxMaService = new WxMaServiceJoddHttpImpl();
+    } else if (httpClientType == HttpClientType.HttpClient) {
+      wxMaService = new WxMaServiceHttpClientImpl();
+    } else {
+      wxMaService = new WxMaServiceImpl();
+    }
+    wxMaService.setWxMaConfig(wxMaConfig);
+    return wxMaService;
   }
 
   @Bean

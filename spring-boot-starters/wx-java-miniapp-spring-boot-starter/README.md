@@ -23,7 +23,7 @@
     wx.miniapp.config-storage.redis.host = 127.0.0.1
     wx.miniapp.config-storage.redis.port = 6379
     # http客户端配置
-    wx.miniapp.config-storage.http-client-type=HttpClient      # http客户端类型: HttpClient(默认)
+    wx.miniapp.config-storage.http-client-type=HttpClient      # http客户端类型: HttpClient(默认), OkHttp, JoddHttp
     wx.miniapp.config-storage.http-proxy-host=
     wx.miniapp.config-storage.http-proxy-port=
     wx.miniapp.config-storage.http-proxy-username=
