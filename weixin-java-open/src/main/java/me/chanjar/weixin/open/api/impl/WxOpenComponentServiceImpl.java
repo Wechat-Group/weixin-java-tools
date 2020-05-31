@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -383,11 +384,15 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       return config.getAuthorizerAccessToken(appId);
     }
     Lock lock = config.getWxMpConfigStorage(appId).getAccessTokenLock();
-    lock.lock();
+    boolean locked = false;
     try {
-      if (!config.isAuthorizerAccessTokenExpired(appId) && !forceRefresh) {
-        return config.getAuthorizerAccessToken(appId);
-      }
+      do {
+        locked = lock.tryLock(100, TimeUnit.MILLISECONDS);
+        if (!forceRefresh && !config.isAuthorizerAccessTokenExpired(appId)) {
+          return config.getAuthorizerAccessToken(appId);
+        }
+      } while (!locked);
+
       JsonObject jsonObject = new JsonObject();
       jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
       jsonObject.addProperty("authorizer_appid", appId);
@@ -397,8 +402,12 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       WxOpenAuthorizerAccessToken wxOpenAuthorizerAccessToken = WxOpenAuthorizerAccessToken.fromJson(responseContent);
       config.updateAuthorizerAccessToken(appId, wxOpenAuthorizerAccessToken);
       return config.getAuthorizerAccessToken(appId);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
     } finally {
-      lock.unlock();
+      if (locked) {
+        lock.unlock();
+      }
     }
   }
 

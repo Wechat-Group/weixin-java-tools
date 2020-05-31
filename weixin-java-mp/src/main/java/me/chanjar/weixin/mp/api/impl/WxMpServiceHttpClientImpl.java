@@ -1,8 +1,5 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import me.chanjar.weixin.common.WxType;
-import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
@@ -16,6 +13,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_ACCESS_TOKEN_URL;
@@ -72,11 +70,15 @@ public class WxMpServiceHttpClientImpl extends BaseWxMpServiceImpl<CloseableHttp
     }
 
     Lock lock = config.getAccessTokenLock();
-    lock.lock();
+    boolean locked = false;
     try {
-      if (!config.isAccessTokenExpired() && !forceRefresh) {
-        return config.getAccessToken();
-      }
+      do {
+        locked = lock.tryLock(100, TimeUnit.MILLISECONDS);
+        if (!forceRefresh && !config.isAccessTokenExpired()) {
+          return config.getAccessToken();
+        }
+      } while (!locked);
+
       String url = String.format(GET_ACCESS_TOKEN_URL.getUrl(config), config.getAppId(), config.getSecret());
       try {
         HttpGet httpGet = new HttpGet(url);
@@ -92,8 +94,12 @@ public class WxMpServiceHttpClientImpl extends BaseWxMpServiceImpl<CloseableHttp
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
     } finally {
-      lock.unlock();
+      if (locked) {
+        lock.unlock();
+      }
     }
   }
 
