@@ -1,10 +1,10 @@
 package com.github.binarywang.wxpay.bean.result;
 
-import org.testng.*;
-import org.testng.annotations.*;
-
 import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 /**
  * The type Wx pay send redpack result test.
@@ -68,6 +68,6 @@ public class WxPaySendRedpackResultTest {
     Assert.assertEquals("FAIL", wxMpRedpackResult.getReturnCode());
     Assert.assertEquals("FAIL", wxMpRedpackResult.getResultCode());
     Assert.assertEquals("onqOjjmM1tad-3ROpncN-yUfa6uI", wxMpRedpackResult.getReOpenid());
-    Assert.assertEquals(1, wxMpRedpackResult.getTotalAmount());
+    Assert.assertEquals(Integer.valueOf(1), wxMpRedpackResult.getTotalAmount());
   }
 }
