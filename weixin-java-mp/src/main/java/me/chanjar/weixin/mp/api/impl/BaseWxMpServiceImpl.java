@@ -440,6 +440,18 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void removeConfigStorage(String mpId) {
     synchronized (this) {
+      if (this.configStorageMap.size() == 1) {
+        this.configStorageMap.remove(mpId);
+        log.warn("已删除最后一个公众号配置：{}，须立即使用setWxMpConfigStorage或setMultiConfigStorages添加配置", mpId);
+        return;
+      }
+      if (WxMpConfigStorageHolder.get().equals(mpId)) {
+        this.configStorageMap.remove(mpId);
+        final String defaultMpId = this.configStorageMap.keySet().iterator().next();
+        WxMpConfigStorageHolder.set(defaultMpId);
+        log.warn("已删除默认公众号配置，公众号【{}】被设为默认配置", defaultMpId);
+        return;
+      }
       this.configStorageMap.remove(mpId);
     }
   }
