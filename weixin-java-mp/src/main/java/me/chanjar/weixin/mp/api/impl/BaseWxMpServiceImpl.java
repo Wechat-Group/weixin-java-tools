@@ -414,7 +414,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider) {
-    final String defaultMpId = WxMpConfigStorageHolder.get();
+    final String defaultMpId = wxConfigProvider.getAppId();
     this.setMultiConfigStorages(ImmutableMap.of(defaultMpId, wxConfigProvider), defaultMpId);
   }
 

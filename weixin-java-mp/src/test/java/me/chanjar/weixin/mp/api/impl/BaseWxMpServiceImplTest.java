@@ -41,6 +41,7 @@ public class BaseWxMpServiceImplTest {
     assertTrue(this.wxService.switchover("another"));
     assertThat(WxMpConfigStorageHolder.get()).isEqualTo("another");
     assertFalse(this.wxService.switchover("whatever"));
+    assertFalse(this.wxService.switchover("default"));
   }
 
   @Test
