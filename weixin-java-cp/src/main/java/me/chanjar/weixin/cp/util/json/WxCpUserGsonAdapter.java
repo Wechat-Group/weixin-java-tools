@@ -93,9 +93,21 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     JsonArray attrJsonElements = o.get(EXTRA_ATTR).getAsJsonObject().get("attrs").getAsJsonArray();
     for (JsonElement attrJsonElement : attrJsonElements) {
       final Integer type = GsonHelper.getInteger(attrJsonElement.getAsJsonObject(), "type");
-      final WxCpUser.Attr attr = new WxCpUser.Attr().setType(type)
-        .setName(GsonHelper.getString(attrJsonElement.getAsJsonObject(), "name"));
+      final WxCpUser.Attr attr = new WxCpUser.Attr();
+      if (type != null) {
+        attr.setType(type);
+      }
+      attr.setName(GsonHelper.getString(attrJsonElement.getAsJsonObject(), "name"));
       user.getExtAttrs().add(attr);
+
+      // 这里为中油即时通做的适配
+      // 如果type == null，默认当作是 文本 对待
+      // 中油即时通返回的json格式为：
+      // "extattr": {"attrs":[{"name":"爱好","value":"旅游"},{"name":"卡号","value":"1234567234"}]}，
+      if (type == null) {
+        attr.setTextValue(GsonHelper.getString(attrJsonElement.getAsJsonObject(), "value"));
+        return;
+      }
 
       switch (type) {
         case 0: {
