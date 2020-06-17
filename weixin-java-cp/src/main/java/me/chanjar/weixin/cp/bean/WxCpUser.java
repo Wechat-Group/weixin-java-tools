@@ -26,6 +26,7 @@ public class WxCpUser implements Serializable {
   private Long[] departIds;
   private Integer[] orders;
   private String position;
+  private String[] positions;
   private String mobile;
   private Gender gender;
   private String email;

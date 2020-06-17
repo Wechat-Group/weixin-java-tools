@@ -54,6 +54,16 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
       user.setOrders(orders);
     }
 
+    if (o.get("positions") != null) {
+      JsonArray positionJsonArray = o.get("positions").getAsJsonArray();
+      String[] positions = new String[positionJsonArray.size()];
+      int i = 0;
+      for (JsonElement jsonElement : positionJsonArray) {
+        positions[i++] = jsonElement.getAsString();
+      }
+      user.setPositions(positions);
+    }
+
     user.setUserId(GsonHelper.getString(o, "userid"));
     user.setName(GsonHelper.getString(o, "name"));
     user.setPosition(GsonHelper.getString(o, "position"));
@@ -198,6 +208,15 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     if (user.getPosition() != null) {
       o.addProperty("position", user.getPosition());
     }
+
+    if (user.getPositions() != null) {
+      JsonArray jsonArray = new JsonArray();
+      for (String position : user.getPositions()) {
+        jsonArray.add(new JsonPrimitive(position));
+      }
+      o.add("positions", jsonArray);
+    }
+
     if (user.getMobile() != null) {
       o.addProperty("mobile", user.getMobile());
     }
@@ -265,6 +284,8 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
         attrsJsonArray.add(attrJson);
 
         if (attr.getType() == null) {
+          attrJson.addProperty("name", attr.getName());
+          attrJson.addProperty("value", attr.getTextValue());
           continue;
         }
 
