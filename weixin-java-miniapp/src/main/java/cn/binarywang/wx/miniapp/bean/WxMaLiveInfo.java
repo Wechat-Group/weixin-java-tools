@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2020/4/5
  */
 @Data
-public class WxMaGetLiveInfo implements Serializable {
+public class WxMaLiveInfo implements Serializable {
   private static final long serialVersionUID = 7285263767524755887L;
   private Integer errcode;
   private String errmsg;
@@ -30,8 +30,8 @@ public class WxMaGetLiveInfo implements Serializable {
   @SerializedName("live_replay")
   private List<LiveReplay> liveReplay;
 
-  public static WxMaGetLiveInfo fromJson(String json) {
-    return WxMaGsonBuilder.create().fromJson(json, WxMaGetLiveInfo.class);
+  public static WxMaLiveInfo fromJson(String json) {
+    return WxMaGsonBuilder.create().fromJson(json, WxMaLiveInfo.class);
   }
 
   /**
@@ -54,8 +54,19 @@ public class WxMaGetLiveInfo implements Serializable {
     private Long endTime;
     @SerializedName("anchor_name")
     private String anchorName;
+    @SerializedName("anchor_wechat")
+    private String anchorWechat;
     @SerializedName("anchor_img")
     private String anchorImg;
+    private Integer type;
+    @SerializedName("screen_type")
+    private Integer screenType;
+    @SerializedName("close_like")
+    private Integer closeLike;
+    @SerializedName("closeGoods")
+    private Integer closeGoods;
+    @SerializedName("close_comment")
+    private Integer closeComment;
     private List<Goods> goods;
   }
 
@@ -65,11 +76,17 @@ public class WxMaGetLiveInfo implements Serializable {
   @Data
   public static class Goods implements Serializable {
     private static final long serialVersionUID = 5769245932149287574L;
-    @SerializedName("cover_img")
-    private String coverImg;
+    private Integer goodsId;
+    private String coverImgUrl;
     private String url;
+    private Integer priceType;
     private String price;
+    private String price2;
     private String name;
+    /**
+     * 1, 2：表示是为api添加商品，否则是在MP添加商品
+     */
+    private String thirdPartyTag;
   }
 
   /**
