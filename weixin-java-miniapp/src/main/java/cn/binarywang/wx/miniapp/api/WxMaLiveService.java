@@ -15,7 +15,7 @@ import java.util.List;
  * @author <a href="https://github.com/yjwang3300300">yjwang</a>
  */
 public interface WxMaLiveService {
-  String GET_LIVE_INFO = "http://api.weixin.qq.com/wxa/business/getliveinfo";
+  String GET_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/getliveinfo";
   String CREATE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/create";
   String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/addgoods";
 
