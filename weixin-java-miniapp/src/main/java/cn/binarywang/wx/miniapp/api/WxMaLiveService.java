@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaLiveInfo;
+import cn.binarywang.wx.miniapp.bean.WxMaLiveResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public interface WxMaLiveService {
    * @return .
    * @throws WxErrorException .
    */
-  WxMaLiveInfo getLiveInfo(Integer start, Integer limit) throws WxErrorException;
+  WxMaLiveResult getLiveInfo(Integer start, Integer limit) throws WxErrorException;
 
   /**
    * 获取所有直播间信息（没有分页直接获取全部）
@@ -48,7 +49,7 @@ public interface WxMaLiveService {
    * @return
    * @throws WxErrorException
    */
-  List<WxMaLiveInfo.RoomInfo> getLiveinfos() throws WxErrorException;
+  List<WxMaLiveResult.RoomInfo> getLiveinfos() throws WxErrorException;
 
   /**
    * 获取直播房间回放数据信息.
@@ -60,7 +61,7 @@ public interface WxMaLiveService {
    * @return
    * @throws WxErrorException
    */
-  WxMaLiveInfo getLiveReplay(String action, Integer room_id, Integer start, Integer limit) throws WxErrorException;
+  WxMaLiveResult getLiveReplay(String action, Integer room_id, Integer start, Integer limit) throws WxErrorException;
 
   /**
    * 获取直播房间回放数据信息.
@@ -73,7 +74,7 @@ public interface WxMaLiveService {
    * @return
    * @throws WxErrorException
    */
-  WxMaLiveInfo getLiveReplay(Integer room_id, Integer start, Integer limit) throws WxErrorException;
+  WxMaLiveResult getLiveReplay(Integer room_id, Integer start, Integer limit) throws WxErrorException;
 
   /**
    * 直播间导入商品

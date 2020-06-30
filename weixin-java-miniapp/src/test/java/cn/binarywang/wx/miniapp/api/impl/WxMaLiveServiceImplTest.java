@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaLiveInfo;
+import cn.binarywang.wx.miniapp.bean.WxMaLiveResult;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
@@ -54,7 +55,7 @@ public class WxMaLiveServiceImplTest {
 
   @Test
   public void getLiveInfo() throws Exception {
-    WxMaLiveInfo list = this.wxService.getLiveService().getLiveInfo(0, 10);
+    WxMaLiveResult list = this.wxService.getLiveService().getLiveInfo(0, 10);
     assertNotNull(list);
     System.out.println(list.toString());
   }
@@ -62,14 +63,14 @@ public class WxMaLiveServiceImplTest {
   @Test
   public void getLiveReplay() throws Exception {
     // [12, 11, 10, 9, 8, 7, 6, 5, 3, 2]
-    WxMaLiveInfo list = this.wxService.getLiveService().getLiveReplay(3, 0, 10);
+    WxMaLiveResult list = this.wxService.getLiveService().getLiveReplay(3, 0, 10);
     assertNotNull(list);
     System.out.println(list.toString());
   }
 
   @Test
   public void getLiveinfos() throws Exception {
-    List<WxMaLiveInfo.RoomInfo> list = this.wxService.getLiveService().getLiveinfos();
+    List<WxMaLiveResult.RoomInfo> list = this.wxService.getLiveService().getLiveinfos();
     assertNotNull(list);
     System.out.println(list.toString());
   }
