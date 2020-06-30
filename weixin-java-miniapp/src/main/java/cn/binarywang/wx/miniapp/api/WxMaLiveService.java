@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface WxMaLiveService {
   String GET_LIVE_INFO = "http://api.weixin.qq.com/wxa/business/getliveinfo";
-  String CREATE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/create?access_token=%s";
+  String CREATE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/create";
   String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/addgoods";
 
   /**
