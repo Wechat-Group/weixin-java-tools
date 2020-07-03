@@ -4,6 +4,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
@@ -16,7 +17,6 @@ import java.util.List;
 @Data
 public class WxMpUserActionSet implements Serializable {
   private static final long serialVersionUID = 1979861770645159905L;
-  protected static final JsonParser JSON_PARSER = new JsonParser();
 
   /**
    * user_action_set_id
@@ -48,7 +48,7 @@ public class WxMpUserActionSet implements Serializable {
 
   public static List<WxMpUserActionSet> fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(
-      JSON_PARSER.parse(json).getAsJsonObject().get("data").getAsJsonObject().get("list"),
+      GsonParser.parse(json).get("data").getAsJsonObject().get("list"),
       new TypeToken<List<WxMpUserActionSet>>() {
       }.getType());
   }

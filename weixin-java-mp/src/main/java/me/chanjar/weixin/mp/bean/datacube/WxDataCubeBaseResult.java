@@ -18,7 +18,6 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 @Data
 public abstract class WxDataCubeBaseResult implements Serializable {
   private static final long serialVersionUID = 8780389911053297600L;
-  protected static final JsonParser JSON_PARSER = new JsonParser();
 
   /**
    * ref_date.

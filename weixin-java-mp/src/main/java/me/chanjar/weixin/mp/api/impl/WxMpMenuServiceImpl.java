@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
@@ -46,8 +47,7 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
 
   @Override
   public String menuCreate(String json) throws WxErrorException {
-    JsonParser jsonParser = new JsonParser();
-    JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
+    JsonObject jsonObject = GsonParser.parse(json);
     WxMpApiUrl.Menu url = MENU_CREATE;
     if (jsonObject.get("matchrule") != null) {
       url = MENU_ADDCONDITIONAL;
@@ -55,7 +55,7 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
 
     String result = this.wxMpService.post(url, json);
     if (jsonObject.get("matchrule") != null) {
-      return jsonParser.parse(result).getAsJsonObject().get("menuid").getAsString();
+      return GsonParser.parse(result).get("menuid").getAsString();
     }
 
     return null;

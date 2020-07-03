@@ -3,6 +3,7 @@ package me.chanjar.weixin.cp.api.impl;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.cp.api.WxCpChatService;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -25,7 +26,7 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Chat.*;
  */
 @RequiredArgsConstructor
 public class WxCpChatServiceImpl implements WxCpChatService {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private final WxCpService cpService;
 
   @Override
@@ -87,7 +88,7 @@ public class WxCpChatServiceImpl implements WxCpChatService {
   public WxCpChat chatGet(String chatId) throws WxErrorException {
     final String url = this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_GET_CHATID + chatId);
     String result = this.cpService.get(url, null);
-    final String chatInfo = JSON_PARSER.parse(result).getAsJsonObject().getAsJsonObject("chat_info").toString();
+    final String chatInfo = GsonParser.parse(result).getAsJsonObject("chat_info").toString();
     return WxCpGsonBuilder.create().fromJson(chatInfo, WxCpChat.class);
   }
 

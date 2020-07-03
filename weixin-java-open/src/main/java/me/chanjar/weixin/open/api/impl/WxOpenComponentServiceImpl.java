@@ -10,6 +10,7 @@ import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.URIUtil;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
@@ -33,7 +34,7 @@ import java.util.concurrent.locks.Lock;
 @Slf4j
 @AllArgsConstructor
 public class WxOpenComponentServiceImpl implements WxOpenComponentService {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private static final Map<String, WxOpenMaService> WX_OPEN_MA_SERVICE_MAP = new ConcurrentHashMap<>();
   private static final Map<String, WxMpService> WX_OPEN_MP_SERVICE_MAP = new ConcurrentHashMap<>();
   private static final Map<String, WxOpenFastMaService> WX_OPEN_FAST_MA_SERVICE_MAP = new ConcurrentHashMap<>();
@@ -435,7 +436,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   @Override
   public List<WxOpenMaCodeTemplate> getTemplateDraftList() throws WxErrorException {
     String responseContent = get(GET_TEMPLATE_DRAFT_LIST_URL, "access_token");
-    JsonObject response = JSON_PARSER.parse(StringUtils.defaultString(responseContent, "{}")).getAsJsonObject();
+    JsonObject response = GsonParser.parse(StringUtils.defaultString(responseContent, "{}"));
     boolean hasDraftList = response.has("draft_list");
     if (hasDraftList) {
       return WxOpenGsonBuilder.create().fromJson(response.getAsJsonArray("draft_list"),
@@ -449,7 +450,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   @Override
   public List<WxOpenMaCodeTemplate> getTemplateList() throws WxErrorException {
     String responseContent = get(GET_TEMPLATE_LIST_URL, "access_token");
-    JsonObject response = JSON_PARSER.parse(StringUtils.defaultString(responseContent, "{}")).getAsJsonObject();
+    JsonObject response = GsonParser.parse(StringUtils.defaultString(responseContent, "{}"));
     boolean hasTemplateList = response.has("template_list");
     if (hasTemplateList) {
       return WxOpenGsonBuilder.create().fromJson(response.getAsJsonArray("template_list"),

@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
@@ -20,7 +21,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
  */
 @Data
 public class WxDataCubeUserCumulate implements Serializable {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
 
   private static final long serialVersionUID = -3570981300225093657L;
 
@@ -30,7 +31,7 @@ public class WxDataCubeUserCumulate implements Serializable {
 
   public static List<WxDataCubeUserCumulate> fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(
-      JSON_PARSER.parse(json).getAsJsonObject().get("list"),
+      GsonParser.parse(json).get("list"),
       new TypeToken<List<WxDataCubeUserCumulate>>() {
       }.getType());
   }

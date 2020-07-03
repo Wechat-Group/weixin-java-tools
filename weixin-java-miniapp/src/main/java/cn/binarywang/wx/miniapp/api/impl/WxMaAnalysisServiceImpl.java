@@ -14,6 +14,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.lang.reflect.Type;
@@ -26,7 +27,7 @@ import java.util.List;
  */
 @AllArgsConstructor
 public class WxMaAnalysisServiceImpl implements WxMaAnalysisService {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private WxMaService wxMaService;
 
   @Override
@@ -106,7 +107,7 @@ public class WxMaAnalysisServiceImpl implements WxMaAnalysisService {
    */
   private <T> List<T> getAnalysisResultAsList(String url, Date beginDate, Date endDate, Type returnType) throws WxErrorException {
     String responseContent = this.wxMaService.post(url, toJson(beginDate, endDate));
-    JsonObject response = JSON_PARSER.parse(responseContent).getAsJsonObject();
+    JsonObject response = GsonParser.parse(responseContent);
     boolean hasList = response.has("list");
     if (hasList) {
       return WxMaGsonBuilder.create().fromJson(response.getAsJsonArray("list"), returnType);

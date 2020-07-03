@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.StringUtils;
 
 import cn.binarywang.wx.miniapp.api.WxMaCodeService;
@@ -34,7 +35,7 @@ import me.chanjar.weixin.common.util.json.GsonHelper;
  */
 @AllArgsConstructor
 public class WxMaCodeServiceImpl implements WxMaCodeService {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private WxMaService wxMaService;
 
   @Override
@@ -73,7 +74,7 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
   @Override
   public List<WxMaCategory> getCategory() throws WxErrorException {
     String responseContent = this.wxMaService.get(GET_CATEGORY_URL, null);
-    JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
+    JsonObject jsonObject = GsonParser.parse(responseContent);
     boolean hasCategoryList = jsonObject.has("category_list");
     if (hasCategoryList) {
       return WxMaGsonBuilder.create().fromJson(jsonObject.getAsJsonArray("category_list"),
@@ -87,7 +88,7 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
   @Override
   public List<String> getPage() throws WxErrorException {
     String responseContent = this.wxMaService.get(GET_PAGE_URL, null);
-    JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
+    JsonObject jsonObject = GsonParser.parse(responseContent);
     boolean hasPageList = jsonObject.has("page_list");
     if (hasPageList) {
       return WxMaGsonBuilder.create().fromJson(jsonObject.getAsJsonArray("page_list"),
@@ -101,7 +102,7 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
   @Override
   public long submitAudit(WxMaCodeSubmitAuditRequest auditRequest) throws WxErrorException {
     String responseContent = this.wxMaService.post(SUBMIT_AUDIT_URL, auditRequest.toJson());
-    JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
+    JsonObject jsonObject = GsonParser.parse(responseContent);
     return GsonHelper.getLong(jsonObject, "auditid");
   }
 

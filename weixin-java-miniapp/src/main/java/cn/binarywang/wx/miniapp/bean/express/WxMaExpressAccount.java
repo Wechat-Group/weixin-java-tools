@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.chanjar.weixin.common.util.json.GsonParser;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 public class WxMaExpressAccount implements Serializable {
 
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private static final long serialVersionUID = -4991983596742569736L;
 
   /**
@@ -95,7 +96,7 @@ public class WxMaExpressAccount implements Serializable {
   private List<WxMaExpressDelivery.ServiceType> serviceType;
 
   public static List<WxMaExpressAccount> fromJsonList(String json) {
-    JsonObject jsonObject = JSON_PARSER.parse(json).getAsJsonObject();
+    JsonObject jsonObject = GsonParser.parse(json);
     return WxMaGsonBuilder.create().fromJson(jsonObject.get("list").toString(),
       new TypeToken<List<WxMaExpressAccount>>() {
       }.getType());

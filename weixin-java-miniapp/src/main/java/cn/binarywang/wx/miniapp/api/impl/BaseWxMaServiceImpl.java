@@ -19,6 +19,7 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
@@ -36,7 +37,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaConstants.ErrorCode.*;
  */
 @Slf4j
 public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestHttp<H, P> {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private WxMaConfig wxMaConfig;
 
   private final WxMaMsgService kefuService = new WxMaMsgServiceImpl(this);
@@ -91,7 +92,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       throw new WxErrorException(error);
     }
 
-    return JSON_PARSER.parse(responseContent).getAsJsonObject().get("unionid").getAsString();
+    return GsonParser.parse(responseContent).get("unionid").getAsString();
   }
 
   @Override

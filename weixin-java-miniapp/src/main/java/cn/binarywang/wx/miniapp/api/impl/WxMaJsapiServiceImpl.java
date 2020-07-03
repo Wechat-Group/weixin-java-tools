@@ -10,6 +10,7 @@ import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
+import me.chanjar.weixin.common.util.json.GsonParser;
 
 import java.util.concurrent.locks.Lock;
 
@@ -22,7 +23,7 @@ import java.util.concurrent.locks.Lock;
  */
 @AllArgsConstructor
 public class WxMaJsapiServiceImpl implements WxMaJsapiService {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
 
   private WxMaService wxMaService;
 
@@ -42,8 +43,7 @@ public class WxMaJsapiServiceImpl implements WxMaJsapiService {
 
       if (this.wxMaService.getWxMaConfig().isCardApiTicketExpired()) {
         String responseContent = this.wxMaService.get(GET_JSAPI_TICKET_URL + "?type=wx_card", null);
-        JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
-        JsonObject tmpJsonObject = tmpJsonElement.getAsJsonObject();
+        JsonObject tmpJsonObject = GsonParser.parse(responseContent);
         String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
         int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
         this.wxMaService.getWxMaConfig().updateCardApiTicket(jsapiTicket, expiresInSeconds);
@@ -70,8 +70,7 @@ public class WxMaJsapiServiceImpl implements WxMaJsapiService {
 
       if (this.wxMaService.getWxMaConfig().isJsapiTicketExpired()) {
         String responseContent = this.wxMaService.get(GET_JSAPI_TICKET_URL + "?type=jsapi", null);
-        JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
-        JsonObject tmpJsonObject = tmpJsonElement.getAsJsonObject();
+        JsonObject tmpJsonObject = GsonParser.parse(responseContent);
         String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
         int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
         this.wxMaService.getWxMaConfig().updateJsapiTicket(jsapiTicket, expiresInSeconds);

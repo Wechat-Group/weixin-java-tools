@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
+import me.chanjar.weixin.common.util.json.GsonParser;
 
 /**
  * 微信运动步数信息.
@@ -16,7 +17,7 @@ import lombok.Data;
  */
 @Data
 public class WxMaRunStepInfo implements Serializable {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private static final long serialVersionUID = -7496372171398607044L;
 
   /**
@@ -30,7 +31,7 @@ public class WxMaRunStepInfo implements Serializable {
   private Integer step;
 
   public static List<WxMaRunStepInfo> fromJson(String json) {
-    JsonObject jsonObject = JSON_PARSER.parse(json).getAsJsonObject();
+    JsonObject jsonObject = GsonParser.parse(json);
     return WxMaGsonBuilder.create().fromJson(jsonObject.get("stepInfoList").toString(),
       new TypeToken<List<WxMaRunStepInfo>>() {
       }.getType());

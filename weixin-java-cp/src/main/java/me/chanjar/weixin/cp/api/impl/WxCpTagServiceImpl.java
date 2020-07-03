@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpTagService;
 import me.chanjar.weixin.cp.bean.WxCpTag;
@@ -49,8 +50,8 @@ public class WxCpTagServiceImpl implements WxCpTagService {
   private String create(JsonObject param) throws WxErrorException {
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(TAG_CREATE);
     String responseContent = this.mainService.post(url, param.toString());
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
-    return tmpJsonElement.getAsJsonObject().get("tagid").getAsString();
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    return jsonObject.get("tagid").getAsString();
   }
 
   @Override

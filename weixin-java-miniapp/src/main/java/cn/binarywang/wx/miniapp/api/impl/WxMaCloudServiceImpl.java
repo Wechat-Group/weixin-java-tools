@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,7 +32,7 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 public class WxMaCloudServiceImpl implements WxMaCloudService {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private final WxMaService wxMaService;
 
   @Override
@@ -44,7 +45,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
   public String invokeCloudFunction(String env, String name, String body) throws WxErrorException {
     String cloudEnv = this.wxMaService.getWxMaConfig().getCloudEnv();
     final String response = this.wxMaService.post(String.format(INVOKE_CLOUD_FUNCTION_URL, cloudEnv, name), body);
-    return JSON_PARSER.parse(response).getAsJsonObject().get("resp_data").getAsString();
+    return GsonParser.parse(response).get("resp_data").getAsString();
   }
 
   @Override
@@ -59,8 +60,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
     params.addProperty("query", query);
 
     String responseContent = wxMaService.post(DATABASE_ADD_URL, params.toString());
-    JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
-    JsonObject jsonObject = tmpJsonElement.getAsJsonObject();
+    JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get(WxMaConstants.ERRCODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent));
     }
@@ -84,8 +84,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
     params.addProperty("query", query);
 
     String responseContent = wxMaService.post(DATABASE_ADD_URL, params.toString());
-    JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
-    JsonObject jsonObject = tmpJsonElement.getAsJsonObject();
+    JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get(WxMaConstants.ERRCODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent));
     }
@@ -102,7 +101,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
   @Override
   public JsonArray databaseAdd(String env, String query) throws WxErrorException {
     String response = this.wxMaService.post(DATABASE_ADD_URL, ImmutableMap.of("env", env, "query", query));
-    return JSON_PARSER.parse(response).getAsJsonObject().get("id_list").getAsJsonArray();
+    return GsonParser.parse(response).get("id_list").getAsJsonArray();
   }
 
   @Override
@@ -116,8 +115,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
     params.addProperty("query", query);
 
     String responseContent = wxMaService.post(DATABASE_DELETE_URL, params.toString());
-    JsonElement tmpJsonElement = JSON_PARSER.parse(responseContent);
-    JsonObject jsonObject = tmpJsonElement.getAsJsonObject();
+    JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get(WxMaConstants.ERRCODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent));
     }
@@ -133,7 +131,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
   @Override
   public int databaseDelete(String env, String query) throws WxErrorException {
     String response = this.wxMaService.post(DATABASE_DELETE_URL, ImmutableMap.of("env", env, "query", query));
-    return JSON_PARSER.parse(response).getAsJsonObject().get("deleted").getAsInt();
+    return GsonParser.parse(response).get("deleted").getAsInt();
   }
 
   @Override
@@ -214,7 +212,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
   @Override
   public JsonArray databaseAggregate(String env, String query) throws WxErrorException {
     String response = this.wxMaService.post(DATABASE_AGGREGATE_URL, ImmutableMap.of("env", env, "query", query));
-    return JSON_PARSER.parse(response).getAsJsonObject().get("data").getAsJsonArray();
+    return GsonParser.parse(response).get("data").getAsJsonArray();
   }
 
   @Override
@@ -228,7 +226,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
     params.addProperty("query", query);
 
     String responseContent = wxMaService.post(DATABASE_COUNT_URL, params.toString());
-    return JSON_PARSER.parse(responseContent).getAsJsonObject().get("count").getAsLong();
+    return GsonParser.parse(responseContent).get("count").getAsLong();
   }
 
   @Override
@@ -240,7 +238,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
   @Override
   public Long databaseCount(String env, String query) throws WxErrorException {
     String response = this.wxMaService.post(DATABASE_COUNT_URL, ImmutableMap.of("env", env, "query", query));
-    return JSON_PARSER.parse(response).getAsJsonObject().get("count").getAsLong();
+    return GsonParser.parse(response).get("count").getAsLong();
   }
 
   @Override
@@ -283,7 +281,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
     params.addProperty("conflict_mode", conflictMode);
 
     String response = this.wxMaService.post(DATABASE_MIGRATE_IMPORT_URL, params.toString());
-    return JSON_PARSER.parse(response).getAsJsonObject().get("job_id").getAsLong();
+    return GsonParser.parse(response).get("job_id").getAsLong();
   }
 
   @Override
@@ -301,7 +299,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
     params.addProperty("query", query);
 
     String response = this.wxMaService.post(DATABASE_MIGRATE_EXPORT_URL, params.toString());
-    return JSON_PARSER.parse(response).getAsJsonObject().get("job_id").getAsLong();
+    return GsonParser.parse(response).get("job_id").getAsLong();
   }
 
   @Override

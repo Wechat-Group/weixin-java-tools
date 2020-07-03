@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import java.util.Map;
  */
 @AllArgsConstructor
 public class WxMaLiveServiceImpl implements WxMaLiveService {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private WxMaService service;
 
   @Override
@@ -91,7 +92,7 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
     map.put("start", start);
     map.put("limit", limit);
     String responseContent = service.post(GET_LIVE_INFO, WxMaGsonBuilder.create().toJson(map));
-    JsonObject jsonObject = JSON_PARSER.parse(responseContent).getAsJsonObject();
+    JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get("errcode").getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }

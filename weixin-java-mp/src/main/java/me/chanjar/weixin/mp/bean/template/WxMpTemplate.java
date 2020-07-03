@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
@@ -19,7 +20,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
  */
 @Data
 public class WxMpTemplate implements Serializable {
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private static final long serialVersionUID = -7366474522571199372L;
 
   /**
@@ -60,7 +61,7 @@ public class WxMpTemplate implements Serializable {
   private String example;
 
   public static List<WxMpTemplate> fromJson(String json) {
-    return WxMpGsonBuilder.create().fromJson(JSON_PARSER.parse(json).getAsJsonObject().get("template_list"),
+    return WxMpGsonBuilder.create().fromJson(GsonParser.parse(json).get("template_list"),
       new TypeToken<List<WxMpTemplate>>() {
       }.getType());
   }

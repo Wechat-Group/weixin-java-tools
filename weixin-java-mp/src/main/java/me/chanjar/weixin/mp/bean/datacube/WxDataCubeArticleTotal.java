@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
@@ -42,7 +43,7 @@ public class WxDataCubeArticleTotal extends WxDataCubeBaseResult {
 
   public static List<WxDataCubeArticleTotal> fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(
-      JSON_PARSER.parse(json).getAsJsonObject().get("list"),
+      GsonParser.parse(json).get("list"),
       new TypeToken<List<WxDataCubeArticleTotal>>() {
       }.getType());
   }

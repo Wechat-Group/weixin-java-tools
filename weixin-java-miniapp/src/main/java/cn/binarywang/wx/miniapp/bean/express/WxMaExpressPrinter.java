@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 public class WxMaExpressPrinter implements Serializable {
 
-  private static final JsonParser JSON_PARSER = new JsonParser();
+
   private static final long serialVersionUID = 7164449984700322531L;
 
   /**

@@ -5,6 +5,7 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpUserService;
 import me.chanjar.weixin.cp.bean.WxCpInviteResult;
@@ -84,9 +85,9 @@ public class WxCpUserServiceImpl implements WxCpUserService {
 
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(USER_LIST + departId);
     String responseContent = this.mainService.get(url, params);
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
+    JsonObject jsonObject = GsonParser.parse(responseContent);
     return WxCpGsonBuilder.create()
-      .fromJson(tmpJsonElement.getAsJsonObject().get("userlist"),
+      .fromJson(jsonObject.get("userlist"),
         new TypeToken<List<WxCpUser>>() {
         }.getType()
       );
