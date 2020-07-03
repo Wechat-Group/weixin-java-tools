@@ -433,7 +433,11 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void addConfigStorage(String mpId, WxMpConfigStorage configStorages) {
     synchronized (this) {
-      this.configStorageMap.put(mpId, configStorages);
+      if (this.configStorageMap == null) {
+        this.setWxMpConfigStorage(configStorages);
+      } else {
+        this.configStorageMap.put(mpId, configStorages);
+      }
     }
   }
 
