@@ -1,6 +1,7 @@
 package com.binarywang.spring.starter.wxjava.mp.config;
 
 import com.binarywang.spring.starter.wxjava.mp.properties.WxMpProperties;
+import me.chanjar.weixin.common.api.WxOcrService;
 import me.chanjar.weixin.mp.api.*;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceHttpClientImpl;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
@@ -176,7 +177,7 @@ public class WxMpServiceAutoConfiguration {
 
   @Bean
   @Deprecated
-  public WxMpOcrService wxMpOcrService(WxMpService wxMpService) {
+  public WxOcrService wxMpOcrService(WxMpService wxMpService) {
     return wxMpService.getOcrService();
   }
 

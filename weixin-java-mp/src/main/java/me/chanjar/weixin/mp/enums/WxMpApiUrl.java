@@ -199,8 +199,8 @@ public interface WxMpApiUrl {
      */
     MENU_ADDCONDITIONAL(API_DEFAULT_HOST_URL, "/cgi-bin/menu/addconditional");
 
-    private String prefix;
-    private String path;
+    private final String prefix;
+    private final String path;
 
     @Override
     public String getUrl(WxMpConfigStorage config) {
@@ -224,8 +224,8 @@ public interface WxMpApiUrl {
      */
     SHOW_QRCODE_WITH_TICKET(MP_DEFAULT_HOST_URL, "/cgi-bin/showqrcode?ticket=%s");
 
-    private String prefix;
-    private String path;
+    private final String prefix;
+    private final String path;
 
     @Override
     public String getUrl(WxMpConfigStorage config) {
@@ -252,8 +252,8 @@ public interface WxMpApiUrl {
      */
     SHAKEAROUND_RELATION_SEARCH(API_DEFAULT_HOST_URL, "/shakearound/relation/search");
 
-    private String prefix;
-    private String path;
+    private final String prefix;
+    private final String path;
 
     @Override
     public String getUrl(WxMpConfigStorage config) {
@@ -272,8 +272,8 @@ public interface WxMpApiUrl {
      */
     SEND_MESSAGE_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/template/subscribe");
 
-    private String prefix;
-    private String path;
+    private final String prefix;
+    private final String path;
 
     @Override
     public String getUrl(WxMpConfigStorage config) {
@@ -376,8 +376,8 @@ public interface WxMpApiUrl {
      */
     TAGS_GETIDLIST(API_DEFAULT_HOST_URL, "/cgi-bin/tags/getidlist");
 
-    private String prefix;
-    private String path;
+    private final String prefix;
+    private final String path;
 
     @Override
     public String getUrl(WxMpConfigStorage config) {
@@ -426,8 +426,8 @@ public interface WxMpApiUrl {
      */
     VOICE_QUERY_RESULT_URL(API_DEFAULT_HOST_URL, "/cgi-bin/media/voice/queryrecoresultfortext");
 
-    private String prefix;
-    private String path;
+    private final String prefix;
+    private final String path;
 
     @Override
     public String getUrl(WxMpConfigStorage config) {

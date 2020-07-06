@@ -1,10 +1,9 @@
 package me.chanjar.weixin.mp.config.impl;
 
 import lombok.Data;
-import me.chanjar.weixin.common.redis.JedisWxRedisOps;
-import me.chanjar.weixin.common.redis.WxRedisOps;
+import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.common.enums.TicketType;
-import redis.clients.jedis.JedisPool;
+import me.chanjar.weixin.common.redis.WxRedisOps;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @author nickwong
  */
 @Data
-@SuppressWarnings("hiding")
+@EqualsAndHashCode(callSuper = false)
 public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
   private static final long serialVersionUID = -988502871997239733L;
 
@@ -32,10 +31,6 @@ public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
 
   private String accessTokenKey;
   private String lockKey;
-
-  public WxMpRedisConfigImpl(JedisPool jedisPool) {
-    this(new JedisWxRedisOps(jedisPool), "wx");
-  }
 
   public WxMpRedisConfigImpl(WxRedisOps redisOps, String keyPrefix) {
     this.redisOps = redisOps;

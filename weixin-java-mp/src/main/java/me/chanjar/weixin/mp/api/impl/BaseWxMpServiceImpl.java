@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.WxType;
+import me.chanjar.weixin.common.api.WxOcrService;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.bean.WxNetCheckResult;
@@ -69,7 +70,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private final WxMpWifiService wifiService = new WxMpWifiServiceImpl(this);
   private WxMpMarketingService marketingService = new WxMpMarketingServiceImpl(this);
   private WxMpCommentService commentService = new WxMpCommentServiceImpl(this);
-  private WxMpOcrService ocrService = new WxMpOcrServiceImpl(this);
+  private WxOcrService ocrService = new WxMpOcrServiceImpl(this);
   private WxMpImgProcService imgProcService = new WxMpImgProcServiceImpl(this);
 
   @Getter
@@ -665,7 +666,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   }
 
   @Override
-  public WxMpOcrService getOcrService() {
+  public WxOcrService getOcrService() {
     return this.ocrService;
   }
 
@@ -680,7 +681,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   }
 
   @Override
-  public void setOcrService(WxMpOcrService ocrService) {
+  public void setOcrService(WxOcrService ocrService) {
     this.ocrService = ocrService;
   }
 

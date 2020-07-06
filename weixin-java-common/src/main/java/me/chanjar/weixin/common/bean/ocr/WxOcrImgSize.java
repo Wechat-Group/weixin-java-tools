@@ -1,8 +1,8 @@
-package me.chanjar.weixin.mp.bean.ocr;
+package me.chanjar.weixin.common.bean.ocr;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Theo Nie
  */
 @Data
-public class WxMpOcrImgSize implements Serializable {
+public class WxOcrImgSize implements Serializable {
   private static final long serialVersionUID = 5234409123551074168L;
 
   @SerializedName("w")
@@ -20,6 +20,6 @@ public class WxMpOcrImgSize implements Serializable {
 
   @Override
   public String toString() {
-    return WxMpGsonBuilder.create().toJson(this);
+    return WxGsonBuilder.create().toJson(this);
   }
 }

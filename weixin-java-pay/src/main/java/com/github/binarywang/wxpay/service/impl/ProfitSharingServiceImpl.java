@@ -74,6 +74,8 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
 
   @Override
   public ProfitSharingQueryResult profitSharingQuery(ProfitSharingQueryRequest request) throws WxPayException {
+    request.setAppid(null);
+
     request.checkAndSign(this.payService.getConfig());
     String url = this.payService.getPayBaseUrl() + "/pay/profitsharingquery";
 

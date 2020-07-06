@@ -12,8 +12,8 @@ import java.io.IOException;
 /**
  * .
  *
- * @author   zhayueran
- * @date  2019/6/27 15:06
+ * @author zhayueran
+ * @date 2019/6/27 15:06
  */
 public abstract class OcrDiscernRequestExecutor<H, P> implements RequestExecutor<String, File> {
   protected RequestHttp<H, P> requestHttp;

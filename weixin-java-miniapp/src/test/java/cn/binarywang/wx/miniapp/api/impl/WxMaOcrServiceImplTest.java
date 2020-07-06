@@ -1,21 +1,15 @@
-package me.chanjar.weixin.mp.api.impl;
+package cn.binarywang.wx.miniapp.api.impl;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.test.ApiTestModule;
+import cn.binarywang.wx.miniapp.test.TestConstants;
+import me.chanjar.weixin.common.bean.ocr.*;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.test.ApiTestModule;
-import me.chanjar.weixin.mp.api.test.TestConstants;
-import me.chanjar.weixin.common.bean.ocr.WxOcrBankCardResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrBizLicenseResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrCommResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrDrivingLicenseResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrDrivingResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrIdCardResult;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,21 +18,19 @@ import java.net.URL;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * 测试类.
- *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-06-22
+ * @date 2020-07-05
  */
 @Test
 @Guice(modules = ApiTestModule.class)
-public class WxMpOcrServiceImplTest {
+public class WxMaOcrServiceImplTest {
   @Inject
-  private WxMpService service;
+  private WxMaService service;
 
   @Test
   public void testIdCard() throws WxErrorException {
@@ -153,14 +145,14 @@ public class WxMpOcrServiceImplTest {
   }
 
   public static class MockTest {
-    private WxMpService wxService = mock(WxMpService.class);
+    private final WxMaService wxService = mock(WxMaService.class);
 
     @Test
     public void testIdCard() throws Exception {
       String returnJson = "{\"type\":\"Back\",\"name\":\"张三\",\"id\":\"110101199909090099\",\"valid_date\":\"20110101-20210201\"}";
 
       when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
-      final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
+      final WxMaOcrServiceImpl wxMpOcrService = new WxMaOcrServiceImpl(wxService);
 
       final WxOcrIdCardResult result = wxMpOcrService.idCard("abc");
       assertThat(result).isNotNull();
@@ -172,9 +164,8 @@ public class WxMpOcrServiceImplTest {
       String returnJson = "{\"number\":\"24234234345234\"}";
 
       when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
-      final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
-
-      final WxOcrBankCardResult result = wxMpOcrService.bankCard("abc");
+      final WxMaOcrServiceImpl ocrService = new WxMaOcrServiceImpl(wxService);
+      final WxOcrBankCardResult result = ocrService.bankCard("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }
@@ -247,9 +238,9 @@ public class WxMpOcrServiceImplTest {
         "}";
 
       when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
-      final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
+      final WxMaOcrServiceImpl ocrService = new WxMaOcrServiceImpl(wxService);
 
-      final WxOcrDrivingResult result = wxMpOcrService.driving("abc");
+      final WxOcrDrivingResult result = ocrService.driving("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }
@@ -272,7 +263,7 @@ public class WxMpOcrServiceImplTest {
         "    \"official_seal\": \"xx市公安局公安交通管理局\" //印章文字\n" +
         "}";
       when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
-      final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
+      final WxMaOcrServiceImpl wxMpOcrService = new WxMaOcrServiceImpl(wxService);
 
       final WxOcrDrivingLicenseResult result = wxMpOcrService.drivingLicense("abc");
       assertThat(result).isNotNull();
@@ -322,9 +313,9 @@ public class WxMpOcrServiceImplTest {
         "    }\n" +
         "}";
       when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
-      final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
+      final WxMaOcrServiceImpl ocrService = new WxMaOcrServiceImpl(wxService);
 
-      final WxOcrBizLicenseResult result = wxMpOcrService.bizLicense("abc");
+      final WxOcrBizLicenseResult result = ocrService.bizLicense("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }
@@ -384,9 +375,9 @@ public class WxMpOcrServiceImplTest {
         "    }\n" +
         "}";
       when(wxService.get(anyString(), anyString())).thenReturn(returnJson);
-      final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
+      final WxMaOcrServiceImpl ocrService = new WxMaOcrServiceImpl(wxService);
 
-      final WxOcrCommResult result = wxMpOcrService.comm("abc");
+      final WxOcrCommResult result = ocrService.comm("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }

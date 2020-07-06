@@ -1,8 +1,8 @@
-package me.chanjar.weixin.mp.bean.ocr;
+package me.chanjar.weixin.common.bean.ocr;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.io.Serializable;
 
@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @date 2019-06-23
  */
 @Data
-public class WxMpOcrIdCardResult implements Serializable {
+public class WxOcrIdCardResult implements Serializable {
   private static final long serialVersionUID = 8184352486986729980L;
 
   @SerializedName("type")
@@ -25,8 +25,8 @@ public class WxMpOcrIdCardResult implements Serializable {
   @SerializedName("valid_date")
   private String validDate;
 
-  public static WxMpOcrIdCardResult fromJson(String json) {
-    return WxMpGsonBuilder.create().fromJson(json, WxMpOcrIdCardResult.class);
+  public static WxOcrIdCardResult fromJson(String json) {
+    return WxGsonBuilder.create().fromJson(json, WxOcrIdCardResult.class);
   }
 
 }

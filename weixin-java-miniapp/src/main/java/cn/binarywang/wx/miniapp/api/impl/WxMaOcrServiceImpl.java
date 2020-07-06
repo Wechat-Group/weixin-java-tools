@@ -1,34 +1,16 @@
-package me.chanjar.weixin.mp.api.impl;
+package cn.binarywang.wx.miniapp.api.impl;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.api.WxOcrService;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.common.bean.ocr.WxOcrBankCardResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrBizLicenseResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrCommResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrDrivingLicenseResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrDrivingResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrIdCardResult;
+import me.chanjar.weixin.common.bean.ocr.*;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.util.requestexecuter.ocr.OcrDiscernRequestExecutor;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.BANK_CARD;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.BIZ_LICENSE;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.COMM;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.DRIVING;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.DRIVING_LICENSE;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILEIDCARD;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_BANK_CARD;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_BIZ_LICENSE;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_COMM;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_DRIVING;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_DRIVING_LICENSE;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.IDCARD;
 
 /**
  * ocr 接口实现.
@@ -37,8 +19,21 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.IDCARD;
  * @date 2019-06-22
  */
 @RequiredArgsConstructor
-public class WxMpOcrServiceImpl implements WxOcrService {
-  private final WxMpService mainService;
+public class WxMaOcrServiceImpl implements WxOcrService {
+  private static final String IDCARD = "https://api.weixin.qq.com/cv/ocr/idcard?img_url=%s";
+  private static final String FILEIDCARD = "https://api.weixin.qq.com/cv/ocr/idcard";
+  private static final String BANK_CARD = "https://api.weixin.qq.com/cv/ocr/bankcard?img_url=%s";
+  private static final String FILE_BANK_CARD = "https://api.weixin.qq.com/cv/ocr/bankcard";
+  private static final String DRIVING = "https://api.weixin.qq.com/cv/ocr/driving?img_url=%s";
+  private static final String FILE_DRIVING = "https://api.weixin.qq.com/cv/ocr/driving";
+  private static final String DRIVING_LICENSE = "https://api.weixin.qq.com/cv/ocr/drivinglicense?img_url=%s";
+  private static final String FILE_DRIVING_LICENSE = "https://api.weixin.qq.com/cv/ocr/drivinglicense";
+  private static final String BIZ_LICENSE = "https://api.weixin.qq.com/cv/ocr/bizlicense?img_url=%s";
+  private static final String FILE_BIZ_LICENSE = "https://api.weixin.qq.com/cv/ocr/bizlicense";
+  private static final String COMM = "https://api.weixin.qq.com/cv/ocr/comm?img_url=%s";
+  private static final String FILE_COMM = "https://api.weixin.qq.com/cv/ocr/comm";
+
+  private final WxMaService mainService;
 
   @Override
   public WxOcrIdCardResult idCard(String imgUrl) throws WxErrorException {
@@ -48,15 +43,14 @@ public class WxMpOcrServiceImpl implements WxOcrService {
       // ignore cannot happen
     }
 
-    final String result = this.mainService.get(String.format(IDCARD.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+    final String result = this.mainService.get(String.format(IDCARD, imgUrl), null);
     return WxOcrIdCardResult.fromJson(result);
   }
 
   @Override
   public WxOcrIdCardResult idCard(File imgFile) throws WxErrorException {
     String result = this.mainService.execute(OcrDiscernRequestExecutor.create(this.mainService.getRequestHttp()),
-      FILEIDCARD.getUrl(this.mainService.getWxMpConfigStorage()), imgFile);
+      FILEIDCARD, imgFile);
     return WxOcrIdCardResult.fromJson(result);
   }
 
@@ -68,15 +62,14 @@ public class WxMpOcrServiceImpl implements WxOcrService {
       // ignore cannot happen
     }
 
-    final String result = this.mainService.get(String.format(BANK_CARD.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+    final String result = this.mainService.get(String.format(BANK_CARD, imgUrl), null);
     return WxOcrBankCardResult.fromJson(result);
   }
 
   @Override
   public WxOcrBankCardResult bankCard(File imgFile) throws WxErrorException {
     String result = this.mainService.execute(OcrDiscernRequestExecutor.create(this.mainService.getRequestHttp()),
-      FILE_BANK_CARD.getUrl(this.mainService.getWxMpConfigStorage()), imgFile);
+      FILE_BANK_CARD, imgFile);
     return WxOcrBankCardResult.fromJson(result);
   }
 
@@ -88,15 +81,14 @@ public class WxMpOcrServiceImpl implements WxOcrService {
       // ignore cannot happen
     }
 
-    final String result = this.mainService.get(String.format(DRIVING.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+    final String result = this.mainService.get(String.format(DRIVING, imgUrl), null);
     return WxOcrDrivingResult.fromJson(result);
   }
 
   @Override
   public WxOcrDrivingResult driving(File imgFile) throws WxErrorException {
     String result = this.mainService.execute(OcrDiscernRequestExecutor.create(this.mainService.getRequestHttp()),
-      FILE_DRIVING.getUrl(this.mainService.getWxMpConfigStorage()), imgFile);
+      FILE_DRIVING, imgFile);
     return WxOcrDrivingResult.fromJson(result);
   }
 
@@ -108,15 +100,14 @@ public class WxMpOcrServiceImpl implements WxOcrService {
       // ignore cannot happen
     }
 
-    final String result = this.mainService.get(String.format(DRIVING_LICENSE.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+    final String result = this.mainService.get(String.format(DRIVING_LICENSE, imgUrl), null);
     return WxOcrDrivingLicenseResult.fromJson(result);
   }
 
   @Override
   public WxOcrDrivingLicenseResult drivingLicense(File imgFile) throws WxErrorException {
     String result = this.mainService.execute(OcrDiscernRequestExecutor.create(this.mainService.getRequestHttp()),
-      FILE_DRIVING_LICENSE.getUrl(this.mainService.getWxMpConfigStorage()), imgFile);
+      FILE_DRIVING_LICENSE, imgFile);
     return WxOcrDrivingLicenseResult.fromJson(result);
   }
 
@@ -128,15 +119,14 @@ public class WxMpOcrServiceImpl implements WxOcrService {
       // ignore cannot happen
     }
 
-    final String result = this.mainService.get(String.format(BIZ_LICENSE.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+    final String result = this.mainService.get(String.format(BIZ_LICENSE, imgUrl), null);
     return WxOcrBizLicenseResult.fromJson(result);
   }
 
   @Override
   public WxOcrBizLicenseResult bizLicense(File imgFile) throws WxErrorException {
     String result = this.mainService.execute(OcrDiscernRequestExecutor.create(this.mainService.getRequestHttp()),
-      FILE_BIZ_LICENSE.getUrl(this.mainService.getWxMpConfigStorage()), imgFile);
+      FILE_BIZ_LICENSE, imgFile);
     return WxOcrBizLicenseResult.fromJson(result);
   }
 
@@ -148,15 +138,14 @@ public class WxMpOcrServiceImpl implements WxOcrService {
       // ignore cannot happen
     }
 
-    final String result = this.mainService.get(String.format(COMM.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+    final String result = this.mainService.get(String.format(COMM, imgUrl), null);
     return WxOcrCommResult.fromJson(result);
   }
 
   @Override
   public WxOcrCommResult comm(File imgFile) throws WxErrorException {
     String result = this.mainService.execute(OcrDiscernRequestExecutor.create(this.mainService.getRequestHttp()),
-      FILE_COMM.getUrl(this.mainService.getWxMpConfigStorage()), imgFile);
+      FILE_COMM, imgFile);
     return WxOcrCommResult.fromJson(result);
   }
 }

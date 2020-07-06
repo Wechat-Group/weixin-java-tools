@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>3.8.3.B</version>
+    <version>3.8.4.B</version>
   </parent>
 
   <artifactId>weixin-java-miniapp</artifactId>
@@ -89,6 +89,12 @@
       <artifactId>jedis-lock</artifactId>
       <version>1.0.0</version>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>3.3.3</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

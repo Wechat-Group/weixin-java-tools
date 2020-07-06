@@ -1,8 +1,8 @@
-package me.chanjar.weixin.mp.bean.ocr;
+package me.chanjar.weixin.common.bean.ocr;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Theo Nie
  */
 @Data
-public class WxMpOcrDrivingLicenseResult implements Serializable {
+public class WxOcrDrivingLicenseResult implements Serializable {
   private static final long serialVersionUID = -6984670645802585738L;
 
   /**
@@ -71,10 +71,10 @@ public class WxMpOcrDrivingLicenseResult implements Serializable {
 
   @Override
   public String toString() {
-    return WxMpGsonBuilder.create().toJson(this);
+    return WxGsonBuilder.create().toJson(this);
   }
 
-  public static WxMpOcrDrivingLicenseResult fromJson(String json) {
-    return WxMpGsonBuilder.create().fromJson(json, WxMpOcrDrivingLicenseResult.class);
+  public static WxOcrDrivingLicenseResult fromJson(String json) {
+    return WxGsonBuilder.create().fromJson(json, WxOcrDrivingLicenseResult.class);
   }
 }

@@ -1,8 +1,8 @@
-package me.chanjar.weixin.mp.bean.ocr;
+package me.chanjar.weixin.common.bean.ocr;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Theo Nie
  */
 @Data
-public class WxMpOcrBizLicenseResult implements Serializable {
+public class WxOcrBizLicenseResult implements Serializable {
   private static final long serialVersionUID = -5007671093920178291L;
 
   /**
@@ -82,26 +82,27 @@ public class WxMpOcrBizLicenseResult implements Serializable {
    * 图片大小
    */
   @SerializedName("img_size")
-  private WxMpOcrImgSize imgSize;
+  private WxOcrImgSize imgSize;
 
-  public static WxMpOcrBizLicenseResult fromJson(String json) {
-    return WxMpGsonBuilder.create().fromJson(json, WxMpOcrBizLicenseResult.class);
+  public static WxOcrBizLicenseResult fromJson(String json) {
+    return WxGsonBuilder.create().fromJson(json, WxOcrBizLicenseResult.class);
   }
 
   @Override
   public String toString() {
-    return WxMpGsonBuilder.create().toJson(this);
+    return WxGsonBuilder.create().toJson(this);
   }
 
   @Data
   public static class CertPosition implements Serializable {
     private static final long serialVersionUID = 290286813344131863L;
+
     @SerializedName("pos")
-    private WxMpOcrPos pos;
+    private WxOcrPos pos;
 
     @Override
     public String toString() {
-      return WxMpGsonBuilder.create().toJson(this);
+      return WxGsonBuilder.create().toJson(this);
     }
   }
 }

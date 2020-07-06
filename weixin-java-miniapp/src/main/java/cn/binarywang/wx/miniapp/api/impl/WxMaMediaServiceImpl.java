@@ -22,7 +22,7 @@ import java.util.UUID;
  */
 @AllArgsConstructor
 public class WxMaMediaServiceImpl implements WxMaMediaService {
-  private WxMaService wxMaService;
+  private final WxMaService wxMaService;
 
   @Override
   public WxMediaUploadResult uploadMedia(String mediaType, String fileType, InputStream inputStream) throws WxErrorException {

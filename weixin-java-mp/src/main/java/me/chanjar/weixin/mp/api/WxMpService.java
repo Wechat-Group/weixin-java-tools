@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.api;
 
+import me.chanjar.weixin.common.api.WxOcrService;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.bean.WxNetCheckResult;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -555,7 +556,7 @@ public interface WxMpService extends WxService {
    *
    * @return WxMpWifiService
    */
-  WxMpOcrService getOcrService();
+  WxOcrService getOcrService();
 
   /**
    * 返回图像处理接口的实现类对象，以方便调用其各个接口.
@@ -688,7 +689,7 @@ public interface WxMpService extends WxService {
    *
    * @param ocrService .
    */
-  void setOcrService(WxMpOcrService ocrService);
+  void setOcrService(WxOcrService ocrService);
 
   /**
    * .

@@ -1,8 +1,8 @@
-package me.chanjar.weixin.mp.bean.ocr;
+package me.chanjar.weixin.common.bean.ocr;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,35 +11,35 @@ import java.util.List;
  * @author Theo Nie
  */
 @Data
-public class WxMpOcrCommResult implements Serializable {
+public class WxOcrCommResult implements Serializable {
   private static final long serialVersionUID = 455833771627756440L;
 
   @SerializedName("img_size")
-  private WxMpOcrImgSize imgSize;
+  private WxOcrImgSize imgSize;
   @SerializedName("items")
   private List<Items> items;
 
-  public static WxMpOcrCommResult fromJson(String json) {
-    return WxMpGsonBuilder.create().fromJson(json, WxMpOcrCommResult.class);
+  public static WxOcrCommResult fromJson(String json) {
+    return WxGsonBuilder.create().fromJson(json, WxOcrCommResult.class);
   }
 
   @Override
   public String toString() {
-    return WxMpGsonBuilder.create().toJson(this);
+    return WxGsonBuilder.create().toJson(this);
   }
 
   @Data
   public static class Items implements Serializable {
-
     private static final long serialVersionUID = 3066181677009102791L;
+
     @SerializedName("text")
     private String text;
     @SerializedName("pos")
-    private WxMpOcrPos pos;
+    private WxOcrPos pos;
 
     @Override
     public String toString() {
-      return WxMpGsonBuilder.create().toJson(this);
+      return WxGsonBuilder.create().toJson(this);
     }
   }
 }

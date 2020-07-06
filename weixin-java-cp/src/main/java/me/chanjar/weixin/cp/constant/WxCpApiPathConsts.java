@@ -70,7 +70,7 @@ public final class WxCpApiPathConsts {
     @Deprecated
     public static final String GET_APPROVAL_DATA = "/cgi-bin/corp/getapprovaldata";
     public static final String GET_TEMPLATE_DETAIL = "/cgi-bin/oa/gettemplatedetail";
-    public static final String APPLY_EVENT="/cgi-bin/oa/applyevent";
+    public static final String APPLY_EVENT = "/cgi-bin/oa/applyevent";
   }
 
   public static class Tag {
