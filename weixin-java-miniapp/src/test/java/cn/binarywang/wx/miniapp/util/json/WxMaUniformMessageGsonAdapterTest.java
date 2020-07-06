@@ -2,7 +2,7 @@ package cn.binarywang.wx.miniapp.util.json;
 
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
 import cn.binarywang.wx.miniapp.bean.WxMaUniformMessage;
-import com.google.gson.JsonParser;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +33,7 @@ public class WxMaUniformMessageGsonAdapterTest {
       .addData(new WxMaTemplateData("keyword3", "2014年9月22日", "#173177"))
       .addData(new WxMaTemplateData("remark", "欢迎再次购买！", "#173177"));
 
-    assertThat(message.toJson()).isEqualTo(new JsonParser().parse("{\n" +
+    assertThat(message.toJson()).isEqualTo(GsonParser.parse("{\n" +
       "    \"touser\":\"OPENID\",\n" +
       "    \"mp_template_msg\":{\n" +
       "        \"appid\":\"APPID\",\n" +
@@ -66,7 +66,7 @@ public class WxMaUniformMessageGsonAdapterTest {
       "            }\n" +
       "        }\n" +
       "    }\n" +
-      "}").getAsJsonObject().toString());
+      "}").toString());
   }
 
   @Test
@@ -84,7 +84,7 @@ public class WxMaUniformMessageGsonAdapterTest {
       .addData(new WxMaTemplateData("keyword3", "腾讯微信总部"))
       .addData(new WxMaTemplateData("keyword4", "广州市海珠区新港中路397号"));
 
-    assertThat(message.toJson()).isEqualTo(new JsonParser().parse("{\n" +
+    assertThat(message.toJson()).isEqualTo(GsonParser.parse("{\n" +
       "    \"touser\":\"OPENID\",\n" +
       "    \"weapp_template_msg\":{\n" +
       "        \"template_id\":\"TEMPLATE_ID\",\n" +
@@ -106,6 +106,6 @@ public class WxMaUniformMessageGsonAdapterTest {
       "        },\n" +
       "        \"emphasis_keyword\":\"keyword1.DATA\"\n" +
       "    }\n" +
-      "}").getAsJsonObject().toString());
+      "}").toString());
   }
 }

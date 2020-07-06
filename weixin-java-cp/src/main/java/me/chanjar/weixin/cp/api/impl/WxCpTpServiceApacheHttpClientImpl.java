@@ -2,13 +2,13 @@ package me.chanjar.weixin.cp.api.impl;
 
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import org.apache.http.Consts;
@@ -76,7 +76,7 @@ public class WxCpTpServiceApacheHttpClientImpl extends BaseWxCpTpServiceImpl<Clo
         if (error.getErrorCode() != 0) {
           throw new WxErrorException(error);
         }
-        jsonObject = new JsonParser().parse(resultContent).getAsJsonObject();
+        jsonObject = GsonParser.parse(resultContent);
         String suiteAccussToken = jsonObject.get("suite_access_token").getAsString();
         Integer expiresIn = jsonObject.get("expires_in").getAsInt();
         this.configStorage.updateSuiteAccessToken(suiteAccussToken, expiresIn);

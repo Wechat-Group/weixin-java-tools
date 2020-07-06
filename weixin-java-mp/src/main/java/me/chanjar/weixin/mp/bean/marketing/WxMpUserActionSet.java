@@ -1,6 +1,5 @@
 package me.chanjar.weixin.mp.bean.marketing;
 
-import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;

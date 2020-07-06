@@ -1,7 +1,6 @@
 package me.chanjar.weixin.common.util.http.apache;
 
 import me.chanjar.weixin.common.WxType;
-import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
@@ -12,7 +11,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 

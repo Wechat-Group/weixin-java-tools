@@ -1,9 +1,6 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.profitsharing.*;
-import com.github.binarywang.wxpay.bean.profitsharing.ProfitSharingRequest;
-import com.github.binarywang.wxpay.bean.profitsharing.Receiver;
-import com.github.binarywang.wxpay.bean.profitsharing.ReceiverList;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;

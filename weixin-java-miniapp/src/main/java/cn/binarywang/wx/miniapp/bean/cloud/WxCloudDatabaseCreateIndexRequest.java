@@ -1,6 +1,5 @@
 package cn.binarywang.wx.miniapp.bean.cloud;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

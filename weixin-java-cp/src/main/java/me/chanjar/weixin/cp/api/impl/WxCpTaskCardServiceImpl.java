@@ -5,7 +5,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpTaskCardService;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 
 import java.util.HashMap;
 import java.util.List;

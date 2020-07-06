@@ -73,10 +73,10 @@ public class WxCpTagServiceImpl implements WxCpTagService {
   public List<WxCpTag> listAll() throws WxErrorException {
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(TAG_LIST);
     String responseContent = this.mainService.get(url, null);
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
+    JsonObject tmpJson = GsonParser.parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(
-        tmpJsonElement.getAsJsonObject().get("taglist"),
+        tmpJson.get("taglist"),
         new TypeToken<List<WxCpTag>>() {
         }.getType()
       );
@@ -86,10 +86,10 @@ public class WxCpTagServiceImpl implements WxCpTagService {
   public List<WxCpUser> listUsersByTagId(String tagId) throws WxErrorException {
     String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(TAG_GET), tagId);
     String responseContent = this.mainService.get(url, null);
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
+    JsonObject tmpJson = GsonParser.parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(
-        tmpJsonElement.getAsJsonObject().get("userlist"),
+        tmpJson.get("userlist"),
         new TypeToken<List<WxCpUser>>() {
         }.getType()
       );

@@ -1,7 +1,6 @@
 package me.chanjar.weixin.common.util.http.apache;
 
 import me.chanjar.weixin.common.WxType;
-import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;

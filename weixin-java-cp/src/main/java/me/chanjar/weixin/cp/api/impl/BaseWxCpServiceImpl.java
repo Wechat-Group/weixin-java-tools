@@ -2,9 +2,7 @@ package me.chanjar.weixin.cp.api.impl;
 
 import com.google.common.base.Joiner;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
@@ -20,6 +18,7 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.*;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
@@ -110,7 +109,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       synchronized (this.globalAgentJsapiTicketRefreshLock) {
         if (this.configStorage.isAgentJsapiTicketExpired()) {
           String responseContent = this.get(this.configStorage.getApiUrl(GET_AGENT_CONFIG_TICKET), null);
-          JsonObject jsonObject = new JsonParser().parse(responseContent).getAsJsonObject();
+          JsonObject jsonObject = GsonParser.parse(responseContent);
           this.configStorage.updateAgentJsapiTicket(jsonObject.get("ticket").getAsString(),
             jsonObject.get("expires_in").getAsInt());
         }
@@ -135,7 +134,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       synchronized (this.globalJsapiTicketRefreshLock) {
         if (this.configStorage.isJsapiTicketExpired()) {
           String responseContent = this.get(this.configStorage.getApiUrl(GET_JSAPI_TICKET), null);
-          JsonObject tmpJsonObject = new JsonParser().parse(responseContent).getAsJsonObject();
+          JsonObject tmpJsonObject = GsonParser.parse(responseContent);
           this.configStorage.updateJsapiTicket(tmpJsonObject.get("ticket").getAsString(),
             tmpJsonObject.get("expires_in").getAsInt());
         }
@@ -191,8 +190,8 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public String[] getCallbackIp() throws WxErrorException {
     String responseContent = get(this.configStorage.getApiUrl(GET_CALLBACK_IP), null);
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
-    JsonArray jsonArray = tmpJsonElement.getAsJsonObject().get("ip_list").getAsJsonArray();
+    JsonObject tmpJsonObject = GsonParser.parse(responseContent);
+    JsonArray jsonArray = tmpJsonObject.get("ip_list").getAsJsonArray();
     String[] ips = new String[jsonArray.size()];
     for (int i = 0; i < jsonArray.size(); i++) {
       ips[i] = jsonArray.get(i).getAsString();

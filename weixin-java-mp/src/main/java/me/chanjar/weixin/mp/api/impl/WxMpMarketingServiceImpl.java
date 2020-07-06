@@ -1,12 +1,11 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.api.WxMpMarketingService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.marketing.WxMpAdLeadFilter;
@@ -38,8 +37,8 @@ public class WxMpMarketingServiceImpl implements WxMpMarketingService {
     json.addProperty("name", name);
     json.addProperty("description", description);
     String responseContent = wxMpService.post(USER_ACTION_SETS_ADD, json.toString());
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
-    return tmpJsonElement.getAsJsonObject().get("data").getAsJsonObject().get("user_action_set_id").getAsLong();
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("data").getAsJsonObject().get("user_action_set_id").getAsLong();
   }
 
   @Override

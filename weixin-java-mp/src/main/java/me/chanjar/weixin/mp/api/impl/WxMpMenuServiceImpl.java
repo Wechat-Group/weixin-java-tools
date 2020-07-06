@@ -1,7 +1,6 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
@@ -39,7 +38,7 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
     log.debug("创建菜单：{},结果：{}", menuJson, result);
 
     if (menu.getMatchRule() != null) {
-      return new JsonParser().parse(result).getAsJsonObject().get("menuid").getAsString();
+      return GsonParser.parse(result).get("menuid").getAsString();
     }
 
     return null;

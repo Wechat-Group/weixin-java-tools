@@ -1,6 +1,5 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;

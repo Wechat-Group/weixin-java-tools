@@ -3,7 +3,6 @@ package com.github.binarywang.wxpay.service.impl;
 import com.github.binarywang.wxpay.bean.WxPayApiData;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import jodd.util.Base64;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.StringUtils;

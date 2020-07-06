@@ -3,8 +3,6 @@ package me.chanjar.weixin.open.bean.ma;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * @author zxfreedom
  * @description

@@ -1,8 +1,8 @@
 package me.chanjar.weixin.mp.bean.wifi;
 
-import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 public class WxMpWifiShopDataResult {
   public static WxMpWifiShopDataResult fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(
-      new JsonParser().parse(json).getAsJsonObject().get("data"),
+      GsonParser.parse(json).get("data"),
       WxMpWifiShopDataResult.class);
   }
 
@@ -86,7 +86,7 @@ public class WxMpWifiShopDataResult {
    */
   @SerializedName("finishpage_url")
   private String finishPageUrl;
-  
+
   /**
    * 商户自己的id，与门店poi_id对应关系，建议在添加门店时候建立关联关系，具体请参考“微信门店接口”.
    */

@@ -5,7 +5,6 @@ import lombok.Data;
 import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateDateRange;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * @author gyv12345@163.com

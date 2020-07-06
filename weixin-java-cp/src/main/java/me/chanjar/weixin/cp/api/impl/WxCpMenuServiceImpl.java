@@ -5,7 +5,6 @@ import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpMenuService;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Menu.*;

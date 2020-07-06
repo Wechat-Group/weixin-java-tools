@@ -8,7 +8,6 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.*;
 
 /**
  * <pre>

@@ -1,6 +1,5 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.*;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import org.testng.annotations.*;
@@ -12,8 +11,6 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
-import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -6,10 +6,10 @@ import cn.binarywang.wx.miniapp.bean.template.WxMaPubTemplateTitleListResult;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -36,7 +36,7 @@ public class WxMaSubscribeServiceImpl implements WxMaSubscribeService {
   public List<PubTemplateKeyword> getPubTemplateKeyWordsById(String id) throws WxErrorException {
     String responseText = this.wxMaService.get(GET_PUB_TEMPLATE_KEY_WORDS_BY_ID_URL,
       Joiner.on("&").withKeyValueSeparator("=").join(ImmutableMap.of("tid", id)));
-    return WxMaGsonBuilder.create().fromJson(new JsonParser().parse(responseText).getAsJsonObject()
+    return WxMaGsonBuilder.create().fromJson(GsonParser.parse(responseText)
       .getAsJsonArray("data"), new TypeToken<List<PubTemplateKeyword>>() {
     }.getType());
   }
@@ -46,13 +46,13 @@ public class WxMaSubscribeServiceImpl implements WxMaSubscribeService {
     String responseText = this.wxMaService.post(TEMPLATE_ADD_URL, ImmutableMap.of("tid", id,
       "kidList", keywordIdList.toArray(),
       "sceneDesc", sceneDesc));
-    return new JsonParser().parse(responseText).getAsJsonObject().get("priTmplId").getAsString();
+    return GsonParser.parse(responseText).get("priTmplId").getAsString();
   }
 
   @Override
   public List<TemplateInfo> getTemplateList() throws WxErrorException {
     String responseText = this.wxMaService.get(TEMPLATE_LIST_URL, null);
-    return WxMaGsonBuilder.create().fromJson(new JsonParser().parse(responseText).getAsJsonObject()
+    return WxMaGsonBuilder.create().fromJson(GsonParser.parse(responseText)
       .getAsJsonArray("data"), new TypeToken<List<TemplateInfo>>() {
     }.getType());
   }
@@ -66,7 +66,7 @@ public class WxMaSubscribeServiceImpl implements WxMaSubscribeService {
   @Override
   public List<CategoryData> getCategory() throws WxErrorException {
     String responseText = this.wxMaService.get(GET_CATEGORY_URL, null);
-    return WxMaGsonBuilder.create().fromJson(new JsonParser().parse(responseText).getAsJsonObject()
+    return WxMaGsonBuilder.create().fromJson(GsonParser.parse(responseText)
       .getAsJsonArray("data"), new TypeToken<List<CategoryData>>() {
     }.getType());
   }

@@ -1,13 +1,13 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.google.common.collect.Lists;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
@@ -138,10 +138,10 @@ public class WxPayRefundResult extends BaseWxPayResult implements Serializable {
       return;
     }
 
-    JsonElement tmpJsonElement = new JsonParser().parse(this.promotionDetailString);
+    JsonObject tmpJson = GsonParser.parse(this.promotionDetailString);
 
     final List<WxPayRefundPromotionDetail> promotionDetail = WxGsonBuilder.create()
-      .fromJson(tmpJsonElement.getAsJsonObject().get("promotion_detail"),
+      .fromJson(tmpJson.get("promotion_detail"),
         new TypeToken<List<WxPayRefundPromotionDetail>>() {
         }.getType()
       );

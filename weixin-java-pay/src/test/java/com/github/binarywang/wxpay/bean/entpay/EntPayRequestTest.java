@@ -2,8 +2,6 @@ package com.github.binarywang.wxpay.bean.entpay;
 
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 /**
  * .
  *

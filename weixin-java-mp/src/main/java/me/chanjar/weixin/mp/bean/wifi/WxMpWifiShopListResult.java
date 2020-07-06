@@ -1,8 +1,8 @@
 package me.chanjar.weixin.mp.bean.wifi;
 
-import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class WxMpWifiShopListResult {
   public static WxMpWifiShopListResult fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(
-      new JsonParser().parse(json).getAsJsonObject().get("data"),
+      GsonParser.parse(json).get("data"),
       WxMpWifiShopListResult.class);
   }
 

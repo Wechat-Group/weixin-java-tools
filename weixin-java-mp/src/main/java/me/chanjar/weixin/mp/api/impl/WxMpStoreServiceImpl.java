@@ -1,13 +1,13 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.BeanUtils;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpStoreService;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo;
@@ -47,7 +47,7 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
     if (wxError.getErrorCode() != 0) {
       throw new WxErrorException(wxError);
     }
-    return WxMpStoreBaseInfo.fromJson(new JsonParser().parse(response).getAsJsonObject()
+    return WxMpStoreBaseInfo.fromJson(GsonParser.parse(response)
       .get("business").getAsJsonObject().get("base_info").toString());
   }
 
@@ -117,7 +117,7 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
     }
 
     return WxMpGsonBuilder.create().fromJson(
-      new JsonParser().parse(response).getAsJsonObject().get("category_list"),
+      GsonParser.parse(response).get("category_list"),
       new TypeToken<List<String>>() {
       }.getType());
   }

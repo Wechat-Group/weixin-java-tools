@@ -3,7 +3,6 @@ package me.chanjar.weixin.cp.api;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.*;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 

@@ -1,15 +1,14 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpDepartmentService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpDepart;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.util.List;
@@ -32,8 +31,8 @@ public class WxCpDepartmentServiceImpl implements WxCpDepartmentService {
   public Long create(WxCpDepart depart) throws WxErrorException {
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_CREATE);
     String responseContent = this.mainService.post(url, depart.toJson());
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
-    return GsonHelper.getAsLong(tmpJsonElement.getAsJsonObject().get("id"));
+    JsonObject tmpJsonObject = GsonParser.parse(responseContent);
+    return GsonHelper.getAsLong(tmpJsonObject.get("id"));
   }
 
   @Override
@@ -56,9 +55,9 @@ public class WxCpDepartmentServiceImpl implements WxCpDepartmentService {
     }
 
     String responseContent = this.mainService.get(url, null);
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
+    JsonObject tmpJsonObject = GsonParser.parse(responseContent);
     return WxCpGsonBuilder.create()
-      .fromJson(tmpJsonElement.getAsJsonObject().get("department"),
+      .fromJson(tmpJsonObject.get("department"),
         new TypeToken<List<WxCpDepart>>() {
         }.getType()
       );

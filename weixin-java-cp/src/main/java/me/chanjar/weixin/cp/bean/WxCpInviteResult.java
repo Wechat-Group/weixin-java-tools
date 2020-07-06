@@ -1,12 +1,7 @@
 package me.chanjar.weixin.cp.bean;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.google.common.base.Splitter;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;

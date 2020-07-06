@@ -1,11 +1,11 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -88,7 +88,7 @@ public class WxCpServiceImpl extends WxCpServiceApacheHttpClientImpl {
         // 拿到锁之后，再次判断一下最新的token是否过期，避免重刷
         if (getWxCpConfigStorage().isAgentJsapiTicketExpired()) {
           String responseContent = this.get(getWxCpConfigStorage().getApiUrl(GET_AGENT_CONFIG_TICKET), null);
-          JsonObject jsonObject = new JsonParser().parse(responseContent).getAsJsonObject();
+          JsonObject jsonObject = GsonParser.parse(responseContent);
           getWxCpConfigStorage().updateAgentJsapiTicket(jsonObject.get("ticket").getAsString(),
             jsonObject.get("expires_in").getAsInt());
         }
@@ -112,7 +112,7 @@ public class WxCpServiceImpl extends WxCpServiceApacheHttpClientImpl {
         // 拿到锁之后，再次判断一下最新的token是否过期，避免重刷
         if (getWxCpConfigStorage().isJsapiTicketExpired()) {
           String responseContent = this.get(getWxCpConfigStorage().getApiUrl(GET_JSAPI_TICKET), null);
-          JsonObject tmpJsonObject = new JsonParser().parse(responseContent).getAsJsonObject();
+          JsonObject tmpJsonObject = GsonParser.parse(responseContent);
           getWxCpConfigStorage().updateJsapiTicket(tmpJsonObject.get("ticket").getAsString(),
             tmpJsonObject.get("expires_in").getAsInt());
         }

@@ -6,7 +6,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpDeviceService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.device.*;
-import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Device.*;
 

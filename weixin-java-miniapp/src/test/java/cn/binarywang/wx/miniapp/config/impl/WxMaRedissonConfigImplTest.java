@@ -1,13 +1,11 @@
 package cn.binarywang.wx.miniapp.config.impl;
 
-import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import lombok.SneakyThrows;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.redisson.config.TransportMode;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

@@ -2,8 +2,6 @@ package me.chanjar.weixin.open.api.impl;
 
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 /**
  * 单元测试类.
  *

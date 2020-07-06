@@ -2,8 +2,6 @@ package me.chanjar.weixin.mp.bean.comment;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.common.util.xml.IntegerArrayConverter;
-import me.chanjar.weixin.mp.bean.device.WxDeviceQrCodeResult;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;

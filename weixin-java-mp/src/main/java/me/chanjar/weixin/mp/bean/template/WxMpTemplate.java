@@ -3,7 +3,6 @@ package me.chanjar.weixin.mp.bean.template;
 import java.io.Serializable;
 import java.util.List;
 
-import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;

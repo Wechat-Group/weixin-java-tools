@@ -2,7 +2,6 @@ package me.chanjar.weixin.mp.bean.datacube;
 
 import java.io.Serializable;
 
-import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;

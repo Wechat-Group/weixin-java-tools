@@ -2,12 +2,12 @@ package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserTagService;
 import me.chanjar.weixin.mp.bean.tag.WxTagListUser;
@@ -134,7 +134,7 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
     String responseContent = this.wxMpService.post(TAGS_GETIDLIST, json.toString());
 
     return WxMpGsonBuilder.create().fromJson(
-      new JsonParser().parse(responseContent).getAsJsonObject().get("tagid_list"),
+      GsonParser.parse(responseContent).get("tagid_list"),
       new TypeToken<List<Long>>() {
       }.getType());
   }

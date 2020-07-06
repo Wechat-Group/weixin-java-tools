@@ -1,13 +1,13 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpOaService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.oa.*;
@@ -64,10 +64,10 @@ public class WxCpOaServiceImpl implements WxCpOaService {
 
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CHECKIN_DATA);
     String responseContent = this.mainService.post(url, jsonObject.toString());
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
+    JsonObject tmpJson = GsonParser.parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(
-        tmpJsonElement.getAsJsonObject().get("checkindata"),
+        tmpJson.get("checkindata"),
         new TypeToken<List<WxCpCheckinData>>() {
         }.getType()
       );
@@ -94,11 +94,11 @@ public class WxCpOaServiceImpl implements WxCpOaService {
 
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CHECKIN_OPTION);
     String responseContent = this.mainService.post(url, jsonObject.toString());
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
+    JsonObject tmpJson = GsonParser.parse(responseContent);
 
     return WxCpGsonBuilder.create()
       .fromJson(
-        tmpJsonElement.getAsJsonObject().get("info"),
+        tmpJson.get("info"),
         new TypeToken<List<WxCpCheckinOption>>() {
         }.getType()
       );
@@ -202,9 +202,9 @@ public class WxCpOaServiceImpl implements WxCpOaService {
 
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_DIAL_RECORD);
     String responseContent = this.mainService.post(url, jsonObject.toString());
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
+    JsonObject tmpJson = GsonParser.parse(responseContent);
 
-    return WxCpGsonBuilder.create().fromJson(tmpJsonElement.getAsJsonObject().get("record"),
+    return WxCpGsonBuilder.create().fromJson(tmpJson.get("record"),
       new TypeToken<List<WxCpDialRecord>>() {
       }.getType()
     );

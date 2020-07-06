@@ -1,6 +1,5 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonParser;
@@ -9,7 +8,6 @@ import me.chanjar.weixin.cp.api.WxCpChatService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.bean.WxCpChat;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
@@ -46,7 +44,7 @@ public class WxCpChatServiceImpl implements WxCpChatService {
     }
     final String url = this.cpService.getWxCpConfigStorage().getApiUrl(APPCHAT_CREATE);
     String result = this.cpService.post(url, WxGsonBuilder.create().toJson(data));
-    return new JsonParser().parse(result).getAsJsonObject().get("chatid").getAsString();
+    return GsonParser.parse(result).get("chatid").getAsString();
   }
 
   @Override

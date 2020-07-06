@@ -1,7 +1,6 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.WxType;

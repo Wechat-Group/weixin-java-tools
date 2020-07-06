@@ -1,19 +1,13 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaShareInfo;
-import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
-import cn.binarywang.wx.miniapp.test.TestConfig;
-import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
-import me.chanjar.weixin.common.error.WxErrorException;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 
 /**
  * 测试分享相关的接口

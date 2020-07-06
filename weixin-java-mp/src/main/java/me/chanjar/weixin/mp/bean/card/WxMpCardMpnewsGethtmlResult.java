@@ -6,7 +6,6 @@ import me.chanjar.weixin.mp.bean.result.WxMpResult;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
-import java.util.List;
 
 
 @Data

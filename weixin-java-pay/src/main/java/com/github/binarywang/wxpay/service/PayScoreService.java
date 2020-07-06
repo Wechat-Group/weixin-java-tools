@@ -5,8 +5,6 @@ import com.github.binarywang.wxpay.bean.payscore.WxPayScoreRequest;
 import com.github.binarywang.wxpay.bean.payscore.WxPayScoreResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
-import java.net.URISyntaxException;
-
 /**
  * <pre>
  *  支付分相关服务类.

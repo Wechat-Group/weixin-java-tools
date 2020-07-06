@@ -9,8 +9,6 @@ import me.chanjar.weixin.mp.bean.marketing.WxMpUserAction;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 /**
  * 测试类.
  *

@@ -3,9 +3,9 @@ package me.chanjar.weixin.mp.bean.tag;
 import java.io.Serializable;
 import java.util.List;
 
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
@@ -37,13 +37,13 @@ public class WxUserTag implements Serializable {
 
   public static WxUserTag fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(
-      new JsonParser().parse(json).getAsJsonObject().get("tag"),
+      GsonParser.parse(json).get("tag"),
       WxUserTag.class);
   }
 
   public static List<WxUserTag> listFromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(
-      new JsonParser().parse(json).getAsJsonObject().get("tags"),
+      GsonParser.parse(json).get("tags"),
       new TypeToken<List<WxUserTag>>() {
       }.getType());
   }

@@ -8,16 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.util.XmlUtils;
-import me.chanjar.weixin.common.util.crypto.WxCryptUtil;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.ImageBuilder;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.NewsBuilder;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.TextBuilder;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.VideoBuilder;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.VoiceBuilder;
-import me.chanjar.weixin.cp.config.WxCpConfigStorage;
-import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
-import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 
 /**

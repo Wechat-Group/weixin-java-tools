@@ -1,15 +1,12 @@
 package me.chanjar.weixin.cp.bean.oa;
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateContent;
-import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateControls;
 import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateTitle;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 审批模板详情

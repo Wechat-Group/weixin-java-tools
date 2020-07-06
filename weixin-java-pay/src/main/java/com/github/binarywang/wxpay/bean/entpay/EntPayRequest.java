@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.annotation.Required;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.util.Map;
 
