@@ -6,7 +6,6 @@ import cn.binarywang.wx.miniapp.bean.WxMaLiveInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaLiveResult;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.WxType;
@@ -104,7 +103,7 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
 
   private JsonObject getLiveInfo(Integer start, Integer limit, Map<String, Object> map) throws WxErrorException {
     if (map == null) {
-      map = new HashMap<>(2);
+      map = new HashMap(2);
     }
     map.put("start", start);
     map.put("limit", limit);
