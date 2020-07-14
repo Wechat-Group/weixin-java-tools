@@ -150,4 +150,11 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     final String result = this.mainService.post(url, json.toString());
     return WxCpUserExternalGroupChatStatistic.fromJson(result);
   }
+
+  @Override
+  public WxCpMsgTemplateAddResult addMsgTemplate(WxCpMsgTemplate wxCpMsgTemplate) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(ADD_MSG_TEMPLATE);
+    final String result = this.mainService.post(url, wxCpMsgTemplate.toJson());
+    return WxCpMsgTemplateAddResult.fromJson(result);
+  }
 }

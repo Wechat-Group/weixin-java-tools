@@ -126,5 +126,6 @@ public final class WxCpApiPathConsts {
     public static final String GROUP_CHAT_INFO = "/cgi-bin/externalcontact/groupchat/get";
     public static final String LIST_USER_BEHAVIOR_DATA = "/cgi-bin/externalcontact/get_user_behavior_data";
     public static final String LIST_GROUP_CHAT_DATA = "/cgi-bin/externalcontact/groupchat/statistic";
+    public static final String ADD_MSG_TEMPLATE = "/cgi-bin/externalcontact/add_msg_template";
   }
 }

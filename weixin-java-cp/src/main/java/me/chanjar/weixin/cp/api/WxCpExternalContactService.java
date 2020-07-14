@@ -88,6 +88,7 @@ public interface WxCpExternalContactService {
 
   /**
    * 企业和第三方可通过此接口，获取所有离职成员的客户列表，并可进一步调用离职成员的外部联系人再分配接口将这些客户重新分配给其他企业成员。
+   *
    * @param page
    * @param pageSize
    * @return
@@ -97,22 +98,24 @@ public interface WxCpExternalContactService {
 
   /**
    * 企业可通过此接口，将已离职成员的外部联系人分配给另一个成员接替联系。
+   *
    * @param externalUserid
    * @param handOverUserid
    * @param takeOverUserid
    * @return
    * @throws WxErrorException
    */
-  WxCpBaseResp transferExternalContact(String externalUserid,String handOverUserid,String takeOverUserid)throws WxErrorException;
+  WxCpBaseResp transferExternalContact(String externalUserid, String handOverUserid, String takeOverUserid) throws WxErrorException;
 
-   /** <pre>
-    * 该接口用于获取配置过客户群管理的客户群列表。
-    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
-    * 暂不支持第三方调用。
-    * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92119
-    * </pre>
-    */
-  WxCpUserExternalGroupChatList listGroupChat(Integer pageIndex,Integer pageSize,int status,String[] userIds,String[] partyIds) throws WxErrorException;
+  /**
+   * <pre>
+   * 该接口用于获取配置过客户群管理的客户群列表。
+   * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
+   * 暂不支持第三方调用。
+   * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92119
+   * </pre>
+   */
+  WxCpUserExternalGroupChatList listGroupChat(Integer pageIndex, Integer pageSize, int status, String[] userIds, String[] partyIds) throws WxErrorException;
 
   /**
    * <pre>
@@ -135,6 +138,7 @@ public interface WxCpExternalContactService {
    * 第三方应用需拥有“企业客户”权限。
    * 第三方/自建应用调用时传入的userid和partyid要在应用的可见范围内;
    * </pre>
+   *
    * @param startTime
    * @param endTime
    * @param userIds
@@ -150,6 +154,7 @@ public interface WxCpExternalContactService {
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
    * 暂不支持第三方调用。
    * </pre>
+   *
    * @param startTime
    * @param orderBy
    * @param orderAsc
@@ -160,5 +165,7 @@ public interface WxCpExternalContactService {
    * @return
    * @throws WxErrorException
    */
-  WxCpUserExternalGroupChatStatistic getGroupChatStatistic(Date startTime,Integer orderBy,Integer orderAsc,Integer pageIndex,Integer pageSize, String[] userIds, String[] partyIds) throws WxErrorException;
+  WxCpUserExternalGroupChatStatistic getGroupChatStatistic(Date startTime, Integer orderBy, Integer orderAsc, Integer pageIndex, Integer pageSize, String[] userIds, String[] partyIds) throws WxErrorException;
+
+  WxCpMsgTemplateAddResult addMsgTemplate(WxCpMsgTemplate wxCpMsgTemplate) throws WxErrorException;
 }
