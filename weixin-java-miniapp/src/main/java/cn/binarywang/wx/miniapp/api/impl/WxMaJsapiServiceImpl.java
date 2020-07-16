@@ -33,8 +33,8 @@ public class WxMaJsapiServiceImpl implements WxMaJsapiService {
   @Override
   public String getCardApiTicket(boolean forceRefresh) throws WxErrorException {
     Lock lock = this.wxMaService.getWxMaConfig().getCardApiTicketLock();
+    lock.lock();
     try {
-      lock.lock();
       if (forceRefresh) {
         this.wxMaService.getWxMaConfig().expireCardApiTicket();
       }
@@ -60,8 +60,8 @@ public class WxMaJsapiServiceImpl implements WxMaJsapiService {
   @Override
   public String getJsapiTicket(boolean forceRefresh) throws WxErrorException {
     Lock lock = this.wxMaService.getWxMaConfig().getJsapiTicketLock();
+    lock.lock();
     try {
-      lock.lock();
       if (forceRefresh) {
         this.wxMaService.getWxMaConfig().expireJsapiTicket();
       }

@@ -49,8 +49,8 @@ public class WxMpCardServiceImpl implements WxMpCardService {
   public String getCardApiTicket(boolean forceRefresh) throws WxErrorException {
     final TicketType type = TicketType.WX_CARD;
     Lock lock = getWxMpService().getWxMpConfigStorage().getTicketLock(type);
+    lock.lock();
     try {
-      lock.lock();
 
       if (forceRefresh) {
         this.getWxMpService().getWxMpConfigStorage().expireTicket(type);

@@ -101,8 +101,8 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public String getTicket(TicketType type, boolean forceRefresh) throws WxErrorException {
     Lock lock = this.getWxMpConfigStorage().getTicketLock(type);
+    lock.lock();
     try {
-      lock.lock();
       if (forceRefresh) {
         this.getWxMpConfigStorage().expireTicket(type);
       }
