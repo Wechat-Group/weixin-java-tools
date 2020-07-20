@@ -142,7 +142,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
       map.put(key, token);
     }
     token.token = tokenString;
-    if (expiresInSeconds != null) {
+    if (expiresInSeconds != null && expiresInSeconds != -1) {
       token.expiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
     }
   }
@@ -159,7 +159,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
   @Override
   public void updateAuthorizerRefreshToken(String appId, String authorizerRefreshToken) {
-    this.setAuthorizerRefreshToken(appId,authorizerRefreshToken);
+    this.setAuthorizerRefreshToken(appId, authorizerRefreshToken);
   }
 
   @Override
