@@ -478,8 +478,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   /**
    * 微信开放平台帐号管理统一请求入口
    *
-   * @param appId      操作appId 小程序/公众阿红
-   * @param appIdType  操作类型   小程序/公众阿红
+   * @param appId      操作appId 小程序/公众号
+   * @param appIdType  操作类型   小程序/公众号
    * @param requestUrl 请求地址
    * @param param      请求参数
    * @return 请求结果
