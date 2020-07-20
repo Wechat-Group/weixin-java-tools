@@ -390,6 +390,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
       WxOpenAuthorizerAccessToken wxOpenAuthorizerAccessToken = WxOpenAuthorizerAccessToken.fromJson(responseContent);
       config.updateAuthorizerAccessToken(appId, wxOpenAuthorizerAccessToken);
+      config.updateAuthorizerRefreshToken(appId,wxOpenAuthorizerAccessToken.getAuthorizerRefreshToken());
       return config.getAuthorizerAccessToken(appId);
     } catch (InterruptedException e) {
       throw new RuntimeException(e);

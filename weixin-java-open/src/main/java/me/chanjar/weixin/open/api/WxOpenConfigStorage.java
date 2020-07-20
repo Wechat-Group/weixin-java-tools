@@ -209,6 +209,13 @@ public interface WxOpenConfigStorage {
   void setAuthorizerRefreshToken(String appId, String authorizerRefreshToken);
 
   /**
+   * setAuthorizerRefreshToken(String appId, String authorizerRefreshToken) 方法重载方法
+   * @param appId                  the app id
+   * @param authorizerRefreshToken the authorizer refresh token
+   */
+  void updateAuthorizerRefreshToken(String appId, String authorizerRefreshToken);
+
+  /**
    * Gets authorizer access token.
    *
    * @param appId the app id

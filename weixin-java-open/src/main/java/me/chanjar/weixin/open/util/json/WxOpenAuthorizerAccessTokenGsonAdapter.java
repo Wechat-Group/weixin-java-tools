@@ -15,6 +15,7 @@ public class WxOpenAuthorizerAccessTokenGsonAdapter implements JsonDeserializer<
     WxOpenAuthorizerAccessToken authorizerAccessToken = new WxOpenAuthorizerAccessToken();
     JsonObject jsonObject = jsonElement.getAsJsonObject();
     authorizerAccessToken.setAuthorizerAccessToken(GsonHelper.getString(jsonObject, "authorizer_access_token"));
+    authorizerAccessToken.setAuthorizerRefreshToken(GsonHelper.getString(jsonObject, "authorizer_refresh_token"));
     authorizerAccessToken.setExpiresIn(GsonHelper.getPrimitiveInteger(jsonObject, "expires_in"));
     return authorizerAccessToken;
   }

@@ -158,6 +158,11 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   }
 
   @Override
+  public void updateAuthorizerRefreshToken(String appId, String authorizerRefreshToken) {
+    this.setAuthorizerRefreshToken(appId,authorizerRefreshToken);
+  }
+
+  @Override
   public String getAuthorizerAccessToken(String appId) {
     return getTokenString(authorizerAccessTokens, appId);
   }
