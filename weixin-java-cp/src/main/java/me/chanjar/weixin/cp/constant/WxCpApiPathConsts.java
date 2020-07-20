@@ -117,6 +117,11 @@ public final class WxCpApiPathConsts {
     @Deprecated
     public static final String GET_EXTERNAL_CONTACT = "/cgi-bin/crm/get_external_contact?external_userid=";
 
+    public static final String ADD_CONTACT_WAY = "/cgi-bin/externalcontact/add_contact_way";
+    public static final String GET_CONTACT_WAY = "/cgi-bin/externalcontact/get_contact_way";
+    public static final String UPDATE_CONTACT_WAY = "/cgi-bin/externalcontact/update_contact_way";
+    public static final String DEL_CONTACT_WAY = "/cgi-bin/externalcontact/del_contact_way";
+    public static final String CLOSE_TEMP_CHAT = "/cgi-bin/externalcontact/close_temp_chat";
     public static final String GET_FOLLOW_USER_LIST = "/cgi-bin/externalcontact/get_follow_user_list";
     public static final String GET_CONTACT_DETAIL = "/cgi-bin/externalcontact/get?external_userid=";
     public static final String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";

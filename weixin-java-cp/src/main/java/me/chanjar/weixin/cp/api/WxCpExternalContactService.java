@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.api;
 
+import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.*;
 
@@ -15,6 +16,83 @@ import java.util.List;
  * @author <a href="https://github.com/JoeCao">JoeCao</a>
  */
 public interface WxCpExternalContactService {
+
+  /**
+   * 配置客户联系「联系我」方式
+   * <pre>
+   * 企业可以在管理后台-客户联系中配置成员的「联系我」的二维码或者小程序按钮，客户通过扫描二维码或点击小程序上的按钮，即可获取成员联系方式，主动联系到成员。
+   * 企业可通过此接口为具有客户联系功能的成员生成专属的「联系我」二维码或者「联系我」按钮。
+   * 如果配置的是「联系我」按钮，需要开发者的小程序接入小程序插件。
+   *
+   * 注意:
+   * 通过API添加的「联系我」不会在管理端进行展示，每个企业可通过API最多配置50万个「联系我」。
+   * 用户需要妥善存储返回的config_id，config_id丢失可能导致用户无法编辑或删除「联系我」。
+   * 临时会话模式不占用「联系我」数量，但每日最多添加10万个，并且仅支持单人。
+   * 临时会话模式的二维码，添加好友完成后该二维码即刻失效。
+   * </pre>
+   *
+   * @param info 客户联系「联系我」方式
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpContactWayResult addContactWay(@NonNull WxCpContactWayInfo info) throws WxErrorException;
+
+  /**
+   * 获取企业已配置的「联系我」方式
+   *
+   * <pre>
+   * <b>批量</b>获取企业配置的「联系我」二维码和「联系我」小程序按钮。
+   * </pre>
+   *
+   * @param configId 联系方式的配置id,必填
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpContactWayInfo getContactWay(@NonNull String configId) throws WxErrorException;
+
+  /**
+   * 更新企业已配置的「联系我」方式
+   *
+   * <pre>
+   * 更新企业配置的「联系我」二维码和「联系我」小程序按钮中的信息，如使用人员和备注等。
+   * </pre>
+   *
+   * @param info 客户联系「联系我」方式
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp updateContactWay(@NonNull WxCpContactWayInfo info) throws WxErrorException;
+
+  /**
+   * 删除企业已配置的「联系我」方式
+   *
+   * <pre>
+   * 删除一个已配置的「联系我」二维码或者「联系我」小程序按钮。
+   * </pre>
+   *
+   * @param configId 企业联系方式的配置id,必填
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp deleteContactWay(@NonNull String configId) throws WxErrorException;
+
+  /**
+   * 结束临时会话
+   *
+   * <pre>
+   * 将指定的企业成员和客户之前的临时会话断开，断开前会自动下发已配置的结束语。
+   *
+   * 注意：请保证传入的企业成员和客户之间有仍然有效的临时会话, 通过<b>其他方式的添加外部联系人无法通过此接口关闭会话</b>。
+   * </pre>
+   *
+   * @param userId
+   * @param externalUserId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp closeTempChat(@NonNull String userId, @NonNull String externalUserId) throws WxErrorException;
+
+
   /**
    * 获取外部联系人详情.
    * <pre>

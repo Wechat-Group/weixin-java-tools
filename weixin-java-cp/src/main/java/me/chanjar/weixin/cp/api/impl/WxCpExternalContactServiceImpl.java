@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxCpErrorMsgEnum;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -9,6 +10,7 @@ import me.chanjar.weixin.cp.api.WxCpExternalContactService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.*;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.Date;
@@ -22,6 +24,70 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.ExternalContact.*;
 @RequiredArgsConstructor
 public class WxCpExternalContactServiceImpl implements WxCpExternalContactService {
   private final WxCpService mainService;
+
+  @Override
+  public WxCpContactWayResult addContactWay(@NonNull WxCpContactWayInfo info) throws WxErrorException {
+
+    if (info.getUsers() != null && info.getUsers().size() > 100) {
+      throw new RuntimeException("「联系我」使用人数默认限制不超过100人(包括部门展开后的人数)");
+    }
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(ADD_CONTACT_WAY);
+    String responseContent = this.mainService.post(url, info.toJson());
+
+    return WxCpContactWayResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpContactWayInfo getContactWay(@NonNull String configId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("config_id", configId);
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CONTACT_WAY);
+    String responseContent = this.mainService.post(url, json.toString());
+
+    return WxCpContactWayInfo.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp updateContactWay(@NonNull WxCpContactWayInfo info) throws WxErrorException {
+    if (StringUtils.isBlank(info.getConfigId())) {
+      throw new RuntimeException("更新「联系我」方式需要指定configId");
+    }
+    if (info.getUsers() != null && info.getUsers().size() > 100) {
+      throw new RuntimeException("「联系我」使用人数默认限制不超过100人(包括部门展开后的人数)");
+    }
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_CONTACT_WAY);
+    String responseContent = this.mainService.post(url, info.toJson());
+
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp deleteContactWay(@NonNull String configId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("config_id",configId);
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(DEL_CONTACT_WAY);
+    String responseContent = this.mainService.post(url, json.toString());
+
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp closeTempChat(@NonNull String userId, @NonNull String externalUserId) throws WxErrorException {
+
+    JsonObject json = new JsonObject();
+    json.addProperty("userid",userId);
+    json.addProperty("external_userid",externalUserId);
+
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(CLOSE_TEMP_CHAT);
+    String responseContent = this.mainService.post(url, json.toString());
+
+    return WxCpBaseResp.fromJson(responseContent);
+  }
 
   @Override
   public WxCpUserExternalContactInfo getExternalContact(String userId) throws WxErrorException {
