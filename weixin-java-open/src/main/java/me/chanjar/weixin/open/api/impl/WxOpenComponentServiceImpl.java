@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.crypto.SHA1;
@@ -474,47 +475,71 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     post(DELETE_TEMPLATE_URL, param.toString(), "access_token");
   }
 
+  /**
+   * 微信开放平台帐号管理统一请求入口
+   *
+   * @param appId      操作appId 小程序/公众阿红
+   * @param appIdType  操作类型   小程序/公众阿红
+   * @param requestUrl 请求地址
+   * @param param      请求参数
+   * @return 请求结果
+   * @throws WxErrorException
+   */
+  private String openAccountServicePost(String appId, String appIdType, String requestUrl, JsonObject param) throws WxErrorException {
+    String result = "";
+    switch (appIdType) {
+      case WxConsts.AppIdType.MP_TYPE:
+        WxMpService wxMpService = this.getWxMpServiceByAppid(appId);
+        result = wxMpService.post(requestUrl, param.toString());
+        return result;
+      case WxConsts.AppIdType.MINI_TYPE:
+        WxOpenMaService maService = this.getWxMaServiceByAppid(appId);
+        result = maService.post(requestUrl, param.toString());
+        return result;
+      default:
+        throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("appIdType类型异常").build());
+    }
+  }
+
   @Override
-  public WxOpenCreateResult createOpenAccount(String appId) throws WxErrorException {
+  public WxOpenCreateResult createOpenAccount(String appId, String appIdType) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("appid", appId);
 
-    String json = post(CREATE_OPEN_URL, param.toString(), "access_token");
+    String json = openAccountServicePost(appId, appIdType, CREATE_OPEN_URL, param);
 
     return WxOpenCreateResult.fromJson(json);
   }
 
 
   @Override
-  public Boolean bindOpenAccount(String appId, String openAppid) throws WxErrorException {
+  public Boolean bindOpenAccount(String appId, String appIdType, String openAppid) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("appid", appId);
     param.addProperty("open_appid", openAppid);
 
-    String json = post(BIND_OPEN_URL, param.toString(), "access_token");
-
+    String json = openAccountServicePost(appId, appIdType, BIND_OPEN_URL, param);
     return WxOpenResult.fromJson(json).isSuccess();
   }
 
 
   @Override
-  public Boolean unbindOpenAccount(String appId, String openAppid) throws WxErrorException {
+  public Boolean unbindOpenAccount(String appId, String appIdType, String openAppid) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("appid", appId);
     param.addProperty("open_appid", openAppid);
 
-    String json = post(UNBIND_OPEN_URL, param.toString(), "access_token");
-
+    String json = openAccountServicePost(appId, appIdType, UNBIND_OPEN_URL, param);
     return WxOpenResult.fromJson(json).isSuccess();
   }
 
 
   @Override
-  public WxOpenGetResult getOpenAccount(String appId) throws WxErrorException {
+  public WxOpenGetResult getOpenAccount(String appId, String appIdType) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("appid", appId);
 
-    String json = post(GET_OPEN_URL, param.toString(), "access_token");
+    String json = openAccountServicePost(appId, appIdType, GET_OPEN_URL, param);
     return WxOpenGetResult.fromJson(json);
   }
 

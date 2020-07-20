@@ -415,43 +415,47 @@ public interface WxOpenComponentService {
    * 创建 开放平台帐号并绑定公众号/小程序.
    * https://api.weixin.qq.com/cgi-bin/open/create
    *
-   * @param appId 公众号/小程序的appId
+   * @param appId     公众号/小程序的appId
+   * @param appIdType appId类型   me.chanjar.weixin.common.api.WxConsts.AppIdType   mp-公众号  mini-小程序
    * @return . wx open create result
    * @throws WxErrorException .
    */
-  WxOpenCreateResult createOpenAccount(String appId) throws WxErrorException;
+  WxOpenCreateResult createOpenAccount(String appId, String appIdType) throws WxErrorException;
 
   /**
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/account/bind.html
    * 将公众号/小程序绑定到开放平台帐号下
    *
    * @param appId     公众号/小程序的appId
+   * @param appIdType appId类型   me.chanjar.weixin.common.api.WxConsts.AppIdType   mp-公众号  mini-小程序
    * @param openAppid 开放平台帐号 appid，由创建开发平台帐号接口返回
    * @return the boolean
    * @throws WxErrorException the wx error exception
    */
-  Boolean bindOpenAccount(String appId, String openAppid) throws WxErrorException;
+  Boolean bindOpenAccount(String appId, String appIdType, String openAppid) throws WxErrorException;
 
   /**
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/account/unbind.html
    * 将公众号/小程序从开放平台帐号下解绑
    *
    * @param appId     公众号/小程序的appId
+   * @param appIdType appId类型   me.chanjar.weixin.common.api.WxConsts.AppIdType   mp-公众号  mini-小程序
    * @param openAppid 开放平台帐号 appid，由创建开发平台帐号接口返回
    * @return the boolean
    * @throws WxErrorException the wx error exception
    */
-  Boolean unbindOpenAccount(String appId, String openAppid) throws WxErrorException;
+  Boolean unbindOpenAccount(String appId, String appIdType, String openAppid) throws WxErrorException;
 
   /**
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/account/get.html
    * 获取公众号/小程序所绑定的开放平台帐号
    *
-   * @param appId 公众号/小程序的appId
+   * @param appId     公众号/小程序的appId
+   * @param appIdType appId类型   me.chanjar.weixin.common.api.WxConsts.AppIdType   mp-公众号  mini-小程序
    * @return 开放平台帐号 appid，由创建开发平台帐号接口返回
    * @throws WxErrorException the wx error exception
    */
-  WxOpenGetResult getOpenAccount(String appId) throws WxErrorException;
+  WxOpenGetResult getOpenAccount(String appId, String appIdType) throws WxErrorException;
 
   /**
    * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21538208049W8uwq&token=&lang=zh_CN

@@ -394,5 +394,17 @@ public class WxConsts {
     public static final String OPERATORDEFAULT = "DEFAULT";
   }
 
-
+  /**
+   * appId 类型
+   */
+  public static class AppIdType {
+    /**
+     * 公众号appId类型
+     */
+    public static final String MP_TYPE = "mp";
+    /**
+     * 小程序appId类型
+     */
+    public static final String MINI_TYPE = "mini";
+  }
 }
