@@ -310,7 +310,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
         authorizationInfo.getAuthorizerAccessToken(), authorizationInfo.getExpiresIn());
     }
     if (authorizationInfo.getAuthorizerRefreshToken() != null) {
-      getWxOpenConfigStorage().setAuthorizerRefreshToken(authorizationInfo.getAuthorizerAppid(), authorizationInfo.getAuthorizerRefreshToken());
+      getWxOpenConfigStorage().updateAuthorizerRefreshToken(authorizationInfo.getAuthorizerAppid(), authorizationInfo.getAuthorizerRefreshToken());
     }
     return queryAuth;
   }
@@ -339,7 +339,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
         String authorizerAppid = data.get("authorizer_appid");
         String refreshToken = data.get("refresh_token");
         if (authorizerAppid != null && refreshToken != null) {
-          this.getWxOpenConfigStorage().setAuthorizerRefreshToken(authorizerAppid, refreshToken);
+          this.getWxOpenConfigStorage().updateAuthorizerRefreshToken(authorizerAppid, refreshToken);
         }
       }
     }
