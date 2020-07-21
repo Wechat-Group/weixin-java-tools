@@ -48,7 +48,7 @@ public class WxMpMassOpenIdsMessageGsonAdapter implements JsonSerializer<WxMpMas
       messageJson.add(WxConsts.MassMsgType.MPVIDEO, sub);
     }
     messageJson.addProperty("msgtype", message.getMsgType());
-    messageJson.addProperty("send_ignore_reprint", message.isSendIgnoreReprint() ? 0 : 1);
+    messageJson.addProperty("send_ignore_reprint", message.isSendIgnoreReprint() ? 1 : 0);
 
     if(StringUtils.isNotEmpty(message.getClientMsgId())){
       messageJson.addProperty("clientmsgid", message.getClientMsgId());
