@@ -223,4 +223,70 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     final String result = this.mainService.post(url, wxCpMsgTemplate.toJson());
     return WxCpMsgTemplateAddResult.fromJson(result);
   }
+
+  @Override
+  public WxCpUserExternalTagGroup getCorpTagList(String[] tagId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    if(ArrayUtils.isNotEmpty(tagId)){
+      json.add("tag_id",new Gson().toJsonTree(tagId).getAsJsonArray());
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CORP_TAG_LIST);
+    final String result = this.mainService.post(url,json.toString());
+    return WxCpUserExternalTagGroup.fromJson(result);
+  }
+
+  @Override
+  public WxCpUserExternalTagGroup addCorpTag(WxCpUserExternalTagGroup tagGroup) throws WxErrorException{
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(ADD_CORP_TAG);
+    final String result = this.mainService.post(url,tagGroup.toJson());
+    return WxCpUserExternalTagGroup.fromJson(result);
+  }
+
+  @Override
+  public WxCpBaseResp editCorpTag(String id, String name, Integer order) throws WxErrorException{
+
+    JsonObject json = new JsonObject();
+    json.addProperty("id",id);
+    json.addProperty("name",name);
+    json.addProperty("order",order);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(EDIT_CORP_TAG);
+    final String result = this.mainService.post(url,json.toString());
+    return WxCpBaseResp.fromJson(result);
+  }
+
+  @Override
+  public WxCpBaseResp delCorpTag(String[] tagId, String[] groupId) throws WxErrorException{
+    JsonObject json = new JsonObject();
+    if(ArrayUtils.isNotEmpty(tagId)){
+      json.add("tag_id",new Gson().toJsonTree(tagId).getAsJsonArray());
+    }
+    if(ArrayUtils.isNotEmpty(groupId)){
+      json.add("group_id",new Gson().toJsonTree(tagId).getAsJsonArray());
+    }
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(DEL_CORP_TAG);
+    final String result = this.mainService.post(url,json.toString());
+    return WxCpBaseResp.fromJson(result);
+  }
+
+  @Override
+  public WxCpBaseResp markTag(String userid, String externalUserid, String[] addTag, String[] removeTag)throws WxErrorException{
+
+
+    JsonObject json = new JsonObject();
+    json.addProperty("userid",userid);
+    json.addProperty("external_userid",externalUserid);
+
+    if(ArrayUtils.isNotEmpty(addTag)){
+      json.add("add_tag",new Gson().toJsonTree(addTag).getAsJsonArray());
+    }
+    if(ArrayUtils.isNotEmpty(removeTag)){
+      json.add("remove_tag",new Gson().toJsonTree(removeTag).getAsJsonArray());
+    }
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(MARK_TAG);
+    final String result = this.mainService.post(url,json.toString());
+    return WxCpBaseResp.fromJson(result);
+  }
 }

@@ -8,10 +8,12 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.WxCpContactWayInfo;
 import me.chanjar.weixin.cp.bean.WxCpUserExternalContactInfo;
+import me.chanjar.weixin.cp.bean.WxCpUserExternalTagGroup;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -101,6 +103,72 @@ public class WxCpExternalContactServiceImplTest {
   public void testGetContactDetail() throws WxErrorException {
     String externalUserId = this.configStorage.getExternalUserId();
     WxCpUserExternalContactInfo result = this.wxCpService.getExternalContactService().getContactDetail(externalUserId);
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testGetCorpTagList() throws WxErrorException {
+    String tag[]={};
+    WxCpUserExternalTagGroup result = this.wxCpService.getExternalContactService().getCorpTagList(null);
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testAddCorpTag() throws WxErrorException {
+
+    List<WxCpUserExternalTagGroup.Tag> list = new ArrayList<>();
+
+    WxCpUserExternalTagGroup.Tag  tag = new  WxCpUserExternalTagGroup.Tag();
+    tag.setName("测试标签1");
+    tag.setOrder(1);
+    list.add(tag);
+
+    WxCpUserExternalTagGroup tagGroup = new WxCpUserExternalTagGroup();
+    tagGroup.setGroupName("其他");
+    tagGroup.setOrder(1);
+    tagGroup.setTag(list);
+
+    WxCpUserExternalTagGroup result = this.wxCpService.getExternalContactService().addCorpTag(tagGroup);
+
+
+
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testEditCorpTag() throws WxErrorException {
+
+    WxCpBaseResp result = this.wxCpService.getExternalContactService().editCorpTag("et2omCCwAArxYqGJQn4MNMS_zQKhIUfQ", "未知", 2);
+
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testDelCorpTag() throws WxErrorException {
+
+    String tagId[] = {"et2omCCwAArxYqGJQn4MNMS_zQKhIUfQ"};
+    String groupId[] = {};
+
+    WxCpBaseResp result = this.wxCpService.getExternalContactService().delCorpTag(tagId,groupId);
+
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testMarkTag() throws WxErrorException {
+
+    String userid="HuangXiaoMing";
+    String externalUserid="wo2omCCwAAzR0Rt1omz-90o_XJkPGXIQ";
+    String addTag[] = {"et2omCCwAAzdcSK-RV80YS9sbpCXlNlQ"};
+    String removeTag[] = {};
+
+    WxCpBaseResp result = this.wxCpService.getExternalContactService().markTag(userid,externalUserid,addTag,removeTag);
+
     System.out.println(result);
     assertNotNull(result);
   }

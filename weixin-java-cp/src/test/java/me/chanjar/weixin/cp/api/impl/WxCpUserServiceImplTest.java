@@ -73,7 +73,7 @@ public class WxCpUserServiceImplTest {
 
   @Test
   public void testListByDepartment() throws Exception {
-    List<WxCpUser> users = this.wxCpService.getUserService().listByDepartment(1L, true, 0);
+    List<WxCpUser> users = this.wxCpService.getUserService().listByDepartment(2L, true, 0);
     assertNotEquals(users.size(), 0);
     for (WxCpUser user : users) {
       System.out.println(ToStringBuilder.reflectionToString(user, ToStringStyle.MULTI_LINE_STYLE));

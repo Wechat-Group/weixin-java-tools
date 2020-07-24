@@ -246,4 +246,61 @@ public interface WxCpExternalContactService {
   WxCpUserExternalGroupChatStatistic getGroupChatStatistic(Date startTime, Integer orderBy, Integer orderAsc, Integer pageIndex, Integer pageSize, String[] userIds, String[] partyIds) throws WxErrorException;
 
   WxCpMsgTemplateAddResult addMsgTemplate(WxCpMsgTemplate wxCpMsgTemplate) throws WxErrorException;
+
+
+  /**
+   * <pre>
+   * 企业可通过此接口获取企业客户标签详情。
+   * </pre>
+   * @param tagId
+   * @return
+   */
+  WxCpUserExternalTagGroup  getCorpTagList(String [] tagId) throws WxErrorException;
+
+
+  /**
+   * <pre>
+   * 企业可通过此接口向客户标签库中添加新的标签组和标签，每个企业最多可配置3000个企业标签。
+   * 暂不支持第三方调用。
+   * </pre>
+   * @param tagGroup
+   * @return
+   */
+  WxCpUserExternalTagGroup  addCorpTag(WxCpUserExternalTagGroup tagGroup)throws WxErrorException;
+
+  /**
+   * <pre>
+   * 企业可通过此接口编辑客户标签/标签组的名称或次序值。
+   * 暂不支持第三方调用。
+   * </pre>
+   * @param id
+   * @param name
+   * @param order
+   * @return
+   */
+  WxCpBaseResp  editCorpTag(String id,String name,Integer order)throws WxErrorException;
+
+  /**
+   * <pre>
+   * 企业可通过此接口删除客户标签库中的标签，或删除整个标签组。
+   * 暂不支持第三方调用。
+   * </pre>
+   * @param tagId
+   * @param groupId
+   * @return
+   */
+  WxCpBaseResp  delCorpTag(String [] tagId,String[] groupId)throws WxErrorException;
+
+  /**
+   * <pre>
+   * 企业可通过此接口为指定成员的客户添加上由企业统一配置的标签。
+   * https://work.weixin.qq.com/api/doc/90000/90135/92117
+   * </pre>
+   * @param userid
+   * @param externalUserid
+   * @param addTag
+   * @param removeTag
+   * @return
+   */
+  WxCpBaseResp  markTag(String userid,String externalUserid,String[] addTag,String [] removeTag)throws WxErrorException;
 }
