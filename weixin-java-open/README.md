@@ -1,7 +1,7 @@
 消息机制未实现，下面为通知回调中设置的代码部分
 
 以下代码可通过腾讯全网发布测试用例
-```
+```Java
 @RestController
 @RequestMapping("notify")
 public class NotifyController extends WechatThridBaseController {
