@@ -100,6 +100,14 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
 
   @Override
   public boolean verify(String serialNumber, byte[] message, String signature) {
+    checkAndAutoUpdateCert();
+    return verifier.verify(serialNumber, message, signature);
+  }
+
+  /**
+   * 检查证书是否在有效期内，如果不在有效期内则进行更新
+   */
+  private void checkAndAutoUpdateCert() {
     if (instant == null || Minutes.minutesBetween(instant, Instant.now()).getMinutes() >= minutesInterval) {
       if (lock.tryLock()) {
         try {
@@ -113,7 +121,6 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
         }
       }
     }
-    return verifier.verify(serialNumber, message, signature);
   }
 
   private void autoUpdateCert() throws IOException, GeneralSecurityException {
@@ -179,4 +186,11 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
 
     return newCertList;
   }
+
+  @Override
+  public X509Certificate getValidCertificate() {
+    checkAndAutoUpdateCert();
+    return verifier.getValidCertificate();
+  }
+
 }

@@ -2,6 +2,7 @@ package com.github.binarywang.wxpay.v3;
 
 import java.io.IOException;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpException;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -12,6 +13,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.conn.routing.HttpRoute;
+import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.execchain.ClientExecChain;
 import org.apache.http.util.EntityUtils;
@@ -43,11 +45,11 @@ public class SignatureExec implements ClientExecChain {
     }
   }
 
-  protected void convertToRepeatableRequestEntity(HttpUriRequest request) throws IOException {
-    if (request instanceof HttpEntityEnclosingRequestBase) {
-      HttpEntity entity = ((HttpEntityEnclosingRequestBase) request).getEntity();
-      if (entity != null && !entity.isRepeatable()) {
-        ((HttpEntityEnclosingRequestBase) request).setEntity(newRepeatableEntity(entity));
+  protected void convertToRepeatableRequestEntity(HttpRequestWrapper request) throws IOException {
+    if (request instanceof HttpEntityEnclosingRequest) {
+      HttpEntity entity = ((HttpEntityEnclosingRequest) request).getEntity();
+      if (entity != null) {
+        ((HttpEntityEnclosingRequest) request).setEntity(new BufferedHttpEntity(entity));
       }
     }
   }
@@ -64,15 +66,16 @@ public class SignatureExec implements ClientExecChain {
 
   private CloseableHttpResponse executeWithSignature(HttpRoute route, HttpRequestWrapper request,
       HttpClientContext context, HttpExecutionAware execAware) throws IOException, HttpException {
-    HttpUriRequest newRequest = RequestBuilder.copy(request.getOriginal()).build();
-    convertToRepeatableRequestEntity(newRequest);
+    // 上传类不需要消耗两次故不做转换
+    if (!(request.getOriginal() instanceof WechatPayUploadHttpPost)) {
+      convertToRepeatableRequestEntity(request);
+    }
     // 添加认证信息
-    newRequest.addHeader("Authorization",
-        credentials.getSchema() + " " + credentials.getToken(newRequest));
+    request.addHeader("Authorization",
+      credentials.getSchema() + " " + credentials.getToken(request));
 
     // 执行
-    CloseableHttpResponse response = mainExec.execute(
-        route, HttpRequestWrapper.wrap(newRequest), context, execAware);
+    CloseableHttpResponse response = mainExec.execute(route, request, context, execAware);
 
     // 对成功应答验签
     StatusLine statusLine = response.getStatusLine();

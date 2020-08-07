@@ -10,6 +10,7 @@ import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
+import org.apache.http.client.methods.HttpPost;
 
 import java.io.File;
 import java.net.URI;
@@ -64,6 +65,16 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   String postV3(String url, String requestStr) throws WxPayException;
+
+  /**
+   * 发送post请求，得到响应字符串.
+   *
+   * @param url        请求地址
+   * @param httpPost 请求信息
+   * @return 返回请求结果字符串 string
+   * @throws WxPayException the wx pay exception
+   */
+  String postV3(String url, HttpPost httpPost) throws WxPayException;
 
   /**
    * 发送get V3请求，得到响应字符串.

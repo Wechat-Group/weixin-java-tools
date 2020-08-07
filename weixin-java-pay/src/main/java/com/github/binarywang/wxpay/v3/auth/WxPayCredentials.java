@@ -1,15 +1,17 @@
 package com.github.binarywang.wxpay.v3.auth;
 
 
+import com.github.binarywang.wxpay.v3.Credentials;
+import com.github.binarywang.wxpay.v3.WechatPayUploadHttpPost;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpEntityEnclosingRequest;
+import org.apache.http.client.methods.HttpRequestWrapper;
+import org.apache.http.util.EntityUtils;
+
 import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
-
-import com.github.binarywang.wxpay.v3.Credentials;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.util.EntityUtils;
 
 @Slf4j
 public class WxPayCredentials implements Credentials {
@@ -46,14 +48,14 @@ public class WxPayCredentials implements Credentials {
   }
 
   @Override
-  public final String getToken(HttpUriRequest request) throws IOException {
+  public final String getToken(HttpRequestWrapper request) throws IOException {
     String nonceStr = generateNonceStr();
     long timestamp = generateTimestamp();
 
     String message = buildMessage(nonceStr, timestamp, request);
     log.debug("authorization message=[{}]", message);
 
-    Signer.SignatureResult signature = signer.sign(message.getBytes("utf-8"));
+    Signer.SignatureResult signature = signer.sign(message.getBytes(StandardCharsets.UTF_8));
 
     String token = "mchid=\"" + getMerchantId() + "\","
         + "nonce_str=\"" + nonceStr + "\","
@@ -65,7 +67,7 @@ public class WxPayCredentials implements Credentials {
     return token;
   }
 
-  protected final String buildMessage(String nonce, long timestamp, HttpUriRequest request)
+  protected final String buildMessage(String nonce, long timestamp, HttpRequestWrapper request)
       throws IOException {
     URI uri = request.getURI();
     String canonicalUrl = uri.getRawPath();
@@ -75,8 +77,10 @@ public class WxPayCredentials implements Credentials {
 
     String body = "";
     // PATCH,POST,PUT
-    if (request instanceof HttpEntityEnclosingRequestBase) {
-      body = EntityUtils.toString(((HttpEntityEnclosingRequestBase) request).getEntity());
+    if (request.getOriginal() instanceof WechatPayUploadHttpPost) {
+      body = ((WechatPayUploadHttpPost) request.getOriginal()).getMeta();
+    } else if (request instanceof HttpEntityEnclosingRequest) {
+      body = EntityUtils.toString(((HttpEntityEnclosingRequest) request).getEntity());
     }
 
     return request.getRequestLine().getMethod() + "\n"

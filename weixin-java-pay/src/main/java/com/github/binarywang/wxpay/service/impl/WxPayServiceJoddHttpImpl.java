@@ -16,6 +16,7 @@ import jodd.http.ProxyInfo.ProxyType;
 import jodd.http.net.SSLSocketHttpConnectionProvider;
 import jodd.http.net.SocketHttpConnectionProvider;
 import jodd.util.Base64;
+import org.apache.http.client.methods.HttpPost;
 
 /**
  * 微信支付请求实现类，jodd-http实现.
@@ -62,6 +63,11 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public String postV3(String url, String requestStr) throws WxPayException {
+    return null;
+  }
+
+  @Override
+  public String postV3(String url, HttpPost httpPost) throws WxPayException {
     return null;
   }
 

@@ -2,10 +2,7 @@ package com.github.binarywang.wxpay.config;
 
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder;
-import com.github.binarywang.wxpay.v3.auth.AutoUpdateCertificatesVerifier;
-import com.github.binarywang.wxpay.v3.auth.PrivateKeySigner;
-import com.github.binarywang.wxpay.v3.auth.WxPayCredentials;
-import com.github.binarywang.wxpay.v3.auth.WxPayValidator;
+import com.github.binarywang.wxpay.v3.auth.*;
 import com.github.binarywang.wxpay.v3.util.PemUtils;
 import jodd.util.ResourcesUtil;
 import lombok.Data;
@@ -154,6 +151,12 @@ public class WxPayConfig {
   private String httpProxyPassword;
 
   /**
+   * v3接口下证书检验对象，通过改对象可以获取到X509Certificate，进一步对敏感信息加密
+   * 文档见 https://wechatpay-api.gitbook.io/wechatpay-api-v3/qian-ming-zhi-nan-1/min-gan-xin-xi-jia-mi
+   */
+  private Verifier verifier;
+
+  /**
    * 返回所设置的微信支付接口请求地址域名.
    *
    * @return 微信支付接口请求地址域名
@@ -297,14 +300,20 @@ public class WxPayConfig {
 
     try {
       PrivateKey merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
+
+      AutoUpdateCertificatesVerifier verifier = new AutoUpdateCertificatesVerifier(
+        new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
+        apiV3Key.getBytes(StandardCharsets.UTF_8));
+
+
       CloseableHttpClient httpClient = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
         .withWechatpay(Collections.singletonList(PemUtils.loadCertificate(certInputStream)))
-        .withValidator(new WxPayValidator(new AutoUpdateCertificatesVerifier(
-          new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
-          apiV3Key.getBytes(StandardCharsets.UTF_8))))
+        .withValidator(new WxPayValidator(verifier))
         .build();
       this.apiV3HttpClient = httpClient;
+      this.verifier=verifier;
+
       return httpClient;
     } catch (Exception e) {
       throw new WxPayException("v3请求构造异常！", e);
