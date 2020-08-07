@@ -5,7 +5,10 @@ import com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder;
 import com.github.binarywang.wxpay.v3.auth.*;
 import com.github.binarywang.wxpay.v3.util.PemUtils;
 import jodd.util.ResourcesUtil;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +29,7 @@ import java.util.Collections;
  * @author Binary Wang (https://github.com/binarywang)
  */
 @Data
+@Getter
 public class WxPayConfig {
   private static final String DEFAULT_PAY_BASE_URL = "https://api.mch.weixin.qq.com";
   private static final String PROBLEM_MSG = "证书文件【%s】有问题，请核实！";
@@ -167,6 +171,15 @@ public class WxPayConfig {
     }
 
     return this.payBaseUrl;
+  }
+
+  @SneakyThrows
+  public Verifier getVerifier() {
+    if (verifier == null) {
+      //当改对象为null时，初始化api v3的请求头
+      initApiV3HttpClient();
+    }
+    return verifier;
   }
 
   /**
@@ -312,7 +325,7 @@ public class WxPayConfig {
         .withValidator(new WxPayValidator(verifier))
         .build();
       this.apiV3HttpClient = httpClient;
-      this.verifier=verifier;
+      this.verifier = verifier;
 
       return httpClient;
     } catch (Exception e) {

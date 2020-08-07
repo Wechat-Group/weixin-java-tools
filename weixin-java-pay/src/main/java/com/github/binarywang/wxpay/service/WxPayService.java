@@ -69,6 +69,18 @@ public interface WxPayService {
   /**
    * 发送post请求，得到响应字符串.
    *
+   * 部分字段会包含敏感信息，所以在提交前需要在请求头中会包含"Wechatpay-Serial"信息
+   *
+   * @param url        请求地址
+   * @param requestStr 请求信息
+   * @return 返回请求结果字符串 string
+   * @throws WxPayException the wx pay exception
+   */
+  String postV3WithWechatpaySerial(String url, String requestStr) throws WxPayException;
+
+  /**
+   * 发送post请求，得到响应字符串.
+   *
    * @param url        请求地址
    * @param httpPost 请求信息
    * @return 返回请求结果字符串 string

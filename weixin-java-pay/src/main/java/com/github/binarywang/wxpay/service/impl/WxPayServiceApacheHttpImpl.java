@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import jodd.util.Base64;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
@@ -26,6 +27,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.SSLContext;
+import java.math.BigInteger;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
@@ -114,6 +116,40 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     }
 
 
+  }
+
+  @Override
+  public String postV3WithWechatpaySerial(String url, String requestStr) throws WxPayException {
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
+    HttpPost httpPost = this.createHttpPost(url, requestStr);
+    httpPost.addHeader("Accept", "application/json");
+    httpPost.addHeader("Content-Type", "application/json");
+    String serialNumber = getConfig().getVerifier().getValidCertificate().getSerialNumber().toString(16).toUpperCase();
+    httpPost.addHeader("Wechatpay-Serial", serialNumber);
+    try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+      //v3已经改为通过状态码判断200 204 成功
+      int statusCode = response.getStatusLine().getStatusCode();
+      String responseString="{}";
+      HttpEntity entity = response.getEntity();
+      if(entity!=null){
+        responseString= EntityUtils.toString(entity, StandardCharsets.UTF_8);
+      }
+
+      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
+        this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
+        return responseString;
+      } else {
+        //有错误提示信息返回
+        JsonObject jsonObject = GsonParser.parse(responseString);
+        throw new WxPayException(jsonObject.get("message").getAsString());
+      }
+    } catch (Exception e) {
+      this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
+      e.printStackTrace();
+      throw new WxPayException(e.getMessage(), e);
+    } finally {
+      httpPost.releaseConnection();
+    }
   }
 
   @Override
