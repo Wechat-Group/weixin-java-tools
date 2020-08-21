@@ -174,6 +174,14 @@ public interface WxCpService {
   String post(String url, String postData) throws WxErrorException;
 
   /**
+   * 当不需要自动带accessToken的时候，可以用这个发起post请求
+   *
+   * @param url      接口地址
+   * @param postData 请求body字符串
+   */
+  String postWithoutToken(String url, String postData) throws WxErrorException;
+
+  /**
    * <pre>
    * Service没有实现某个API的时候，可以用这个，
    * 比{@link #get}和{@link #post}方法更灵活，可以自己构造RequestExecutor用来处理不同的参数和不同的返回类型。
@@ -327,6 +335,13 @@ public interface WxCpService {
   WxCpAgentService getAgentService();
 
   WxCpOaService getOAService();
+
+  /**
+   * 获取群机器人消息推送服务
+   *
+   * @return 群机器人消息推送服务
+   */
+  WxCpGroupRobotService getGroupRobotService();
 
   /**
    * http请求对象

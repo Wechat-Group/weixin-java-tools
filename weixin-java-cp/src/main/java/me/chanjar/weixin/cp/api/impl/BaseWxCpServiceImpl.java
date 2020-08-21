@@ -51,6 +51,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxCpOaService oaService = new WxCpOaServiceImpl(this);
   private WxCpTaskCardService taskCardService = new WxCpTaskCardServiceImpl(this);
   private WxCpExternalContactService externalContactService = new WxCpExternalContactServiceImpl(this);
+  private WxCpGroupRobotService groupRobotService = new WxCpGroupRobotServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -217,6 +218,11 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     return execute(SimplePostRequestExecutor.create(this), url, postData);
   }
 
+  @Override
+  public String postWithoutToken(String url, String postData) throws WxErrorException {
+    return this.executeNormal(SimplePostRequestExecutor.create(this), url, postData);
+  }
+
   /**
    * 向微信端发送请求，在这里执行的策略是当发生access_token过期时才去刷新，然后重新执行请求，而不是全局定时请求.
    */
@@ -292,6 +298,27 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       return null;
     } catch (IOException e) {
       log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * 普通请求，不自动带accessToken
+   */
+  private <T, E> T executeNormal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+    try {
+      T result = executor.execute(uri, data, WxType.CP);
+      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uri, data, result);
+      return result;
+    } catch (WxErrorException e) {
+      WxError error = e.getError();
+      if (error.getErrorCode() != 0) {
+        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uri, data, error);
+        throw new WxErrorException(error, e);
+      }
+      return null;
+    } catch (IOException e) {
+      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uri, data, e.getMessage());
       throw new RuntimeException(e);
     }
   }
@@ -410,6 +437,11 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public WxCpOaService getOAService() {
     return oaService;
+  }
+
+  @Override
+  public WxCpGroupRobotService getGroupRobotService() {
+    return groupRobotService;
   }
 
   @Override
