@@ -50,6 +50,8 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
 
   private volatile String baseApiUrl;
 
+  private volatile String webhookKey;
+
   @Override
   public void setBaseApiUrl(String baseUrl) {
     this.baseApiUrl = baseUrl;
@@ -285,6 +287,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   @Override
   public boolean autoRefreshToken() {
     return true;
+  }
+
+  @Override
+  public String getWebhookKey() {
+    return this.webhookKey;
   }
 
   public void setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {

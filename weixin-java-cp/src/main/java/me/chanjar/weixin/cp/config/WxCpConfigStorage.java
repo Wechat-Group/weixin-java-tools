@@ -107,7 +107,15 @@ public interface WxCpConfigStorage {
 
   /**
    * 是否自动刷新token
+   *
    * @return .
    */
   boolean autoRefreshToken();
+
+  /**
+   * 获取群机器人webhook的key
+   *
+   * @return key
+   */
+  String getWebhookKey();
 }

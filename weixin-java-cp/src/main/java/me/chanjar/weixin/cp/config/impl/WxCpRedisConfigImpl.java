@@ -46,6 +46,8 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
 
   protected volatile String baseApiUrl;
 
+  private volatile String webhookKey;
+
   @Override
   public void setBaseApiUrl(String baseUrl) {
     this.baseApiUrl = baseUrl;
@@ -342,6 +344,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   @Override
   public boolean autoRefreshToken() {
     return true;
+  }
+
+  @Override
+  public String getWebhookKey() {
+    return this.getWebhookKey();
   }
 
   public void setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
