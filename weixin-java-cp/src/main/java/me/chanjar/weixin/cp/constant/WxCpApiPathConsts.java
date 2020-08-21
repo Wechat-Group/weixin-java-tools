@@ -21,6 +21,7 @@ public final class WxCpApiPathConsts {
   public static final String BATCH_GET_RESULT = "/cgi-bin/batch/getresult?jobid=";
   public static final String JSCODE_TO_SESSION = "/cgi-bin/miniprogram/jscode2session";
   public static final String GET_TOKEN = "/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
+  public static final String WEBHOOK_SEND = "/cgi-bin/webhook/send?key=";
 
   public static class Agent {
     public static final String AGENT_GET = "/cgi-bin/agent/get?agentid=%d";
