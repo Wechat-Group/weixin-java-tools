@@ -58,6 +58,14 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
 
     @SerializedName("join_time")
     private Long joinTime;
+    
+    /**
+    * 外部联系人在微信开放平台的唯一身份标识（微信unionid）
+    * 通过此字段企业可将外部联系人与公众号/小程序用户关联起来
+    * 仅当群成员类型是微信用户（包括企业成员未添加好友），且企业或第三方服务商绑定了微信开发者ID有此字段
+    */
+    @SerializedName("unionid")
+    private String unionId;
 
     /**
      * 入群方式。
