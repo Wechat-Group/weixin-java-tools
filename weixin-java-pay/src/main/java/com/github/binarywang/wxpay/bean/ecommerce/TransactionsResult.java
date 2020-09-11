@@ -16,7 +16,7 @@ import java.security.PrivateKey;
 @Data
 @NoArgsConstructor
 public class TransactionsResult implements Serializable {
-
+  private static final long serialVersionUID = 1760592667519950149L;
   /**
    * <pre>
    * 字段名：预支付交易会话标识 （APP支付、JSAPI支付 会返回）
@@ -97,7 +97,7 @@ public class TransactionsResult implements Serializable {
           //签名类型，默认为RSA，仅支持RSA。
           .setSignType("RSA").setPaySign(SignUtils.sign(jsapiResult.getSignStr(), privateKey));
         return (T) jsapiResult;
-      case H5:
+      case MWEB:
         return (T) this.h5Url;
       case APP:
         AppResult appResult = new AppResult();

@@ -16,6 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class CombineTransactionsRequest implements Serializable {
+  private static final long serialVersionUID = -1242741645939606441L;
   /**
    * <pre>
    * 字段名：合单商户appid

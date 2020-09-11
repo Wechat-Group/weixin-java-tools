@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class PartnerTransactionsRequest implements Serializable {
-
+  private static final long serialVersionUID = -1550405819444680465L;
   /**
    * <pre>
    * 字段名：服务商公众号ID
