@@ -1,8 +1,8 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaLiveInfo;
-import cn.binarywang.wx.miniapp.bean.WxMaLiveResult;
+import cn.binarywang.wx.miniapp.bean.live.WxMaLiveGoodInfo;
+import cn.binarywang.wx.miniapp.bean.live.WxMaLiveResult;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
@@ -31,7 +31,7 @@ public class WxMaLiveGoodsServiceImplTest {
     //上传临时素材
     WxMediaUploadResult mediaUpload = this.wxService.getMediaService().uploadMedia("image", new File("E:\\1.png"));
 
-    WxMaLiveInfo.Goods goods = new WxMaLiveInfo.Goods();
+    WxMaLiveGoodInfo goods = new WxMaLiveGoodInfo();
     goods.setCoverImgUrl(mediaUpload.getMediaId());
     goods.setName("宫廷奢华真丝四件套");
     goods.setPrice("1599");
@@ -64,7 +64,7 @@ public class WxMaLiveGoodsServiceImplTest {
   @Test
   public void updateGoods() throws Exception {
 
-    WxMaLiveInfo.Goods goods = new WxMaLiveInfo.Goods();
+    WxMaLiveGoodInfo goods = new WxMaLiveGoodInfo();
     goods.setGoodsId(8);
     goods.setName("宫廷奢华真丝四件套");
     goods.setCoverImgUrl("http://mmbiz.qpic.cn/mmbiz_png/omYktZNGamuUQE0WPVfqdnLV61JDhluXOac7PiaoZeticFpcR7wvicC0aXUC2VXkl7r1gN0QSKosv2satn6oCFeiaQ/0");

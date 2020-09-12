@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.constant;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * <pre>
  * 企业微信常量
@@ -8,11 +10,13 @@ package me.chanjar.weixin.cp.constant;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@UtilityClass
 public class WxCpConsts {
   /**
    * 企业微信端推送过来的事件类型.
    * 参考文档：https://work.weixin.qq.com/api/doc#12974
    */
+  @UtilityClass
   public static class EventType {
     /**
      * 成员关注事件.
@@ -105,6 +109,7 @@ public class WxCpConsts {
   /**
    * 企业外部联系人变更事件的CHANGE_TYPE
    */
+  @UtilityClass
   public static class ExternalContactChangeType {
     /**
      * 新增外部联系人
@@ -128,6 +133,7 @@ public class WxCpConsts {
   /**
    * 企业微信通讯录变更事件.
    */
+  @UtilityClass
   public static class ContactChangeType {
     /**
      * 新增成员事件.
@@ -169,6 +175,7 @@ public class WxCpConsts {
   /**
    * 互联企业发送应用消息的消息类型.
    */
+  @UtilityClass
   public static class LinkedCorpMsgType {
     /**
      * 文本消息.
@@ -213,6 +220,7 @@ public class WxCpConsts {
   /**
    * 群机器人的消息类型.
    */
+  @UtilityClass
   public static class GroupRobotMsgType {
     /**
      * 文本消息.
@@ -238,6 +246,7 @@ public class WxCpConsts {
   /**
    * 应用推送消息的消息类型.
    */
+  @UtilityClass
   public static class AppChatMsgType {
     /**
      * 文本消息.

@@ -133,6 +133,7 @@ public class WxOpenStorageAutoConfiguration {
     Config config = new Config();
     config.useSingleServer()
       .setAddress("redis://" + redis.getHost() + ":" + redis.getPort())
+      .setDatabase(redis.getDatabase())
       .setPassword(redis.getPassword());
     config.setTransportMode(TransportMode.NIO);
     return Redisson.create(config);

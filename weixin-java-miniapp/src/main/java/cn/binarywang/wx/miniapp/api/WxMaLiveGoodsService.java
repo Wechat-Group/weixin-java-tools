@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.WxMaLiveInfo;
-import cn.binarywang.wx.miniapp.bean.WxMaLiveResult;
+import cn.binarywang.wx.miniapp.bean.live.WxMaLiveGoodInfo;
+import cn.binarywang.wx.miniapp.bean.live.WxMaLiveResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public interface WxMaLiveGoodsService {
    * @return 返回auditId、goodsId
    * @throws WxErrorException .
    */
-  WxMaLiveResult addGoods(WxMaLiveInfo.Goods goods) throws WxErrorException;
+  WxMaLiveResult addGoods(WxMaLiveGoodInfo goods) throws WxErrorException;
 
   /**
    * 撤回审核
@@ -91,7 +91,7 @@ public interface WxMaLiveGoodsService {
    * @return 更新商品是否成功
    * @throws WxErrorException .
    */
-  boolean updateGoods(WxMaLiveInfo.Goods goods) throws WxErrorException;
+  boolean updateGoods(WxMaLiveGoodInfo goods) throws WxErrorException;
 
   /**
    * 获取商品状态

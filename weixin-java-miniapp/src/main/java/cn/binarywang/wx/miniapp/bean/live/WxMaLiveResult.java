@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.bean;
+package cn.binarywang.wx.miniapp.bean.live;
 
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -18,8 +18,6 @@ import java.util.List;
 @Data
 public class WxMaLiveResult implements Serializable {
   private static final long serialVersionUID = 1L;
-  private Integer errcode;
-  private String errmsg;
   private Integer total;
   private Integer auditId;
   private Integer goodsId;
