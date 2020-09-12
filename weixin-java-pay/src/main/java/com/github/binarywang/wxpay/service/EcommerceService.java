@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.ecommerce.*;
+import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
@@ -127,4 +128,50 @@ public interface EcommerceService {
    * @return 解密后通知数据
    */
   PartnerTransactionsNotifyResult parsePartnerNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * <pre>
+   * 服务商账户实时余额
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
+   * </pre>
+   *
+   * @param accountType 服务商账户类型
+   * @return 返回数据
+   */
+  FundBalanceResult spNowBalance(SpAccountTypeEnum accountType) throws WxPayException;
+
+  /**
+   * <pre>
+   * 服务商账户日终余额
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
+   * </pre>
+   *
+   * @param accountType 服务商账户类型
+   * @param date 查询日期 2020-09-11
+   * @return 返回数据
+   */
+  FundBalanceResult spDayEndBalance(SpAccountTypeEnum accountType, String date) throws WxPayException;
+
+  /**
+   * <pre>
+   * 二级商户号账户实时余额
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @return 返回数据
+   */
+  FundBalanceResult subNowBalance(String subMchid) throws WxPayException;
+
+  /**
+   * <pre>
+   * 二级商户号账户日终余额
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @param date 查询日期 2020-09-11
+   * @return 返回数据
+   */
+  FundBalanceResult subDayEndBalance(String subMchid, String date) throws WxPayException;
 }

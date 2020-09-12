@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.ecommerce.*;
+import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.EcommerceService;
@@ -113,6 +114,38 @@ public class EcommerceServiceImpl implements EcommerceService {
     } catch (GeneralSecurityException | IOException e) {
       throw new WxPayException("解析报文异常！", e);
     }
+  }
+
+  @Override
+  public FundBalanceResult spNowBalance(SpAccountTypeEnum accountType) throws WxPayException {
+    String url = String.format("%s/v3/merchant/fund/balance/%s", this.payService.getPayBaseUrl(), accountType);
+    URI uri = URI.create(url);
+    String response = this.payService.getV3(uri);
+    return GSON.fromJson(response, FundBalanceResult.class);
+  }
+
+  @Override
+  public FundBalanceResult spDayEndBalance(SpAccountTypeEnum accountType, String date) throws WxPayException {
+    String url = String.format("%s/v3/merchant/fund/dayendbalance/%s?date=%s", this.payService.getPayBaseUrl(), accountType, date);
+    URI uri = URI.create(url);
+    String response = this.payService.getV3(uri);
+    return GSON.fromJson(response, FundBalanceResult.class);
+  }
+
+  @Override
+  public FundBalanceResult subNowBalance(String subMchid) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/fund/balance/%s", this.payService.getPayBaseUrl(), subMchid);
+    URI uri = URI.create(url);
+    String response = this.payService.getV3(uri);
+    return GSON.fromJson(response, FundBalanceResult.class);
+  }
+
+  @Override
+  public FundBalanceResult subDayEndBalance(String subMchid, String date) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/fund/enddaybalance/%s?date=%s", this.payService.getPayBaseUrl(), subMchid, date);
+    URI uri = URI.create(url);
+    String response = this.payService.getV3(uri);
+    return GSON.fromJson(response, FundBalanceResult.class);
   }
 
   private boolean verifyNotifySign(SignatureHeader header, String data) {
