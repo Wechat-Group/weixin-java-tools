@@ -174,4 +174,15 @@ public interface EcommerceService {
    * @return 返回数据
    */
   FundBalanceResult subDayEndBalance(String subMchid, String date) throws WxPayException;
+
+  /**
+   * <pre>
+   * 请求分账API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_1.shtml
+   * </pre>
+   *
+   * @param request 分账请求
+   * @return 返回数据
+   */
+  ProfitSharingResult profitSharing(ProfitSharingRequest request) throws WxPayException;
 }
