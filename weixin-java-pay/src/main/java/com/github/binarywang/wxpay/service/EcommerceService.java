@@ -185,4 +185,5 @@ public interface EcommerceService {
    * @return 返回数据
    */
   ProfitSharingResult profitSharing(ProfitSharingRequest request) throws WxPayException;
+
 }
