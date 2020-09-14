@@ -37,6 +37,11 @@ public final class WxCpApiPathConsts {
     public static final String MESSAGE_SEND = "/cgi-bin/message/send";
 
     /**
+     * 查询应用消息发送统计
+     */
+    public static final String GET_STATISTICS = "/cgi-bin/message/get_statistics";
+
+    /**
      * 互联企业发送应用消息
      */
     public static final String LINKEDCORP_MESSAGE_SEND = "/cgi-bin/linkedcorp/message/send";

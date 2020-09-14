@@ -12,6 +12,7 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.message.WxCpLinkedCorpMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpMessageSendResult;
+import me.chanjar.weixin.cp.bean.message.WxCpMessageSendStatistics;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Guice;
@@ -20,6 +21,7 @@ import org.testng.annotations.Test;
 import static com.github.dreamhead.moco.Moco.file;
 import static com.github.dreamhead.moco.MocoJsonRunner.jsonHttpServer;
 import static me.chanjar.weixin.cp.api.ApiTestModuleWithMockServer.mockServerPort;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertNotNull;
 
 /**
@@ -29,8 +31,8 @@ import static org.testng.Assert.assertNotNull;
  * @date 2020-08-30
  */
 @Test
-@Guice(modules = ApiTestModuleWithMockServer.class)
-//@Guice(modules = ApiTestModule.class)
+//@Guice(modules = ApiTestModuleWithMockServer.class)
+@Guice(modules = ApiTestModule.class)
 public class WxCpMessageServiceImplTest {
   @Inject
   protected WxCpService wxService;
@@ -154,11 +156,24 @@ public class WxCpMessageServiceImplTest {
   }
 
   @Test
-  public void testLinkedCorpMessageSend() throws WxErrorException {
+  public void testSendLinkedCorpMessage() throws WxErrorException {
     this.wxService.getMessageService().sendLinkedCorpMessage(WxCpLinkedCorpMessage.builder()
       .msgType(WxConsts.KefuMsgType.TEXT)
       .toUsers(new String[]{configStorage.getUserId()})
       .content("欢迎欢迎，热烈欢迎\n换行测试\n超链接:<a href=\"http://www.baidu.com\">Hello World</a>")
       .build());
   }
+
+  @Test
+  public void testSend() {
+    // see other test methods
+  }
+
+  @Test
+  public void testGetStatistics() throws WxErrorException {
+    final WxCpMessageSendStatistics statistics = this.wxService.getMessageService().getStatistics(1);
+    assertNotNull(statistics);
+    assertThat(statistics.getStatistics()).isNotNull();
+  }
+
 }

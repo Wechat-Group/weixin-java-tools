@@ -4,6 +4,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.message.WxCpLinkedCorpMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpMessageSendResult;
+import me.chanjar.weixin.cp.bean.message.WxCpMessageSendStatistics;
 
 /**
  * 消息推送接口.
@@ -23,6 +24,21 @@ public interface WxCpMessageService {
    * @throws WxErrorException the wx error exception
    */
   WxCpMessageSendResult send(WxCpMessage message) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 查询应用消息发送统计
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/message/get_statistics?access_token=ACCESS_TOKEN
+   *
+   * 详情请见: https://work.weixin.qq.com/api/doc/90000/90135/92369
+   * </pre>
+   *
+   * @param timeType 查询哪天的数据，0：当天；1：昨天。默认为0。
+   * @return 统计结果
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpMessageSendStatistics getStatistics(int timeType) throws WxErrorException;
 
   /**
    * <pre>

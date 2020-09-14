@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.ecommerce.*;
+import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
@@ -11,7 +12,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
  * </pre>
  *
  * @author cloudX
- * @date 2020/08/17
+ * @date 2020 /08/17
  */
 public interface EcommerceService {
   /**
@@ -62,8 +63,9 @@ public interface EcommerceService {
    * </pre>
    *
    * @param tradeType 支付方式
-   * @param request 请求对象
-   * @return 微信合单支付返回
+   * @param request   请求对象
+   * @return 微信合单支付返回 transactions result
+   * @throws WxPayException the wx pay exception
    */
   TransactionsResult combine(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
 
@@ -74,9 +76,11 @@ public interface EcommerceService {
    * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/e-combine.shtml
    * </pre>
    *
+   * @param <T>       the type parameter
    * @param tradeType 支付方式
-   * @param request 请求对象
-   * @return 调起支付需要的参数
+   * @param request   请求对象
+   * @return 调起支付需要的参数 t
+   * @throws WxPayException the wx pay exception
    */
   <T> T combineTransactions(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
 
@@ -87,32 +91,38 @@ public interface EcommerceService {
    * </pre>
    *
    * @param notifyData 通知数据
-   * @param header 通知头部数据，不传则表示不校验头
-   * @return 解密后通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return 解密后通知数据 combine transactions notify result
+   * @throws WxPayException the wx pay exception
    */
   CombineTransactionsNotifyResult parseCombineNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
-   *  <pre>
+   * <pre>
    *  服务商模式普通支付API(APP支付、JSAPI支付、H5支付、NATIVE支付).
    *  请求URL：https://api.mch.weixin.qq.com/v3/pay/partner/transactions/jsapi
    *  文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/transactions_sl.shtml
    *  </pre>
+   *
    * @param tradeType 支付方式
-   * @param request 请求对象
-   * @return 调起支付需要的参数
+   * @param request   请求对象
+   * @return 调起支付需要的参数 transactions result
+   * @throws WxPayException the wx pay exception
    */
   TransactionsResult partner(TradeTypeEnum tradeType, PartnerTransactionsRequest request) throws WxPayException;
 
   /**
-   *  <pre>
+   * <pre>
    *  服务商模式普通支付API(APP支付、JSAPI支付、H5支付、NATIVE支付).
    *  请求URL：https://api.mch.weixin.qq.com/v3/pay/partner/transactions/jsapi
    *  文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/transactions_sl.shtml
    *  </pre>
+   *
+   * @param <T>       the type parameter
    * @param tradeType 支付方式
-   * @param request 请求对象
-   * @return 调起支付需要的参数
+   * @param request   请求对象
+   * @return 调起支付需要的参数 t
+   * @throws WxPayException the wx pay exception
    */
   <T> T partnerTransactions(TradeTypeEnum tradeType, PartnerTransactionsRequest request) throws WxPayException;
 
@@ -123,8 +133,72 @@ public interface EcommerceService {
    * </pre>
    *
    * @param notifyData 通知数据
-   * @param header 通知头部数据，不传则表示不校验头
-   * @return 解密后通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return 解密后通知数据 partner transactions notify result
+   * @throws WxPayException the wx pay exception
    */
   PartnerTransactionsNotifyResult parsePartnerNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * <pre>
+   * 服务商账户实时余额
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
+   * </pre>
+   *
+   * @param accountType 服务商账户类型
+   * @return 返回数据 fund balance result
+   * @throws WxPayException the wx pay exception
+   */
+  FundBalanceResult spNowBalance(SpAccountTypeEnum accountType) throws WxPayException;
+
+  /**
+   * <pre>
+   * 服务商账户日终余额
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
+   * </pre>
+   *
+   * @param accountType 服务商账户类型
+   * @param date        查询日期 2020-09-11
+   * @return 返回数据 fund balance result
+   * @throws WxPayException the wx pay exception
+   */
+  FundBalanceResult spDayEndBalance(SpAccountTypeEnum accountType, String date) throws WxPayException;
+
+  /**
+   * <pre>
+   * 二级商户号账户实时余额
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @return 返回数据 fund balance result
+   * @throws WxPayException the wx pay exception
+   */
+  FundBalanceResult subNowBalance(String subMchid) throws WxPayException;
+
+  /**
+   * <pre>
+   * 二级商户号账户日终余额
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @param date     查询日期 2020-09-11
+   * @return 返回数据 fund balance result
+   * @throws WxPayException the wx pay exception
+   */
+  FundBalanceResult subDayEndBalance(String subMchid, String date) throws WxPayException;
+
+  /**
+   * <pre>
+   * 请求分账API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_1.shtml
+   * </pre>
+   *
+   * @param request 分账请求
+   * @return 返回数据 profit sharing result
+   * @throws WxPayException the wx pay exception
+   */
+  ProfitSharingResult profitSharing(ProfitSharingRequest request) throws WxPayException;
+
 }
