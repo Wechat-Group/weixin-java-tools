@@ -155,6 +155,13 @@ public class EcommerceServiceImpl implements EcommerceService {
     return GSON.fromJson(response, ProfitSharingResult.class);
   }
 
+  @Override
+  public ReturnOrdersResult returnOrders(ReturnOrdersRequest request) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/profitsharing/returnorders", this.payService.getPayBaseUrl());
+    String response = this.payService.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, ReturnOrdersResult.class);
+  }
+
   private boolean verifyNotifySign(SignatureHeader header, String data) {
     String beforeSign = String.format("%s\n%s\n%s\n",
       header.getTimeStamp(),

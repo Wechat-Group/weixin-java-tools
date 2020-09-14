@@ -201,4 +201,16 @@ public interface EcommerceService {
    */
   ProfitSharingResult profitSharing(ProfitSharingRequest request) throws WxPayException;
 
+  /**
+   * <pre>
+   * 请求分账回退API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_3.shtml
+   * </pre>
+   *
+   * @param request 分账回退请求
+   * @return 返回数据 return orders result
+   * @throws WxPayException the wx pay exception
+   */
+  ReturnOrdersResult returnOrders(ReturnOrdersRequest request) throws WxPayException;
+
 }
