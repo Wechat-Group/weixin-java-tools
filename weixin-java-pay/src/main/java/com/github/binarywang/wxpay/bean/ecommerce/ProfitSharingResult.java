@@ -1,6 +1,8 @@
 package com.github.binarywang.wxpay.bean.ecommerce;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -9,6 +11,8 @@ import java.io.Serializable;
  * @author: f00lish
  * @date: 2020/09/12
  */
+@Data
+@NoArgsConstructor
 public class ProfitSharingResult implements Serializable {
 
   private static final long serialVersionUID = 9026456165403642050L;
