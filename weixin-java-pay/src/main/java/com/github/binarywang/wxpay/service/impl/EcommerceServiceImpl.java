@@ -162,6 +162,20 @@ public class EcommerceServiceImpl implements EcommerceService {
     return GSON.fromJson(response, ReturnOrdersResult.class);
   }
 
+  @Override
+  public ProfitSharingResult finishOrder(FinishOrderRequest request) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/profitsharing/finish-order", this.payService.getPayBaseUrl());
+    String response = this.payService.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, ProfitSharingResult.class);
+  }
+
+  @Override
+  public RefundsResult refunds(RefundsRequest request) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/refunds/apply", this.payService.getPayBaseUrl());
+    String response = this.payService.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, RefundsResult.class);
+  }
+
   private boolean verifyNotifySign(SignatureHeader header, String data) {
     String beforeSign = String.format("%s\n%s\n%s\n",
       header.getTimeStamp(),

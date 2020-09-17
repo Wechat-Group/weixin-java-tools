@@ -213,4 +213,28 @@ public interface EcommerceService {
    */
   ReturnOrdersResult returnOrders(ReturnOrdersRequest request) throws WxPayException;
 
+  /**
+   * <pre>
+   * 完结分账API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_5.shtml
+   * </pre>
+   *
+   * @param request 完结分账请求
+   * @return 返回数据 return orders result
+   * @throws WxPayException the wx pay exception
+   */
+  ProfitSharingResult finishOrder(FinishOrderRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 退款申请API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/refunds/chapter3_1.shtml
+   * </pre>
+   *
+   * @param request 退款请求
+   * @return 返回数据 return refunds result
+   * @throws WxPayException the wx pay exception
+   */
+  RefundsResult refunds(RefundsRequest request) throws WxPayException;
+
 }
