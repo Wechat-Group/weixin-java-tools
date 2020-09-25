@@ -74,7 +74,7 @@ public class ProfitSharingReturnQueryRequest extends BaseWxPayRequest {
 
   @Override
   protected boolean ignoreSubAppId() {
-    return super.ignoreSubAppId();
+    return true;
   }
 
   @Override
