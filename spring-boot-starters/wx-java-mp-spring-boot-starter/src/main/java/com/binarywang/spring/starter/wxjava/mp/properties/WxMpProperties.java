@@ -40,6 +40,11 @@ public class WxMpProperties {
    * 设置微信公众号的EncodingAESKey.
    */
   private String aesKey;
+  
+  /**
+   * 自定义host配置
+   */
+  private HostConfig hosts;
 
   /**
    * 存储策略
