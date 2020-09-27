@@ -21,8 +21,8 @@
     wx.mp.config-storage.redis.host = 127.0.0.1
     wx.mp.config-storage.redis.port = 6379
 	#单机和sentinel同时存在时，优先使用sentinel配置
-	#wx.mp.config-storage.redis.sentinelips=127.0.0.1:16379,127.0.0.1:26379
-	#wx.mp.config-storage.redis.sentinelname=mymaster
+	#wx.mp.config-storage.redis.sentinel-ips=127.0.0.1:16379,127.0.0.1:26379
+	#wx.mp.config-storage.redis.sentinel-name=mymaster
     # http客户端配置
     wx.mp.config-storage.http-client-type=httpclient      # http客户端类型: HttpClient(默认), OkHttp, JoddHttp
     wx.mp.config-storage.http-proxy-host=
@@ -30,9 +30,9 @@
     wx.mp.config-storage.http-proxy-username=
     wx.mp.config-storage.http-proxy-password=
 	# 公众号地址host配置
-	#wx.mp.hosts.apihost=http://proxy.com/
-	#wx.mp.hosts.openhost=http://proxy.com/
-	#wx.mp.hosts.mphost=http://proxy.com/
+	#wx.mp.hosts.api-host=http://proxy.com/
+	#wx.mp.hosts.open-host=http://proxy.com/
+	#wx.mp.hosts.mp-host=http://proxy.com/
     ```
 3. 自动注入的类型
 - `WxMpService`以及~~相关的服务类, 比如: `wxMpService.getXxxService`。~~

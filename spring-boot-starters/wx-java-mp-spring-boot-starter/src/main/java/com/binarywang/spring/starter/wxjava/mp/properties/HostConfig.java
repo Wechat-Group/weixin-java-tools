@@ -9,10 +9,10 @@ public class HostConfig implements Serializable {
 	  
 	private static final long serialVersionUID = -4172767630740346001L;
 
-	private String apihost;
+	private String apiHost;
 	
-	private String openhost;
+	private String openHost;
 	
-	private String mphost;
+	private String mpHost;
 	  
 }

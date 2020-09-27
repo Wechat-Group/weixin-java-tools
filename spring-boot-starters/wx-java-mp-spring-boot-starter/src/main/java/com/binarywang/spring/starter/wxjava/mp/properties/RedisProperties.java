@@ -42,12 +42,12 @@ public class RedisProperties implements Serializable {
   /**
    * sentinel ips
    */
-  private String sentinelips;
+  private String sentinelIps;
   
   /**
    * sentinel name
    */
-  private String sentinelname;
+  private String sentinelName;
 
   private Integer maxActive;
   private Integer maxIdle;

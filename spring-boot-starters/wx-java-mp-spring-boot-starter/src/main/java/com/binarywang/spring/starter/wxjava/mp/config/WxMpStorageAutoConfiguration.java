@@ -63,11 +63,11 @@ public class WxMpStorageAutoConfiguration {
 			break;
 		}
 		// wx host config
-		if (null != wxMpProperties.getHosts() && StringUtils.isNotEmpty(wxMpProperties.getHosts().getApihost())) {
+		if (null != wxMpProperties.getHosts() && StringUtils.isNotEmpty(wxMpProperties.getHosts().getApiHost())) {
 			WxMpHostConfig hostConfig = new WxMpHostConfig();
-			hostConfig.setApiHost(wxMpProperties.getHosts().getApihost());
-			hostConfig.setMpHost(wxMpProperties.getHosts().getMphost());
-			hostConfig.setOpenHost(wxMpProperties.getHosts().getOpenhost());
+			hostConfig.setApiHost(wxMpProperties.getHosts().getApiHost());
+			hostConfig.setMpHost(wxMpProperties.getHosts().getMpHost());
+			hostConfig.setOpenHost(wxMpProperties.getHosts().getOpenHost());
 			config.setHostConfig(hostConfig);
 		}
 		return config;
@@ -137,9 +137,9 @@ public class WxMpStorageAutoConfiguration {
 		}
 		config.setTestOnBorrow(true);
 		config.setTestWhileIdle(true);
-		if (StringUtils.isNotEmpty(redis.getSentinelips())) {
-			Set<String> sentinels = Sets.newHashSet(redis.getSentinelips().split(","));
-			return new JedisSentinelPool(redis.getSentinelname(), sentinels);
+		if (StringUtils.isNotEmpty(redis.getSentinelIps())) {
+			Set<String> sentinels = Sets.newHashSet(redis.getSentinelIps().split(","));
+			return new JedisSentinelPool(redis.getSentinelName(), sentinels);
 		}
 
 		return new JedisPool(config, redis.getHost(), redis.getPort(), redis.getTimeout(), redis.getPassword(),
