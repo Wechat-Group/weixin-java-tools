@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanMap;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
@@ -284,6 +285,11 @@ public class EcommerceServiceImpl implements EcommerceService {
     String url = String.format(billType.getUrl(), this.payService.getPayBaseUrl(), this.parseURLPair(request));
     String response = this.payService.getV3(URI.create(url));
     return GSON.fromJson(response, BillResult.class);
+  }
+
+  @Override
+  public InputStream downloadBill(String url) throws WxPayException {
+    return this.payService.downloadV3(URI.create(url));
   }
 
   /**

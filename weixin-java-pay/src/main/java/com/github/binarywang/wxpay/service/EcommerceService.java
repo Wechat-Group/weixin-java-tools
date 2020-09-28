@@ -6,6 +6,8 @@ import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
+import java.io.InputStream;
+
 /**
  * <pre>
  *  电商收付通相关服务类.
@@ -373,5 +375,17 @@ public interface EcommerceService {
    * @throws WxPayException the wx pay exception
    */
   BillResult applyBill(BillTypeEnum billType, BillRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 下载账单API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/bill.shtml
+   * </pre>
+   *
+   * @param url 微信返回的账单地址。
+   * @return 返回数据 return inputStream
+   * @throws WxPayException the wx pay exception
+   */
+  InputStream downloadBill(String url) throws WxPayException;
 
 }
