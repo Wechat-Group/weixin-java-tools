@@ -26,6 +26,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.SSLContext;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -196,6 +197,31 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
         return responseString;
       } else {
         //有错误提示信息返回
+        JsonObject jsonObject = GsonParser.parse(responseString);
+        throw new WxPayException(jsonObject.get("message").getAsString());
+      }
+    } catch (Exception e) {
+      this.log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
+      throw new WxPayException(e.getMessage(), e);
+    } finally {
+      httpGet.releaseConnection();
+    }
+  }
+
+  @Override
+  public InputStream downloadV3(URI url) throws WxPayException {
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
+    HttpGet httpGet = new HttpGet(url);
+    httpGet.addHeader("Accept", ContentType.WILDCARD.getMimeType());
+    try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+      //v3已经改为通过状态码判断200 204 成功
+      int statusCode = response.getStatusLine().getStatusCode();
+      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
+        this.log.info("\n【请求地址】：{}\n", url);
+        return response.getEntity().getContent();
+      } else {
+        //有错误提示信息返回
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         JsonObject jsonObject = GsonParser.parse(responseString);
         throw new WxPayException(jsonObject.get("message").getAsString());
       }
