@@ -1,20 +1,20 @@
-package me.chanjar.weixin.cp.api.impl;
+package me.chanjar.weixin.cp.tp.service.impl;
 
 import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.cp.api.WxCpTpService;
 import me.chanjar.weixin.cp.bean.WxCpTpAuthInfo;
 import me.chanjar.weixin.cp.bean.WxCpTpCorp;
 import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.config.impl.WxCpTpDefaultConfigImpl;
+import me.chanjar.weixin.cp.tp.service.WxCpTpService;
+import org.mockito.Mockito;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_AUTH_INFO;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_PERMANENT_CODE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
-import static org.testng.Assert.*;
 
 /**
  * 测试代码.
@@ -23,7 +23,7 @@ import static org.testng.Assert.*;
  * @date 2019-08-18
  */
 public class BaseWxCpTpServiceImplTest {
-  private WxCpTpService tpService = spy(new WxCpTpServiceImpl());
+  private final WxCpTpService tpService = Mockito.spy(new WxCpTpServiceImpl());
 
   @Test
   public void testCheckSignature() {
@@ -123,7 +123,7 @@ public class BaseWxCpTpServiceImplTest {
     JsonObject jsonObject = new JsonObject();
     String authCode = "";
     jsonObject.addProperty("auth_code", authCode);
-    doReturn(returnJson).when(tpService).post(configStorage.getApiUrl(GET_PERMANENT_CODE), jsonObject.toString());
+    Mockito.doReturn(returnJson).when(tpService).post(configStorage.getApiUrl(GET_PERMANENT_CODE), jsonObject.toString());
 
     final WxCpTpCorp tpCorp = tpService.getPermanentCode(authCode);
     assertThat(tpCorp.getPermanentCode()).isEqualTo("xxxx");
@@ -134,7 +134,7 @@ public class BaseWxCpTpServiceImplTest {
   }
 
   @Test
-  public void testGetPermanentCodeInfo() throws WxErrorException{
+  public void testGetPermanentCodeInfo() throws WxErrorException {
     String returnJson = "{\n" +
       "  \"access_token\": \"u6SoEWyrEmworJ1uNzddbiXh42mCLNU_mdd6b01Afo2LKmyi-WdaaYqhEGFZjB1RGZ-rhjLcAJ86ger7b7Q0gowSw9iIDR8dm49aVH_MztzmQttP3XFG7np1Dxs_VQkVwhhRmfRpEonAmK1_JWIFqayJXXiPUS3LsFd3tWpE7rxmsRa7Ev2ml2htbRp_qGUjtFTErKoDsnNGSka6_RqFPA\", \n" +
       "  \"expires_in\": 7200, \n" +
@@ -187,15 +187,15 @@ public class BaseWxCpTpServiceImplTest {
     JsonObject jsonObject = new JsonObject();
     String authCode = "";
     jsonObject.addProperty("auth_code", authCode);
-    doReturn(returnJson).when(tpService).post(configStorage.getApiUrl(GET_PERMANENT_CODE), jsonObject.toString());
+    Mockito.doReturn(returnJson).when(tpService).post(configStorage.getApiUrl(GET_PERMANENT_CODE), jsonObject.toString());
     final WxCpTpPermanentCodeInfo tpPermanentCodeInfo = tpService.getPermanentCodeInfo(authCode);
     assertThat(tpPermanentCodeInfo.getAuthInfo().getAgents().get(0).getAgentId()).isEqualTo(1000012);
-    assertNotNull(tpPermanentCodeInfo.getAuthInfo().getAgents().get(0).getSquareLogoUrl());
-    assertNotNull(tpPermanentCodeInfo.getAuthCorpInfo().getCorpSquareLogoUrl());
+    Assert.assertNotNull(tpPermanentCodeInfo.getAuthInfo().getAgents().get(0).getSquareLogoUrl());
+    Assert.assertNotNull(tpPermanentCodeInfo.getAuthCorpInfo().getCorpSquareLogoUrl());
   }
 
   @Test
-  public void testGetAuthInfo() throws WxErrorException{
+  public void testGetAuthInfo() throws WxErrorException {
     String returnJson = "{\n" +
       "    \"errcode\":0 ,\n" +
       "    \"errmsg\":\"ok\" ,\n" +
@@ -260,9 +260,9 @@ public class BaseWxCpTpServiceImplTest {
     String permanentCode = "xxxxx";
     jsonObject.addProperty("auth_corpid", authCorpId);
     jsonObject.addProperty("permanent_code", permanentCode);
-    doReturn(returnJson).when(tpService).post(configStorage.getApiUrl(GET_AUTH_INFO), jsonObject.toString());
-    WxCpTpAuthInfo authInfo = tpService.getAuthInfo(authCorpId,permanentCode);
-    assertNotNull(authInfo.getAuthCorpInfo().getCorpId());
+    Mockito.doReturn(returnJson).when(tpService).post(configStorage.getApiUrl(GET_AUTH_INFO), jsonObject.toString());
+    WxCpTpAuthInfo authInfo = tpService.getAuthInfo(authCorpId, permanentCode);
+    Assert.assertNotNull(authInfo.getAuthCorpInfo().getCorpId());
   }
 
   @Test

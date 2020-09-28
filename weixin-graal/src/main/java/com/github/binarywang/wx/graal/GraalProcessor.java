@@ -1,4 +1,4 @@
-package cn.binarywang.wx.graal;
+package com.github.binarywang.wx.graal;
 
 import lombok.Data;
 
@@ -26,12 +26,12 @@ import java.util.TreeSet;
  * @author outersky
  */
 @SupportedAnnotationTypes("lombok.Data")
-@SupportedSourceVersion(SourceVersion.RELEASE_7)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class GraalProcessor extends AbstractProcessor {
   private static final String REFLECTION_CONFIG_JSON = "reflection-config.json";
   private static final String NATIVE_IMAGE_PROPERTIES = "native-image.properties";
 
-  private SortedSet<String> classSet = new TreeSet<>();
+  private final SortedSet<String> classSet = new TreeSet<>();
   private String shortestPackageName = null;
 
   @Override

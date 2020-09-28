@@ -115,11 +115,11 @@ public class WxMpKefuServiceImpl implements WxMpKefuService {
   @Override
   public WxMpKfMsgList kfMsgList(Date startTime, Date endTime, Long msgId, Integer number) throws WxErrorException {
     if (number > 10000) {
-      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("非法参数请求，每次最多查询10000条记录！").build());
+      throw new WxErrorException("非法参数请求，每次最多查询10000条记录！");
     }
 
     if (startTime.after(endTime)) {
-      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("起始时间不能晚于结束时间！").build());
+      throw new WxErrorException("起始时间不能晚于结束时间！");
     }
 
     JsonObject param = new JsonObject();

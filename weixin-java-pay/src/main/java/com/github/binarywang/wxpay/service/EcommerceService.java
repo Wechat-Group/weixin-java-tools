@@ -99,6 +99,18 @@ public interface EcommerceService {
 
   /**
    * <pre>
+   * 合单查询订单API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/combine/chapter3_3.shtml
+   * </pre>
+   *
+   * @param outTradeNo 合单商户订单号
+   * @return 支付订单信息
+   * @throws WxPayException the wx pay exception
+   */
+  CombineTransactionsResult queryCombineTransactions(String outTradeNo) throws WxPayException;
+
+  /**
+   * <pre>
    *  服务商模式普通支付API(APP支付、JSAPI支付、H5支付、NATIVE支付).
    *  请求URL：https://api.mch.weixin.qq.com/v3/pay/partner/transactions/jsapi
    *  文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/transactions_sl.shtml
@@ -138,6 +150,18 @@ public interface EcommerceService {
    * @throws WxPayException the wx pay exception
    */
   PartnerTransactionsNotifyResult parsePartnerNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * <pre>
+   * 普通查询订单API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/e_transactions/chapter3_5.shtml
+   * </pre>
+   *
+   * @param request 商户订单信息
+   * @return 支付订单信息
+   * @throws WxPayException the wx pay exception
+   */
+  PartnerTransactionsResult queryPartnerTransactions(PartnerTransactionsQueryRequest request) throws WxPayException;
 
   /**
    * <pre>
@@ -203,6 +227,18 @@ public interface EcommerceService {
 
   /**
    * <pre>
+   * 查询分账结果API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_2.shtml
+   * </pre>
+   *
+   * @param request 查询分账请求
+   * @return 返回数据 profit sharing result
+   * @throws WxPayException the wx pay exception
+   */
+  ProfitSharingResult queryProfitSharing(ProfitSharingQueryRequest request) throws WxPayException;
+
+  /**
+   * <pre>
    * 请求分账回退API
    * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_3.shtml
    * </pre>
@@ -212,5 +248,116 @@ public interface EcommerceService {
    * @throws WxPayException the wx pay exception
    */
   ReturnOrdersResult returnOrders(ReturnOrdersRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 完结分账API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_5.shtml
+   * </pre>
+   *
+   * @param request 完结分账请求
+   * @return 返回数据 return orders result
+   * @throws WxPayException the wx pay exception
+   */
+  ProfitSharingResult finishOrder(FinishOrderRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 退款申请API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/refunds/chapter3_1.shtml
+   * </pre>
+   *
+   * @param request 退款请求
+   * @return 返回数据 return refunds result
+   * @throws WxPayException the wx pay exception
+   */
+  RefundsResult refunds(RefundsRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 查询退款API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/refunds/chapter3_2.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @param refundId 微信退款单号
+   * @return 返回数据 return refunds result
+   * @throws WxPayException the wx pay exception
+   */
+  RefundQueryResult queryRefundByRefundId(String subMchid, String refundId) throws WxPayException;
+
+  /**
+   * <pre>
+   * 查询退款API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/refunds/chapter3_2.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @param outRefundNo 商户退款单号
+   * @return 返回数据 return refunds result
+   * @throws WxPayException the wx pay exception
+   */
+  RefundQueryResult queryRefundByOutRefundNo(String subMchid, String outRefundNo) throws WxPayException;
+
+  /**
+   * <pre>
+   * 退款通知回调数据处理
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/refunds/chapter3_3.shtml
+   * </pre>
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return 解密后通知数据 partner refund notify result
+   * @throws WxPayException the wx pay exception
+   */
+  RefundNotifyResult parseRefundNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * <pre>
+   * 二级商户账户余额提现API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/fund/chapter3_2.shtml
+   * </pre>
+   *
+   * @param request 提现请求
+   * @return 返回数据 return withdraw result
+   * @throws WxPayException the wx pay exception
+   */
+  SubWithdrawResult subWithdraw(SubWithdrawRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 电商平台提现API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/fund/chapter3_5.shtml
+   * </pre>
+   *
+   * @param request 提现请求
+   * @return 返回数据 return withdraw result
+   * @throws WxPayException the wx pay exception
+   */
+  SpWithdrawResult spWithdraw(SpWithdrawRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 修改结算帐号API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/applyments/chapter3_4.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号。
+   * @param request 结算帐号
+   * @throws WxPayException the wx pay exception
+   */
+  void modifySettlement(String subMchid, SettlementRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 查询结算账户API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/applyments/chapter3_5.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号。
+   * @return 返回数据 return settlement result
+   * @throws WxPayException the wx pay exception
+   */
+  SettlementResult querySettlement(String subMchid) throws WxPayException;
 
 }

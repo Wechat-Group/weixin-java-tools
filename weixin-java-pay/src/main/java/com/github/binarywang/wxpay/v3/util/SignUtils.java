@@ -1,12 +1,14 @@
 package com.github.binarywang.wxpay.v3.util;
 
+import me.chanjar.weixin.common.error.WxRuntimeException;
+
 import java.security.*;
 import java.util.Base64;
 import java.util.Random;
 
 public class SignUtils {
 
-  public static String sign(String string, PrivateKey privateKey){
+  public static String sign(String string, PrivateKey privateKey) {
     try {
       Signature sign = Signature.getInstance("SHA256withRSA");
       sign.initSign(privateKey);
@@ -14,23 +16,24 @@ public class SignUtils {
 
       return Base64.getEncoder().encodeToString(sign.sign());
     } catch (NoSuchAlgorithmException e) {
-      throw new RuntimeException("当前Java环境不支持SHA256withRSA", e);
+      throw new WxRuntimeException("当前Java环境不支持SHA256withRSA", e);
     } catch (SignatureException e) {
-      throw new RuntimeException("签名计算失败", e);
+      throw new WxRuntimeException("签名计算失败", e);
     } catch (InvalidKeyException e) {
-      throw new RuntimeException("无效的私钥", e);
+      throw new WxRuntimeException("无效的私钥", e);
     }
   }
 
   /**
    * 随机生成32位字符串.
    */
-  public static String genRandomStr(){
+  public static String genRandomStr() {
     return genRandomStr(32);
   }
 
   /**
    * 生成随机字符串
+   *
    * @param length 字符串长度
    * @return
    */

@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import jodd.util.MathUtil;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 
 import java.util.List;
 
@@ -173,7 +174,7 @@ public class GsonHelper {
    */
   public static void put(JsonObject jsonObject, Object... keyOrValue) {
     if (MathUtil.isOdd(keyOrValue.length)) {
-      throw new RuntimeException("参数个数必须为偶数");
+      throw new WxRuntimeException("参数个数必须为偶数");
     }
 
     for (int i = 0; i < keyOrValue.length / 2; i++) {

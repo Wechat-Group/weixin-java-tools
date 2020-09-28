@@ -44,7 +44,7 @@ public abstract class SimplePostRequestExecutor<H, P> implements RequestExecutor
   @NotNull
   public String handleResponse(WxType wxType, String responseContent) throws WxErrorException {
     if (responseContent.isEmpty()) {
-      throw new WxErrorException(WxError.builder().errorCode(9999).errorMsg("无响应内容").build());
+      throw new WxErrorException("无响应内容");
     }
 
     if (responseContent.startsWith("<xml>")) {

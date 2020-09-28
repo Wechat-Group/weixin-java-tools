@@ -10,6 +10,7 @@ import com.github.binarywang.wxpay.v3.util.PemUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -94,7 +95,7 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
       autoUpdateCert();
       instant = Instant.now();
     } catch (IOException | GeneralSecurityException e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     }
   }
 

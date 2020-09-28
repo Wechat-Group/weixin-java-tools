@@ -1,5 +1,7 @@
 package com.github.binarywang.wxpay.v3.util;
 
+import me.chanjar.weixin.common.error.WxRuntimeException;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,11 +37,11 @@ public class PemUtils {
       return kf.generatePrivate(
           new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey)));
     } catch (NoSuchAlgorithmException e) {
-      throw new RuntimeException("当前Java环境不支持RSA", e);
+      throw new WxRuntimeException("当前Java环境不支持RSA", e);
     } catch (InvalidKeySpecException e) {
-      throw new RuntimeException("无效的密钥格式");
+      throw new WxRuntimeException("无效的密钥格式");
     } catch (IOException e) {
-      throw new RuntimeException("无效的密钥");
+      throw new WxRuntimeException("无效的密钥");
     }
   }
 
@@ -50,11 +52,11 @@ public class PemUtils {
       cert.checkValidity();
       return cert;
     } catch (CertificateExpiredException e) {
-      throw new RuntimeException("证书已过期", e);
+      throw new WxRuntimeException("证书已过期", e);
     } catch (CertificateNotYetValidException e) {
-      throw new RuntimeException("证书尚未生效", e);
+      throw new WxRuntimeException("证书尚未生效", e);
     } catch (CertificateException e) {
-      throw new RuntimeException("无效的证书", e);
+      throw new WxRuntimeException("无效的证书", e);
     }
   }
 }

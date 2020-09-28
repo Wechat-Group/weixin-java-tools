@@ -72,7 +72,7 @@ public class ReturnOrdersResult implements Serializable {
    * </pre>
    */
   @SerializedName(value = "out_return_no")
-  private String R20190516001;
+  private String outReturnNo;
 
   /**
    * <pre>

@@ -1,20 +1,17 @@
 package me.chanjar.weixin.common.util;
 
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.error.WxErrorException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-
+/**
+ * @author Daniel Qian
+ */
+@Slf4j
 public class LogExceptionHandler implements WxErrorExceptionHandler {
-
-  private Logger log = LoggerFactory.getLogger(WxErrorExceptionHandler.class);
-
   @Override
   public void handle(WxErrorException e) {
-
-    this.log.error("Error happens", e);
-
+    log.error("Error happens", e);
   }
 
 }

@@ -9,6 +9,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.BeanUtils;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
@@ -246,7 +247,7 @@ public abstract class BaseWxPayRequest implements Serializable {
 
       return document.asXML();
     } catch (Exception e) {
-      throw new RuntimeException("generate xml error", e);
+      throw new WxRuntimeException("generate xml error", e);
     }
   }
 

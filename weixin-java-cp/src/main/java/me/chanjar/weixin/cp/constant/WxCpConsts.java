@@ -99,10 +99,39 @@ public class WxCpConsts {
     public static final String CHANGE_EXTERNAL_CONTACT = "change_external_contact";
 
     /**
-     * 企业微信审批事件推送
+     * 企业微信审批事件推送（自建应用审批）
      */
     public static final String OPEN_APPROVAL_CHANGE = "open_approval_change";
 
+    /**
+     * 企业微信审批事件推送（系统审批）
+     */
+    public static final String SYS_APPROVAL_CHANGE = "sys_approval_change";
+
+    /**
+     * 修改日历事件
+     */
+    public static final String MODIFY_CALENDAR = "modify_calendar";
+
+    /**
+     * 删除日历事件
+     */
+    public static final String DELETE_CALENDAR = "delete_calendar";
+
+    /**
+     * 添加日程事件
+     */
+    public static final String ADD_SCHEDULE = "add_schedule";
+
+    /**
+     * 修改日程事件
+     */
+    public static final String MODIFY_SCHEDULE = "modify_schedule";
+
+    /**
+     * 删除日程事件
+     */
+    public static final String DELETE_SCHEDULE = "delete_schedule";
 
   }
 

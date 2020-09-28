@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.locks.ReentrantLock;
 
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceHttpClientImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ public class ApiTestModule implements Module {
   public void configure(Binder binder) {
     try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(TEST_CONFIG_XML)) {
       if (inputStream == null) {
-        throw new RuntimeException("测试配置文件【" + TEST_CONFIG_XML + "】未找到，请参照test-config-sample.xml文件生成");
+        throw new WxRuntimeException("测试配置文件【" + TEST_CONFIG_XML + "】未找到，请参照test-config-sample.xml文件生成");
       }
 
       TestConfigStorage config = this.fromXml(TestConfigStorage.class, inputStream);

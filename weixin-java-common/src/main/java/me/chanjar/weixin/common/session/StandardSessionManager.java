@@ -183,18 +183,15 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
   public void add(InternalSession session) {
     // 当第一次有session创建的时候，开启session清理线程
     if (!this.backgroundProcessStarted.getAndSet(true)) {
-      Thread t = new Thread(new Runnable() {
-        @Override
-        public void run() {
-          while (true) {
-            try {
-              // 每秒清理一次
-              Thread.sleep(StandardSessionManager.this.backgroundProcessorDelay * 1000L);
-              backgroundProcess();
-            } catch (InterruptedException e) {
-              Thread.currentThread().interrupt();
-              StandardSessionManager.this.log.error("SessionManagerImpl.backgroundProcess error", e);
-            }
+      Thread t = new Thread(() -> {
+        while (true) {
+          try {
+            // 每秒清理一次
+            Thread.sleep(StandardSessionManager.this.backgroundProcessorDelay * 1000L);
+            backgroundProcess();
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            StandardSessionManager.this.log.error("SessionManagerImpl.backgroundProcess error", e);
           }
         }
       });

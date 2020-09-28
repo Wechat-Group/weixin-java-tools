@@ -12,6 +12,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.io.BaseEncoding;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -47,7 +48,7 @@ public class WxMaCryptUtils extends me.chanjar.weixin.common.util.crypto.WxCrypt
 
       return new String(PKCS7Encoder.decode(cipher.doFinal(Base64.decodeBase64(encryptedData))), UTF_8);
     } catch (Exception e) {
-      throw new RuntimeException("AES解密失败！", e);
+      throw new WxRuntimeException("AES解密失败！", e);
     }
   }
 
@@ -78,7 +79,7 @@ public class WxMaCryptUtils extends me.chanjar.weixin.common.util.crypto.WxCrypt
       cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(Base64.decodeBase64(ivStr.getBytes(UTF_8))));
       return new String(cipher.doFinal(Base64.decodeBase64(encryptedData.getBytes(UTF_8))), UTF_8);
     } catch (Exception e) {
-      throw new RuntimeException("AES解密失败！", e);
+      throw new WxRuntimeException("AES解密失败！", e);
     }
   }
 

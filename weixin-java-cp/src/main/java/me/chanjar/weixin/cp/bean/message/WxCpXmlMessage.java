@@ -6,6 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.IntegerArrayConverter;
 import me.chanjar.weixin.common.util.xml.LongArrayConverter;
@@ -295,6 +296,20 @@ public class WxCpXmlMessage implements Serializable {
   private String address;
 
   /**
+   * 日程ID.
+   */
+  @XStreamAlias("ScheduleId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String scheduleId;
+
+  /**
+   * 日历ID.
+   */
+  @XStreamAlias("CalId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String calId;
+
+  /**
    * 扩展属性.
    */
   @XStreamAlias("ExtAttr")
@@ -436,7 +451,7 @@ public class WxCpXmlMessage implements Serializable {
     try {
       return fromEncryptedXml(IOUtils.toString(is, StandardCharsets.UTF_8), wxCpConfigStorage, timestamp, nonce, msgSignature);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     }
   }
 

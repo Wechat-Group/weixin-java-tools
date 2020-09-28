@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.URIUtil;
@@ -75,7 +76,7 @@ public class WxOAuth2ServiceImpl implements WxOAuth2Service {
       String responseText = executor.execute(url, null, WxType.MP);
       return WxMpUser.fromJson(responseText);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     }
   }
 
@@ -86,7 +87,7 @@ public class WxOAuth2ServiceImpl implements WxOAuth2Service {
     try {
       SimpleGetRequestExecutor.create(this.wxMpService.getRequestHttp()).execute(url, null, WxType.MP);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     } catch (WxErrorException e) {
       return false;
     }

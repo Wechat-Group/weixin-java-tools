@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * .
@@ -37,7 +38,7 @@ public class JoddHttpSimplePostRequestExecutor extends SimplePostRequestExecutor
       request.bodyText(postEntity);
     }
     HttpResponse response = request.send();
-    response.charset(StringPool.UTF_8);
+    response.charset(StandardCharsets.UTF_8.name());
 
     return this.handleResponse(wxType, response.bodyText());
   }

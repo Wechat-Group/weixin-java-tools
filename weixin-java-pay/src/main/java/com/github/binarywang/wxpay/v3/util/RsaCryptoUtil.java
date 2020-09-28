@@ -2,6 +2,7 @@ package com.github.binarywang.wxpay.v3.util;
 
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.v3.SpecEncrypt;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -70,7 +71,7 @@ public class RsaCryptoUtil {
       byte[] ciphertext = cipher.doFinal(data);
       return Base64.getEncoder().encodeToString(ciphertext);
     } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-      throw new RuntimeException("当前Java环境不支持RSA v1.5/OAEP", e);
+      throw new WxRuntimeException("当前Java环境不支持RSA v1.5/OAEP", e);
     } catch (InvalidKeyException e) {
       throw new IllegalArgumentException("无效的证书", e);
     } catch (IllegalBlockSizeException | BadPaddingException e) {
@@ -87,7 +88,7 @@ public class RsaCryptoUtil {
       byte[] data = Base64.getDecoder().decode(ciphertext);
       return new String(cipher.doFinal(data), StandardCharsets.UTF_8);
     } catch (NoSuchPaddingException | NoSuchAlgorithmException e) {
-      throw new RuntimeException("当前Java环境不支持RSA v1.5/OAEP", e);
+      throw new WxRuntimeException("当前Java环境不支持RSA v1.5/OAEP", e);
     } catch (InvalidKeyException e) {
       throw new IllegalArgumentException("无效的私钥", e);
     } catch (BadPaddingException | IllegalBlockSizeException e) {

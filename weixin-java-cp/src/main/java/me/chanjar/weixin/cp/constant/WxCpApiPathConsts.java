@@ -101,6 +101,11 @@ public final class WxCpApiPathConsts {
     public static final String GET_DIAL_RECORD = "/cgi-bin/dial/get_dial_record";
     public static final String GET_TEMPLATE_DETAIL = "/cgi-bin/oa/gettemplatedetail";
     public static final String APPLY_EVENT = "/cgi-bin/oa/applyevent";
+
+    public static final String CALENDAR_ADD = "/cgi-bin/oa/calendar/add";
+    public static final String CALENDAR_UPDATE = "/cgi-bin/oa/calendar/update";
+    public static final String CALENDAR_GET = "/cgi-bin/oa/calendar/get";
+    public static final String CALENDAR_DEL = "/cgi-bin/oa/calendar/del";
   }
 
   @UtilityClass
@@ -159,6 +164,7 @@ public final class WxCpApiPathConsts {
     public static final String CLOSE_TEMP_CHAT = "/cgi-bin/externalcontact/close_temp_chat";
     public static final String GET_FOLLOW_USER_LIST = "/cgi-bin/externalcontact/get_follow_user_list";
     public static final String GET_CONTACT_DETAIL = "/cgi-bin/externalcontact/get?external_userid=";
+    public static final String UPDATE_REMARK = "/cgi-bin/externalcontact/remark";
     public static final String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";
     public static final String LIST_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/get_unassigned_list";
     public static final String TRANSFER_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/transfer";

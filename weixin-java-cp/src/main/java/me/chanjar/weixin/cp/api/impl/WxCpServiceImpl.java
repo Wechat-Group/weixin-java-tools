@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import org.apache.http.client.config.RequestConfig;
@@ -68,7 +69,7 @@ public class WxCpServiceImpl extends WxCpServiceApacheHttpClientImpl {
         WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
         getWxCpConfigStorage().updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        throw new WxRuntimeException(e);
       }
     } finally {
       lock.unlock();

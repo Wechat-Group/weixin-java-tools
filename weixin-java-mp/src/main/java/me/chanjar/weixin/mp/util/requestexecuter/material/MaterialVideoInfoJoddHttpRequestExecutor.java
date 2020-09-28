@@ -13,6 +13,7 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialVideoInfoResult;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by ecoolper on 2017/5/5.
@@ -32,7 +33,7 @@ public class MaterialVideoInfoJoddHttpRequestExecutor extends MaterialVideoInfoR
 
     request.query("media_id", materialId);
     HttpResponse response = request.send();
-    response.charset(StringPool.UTF_8);
+    response.charset(StandardCharsets.UTF_8.name());
     String responseContent = response.bodyText();
     WxError error = WxError.fromJson(responseContent, WxType.MP);
     if (error.getErrorCode() != 0) {

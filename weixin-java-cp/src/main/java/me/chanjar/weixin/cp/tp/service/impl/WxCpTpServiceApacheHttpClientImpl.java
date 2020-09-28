@@ -1,10 +1,11 @@
-package me.chanjar.weixin.cp.api.impl;
+package me.chanjar.weixin.cp.tp.service.impl;
 
 
 import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
@@ -81,7 +82,7 @@ public class WxCpTpServiceApacheHttpClientImpl extends BaseWxCpTpServiceImpl<Clo
         Integer expiresIn = jsonObject.get("expires_in").getAsInt();
         this.configStorage.updateSuiteAccessToken(suiteAccussToken, expiresIn);
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        throw new WxRuntimeException(e);
       }
     }
     return this.configStorage.getSuiteAccessToken();

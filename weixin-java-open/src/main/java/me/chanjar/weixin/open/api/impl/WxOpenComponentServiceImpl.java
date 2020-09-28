@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.URIUtil;
 import me.chanjar.weixin.common.util.json.GsonParser;
@@ -384,7 +385,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       config.updateAuthorizerRefreshToken(appId,wxOpenAuthorizerAccessToken.getAuthorizerRefreshToken());
       return config.getAuthorizerAccessToken(appId);
     } catch (InterruptedException e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     } finally {
       if (locked) {
         lock.unlock();
@@ -488,7 +489,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
         result = maService.post(requestUrl, param.toString());
         return result;
       default:
-        throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("appIdType类型异常").build());
+        throw new WxErrorException("appIdType类型异常");
     }
   }
 

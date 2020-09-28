@@ -14,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.io.BaseEncoding;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.codec.binary.Base64;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -77,7 +78,7 @@ public class WxCryptUtil {
       Element root = document.getDocumentElement();
       return root.getElementsByTagName("Encrypt").item(0).getTextContent();
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     }
   }
 
@@ -198,7 +199,7 @@ public class WxCryptUtil {
       // 使用BASE64对加密后的字符串进行编码
       return BASE64.encodeToString(encrypted);
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     }
   }
 
@@ -224,7 +225,7 @@ public class WxCryptUtil {
     // 验证安全签名
     String signature = SHA1.gen(this.token, timeStamp, nonce, cipherText);
     if (!signature.equals(msgSignature)) {
-      throw new RuntimeException("加密消息签名校验失败");
+      throw new WxRuntimeException("加密消息签名校验失败");
     }
 
     // 解密
@@ -252,7 +253,7 @@ public class WxCryptUtil {
       // 解密
       original = cipher.doFinal(encrypted);
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     }
 
     String xmlContent;
@@ -269,12 +270,12 @@ public class WxCryptUtil {
       xmlContent = new String(Arrays.copyOfRange(bytes, 20, 20 + xmlLength), CHARSET);
       fromAppid = new String(Arrays.copyOfRange(bytes, 20 + xmlLength, bytes.length), CHARSET);
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     }
 
     // appid不相同的情况 暂时忽略这段判断
 //    if (!fromAppid.equals(this.appidOrCorpid)) {
-//      throw new RuntimeException("AppID不正确，请核实！");
+//      throw new WxRuntimeException("AppID不正确，请核实！");
 //    }
 
     return xmlContent;

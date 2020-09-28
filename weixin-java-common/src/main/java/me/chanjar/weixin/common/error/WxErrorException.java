@@ -6,7 +6,11 @@ package me.chanjar.weixin.common.error;
 public class WxErrorException extends Exception {
   private static final long serialVersionUID = -6357149550353160810L;
 
-  private WxError error;
+  private final WxError error;
+
+  public WxErrorException(String message) {
+    this(WxError.builder().errorCode(-1).errorMsg(message).build());
+  }
 
   public WxErrorException(WxError error) {
     super(error.toString());

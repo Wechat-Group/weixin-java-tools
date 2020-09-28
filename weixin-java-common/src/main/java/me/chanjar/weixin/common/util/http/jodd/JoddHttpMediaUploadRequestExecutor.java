@@ -14,6 +14,7 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * .
@@ -35,7 +36,7 @@ public class JoddHttpMediaUploadRequestExecutor extends MediaUploadRequestExecut
     request.withConnectionProvider(requestHttp.getRequestHttpClient());
     request.form("media", file);
     HttpResponse response = request.send();
-    response.charset(StringPool.UTF_8);
+    response.charset(StandardCharsets.UTF_8.name());
 
     String responseContent = response.bodyText();
     WxError error = WxError.fromJson(responseContent, wxType);

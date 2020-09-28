@@ -61,7 +61,6 @@ public class WxCpEndpointServlet extends HttpServlet {
       response.getWriter().write(outMessage.toEncryptedXml(this.wxCpConfigStorage));
     }
 
-    return;
   }
 
 }

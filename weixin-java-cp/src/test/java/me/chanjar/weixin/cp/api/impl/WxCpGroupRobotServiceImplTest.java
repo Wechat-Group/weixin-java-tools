@@ -46,7 +46,7 @@ public class WxCpGroupRobotServiceImplTest {
       ">类型:<font color=\"comment\">用户反馈</font> \n" +
       ">普通用户反馈:<font color=\"comment\">117例</font> \n" +
       ">VIP用户反馈:<font color=\"comment\">15例</font>";
-    robotService.sendMarkDown(content);
+    robotService.sendMarkdown(content);
   }
 
   @Test

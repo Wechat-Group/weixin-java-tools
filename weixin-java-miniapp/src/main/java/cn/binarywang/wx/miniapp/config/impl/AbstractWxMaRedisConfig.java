@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.config.impl;
 
 import com.github.jedis.lock.JedisLock;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import redis.clients.jedis.Jedis;
 
 import java.io.File;
@@ -232,10 +233,10 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
     public void lock() {
       try (Jedis jedis = getConfiguredJedis()) {
         if (!lock.acquire(jedis)) {
-          throw new RuntimeException("acquire timeouted");
+          throw new WxRuntimeException("acquire timeouted");
         }
       } catch (InterruptedException e) {
-        throw new RuntimeException("lock failed", e);
+        throw new WxRuntimeException("lock failed", e);
       }
     }
 
@@ -243,7 +244,7 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
     public void lockInterruptibly() throws InterruptedException {
       try (Jedis jedis = getConfiguredJedis()) {
         if (!lock.acquire(jedis)) {
-          throw new RuntimeException("acquire timeouted");
+          throw new WxRuntimeException("acquire timeouted");
         }
       }
     }
@@ -253,7 +254,7 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
       try (Jedis jedis = getConfiguredJedis()) {
         return lock.acquire(jedis);
       } catch (InterruptedException e) {
-        throw new RuntimeException("lock failed", e);
+        throw new WxRuntimeException("lock failed", e);
       }
     }
 
@@ -273,7 +274,7 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
 
     @Override
     public Condition newCondition() {
-      throw new RuntimeException("unsupported method");
+      throw new WxRuntimeException("unsupported method");
     }
 
   }

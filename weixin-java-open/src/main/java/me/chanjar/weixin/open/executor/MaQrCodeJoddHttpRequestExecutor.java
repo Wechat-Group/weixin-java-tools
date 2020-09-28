@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 /**
@@ -49,7 +50,7 @@ public class MaQrCodeJoddHttpRequestExecutor extends MaQrCodeRequestExecutor<Htt
     request.withConnectionProvider(requestHttp.getRequestHttpClient());
 
     HttpResponse response = request.send();
-    response.charset(StringPool.UTF_8);
+    response.charset(StandardCharsets.UTF_8.name());
     String contentTypeHeader = response.header("Content-Type");
     if (MimeTypes.MIME_TEXT_PLAIN.equals(contentTypeHeader)) {
       String responseContent = response.bodyText();

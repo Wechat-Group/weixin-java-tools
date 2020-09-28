@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>3.9.2.B</version>
+  <version>3.9.4.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -134,7 +134,7 @@
       <dependency>
         <groupId>org.jodd</groupId>
         <artifactId>jodd-http</artifactId>
-        <version>5.1.6</version>
+        <version>5.2.0</version>
         <scope>provided</scope>
       </dependency>
       <dependency>

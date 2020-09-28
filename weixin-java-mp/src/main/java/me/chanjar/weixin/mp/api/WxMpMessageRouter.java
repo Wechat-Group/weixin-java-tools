@@ -1,5 +1,8 @@
 package me.chanjar.weixin.mp.api;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.api.WxMessageDuplicateChecker;
 import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
@@ -18,10 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * <pre>
@@ -51,9 +51,10 @@ import java.util.concurrent.Future;
  *
  * @author Daniel Qian
  */
+@Slf4j
+@AllArgsConstructor
 public class WxMpMessageRouter {
   private static final int DEFAULT_THREAD_POOL_SIZE = 100;
-  protected final Logger log = LoggerFactory.getLogger(WxMpMessageRouter.class);
   private final List<WxMpMessageRouterRule> rules = new ArrayList<>();
 
   private final WxMpService wxMpService;
@@ -68,7 +69,9 @@ public class WxMpMessageRouter {
 
   public WxMpMessageRouter(WxMpService wxMpService) {
     this.wxMpService = wxMpService;
-    this.executorService = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
+    ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxMpMessageRouter-pool-%d").build();
+    this.executorService = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE,
+      0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
     this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
@@ -199,7 +202,7 @@ public class WxMpMessageRouter {
       } else {
         res = rule.service(wxMessage, context, mpService, this.sessionManager, this.exceptionHandler);
         // 在同步操作结束，session访问结束
-        this.log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUser());
+        log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUser());
         sessionEndAccess(wxMessage);
       }
     }
@@ -212,14 +215,14 @@ public class WxMpMessageRouter {
       for (Future<?> future : futures) {
         try {
           future.get();
-          WxMpMessageRouter.this.log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUser());
+          log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUser());
           // 异步操作结束，session访问结束
           sessionEndAccess(wxMessage);
         } catch (InterruptedException e) {
-          WxMpMessageRouter.this.log.error("Error happened when wait task finish", e);
+          log.error("Error happened when wait task finish", e);
           Thread.currentThread().interrupt();
         } catch (ExecutionException e) {
-          WxMpMessageRouter.this.log.error("Error happened when wait task finish", e);
+          log.error("Error happened when wait task finish", e);
         }
       }
     });

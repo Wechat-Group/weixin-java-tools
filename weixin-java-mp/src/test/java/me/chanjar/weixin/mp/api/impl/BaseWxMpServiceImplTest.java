@@ -82,15 +82,12 @@ public class BaseWxMpServiceImplTest {
     // 测试多线程刷新accessToken时是否重复刷新
     wxService.getWxMpConfigStorage().expireAccessToken();
     final Set<String> set = Sets.newConcurrentHashSet();
-    Runnable r = new Runnable() {
-      @Override
-      public void run() {
-        try {
-          String accessToken = wxService.getAccessToken();
-          set.add(accessToken);
-        } catch (WxErrorException e) {
-          e.printStackTrace();
-        }
+    Runnable r = () -> {
+      try {
+        String accessToken = wxService.getAccessToken();
+        set.add(accessToken);
+      } catch (WxErrorException e) {
+        e.printStackTrace();
       }
     };
 

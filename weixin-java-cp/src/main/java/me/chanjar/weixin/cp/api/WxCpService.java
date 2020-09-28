@@ -388,7 +388,14 @@ public interface WxCpService {
    *
    * @return the oa service
    */
-  WxCpOaService getOAService();
+  WxCpOaService getOaService();
+
+  /**
+   * 获取日历相关接口的服务类对象
+   *
+   * @return the menu service
+   */
+  WxCpOaCalendarService getOaCalendarService();
 
   /**
    * 获取群机器人消息推送服务
@@ -445,4 +452,5 @@ public interface WxCpService {
    * @param tagService the tag service
    */
   void setTagService(WxCpTagService tagService);
+
 }

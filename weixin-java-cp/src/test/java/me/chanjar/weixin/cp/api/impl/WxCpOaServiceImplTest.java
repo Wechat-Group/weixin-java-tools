@@ -37,7 +37,7 @@ public class WxCpOaServiceImplTest {
     Date startTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2019-04-11");
     Date endTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2019-05-10");
 
-    List<WxCpCheckinData> results = wxService.getOAService()
+    List<WxCpCheckinData> results = wxService.getOaService()
       .getCheckinData(1, startTime, endTime, Lists.newArrayList("binary"));
 
     assertThat(results).isNotNull();
@@ -51,7 +51,7 @@ public class WxCpOaServiceImplTest {
   public void testGetCheckinOption() throws WxErrorException {
 
     Date now = new Date();
-    List<WxCpCheckinOption> results = wxService.getOAService().getCheckinOption(now, Lists.newArrayList("binary"));
+    List<WxCpCheckinOption> results = wxService.getOaService().getCheckinOption(now, Lists.newArrayList("binary"));
     assertThat(results).isNotNull();
     System.out.println("results ");
     System.out.println(gson.toJson(results));
@@ -61,7 +61,7 @@ public class WxCpOaServiceImplTest {
   public void testGetApprovalInfo() throws WxErrorException, ParseException {
     Date startTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2019-12-01");
     Date endTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2019-12-31");
-    WxCpApprovalInfo result = wxService.getOAService().getApprovalInfo(startTime, endTime);
+    WxCpApprovalInfo result = wxService.getOaService().getApprovalInfo(startTime, endTime);
 
     assertThat(result).isNotNull();
 
@@ -72,7 +72,7 @@ public class WxCpOaServiceImplTest {
   @Test
   public void testGetApprovalDetail() throws WxErrorException {
     String spNo = "201912020001";
-    WxCpApprovalDetailResult result = wxService.getOAService().getApprovalDetail(spNo);
+    WxCpApprovalDetailResult result = wxService.getOaService().getApprovalDetail(spNo);
 
     assertThat(result).isNotNull();
 
@@ -83,7 +83,7 @@ public class WxCpOaServiceImplTest {
   @Test
   public void testGetTemplateDetail() throws WxErrorException {
     String templateId = "3TkZjxugodbqpEMk9j7X6h6zKqYkc7MxQrrFmT7H";
-    WxCpTemplateResult result = wxService.getOAService().getTemplateDetail(templateId);
+    WxCpTemplateResult result = wxService.getOaService().getTemplateDetail(templateId);
     assertThat(result).isNotNull();
     System.out.println("result ");
     System.out.println(gson.toJson(result));
@@ -91,7 +91,7 @@ public class WxCpOaServiceImplTest {
 
   @Test
   public void testApply() throws WxErrorException {
-    this.wxService.getOAService().apply(new WxCpOaApplyEventRequest().setCreatorUserId("123"));
+    this.wxService.getOaService().apply(new WxCpOaApplyEventRequest().setCreatorUserId("123"));
   }
 
   @Test

@@ -38,6 +38,16 @@ public class RedisProperties implements Serializable {
    * 数据库.
    */
   private int database = 0;
+  
+  /**
+   * sentinel ips
+   */
+  private String sentinelIps;
+  
+  /**
+   * sentinel name
+   */
+  private String sentinelName;
 
   private Integer maxActive;
   private Integer maxIdle;

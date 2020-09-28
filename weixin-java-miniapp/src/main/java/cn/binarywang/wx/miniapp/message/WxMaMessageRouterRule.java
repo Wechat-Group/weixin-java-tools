@@ -6,10 +6,7 @@ import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -135,9 +132,7 @@ public class WxMaMessageRouterRule {
   public WxMaMessageRouterRule interceptor(WxMaMessageInterceptor interceptor, WxMaMessageInterceptor... otherInterceptors) {
     this.interceptors.add(interceptor);
     if (otherInterceptors != null && otherInterceptors.length > 0) {
-      for (WxMaMessageInterceptor i : otherInterceptors) {
-        this.interceptors.add(i);
-      }
+      Collections.addAll(this.interceptors, otherInterceptors);
     }
     return this;
   }
@@ -155,9 +150,7 @@ public class WxMaMessageRouterRule {
   public WxMaMessageRouterRule handler(WxMaMessageHandler handler, WxMaMessageHandler... otherHandlers) {
     this.handlers.add(handler);
     if (otherHandlers != null && otherHandlers.length > 0) {
-      for (WxMaMessageHandler i : otherHandlers) {
-        this.handlers.add(i);
-      }
+      Collections.addAll(this.handlers, otherHandlers);
     }
     return this;
   }
