@@ -23,10 +23,11 @@ import me.chanjar.weixin.mp.bean.WxMpHostConfig;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolAbstract;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisSentinelPool;
+import redis.clients.util.Pool;
 
 /**
  * 微信公众号存储策略自动配置.
@@ -80,7 +81,7 @@ public class WxMpStorageAutoConfiguration {
 	}
 
 	private WxMpConfigStorage jedisConfigStorage() {
-		JedisPoolAbstract jedisPool;
+		Pool<Jedis> jedisPool;
 		if (StringUtils.isNotEmpty(redisHost) || StringUtils.isNotEmpty(redisHost2)) {
 			jedisPool = getJedisPool();
 		} else {
@@ -94,10 +95,26 @@ public class WxMpStorageAutoConfiguration {
 	}
 
 	private WxMpConfigStorage redisTemplateConfigStorage() {
-		StringRedisTemplate redisTemplate = applicationContext.getBean(StringRedisTemplate.class);
+		StringRedisTemplate redisTemplate = null;
+		try {
+			redisTemplate = applicationContext.getBean(StringRedisTemplate.class);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			if (null == redisTemplate) {
+				redisTemplate = (StringRedisTemplate) applicationContext.getBean("stringRedisTemplate");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		if (null == redisTemplate) {
+			redisTemplate = (StringRedisTemplate) applicationContext.getBean("redisTemplate");
+		}
 		WxRedisOps redisOps = new RedisTemplateWxRedisOps(redisTemplate);
 		WxMpRedisConfigImpl wxMpRedisConfig = new WxMpRedisConfigImpl(redisOps,
 				wxMpProperties.getConfigStorage().getKeyPrefix());
+
 		setWxMpInfo(wxMpRedisConfig);
 		return wxMpRedisConfig;
 	}
@@ -118,7 +135,7 @@ public class WxMpStorageAutoConfiguration {
 		}
 	}
 
-	private JedisPoolAbstract getJedisPool() {
+	private Pool<Jedis> getJedisPool() {
 		WxMpProperties.ConfigStorage storage = wxMpProperties.getConfigStorage();
 		RedisProperties redis = storage.getRedis();
 
