@@ -403,6 +403,12 @@ public interface WxCpService {
    * @return 群机器人消息推送服务 group robot service
    */
   WxCpGroupRobotService getGroupRobotService();
+  /*
+  * 获取工作台服务
+  *
+  * @return the workbench service
+  * */
+  WxCpAgentWorkBenchService getWorkBenchService();
 
   /**
    * http请求对象

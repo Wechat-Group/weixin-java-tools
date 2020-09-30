@@ -55,6 +55,13 @@ public final class WxCpApiPathConsts {
   }
 
   @UtilityClass
+  public static class WorkBench {
+    public static final String WORKBENCH_TEMPLATE_SET = "/cgi-bin/agent/set_workbench_template";
+    public static final String WORKBENCH_TEMPLATE_GET = "/cgi-bin/agent/get_workbench_template";
+    public static final String WORKBENCH_DATA_SET = "/cgi-bin/agent/set_workbench_data";
+  }
+
+  @UtilityClass
   public static class OAuth2 {
     public static final String GET_USER_INFO = "/cgi-bin/user/getuserinfo?code=%s&agentid=%d";
     public static final String GET_USER_DETAIL = "/cgi-bin/user/getuserdetail";

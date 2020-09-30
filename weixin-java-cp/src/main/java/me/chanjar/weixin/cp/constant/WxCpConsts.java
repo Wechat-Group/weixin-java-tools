@@ -314,4 +314,23 @@ public class WxCpConsts {
      */
     public static final String MARKDOWN = "markdown";
   }
+
+  public static class WorkBenchType {
+    /*
+    * 关键数据型
+    * */
+    public static final String KEYDATA = "keydata";
+    /*
+    * 图片型
+    * */
+    public static final String IMAGE = "image";
+    /*
+    * 列表型
+    * */
+    public static final String LIST = "list";
+    /*
+    * webview型
+    * */
+    public static final String WEBVIEW = "webview";
+  }
 }
