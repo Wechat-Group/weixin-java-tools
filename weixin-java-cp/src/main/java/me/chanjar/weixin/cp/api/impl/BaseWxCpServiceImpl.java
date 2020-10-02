@@ -54,6 +54,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxCpGroupRobotService groupRobotService = new WxCpGroupRobotServiceImpl(this);
   private WxCpMessageService messageService = new WxCpMessageServiceImpl(this);
   private WxCpOaCalendarService oaCalendarService = new WxCpOaCalendarServiceImpl(this);
+  private WxCpAgentWorkBenchService workBenchService = new WxCpAgentWorkBenchServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -435,6 +436,11 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public WxCpGroupRobotService getGroupRobotService() {
     return groupRobotService;
+  }
+
+  @Override
+  public WxCpAgentWorkBenchService getWorkBenchService() {
+    return workBenchService;
   }
 
   @Override

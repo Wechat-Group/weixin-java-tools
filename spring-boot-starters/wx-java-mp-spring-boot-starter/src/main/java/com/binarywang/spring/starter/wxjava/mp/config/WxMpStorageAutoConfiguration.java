@@ -23,8 +23,8 @@ import me.chanjar.weixin.mp.bean.WxMpHostConfig;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpRedisConfigImpl;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolAbstract;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisSentinelPool;
 import redis.clients.jedis.util.Pool;
@@ -81,7 +81,7 @@ public class WxMpStorageAutoConfiguration {
 	}
 
 	private WxMpConfigStorage jedisConfigStorage() {
-		Pool<Jedis> jedisPool;
+		JedisPoolAbstract jedisPool;
 		if (StringUtils.isNotEmpty(redisHost) || StringUtils.isNotEmpty(redisHost2)) {
 			jedisPool = getJedisPool();
 		} else {
@@ -135,7 +135,7 @@ public class WxMpStorageAutoConfiguration {
 		}
 	}
 
-	private Pool<Jedis> getJedisPool() {
+	private JedisPoolAbstract getJedisPool() {
 		WxMpProperties.ConfigStorage storage = wxMpProperties.getConfigStorage();
 		RedisProperties redis = storage.getRedis();
 

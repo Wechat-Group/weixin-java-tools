@@ -1,9 +1,12 @@
 package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.ecommerce.*;
+import com.github.binarywang.wxpay.bean.ecommerce.enums.BillTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
+
+import java.io.InputStream;
 
 /**
  * <pre>
@@ -359,5 +362,30 @@ public interface EcommerceService {
    * @throws WxPayException the wx pay exception
    */
   SettlementResult querySettlement(String subMchid) throws WxPayException;
+
+  /**
+   * <pre>
+   * 请求账单API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/bill.shtml
+   * </pre>
+   *
+   * @param billType 账单类型。
+   * @param request 二级商户号。
+   * @return 返回数据 return bill result
+   * @throws WxPayException the wx pay exception
+   */
+  BillResult applyBill(BillTypeEnum billType, BillRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 下载账单API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/bill.shtml
+   * </pre>
+   *
+   * @param url 微信返回的账单地址。
+   * @return 返回数据 return inputStream
+   * @throws WxPayException the wx pay exception
+   */
+  InputStream downloadBill(String url) throws WxPayException;
 
 }
