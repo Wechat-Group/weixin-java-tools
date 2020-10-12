@@ -133,6 +133,8 @@ public final class WxCpApiPathConsts {
     public static final String GET_PROVIDER_TOKEN = "/cgi-bin/service/get_provider_token";
     public static final String GET_PREAUTH_CODE = "/cgi-bin/service/get_pre_auth_code";
     public static final String GET_AUTH_INFO = "/cgi-bin/service/get_auth_info";
+    public static final String GET_AUTH_CORP_JSAPI_TICKET = "/cgi-bin/get_jsapi_ticket";
+    public static final String GET_SUITE_JSAPI_TICKET = "/cgi-bin/ticket/get";
   }
 
   @UtilityClass
