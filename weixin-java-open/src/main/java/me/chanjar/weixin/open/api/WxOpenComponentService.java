@@ -2,7 +2,6 @@ package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.open.bean.WxOpenCreateResult;
 import me.chanjar.weixin.open.bean.WxOpenGetResult;
@@ -133,7 +132,7 @@ public interface WxOpenComponentService {
    * @param appid the appid
    * @return the wx mp service by appid
    */
-  WxMpService getWxMpServiceByAppid(String appid);
+  WxOpenMpService getWxMpServiceByAppid(String appid);
 
   /**
    * 获取指定appid的开放平台小程序服务（继承一般小程序服务能力）.

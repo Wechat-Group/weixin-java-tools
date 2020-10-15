@@ -1,15 +1,21 @@
 package me.chanjar.weixin.open.api.impl;
 
+import lombok.SneakyThrows;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
+import me.chanjar.weixin.open.api.WxOpenMpService;
+import me.chanjar.weixin.open.bean.mp.FastRegisterResult;
+
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
  */
-public class WxOpenMpServiceImpl extends WxMpServiceImpl {
+public class WxOpenMpServiceImpl extends WxMpServiceImpl implements WxOpenMpService {
   private WxOpenComponentService wxOpenComponentService;
   private WxMpConfigStorage wxMpConfigStorage;
   private String appId;
@@ -31,4 +37,20 @@ public class WxOpenMpServiceImpl extends WxMpServiceImpl {
     return wxOpenComponentService.getAuthorizerAccessToken(appId, forceRefresh);
   }
 
+  @SneakyThrows
+  @Override
+  public String getFastRegisterAuthUrl(String redirectUri, Boolean copyWxVerify) {
+    String copyInfo = Objects.equals(copyWxVerify, false) ? "0" : "1";
+    String componentAppId = wxOpenComponentService.getWxOpenConfigStorage().getComponentAppId();
+    String encoded = URLEncoder.encode(redirectUri, "UTF-8");
+    return String.format(URL_FAST_REGISTER_AUTH, appId, componentAppId, copyInfo, encoded);
+  }
+
+  @Override
+  public FastRegisterResult fastRegister(String ticket) throws WxErrorException {
+    HashMap<String, String> params = new HashMap<>();
+    params.put("ticket", ticket);
+    String json = post(API_FAST_REGISTER, params);
+    return FastRegisterResult.fromJson(json);
+  }
 }

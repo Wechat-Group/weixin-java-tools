@@ -36,14 +36,14 @@ import java.util.concurrent.locks.Lock;
 public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   private static final Map<String, WxOpenMaService> WX_OPEN_MA_SERVICE_MAP = new ConcurrentHashMap<>();
-  private static final Map<String, WxMpService> WX_OPEN_MP_SERVICE_MAP = new ConcurrentHashMap<>();
+  private static final Map<String, WxOpenMpService> WX_OPEN_MP_SERVICE_MAP = new ConcurrentHashMap<>();
   private static final Map<String, WxOpenFastMaService> WX_OPEN_FAST_MA_SERVICE_MAP = new ConcurrentHashMap<>();
 
   private final WxOpenService wxOpenService;
 
   @Override
-  public WxMpService getWxMpServiceByAppid(String appId) {
-    WxMpService wxMpService = WX_OPEN_MP_SERVICE_MAP.get(appId);
+  public WxOpenMpService getWxMpServiceByAppid(String appId) {
+    WxOpenMpService wxMpService = WX_OPEN_MP_SERVICE_MAP.get(appId);
     if (wxMpService == null) {
       synchronized (WX_OPEN_MP_SERVICE_MAP) {
         wxMpService = WX_OPEN_MP_SERVICE_MAP.get(appId);
@@ -381,7 +381,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
       WxOpenAuthorizerAccessToken wxOpenAuthorizerAccessToken = WxOpenAuthorizerAccessToken.fromJson(responseContent);
       config.updateAuthorizerAccessToken(appId, wxOpenAuthorizerAccessToken);
-      config.updateAuthorizerRefreshToken(appId,wxOpenAuthorizerAccessToken.getAuthorizerRefreshToken());
+      config.updateAuthorizerRefreshToken(appId, wxOpenAuthorizerAccessToken.getAuthorizerRefreshToken());
       return config.getAuthorizerAccessToken(appId);
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
