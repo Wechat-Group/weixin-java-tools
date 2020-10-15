@@ -10,16 +10,24 @@
     <version>3.9.3.B</version>
   </parent>
 
+  <groupId>com.zuopeng</groupId>
   <artifactId>weixin-java-cp</artifactId>
   <name>WxJava - CP Java SDK</name>
+  <version>1.0-SNAPSHOT</version>
   <description>微信企业号/企业微信 Java SDK</description>
 
   <dependencies>
     <dependency>
-      <groupId>com.github.binarywang</groupId>
+      <groupId>com.zuopeng</groupId>
       <artifactId>weixin-java-common</artifactId>
-      <version>${project.version}</version>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
+
+<!--    <dependency>-->
+<!--      <groupId>com.github.binarywang</groupId>-->
+<!--      <artifactId>weixin-java-common</artifactId>-->
+<!--      <version>${project.version}</version>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>org.jodd</groupId>
       <artifactId>jodd-http</artifactId>
@@ -135,5 +143,21 @@
 
     </profile>
   </profiles>
+
+  <repositories>
+    <repository>
+      <id>zpnexus</id>
+      <name>zp maven</name>
+      <url>http://nexus.zuopeng.io/repository/maven-public/</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
 
 </project>

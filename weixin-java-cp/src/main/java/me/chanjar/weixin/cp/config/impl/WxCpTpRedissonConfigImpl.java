@@ -4,12 +4,10 @@ package me.chanjar.weixin.cp.config.impl;
 import lombok.Builder;
 import lombok.NonNull;
 import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.redis.RedissonWxRedisOps;
 import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
-import org.redisson.api.RedissonClient;
 
 import java.io.File;
 import java.io.Serializable;
@@ -79,18 +77,18 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
    */
   @Override
   public String getSuiteAccessToken() {
-    return wxRedisOps.getValue(suiteAccessTokenKey);
+    return wxRedisOps.getValue(keyWithPrefix(suiteAccessTokenKey));
   }
 
   @Override
   public boolean isSuiteAccessTokenExpired() {
-    //remain time to live in seconds, or expire not set
-    return wxRedisOps.getExpire(suiteAccessTokenKey) > 0L || wxRedisOps.getExpire(suiteAccessTokenKey) == -1;
+    //remain time to live in seconds, or key not exist
+    return wxRedisOps.getExpire(keyWithPrefix(suiteAccessTokenKey)) == 0L || wxRedisOps.getExpire(keyWithPrefix(suiteAccessTokenKey)) == -2;
   }
 
   @Override
   public void expireSuiteAccessToken() {
-    wxRedisOps.expire(suiteAccessTokenKey, 0, TimeUnit.SECONDS);
+    wxRedisOps.expire(keyWithPrefix(suiteAccessTokenKey), 0, TimeUnit.SECONDS);
   }
 
   @Override
@@ -100,7 +98,7 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
 
   @Override
   public void updateSuiteAccessToken(String suiteAccessToken, int expiresInSeconds) {
-    wxRedisOps.setValue(suiteAccessTokenKey, suiteAccessToken, expiresInSeconds, TimeUnit.SECONDS);
+    wxRedisOps.setValue(keyWithPrefix(suiteAccessTokenKey), suiteAccessToken, expiresInSeconds, TimeUnit.SECONDS);
   }
 
   /**
@@ -108,23 +106,23 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
    */
   @Override
   public String getSuiteTicket() {
-    return wxRedisOps.getValue(suiteTicketKey);
+    return wxRedisOps.getValue(keyWithPrefix(suiteTicketKey));
   }
 
   @Override
   public boolean isSuiteTicketExpired() {
-    //remain time to live in seconds, or expire not set
-    return wxRedisOps.getExpire(suiteTicketKey) > 0L || wxRedisOps.getExpire(suiteTicketKey) == -1;
+    //remain time to live in seconds, or key not exist
+    return wxRedisOps.getExpire(keyWithPrefix(suiteTicketKey)) == 0L || wxRedisOps.getExpire(keyWithPrefix(suiteTicketKey)) == -2;
   }
 
   @Override
   public void expireSuiteTicket() {
-    wxRedisOps.expire(suiteTicketKey, 0, TimeUnit.SECONDS);
+    wxRedisOps.expire(keyWithPrefix(suiteTicketKey), 0, TimeUnit.SECONDS);
   }
 
   @Override
   public void updateSuiteTicket(String suiteTicket, int expiresInSeconds) {
-    wxRedisOps.setValue(suiteTicketKey, suiteTicket, expiresInSeconds, TimeUnit.SECONDS);
+    wxRedisOps.setValue(keyWithPrefix(suiteTicketKey), suiteTicket, expiresInSeconds, TimeUnit.SECONDS);
   }
 
   /**
@@ -172,19 +170,19 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
    */
   @Override
   public String getAccessToken(String authCorpId) {
-    return wxRedisOps.getValue(authCorpId + accessTokenKey);
+    return wxRedisOps.getValue(keyWithPrefix(authCorpId) + accessTokenKey);
   }
 
   @Override
   public boolean isAccessTokenExpired(String authCorpId) {
-    //没有设置或者大于零，都认为没有过期
-    return wxRedisOps.getExpire(authCorpId + accessTokenKey) > 0L
-      || wxRedisOps.getExpire(authCorpId + accessTokenKey) == -1;
+    //没有设置或者TTL为0，都是过期
+    return wxRedisOps.getExpire(keyWithPrefix(authCorpId) + accessTokenKey) == 0L
+      || wxRedisOps.getExpire(keyWithPrefix(authCorpId) + accessTokenKey) == -2;
   }
 
   @Override
   public void updateAccessToken(String authCorpId, String accessToken, int expiredInSeconds) {
-    wxRedisOps.setValue(authCorpId + accessTokenKey, accessToken, expiredInSeconds, TimeUnit.SECONDS);
+    wxRedisOps.setValue(keyWithPrefix(authCorpId) + accessTokenKey, accessToken, expiredInSeconds, TimeUnit.SECONDS);
   }
 
 
@@ -193,19 +191,19 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
    */
   @Override
   public String getAuthCorpJsApiTicket(String authCorpId) {
-    return wxRedisOps.getValue(authCorpId + authCorpJsApiTicketKey);
+    return wxRedisOps.getValue(keyWithPrefix(authCorpId) + authCorpJsApiTicketKey);
   }
 
   @Override
   public boolean isAuthCorpJsApiTicketExpired(String authCorpId) {
-    //没有设置或者大于零，都认为没有过期
-    return wxRedisOps.getExpire(authCorpId + authCorpJsApiTicketKey) > 0L
-      || wxRedisOps.getExpire(authCorpId + authCorpJsApiTicketKey) == -1;
+    //没有设置或TTL为0,都是过期
+    return wxRedisOps.getExpire(keyWithPrefix(authCorpId) + authCorpJsApiTicketKey) == 0L
+      || wxRedisOps.getExpire(keyWithPrefix(authCorpId) + authCorpJsApiTicketKey) == -2;
   }
 
   @Override
   public void updateAuthCorpJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds) {
-    wxRedisOps.setValue(authCorpId + authCorpJsApiTicketKey, jsApiTicket, expiredInSeconds, TimeUnit.SECONDS);
+    wxRedisOps.setValue(keyWithPrefix(authCorpId) + authCorpJsApiTicketKey, jsApiTicket, expiredInSeconds, TimeUnit.SECONDS);
   }
 
 
@@ -214,19 +212,19 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
    */
   @Override
   public String getAuthSuiteJsApiTicket(String authCorpId) {
-    return wxRedisOps.getValue(authCorpId + authSuiteJsApiTicketKey);
+    return wxRedisOps.getValue(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey);
   }
 
   @Override
   public boolean isAuthSuiteJsApiTicketExpired(String authCorpId) {
-    //没有设置或者大于零，都认为没有过期
-    return wxRedisOps.getExpire(authCorpId + authSuiteJsApiTicketKey) > 0L
-      || wxRedisOps.getExpire(authCorpId + authSuiteJsApiTicketKey) == -1;
+    //没有设置或者TTL为0，都是过期
+    return wxRedisOps.getExpire(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey) == 0L
+      || wxRedisOps.getExpire(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey) == -2;
   }
 
   @Override
   public void updateAuthSuiteJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds) {
-    wxRedisOps.setValue(authCorpId + authSuiteJsApiTicketKey, jsApiTicket, expiredInSeconds, TimeUnit.SECONDS);
+    wxRedisOps.setValue(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey, jsApiTicket, expiredInSeconds, TimeUnit.SECONDS);
   }
 
 
@@ -272,5 +270,9 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   public String toString() {
     //TODO:
     return WxCpGsonBuilder.create().toJson(this);
+  }
+
+  private String keyWithPrefix(String key) {
+    return keyPrefix + key;
   }
 }

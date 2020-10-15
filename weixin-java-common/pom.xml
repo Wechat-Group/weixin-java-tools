@@ -9,8 +9,11 @@
     <version>3.9.3.B</version>
   </parent>
 
+
+  <groupId>com.zuopeng</groupId>
   <artifactId>weixin-java-common</artifactId>
   <name>WxJava - Common Java SDK</name>
+  <version>1.0-SNAPSHOT</version>
   <description>微信开发Java SDK公共模块</description>
 
   <dependencies>

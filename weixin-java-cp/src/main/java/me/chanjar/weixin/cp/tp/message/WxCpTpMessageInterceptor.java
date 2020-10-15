@@ -2,7 +2,7 @@ package me.chanjar.weixin.cp.tp.message;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 
 import java.util.Map;
@@ -24,7 +24,7 @@ public interface WxCpTpMessageInterceptor {
    * @return true代表OK ，false代表不OK
    * @throws WxErrorException the wx error exception
    */
-  boolean intercept(WxCpXmlMessage wxMessage,
+  boolean intercept(WxCpTpXmlMessage wxMessage,
                     Map<String, Object> context,
                     WxCpTpService wxCpService,
                     WxSessionManager sessionManager) throws WxErrorException;

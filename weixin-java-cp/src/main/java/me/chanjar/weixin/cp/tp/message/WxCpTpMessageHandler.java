@@ -2,7 +2,7 @@ package me.chanjar.weixin.cp.tp.message;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 
@@ -25,7 +25,7 @@ public interface WxCpTpMessageHandler {
    * @return xml格式的消息 ，如果在异步规则里处理的话，可以返回null
    * @throws WxErrorException the wx error exception
    */
-  WxCpXmlOutMessage handle(WxCpXmlMessage wxMessage,
+  WxCpXmlOutMessage handle(WxCpTpXmlMessage wxMessage,
                            Map<String, Object> context,
                            WxCpTpService wxCpService,
                            WxSessionManager sessionManager) throws WxErrorException;
