@@ -1,13 +1,13 @@
 package me.chanjar.weixin.common.util.http;
 
-import java.io.IOException;
-
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheSimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpSimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpSimpleGetRequestExecutor;
+
+import java.io.IOException;
 
 /**
  * 简单的GET请求执行器.
@@ -27,7 +27,7 @@ public abstract class SimpleGetRequestExecutor<H, P> implements RequestExecutor<
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  public static RequestExecutor<String, String> create(RequestHttp requestHttp) {
+  public static RequestExecutor<String, String> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
         return new ApacheSimpleGetRequestExecutor(requestHttp);

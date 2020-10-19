@@ -84,7 +84,7 @@ public class RefundsRequest implements Serializable {
   /**
    * <pre>
    * 字段名：商户订单号
-   * 变量名：out_order_no
+   * 变量名：out_trade_no
    * 是否必填：与transaction_id二选一
    * 类型：string（64）
    * 描述：
@@ -92,8 +92,8 @@ public class RefundsRequest implements Serializable {
    *   示例值：P20150806125346
    * </pre>
    */
-  @SerializedName(value = "out_order_no")
-  private String outOrderNo;
+  @SerializedName(value = "out_trade_no")
+  private String outTradeNo;
 
   /**
    * <pre>

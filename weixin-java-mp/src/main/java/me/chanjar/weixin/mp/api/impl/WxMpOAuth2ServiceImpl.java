@@ -1,7 +1,8 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
+import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -11,14 +12,12 @@ import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.URIUtil;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxOAuth2Service;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
-import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.*;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.OAuth2.*;
 
 /**
  * oauth2 相关接口实现类.
@@ -27,34 +26,37 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.*;
  * @date 2020-08-08
  */
 @RequiredArgsConstructor
-public class WxOAuth2ServiceImpl implements WxOAuth2Service {
+public class WxMpOAuth2ServiceImpl implements WxOAuth2Service {
   private final WxMpService wxMpService;
 
   @Override
-  public String buildAuthorizationUrl(String redirectURI, String scope, String state) {
+  public String buildAuthorizationUrl(String redirectUri, String scope, String state) {
     return String.format(CONNECT_OAUTH2_AUTHORIZE_URL.getUrl(getMpConfigStorage()),
-      getMpConfigStorage().getAppId(), URIUtil.encodeURIComponent(redirectURI), scope, StringUtils.trimToEmpty(state));
+      getMpConfigStorage().getAppId(), URIUtil.encodeURIComponent(redirectUri), scope, StringUtils.trimToEmpty(state));
   }
 
-  private WxMpOAuth2AccessToken getOAuth2AccessToken(String url) throws WxErrorException {
+  private WxOAuth2AccessToken getOAuth2AccessToken(String url) throws WxErrorException {
     try {
       RequestExecutor<String, String> executor = SimpleGetRequestExecutor.create(this.wxMpService.getRequestHttp());
       String responseText = executor.execute(url, null, WxType.MP);
-      return WxMpOAuth2AccessToken.fromJson(responseText);
+      return WxOAuth2AccessToken.fromJson(responseText);
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorCode(99999).errorMsg(e.getMessage()).build(), e);
     }
   }
 
   @Override
-  public WxMpOAuth2AccessToken getAccessToken(String code) throws WxErrorException {
-    String url = String.format(OAUTH2_ACCESS_TOKEN_URL.getUrl(getMpConfigStorage()), getMpConfigStorage().getAppId(),
-      getMpConfigStorage().getSecret(), code);
-    return this.getOAuth2AccessToken(url);
+  public WxOAuth2AccessToken getAccessToken(String code) throws WxErrorException {
+    return this.getAccessToken(getMpConfigStorage().getAppId(), getMpConfigStorage().getSecret(), code);
   }
 
   @Override
-  public WxMpOAuth2AccessToken refreshAccessToken(String refreshToken) throws WxErrorException {
+  public WxOAuth2AccessToken getAccessToken(String appId, String appSecret, String code) throws WxErrorException {
+    return this.getOAuth2AccessToken(String.format(OAUTH2_ACCESS_TOKEN_URL.getUrl(getMpConfigStorage()), appId, appSecret, code));
+  }
+
+  @Override
+  public WxOAuth2AccessToken refreshAccessToken(String refreshToken) throws WxErrorException {
     String url = String.format(OAUTH2_REFRESH_TOKEN_URL.getUrl(getMpConfigStorage()), getMpConfigStorage().getAppId(), refreshToken);
     return this.getOAuth2AccessToken(url);
   }
@@ -64,7 +66,7 @@ public class WxOAuth2ServiceImpl implements WxOAuth2Service {
   }
 
   @Override
-  public WxMpUser getUserInfo(WxMpOAuth2AccessToken token, String lang) throws WxErrorException {
+  public WxOAuth2UserInfo getUserInfo(WxOAuth2AccessToken token, String lang) throws WxErrorException {
     if (lang == null) {
       lang = "zh_CN";
     }
@@ -74,14 +76,14 @@ public class WxOAuth2ServiceImpl implements WxOAuth2Service {
     try {
       RequestExecutor<String, String> executor = SimpleGetRequestExecutor.create(this.wxMpService.getRequestHttp());
       String responseText = executor.execute(url, null, WxType.MP);
-      return WxMpUser.fromJson(responseText);
+      return WxOAuth2UserInfo.fromJson(responseText);
     } catch (IOException e) {
       throw new WxRuntimeException(e);
     }
   }
 
   @Override
-  public boolean validateAccessToken(WxMpOAuth2AccessToken token) {
+  public boolean validateAccessToken(WxOAuth2AccessToken token) {
     String url = String.format(OAUTH2_VALIDATE_TOKEN_URL.getUrl(getMpConfigStorage()), token.getAccessToken(), token.getOpenId());
 
     try {

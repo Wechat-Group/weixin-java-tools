@@ -28,6 +28,106 @@ public class PayScoreServiceImpl implements PayScoreService {
   private final WxPayService payService;
 
   @Override
+  public WxPayScoreResult permissions(WxPayScoreRequest request) throws WxPayException {
+    WxPayConfig config = this.payService.getConfig();
+    String url = this.payService.getPayBaseUrl() + "/v3/payscore/permissions";
+    request.setAppid(config.getAppId());
+    request.setServiceId(config.getServiceId());
+    String permissionNotifyUrl = config.getPayScorePermissionNotifyUrl();
+    if (StringUtils.isBlank(permissionNotifyUrl)){
+      throw new WxPayException("授权回调地址未配置");
+    }
+    String authorizationCode = request.getAuthorizationCode();
+    if (StringUtils.isBlank(authorizationCode)){
+      throw new WxPayException("authorizationCode不允许为空");
+    }
+    request.setNotifyUrl(permissionNotifyUrl);
+    String result = this.payService.postV3(url, request.toJson());
+   return WxPayScoreResult.fromJson(result);
+
+  }
+
+  @Override
+  public WxPayScoreResult permissionsQueryByAuthorizationCode(String authorizationCode) throws WxPayException {
+    WxPayConfig config = this.payService.getConfig();
+    if (StringUtils.isBlank(authorizationCode)){
+      throw new WxPayException("authorizationCode不允许为空");
+    }
+    String url = String.format("%s/v3/payscore/permissions/authorization-code/%s", this.payService.getPayBaseUrl(), authorizationCode);
+    URIBuilder uriBuilder;
+    try {
+      uriBuilder = new URIBuilder(url);
+    } catch (URISyntaxException e) {
+      throw new WxPayException("未知异常！", e);
+    }
+
+    uriBuilder.setParameter("service_id", config.getServiceId());
+    try {
+      String result = payService.getV3(uriBuilder.build());
+      return WxPayScoreResult.fromJson(result);
+    } catch (URISyntaxException e) {
+      throw new WxPayException("未知异常！", e);
+    }
+
+  }
+
+  @Override
+  public WxPayScoreResult permissionsTerminateByAuthorizationCode(String authorizationCode,String reason) throws WxPayException {
+    WxPayConfig config = this.payService.getConfig();
+    if (StringUtils.isBlank(authorizationCode)){
+      throw new WxPayException("authorizationCode不允许为空");
+    }
+    String url = String.format("%s/v3/payscore/permissions/authorization-code/%s/terminate", this.payService.getPayBaseUrl(), authorizationCode);
+    Map<String, Object> map = new HashMap<>(4);
+    map.put("service_id", config.getServiceId());
+    map.put("reason", reason);
+    String result = payService.postV3(url, WxGsonBuilder.create().toJson(map));
+    return WxPayScoreResult.fromJson(result);
+
+  }
+
+  @Override
+  public WxPayScoreResult permissionsQueryByOpenId(String openId) throws WxPayException {
+    WxPayConfig config = this.payService.getConfig();
+    if (StringUtils.isBlank(openId)){
+      throw new WxPayException("openId不允许为空");
+    }
+    String url = String.format("%s/v3/payscore/permissions/openid/%s", this.payService.getPayBaseUrl(), openId);
+    URIBuilder uriBuilder;
+    try {
+      uriBuilder = new URIBuilder(url);
+    } catch (URISyntaxException e) {
+      throw new WxPayException("未知异常！", e);
+    }
+
+    uriBuilder.setParameter("appid", config.getAppId());
+    uriBuilder.setParameter("service_id", config.getServiceId());
+    try {
+      String result = payService.getV3(uriBuilder.build());
+      return WxPayScoreResult.fromJson(result);
+    } catch (URISyntaxException e) {
+      throw new WxPayException("未知异常！", e);
+    }
+
+  }
+
+  @Override
+  public WxPayScoreResult permissionsTerminateByOpenId(String openId, String reason) throws WxPayException {
+    WxPayConfig config = this.payService.getConfig();
+    if (StringUtils.isBlank(openId)){
+      throw new WxPayException("openId不允许为空");
+    }
+    String url = String.format("%s/v3/payscore/permissions/openid/%s/terminate", this.payService.getPayBaseUrl(), openId);
+    Map<String, Object> map = new HashMap<>(4);
+    map.put("service_id", config.getServiceId());
+    map.put("appid", config.getAppId());
+    map.put("reason", reason);
+    String result = payService.postV3(url, WxGsonBuilder.create().toJson(map));
+    return WxPayScoreResult.fromJson(result);
+
+  }
+
+  @Override
   public WxPayScoreResult createServiceOrder(WxPayScoreRequest request) throws WxPayException {
     boolean needUserConfirm = request.isNeedUserConfirm();
     WxPayConfig config = this.payService.getConfig();

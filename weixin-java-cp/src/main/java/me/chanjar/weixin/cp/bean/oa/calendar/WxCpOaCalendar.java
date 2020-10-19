@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
@@ -23,8 +24,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class WxCpOaCalendar implements Serializable {
+public class WxCpOaCalendar implements Serializable, ToJson {
   private static final long serialVersionUID = -817988838579546989L;
+
+  /**
+   * 变量名：cal_id
+   * 是否必须：更新时必须提供
+   * 描述：日历ID
+   */
+  @SerializedName("cal_id")
+  private String calId;
 
   /**
    * 变量名：organizer
@@ -99,7 +108,8 @@ public class WxCpOaCalendar implements Serializable {
     private Integer readonly;
   }
 
+  @Override
   public String toJson() {
-    return WxCpGsonBuilder.create().toJson(ImmutableMap.of("calendar",this));
+    return WxCpGsonBuilder.create().toJson(ImmutableMap.of("calendar", this));
   }
 }

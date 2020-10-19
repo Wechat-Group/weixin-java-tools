@@ -2,8 +2,7 @@ package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.open.bean.WxOpenCreateResult;
 import me.chanjar.weixin.open.bean.WxOpenGetResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
@@ -133,7 +132,7 @@ public interface WxOpenComponentService {
    * @param appid the appid
    * @return the wx mp service by appid
    */
-  WxMpService getWxMpServiceByAppid(String appid);
+  WxOpenMpService getWxMpServiceByAppid(String appid);
 
   /**
    * 获取指定appid的开放平台小程序服务（继承一般小程序服务能力）.
@@ -332,7 +331,7 @@ public interface WxOpenComponentService {
    * @return the wx mp o auth 2 access token
    * @throws WxErrorException the wx error exception
    */
-  WxMpOAuth2AccessToken oauth2getAccessToken(String appid, String code) throws WxErrorException;
+  WxOAuth2AccessToken oauth2getAccessToken(String appid, String code) throws WxErrorException;
 
   /**
    * Check signature boolean.
@@ -353,7 +352,7 @@ public interface WxOpenComponentService {
    * @return the wx mp o auth 2 access token
    * @throws WxErrorException the wx error exception
    */
-  WxMpOAuth2AccessToken oauth2refreshAccessToken(String appid, String refreshToken) throws WxErrorException;
+  WxOAuth2AccessToken oauth2refreshAccessToken(String appid, String refreshToken) throws WxErrorException;
 
   /**
    * Oauth 2 build authorization url string.

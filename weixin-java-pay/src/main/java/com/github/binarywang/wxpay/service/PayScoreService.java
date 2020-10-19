@@ -18,6 +18,91 @@ import com.github.binarywang.wxpay.exception.WxPayException;
  * @author doger.wang
  */
 public interface PayScoreService {
+
+
+
+  /**
+   * <pre>
+   * 支付分商户预授权API
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_1.shtml
+   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/permissions
+   * </pre>
+   *
+   * @param request 请求对象
+   * @return WxPayScoreResult wx pay score result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayScoreResult permissions(WxPayScoreRequest request) throws WxPayException;
+
+
+  /**
+   * <pre>
+   * 支付分查询与用户授权记录（授权协议号）API
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_2.shtml
+   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/permissions/authorization-code/{authorization_code}
+   * </pre>
+   *
+   * @param authorizationCode
+   * @return WxPayScoreResult wx pay score result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayScoreResult permissionsQueryByAuthorizationCode(String authorizationCode) throws WxPayException;
+
+
+
+  /**
+   * <pre>
+   * 解除用户授权关系（授权协议号）API
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_3.shtml
+   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/permissions/authorization-code/{authorization_code}/terminate
+   * </pre>
+   *
+   * @param authorizationCode
+   * @param reason
+   * @return WxPayScoreResult wx pay score result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayScoreResult permissionsTerminateByAuthorizationCode(String authorizationCode,String reason) throws WxPayException;
+
+
+
+
+
+  /**
+   * <pre>
+   * 支付分查询与用户授权记录（openid）API
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_4shtml
+   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/permissions/openid/{openid}
+   * </pre>
+   *
+   * @param openId
+   * @return WxPayScoreResult wx pay score result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayScoreResult permissionsQueryByOpenId(String openId) throws WxPayException;
+
+
+
+
+
+  /**
+   * <pre>
+   * 解除用户授权关系（openid）API
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_5.shtml
+   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/permissions/openid/{openid}/terminate
+   * </pre>
+   *
+   * @param openId
+   * @param reason
+   * @return WxPayScoreResult wx pay score result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayScoreResult permissionsTerminateByOpenId(String openId,String reason) throws WxPayException;
+
+
+
+
+
   /**
    * <pre>
    * 支付分创建订单API.

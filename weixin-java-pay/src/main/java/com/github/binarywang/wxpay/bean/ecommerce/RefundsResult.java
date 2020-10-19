@@ -6,7 +6,8 @@ package com.github.binarywang.wxpay.bean.ecommerce;
  */
 
 import com.google.gson.annotations.SerializedName;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,9 +21,7 @@ import java.util.Date;
  * @date: 2020/09/14
  */
 @Data
-@Builder
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class RefundsResult implements Serializable {
   private static final long serialVersionUID = -3186851559004865784L;
 
@@ -42,17 +41,17 @@ public class RefundsResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：商户订单号
-   * 变量名：out_order_no
-   * 是否必填：与transaction_id二选一
+   * 字段名：商户退款单号
+   * 变量名：out_refund_no
+   * 是否必填：是
    * 类型：string（64）
    * 描述：
-   *   原支付交易对应的商户订单号。
-   *   示例值：P20150806125346
+   *   商户系统内部的退款单号，商户系统内部唯一，同一退款单号多次请求只退一笔。
+   * 示例值：1217752501201407033233368018
    * </pre>
    */
-  @SerializedName(value = "out_order_no")
-  private String outOrderNo;
+  @SerializedName(value = "out_refund_no")
+  private String outRefundNo;
 
   /**
    * <pre>
@@ -95,9 +94,7 @@ public class RefundsResult implements Serializable {
   private PromotionDetail[] promotionDetail;
 
   @Data
-  @Builder
-  @NoArgsConstructor(access = AccessLevel.PRIVATE)
-  @AllArgsConstructor(access = AccessLevel.PRIVATE)
+  @NoArgsConstructor
   public static class Amount implements Serializable {
 
     private static final long serialVersionUID = 7383027142329410399L;
@@ -161,9 +158,7 @@ public class RefundsResult implements Serializable {
   }
 
   @Data
-  @Builder
-  @NoArgsConstructor(access = AccessLevel.PRIVATE)
-  @AllArgsConstructor(access = AccessLevel.PRIVATE)
+  @NoArgsConstructor
   public static class PromotionDetail implements Serializable {
 
     private static final long serialVersionUID = 7383027142329410399L;

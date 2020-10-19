@@ -41,7 +41,7 @@ public class WxCpRedissonConfigImpl extends WxCpDefaultConfigImpl {
     this(redissonClient, null);
   }
 
-  private WxCpRedissonConfigImpl(@NonNull WxRedisOps redisOps, String keyPrefix) {
+  public WxCpRedissonConfigImpl(@NonNull WxRedisOps redisOps, String keyPrefix) {
     this.redisOps = redisOps;
     this.keyPrefix = keyPrefix;
   }

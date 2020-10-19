@@ -22,6 +22,11 @@ public class WxErrorException extends Exception {
     this.error = error;
   }
 
+  public WxErrorException(Throwable cause) {
+    super(cause.getMessage(), cause);
+    this.error = WxError.builder().errorCode(-1).errorMsg(cause.getMessage()).build();
+  }
+
   public WxError getError() {
     return this.error;
   }

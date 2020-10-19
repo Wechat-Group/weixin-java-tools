@@ -126,6 +126,13 @@ public class WxPayConfig {
    */
   private String payScoreNotifyUrl;
 
+
+  /**
+   * 微信支付分授权回调地址
+   */
+  private String payScorePermissionNotifyUrl;
+
+
   private CloseableHttpClient apiV3HttpClient;
   /**
    * 私钥信息

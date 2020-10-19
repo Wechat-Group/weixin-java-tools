@@ -1,34 +1,18 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.api.WxOcrService;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.common.bean.ocr.WxOcrBankCardResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrBizLicenseResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrCommResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrDrivingLicenseResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrDrivingResult;
-import me.chanjar.weixin.common.bean.ocr.WxOcrIdCardResult;
+import me.chanjar.weixin.common.bean.ocr.*;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.requestexecuter.ocr.OcrDiscernRequestExecutor;
+import me.chanjar.weixin.mp.api.WxMpService;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.BANK_CARD;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.BIZ_LICENSE;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.COMM;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.DRIVING;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.DRIVING_LICENSE;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILEIDCARD;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_BANK_CARD;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_BIZ_LICENSE;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_COMM;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_DRIVING;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.FILE_DRIVING_LICENSE;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.IDCARD;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Ocr.*;
 
 /**
  * ocr 接口实现.
@@ -49,7 +33,7 @@ public class WxMpOcrServiceImpl implements WxOcrService {
     }
 
     final String result = this.mainService.post(String.format(IDCARD.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+      imgUrl), (String) null);
     return WxOcrIdCardResult.fromJson(result);
   }
 
@@ -69,7 +53,7 @@ public class WxMpOcrServiceImpl implements WxOcrService {
     }
 
     final String result = this.mainService.post(String.format(BANK_CARD.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+      imgUrl), (String) null);
     return WxOcrBankCardResult.fromJson(result);
   }
 
@@ -89,7 +73,7 @@ public class WxMpOcrServiceImpl implements WxOcrService {
     }
 
     final String result = this.mainService.post(String.format(DRIVING.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+      imgUrl), (String) null);
     return WxOcrDrivingResult.fromJson(result);
   }
 
@@ -109,7 +93,7 @@ public class WxMpOcrServiceImpl implements WxOcrService {
     }
 
     final String result = this.mainService.post(String.format(DRIVING_LICENSE.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+      imgUrl), (String) null);
     return WxOcrDrivingLicenseResult.fromJson(result);
   }
 
@@ -129,7 +113,7 @@ public class WxMpOcrServiceImpl implements WxOcrService {
     }
 
     final String result = this.mainService.post(String.format(BIZ_LICENSE.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+      imgUrl), (String) null);
     return WxOcrBizLicenseResult.fromJson(result);
   }
 
@@ -149,7 +133,7 @@ public class WxMpOcrServiceImpl implements WxOcrService {
     }
 
     final String result = this.mainService.post(String.format(COMM.getUrl(this.mainService.getWxMpConfigStorage()),
-      imgUrl), null);
+      imgUrl), (String) null);
     return WxOcrCommResult.fromJson(result);
   }
 

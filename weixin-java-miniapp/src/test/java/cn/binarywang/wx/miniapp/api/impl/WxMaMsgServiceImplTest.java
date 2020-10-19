@@ -12,9 +12,6 @@ import com.google.gson.JsonObject;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -47,8 +44,8 @@ public class WxMaMsgServiceImplTest {
     WxMaSubscribeMessage message = new WxMaSubscribeMessage();
     message.setTemplateId(config.getTemplateId());
     message.setToUser(config.getOpenid());
-    message.setLang(WxMaConstants.MiniprogramLang.ZH_CN);
-    message.setMiniprogramState(WxMaConstants.MiniprogramState.FORMAL);
+    message.setLang(WxMaConstants.MiniProgramLang.ZH_CN);
+    message.setMiniprogramState(WxMaConstants.MiniProgramState.FORMAL);
     message.addData(new WxMaSubscribeMessage.Data("thing1", "苹果到货啦"));
     message.addData(new WxMaSubscribeMessage.Data("amount3", "¥5"));
     message.addData(new WxMaSubscribeMessage.Data("thing5", "记得领取哦"));

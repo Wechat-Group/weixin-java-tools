@@ -193,6 +193,10 @@ public class GsonHelper {
         jsonObject.addProperty(key.toString(), (Number) value);
       } else if (value instanceof JsonElement) {
         jsonObject.add(key.toString(), (JsonElement) value);
+      } else if (value instanceof List) {
+        JsonArray array = new JsonArray();
+        ((List<?>) value).forEach(a -> array.add(a.toString()));
+        jsonObject.add(key.toString(), array);
       } else {
         jsonObject.addProperty(key.toString(), value.toString());
       }

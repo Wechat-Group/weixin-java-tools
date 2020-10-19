@@ -85,6 +85,22 @@ public class WxPayScoreResult implements Serializable {
   @SerializedName("payScoreSignInfo")
   private Map<String, String> payScoreSignInfo;
 
+  @SerializedName("apply_permissions_token")
+  private  String applyPermissionsToken;
+
+  @SerializedName("authorization_code")
+  private  String authorizationCode;
+
+  @SerializedName("authorization_state")
+  private  String authorizationState;
+
+  @SerializedName("cancel_authorization_time")
+  private  String cancelAuthorizationTime;
+
+  @SerializedName("authorization_success_time")
+  private  String authorizationSuccessTime;
+
+
   /**
    * 收款信息
    */

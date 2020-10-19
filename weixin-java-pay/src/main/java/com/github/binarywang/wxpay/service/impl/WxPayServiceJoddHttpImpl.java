@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.HttpPost;
 
 import javax.net.ssl.SSLContext;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -77,6 +78,11 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public String getV3(URI url) throws WxPayException {
+    return null;
+  }
+
+  @Override
+  public InputStream downloadV3(URI url) throws WxPayException {
     return null;
   }
 

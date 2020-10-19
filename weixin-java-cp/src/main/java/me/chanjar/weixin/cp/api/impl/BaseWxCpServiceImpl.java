@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
@@ -54,6 +55,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxCpGroupRobotService groupRobotService = new WxCpGroupRobotServiceImpl(this);
   private WxCpMessageService messageService = new WxCpMessageServiceImpl(this);
   private WxCpOaCalendarService oaCalendarService = new WxCpOaCalendarServiceImpl(this);
+  private WxCpAgentWorkBenchService workBenchService = new WxCpAgentWorkBenchServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -211,6 +213,21 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   }
 
   @Override
+  public String post(String url, JsonObject jsonObject) throws WxErrorException {
+    return this.post(url, jsonObject.toString());
+  }
+
+  @Override
+  public String post(String url, ToJson obj) throws WxErrorException {
+    return this.post(url, obj.toJson());
+  }
+
+  @Override
+  public String post(String url, Object obj) throws WxErrorException {
+    return this.post(url, obj.toString());
+  }
+
+  @Override
   public String postWithoutToken(String url, String postData) throws WxErrorException {
     return this.executeNormal(SimplePostRequestExecutor.create(this), url, postData);
   }
@@ -307,7 +324,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       return null;
     } catch (IOException e) {
       log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uri, data, e.getMessage());
-      throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).errorCode(-1).build(), e);
+      throw new WxErrorException(e);
     }
   }
 
@@ -435,6 +452,11 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public WxCpGroupRobotService getGroupRobotService() {
     return groupRobotService;
+  }
+
+  @Override
+  public WxCpAgentWorkBenchService getWorkBenchService() {
+    return workBenchService;
   }
 
   @Override

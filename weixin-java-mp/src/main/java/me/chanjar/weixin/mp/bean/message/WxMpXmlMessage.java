@@ -569,7 +569,7 @@ public class WxMpXmlMessage implements Serializable {
    * 审核成功时的时间（整形），时间戳
    */
   @XStreamAlias("SuccTime")
-  private Long succTime;
+  private Long successTime;
 
   /**
    * 审核失败的原因

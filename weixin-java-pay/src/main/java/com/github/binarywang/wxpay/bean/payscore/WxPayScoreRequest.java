@@ -80,5 +80,7 @@ public class WxPayScoreRequest implements Serializable {
   private String type;
   @SerializedName("detail")
   private Detail detail;
+  @SerializedName("authorization_code")
+  private  String authorizationCode;
 
 }

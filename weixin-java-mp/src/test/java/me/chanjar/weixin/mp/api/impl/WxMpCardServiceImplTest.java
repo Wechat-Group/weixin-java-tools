@@ -10,7 +10,8 @@ import me.chanjar.weixin.mp.bean.card.*;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
-import static org.testng.AssertJUnit.*;
+import static org.testng.AssertJUnit.assertNotNull;
+import static org.testng.AssertJUnit.assertTrue;
 
 /**
  * 测试代码仅供参考，未做严格测试，因原接口作者并未提供单元测试代码
@@ -234,7 +235,7 @@ public class WxMpCardServiceImplTest {
     String openId = "ou7Gr5sJZgFGgj38sRCNQg5pc3Fc";
     String cardId = "pu7Gr5secJXPkxBeuYUhmp8TYsuY";
     WxUserCardListResult result = this.wxService.getCardService().getUserCardList(openId, cardId);
-    assertTrue(result.isSuccess());
+    assertNotNull(result);
     System.out.println(result);
   }
 }

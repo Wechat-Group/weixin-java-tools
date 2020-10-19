@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.ecommerce.*;
+import com.github.binarywang.wxpay.bean.ecommerce.enums.BillTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -8,15 +9,21 @@ import com.github.binarywang.wxpay.service.EcommerceService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.v3.util.AesUtils;
 import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
+import com.google.common.base.CaseFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.beanutils.BeanMap;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 @RequiredArgsConstructor
 public class EcommerceServiceImpl implements EcommerceService {
@@ -273,6 +280,18 @@ public class EcommerceServiceImpl implements EcommerceService {
     return GSON.fromJson(response, SettlementResult.class);
   }
 
+  @Override
+  public BillResult applyBill(BillTypeEnum billType, BillRequest request) throws WxPayException {
+    String url = String.format(billType.getUrl(), this.payService.getPayBaseUrl(), this.parseURLPair(request));
+    String response = this.payService.getV3(URI.create(url));
+    return GSON.fromJson(response, BillResult.class);
+  }
+
+  @Override
+  public InputStream downloadBill(String url) throws WxPayException {
+    return this.payService.downloadV3(URI.create(url));
+  }
+
   /**
    * 校验通知签名
    * @param header 通知头信息
@@ -287,4 +306,24 @@ public class EcommerceServiceImpl implements EcommerceService {
     return payService.getConfig().getVerifier().verify(header.getSerialNo(),
       beforeSign.getBytes(StandardCharsets.UTF_8), header.getSigned());
   }
-}
+
+  /**
+   * 对象拼接到url
+   * @param o 转换对象
+   * @return  拼接好的string
+   */
+  private String parseURLPair(Object o) {
+    Map<Object, Object> map = new BeanMap(o);
+    Set<Map.Entry<Object, Object>> set = map.entrySet();
+    Iterator<Map.Entry<Object, Object>> it = set.iterator();
+    StringBuilder sb = new StringBuilder();
+    while (it.hasNext()) {
+      Map.Entry<Object, Object> e = it.next();
+      if ( !"class".equals(e.getKey()) && e.getValue() != null)
+        sb.append(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, String.valueOf(e.getKey()))).append("=").append(e.getValue()).append("&");
+    }
+    return sb.deleteCharAt(sb.length() - 1).toString();
+  }
+
+
+  }
