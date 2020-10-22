@@ -162,10 +162,10 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     if (ArrayUtils.isNotEmpty(userIds) || ArrayUtils.isNotEmpty(partyIds)) {
       JsonObject ownerFilter = new JsonObject();
       if (ArrayUtils.isNotEmpty(userIds)) {
-        json.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
+        ownerFilter.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
       }
       if (ArrayUtils.isNotEmpty(partyIds)) {
-        json.add("partyid_list", new Gson().toJsonTree(partyIds).getAsJsonArray());
+        ownerFilter.add("partyid_list", new Gson().toJsonTree(partyIds).getAsJsonArray());
       }
       json.add("owner_filter", ownerFilter);
     }
@@ -212,10 +212,10 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     if (ArrayUtils.isNotEmpty(userIds) || ArrayUtils.isNotEmpty(partyIds)) {
       JsonObject ownerFilter = new JsonObject();
       if (ArrayUtils.isNotEmpty(userIds)) {
-        json.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
+        ownerFilter.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
       }
       if (ArrayUtils.isNotEmpty(partyIds)) {
-        json.add("partyid_list", new Gson().toJsonTree(partyIds).getAsJsonArray());
+        ownerFilter.add("partyid_list", new Gson().toJsonTree(partyIds).getAsJsonArray());
       }
       json.add("owner_filter", ownerFilter);
     }
