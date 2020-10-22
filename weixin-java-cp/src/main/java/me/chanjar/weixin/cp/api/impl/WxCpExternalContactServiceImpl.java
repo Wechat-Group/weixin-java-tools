@@ -105,6 +105,27 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpUserExternalContactBatchInfo getContactDetailBatch(String userId,
+                                                                String cursor,
+                                                                Integer limit)
+    throws WxErrorException {
+    final String url =
+      this.mainService
+        .getWxCpConfigStorage()
+        .getApiUrl(GET_CONTACT_DETAIL_BATCH);
+    JsonObject json = new JsonObject();
+    json.addProperty("userid", userId);
+    if (StringUtils.isNotBlank(cursor)) {
+      json.addProperty("cursor", cursor);
+    }
+    if (limit != null) {
+      json.addProperty("limit", limit);
+    }
+    String responseContent = this.mainService.post(url, json.toString());
+    return WxCpUserExternalContactBatchInfo.fromJson(responseContent);
+  }
+
+  @Override
   public void updateRemark(WxCpUpdateRemarkRequest request) throws WxErrorException {
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_REMARK);
     this.mainService.post(url, request.toJson());
