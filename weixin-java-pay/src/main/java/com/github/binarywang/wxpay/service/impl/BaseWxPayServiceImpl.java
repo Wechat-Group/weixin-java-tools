@@ -23,6 +23,7 @@ import com.github.binarywang.wxpay.util.XmlConfig;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import jodd.io.ZipUtil;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -409,7 +410,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     WxPayUnifiedOrderResult unifiedOrderResult = this.unifiedOrder(request);
     String prepayId = unifiedOrderResult.getPrepayId();
     if (StringUtils.isBlank(prepayId)) {
-      throw new RuntimeException(String.format("无法获取prepay id，错误代码： '%s'，信息：%s。",
+      throw new WxRuntimeException(String.format("无法获取prepay id，错误代码： '%s'，信息：%s。",
         unifiedOrderResult.getErrCode(), unifiedOrderResult.getErrCodeDes()));
     }
 

@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>3.9.0</version>
+  <version>3.9.5.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -134,7 +134,7 @@
       <dependency>
         <groupId>org.jodd</groupId>
         <artifactId>jodd-http</artifactId>
-        <version>5.1.6</version>
+        <version>5.2.0</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -172,7 +172,7 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>1.7.24</version>
+        <version>1.7.30</version>
       </dependency>
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
@@ -182,7 +182,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>29.0-android</version>
+        <version>29.0-jre</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.gson</groupId>
@@ -239,6 +239,12 @@
         <version>3.0.0</version>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>com.github.dreamhead</groupId>
+        <artifactId>moco-runner</artifactId>
+        <version>1.1.0</version>
+        <scope>test</scope>
+      </dependency>
 
       <dependency>
         <groupId>redis.clients</groupId>
@@ -262,7 +268,7 @@
       <dependency>
         <groupId>org.springframework.data</groupId>
         <artifactId>spring-data-redis</artifactId>
-        <version>1.8.23.RELEASE</version>
+        <version>2.3.3.RELEASE</version>
         <optional>true</optional>
         <scope>provided</scope>
       </dependency>

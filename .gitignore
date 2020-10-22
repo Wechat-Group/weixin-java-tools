@@ -50,3 +50,4 @@ sonar-project.properties
 
 # STS
 .factorypath
+*.zip

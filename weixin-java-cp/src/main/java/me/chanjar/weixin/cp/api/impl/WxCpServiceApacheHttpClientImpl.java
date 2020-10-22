@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
@@ -72,7 +73,7 @@ public class WxCpServiceApacheHttpClientImpl extends BaseWxCpServiceImpl<Closeab
         WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
         this.configStorage.updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        throw new WxRuntimeException(e);
       }
     }
     return this.configStorage.getAccessToken();

@@ -2,8 +2,8 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaLiveService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaLiveInfo;
-import cn.binarywang.wx.miniapp.bean.WxMaLiveResult;
+import cn.binarywang.wx.miniapp.bean.live.WxMaLiveResult;
+import cn.binarywang.wx.miniapp.bean.live.WxMaLiveRoomInfo;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
@@ -31,7 +31,7 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
   private final WxMaService wxMaService;
 
   @Override
-  public Integer createRoom(WxMaLiveInfo.RoomInfo roomInfo) throws WxErrorException {
+  public Integer createRoom(WxMaLiveRoomInfo roomInfo) throws WxErrorException {
     String responseContent = this.wxMaService.post(CREATE_ROOM, WxMaGsonBuilder.create().toJson(roomInfo));
     JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get("errcode").getAsInt() != 0) {

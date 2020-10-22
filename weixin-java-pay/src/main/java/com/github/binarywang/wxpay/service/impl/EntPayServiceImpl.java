@@ -8,7 +8,6 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.EntPayService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.util.SignUtils;
-import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMParser;
@@ -22,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.PublicKey;
 import java.security.Security;
+import java.util.Base64;
 
 /**
  * <pre>
@@ -168,7 +168,7 @@ public class EntPayServiceImpl implements EntPayService {
 
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         byte[] encrypt = cipher.doFinal(srcString.getBytes(StandardCharsets.UTF_8));
-        return Base64.encodeBase64String(encrypt);
+        return Base64.getEncoder().encodeToString(encrypt);
       }
     } catch (Exception e) {
       throw new WxPayException("加密出错", e);

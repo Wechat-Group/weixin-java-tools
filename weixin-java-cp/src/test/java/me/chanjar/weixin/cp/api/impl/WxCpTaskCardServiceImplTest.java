@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.WxCpMessage;
-import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
+import me.chanjar.weixin.cp.bean.message.WxCpMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpMessageSendResult;
 import me.chanjar.weixin.cp.bean.taskcard.TaskCardButton;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
@@ -49,7 +49,7 @@ public class WxCpTaskCardServiceImplTest {
       .buttons(Arrays.asList(btn1, btn2))
       .build();
 
-    WxCpMessageSendResult messageSendResult = this.wxCpService.messageSend(message);
+    WxCpMessageSendResult messageSendResult = this.wxCpService.getMessageService().send(message);
     assertNotNull(messageSendResult);
     System.out.println(messageSendResult);
     System.out.println(messageSendResult.getInvalidPartyList());

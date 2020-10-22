@@ -1,8 +1,8 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaLiveInfo;
-import cn.binarywang.wx.miniapp.bean.WxMaLiveResult;
+import cn.binarywang.wx.miniapp.bean.live.WxMaLiveResult;
+import cn.binarywang.wx.miniapp.bean.live.WxMaLiveRoomInfo;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
@@ -33,7 +33,7 @@ public class WxMaLiveServiceImplTest {
     //上传临时素材
     WxMediaUploadResult mediaUpload = this.wxService.getMediaService().uploadMedia("image", new File("E:\\1.png"));
 
-    WxMaLiveInfo.RoomInfo roomInfo = new WxMaLiveInfo.RoomInfo();
+    WxMaLiveRoomInfo roomInfo = new WxMaLiveRoomInfo();
     roomInfo.setName("订阅通知直播间");
     roomInfo.setCoverImg(mediaUpload.getMediaId());
     Calendar c = Calendar.getInstance();

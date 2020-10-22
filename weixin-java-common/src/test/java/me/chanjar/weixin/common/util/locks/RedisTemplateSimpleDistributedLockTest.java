@@ -1,6 +1,6 @@
 package me.chanjar.weixin.common.util.locks;
 
-import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.testng.annotations.BeforeTest;
@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.testng.Assert.*;
 
+@Slf4j
 @Test(enabled = false)
 public class RedisTemplateSimpleDistributedLockTest {
 
@@ -40,19 +41,19 @@ public class RedisTemplateSimpleDistributedLockTest {
     final CountDownLatch endLatch = new CountDownLatch(threadSize);
 
     for (int i = 0; i < threadSize; i++) {
-      new Thread(new Runnable() {
-        @SneakyThrows
-        @Override
-        public void run() {
+      new Thread(() -> {
+        try {
           startLatch.await();
-
-          redisLock.lock();
-          assertEquals(lockCurrentExecuteCounter.incrementAndGet(), 1, "临界区同时只能有一个线程执行");
-          lockCurrentExecuteCounter.decrementAndGet();
-          redisLock.unlock();
-
-          endLatch.countDown();
+        } catch (InterruptedException e) {
+          log.error("unexpected exception", e);
         }
+
+        redisLock.lock();
+        assertEquals(lockCurrentExecuteCounter.incrementAndGet(), 1, "临界区同时只能有一个线程执行");
+        lockCurrentExecuteCounter.decrementAndGet();
+        redisLock.unlock();
+
+        endLatch.countDown();
       }).start();
       startLatch.countDown();
     }

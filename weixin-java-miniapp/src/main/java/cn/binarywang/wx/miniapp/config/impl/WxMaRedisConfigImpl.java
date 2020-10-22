@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.config.impl;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -79,5 +80,10 @@ public class WxMaRedisConfigImpl extends AbstractWxMaRedisConfig {
     try (Jedis jedis = this.jedisPool.getResource()) {
       jedis.expire(this.accessTokenKey, 0);
     }
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
   }
 }

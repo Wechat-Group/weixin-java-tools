@@ -1,6 +1,8 @@
 package me.chanjar.weixin.cp.constant;
 
 
+import lombok.experimental.UtilityClass;
+
 /**
  * <pre>
  *  企业微信api地址常量类
@@ -9,12 +11,12 @@ package me.chanjar.weixin.cp.constant;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@UtilityClass
 public final class WxCpApiPathConsts {
   public static final String DEFAULT_CP_BASE_URL = "https://qyapi.weixin.qq.com";
 
   public static final String GET_JSAPI_TICKET = "/cgi-bin/get_jsapi_ticket";
   public static final String GET_AGENT_CONFIG_TICKET = "/cgi-bin/ticket/get?&type=agent_config";
-  public static final String MESSAGE_SEND = "/cgi-bin/message/send";
   public static final String GET_CALLBACK_IP = "/cgi-bin/getcallbackip";
   public static final String BATCH_REPLACE_PARTY = "/cgi-bin/batch/replaceparty";
   public static final String BATCH_REPLACE_USER = "/cgi-bin/batch/replaceuser";
@@ -23,18 +25,50 @@ public final class WxCpApiPathConsts {
   public static final String GET_TOKEN = "/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
   public static final String WEBHOOK_SEND = "/cgi-bin/webhook/send?key=";
 
+  /**
+   * 消息推送相关接口
+   * https://work.weixin.qq.com/api/doc/90000/90135/90235
+   */
+  @UtilityClass
+  public static class Message {
+    /**
+     * 发送应用消息
+     */
+    public static final String MESSAGE_SEND = "/cgi-bin/message/send";
+
+    /**
+     * 查询应用消息发送统计
+     */
+    public static final String GET_STATISTICS = "/cgi-bin/message/get_statistics";
+
+    /**
+     * 互联企业发送应用消息
+     */
+    public static final String LINKEDCORP_MESSAGE_SEND = "/cgi-bin/linkedcorp/message/send";
+  }
+
+  @UtilityClass
   public static class Agent {
     public static final String AGENT_GET = "/cgi-bin/agent/get?agentid=%d";
     public static final String AGENT_SET = "/cgi-bin/agent/set";
     public static final String AGENT_LIST = "/cgi-bin/agent/list";
   }
 
+  @UtilityClass
+  public static class WorkBench {
+    public static final String WORKBENCH_TEMPLATE_SET = "/cgi-bin/agent/set_workbench_template";
+    public static final String WORKBENCH_TEMPLATE_GET = "/cgi-bin/agent/get_workbench_template";
+    public static final String WORKBENCH_DATA_SET = "/cgi-bin/agent/set_workbench_data";
+  }
+
+  @UtilityClass
   public static class OAuth2 {
     public static final String GET_USER_INFO = "/cgi-bin/user/getuserinfo?code=%s&agentid=%d";
     public static final String GET_USER_DETAIL = "/cgi-bin/user/getuserdetail";
     public static final String URL_OAUTH2_AUTHORIZE = "https://open.weixin.qq.com/connect/oauth2/authorize";
   }
 
+  @UtilityClass
   public static class Chat {
     public static final String APPCHAT_CREATE = "/cgi-bin/appchat/create";
     public static final String APPCHAT_UPDATE = "/cgi-bin/appchat/update";
@@ -42,6 +76,7 @@ public final class WxCpApiPathConsts {
     public static final String APPCHAT_SEND = "/cgi-bin/appchat/send";
   }
 
+  @UtilityClass
   public static class Department {
     public static final String DEPARTMENT_CREATE = "/cgi-bin/department/create";
     public static final String DEPARTMENT_UPDATE = "/cgi-bin/department/update";
@@ -49,6 +84,7 @@ public final class WxCpApiPathConsts {
     public static final String DEPARTMENT_LIST = "/cgi-bin/department/list";
   }
 
+  @UtilityClass
   public static class Media {
     public static final String MEDIA_GET = "/cgi-bin/media/get";
     public static final String MEDIA_UPLOAD = "/cgi-bin/media/upload?type=";
@@ -56,12 +92,14 @@ public final class WxCpApiPathConsts {
     public static final String JSSDK_MEDIA_GET = "/cgi-bin/media/get/jssdk";
   }
 
+  @UtilityClass
   public static class Menu {
     public static final String MENU_CREATE = "/cgi-bin/menu/create?agentid=%d";
     public static final String MENU_DELETE = "/cgi-bin/menu/delete?agentid=%d";
     public static final String MENU_GET = "/cgi-bin/menu/get?agentid=%d";
   }
 
+  @UtilityClass
   public static class Oa {
     public static final String GET_CHECKIN_DATA = "/cgi-bin/checkin/getcheckindata";
     public static final String GET_CHECKIN_OPTION = "/cgi-bin/checkin/getcheckinoption";
@@ -70,8 +108,14 @@ public final class WxCpApiPathConsts {
     public static final String GET_DIAL_RECORD = "/cgi-bin/dial/get_dial_record";
     public static final String GET_TEMPLATE_DETAIL = "/cgi-bin/oa/gettemplatedetail";
     public static final String APPLY_EVENT = "/cgi-bin/oa/applyevent";
+
+    public static final String CALENDAR_ADD = "/cgi-bin/oa/calendar/add";
+    public static final String CALENDAR_UPDATE = "/cgi-bin/oa/calendar/update";
+    public static final String CALENDAR_GET = "/cgi-bin/oa/calendar/get";
+    public static final String CALENDAR_DEL = "/cgi-bin/oa/calendar/del";
   }
 
+  @UtilityClass
   public static class Tag {
     public static final String TAG_CREATE = "/cgi-bin/tag/create";
     public static final String TAG_UPDATE = "/cgi-bin/tag/update";
@@ -82,10 +126,12 @@ public final class WxCpApiPathConsts {
     public static final String TAG_DEL_TAG_USERS = "/cgi-bin/tag/deltagusers";
   }
 
+  @UtilityClass
   public static class TaskCard {
     public static final String UPDATE_TASK_CARD = "/cgi-bin/message/update_taskcard";
   }
 
+  @UtilityClass
   public static class Tp {
     public static final String JSCODE_TO_SESSION = "/cgi-bin/service/miniprogram/jscode2session";
     public static final String GET_CORP_TOKEN = "/cgi-bin/service/get_corp_token";
@@ -96,6 +142,7 @@ public final class WxCpApiPathConsts {
     public static final String GET_AUTH_INFO = "/cgi-bin/service/get_auth_info";
   }
 
+  @UtilityClass
   public static class User {
     public static final String USER_AUTHENTICATE = "/cgi-bin/user/authsucc?userid=";
     public static final String USER_CREATE = "/cgi-bin/user/create";
@@ -112,6 +159,7 @@ public final class WxCpApiPathConsts {
     public static final String GET_EXTERNAL_CONTACT = "/cgi-bin/crm/get_external_contact?external_userid=";
   }
 
+  @UtilityClass
   public static class ExternalContact {
     @Deprecated
     public static final String GET_EXTERNAL_CONTACT = "/cgi-bin/crm/get_external_contact?external_userid=";
@@ -123,6 +171,7 @@ public final class WxCpApiPathConsts {
     public static final String CLOSE_TEMP_CHAT = "/cgi-bin/externalcontact/close_temp_chat";
     public static final String GET_FOLLOW_USER_LIST = "/cgi-bin/externalcontact/get_follow_user_list";
     public static final String GET_CONTACT_DETAIL = "/cgi-bin/externalcontact/get?external_userid=";
+    public static final String UPDATE_REMARK = "/cgi-bin/externalcontact/remark";
     public static final String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";
     public static final String LIST_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/get_unassigned_list";
     public static final String TRANSFER_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/transfer";

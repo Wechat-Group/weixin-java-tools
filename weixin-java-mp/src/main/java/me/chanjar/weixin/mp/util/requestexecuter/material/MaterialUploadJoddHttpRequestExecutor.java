@@ -17,6 +17,7 @@ import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -36,7 +37,7 @@ public class MaterialUploadJoddHttpRequestExecutor extends MaterialUploadRequest
     request.withConnectionProvider(requestHttp.getRequestHttpClient());
 
     if (material == null) {
-      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("非法请求，material参数为空").build());
+      throw new WxErrorException("非法请求，material参数为空");
     }
 
     File file = material.getFile();
@@ -50,7 +51,7 @@ public class MaterialUploadJoddHttpRequestExecutor extends MaterialUploadRequest
     }
 
     HttpResponse response = request.send();
-    response.charset(StringPool.UTF_8);
+    response.charset(StandardCharsets.UTF_8.name());
     String responseContent = response.bodyText();
     WxError error = WxError.fromJson(responseContent, WxType.MP);
     if (error.getErrorCode() != 0) {

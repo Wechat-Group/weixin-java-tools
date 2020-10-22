@@ -2,15 +2,16 @@ package me.chanjar.weixin.mp.bean.card;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.mp.bean.result.WxMpResult;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
 
 
+/**
+ * @author S <sshzh90@gmail.com>
+ */
 @Data
-public class WxMpCardCodeDepositResult extends WxMpResult implements Serializable {
-
+public class WxMpCardCodeDepositResult  implements Serializable {
   private static final long serialVersionUID = 2955588617765355420L;
 
   /**

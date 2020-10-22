@@ -3,8 +3,8 @@ package me.chanjar.weixin.cp.demo;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.message.WxCpMessageRouter;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
-import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -61,7 +61,6 @@ public class WxCpEndpointServlet extends HttpServlet {
       response.getWriter().write(outMessage.toEncryptedXml(this.wxCpConfigStorage));
     }
 
-    return;
   }
 
 }

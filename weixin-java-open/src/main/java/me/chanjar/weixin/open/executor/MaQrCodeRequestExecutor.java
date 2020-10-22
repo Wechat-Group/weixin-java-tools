@@ -38,7 +38,7 @@ public abstract class MaQrCodeRequestExecutor<H, P> implements RequestExecutor<F
       case OK_HTTP:
         return new MaQrCodeOkhttpRequestExecutor(requestHttp);
       default:
-        throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("不支持的http框架").build());
+        throw new WxErrorException("不支持的http框架");
     }
   }
 

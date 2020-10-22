@@ -45,7 +45,7 @@ public class WxMaMessageRouter {
     this.wxMaService = wxMaService;
     ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxMaMessageRouter-pool-%d").build();
     this.executorService = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE,
-      0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), namedThreadFactory);
+      0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
     this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
@@ -88,11 +88,8 @@ public class WxMaMessageRouter {
       // 返回最后一个非异步的rule的执行结果
       if (rule.isAsync()) {
         futures.add(
-          this.executorService.submit(new Runnable() {
-            @Override
-            public void run() {
-              rule.service(wxMessage, context, WxMaMessageRouter.this.wxMaService, WxMaMessageRouter.this.sessionManager, WxMaMessageRouter.this.exceptionHandler);
-            }
+          this.executorService.submit(() -> {
+            rule.service(wxMessage, context, WxMaMessageRouter.this.wxMaService, WxMaMessageRouter.this.sessionManager, WxMaMessageRouter.this.exceptionHandler);
           })
         );
       } else {
@@ -104,18 +101,15 @@ public class WxMaMessageRouter {
     }
 
     if (futures.size() > 0) {
-      this.executorService.submit(new Runnable() {
-        @Override
-        public void run() {
-          for (Future<?> future : futures) {
-            try {
-              future.get();
-              WxMaMessageRouter.this.log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUser());
-              // 异步操作结束，session访问结束
-              sessionEndAccess(wxMessage);
-            } catch (InterruptedException | ExecutionException e) {
-              WxMaMessageRouter.this.log.error("Error happened when wait task finish", e);
-            }
+      this.executorService.submit(() -> {
+        for (Future<?> future : futures) {
+          try {
+            future.get();
+            WxMaMessageRouter.this.log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUser());
+            // 异步操作结束，session访问结束
+            sessionEndAccess(wxMessage);
+          } catch (InterruptedException | ExecutionException e) {
+            WxMaMessageRouter.this.log.error("Error happened when wait task finish", e);
           }
         }
       });
@@ -124,7 +118,7 @@ public class WxMaMessageRouter {
   }
 
   public WxMaXmlOutMessage route(final WxMaMessage wxMessage) {
-    return this.route(wxMessage, new HashMap<String, Object>(2));
+    return this.route(wxMessage, new HashMap<>(2));
   }
 
   private boolean isMsgDuplicated(WxMaMessage wxMessage) {

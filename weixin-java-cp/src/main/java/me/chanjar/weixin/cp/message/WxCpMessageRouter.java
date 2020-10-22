@@ -1,15 +1,7 @@
 package me.chanjar.weixin.cp.message;
 
-import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.api.WxMessageDuplicateChecker;
 import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
@@ -18,8 +10,15 @@ import me.chanjar.weixin.common.session.InternalSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.LogExceptionHandler;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
-import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * <pre>
@@ -49,9 +48,9 @@ import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
  *
  * @author Daniel Qian
  */
+@Slf4j
 public class WxCpMessageRouter {
   private static final int DEFAULT_THREAD_POOL_SIZE = 100;
-  private final Logger log = LoggerFactory.getLogger(WxCpMessageRouter.class);
   private final List<WxCpMessageRouterRule> rules = new ArrayList<>();
 
   private final WxCpService wxCpService;
@@ -69,7 +68,9 @@ public class WxCpMessageRouter {
    */
   public WxCpMessageRouter(WxCpService wxCpService) {
     this.wxCpService = wxCpService;
-    this.executorService = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
+    ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxCpMessageRouter-pool-%d").build();
+    this.executorService = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE,
+      0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
     this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
     this.sessionManager = wxCpService.getSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
@@ -156,37 +157,31 @@ public class WxCpMessageRouter {
       // 返回最后一个非异步的rule的执行结果
       if (rule.isAsync()) {
         futures.add(
-          this.executorService.submit(new Runnable() {
-            @Override
-            public void run() {
-              rule.service(wxMessage, context, WxCpMessageRouter.this.wxCpService, WxCpMessageRouter.this.sessionManager, WxCpMessageRouter.this.exceptionHandler);
-            }
+          this.executorService.submit(() -> {
+            rule.service(wxMessage, context, WxCpMessageRouter.this.wxCpService, WxCpMessageRouter.this.sessionManager, WxCpMessageRouter.this.exceptionHandler);
           })
         );
       } else {
         res = rule.service(wxMessage, context, this.wxCpService, this.sessionManager, this.exceptionHandler);
         // 在同步操作结束，session访问结束
-        this.log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUserName());
+        log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUserName());
         sessionEndAccess(wxMessage);
       }
     }
 
     if (futures.size() > 0) {
-      this.executorService.submit(new Runnable() {
-        @Override
-        public void run() {
-          for (Future future : futures) {
-            try {
-              future.get();
-              WxCpMessageRouter.this.log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUserName());
-              // 异步操作结束，session访问结束
-              sessionEndAccess(wxMessage);
-            } catch (InterruptedException e) {
-              WxCpMessageRouter.this.log.error("Error happened when wait task finish", e);
-              Thread.currentThread().interrupt();
-            } catch (ExecutionException e) {
-              WxCpMessageRouter.this.log.error("Error happened when wait task finish", e);
-            }
+      this.executorService.submit(() -> {
+        for (Future future : futures) {
+          try {
+            future.get();
+            log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUserName());
+            // 异步操作结束，session访问结束
+            sessionEndAccess(wxMessage);
+          } catch (InterruptedException e) {
+            log.error("Error happened when wait task finish", e);
+            Thread.currentThread().interrupt();
+          } catch (ExecutionException e) {
+            log.error("Error happened when wait task finish", e);
           }
         }
       });
@@ -198,7 +193,7 @@ public class WxCpMessageRouter {
    * 处理微信消息.
    */
   public WxCpXmlOutMessage route(final WxCpXmlMessage wxMessage) {
-    return this.route(wxMessage, new HashMap<String, Object>(2));
+    return this.route(wxMessage, new HashMap<>(2));
   }
 
   private boolean isMsgDuplicated(WxCpXmlMessage wxMessage) {

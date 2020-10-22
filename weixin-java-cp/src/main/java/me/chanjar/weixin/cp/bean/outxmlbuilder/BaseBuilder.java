@@ -1,6 +1,6 @@
 package me.chanjar.weixin.cp.bean.outxmlbuilder;
 
-import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 
 public abstract class BaseBuilder<BuilderType, ValueType> {
 

@@ -58,7 +58,7 @@ public class BeanUtils {
     if (!requiredFields.isEmpty()) {
       String msg = String.format("必填字段【%s】必须提供值！", requiredFields);
       log.debug(msg);
-      throw new WxErrorException(WxError.builder().errorMsg(msg).build());
+      throw new WxErrorException(msg);
     }
   }
 

@@ -133,6 +133,20 @@ public interface WxCpExternalContactService {
   WxCpUserExternalContactInfo getContactDetail(String userId) throws WxErrorException;
 
   /**
+   * 修改客户备注信息.
+   * <pre>
+   * 企业可通过此接口修改指定用户添加的客户的备注信息。
+   * 请求方式: POST(HTTP)
+   * 请求地址:https://qyapi.weixin.qq.com/cgi-bin/externalcontact/remark?access_token=ACCESS_TOKEN
+   * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/92115
+   * </pre>
+   *
+   * @param request 备注信息请求
+   * @throws WxErrorException .
+   */
+  void updateRemark(WxCpUpdateRemarkRequest request) throws WxErrorException;
+
+  /**
    * 获取客户列表.
    * <pre>
    *   企业可通过此接口获取指定成员添加的客户列表。客户是指配置了客户联系功能的成员所添加的外部联系人。没有配置客户联系功能的成员，所添加的外部联系人将不会作为客户返回。

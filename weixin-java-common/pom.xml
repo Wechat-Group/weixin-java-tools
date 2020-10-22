@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>3.9.0</version>
+    <version>3.9.5.B</version>
   </parent>
 
   <artifactId>weixin-java-common</artifactId>
@@ -50,7 +50,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
-      <version>1.7.24</version>
+      <version>1.7.30</version>
     </dependency>
 
     <dependency>
@@ -165,7 +165,7 @@
             <version>3.5.1</version>
             <configuration>
               <annotationProcessors>
-                cn.binarywang.wx.graal.GraalProcessor,lombok.launch.AnnotationProcessorHider$AnnotationProcessor,lombok.launch.AnnotationProcessorHider$ClaimingProcessor
+                com.github.binarywang.wx.graal.GraalProcessor,lombok.launch.AnnotationProcessorHider$AnnotationProcessor,lombok.launch.AnnotationProcessorHider$ClaimingProcessor
               </annotationProcessors>
               <annotationProcessorPaths>
                 <path>

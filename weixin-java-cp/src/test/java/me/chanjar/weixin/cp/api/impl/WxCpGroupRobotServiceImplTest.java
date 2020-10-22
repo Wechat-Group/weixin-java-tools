@@ -16,8 +16,6 @@ import java.io.InputStream;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.testng.Assert.*;
-
 /**
  * 微信群机器人消息发送api 单元测试
  *
@@ -48,7 +46,7 @@ public class WxCpGroupRobotServiceImplTest {
       ">类型:<font color=\"comment\">用户反馈</font> \n" +
       ">普通用户反馈:<font color=\"comment\">117例</font> \n" +
       ">VIP用户反馈:<font color=\"comment\">15例</font>";
-    robotService.sendMarkDown(content);
+    robotService.sendMarkdown(content);
   }
 
   @Test
@@ -62,7 +60,8 @@ public class WxCpGroupRobotServiceImplTest {
 
   @Test
   public void testSendNews() throws WxErrorException {
-    NewArticle article = new NewArticle("图文消息测试","hello world","http://www.baidu.com","http://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png");
+    NewArticle article = new NewArticle("图文消息测试", "hello world", "http://www.baidu.com",
+      "http://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png", null);
     robotService.sendNews(Stream.of(article).collect(Collectors.toList()));
   }
 }

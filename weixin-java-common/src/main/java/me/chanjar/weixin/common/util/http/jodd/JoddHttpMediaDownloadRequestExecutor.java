@@ -19,6 +19,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * .
@@ -47,7 +48,7 @@ public class JoddHttpMediaDownloadRequestExecutor extends BaseMediaDownloadReque
     request.withConnectionProvider(requestHttp.getRequestHttpClient());
 
     HttpResponse response = request.send();
-    response.charset(StringPool.UTF_8);
+    response.charset(StandardCharsets.UTF_8.name());
 
     String contentType = response.header("Content-Type");
     if (contentType != null && contentType.startsWith("application/json")) {

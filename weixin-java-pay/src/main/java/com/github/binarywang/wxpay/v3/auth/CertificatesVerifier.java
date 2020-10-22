@@ -1,5 +1,7 @@
 package com.github.binarywang.wxpay.v3.auth;
 
+import me.chanjar.weixin.common.error.WxRuntimeException;
+
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -30,11 +32,11 @@ public class CertificatesVerifier implements Verifier {
       sign.update(message);
       return sign.verify(Base64.getDecoder().decode(signature));
     } catch (NoSuchAlgorithmException e) {
-      throw new RuntimeException("当前Java环境不支持SHA256withRSA", e);
+      throw new WxRuntimeException("当前Java环境不支持SHA256withRSA", e);
     } catch (SignatureException e) {
-      throw new RuntimeException("签名验证过程发生了错误", e);
+      throw new WxRuntimeException("签名验证过程发生了错误", e);
     } catch (InvalidKeyException e) {
-      throw new RuntimeException("无效的证书", e);
+      throw new WxRuntimeException("无效的证书", e);
     }
   }
 

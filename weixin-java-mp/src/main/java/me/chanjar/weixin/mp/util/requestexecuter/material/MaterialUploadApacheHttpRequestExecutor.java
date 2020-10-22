@@ -41,7 +41,7 @@ public class MaterialUploadApacheHttpRequestExecutor extends MaterialUploadReque
     }
 
     if (material == null) {
-      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("非法请求，material参数为空").build());
+      throw new WxErrorException("非法请求，material参数为空");
     }
 
     File file = material.getFile();

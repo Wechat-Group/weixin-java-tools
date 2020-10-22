@@ -5,6 +5,7 @@ import jodd.http.HttpRequest;
 import jodd.http.ProxyInfo;
 import jodd.http.net.SocketHttpConnectionProvider;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 
@@ -77,7 +78,7 @@ public class WxMpServiceJoddHttpImpl extends BaseWxMpServiceImpl<HttpConnectionP
 
       return this.extractAccessToken(request.send().bodyText());
     } catch (InterruptedException e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     } finally {
       if (locked) {
         lock.unlock();

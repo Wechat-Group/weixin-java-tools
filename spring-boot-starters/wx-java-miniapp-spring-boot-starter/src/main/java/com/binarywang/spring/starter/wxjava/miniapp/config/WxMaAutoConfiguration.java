@@ -9,6 +9,7 @@ import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.config.impl.WxMaRedisBetterConfigImpl;
 import com.binarywang.spring.starter.wxjava.miniapp.enums.HttpClientType;
+import com.binarywang.spring.starter.wxjava.miniapp.properties.RedisProperties;
 import com.binarywang.spring.starter.wxjava.miniapp.properties.WxMaProperties;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.redis.JedisWxRedisOps;
@@ -52,14 +53,19 @@ public class WxMaAutoConfiguration {
   public WxMaService service(WxMaConfig wxMaConfig) {
     HttpClientType httpClientType = wxMaProperties.getConfigStorage().getHttpClientType();
     WxMaService wxMaService;
-    if (httpClientType == HttpClientType.OkHttp) {
-      wxMaService = new WxMaServiceOkHttpImpl();
-    } else if (httpClientType == HttpClientType.JoddHttp) {
-      wxMaService = new WxMaServiceJoddHttpImpl();
-    } else if (httpClientType == HttpClientType.HttpClient) {
-      wxMaService = new WxMaServiceHttpClientImpl();
-    } else {
-      wxMaService = new WxMaServiceImpl();
+    switch (httpClientType) {
+      case OkHttp:
+        wxMaService = new WxMaServiceOkHttpImpl();
+        break;
+      case JoddHttp:
+        wxMaService = new WxMaServiceJoddHttpImpl();
+        break;
+      case HttpClient:
+        wxMaService = new WxMaServiceHttpClientImpl();
+        break;
+      default:
+        wxMaService = new WxMaServiceImpl();
+        break;
     }
     wxMaService.setWxMaConfig(wxMaConfig);
     return wxMaService;
@@ -102,7 +108,7 @@ public class WxMaAutoConfiguration {
   }
 
   private WxMaDefaultConfigImpl wxMaJedisConfigStorage() {
-    WxMaProperties.RedisProperties redisProperties = wxMaProperties.getConfigStorage().getRedis();
+    RedisProperties redisProperties = wxMaProperties.getConfigStorage().getRedis();
     JedisPool jedisPool;
     if (StringUtils.isNotEmpty(redisProperties.getHost())) {
       JedisPoolConfig config = new JedisPoolConfig();

@@ -1,11 +1,5 @@
 package com.github.binarywang.wxpay.service.impl;
 
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import javax.net.ssl.SSLContext;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.github.binarywang.wxpay.bean.WxPayApiData;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import jodd.http.HttpConnectionProvider;
@@ -15,8 +9,14 @@ import jodd.http.ProxyInfo;
 import jodd.http.ProxyInfo.ProxyType;
 import jodd.http.net.SSLSocketHttpConnectionProvider;
 import jodd.http.net.SocketHttpConnectionProvider;
-import jodd.util.Base64;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.HttpPost;
+
+import javax.net.ssl.SSLContext;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 /**
  * 微信支付请求实现类，jodd-http实现.
@@ -30,7 +30,7 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
     try {
       HttpRequest request = this.buildHttpRequest(url, requestStr, useKey);
       byte[] responseBytes = request.send().bodyBytes();
-      final String responseString = Base64.encodeToString(responseBytes);
+      final String responseString = Base64.getEncoder().encodeToString(responseBytes);
       this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据(Base64编码后)】：{}", url, requestStr, responseString);
       if (this.getConfig().isIfSaveApiData()) {
         wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
@@ -78,6 +78,11 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public String getV3(URI url) throws WxPayException {
+    return null;
+  }
+
+  @Override
+  public InputStream downloadV3(URI url) throws WxPayException {
     return null;
   }
 

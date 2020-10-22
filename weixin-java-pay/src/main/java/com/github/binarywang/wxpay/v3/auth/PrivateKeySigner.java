@@ -1,5 +1,7 @@
 package com.github.binarywang.wxpay.v3.auth;
 
+import me.chanjar.weixin.common.error.WxRuntimeException;
+
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -27,11 +29,11 @@ public class PrivateKeySigner implements Signer {
       return new SignatureResult(
           Base64.getEncoder().encodeToString(sign.sign()), certificateSerialNumber);
     } catch (NoSuchAlgorithmException e) {
-      throw new RuntimeException("当前Java环境不支持SHA256withRSA", e);
+      throw new WxRuntimeException("当前Java环境不支持SHA256withRSA", e);
     } catch (SignatureException e) {
-      throw new RuntimeException("签名计算失败", e);
+      throw new WxRuntimeException("签名计算失败", e);
     } catch (InvalidKeyException e) {
-      throw new RuntimeException("无效的私钥", e);
+      throw new WxRuntimeException("无效的私钥", e);
     }
   }
 }

@@ -792,6 +792,18 @@ public class ApplymentsRequest implements Serializable {
     @SerializedName(value = "store_qr_code")
     private String storeQrCode;
 
+    /**
+     * <pre>
+     * 字段名：小程序AppID
+     * 变量名：mini_program_sub_appid
+     * 是否必填：否
+     * 类型：string(256)
+     * 描述：
+     * </pre>
+     */
+    @SerializedName(value = "mini_program_sub_appid")
+    private String miniProgramSubAppid;
+
   }
 
 }

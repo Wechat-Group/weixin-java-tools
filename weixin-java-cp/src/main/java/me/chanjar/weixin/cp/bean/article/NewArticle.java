@@ -37,4 +37,8 @@ public class NewArticle implements Serializable {
    */
   private String picUrl;
 
+  /**
+   * 按钮文字，仅在图文数为1条时才生效。 默认为“阅读全文”， 不超过4个文字，超过自动截断。该设置只在企业微信上生效，微工作台（原企业号）上不生效。
+   */
+  private String btnText;
 }

@@ -24,7 +24,7 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
 
   private volatile String token;
   protected volatile String accessToken;
-  protected Lock accessTokenLock = new ReentrantLock();
+  protected transient Lock accessTokenLock = new ReentrantLock();
   private volatile String aesKey;
   protected volatile Integer agentId;
   private volatile long expiresTime;
@@ -37,16 +37,16 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   private volatile String httpProxyPassword;
 
   private volatile String jsapiTicket;
-  protected Lock jsapiTicketLock = new ReentrantLock();
+  protected transient Lock jsapiTicketLock = new ReentrantLock();
   private volatile long jsapiTicketExpiresTime;
 
   private volatile String agentJsapiTicket;
-  protected Lock agentJsapiTicketLock = new ReentrantLock();
+  protected transient Lock agentJsapiTicketLock = new ReentrantLock();
   private volatile long agentJsapiTicketExpiresTime;
 
   private volatile File tmpDirFile;
 
-  private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
+  private transient volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
 
   private volatile String baseApiUrl;
 
@@ -296,5 +296,10 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
 
   public void setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
     this.apacheHttpClientBuilder = apacheHttpClientBuilder;
+  }
+
+  public WxCpDefaultConfigImpl setWebhookKey(String webhookKey) {
+    this.webhookKey = webhookKey;
+    return this;
   }
 }

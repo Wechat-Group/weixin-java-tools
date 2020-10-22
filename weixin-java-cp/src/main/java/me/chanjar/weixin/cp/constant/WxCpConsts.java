@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.constant;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * <pre>
  * 企业微信常量
@@ -8,11 +10,13 @@ package me.chanjar.weixin.cp.constant;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@UtilityClass
 public class WxCpConsts {
   /**
    * 企业微信端推送过来的事件类型.
    * 参考文档：https://work.weixin.qq.com/api/doc#12974
    */
+  @UtilityClass
   public static class EventType {
     /**
      * 成员关注事件.
@@ -95,16 +99,46 @@ public class WxCpConsts {
     public static final String CHANGE_EXTERNAL_CONTACT = "change_external_contact";
 
     /**
-     * 企业微信审批事件推送
+     * 企业微信审批事件推送（自建应用审批）
      */
     public static final String OPEN_APPROVAL_CHANGE = "open_approval_change";
 
+    /**
+     * 企业微信审批事件推送（系统审批）
+     */
+    public static final String SYS_APPROVAL_CHANGE = "sys_approval_change";
+
+    /**
+     * 修改日历事件
+     */
+    public static final String MODIFY_CALENDAR = "modify_calendar";
+
+    /**
+     * 删除日历事件
+     */
+    public static final String DELETE_CALENDAR = "delete_calendar";
+
+    /**
+     * 添加日程事件
+     */
+    public static final String ADD_SCHEDULE = "add_schedule";
+
+    /**
+     * 修改日程事件
+     */
+    public static final String MODIFY_SCHEDULE = "modify_schedule";
+
+    /**
+     * 删除日程事件
+     */
+    public static final String DELETE_SCHEDULE = "delete_schedule";
 
   }
 
   /**
    * 企业外部联系人变更事件的CHANGE_TYPE
    */
+  @UtilityClass
   public static class ExternalContactChangeType {
     /**
      * 新增外部联系人
@@ -128,6 +162,7 @@ public class WxCpConsts {
   /**
    * 企业微信通讯录变更事件.
    */
+  @UtilityClass
   public static class ContactChangeType {
     /**
      * 新增成员事件.
@@ -167,8 +202,80 @@ public class WxCpConsts {
   }
 
   /**
+   * 互联企业发送应用消息的消息类型.
+   */
+  @UtilityClass
+  public static class LinkedCorpMsgType {
+    /**
+     * 文本消息.
+     */
+    public static final String TEXT = "text";
+    /**
+     * 图片消息.
+     */
+    public static final String IMAGE = "image";
+    /**
+     * 视频消息.
+     */
+    public static final String VIDEO = "video";
+    /**
+     * 图文消息（点击跳转到外链）.
+     */
+    public static final String NEWS = "news";
+    /**
+     * 图文消息（点击跳转到图文消息页面）.
+     */
+    public static final String MPNEWS = "mpnews";
+    /**
+     * markdown消息.
+     * （目前仅支持markdown语法的子集，微工作台（原企业号）不支持展示markdown消息）
+     */
+    public static final String MARKDOWN = "markdown";
+    /**
+     * 发送文件.
+     */
+    public static final String FILE = "file";
+    /**
+     * 文本卡片消息.
+     */
+    public static final String TEXTCARD = "textcard";
+
+    /**
+     * 小程序通知消息.
+     */
+    public static final String MINIPROGRAM_NOTICE = "miniprogram_notice";
+  }
+
+  /**
+   * 群机器人的消息类型.
+   */
+  @UtilityClass
+  public static class GroupRobotMsgType {
+    /**
+     * 文本消息.
+     */
+    public static final String TEXT = "text";
+
+    /**
+     * 图片消息.
+     */
+    public static final String IMAGE = "image";
+
+    /**
+     * markdown消息.
+     */
+    public static final String MARKDOWN = "markdown";
+
+    /**
+     * 图文消息（点击跳转到外链）.
+     */
+    public static final String NEWS = "news";
+  }
+
+  /**
    * 应用推送消息的消息类型.
    */
+  @UtilityClass
   public static class AppChatMsgType {
     /**
      * 文本消息.
@@ -206,5 +313,24 @@ public class WxCpConsts {
      * markdown消息.
      */
     public static final String MARKDOWN = "markdown";
+  }
+
+  public static class WorkBenchType {
+    /*
+    * 关键数据型
+    * */
+    public static final String KEYDATA = "keydata";
+    /*
+    * 图片型
+    * */
+    public static final String IMAGE = "image";
+    /*
+    * 列表型
+    * */
+    public static final String LIST = "list";
+    /*
+    * webview型
+    * */
+    public static final String WEBVIEW = "webview";
   }
 }

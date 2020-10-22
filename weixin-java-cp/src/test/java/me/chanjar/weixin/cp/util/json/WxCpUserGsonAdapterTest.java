@@ -91,7 +91,7 @@ public class WxCpUserGsonAdapterTest {
     assertThat(user).isNotNull();
 
     assertThat(user.getOrders()).isNotEmpty();
-    assertThat(user.getOrders().length).isEqualTo(2);
+    assertThat(user.getOrders()).hasSize(2);
     assertThat(user.getOrders()[0]).isEqualTo(1);
     assertThat(user.getOrders()[1]).isEqualTo(2);
 
@@ -140,6 +140,12 @@ public class WxCpUserGsonAdapterTest {
   public void testSerialize() {
     WxCpUser user = new WxCpUser();
     user.setOrders(new Integer[]{1, 2});
+    user.addExtAttr(WxCpUser.Attr.builder()
+      .type(0)
+      .name("文本名称")
+      .textValue("文本")
+      .build());
+
     user.addExternalAttr(WxCpUser.ExternalAttribute.builder()
       .type(0)
       .name("文本名称")
@@ -159,7 +165,9 @@ public class WxCpUserGsonAdapterTest {
       .title("my miniprogram")
       .build());
 
-    assertThat(user.toJson()).isEqualTo("{\"order\":[1,2],\"external_profile\":{\"external_attr\":" +
+    assertThat(user.toJson()).isEqualTo("{\"order\":[1,2]," +
+      "\"extattr\":{\"attrs\":[{\"type\":0,\"name\":\"文本名称\",\"text\":{\"value\":\"文本\"}}]}," +
+      "\"external_profile\":{\"external_attr\":" +
       "[{\"type\":0,\"name\":\"文本名称\",\"text\":{\"value\":\"文本\"}}," +
       "{\"type\":1,\"name\":\"网页名称\",\"web\":{\"url\":\"http://www.test.com\",\"title\":\"标题\"}}," +
       "{\"type\":2,\"name\":\"测试app\"," +

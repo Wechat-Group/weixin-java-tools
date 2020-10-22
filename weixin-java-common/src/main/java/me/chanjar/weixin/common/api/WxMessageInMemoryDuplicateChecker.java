@@ -61,23 +61,20 @@ public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChec
     if (this.backgroundProcessStarted.getAndSet(true)) {
       return;
     }
-    Thread t = new Thread(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          while (true) {
-            Thread.sleep(WxMessageInMemoryDuplicateChecker.this.clearPeriod);
-            Long now = System.currentTimeMillis();
-            for (Map.Entry<String, Long> entry :
-                WxMessageInMemoryDuplicateChecker.this.msgId2Timestamp.entrySet()) {
-              if (now - entry.getValue() > WxMessageInMemoryDuplicateChecker.this.timeToLive) {
-                WxMessageInMemoryDuplicateChecker.this.msgId2Timestamp.entrySet().remove(entry);
-              }
+    Thread t = new Thread(() -> {
+      try {
+        while (true) {
+          Thread.sleep(WxMessageInMemoryDuplicateChecker.this.clearPeriod);
+          Long now = System.currentTimeMillis();
+          for (Map.Entry<String, Long> entry :
+              WxMessageInMemoryDuplicateChecker.this.msgId2Timestamp.entrySet()) {
+            if (now - entry.getValue() > WxMessageInMemoryDuplicateChecker.this.timeToLive) {
+              WxMessageInMemoryDuplicateChecker.this.msgId2Timestamp.entrySet().remove(entry);
             }
           }
-        } catch (InterruptedException e) {
-          Thread.currentThread().interrupt();
         }
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
       }
     });
     t.setDaemon(true);

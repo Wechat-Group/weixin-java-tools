@@ -1,6 +1,6 @@
 package me.chanjar.weixin.cp.bean.outxmlbuilder;
 
-import me.chanjar.weixin.cp.bean.WxCpXmlOutImageMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlOutImageMessage;
 
 /**
  * 图片消息builder

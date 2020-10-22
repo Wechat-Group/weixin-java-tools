@@ -1,21 +1,24 @@
 package me.chanjar.weixin.cp.message;
 
+import lombok.Data;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
-import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
+/**
+ * The type Wx cp message router rule.
+ *
+ * @author Daniel Qian
+ */
+@Data
 public class WxCpMessageRouterRule {
-
   private final WxCpMessageRouter routerBuilder;
 
   private boolean async = true;
@@ -44,6 +47,11 @@ public class WxCpMessageRouterRule {
 
   private List<WxCpMessageInterceptor> interceptors = new ArrayList<>();
 
+  /**
+   * Instantiates a new Wx cp message router rule.
+   *
+   * @param routerBuilder the router builder
+   */
   protected WxCpMessageRouterRule(WxCpMessageRouter routerBuilder) {
     this.routerBuilder = routerBuilder;
   }
@@ -51,7 +59,8 @@ public class WxCpMessageRouterRule {
   /**
    * 设置是否异步执行，默认是true
    *
-   * @param async
+   * @param async the async
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule async(boolean async) {
     this.async = async;
@@ -61,7 +70,8 @@ public class WxCpMessageRouterRule {
   /**
    * 如果agentId匹配
    *
-   * @param agentId
+   * @param agentId the agent id
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule agentId(Integer agentId) {
     this.agentId = agentId;
@@ -71,7 +81,8 @@ public class WxCpMessageRouterRule {
   /**
    * 如果msgType等于某值
    *
-   * @param msgType
+   * @param msgType the msg type
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule msgType(String msgType) {
     this.msgType = msgType;
@@ -81,7 +92,8 @@ public class WxCpMessageRouterRule {
   /**
    * 如果event等于某值
    *
-   * @param event
+   * @param event the event
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule event(String event) {
     this.event = event;
@@ -91,7 +103,8 @@ public class WxCpMessageRouterRule {
   /**
    * 如果eventKey等于某值
    *
-   * @param eventKey
+   * @param eventKey the event key
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule eventKey(String eventKey) {
     this.eventKey = eventKey;
@@ -100,6 +113,9 @@ public class WxCpMessageRouterRule {
 
   /**
    * 如果eventKey匹配该正则表达式
+   *
+   * @param regex the regex
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule eventKeyRegex(String regex) {
     this.eventKeyRegex = regex;
@@ -109,7 +125,8 @@ public class WxCpMessageRouterRule {
   /**
    * 如果content等于某值
    *
-   * @param content
+   * @param content the content
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule content(String content) {
     this.content = content;
@@ -119,7 +136,8 @@ public class WxCpMessageRouterRule {
   /**
    * 如果content匹配该正则表达式
    *
-   * @param regex
+   * @param regex the regex
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule rContent(String regex) {
     this.rContent = regex;
@@ -129,7 +147,8 @@ public class WxCpMessageRouterRule {
   /**
    * 如果fromUser等于某值
    *
-   * @param fromUser
+   * @param fromUser the from user
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule fromUser(String fromUser) {
     this.fromUser = fromUser;
@@ -139,7 +158,8 @@ public class WxCpMessageRouterRule {
   /**
    * 如果消息匹配某个matcher，用在用户需要自定义更复杂的匹配规则的时候
    *
-   * @param matcher
+   * @param matcher the matcher
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule matcher(WxCpMessageMatcher matcher) {
     this.matcher = matcher;
@@ -149,7 +169,8 @@ public class WxCpMessageRouterRule {
   /**
    * 设置微信消息拦截器
    *
-   * @param interceptor
+   * @param interceptor the interceptor
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule interceptor(WxCpMessageInterceptor interceptor) {
     return interceptor(interceptor, (WxCpMessageInterceptor[]) null);
@@ -158,15 +179,14 @@ public class WxCpMessageRouterRule {
   /**
    * 设置微信消息拦截器
    *
-   * @param interceptor
-   * @param otherInterceptors
+   * @param interceptor       the interceptor
+   * @param otherInterceptors the other interceptors
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule interceptor(WxCpMessageInterceptor interceptor, WxCpMessageInterceptor... otherInterceptors) {
     this.interceptors.add(interceptor);
     if (otherInterceptors != null && otherInterceptors.length > 0) {
-      for (WxCpMessageInterceptor i : otherInterceptors) {
-        this.interceptors.add(i);
-      }
+      Collections.addAll(this.interceptors, otherInterceptors);
     }
     return this;
   }
@@ -174,7 +194,8 @@ public class WxCpMessageRouterRule {
   /**
    * 设置微信消息处理器
    *
-   * @param handler
+   * @param handler the handler
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule handler(WxCpMessageHandler handler) {
     return handler(handler, (WxCpMessageHandler[]) null);
@@ -183,21 +204,22 @@ public class WxCpMessageRouterRule {
   /**
    * 设置微信消息处理器
    *
-   * @param handler
-   * @param otherHandlers
+   * @param handler       the handler
+   * @param otherHandlers the other handlers
+   * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule handler(WxCpMessageHandler handler, WxCpMessageHandler... otherHandlers) {
     this.handlers.add(handler);
     if (otherHandlers != null && otherHandlers.length > 0) {
-      for (WxCpMessageHandler i : otherHandlers) {
-        this.handlers.add(i);
-      }
+      Collections.addAll(this.handlers, otherHandlers);
     }
     return this;
   }
 
   /**
    * 规则结束，代表如果一个消息匹配该规则，那么它将不再会进入其他规则
+   *
+   * @return the wx cp message router
    */
   public WxCpMessageRouter end() {
     this.routerBuilder.getRules().add(this);
@@ -206,12 +228,20 @@ public class WxCpMessageRouterRule {
 
   /**
    * 规则结束，但是消息还会进入其他规则
+   *
+   * @return the wx cp message router
    */
   public WxCpMessageRouter next() {
     this.reEnter = true;
     return end();
   }
 
+  /**
+   * Test boolean.
+   *
+   * @param wxMessage the wx message
+   * @return the boolean
+   */
   protected boolean test(WxCpXmlMessage wxMessage) {
     return
       (this.fromUser == null || this.fromUser.equals(wxMessage.getFromUserName()))
@@ -237,7 +267,11 @@ public class WxCpMessageRouterRule {
   /**
    * 处理微信推送过来的消息
    *
-   * @param wxMessage
+   * @param wxMessage        the wx message
+   * @param context          the context
+   * @param wxCpService      the wx cp service
+   * @param sessionManager   the session manager
+   * @param exceptionHandler the exception handler
    * @return true 代表继续执行别的router，false 代表停止执行别的router
    */
   protected WxCpXmlOutMessage service(WxCpXmlMessage wxMessage,
@@ -274,60 +308,5 @@ public class WxCpMessageRouterRule {
 
   }
 
-  public void setFromUser(String fromUser) {
-    this.fromUser = fromUser;
-  }
-
-  public void setMsgType(String msgType) {
-    this.msgType = msgType;
-  }
-
-  public void setEvent(String event) {
-    this.event = event;
-  }
-
-  public void setEventKey(String eventKey) {
-    this.eventKey = eventKey;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
-  }
-
-  public void setrContent(String rContent) {
-    this.rContent = rContent;
-  }
-
-  public void setMatcher(WxCpMessageMatcher matcher) {
-    this.matcher = matcher;
-  }
-
-  public void setAgentId(Integer agentId) {
-    this.agentId = agentId;
-  }
-
-  public void setHandlers(List<WxCpMessageHandler> handlers) {
-    this.handlers = handlers;
-  }
-
-  public void setInterceptors(List<WxCpMessageInterceptor> interceptors) {
-    this.interceptors = interceptors;
-  }
-
-  public boolean isAsync() {
-    return this.async;
-  }
-
-  public void setAsync(boolean async) {
-    this.async = async;
-  }
-
-  public boolean isReEnter() {
-    return this.reEnter;
-  }
-
-  public void setReEnter(boolean reEnter) {
-    this.reEnter = reEnter;
-  }
 
 }

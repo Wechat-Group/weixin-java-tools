@@ -11,6 +11,7 @@ import com.google.common.collect.Maps;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import org.apache.commons.lang3.StringUtils;
@@ -139,7 +140,7 @@ public abstract class BaseWxPayResult {
         t.loadXml(doc);
         return (T) t;
       } catch (Exception e) {
-        throw new RuntimeException("parse xml error", e);
+        throw new WxRuntimeException("parse xml error", e);
       }
     }
     XStream xstream = XStreamInitializer.getInstance();
@@ -243,7 +244,7 @@ public abstract class BaseWxPayResult {
    */
   public Map<String, String> toMap() {
     if (StringUtils.isBlank(this.xmlString)) {
-      throw new RuntimeException("xml数据有问题，请核实！");
+      throw new WxRuntimeException("xml数据有问题，请核实！");
     }
 
     Map<String, String> result = Maps.newHashMap();
@@ -258,7 +259,7 @@ public abstract class BaseWxPayResult {
         result.put(list.item(i).getNodeName(), list.item(i).getTextContent());
       }
     } catch (XPathExpressionException e) {
-      throw new RuntimeException("非法的xml文本内容：" + xmlString);
+      throw new WxRuntimeException("非法的xml文本内容：" + xmlString);
     }
 
     return result;
@@ -282,7 +283,7 @@ public abstract class BaseWxPayResult {
       factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
       return factory.newDocumentBuilder().parse(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
     } catch (Exception e) {
-      throw new RuntimeException("非法的xml文本内容：\n" + this.xmlString, e);
+      throw new WxRuntimeException("非法的xml文本内容：\n" + this.xmlString, e);
     }
   }
 
@@ -302,7 +303,7 @@ public abstract class BaseWxPayResult {
         .compile(expression)
         .evaluate(doc, XPathConstants.STRING);
     } catch (XPathExpressionException e) {
-      throw new RuntimeException("未找到相应路径的文本：" + expression);
+      throw new WxRuntimeException("未找到相应路径的文本：" + expression);
     }
   }
 

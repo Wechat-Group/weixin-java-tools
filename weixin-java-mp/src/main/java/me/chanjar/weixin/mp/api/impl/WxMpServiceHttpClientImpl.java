@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
@@ -92,10 +93,10 @@ public class WxMpServiceHttpClientImpl extends BaseWxMpServiceImpl<CloseableHttp
           httpGet.releaseConnection();
         }
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        throw new WxRuntimeException(e);
       }
     } catch (InterruptedException e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     } finally {
       if (locked) {
         lock.unlock();

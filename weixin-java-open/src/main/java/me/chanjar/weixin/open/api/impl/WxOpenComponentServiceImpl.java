@@ -8,12 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.URIUtil;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.open.api.*;
 import me.chanjar.weixin.open.bean.*;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
@@ -36,14 +37,14 @@ import java.util.concurrent.locks.Lock;
 public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   private static final Map<String, WxOpenMaService> WX_OPEN_MA_SERVICE_MAP = new ConcurrentHashMap<>();
-  private static final Map<String, WxMpService> WX_OPEN_MP_SERVICE_MAP = new ConcurrentHashMap<>();
+  private static final Map<String, WxOpenMpService> WX_OPEN_MP_SERVICE_MAP = new ConcurrentHashMap<>();
   private static final Map<String, WxOpenFastMaService> WX_OPEN_FAST_MA_SERVICE_MAP = new ConcurrentHashMap<>();
 
   private final WxOpenService wxOpenService;
 
   @Override
-  public WxMpService getWxMpServiceByAppid(String appId) {
-    WxMpService wxMpService = WX_OPEN_MP_SERVICE_MAP.get(appId);
+  public WxOpenMpService getWxMpServiceByAppid(String appId) {
+    WxOpenMpService wxMpService = WX_OPEN_MP_SERVICE_MAP.get(appId);
     if (wxMpService == null) {
       synchronized (WX_OPEN_MP_SERVICE_MAP) {
         wxMpService = WX_OPEN_MP_SERVICE_MAP.get(appId);
@@ -381,10 +382,10 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
       WxOpenAuthorizerAccessToken wxOpenAuthorizerAccessToken = WxOpenAuthorizerAccessToken.fromJson(responseContent);
       config.updateAuthorizerAccessToken(appId, wxOpenAuthorizerAccessToken);
-      config.updateAuthorizerRefreshToken(appId,wxOpenAuthorizerAccessToken.getAuthorizerRefreshToken());
+      config.updateAuthorizerRefreshToken(appId, wxOpenAuthorizerAccessToken.getAuthorizerRefreshToken());
       return config.getAuthorizerAccessToken(appId);
     } catch (InterruptedException e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     } finally {
       if (locked) {
         lock.unlock();
@@ -393,10 +394,10 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public WxMpOAuth2AccessToken oauth2getAccessToken(String appId, String code) throws WxErrorException {
+  public WxOAuth2AccessToken oauth2getAccessToken(String appId, String code) throws WxErrorException {
     String url = String.format(OAUTH2_ACCESS_TOKEN_URL, appId, code, getWxOpenConfigStorage().getComponentAppId());
     String responseContent = get(url);
-    return WxMpOAuth2AccessToken.fromJson(responseContent);
+    return WxOAuth2AccessToken.fromJson(responseContent);
   }
 
   @Override
@@ -405,10 +406,10 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public WxMpOAuth2AccessToken oauth2refreshAccessToken(String appId, String refreshToken) throws WxErrorException {
+  public WxOAuth2AccessToken oauth2refreshAccessToken(String appId, String refreshToken) throws WxErrorException {
     String url = String.format(OAUTH2_REFRESH_TOKEN_URL, appId, refreshToken, getWxOpenConfigStorage().getComponentAppId());
     String responseContent = get(url);
-    return WxMpOAuth2AccessToken.fromJson(responseContent);
+    return WxOAuth2AccessToken.fromJson(responseContent);
   }
 
   @Override
@@ -488,7 +489,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
         result = maService.post(requestUrl, param.toString());
         return result;
       default:
-        throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("appIdType类型异常").build());
+        throw new WxErrorException("appIdType类型异常");
     }
   }
 

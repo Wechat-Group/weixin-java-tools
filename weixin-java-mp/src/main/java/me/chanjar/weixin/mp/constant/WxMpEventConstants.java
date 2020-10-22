@@ -141,4 +141,14 @@ public class WxMpEventConstants {
     public static final String CLOUD_INVOICE_INVOICERESULT_EVENT = "cloud_invoice_invoiceresult_event";
   }
 
+  /**
+   * 对话助手相关事件
+   */
+  public static class Guide {
+    /**
+     * 顾问邀请结果通知事件.
+     */
+    public static final String GUIDE_INVITE_RESULT_EVENT = "guide_invite_result_event";
+
+  }
 }

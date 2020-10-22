@@ -18,10 +18,10 @@ public class ContentValue implements Serializable {
   private String text;
 
   @SerializedName("new_number")
-  private Double newNumber;
+  private String newNumber;
 
   @SerializedName("new_money")
-  private Double newMoney;
+  private String newMoney;
 
   private ContentValue.Date date;
 
@@ -43,7 +43,7 @@ public class ContentValue implements Serializable {
     private String type;
 
     @SerializedName("s_timestamp")
-    private Double timestamp;
+    private String timestamp;
   }
 
   @Data

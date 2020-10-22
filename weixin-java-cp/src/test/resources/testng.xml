@@ -12,13 +12,13 @@
 
   <test name="Bean_Test">
     <classes>
-      <class name="me.chanjar.weixin.cp.bean.WxCpMessageTest"/>
-      <class name="me.chanjar.weixin.cp.bean.WxCpXmlMessageTest"/>
-      <class name="me.chanjar.weixin.cp.bean.WxCpXmlOutImageMessageTest"/>
-      <class name="me.chanjar.weixin.cp.bean.WxCpXmlOutNewsMessageTest"/>
-      <class name="me.chanjar.weixin.cp.bean.WxCpXmlOutVideoMessageTest"/>
-      <class name="me.chanjar.weixin.cp.bean.WxCpXmlOutVoiceMessageTest"/>
-      <class name="me.chanjar.weixin.cp.bean.WxCpXmlOutTextMessageTest"/>
+      <class name="me.chanjar.weixin.cp.bean.message.WxCpMessageTest"/>
+      <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlMessageTest"/>
+      <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutImageMessageTest"/>
+      <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutNewsMessageTest"/>
+      <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutVideoMessageTest"/>
+      <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutVoiceMessageTest"/>
+      <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutTextMessageTest"/>
     </classes>
   </test>
 </suite>

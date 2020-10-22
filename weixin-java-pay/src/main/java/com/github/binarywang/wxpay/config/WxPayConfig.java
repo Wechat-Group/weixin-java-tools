@@ -19,6 +19,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.PrivateKey;
+import java.security.cert.X509Certificate;
 import java.util.Collections;
 
 /**
@@ -125,6 +126,13 @@ public class WxPayConfig {
    */
   private String payScoreNotifyUrl;
 
+
+  /**
+   * 微信支付分授权回调地址
+   */
+  private String payScorePermissionNotifyUrl;
+
+
   private CloseableHttpClient apiV3HttpClient;
   /**
    * 私钥信息
@@ -229,7 +237,7 @@ public class WxPayConfig {
   public CloseableHttpClient initApiV3HttpClient() throws WxPayException {
     String privateKeyPath = this.getPrivateKeyPath();
     String privateCertPath = this.getPrivateCertPath();
-    String certSerialNo = this.getCertSerialNo();
+    String serialNo = this.getCertSerialNo();
     String apiV3Key = this.getApiV3Key();
     if (StringUtils.isBlank(privateKeyPath)) {
       throw new WxPayException("请确保privateKeyPath已设置");
@@ -237,9 +245,9 @@ public class WxPayConfig {
     if (StringUtils.isBlank(privateCertPath)) {
       throw new WxPayException("请确保privateCertPath已设置");
     }
-    if (StringUtils.isBlank(certSerialNo)) {
-      throw new WxPayException("请确保certSerialNo证书序列号已设置");
-    }
+//    if (StringUtils.isBlank(certSerialNo)) {
+//      throw new WxPayException("请确保certSerialNo证书序列号已设置");
+//    }
     if (StringUtils.isBlank(apiV3Key)) {
       throw new WxPayException("请确保apiV3Key值已设置");
     }
@@ -248,6 +256,10 @@ public class WxPayConfig {
     InputStream certInputStream = this.loadConfigInputStream(privateCertPath);
     try {
       PrivateKey merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
+      X509Certificate certificate = PemUtils.loadCertificate(certInputStream);
+      if(StringUtils.isBlank(serialNo)){
+        this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
+      }
 
       AutoUpdateCertificatesVerifier verifier = new AutoUpdateCertificatesVerifier(
         new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
@@ -255,7 +267,7 @@ public class WxPayConfig {
 
       CloseableHttpClient httpClient = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
-        .withWechatpay(Collections.singletonList(PemUtils.loadCertificate(certInputStream)))
+        .withWechatpay(Collections.singletonList(certificate))
         .withValidator(new WxPayValidator(verifier))
         .build();
       this.apiV3HttpClient = httpClient;

@@ -13,10 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.api.WxImgProcService;
 import me.chanjar.weixin.common.api.WxOcrService;
+import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.DataUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -155,7 +157,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       String response = doGetAccessTokenRequest();
       return extractAccessToken(response);
     } catch (IOException | InterruptedException e) {
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     } finally {
       if (locked) {
         lock.unlock();
@@ -185,7 +187,15 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   public String post(String url, Object obj) throws WxErrorException {
     return this.execute(SimplePostRequestExecutor.create(this), url, WxGsonBuilder.create().toJson(obj));
   }
+  @Override
+  public String post(String url, ToJson obj) throws WxErrorException {
+    return this.post(url, obj.toJson());
+  }
 
+  @Override
+  public String post(String url, JsonObject jsonObject) throws WxErrorException {
+    return this.post(url, jsonObject.toString());
+  }
   /**
    * 向微信端发送请求，在这里执行的策略是当发生access_token过期时才去刷新，然后重新执行请求，而不是全局定时请求
    */
@@ -222,7 +232,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     } while (retryTimes++ < this.maxRetryTimes);
 
     log.warn("重试达到最大次数【{}】", this.maxRetryTimes);
-    throw new RuntimeException("微信服务端异常，超出重试次数");
+    throw new WxRuntimeException("微信服务端异常，超出重试次数");
   }
 
   private <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
@@ -267,7 +277,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       return null;
     } catch (IOException e) {
       log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     }
   }
 
@@ -354,7 +364,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       return this;
     }
 
-    throw new RuntimeException(String.format("无法找到对应【%s】的小程序配置信息，请核实！", miniappId));
+    throw new WxRuntimeException(String.format("无法找到对应【%s】的小程序配置信息，请核实！", miniappId));
   }
 
   @Override

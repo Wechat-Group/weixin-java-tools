@@ -11,7 +11,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.constant.WxCpConsts.AppChatMsgType;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.WxCpAppChatMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.bean.WxCpChat;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;

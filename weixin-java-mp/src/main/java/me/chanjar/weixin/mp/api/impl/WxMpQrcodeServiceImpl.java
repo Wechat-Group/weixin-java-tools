@@ -29,7 +29,7 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
   @Override
   public WxMpQrCodeTicket qrCodeCreateTmpTicket(int sceneId, Integer expireSeconds) throws WxErrorException {
     if (sceneId == 0) {
-      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("临时二维码场景值不能为0！").build());
+      throw new WxErrorException("临时二维码场景值不能为0！");
     }
 
     return this.createQrCode("QR_SCENE", null, sceneId, expireSeconds);
@@ -38,7 +38,7 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
   @Override
   public WxMpQrCodeTicket qrCodeCreateTmpTicket(String sceneStr, Integer expireSeconds) throws WxErrorException {
     if (StringUtils.isBlank(sceneStr)) {
-      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("临时二维码场景值不能为空！").build());
+      throw new WxErrorException("临时二维码场景值不能为空！");
     }
 
     return this.createQrCode("QR_STR_SCENE", sceneStr, null, expireSeconds);
@@ -48,8 +48,7 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
     throws WxErrorException {
     //expireSeconds 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
     if (expireSeconds != null && expireSeconds > 2592000) {
-      throw new WxErrorException(WxError.builder().errorCode(-1)
-        .errorMsg("临时二维码有效时间最大不能超过2592000（即30天）！").build());
+      throw new WxErrorException("临时二维码有效时间最大不能超过2592000（即30天）！");
     }
 
     if (expireSeconds == null) {
@@ -84,9 +83,7 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
   @Override
   public WxMpQrCodeTicket qrCodeCreateLastTicket(int sceneId) throws WxErrorException {
     if (sceneId < 1 || sceneId > 100000) {
-      throw new WxErrorException(WxError.builder().errorCode(-1)
-        .errorMsg("永久二维码的场景值目前只支持1--100000！")
-        .build());
+      throw new WxErrorException("永久二维码的场景值目前只支持1--100000！");
     }
 
     return this.getQrCodeTicket("QR_LIMIT_SCENE", null, sceneId, null);
@@ -113,7 +110,7 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
 
       return resultUrl;
     } catch (UnsupportedEncodingException e) {
-      throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg(e.getMessage()).build());
+      throw new WxErrorException(e.getMessage());
     }
   }
 

@@ -7,9 +7,14 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 二级商户进件 查询申请状态结果响应
+ *
+ */
 @Data
 @NoArgsConstructor
 public class ApplymentsStatusResult implements Serializable {
+  private static final long serialVersionUID = 1488464536143984732L;
   /**
    * <pre>
    * 字段名：申请状态

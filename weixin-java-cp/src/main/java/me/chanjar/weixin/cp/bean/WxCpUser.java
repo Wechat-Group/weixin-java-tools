@@ -86,6 +86,9 @@ public class WxCpUser implements Serializable {
 
   @Data
   @Accessors(chain = true)
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class Attr {
     /**
      * 属性类型: 0-文本 1-网页

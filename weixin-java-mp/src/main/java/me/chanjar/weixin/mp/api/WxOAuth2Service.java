@@ -1,8 +1,8 @@
 package me.chanjar.weixin.mp.api;
 
+import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
+import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
-import me.chanjar.weixin.mp.bean.result.WxMpUser;
 
 /**
  * oauth2 相关接口.
@@ -17,12 +17,12 @@ public interface WxOAuth2Service {
    * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=网页授权获取用户基本信息
    * </pre>
    *
-   * @param redirectURI 用户授权完成后的重定向链接，无需urlencode, 方法内会进行encode
+   * @param redirectUri 用户授权完成后的重定向链接，无需urlencode, 方法内会进行encode
    * @param scope       scope
    * @param state       state
    * @return url
    */
-  String buildAuthorizationUrl(String redirectURI, String scope, String state);
+  String buildAuthorizationUrl(String redirectUri, String scope, String state);
 
   /**
    * <pre>
@@ -34,7 +34,18 @@ public interface WxOAuth2Service {
    * @return token对象
    * @throws WxErrorException .
    */
-  WxMpOAuth2AccessToken getAccessToken(String code) throws WxErrorException;
+  WxOAuth2AccessToken getAccessToken(String code) throws WxErrorException;
+
+  /**
+   * 用code换取oauth2的access token.
+   *
+   * @param appId     the appid
+   * @param appSecret the secret
+   * @param code      code
+   * @return token对象
+   * @throws WxErrorException .
+   */
+  WxOAuth2AccessToken getAccessToken(String appId, String appSecret, String code) throws WxErrorException;
 
   /**
    * <pre>
@@ -45,7 +56,7 @@ public interface WxOAuth2Service {
    * @return 新的token对象
    * @throws WxErrorException .
    */
-  WxMpOAuth2AccessToken refreshAccessToken(String refreshToken) throws WxErrorException;
+  WxOAuth2AccessToken refreshAccessToken(String refreshToken) throws WxErrorException;
 
   /**
    * <pre>
@@ -57,7 +68,7 @@ public interface WxOAuth2Service {
    * @return 用户对象
    * @throws WxErrorException .
    */
-  WxMpUser getUserInfo(WxMpOAuth2AccessToken oAuth2AccessToken, String lang) throws WxErrorException;
+  WxOAuth2UserInfo getUserInfo(WxOAuth2AccessToken oAuth2AccessToken, String lang) throws WxErrorException;
 
   /**
    * <pre>
@@ -67,6 +78,6 @@ public interface WxOAuth2Service {
    * @param oAuth2AccessToken token对象
    * @return 是否有效
    */
-  boolean validateAccessToken(WxMpOAuth2AccessToken oAuth2AccessToken);
+  boolean validateAccessToken(WxOAuth2AccessToken oAuth2AccessToken);
 
 }

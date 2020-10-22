@@ -37,7 +37,7 @@ public class MaterialVoiceAndImageDownloadJoddHttpRequestExecutor extends Materi
 
     request.query("media_id", materialId);
     HttpResponse response = request.send();
-    response.charset(StringPool.UTF_8);
+    response.charset(StandardCharsets.UTF_8.name());
     try (InputStream inputStream = new ByteArrayInputStream(response.bodyBytes())) {
       // 下载媒体文件出错
       byte[] responseContent = IOUtils.toByteArray(inputStream);

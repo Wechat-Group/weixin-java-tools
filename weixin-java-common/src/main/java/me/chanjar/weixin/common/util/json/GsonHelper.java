@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import jodd.util.MathUtil;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 
 import java.util.List;
 
@@ -150,5 +152,55 @@ public class GsonHelper {
 
   public static JsonArray getAsJsonArray(JsonElement element) {
     return element == null ? null : element.getAsJsonArray();
+  }
+
+  /**
+   * 快速构建JsonObject对象，批量添加一堆属性
+   *
+   * @param keyOrValue 包含key或value的数组
+   * @return JsonObject对象.
+   */
+  public static JsonObject buildJsonObject(Object... keyOrValue) {
+    JsonObject result = new JsonObject();
+    put(result, keyOrValue);
+    return result;
+  }
+
+  /**
+   * 批量向JsonObject对象中添加属性
+   *
+   * @param jsonObject 原始JsonObject对象
+   * @param keyOrValue 包含key或value的数组
+   */
+  public static void put(JsonObject jsonObject, Object... keyOrValue) {
+    if (MathUtil.isOdd(keyOrValue.length)) {
+      throw new WxRuntimeException("参数个数必须为偶数");
+    }
+
+    for (int i = 0; i < keyOrValue.length / 2; i++) {
+      final Object key = keyOrValue[2 * i];
+      final Object value = keyOrValue[2 * i + 1];
+      if (value == null) {
+        jsonObject.add(key.toString(), null);
+        continue;
+      }
+
+      if (value instanceof Boolean) {
+        jsonObject.addProperty(key.toString(), (Boolean) value);
+      } else if (value instanceof Character) {
+        jsonObject.addProperty(key.toString(), (Character) value);
+      } else if (value instanceof Number) {
+        jsonObject.addProperty(key.toString(), (Number) value);
+      } else if (value instanceof JsonElement) {
+        jsonObject.add(key.toString(), (JsonElement) value);
+      } else if (value instanceof List) {
+        JsonArray array = new JsonArray();
+        ((List<?>) value).forEach(a -> array.add(a.toString()));
+        jsonObject.add(key.toString(), array);
+      } else {
+        jsonObject.addProperty(key.toString(), value.toString());
+      }
+    }
+
   }
 }

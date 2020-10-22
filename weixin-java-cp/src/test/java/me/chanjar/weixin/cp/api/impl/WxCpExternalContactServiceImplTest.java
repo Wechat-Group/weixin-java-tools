@@ -217,4 +217,17 @@ public class WxCpExternalContactServiceImplTest {
       .welcomeCode("abc")
       .build());
   }
+
+  @Test
+  public void testUpdateRemark() throws WxErrorException {
+    this.wxCpService.getExternalContactService().updateRemark(WxCpUpdateRemarkRequest.builder()
+      .description("abc")
+      .userId("aaa")
+      .externalUserId("aaa")
+      .remark("aa")
+      .remarkCompany("aaa")
+      .remarkMobiles(new String[]{"111","222"})
+      .remarkPicMediaId("aaa")
+      .build());
+  }
 }

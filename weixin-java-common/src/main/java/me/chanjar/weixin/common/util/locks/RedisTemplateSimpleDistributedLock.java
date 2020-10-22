@@ -3,8 +3,6 @@ package me.chanjar.weixin.common.util.locks;
 import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -76,13 +74,10 @@ public class RedisTemplateSimpleDistributedLock implements Lock {
     }
     final byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
     final byte[] valueBytes = value.getBytes(StandardCharsets.UTF_8);
-    List<Object> redisResults = redisTemplate.executePipelined(new RedisCallback<String>() {
-      @Override
-      public String doInRedis(RedisConnection connection) throws DataAccessException {
-        connection.set(keyBytes, valueBytes, Expiration.milliseconds(leaseMilliseconds), RedisStringCommands.SetOption.SET_IF_ABSENT);
-        connection.get(keyBytes);
-        return null;
-      }
+    List<Object> redisResults = redisTemplate.executePipelined((RedisCallback<String>) connection -> {
+      connection.set(keyBytes, valueBytes, Expiration.milliseconds(leaseMilliseconds), RedisStringCommands.SetOption.SET_IF_ABSENT);
+      connection.get(keyBytes);
+      return null;
     });
     Object currentLockSecret = redisResults.size() > 1 ? redisResults.get(1) : redisResults.get(0);
     return currentLockSecret != null && currentLockSecret.toString().equals(value);

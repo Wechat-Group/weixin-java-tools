@@ -1,22 +1,24 @@
 package me.chanjar.weixin.cp.api;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+@Slf4j
 public class ApiTestModule implements Module {
-  private final Logger log = LoggerFactory.getLogger(this.getClass());
   private static final String TEST_CONFIG_XML = "test-config.xml";
+  protected WxXmlCpInMemoryConfigStorage config;
 
   private static <T> T fromXml(Class<T> clazz, InputStream is) {
     XStream xstream = XStreamInitializer.getInstance();
@@ -29,73 +31,30 @@ public class ApiTestModule implements Module {
   public void configure(Binder binder) {
     try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(TEST_CONFIG_XML)) {
       if (inputStream == null) {
-        throw new RuntimeException("测试配置文件【" + TEST_CONFIG_XML + "】未找到，请参照test-config-sample.xml文件生成");
+        throw new WxRuntimeException("测试配置文件【" + TEST_CONFIG_XML + "】未找到，请参照test-config-sample.xml文件生成");
       }
 
-      WxXmlCpInMemoryConfigStorage config = fromXml(WxXmlCpInMemoryConfigStorage.class, inputStream);
+      config = fromXml(WxXmlCpInMemoryConfigStorage.class, inputStream);
       WxCpService wxService = new WxCpServiceImpl();
       wxService.setWxCpConfigStorage(config);
 
       binder.bind(WxCpService.class).toInstance(wxService);
       binder.bind(WxXmlCpInMemoryConfigStorage.class).toInstance(config);
     } catch (IOException e) {
-      this.log.error(e.getMessage(), e);
+      log.error(e.getMessage(), e);
     }
   }
 
+  @Data
+  @EqualsAndHashCode(callSuper = true)
   @XStreamAlias("xml")
   public static class WxXmlCpInMemoryConfigStorage extends WxCpDefaultConfigImpl {
+    private static final long serialVersionUID = -4521839921547374822L;
 
     protected String userId;
-
     protected String departmentId;
-
     protected String tagId;
-
     protected String externalUserId;
-
-    public String getUserId() {
-      return this.userId;
-    }
-
-    public void setUserId(String userId) {
-      this.userId = userId;
-    }
-
-    public String getDepartmentId() {
-      return this.departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-      this.departmentId = departmentId;
-    }
-
-    public String getTagId() {
-      return this.tagId;
-    }
-
-    public void setTagId(String tagId) {
-      this.tagId = tagId;
-    }
-
-    public String getExternalUserId() {
-      return externalUserId;
-    }
-
-    public void setExternalUserId(String externalUserId) {
-      this.externalUserId = externalUserId;
-    }
-
-    @Override
-    public String toString() {
-      return super.toString() + " > WxXmlCpConfigStorage{" +
-        "userId='" + this.userId + '\'' +
-        ", departmentId='" + this.departmentId + '\'' +
-        ", tagId='" + this.tagId + '\'' +
-        ", externalUserId='" + this.externalUserId + '\'' +
-
-        '}';
-    }
   }
 
 }

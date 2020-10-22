@@ -1,6 +1,8 @@
 package me.chanjar.weixin.mp.enums;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import me.chanjar.weixin.mp.bean.WxMpHostConfig;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 
 import static me.chanjar.weixin.mp.bean.WxMpHostConfig.*;
@@ -21,9 +23,31 @@ public interface WxMpApiUrl {
    * @param config 微信公众号配置
    * @return api地址
    */
-  String getUrl(WxMpConfigStorage config);
+  default String getUrl(WxMpConfigStorage config) {
+    WxMpHostConfig hostConfig = null;
+    if (config != null) {
+      hostConfig = config.getHostConfig();
+    }
+    return buildUrl(hostConfig, this.getPrefix(), this.getPath());
+
+  }
+
+  /**
+   * the path
+   *
+   * @return path
+   */
+  String getPath();
+
+  /**
+   * the prefix
+   *
+   * @return prefix
+   */
+  String getPrefix();
 
   @AllArgsConstructor
+  @Getter
   enum Device implements WxMpApiUrl {
     /**
      * get_bind_device.
@@ -64,15 +88,39 @@ public interface WxMpApiUrl {
 
     private final String prefix;
     private final String path;
+  }
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
+  @AllArgsConstructor
+  @Getter
+  enum OAuth2 implements WxMpApiUrl {
+    /**
+     * 用code换取oauth2的access token.
+     */
+    OAUTH2_ACCESS_TOKEN_URL(API_DEFAULT_HOST_URL, "/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code"),
+    /**
+     * 刷新oauth2的access token.
+     */
+    OAUTH2_REFRESH_TOKEN_URL(API_DEFAULT_HOST_URL, "/sns/oauth2/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s"),
+    /**
+     * 用oauth2获取用户信息.
+     */
+    OAUTH2_USERINFO_URL(API_DEFAULT_HOST_URL, "/sns/userinfo?access_token=%s&openid=%s&lang=%s"),
+    /**
+     * 验证oauth2的access token是否有效.
+     */
+    OAUTH2_VALIDATE_TOKEN_URL(API_DEFAULT_HOST_URL, "/sns/auth?access_token=%s&openid=%s"),
+    /**
+     * oauth2授权的url连接.
+     */
+    CONNECT_OAUTH2_AUTHORIZE_URL(OPEN_DEFAULT_HOST_URL, "/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s&connect_redirect=1#wechat_redirect");
+
+    private final String prefix;
+    private final String path;
 
   }
 
   @AllArgsConstructor
+  @Getter
   enum Other implements WxMpApiUrl {
     /**
      * 获取access_token.
@@ -91,22 +139,6 @@ public interface WxMpApiUrl {
      */
     SEMANTIC_SEMPROXY_SEARCH_URL(API_DEFAULT_HOST_URL, "/semantic/semproxy/search"),
     /**
-     * 用code换取oauth2的access token.
-     */
-    OAUTH2_ACCESS_TOKEN_URL(API_DEFAULT_HOST_URL, "/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code"),
-    /**
-     * 刷新oauth2的access token.
-     */
-    OAUTH2_REFRESH_TOKEN_URL(API_DEFAULT_HOST_URL, "/sns/oauth2/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s"),
-    /**
-     * 用oauth2获取用户信息.
-     */
-    OAUTH2_USERINFO_URL(API_DEFAULT_HOST_URL, "/sns/userinfo?access_token=%s&openid=%s&lang=%s"),
-    /**
-     * 验证oauth2的access token是否有效.
-     */
-    OAUTH2_VALIDATE_TOKEN_URL(API_DEFAULT_HOST_URL, "/sns/auth?access_token=%s&openid=%s"),
-    /**
      * 获取微信服务器IP地址.
      */
     GET_CALLBACK_IP_URL(API_DEFAULT_HOST_URL, "/cgi-bin/getcallbackip"),
@@ -119,10 +151,6 @@ public interface WxMpApiUrl {
      */
     QRCONNECT_URL(OPEN_DEFAULT_HOST_URL, "/connect/qrconnect?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect"),
     /**
-     * oauth2授权的url连接.
-     */
-    CONNECT_OAUTH2_AUTHORIZE_URL(OPEN_DEFAULT_HOST_URL, "/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s&connect_redirect=1#wechat_redirect"),
-    /**
      * 获取公众号的自动回复规则.
      */
     GET_CURRENT_AUTOREPLY_INFO_URL(API_DEFAULT_HOST_URL, "/cgi-bin/get_current_autoreply_info"),
@@ -134,13 +162,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum Marketing implements WxMpApiUrl {
     /**
      * sets add.
@@ -162,13 +187,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum Menu implements WxMpApiUrl {
     /**
      * get_current_selfmenu_info.
@@ -202,14 +224,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
-
   @AllArgsConstructor
+  @Getter
   enum Qrcode implements WxMpApiUrl {
     /**
      * create.
@@ -227,13 +245,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum ShakeAround implements WxMpApiUrl {
     /**
      * getshakeinfo.
@@ -255,13 +270,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum SubscribeMsg implements WxMpApiUrl {
     /**
      * subscribemsg.
@@ -275,13 +287,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum TemplateMsg implements WxMpApiUrl {
     /**
      * send.
@@ -311,13 +320,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum UserBlacklist implements WxMpApiUrl {
     /**
      * getblacklist.
@@ -335,13 +341,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum UserTag implements WxMpApiUrl {
     /**
      * create.
@@ -379,13 +382,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum Wifi implements WxMpApiUrl {
     /**
      * list.
@@ -405,13 +405,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum AiOpen implements WxMpApiUrl {
     /**
      * translatecontent.
@@ -429,13 +426,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum Ocr implements WxMpApiUrl {
     /**
      * 身份证识别.
@@ -496,17 +490,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      if (config == null) {
-        return buildUrl(null, prefix, path);
-      }
-
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum Card implements WxMpApiUrl {
     /**
      * create.
@@ -606,13 +593,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum DataCube implements WxMpApiUrl {
     /**
      * getusersummary.
@@ -686,13 +670,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum Kefu implements WxMpApiUrl {
     /**
      * send.
@@ -758,13 +739,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum MassMessage implements WxMpApiUrl {
     /**
      * 上传群发用的图文消息.
@@ -812,13 +790,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum Material implements WxMpApiUrl {
     /**
      * get.
@@ -868,13 +843,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum MemberCard implements WxMpApiUrl {
     /**
      * create.
@@ -913,13 +885,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum Store implements WxMpApiUrl {
     /**
      * getwxcategory.
@@ -949,13 +918,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum User implements WxMpApiUrl {
     /**
      * batchget.
@@ -981,13 +947,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum Comment implements WxMpApiUrl {
     /**
      * 打开已群发文章评论.
@@ -1032,13 +995,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum ImgProc implements WxMpApiUrl {
     /**
      * 二维码/条码识别
@@ -1073,16 +1033,10 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      if (null == config) {
-        return buildUrl(null, prefix, path);
-      }
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
   }
 
   @AllArgsConstructor
+  @Getter
   enum Invoice implements WxMpApiUrl {
 
     /**
@@ -1148,12 +1102,36 @@ public interface WxMpApiUrl {
     private final String prefix;
     private final String path;
 
-    @Override
-    public String getUrl(WxMpConfigStorage config) {
-      if (null == config) {
-        return buildUrl(null, prefix, path);
-      }
-      return buildUrl(config.getHostConfig(), prefix, path);
-    }
+  }
+
+  /**
+   * 对话能力
+   */
+  @AllArgsConstructor
+  @Getter
+  enum Guide implements WxMpApiUrl {
+    /**
+     * 添加顾问
+     */
+    ADD_GUIDE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/addguideacct"),
+    /**
+     * 修改顾问
+     */
+    UPDATE_GUIDE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/updateguideacct"),
+    /**
+     * 获取顾问信息
+     */
+    GET_GUIDE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguideacct"),
+    /**
+     * 删除顾问
+     */
+    DEL_GUIDE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/delguideacct"),
+    /**
+     * 获取服务号顾问列表
+     */
+    LIST_GUIDE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguideacctlist");
+    private final String prefix;
+    private final String path;
+
   }
 }

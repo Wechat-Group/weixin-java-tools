@@ -1,8 +1,8 @@
 package com.binarywang.spring.starter.wxjava.mp.config;
 
+import com.binarywang.spring.starter.wxjava.mp.enums.HttpClientType;
 import com.binarywang.spring.starter.wxjava.mp.properties.WxMpProperties;
-import me.chanjar.weixin.common.api.WxOcrService;
-import me.chanjar.weixin.mp.api.*;
+import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceHttpClientImpl;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceJoddHttpImpl;
@@ -23,16 +23,21 @@ public class WxMpServiceAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public WxMpService wxMpService(WxMpConfigStorage configStorage, WxMpProperties wxMpProperties) {
-    WxMpProperties.HttpClientType httpClientType = wxMpProperties.getConfigStorage().getHttpClientType();
+    HttpClientType httpClientType = wxMpProperties.getConfigStorage().getHttpClientType();
     WxMpService wxMpService;
-    if (httpClientType == WxMpProperties.HttpClientType.okhttp) {
-      wxMpService = newWxMpServiceOkHttpImpl();
-    } else if (httpClientType == WxMpProperties.HttpClientType.joddhttp) {
-      wxMpService = newWxMpServiceJoddHttpImpl();
-    } else if (httpClientType == WxMpProperties.HttpClientType.httpclient) {
-      wxMpService = newWxMpServiceHttpClientImpl();
-    } else {
-      wxMpService = newWxMpServiceImpl();
+    switch (httpClientType) {
+      case OkHttp:
+        wxMpService = newWxMpServiceOkHttpImpl();
+        break;
+      case JoddHttp:
+        wxMpService = newWxMpServiceJoddHttpImpl();
+        break;
+      case HttpClient:
+        wxMpService = newWxMpServiceHttpClientImpl();
+        break;
+      default:
+        wxMpService = newWxMpServiceImpl();
+        break;
     }
 
     wxMpService.setWxMpConfigStorage(configStorage);

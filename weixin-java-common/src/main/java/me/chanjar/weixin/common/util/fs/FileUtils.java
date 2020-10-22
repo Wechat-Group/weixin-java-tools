@@ -1,10 +1,15 @@
 package me.chanjar.weixin.common.util.fs;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Base64;
+
+import static org.apache.commons.io.FileUtils.openOutputStream;
 
 public class FileUtils {
 
@@ -20,8 +25,14 @@ public class FileUtils {
     File resultFile = File.createTempFile(name, '.' + ext, tmpDirFile);
 
     resultFile.deleteOnExit();
-    org.apache.commons.io.FileUtils.copyToFile(inputStream, resultFile);
+    copyToFile(inputStream, resultFile);
     return resultFile;
+  }
+
+  private static void copyToFile(final InputStream source, final File destination) throws IOException {
+    try (InputStream in = source; OutputStream out = openOutputStream(destination)) {
+      IOUtils.copy(in, out);
+    }
   }
 
   /**

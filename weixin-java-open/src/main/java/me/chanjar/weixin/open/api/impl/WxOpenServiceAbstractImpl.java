@@ -3,6 +3,7 @@ package me.chanjar.weixin.open.api.impl;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
@@ -56,7 +57,7 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
       return null;
     } catch (IOException e) {
       this.log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uri, data, e.getMessage());
-      throw new RuntimeException(e);
+      throw new WxRuntimeException(e);
     }
   }
 }
