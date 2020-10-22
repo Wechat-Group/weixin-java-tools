@@ -133,6 +133,31 @@ public interface WxCpExternalContactService {
   WxCpUserExternalContactInfo getContactDetail(String userId) throws WxErrorException;
 
   /**
+   * 批量获取客户详情.
+   * <pre>
+   *
+   * 企业/第三方可通过此接口获取指定成员添加的客户信息列表。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/batch/get_by_user?access_token=ACCESS_TOKEN
+   *
+   * 权限说明：
+   *
+   * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）；
+   * 第三方/自建应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
+   * </pre>
+   *
+   * @param userId 企业成员的userid，注意不是外部联系人的帐号
+   * @param cursor the cursor
+   * @param limit the  limit
+   * @return wx cp user external contact batch info
+   * @throws WxErrorException .
+   */
+  WxCpUserExternalContactBatchInfo getContactDetailBatch(String userId, String cursor,
+                                                         Integer limit)
+    throws WxErrorException;
+
+  /**
    * 修改客户备注信息.
    * <pre>
    * 企业可通过此接口修改指定用户添加的客户的备注信息。

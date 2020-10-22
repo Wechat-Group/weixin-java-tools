@@ -171,6 +171,7 @@ public final class WxCpApiPathConsts {
     public static final String CLOSE_TEMP_CHAT = "/cgi-bin/externalcontact/close_temp_chat";
     public static final String GET_FOLLOW_USER_LIST = "/cgi-bin/externalcontact/get_follow_user_list";
     public static final String GET_CONTACT_DETAIL = "/cgi-bin/externalcontact/get?external_userid=";
+    public static final String POST_CONTACT_DETAIL_BATCH = "/cgi-bin/externalcontact/batch/get_by_user?";
     public static final String UPDATE_REMARK = "/cgi-bin/externalcontact/remark";
     public static final String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";
     public static final String LIST_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/get_unassigned_list";
