@@ -160,12 +160,14 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       Lock lock = this.getWxMpConfigStorage().getTicketLock(type);
       lock.lock();
       try {
-        String responseContent = execute(SimpleGetRequestExecutor.create(this),
-          GET_TICKET_URL.getUrl(this.getWxMpConfigStorage()) + type.getCode(), null);
-        JsonObject tmpJsonObject = GsonParser.parse(responseContent);
-        String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
-        int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
-        this.getWxMpConfigStorage().updateTicket(type, jsapiTicket, expiresInSeconds);
+        if (this.getWxMpConfigStorage().isTicketExpired(type)) {
+          String responseContent = execute(SimpleGetRequestExecutor.create(this),
+            GET_TICKET_URL.getUrl(this.getWxMpConfigStorage()) + type.getCode(), null);
+          JsonObject tmpJsonObject = GsonParser.parse(responseContent);
+          String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
+          int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
+          this.getWxMpConfigStorage().updateTicket(type, jsapiTicket, expiresInSeconds);
+        }
       } finally {
         lock.unlock();
       }
