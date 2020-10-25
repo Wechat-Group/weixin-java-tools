@@ -2,7 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.api.WxImgProcService;
+import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcAiCropResult;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcQrCodeResult;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcSuperResolutionResult;

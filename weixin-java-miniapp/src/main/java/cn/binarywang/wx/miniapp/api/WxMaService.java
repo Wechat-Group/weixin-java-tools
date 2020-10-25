@@ -2,8 +2,8 @@ package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
-import me.chanjar.weixin.common.api.WxImgProcService;
-import me.chanjar.weixin.common.api.WxOcrService;
+import me.chanjar.weixin.common.service.WxImgProcService;
+import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.service.WxService;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
