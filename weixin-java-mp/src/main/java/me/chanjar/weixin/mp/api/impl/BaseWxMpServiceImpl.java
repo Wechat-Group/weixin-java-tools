@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.api.WxImgProcService;
-import me.chanjar.weixin.common.api.WxOcrService;
+import me.chanjar.weixin.common.service.WxImgProcService;
+import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
@@ -19,6 +19,7 @@ import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.service.WxOAuth2Service;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.DataUtils;
@@ -151,23 +152,26 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public String getTicket(TicketType type, boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.getWxMpConfigStorage().getTicketLock(type);
-    lock.lock();
-    try {
-      if (forceRefresh) {
-        this.getWxMpConfigStorage().expireTicket(type);
-      }
 
-      if (this.getWxMpConfigStorage().isTicketExpired(type)) {
-        String responseContent = execute(SimpleGetRequestExecutor.create(this),
-          GET_TICKET_URL.getUrl(this.getWxMpConfigStorage()) + type.getCode(), null);
-        JsonObject tmpJsonObject = GsonParser.parse(responseContent);
-        String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
-        int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
-        this.getWxMpConfigStorage().updateTicket(type, jsapiTicket, expiresInSeconds);
+    if (forceRefresh) {
+      this.getWxMpConfigStorage().expireTicket(type);
+    }
+
+    if (this.getWxMpConfigStorage().isTicketExpired(type)) {
+      Lock lock = this.getWxMpConfigStorage().getTicketLock(type);
+      lock.lock();
+      try {
+        if (this.getWxMpConfigStorage().isTicketExpired(type)) {
+          String responseContent = execute(SimpleGetRequestExecutor.create(this),
+            GET_TICKET_URL.getUrl(this.getWxMpConfigStorage()) + type.getCode(), null);
+          JsonObject tmpJsonObject = GsonParser.parse(responseContent);
+          String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
+          int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
+          this.getWxMpConfigStorage().updateTicket(type, jsapiTicket, expiresInSeconds);
+        }
+      } finally {
+        lock.unlock();
       }
-    } finally {
-      lock.unlock();
     }
 
     return this.getWxMpConfigStorage().getTicket(type);

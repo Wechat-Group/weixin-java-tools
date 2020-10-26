@@ -105,6 +105,27 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpUserExternalContactBatchInfo getContactDetailBatch(String userId,
+                                                                String cursor,
+                                                                Integer limit)
+    throws WxErrorException {
+    final String url =
+      this.mainService
+        .getWxCpConfigStorage()
+        .getApiUrl(GET_CONTACT_DETAIL_BATCH);
+    JsonObject json = new JsonObject();
+    json.addProperty("userid", userId);
+    if (StringUtils.isNotBlank(cursor)) {
+      json.addProperty("cursor", cursor);
+    }
+    if (limit != null) {
+      json.addProperty("limit", limit);
+    }
+    String responseContent = this.mainService.post(url, json.toString());
+    return WxCpUserExternalContactBatchInfo.fromJson(responseContent);
+  }
+
+  @Override
   public void updateRemark(WxCpUpdateRemarkRequest request) throws WxErrorException {
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_REMARK);
     this.mainService.post(url, request.toJson());
@@ -162,10 +183,10 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     if (ArrayUtils.isNotEmpty(userIds) || ArrayUtils.isNotEmpty(partyIds)) {
       JsonObject ownerFilter = new JsonObject();
       if (ArrayUtils.isNotEmpty(userIds)) {
-        json.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
+        ownerFilter.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
       }
       if (ArrayUtils.isNotEmpty(partyIds)) {
-        json.add("partyid_list", new Gson().toJsonTree(partyIds).getAsJsonArray());
+        ownerFilter.add("partyid_list", new Gson().toJsonTree(partyIds).getAsJsonArray());
       }
       json.add("owner_filter", ownerFilter);
     }
@@ -212,10 +233,10 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     if (ArrayUtils.isNotEmpty(userIds) || ArrayUtils.isNotEmpty(partyIds)) {
       JsonObject ownerFilter = new JsonObject();
       if (ArrayUtils.isNotEmpty(userIds)) {
-        json.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
+        ownerFilter.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
       }
       if (ArrayUtils.isNotEmpty(partyIds)) {
-        json.add("partyid_list", new Gson().toJsonTree(partyIds).getAsJsonArray());
+        ownerFilter.add("partyid_list", new Gson().toJsonTree(partyIds).getAsJsonArray());
       }
       json.add("owner_filter", ownerFilter);
     }

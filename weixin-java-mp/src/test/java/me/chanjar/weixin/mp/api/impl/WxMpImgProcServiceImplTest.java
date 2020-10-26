@@ -2,7 +2,7 @@ package me.chanjar.weixin.mp.api.impl;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
-import me.chanjar.weixin.common.api.WxImgProcService;
+import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConstants;

@@ -2,7 +2,7 @@ package me.chanjar.weixin.mp.api.impl;
 
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.api.WxImgProcService;
+import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcAiCropResult;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcQrCodeResult;

@@ -24,7 +24,9 @@ public class WxMpMaterialFileBatchGetResult implements Serializable {
   }
 
   @Data
-  public static class WxMaterialFileBatchGetNewsItem {
+  public static class WxMaterialFileBatchGetNewsItem implements Serializable {
+    private static final long serialVersionUID = -8300080343204117459L;
+
     private String mediaId;
     private Date updateTime;
     private String name;

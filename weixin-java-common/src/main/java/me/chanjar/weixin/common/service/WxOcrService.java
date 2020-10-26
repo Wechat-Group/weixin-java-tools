@@ -1,4 +1,4 @@
-package me.chanjar.weixin.common.api;
+package me.chanjar.weixin.common.service;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.bean.ocr.WxOcrBankCardResult;

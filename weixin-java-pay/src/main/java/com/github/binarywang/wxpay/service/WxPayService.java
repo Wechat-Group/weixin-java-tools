@@ -418,6 +418,17 @@ public interface WxPayService {
    * 详见https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4
    *
    * @param xmlData the xml data
+   * @param signType 签名类型
+   * @return the wx scan pay notify result
+   * @throws WxPayException the wx pay exception
+   */
+  WxScanPayNotifyResult parseScanPayNotifyResult(String xmlData, String signType) throws WxPayException;
+
+  /**
+   * 解析扫码支付回调通知
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4
+   *
+   * @param xmlData the xml data
    * @return the wx scan pay notify result
    * @throws WxPayException the wx pay exception
    */

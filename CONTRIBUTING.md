@@ -1,8 +1,8 @@
 # 代码贡献指南
-1. 首先非常欢迎和感谢对本项目发起Pull Request的同学。
-1. **特别提示：请务必在develop分支提交PR，master分支目前仅是正式版的代码，即发布正式版本后才会从develop分支进行合并。**
+1. 首先非常欢迎和感谢对本项目发起`Pull Request`的同学。
+1. **特别提示：请务必在 `develop` 分支提交 `PR`，`release` 分支目前仅是正式版的代码，即发布正式版本后才会从 `develop` 分支进行合并。**
 1. 本项目代码风格为使用2个空格代表一个Tab，因此在提交代码时请注意一下，否则很容易在IDE格式化代码后与原代码产生大量diff，这样会给其他人阅读代码带来极大的困扰。
-1. 为了便于设置，本项目引入editorconfig支持，请使用Eclipse的同学在贡献代码前安装相关插件，而IntelliJ IDEA新版本自带支持，如果没有可自行安装插件。
+1. 为了便于设置，本项目引入`editorconfig`支持，请使用Eclipse的同学在贡献代码前安装相关插件，而`IntelliJ IDEA`新版本自带支持，如果没有可自行安装插件。
 1. **提交代码前，请检查代码是否已经格式化，并且保证新增加或者修改的方法都有完整的参数说明，而public方法必须拥有相应的单元测试并通过测试。**
 1. 本项目可以采用两种方式接受代码贡献：
   -  第一种就是基于[Git Flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)开发流程，因此在发起Pull Request的时候请选择develop分支，详细步骤参考后文，推荐使用此种方式贡献代码。

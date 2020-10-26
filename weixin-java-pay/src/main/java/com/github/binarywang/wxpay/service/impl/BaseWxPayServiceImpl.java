@@ -236,19 +236,24 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
-  public WxScanPayNotifyResult parseScanPayNotifyResult(String xmlData) throws WxPayException {
+  public WxScanPayNotifyResult parseScanPayNotifyResult(String xmlData, String signType) throws WxPayException {
     try {
       log.debug("扫码支付回调通知请求参数：{}", xmlData);
       WxScanPayNotifyResult result = BaseWxPayResult.fromXML(xmlData, WxScanPayNotifyResult.class);
       log.debug("扫码支付回调通知解析后的对象：{}", result);
-      result.checkResult(this, this.getConfig().getSignType(), false);
+      result.checkResult(this, signType, false);
       return result;
     } catch (WxPayException e) {
       throw e;
     } catch (Exception e) {
       throw new WxPayException("发生异常，" + e.getMessage(), e);
     }
+  }
 
+  @Override
+  public WxScanPayNotifyResult parseScanPayNotifyResult(String xmlData) throws WxPayException {
+    final String signType = this.getConfig().getSignType();
+    return this.parseScanPayNotifyResult(xmlData, signType);
   }
 
   @Override
