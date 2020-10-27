@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 二级商户查询提现状态
  * <pre>
@@ -14,8 +16,9 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class SubWithdrawStatusResult {
+public class SubWithdrawStatusResult implements Serializable {
 
+  private static final long serialVersionUID = 4692602703819018325L;
   /**
    * <pre>
    * 字段名：二级商户号

@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 电商平台查询提现状态
  * <pre>
@@ -14,9 +16,10 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class SpWithdrawStatusResult {
+public class SpWithdrawStatusResult implements Serializable {
 
 
+  private static final long serialVersionUID = -6013827963506201478L;
   /**
    * <pre>
    * 字段名：提现单状态
