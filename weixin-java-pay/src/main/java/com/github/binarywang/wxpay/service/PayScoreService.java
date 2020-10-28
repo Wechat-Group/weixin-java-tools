@@ -1,6 +1,8 @@
 package com.github.binarywang.wxpay.service;
 
+import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
 import com.github.binarywang.wxpay.bean.payscore.PayScoreNotifyData;
+import com.github.binarywang.wxpay.bean.payscore.UserAuthorizationStatusNotifyResult;
 import com.github.binarywang.wxpay.bean.payscore.WxPayScoreRequest;
 import com.github.binarywang.wxpay.bean.payscore.WxPayScoreResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -196,6 +198,19 @@ public interface PayScoreService {
    * @throws WxPayException the wx pay exception
    */
   WxPayScoreResult syncServiceOrder(WxPayScoreRequest request) throws WxPayException;
+  
+  /**
+   * <pre>
+   * 授权/解除授权服务回调数据处理
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter4_4.shtml
+   * </pre>
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return 解密后通知数据 return user authorization status notify result
+   * @throws WxPayException the wx pay exception
+   */
+  UserAuthorizationStatusNotifyResult parseUserAuthorizationStatusNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * <pre>
@@ -206,7 +221,7 @@ public interface PayScoreService {
    * @param data the data
    * @return the wx pay score result
    */
-  PayScoreNotifyData parseNotifyData(String data);
+  PayScoreNotifyData parseNotifyData(String data,SignatureHeader header) throws WxPayException;
 
   /**
    * <pre>

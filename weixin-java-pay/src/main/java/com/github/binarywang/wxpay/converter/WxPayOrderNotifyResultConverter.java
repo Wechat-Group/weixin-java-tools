@@ -112,7 +112,8 @@ public class WxPayOrderNotifyResultConverter extends AbstractReflectionConverter
     Object val = context.convertAnother(obj, field.getType());
     try {
       if (val != null) {
-        PropertyDescriptor pd = new PropertyDescriptor(field.getName(), obj.getClass());
+    	//这里加一个看似多余的(String)强转可解决高jdk版本下的编译报错问题，详情见讨论https://github.com/vaadin/framework/issues/10737
+        PropertyDescriptor pd = new PropertyDescriptor((String)field.getName(), obj.getClass());
         pd.getWriteMethod().invoke(obj, val);
       }
     } catch (Exception ignored) {
