@@ -119,7 +119,7 @@ public class UserAuthorizationStatusNotifyResult implements Serializable {
    * </pre>
    */
   @SerializedName(value = "openorclose_time")
-  private String openorcloseTime;
+  private String openOrCloseTime;
   
   /**
    * <pre>
