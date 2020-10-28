@@ -28,10 +28,11 @@
     wx.mp.config-storage.http-proxy-password=
     ```
 3. 自动注入的类型
-- `WxMpService`以及~~相关的服务类, 比如: `wxMpService.getXxxService`。~~
+- `WxMpService`
 - `WxMpConfigStorage`
 
-
+4、参考demo：
+https://github.com/binarywang/wx-java-mp-demo
 
 
 
