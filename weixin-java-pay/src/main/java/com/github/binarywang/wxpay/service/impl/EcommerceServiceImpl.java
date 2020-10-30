@@ -268,14 +268,14 @@ public class EcommerceServiceImpl implements EcommerceService {
 
   @Override
   public SubWithdrawStatusResult querySubWithdrawByOutRequestNo(String subMchid, String outRequestNo) throws WxPayException {
-    String url = String.format("%s/v3/ecommerce/fund/withdraw/out-request-no/%s?sub_mcid=%s", this.payService.getPayBaseUrl(), subMchid, outRequestNo);
+    String url = String.format("%s/v3/ecommerce/fund/withdraw/out-request-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outRequestNo, subMchid);
     String response = this.payService.getV3(URI.create(url));
     return GSON.fromJson(response, SubWithdrawStatusResult.class);
   }
 
   @Override
   public SpWithdrawStatusResult querySpWithdrawByOutRequestNo(String outRequestNo) throws WxPayException {
-    String url = String.format("%s/v3/merchant/fund/withdraw/out-request-no%s", this.payService.getPayBaseUrl(), outRequestNo);
+    String url = String.format("%s/v3/merchant/fund/withdraw/out-request-no/%s", this.payService.getPayBaseUrl(), outRequestNo);
     String response = this.payService.getV3(URI.create(url));
     return GSON.fromJson(response, SpWithdrawStatusResult.class);
   }
