@@ -97,7 +97,7 @@ public class WxMaUniformMessage implements Serializable {
     private static final long serialVersionUID = -7945254706501974849L;
 
     private String appid;
-    private String pagePath;
+    private String pagepath;
 
     /**
      * 是否使用path，否则使用pagepath.
