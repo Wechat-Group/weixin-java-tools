@@ -48,6 +48,32 @@ public class WxPayMicropayResult extends BaseWxPayResult implements Serializable
    **/
   @XStreamAlias("is_subscribe")
   private String isSubscribe;
+  
+  /**
+   * <pre>
+   * 用户子标识.
+   * sub_openid
+   * 否
+   * String(128)
+   * Y
+   * 子商户appid下用户唯一标识，如需返回则请求时需要传sub_appid
+   * </pre>
+   **/
+  @XStreamAlias("sub_openid")
+  private String subOpenid;
+
+  /**
+   * <pre>
+   * 是否关注子公众账号.
+   * sub_is_subscribe
+   * 否
+   * String(1)
+   * Y
+   * 用户是否关注子公众账号，仅在公众账号类型支付有效，取值范围：Y或N;Y-关注;N-未关注
+   * </pre>
+   **/
+  @XStreamAlias("sub_is_subscribe")
+  private String subIsSubscribe;
 
   /**
    * <pre>
@@ -227,6 +253,8 @@ public class WxPayMicropayResult extends BaseWxPayResult implements Serializable
   protected void loadXml(Document d) {
     openid = readXmlString(d, "openid");
     isSubscribe = readXmlString(d, "is_subscribe");
+    subOpenid = readXmlString(d, "sub_openid");
+    subIsSubscribe = readXmlString(d, "sub_is_subscribe");
     tradeType = readXmlString(d, "trade_type");
     bankType = readXmlString(d, "bank_type");
     feeType = readXmlString(d, "fee_type");
