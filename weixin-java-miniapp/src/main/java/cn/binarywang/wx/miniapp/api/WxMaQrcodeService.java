@@ -107,7 +107,7 @@ public interface WxMaQrcodeService {
    * @param path      不能为空，最大长度 128 字节
    * @param width     默认430 二维码的宽度
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
-   * @param lineColor auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
+   * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
    * @param isHyaline 是否需要透明底色， isHyaline 为true时，生成透明底色的小程序码
    * @return 文件内容字节数组
    * @throws WxErrorException 异常
@@ -122,7 +122,7 @@ public interface WxMaQrcodeService {
    * @param width     默认430 二维码的宽度
    * @param filePath  二维码生成的文件路径，例如: /var/temp
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
-   * @param lineColor auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
+   * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
    * @param isHyaline 是否需要透明底色， isHyaline 为true时，生成透明底色的小程序码
    * @return 文件对象
    * @throws WxErrorException 异常
@@ -136,7 +136,7 @@ public interface WxMaQrcodeService {
    * @param path      不能为空，最大长度 128 字节
    * @param width     默认430 二维码的宽度
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
-   * @param lineColor auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
+   * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
    * @param isHyaline 是否需要透明底色， isHyaline 为true时，生成透明底色的小程序码
    * @return 文件对象
    * @throws WxErrorException 异常
@@ -198,7 +198,7 @@ public interface WxMaQrcodeService {
    * @param page      必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面
    * @param width     默认false 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
-   * @param lineColor auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
+   * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
    * @param isHyaline 是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码
    * @return 文件内容字节数组
    * @throws WxErrorException 异常
@@ -221,7 +221,7 @@ public interface WxMaQrcodeService {
    * @param filePath  二维码生成的文件路径，例如: /var/temp
    * @param width     默认false 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
-   * @param lineColor auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
+   * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
    * @param isHyaline 是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码
    * @return 文件对象
    * @throws WxErrorException 异常
@@ -243,7 +243,7 @@ public interface WxMaQrcodeService {
    * @param page      必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面
    * @param width     默认false 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
-   * @param lineColor auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
+   * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
    * @param isHyaline 是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码
    * @return 文件对象
    * @throws WxErrorException 异常
