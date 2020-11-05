@@ -315,6 +315,7 @@ public class WxCpConsts {
     public static final String MARKDOWN = "markdown";
   }
 
+  @UtilityClass
   public static class WorkBenchType {
     /*
     * 关键数据型

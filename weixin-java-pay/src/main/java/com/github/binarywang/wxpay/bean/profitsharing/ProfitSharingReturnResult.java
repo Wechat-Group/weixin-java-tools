@@ -17,6 +17,19 @@ import org.w3c.dom.Document;
 @XStreamAlias("xml")
 public class ProfitSharingReturnResult extends BaseWxPayResult {
   private static final long serialVersionUID = 718554909816994568L;
+
+  /**
+   * 如果返回状态码为FAIL，则本字段存在，且为失败的错误码.
+   */
+  @XStreamAlias("error_code")
+  private String errorCode;
+
+  /**
+   * 如果返回状态码为FAIL，则本字段存在，且为失败的错误信息.
+   */
+  @XStreamAlias("error_msg")
+  private String errorMsg;
+
   /**
    * 微信分账单号
    */
@@ -86,5 +99,15 @@ public class ProfitSharingReturnResult extends BaseWxPayResult {
     result = readXmlString(d, "result");
     failReason = readXmlString(d, "fail_reason");
     finishTime = readXmlString(d, "finish_time");
+  }
+
+  @Override
+  public String getErrCode() {
+    return this.errorCode;
+  }
+
+  @Override
+  public String getErrCodeDes() {
+    return this.errorMsg;
   }
 }

@@ -14,6 +14,7 @@ import java.util.List;
  */
 @Data
 public class BaseInfoUpdate implements Serializable {
+  private static final long serialVersionUID = -7810188893073599733L;
 
   /**
    * 需要审核：卡券名,字数上限为9个汉字 (建议涵盖卡券属性、服务及金额).

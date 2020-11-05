@@ -11,6 +11,8 @@ import me.chanjar.weixin.cp.api.WxCpExternalContactService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
+import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
+import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -91,23 +93,23 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpUserExternalContactInfo getExternalContact(String userId) throws WxErrorException {
+  public WxCpExternalContactInfo getExternalContact(String userId) throws WxErrorException {
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_EXTERNAL_CONTACT + userId);
     String responseContent = this.mainService.get(url, null);
-    return WxCpUserExternalContactInfo.fromJson(responseContent);
+    return WxCpExternalContactInfo.fromJson(responseContent);
   }
 
   @Override
-  public WxCpUserExternalContactInfo getContactDetail(String userId) throws WxErrorException {
+  public WxCpExternalContactInfo getContactDetail(String userId) throws WxErrorException {
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CONTACT_DETAIL + userId);
     String responseContent = this.mainService.get(url, null);
-    return WxCpUserExternalContactInfo.fromJson(responseContent);
+    return WxCpExternalContactInfo.fromJson(responseContent);
   }
 
   @Override
-  public WxCpUserExternalContactBatchInfo getContactDetailBatch(String userId,
-                                                                String cursor,
-                                                                Integer limit)
+  public WxCpExternalContactBatchInfo getContactDetailBatch(String userId,
+                                                            String cursor,
+                                                            Integer limit)
     throws WxErrorException {
     final String url =
       this.mainService
@@ -122,7 +124,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
       json.addProperty("limit", limit);
     }
     String responseContent = this.mainService.post(url, json.toString());
-    return WxCpUserExternalContactBatchInfo.fromJson(responseContent);
+    return WxCpExternalContactBatchInfo.fromJson(responseContent);
   }
 
   @Override

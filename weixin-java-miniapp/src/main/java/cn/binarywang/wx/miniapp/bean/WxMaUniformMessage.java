@@ -97,6 +97,10 @@ public class WxMaUniformMessage implements Serializable {
     private static final long serialVersionUID = -7945254706501974849L;
 
     private String appid;
+    /**
+     *  注意，此属性不是最终的json字符串，可结合以下两个属性一起使用，确定最终json字符串是什么
+     *  转换的代码逻辑，请阅读 {@link cn.binarywang.wx.miniapp.util.json.WxMaUniformMessageGsonAdapter}
+     */
     private String pagePath;
 
     /**

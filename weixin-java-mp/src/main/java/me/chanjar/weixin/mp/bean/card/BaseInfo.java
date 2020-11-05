@@ -14,6 +14,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
  */
 @Data
 public class BaseInfo implements Serializable {
+  private static final long serialVersionUID = 4753535126193166020L;
 
   /**
    * 卡券的商户logo,建议像素为300*300.
@@ -172,6 +173,12 @@ public class BaseInfo implements Serializable {
    */
   @SerializedName("get_limit")
   private Integer getLimit = 1;
+
+  /**
+   * 每人可核销的数量限制,不填写默认为50.
+   */
+  @SerializedName("use_limit")
+  private Integer useLimit = 50;
 
   /**
    * 卡券领取页面是否可分享,默认为true.

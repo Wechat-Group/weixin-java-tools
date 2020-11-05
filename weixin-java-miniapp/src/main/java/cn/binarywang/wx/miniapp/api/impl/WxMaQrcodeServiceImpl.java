@@ -7,6 +7,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaQrcode;
 import cn.binarywang.wx.miniapp.bean.WxaCode;
 import cn.binarywang.wx.miniapp.bean.WxaCodeUnlimit;
 import cn.binarywang.wx.miniapp.util.QrcodeBytesRequestExecutor;
+import cn.binarywang.wx.miniapp.util.QrcodeFileRequestExecutor;
 import cn.binarywang.wx.miniapp.util.QrcodeRequestExecutor;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -105,6 +106,53 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
   @Override
   public File createWxaCodeUnlimit(String scene, String page) throws WxErrorException {
     return this.createWxaCodeUnlimit(scene, page, 430, true, null, false);
+  }
+
+  @Override
+  public File createQrcode(String path, int width, String filePath) throws WxErrorException {
+    final QrcodeFileRequestExecutor executor = new QrcodeFileRequestExecutor(this.wxMaService.getRequestHttp(), filePath);
+    return this.wxMaService.execute(executor, CREATE_QRCODE_URL, new WxMaQrcode(path, width));
+  }
+
+  @Override
+  public File createQrcode(String path, String filePath) throws WxErrorException {
+    return createQrcode(path, 430, filePath);
+  }
+
+  @Override
+  public File createWxaCode(String path, int width, String filePath, boolean autoColor, WxMaCodeLineColor lineColor, boolean isHyaline)
+    throws WxErrorException {
+    final QrcodeFileRequestExecutor executor = new QrcodeFileRequestExecutor(this.wxMaService.getRequestHttp(), filePath);
+    return this.wxMaService.execute(executor, GET_WXACODE_URL, WxaCode.builder()
+      .path(path)
+      .width(width)
+      .autoColor(autoColor)
+      .lineColor(lineColor)
+      .isHyaline(isHyaline)
+      .build());
+  }
+
+  @Override
+  public File createWxaCode(String path, int width, String filePath) throws WxErrorException {
+    return this.createWxaCode(path, width, filePath, true, null, false);
+  }
+
+  @Override
+  public File createWxaCode(String path, String filePath) throws WxErrorException {
+    return this.createWxaCode(path, 430, filePath);
+  }
+
+  @Override
+  public File createWxaCodeUnlimit(String scene, String page, String filePath, int width, boolean autoColor,
+                                   WxMaCodeLineColor lineColor, boolean isHyaline) throws WxErrorException {
+    return this.wxMaService.execute(new QrcodeFileRequestExecutor(this.wxMaService.getRequestHttp(), filePath),
+      GET_WXACODE_UNLIMIT_URL,
+      this.buildWxaCodeUnlimit(scene, page, width, autoColor, lineColor, isHyaline));
+  }
+
+  @Override
+  public File createWxaCodeUnlimit(String scene, String page, String filePath) throws WxErrorException {
+    return this.createWxaCodeUnlimit(scene, page, filePath, 430, true, null, false);
   }
 
 }

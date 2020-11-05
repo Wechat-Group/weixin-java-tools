@@ -24,6 +24,7 @@ public class WxMenuRule implements Serializable {
   private String country;
   private String province;
   private String city;
+  @SerializedName("client_platform_type")
   private String clientPlatformType;
   private String language;
 

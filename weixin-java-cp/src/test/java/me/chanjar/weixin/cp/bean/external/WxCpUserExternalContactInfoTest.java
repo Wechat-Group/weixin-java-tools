@@ -1,9 +1,11 @@
-package me.chanjar.weixin.cp.bean;
+package me.chanjar.weixin.cp.bean.external;
+
+import me.chanjar.weixin.cp.bean.external.contact.ExternalContact;
+import me.chanjar.weixin.cp.bean.external.contact.FollowedUser;
+import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
+import org.testng.annotations.*;
 
 import java.util.List;
-
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalContactInfo;
-import org.testng.annotations.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -77,7 +79,7 @@ public class WxCpUserExternalContactInfoTest {
       "  ]\n" +
       "}";
 
-    final WxCpUserExternalContactInfo contactInfo = WxCpUserExternalContactInfo.fromJson(json);
+    final WxCpExternalContactInfo contactInfo = WxCpExternalContactInfo.fromJson(json);
     assertThat(contactInfo).isNotNull();
     assertThat(contactInfo.getExternalContact()).isNotNull();
 
@@ -93,21 +95,21 @@ public class WxCpUserExternalContactInfoTest {
 
     assertThat(contactInfo.getExternalContact().getExternalProfile()).isNotNull();
 
-    final List<WxCpUserExternalContactInfo.ExternalAttribute> externalAttrs = contactInfo.getExternalContact().getExternalProfile().getExternalAttrs();
+    final List<ExternalContact.ExternalAttribute> externalAttrs = contactInfo.getExternalContact().getExternalProfile().getExternalAttrs();
     assertThat(externalAttrs).isNotEmpty();
 
-    final WxCpUserExternalContactInfo.ExternalAttribute externalAttr1 = externalAttrs.get(0);
+    final ExternalContact.ExternalAttribute externalAttr1 = externalAttrs.get(0);
     assertThat(externalAttr1.getType()).isEqualTo(0);
     assertThat(externalAttr1.getName()).isEqualTo("文本名称");
     assertThat(externalAttr1.getText().getValue()).isEqualTo("文本");
 
-    final WxCpUserExternalContactInfo.ExternalAttribute externalAttr2 = externalAttrs.get(1);
+    final ExternalContact.ExternalAttribute externalAttr2 = externalAttrs.get(1);
     assertThat(externalAttr2.getType()).isEqualTo(1);
     assertThat(externalAttr2.getName()).isEqualTo("网页名称");
     assertThat(externalAttr2.getWeb().getUrl()).isEqualTo("http://www.test.com");
     assertThat(externalAttr2.getWeb().getTitle()).isEqualTo("标题");
 
-    final WxCpUserExternalContactInfo.ExternalAttribute externalAttr3 = externalAttrs.get(2);
+    final ExternalContact.ExternalAttribute externalAttr3 = externalAttrs.get(2);
     assertThat(externalAttr3.getType()).isEqualTo(2);
     assertThat(externalAttr3.getName()).isEqualTo("测试app");
     assertThat(externalAttr3.getMiniProgram().getAppid()).isEqualTo("wx8bd80126147df384");
@@ -115,7 +117,7 @@ public class WxCpUserExternalContactInfoTest {
     assertThat(externalAttr3.getMiniProgram().getTitle()).isEqualTo("my miniprogram");
 
 
-    List<WxCpUserExternalContactInfo.FollowedUser> followedUsers = contactInfo.getFollowedUsers();
+    List<FollowedUser> followedUsers = contactInfo.getFollowedUsers();
     assertThat(followedUsers).isNotEmpty();
     assertThat(followedUsers.get(0).getUserId()).isEqualTo("rocky");
     assertThat(followedUsers.get(0).getRemark()).isEqualTo("李部长");

@@ -4,6 +4,8 @@ import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
+import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
+import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
 
 import java.util.Date;
 import java.util.List;
@@ -109,7 +111,7 @@ public interface WxCpExternalContactService {
    * @deprecated 建议使用 {@link #getContactDetail(String)}
    */
   @Deprecated
-  WxCpUserExternalContactInfo getExternalContact(String userId) throws WxErrorException;
+  WxCpExternalContactInfo getExternalContact(String userId) throws WxErrorException;
 
   /**
    * 获取客户详情.
@@ -130,7 +132,7 @@ public interface WxCpExternalContactService {
    * @return . contact detail
    * @throws WxErrorException .
    */
-  WxCpUserExternalContactInfo getContactDetail(String userId) throws WxErrorException;
+  WxCpExternalContactInfo getContactDetail(String userId) throws WxErrorException;
 
   /**
    * 批量获取客户详情.
@@ -153,8 +155,8 @@ public interface WxCpExternalContactService {
    * @return wx cp user external contact batch info
    * @throws WxErrorException .
    */
-  WxCpUserExternalContactBatchInfo getContactDetailBatch(String userId, String cursor,
-                                                         Integer limit)
+  WxCpExternalContactBatchInfo getContactDetailBatch(String userId, String cursor,
+                                                     Integer limit)
     throws WxErrorException;
 
   /**
