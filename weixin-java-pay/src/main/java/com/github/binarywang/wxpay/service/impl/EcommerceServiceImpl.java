@@ -226,7 +226,7 @@ public class EcommerceServiceImpl implements EcommerceService {
 
   @Override
   public RefundQueryResult queryRefundByOutRefundNo(String subMchid, String outRefundNo) throws WxPayException {
-    String url = String.format("%s/v3/ecommerce/applyments/out-request-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outRefundNo, subMchid);
+    String url = String.format("%s/v3/ecommerce/refunds/out-refund-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outRefundNo, subMchid);
     String response = this.payService.getV3(URI.create(url));
     return GSON.fromJson(response, RefundQueryResult.class);
   }
