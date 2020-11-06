@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 
 /**
@@ -38,6 +35,26 @@ public class MerchantMediaServiceImpl implements MerchantMediaService {
         String result = this.payService.postV3(url, request);
         return ImageUploadResult.fromJson(result);
       }
+    }
+  }
+
+  @Override
+  public ImageUploadResult imageUploadV3(InputStream inputStream, String fileName) throws WxPayException, IOException {
+    String url = String.format("%s/v3/merchant/media/upload", this.payService.getPayBaseUrl());
+    try(ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+      byte[] buffer = new byte[2048];
+      int len;
+      while ((len = inputStream.read(buffer)) > -1) {
+        bos.write(buffer, 0, len);
+      }
+      bos.flush();
+      byte[] data = bos.toByteArray();
+      String sha256 = DigestUtils.sha256Hex(data);
+      WechatPayUploadHttpPost request = new WechatPayUploadHttpPost.Builder(URI.create(url))
+        .withImage(fileName, sha256, new ByteArrayInputStream(data))
+        .build();
+      String result = this.payService.postV3(url, request);
+      return ImageUploadResult.fromJson(result);
     }
   }
 
