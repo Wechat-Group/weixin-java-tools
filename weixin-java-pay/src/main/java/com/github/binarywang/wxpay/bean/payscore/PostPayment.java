@@ -26,7 +26,7 @@ public class PostPayment implements Serializable {
   @SerializedName("name")
   private String name;
   @SerializedName("amount")
-  private int amount;
+  private Integer amount;
   @SerializedName("description")
   private String description;
   @SerializedName("count")
