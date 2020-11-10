@@ -100,7 +100,7 @@ public class PartnerTransactionsRequest implements Serializable {
    * </pre>
    */
   @SerializedName(value = "out_trade_no")
-  private String out_trade_no;
+  private String outTradeNo;
 
   /**
    * <pre>
