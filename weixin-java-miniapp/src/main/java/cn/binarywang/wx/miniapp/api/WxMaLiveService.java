@@ -18,6 +18,10 @@ public interface WxMaLiveService {
   String GET_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/getliveinfo";
   String CREATE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/create";
   String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/addgoods";
+  String DELETE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/deleteroom";
+  String EDIT_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/editroom";
+  String GET_PUSH_URL = "https://api.weixin.qq.com/wxaapi/broadcast/room/getpushurl";
+  String GET_SHARED_CODE = "https://api.weixin.qq.com/wxaapi/broadcast/room/getsharedcode";
 
   /**
    * 创建直播间
@@ -33,6 +37,61 @@ public interface WxMaLiveService {
    */
   Integer createRoom(WxMaLiveRoomInfo roomInfo) throws WxErrorException;
 
+  /**
+   * 删除直播间
+   * <pre>
+   * 调用额度：10000次/一天
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/studio-api.html#5
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/room/deleteroom?access_token=ACCESS_TOKEN
+   * </pre>
+   *
+   * @param roomId 直播间id
+   * @return .
+   * @throws WxErrorException .
+   */
+  boolean deleteRoom(Integer roomId) throws WxErrorException;
+
+  /**
+   * 编辑直播间
+   * <pre>
+   * 调用此接口编辑直播间，调用额度：10000次/一天
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/studio-api.html#6
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/room/editroom?access_token=ACCESS_TOKEN
+   * </pre>
+   *
+   * @param roomInfo 直播间信息
+   * @return .
+   * @throws WxErrorException .
+   */
+  boolean editRoom(WxMaLiveRoomInfo roomInfo) throws WxErrorException;
+
+  /**
+   * 获取直播间推流地址
+   * <pre>
+   * 调用额度：10000次/一天
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/studio-api.html#7
+   * http请求方式：GET https://api.weixin.qq.com/wxaapi/broadcast/room/getpushurl?access_token=ACCESS_TOKEN
+   * </pre>
+   *
+   * @param roomId 直播间id
+   * @return .
+   * @throws WxErrorException .
+   */
+  String getPushUrl(Integer roomId) throws WxErrorException;
+
+  /**
+   * 获取直播间分享二维码
+   * <pre>
+   * 调用额度：10000次/一天
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/studio-api.html#8
+   * http请求方式：GET https://api.weixin.qq.com/wxaapi/broadcast/room/getsharedcode?access_token=ACCESS_TOKEN
+   * </pre>
+   *
+   * @param roomId 直播间id
+   * @return .
+   * @throws WxErrorException .
+   */
+  String getSharedCode(Integer roomId, String params) throws WxErrorException;
   /**
    * 获取直播房间列表.（分页）
    *

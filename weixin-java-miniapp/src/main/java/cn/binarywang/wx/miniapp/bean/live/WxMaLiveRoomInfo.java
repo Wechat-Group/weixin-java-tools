@@ -12,6 +12,10 @@ public class WxMaLiveRoomInfo implements Serializable {
   private static final long serialVersionUID = 7745775280267417154L;
 
   /**
+   * 直播间ID
+   */
+  private Integer id;
+  /**
    * 直播间名字，最短3个汉字，最长17个汉字，1个汉字相当于2个字符
    **/
   private String name;
@@ -39,6 +43,10 @@ public class WxMaLiveRoomInfo implements Serializable {
    * 主播副号微信号，如果未实名认证，需要先前往“小程序直播”小程序进行实名验证, 小程序二维码链接：https://res.wx.qq.com/op_res/BbVNeczA1XudfjVqCVoKgfuWe7e3aUhokktRVOqf_F0IqS6kYR--atCpVNUUC3zr
    **/
   private String subAnchorWechat;
+  /**
+   * 创建者微信号，不传入则此直播间所有成员可见。传入则此房间仅创建者、管理员、超管、直播间主播可见
+   **/
+  private String createrWechat;
   /**
    * 分享图，填入mediaID（mediaID获取后，三天内有效）；图片mediaID的获取，请参考以下文档： https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html；直播间分享图，图片规则：建议像素800*640，大小不超过1M；
    **/

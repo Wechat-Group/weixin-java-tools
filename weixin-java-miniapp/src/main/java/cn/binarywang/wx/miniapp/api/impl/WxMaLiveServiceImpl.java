@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.live.WxMaLiveResult;
 import cn.binarywang.wx.miniapp.bean.live.WxMaLiveRoomInfo;
 import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import com.google.common.base.Joiner;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,55 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return jsonObject.get("roomId").getAsInt();
+  }
+
+  @Override
+  public boolean deleteRoom(Integer roomId) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put("id", roomId);
+    String responseContent = this.wxMaService.post(DELETE_GOODS, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get("errcode").getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public boolean editRoom(WxMaLiveRoomInfo roomInfo) throws WxErrorException {
+    String responseContent = this.wxMaService.post(EDIT_GOODS, WxMaGsonBuilder.create().toJson(roomInfo));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get("errcode").getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public String getPushUrl(Integer roomId) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put("roomId", roomId);
+    String responseContent = this.wxMaService.get(GET_PUSH_URL, Joiner.on("&").withKeyValueSeparator("=").join(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get("errcode").getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return jsonObject.get("pushAddr").getAsString();
+  }
+
+  @Override
+  public String getSharedCode(Integer roomId, String params) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put("roomId", roomId);
+    if (null != params) {
+      map.put("params", params);
+    }
+    String responseContent = this.wxMaService.get(GET_SHARED_CODE, Joiner.on("&").withKeyValueSeparator("=").join(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get("errcode").getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return jsonObject.get("cdnUrl").getAsString();
   }
 
   @Override
