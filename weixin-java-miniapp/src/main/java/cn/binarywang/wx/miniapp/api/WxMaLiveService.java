@@ -18,8 +18,8 @@ public interface WxMaLiveService {
   String GET_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/getliveinfo";
   String CREATE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/create";
   String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/addgoods";
-  String DELETE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/deleteroom";
-  String EDIT_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/editroom";
+  String DELETE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/deleteroom";
+  String EDIT_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/editroom";
   String GET_PUSH_URL = "https://api.weixin.qq.com/wxaapi/broadcast/room/getpushurl";
   String GET_SHARED_CODE = "https://api.weixin.qq.com/wxaapi/broadcast/room/getsharedcode";
 

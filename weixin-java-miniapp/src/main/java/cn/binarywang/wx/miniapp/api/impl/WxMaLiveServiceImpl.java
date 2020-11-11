@@ -45,7 +45,7 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
   public boolean deleteRoom(Integer roomId) throws WxErrorException {
     Map<String, Object> map = new HashMap<>(2);
     map.put("id", roomId);
-    String responseContent = this.wxMaService.post(DELETE_GOODS, WxMaGsonBuilder.create().toJson(map));
+    String responseContent = this.wxMaService.post(DELETE_ROOM, WxMaGsonBuilder.create().toJson(map));
     JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get("errcode").getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
@@ -55,7 +55,7 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
 
   @Override
   public boolean editRoom(WxMaLiveRoomInfo roomInfo) throws WxErrorException {
-    String responseContent = this.wxMaService.post(EDIT_GOODS, WxMaGsonBuilder.create().toJson(roomInfo));
+    String responseContent = this.wxMaService.post(EDIT_ROOM, WxMaGsonBuilder.create().toJson(roomInfo));
     JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get("errcode").getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
