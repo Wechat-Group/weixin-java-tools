@@ -6,10 +6,11 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
-import me.chanjar.weixin.cp.message.WxCpMessageMatcher;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * The type Wx cp message router rule.
@@ -22,15 +23,34 @@ public class WxCpTpMessageRouterRule {
 
   private boolean async = true;
 
-  private WxCpMessageMatcher matcher;
+  private String fromUser;
+
+  private String msgType;
+
+  private String event;
+
+  private String eventKey;
+
+  private String eventKeyRegex;
+
+  private String content;
+
+  private String rContent;
+
+  private WxCpTpMessageMatcher matcher;
 
   private boolean reEnter = false;
+
+  private Integer agentId;
+
+  private String infoType;
+
+  private String changeType;
 
   private List<WxCpTpMessageHandler> handlers = new ArrayList<>();
 
   private List<WxCpTpMessageInterceptor> interceptors = new ArrayList<>();
   private String suiteId;
-  private String infoType;
   private String authCode;
   private String suiteTicket;
 
@@ -65,12 +85,23 @@ public class WxCpTpMessageRouterRule {
   }
 
   /**
+   * 如果changeType等于这个type，符合rule的条件之一
+   * @param changeType
+   * @return
+   */
+  public WxCpTpMessageRouterRule changeType(String changeType) {
+    this.changeType = changeType;
+    return this;
+  }
+
+
+  /**
    * 如果消息匹配某个matcher，用在用户需要自定义更复杂的匹配规则的时候
    *
    * @param matcher the matcher
    * @return the wx cp message router rule
    */
-  public WxCpTpMessageRouterRule matcher(WxCpMessageMatcher matcher) {
+  public WxCpTpMessageRouterRule matcher(WxCpTpMessageMatcher matcher) {
     this.matcher = matcher;
     return this;
   }
@@ -155,12 +186,29 @@ public class WxCpTpMessageRouterRule {
     return
       (this.suiteId == null || this.suiteId.equals(wxMessage.getSuiteId()))
         &&
+        (this.fromUser == null || this.fromUser.equals(wxMessage.getFromUserName()))
+        &&
+        (this.agentId == null || this.agentId.equals(wxMessage.getAgentID()))
+        &&
+        (this.msgType == null || this.msgType.equalsIgnoreCase(wxMessage.getMsgType()))
+        &&
         (this.infoType == null || this.infoType.equals(wxMessage.getInfoType()))
         &&
         (this.suiteTicket == null || this.suiteTicket.equalsIgnoreCase(wxMessage.getSuiteTicket()))
         &&
-        (this.authCode == null || this.authCode.equalsIgnoreCase(wxMessage.getAuthCode()))
-      ;
+        (this.eventKeyRegex == null || Pattern.matches(this.eventKeyRegex, StringUtils.trimToEmpty(wxMessage.getEventKey())))
+        &&
+        (this.content == null || this.content.equals(StringUtils.trimToNull(wxMessage.getContent())))
+        &&
+        (this.rContent == null || Pattern.matches(this.rContent, StringUtils.trimToEmpty(wxMessage.getContent())))
+        &&
+        (this.infoType == null || this.infoType.equals(wxMessage.getInfoType()))
+        &&
+        (this.changeType == null || this.changeType.equals(wxMessage.getChangeType()))
+        &&
+        (this.matcher == null || this.matcher.match(wxMessage))
+        &&
+        (this.authCode == null || this.authCode.equalsIgnoreCase(wxMessage.getAuthCode()));
   }
 
   /**

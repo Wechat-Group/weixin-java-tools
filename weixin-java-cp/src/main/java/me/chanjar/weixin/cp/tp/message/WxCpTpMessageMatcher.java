@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.tp.message;
 
+import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 
 /**
@@ -15,6 +16,6 @@ public interface WxCpTpMessageMatcher {
    * @param message the message
    * @return the boolean
    */
-  boolean match(WxCpXmlMessage message);
+  boolean match(WxCpTpXmlMessage message);
 
 }

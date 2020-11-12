@@ -45,10 +45,16 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
    */
   protected final Object globalSuiteAccessTokenRefreshLock = new Object();
 
+
+  /**
+   * 全局刷新suite ticket的锁
+   */
+  protected final Object globalSuiteTicketRefreshLock = new Object();
+
   /**
    * 全局的是否正在刷新jsapi_ticket的锁.
    */
-  protected final Object globalSuiteTicketRefreshLock = new Object();
+  protected final Object globalJsApiTicketRefreshLock = new Object();
 
   protected WxCpTpConfigStorage configStorage;
 
@@ -79,16 +85,6 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
 
   @Override
   public String getSuiteTicket() throws WxErrorException {
-    return getSuiteTicket(false);
-  }
-
-  @Override
-  public String getSuiteTicket(boolean forceRefresh) throws WxErrorException {
-//     suite ticket由微信服务器推送，不能强制刷新
-//    if (forceRefresh) {
-//      this.configStorage.expireSuiteTicket();
-//    }
-
     if (this.configStorage.isSuiteTicketExpired()) {
       // 本地suite ticket 不存在或者过期
       WxError wxError = WxError.fromJson("{\"errcode\":40085, \"errmsg\":\"invaild suite ticket\"}", WxType.CP);
@@ -97,6 +93,68 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     return this.configStorage.getSuiteTicket();
   }
 
+  @Override
+  public String getSuiteTicket(boolean forceRefresh) throws WxErrorException {
+//     suite ticket由微信服务器推送，不能强制刷新
+//    if (forceRefresh) {
+//      this.configStorage.expireSuiteTicket();
+//    }
+    return getSuiteTicket();
+  }
+
+  @Override
+  public void setSuiteTicket(String suiteTicket) throws WxErrorException {
+    synchronized (globalSuiteTicketRefreshLock) {
+      this.configStorage.updateSuiteTicket(suiteTicket, 10 * 60);
+    }
+  }
+
+  @Override
+  public String getSuiteJsApiTicket(String authCorpId) throws WxErrorException {
+    if (this.configStorage.isSuiteAccessTokenExpired()) {
+
+      String resp = get(configStorage.getApiUrl(GET_SUITE_JSAPI_TICKET),
+        "type=agent_config&access_token=" + this.configStorage.getAccessToken(authCorpId));
+
+      JsonObject jsonObject = GsonParser.parse(resp);
+      if (jsonObject.get("errcode").getAsInt() == 0) {
+        String jsApiTicket = jsonObject.get("ticket").getAsString();
+        int expiredInSeconds = jsonObject.get("expires_in").getAsInt();
+        synchronized (globalJsApiTicketRefreshLock) {
+          configStorage.updateAuthSuiteJsApiTicket(authCorpId, jsApiTicket, expiredInSeconds);
+        }
+      }
+      else {
+        throw new WxErrorException(WxError.fromJson(resp));
+      }
+    }
+
+    return configStorage.getSuiteAccessToken();
+  }
+
+  @Override
+  public String getAuthCorpJsApiTicket(String authCorpId) throws WxErrorException {
+    if (this.configStorage.isSuiteAccessTokenExpired()) {
+
+      String resp = get(configStorage.getApiUrl(GET_AUTH_CORP_JSAPI_TICKET),
+        "access_token=" + this.configStorage.getAccessToken(authCorpId));
+
+      JsonObject jsonObject = GsonParser.parse(resp);
+      if (jsonObject.get("errcode").getAsInt() == 0) {
+        String jsApiTicket = jsonObject.get("ticket").getAsString();
+        int expiredInSeconds = jsonObject.get("expires_in").getAsInt();
+
+        synchronized (globalJsApiTicketRefreshLock) {
+          configStorage.updateAuthCorpJsApiTicket(authCorpId, jsApiTicket, expiredInSeconds);
+        }
+      }
+      else {
+        throw new WxErrorException(WxError.fromJson(resp));
+      }
+    }
+
+    return configStorage.getSuiteAccessToken();
+  }
 
   @Override
   public WxCpMaJsCode2SessionResult jsCode2Session(String jsCode) throws WxErrorException {
