@@ -342,4 +342,19 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     return this.sessionManager;
   }
 
+  @Override
+  public WxCpTpUserInfo getUserInfo3rd(String code) throws WxErrorException{
+    String url = configStorage.getApiUrl(GET_USERINFO3RD);
+    String result = get(url+"?code="+code,null);
+    return WxCpTpUserInfo.fromJson(result);
+  }
+
+  @Override
+  public WxCpTpUserDetail getUserDetail3rd(String userTicket) throws WxErrorException{
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("user_ticket", userTicket);
+    String result = post(configStorage.getApiUrl(GET_USERDETAIL3RD), jsonObject.toString());
+    return WxCpTpUserDetail.fromJson(result);
+  }
+
 }

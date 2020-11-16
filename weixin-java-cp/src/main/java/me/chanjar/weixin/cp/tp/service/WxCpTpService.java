@@ -6,10 +6,7 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
-import me.chanjar.weixin.cp.bean.WxCpTpAuthInfo;
-import me.chanjar.weixin.cp.bean.WxCpTpCorp;
-import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
+import me.chanjar.weixin.cp.bean.*;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 
 /**
@@ -266,4 +263,24 @@ public interface WxCpTpService {
    * @return WxSessionManager session manager
    */
   WxSessionManager getSessionManager();
+
+  /**
+   * <pre>
+   * 获取访问用户身份
+   * </pre>
+   *
+   * @param code
+   * @return
+   */
+  WxCpTpUserInfo getUserInfo3rd(String code) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取访问用户敏感信息
+   * </pre>
+   * 
+   * @param userTicket
+   * @return
+   */
+  WxCpTpUserDetail getUserDetail3rd(String userTicket) throws WxErrorException;
 }
