@@ -27,9 +27,4 @@ public class WxMaUserInfo implements Serializable {
     return WxMaGsonBuilder.create().fromJson(json, WxMaUserInfo.class);
   }
 
-  @Data
-  public static class Watermark {
-    private String timestamp;
-    private String appid;
-  }
 }

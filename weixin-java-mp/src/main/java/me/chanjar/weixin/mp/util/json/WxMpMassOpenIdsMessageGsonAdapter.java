@@ -1,19 +1,15 @@
-/*
- * KINGSTAR MEDIA SOLUTIONS Co.,LTD. Copyright c 2005-2013. All rights reserved.
- *
- * This source code is the property of KINGSTAR MEDIA SOLUTIONS LTD. It is intended
- * only for the use of KINGSTAR MEDIA application development. Reengineering, reproduction
- * arose from modification of the original source, or other redistribution of this source
- * is not permitted without written permission of the KINGSTAR MEDIA SOLUTIONS LTD.
- */
 package me.chanjar.weixin.mp.util.json;
 
 import com.google.gson.*;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
 
+/**
+ * @author someone
+ */
 public class WxMpMassOpenIdsMessageGsonAdapter implements JsonSerializer<WxMpMassOpenIdsMessage> {
 
   @Override
@@ -52,7 +48,19 @@ public class WxMpMassOpenIdsMessageGsonAdapter implements JsonSerializer<WxMpMas
       messageJson.add(WxConsts.MassMsgType.MPVIDEO, sub);
     }
     messageJson.addProperty("msgtype", message.getMsgType());
-    messageJson.addProperty("send_ignore_reprint", message.isSendIgnoreReprint() ? 0 : 1);
+
+    /*
+    开发者可以对群发接口的 send_ignore_reprint 参数进行设置，指定待群发的文章被判定为转载时，是否继续群发。
+    当 send_ignore_reprint 参数设置为1时，文章被判定为转载时，且原创文允许转载时，将继续进行群发操作。
+    当 send_ignore_reprint 参数设置为0时，文章被判定为转载时，将停止群发操作。
+    send_ignore_reprint 默认为0。
+     */
+    messageJson.addProperty("send_ignore_reprint", message.isSendIgnoreReprint() ? 1 : 0);
+
+    if (StringUtils.isNotEmpty(message.getClientMsgId())) {
+      messageJson.addProperty("clientmsgid", message.getClientMsgId());
+    }
+
     return messageJson;
   }
 

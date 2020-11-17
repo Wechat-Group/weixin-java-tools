@@ -1,0 +1,26 @@
+[
+  {
+    "request": {
+      "uri": "/cgi-bin/gettoken"
+    },
+    "response": {
+      "text": "{\"errcode\":0,\"errmsg\":\"ok\",\"access_token\":\"oG1MrhLSzGBl4YxM1W2EHJlL_5vAotNwQ6KBp98sP2fO8XGPPRUlWS9w98CKjxSgPx4YnTy0DU_DvmNXAwt3mSDJ1Uhg_WCFrxX8GWbbCRlzrj2csK-1Y3tzI6dBCMa2YmblBo2sX7qkkzc9pnjP38GzO7Yuo_Bbpyi4doilNWZme0z9ovwiBCkAtV7DXYuh14EsnNrODG454kstOxsqWA\",\"expires_in\":7200}"
+    }
+  },
+  {
+    "request": {
+      "uri": "/cgi-bin/message/send"
+    },
+    "response": {
+      "text": "{\"errcode\":0,\"errmsg\":\"ok\",\"invaliduser\":\"\"}"
+    }
+  },
+  {
+    "request": {
+      "uri": "/cgi-bin/linkedcorp/message/send"
+    },
+    "response": {
+      "text": "{\"errcode\":0,\"errmsg\":\"ok\",\"invaliduser\":\"\"}"
+    }
+  }
+]

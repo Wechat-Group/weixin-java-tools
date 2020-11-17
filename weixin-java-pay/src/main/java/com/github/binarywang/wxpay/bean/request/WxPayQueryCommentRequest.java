@@ -5,9 +5,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
+import java.util.Map;
+
 /**
  * <pre>
- *  拉取订单评价数据接口的请求参数封装类
+ *  拉取订单评价数据接口的请求参数封装类.
  *  Created by BinaryWang on 2017/9/2.
  * </pre>
  *
@@ -19,10 +21,12 @@ import me.chanjar.weixin.common.annotation.Required;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayQueryCommentRequest extends WxPayBaseRequest {
+public class WxPayQueryCommentRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = 2633600418272768186L;
+
   /**
    * <pre>
-   * 字段名：开始时间
+   * 字段名：开始时间.
    * 变量名：begin_time
    * 是否必填：是
    * 类型：String(19)
@@ -36,7 +40,7 @@ public class WxPayQueryCommentRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：结束时间
+   * 字段名：结束时间.
    * 变量名：end_time
    * 是否必填：是
    * 类型：String(19)
@@ -50,7 +54,7 @@ public class WxPayQueryCommentRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：位移
+   * 字段名：位移.
    * 变量名：offset
    * 是否必填：是
    * 类型：uint(64)
@@ -64,7 +68,7 @@ public class WxPayQueryCommentRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：条数
+   * 字段名：条数.
    * 变量名：limit
    * 是否必填：否
    * 类型：uint(32)
@@ -76,11 +80,20 @@ public class WxPayQueryCommentRequest extends WxPayBaseRequest {
   private Integer limit;
 
   /**
-   * 检查约束情况
+   * 检查约束情况.
    */
   @Override
   protected void checkConstraints() throws WxPayException {
+  }
 
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("begin_time", beginTime);
+    map.put("end_time", endTime);
+    map.put("offset", offset.toString());
+    if (limit != null) {
+      map.put("limit", limit.toString());
+    }
   }
 
 }

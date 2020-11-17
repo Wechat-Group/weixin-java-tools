@@ -1,16 +1,13 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class WxMpMessageRouterRule {
@@ -130,9 +127,7 @@ public class WxMpMessageRouterRule {
   public WxMpMessageRouterRule interceptor(WxMpMessageInterceptor interceptor, WxMpMessageInterceptor... otherInterceptors) {
     this.interceptors.add(interceptor);
     if (otherInterceptors != null && otherInterceptors.length > 0) {
-      for (WxMpMessageInterceptor i : otherInterceptors) {
-        this.interceptors.add(i);
-      }
+      Collections.addAll(this.interceptors, otherInterceptors);
     }
     return this;
   }

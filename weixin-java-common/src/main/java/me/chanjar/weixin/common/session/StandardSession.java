@@ -1,23 +1,29 @@
 package me.chanjar.weixin.common.session;
 
-import me.chanjar.weixin.common.util.res.StringManager;
-
-import java.util.*;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import me.chanjar.weixin.common.util.res.StringManager;
+
+/**
+ * @author Daniel Qian
+ */
 public class StandardSession implements WxSession, InternalSession {
 
   /**
    * The string manager for this package.
    */
-  protected static final StringManager sm = StringManager.getManager(Constants.Package);
+  protected static final StringManager SM = StringManager.getManager(Constants.PACKAGE);
   /**
    * Type array.
    */
   private static final String[] EMPTY_ARRAY = new String[0];
 
-  // ------------------------------ WxSession
   protected Map<String, Object> attributes = new ConcurrentHashMap<>();
   /**
    * The session identifier of this Session.
@@ -73,7 +79,7 @@ public class StandardSession implements WxSession, InternalSession {
 
     if (!isValidInternal()) {
       throw new IllegalStateException
-        (sm.getString("sessionImpl.getAttribute.ise"));
+        (SM.getString("sessionImpl.getAttribute.ise"));
     }
 
     if (name == null) {
@@ -86,7 +92,7 @@ public class StandardSession implements WxSession, InternalSession {
   @Override
   public Enumeration<String> getAttributeNames() {
     if (!isValidInternal()) {
-      throw new IllegalStateException(sm.getString("sessionImpl.getAttributeNames.ise"));
+      throw new IllegalStateException(SM.getString("sessionImpl.getAttributeNames.ise"));
     }
 
     Set<String> names = new HashSet<>();
@@ -98,7 +104,7 @@ public class StandardSession implements WxSession, InternalSession {
   public void setAttribute(String name, Object value) {
     // Name cannot be null
     if (name == null) {
-      throw new IllegalArgumentException(sm.getString("sessionImpl.setAttribute.namenull"));
+      throw new IllegalArgumentException(SM.getString("sessionImpl.setAttribute.namenull"));
     }
 
     // Null value is the same as removeAttribute()
@@ -109,7 +115,7 @@ public class StandardSession implements WxSession, InternalSession {
 
     // Validate our current state
     if (!isValidInternal()) {
-      throw new IllegalStateException(sm.getString("sessionImpl.setAttribute.ise", getIdInternal()));
+      throw new IllegalStateException(SM.getString("sessionImpl.setAttribute.ise", getIdInternal()));
     }
 
     this.attributes.put(name, value);
@@ -123,8 +129,9 @@ public class StandardSession implements WxSession, InternalSession {
 
   @Override
   public void invalidate() {
-    if (!isValidInternal())
-      throw new IllegalStateException(sm.getString("sessionImpl.invalidate.ise"));
+    if (!isValidInternal()) {
+      throw new IllegalStateException(SM.getString("sessionImpl.invalidate.ise"));
+    }
 
     // Cause this session to expire
     expire();

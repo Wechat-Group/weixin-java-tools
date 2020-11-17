@@ -1,7 +1,9 @@
 package me.chanjar.weixin.common.util.http.okhttp;
 
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.enums.WxType;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.HttpResponseProxy;
 import me.chanjar.weixin.common.util.http.RequestHttp;
@@ -12,25 +14,23 @@ import okio.BufferedSink;
 import okio.Okio;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by ecoolper on 2017/5/5.
+ *.
+ * @author ecoolper
+ * @date 2017/5/5
  */
+@Slf4j
 public class OkHttpMediaDownloadRequestExecutor extends BaseMediaDownloadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
   public OkHttpMediaDownloadRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {
     super(requestHttp, tmpDirFile);
   }
 
   @Override
-  public File execute(String uri, String queryParam) throws WxErrorException, IOException {
-    logger.debug("OkHttpMediaDownloadRequestExecutor is running");
+  public File execute(String uri, String queryParam, WxType wxType) throws WxErrorException, IOException {
     if (queryParam != null) {
       if (uri.indexOf('?') == -1) {
         uri += '?';
@@ -48,7 +48,7 @@ public class OkHttpMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
     String contentType = response.header("Content-Type");
     if (contentType != null && contentType.startsWith("application/json")) {
       // application/json; encoding=utf-8 下载媒体文件出错
-      throw new WxErrorException(WxError.fromJson(response.body().string()));
+      throw new WxErrorException(WxError.fromJson(response.body().string(), wxType));
     }
 
     String fileName = new HttpResponseProxy(response).getFileName();
@@ -56,11 +56,19 @@ public class OkHttpMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
       return null;
     }
 
-    File file = File.createTempFile(FilenameUtils.getBaseName(fileName), FilenameUtils.getExtension(fileName),
-      super.tmpDirFile);
+    String baseName = FilenameUtils.getBaseName(fileName);
+    if (StringUtils.isBlank(fileName) || baseName.length() < 3) {
+      baseName = String.valueOf(System.currentTimeMillis());
+    }
+
+    File file = File.createTempFile(
+      baseName, "." + FilenameUtils.getExtension(fileName), super.tmpDirFile
+    );
+
     try (BufferedSink sink = Okio.buffer(Okio.sink(file))) {
       sink.writeAll(response.body().source());
     }
+
     file.deleteOnExit();
     return file;
   }

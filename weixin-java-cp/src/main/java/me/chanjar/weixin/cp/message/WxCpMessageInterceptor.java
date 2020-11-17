@@ -1,9 +1,9 @@
 package me.chanjar.weixin.cp.message;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 
 import java.util.Map;
 
@@ -17,11 +17,12 @@ public interface WxCpMessageInterceptor {
   /**
    * 拦截微信消息
    *
-   * @param wxMessage
+   * @param wxMessage      the wx message
    * @param context        上下文，如果handler或interceptor之间有信息要传递，可以用这个
-   * @param wxCpService
-   * @param sessionManager
-   * @return true代表OK，false代表不OK
+   * @param wxCpService    the wx cp service
+   * @param sessionManager the session manager
+   * @return true代表OK ，false代表不OK
+   * @throws WxErrorException the wx error exception
    */
   boolean intercept(WxCpXmlMessage wxMessage,
                     Map<String, Object> context,

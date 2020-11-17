@@ -1,20 +1,25 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import jodd.http.*;
+import jodd.http.HttpConnectionProvider;
+import jodd.http.HttpRequest;
+import jodd.http.ProxyInfo;
 import jodd.http.net.SocketHttpConnectionProvider;
-import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.HttpType;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
-import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_ACCESS_TOKEN_URL;
+
 /**
- * jodd-http方式实现
+ * jodd-http方式实现.
+ *
+ * @author someone
  */
-public class WxMpServiceJoddHttpImpl extends WxMpServiceAbstractImpl<HttpConnectionProvider, ProxyInfo> {
+public class WxMpServiceJoddHttpImpl extends BaseWxMpServiceImpl<HttpConnectionProvider, ProxyInfo> {
   private HttpConnectionProvider httpClient;
   private ProxyInfo httpProxy;
 
@@ -42,41 +47,43 @@ public class WxMpServiceJoddHttpImpl extends WxMpServiceAbstractImpl<HttpConnect
       httpProxy = new ProxyInfo(ProxyInfo.ProxyType.HTTP, configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort(), configStorage.getHttpProxyUsername(), configStorage.getHttpProxyPassword());
     }
 
-    httpClient = JoddHttp.httpConnectionProvider;
+    httpClient = new SocketHttpConnectionProvider();
   }
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
-    try {
-      lock.lock();
-
-      if (this.getWxMpConfigStorage().isAccessTokenExpired() || forceRefresh) {
-        String url = String.format(WxMpService.GET_ACCESS_TOKEN_URL,
-          this.getWxMpConfigStorage().getAppId(), this.getWxMpConfigStorage().getSecret());
-
-        HttpRequest request = HttpRequest.get(url);
-
-        if (this.getRequestHttpProxy() != null) {
-          SocketHttpConnectionProvider provider = new SocketHttpConnectionProvider();
-          provider.useProxy(getRequestHttpProxy());
-
-          request.withConnectionProvider(provider);
-        }
-        HttpResponse response = request.send();
-        String resultContent = response.bodyText();
-        WxError error = WxError.fromJson(resultContent);
-        if (error.getErrorCode() != 0) {
-          throw new WxErrorException(error);
-        }
-        WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-        this.getWxMpConfigStorage().updateAccessToken(accessToken.getAccessToken(),
-          accessToken.getExpiresIn());
-      }
-    } finally {
-      lock.unlock();
+    final WxMpConfigStorage config = this.getWxMpConfigStorage();
+    if (!config.isAccessTokenExpired() && !forceRefresh) {
+      return config.getAccessToken();
     }
-    return this.getWxMpConfigStorage().getAccessToken();
+
+    Lock lock = config.getAccessTokenLock();
+    boolean locked = false;
+    try {
+      do {
+        locked = lock.tryLock(100, TimeUnit.MILLISECONDS);
+        if (!forceRefresh && !config.isAccessTokenExpired()) {
+          return config.getAccessToken();
+        }
+      } while (!locked);
+      String url = String.format(GET_ACCESS_TOKEN_URL.getUrl(config), config.getAppId(), config.getSecret());
+
+      HttpRequest request = HttpRequest.get(url);
+      if (this.getRequestHttpProxy() != null) {
+        SocketHttpConnectionProvider provider = new SocketHttpConnectionProvider();
+        provider.useProxy(getRequestHttpProxy());
+
+        request.withConnectionProvider(provider);
+      }
+
+      return this.extractAccessToken(request.send().bodyText());
+    } catch (InterruptedException e) {
+      throw new WxRuntimeException(e);
+    } finally {
+      if (locked) {
+        lock.unlock();
+      }
+    }
   }
 
 }

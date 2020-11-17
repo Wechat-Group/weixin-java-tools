@@ -6,13 +6,17 @@ import org.testng.annotations.*;
 /**
  * <pre>
  * Created by Binary Wang on 2017-01-04.
+ *  </pre>
+ *
  * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- * </pre>
  */
 public class WxPayOrderQueryResultTest {
+  /**
+   * Test compose coupons.
+   */
   @Test
-  public void testComposeCoupons() throws Exception {
-    /**
+  public void testComposeCoupons() {
+    /*
      * xml样例字符串来自于官方文档，并稍加改造加入了coupon相关的数据便于测试
      */
     String xmlString = "<xml>\n" +

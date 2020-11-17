@@ -1,11 +1,16 @@
 package me.chanjar.weixin.common.bean.menu;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-
 import java.io.Serializable;
 
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+
+/**
+ * menu rule.
+ *
+ * @author Daniel Qian
+ */
 @Data
 public class WxMenuRule implements Serializable {
   private static final long serialVersionUID = -4587181819499286670L;
@@ -19,11 +24,12 @@ public class WxMenuRule implements Serializable {
   private String country;
   private String province;
   private String city;
+  @SerializedName("client_platform_type")
   private String clientPlatformType;
   private String language;
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxGsonBuilder.create().toJson(this);
   }
 }

@@ -19,6 +19,7 @@ package me.chanjar.weixin.common.util.res;
 
 import java.text.MessageFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An internationalization / localization helper class which reduces
@@ -46,8 +47,7 @@ import java.util.*;
  */
 public class StringManager {
 
-  private static final Map<String, Map<Locale, StringManager>> managers =
-    new Hashtable<>();
+  private static final Map<String, Map<Locale, StringManager>> MANAGERS = new ConcurrentHashMap<>();
   private static int LOCALE_CACHE_SIZE = 10;
   /**
    * The ResourceBundle for this StringManager.
@@ -118,16 +118,16 @@ public class StringManager {
   public static final synchronized StringManager getManager(
     String packageName, Locale locale) {
 
-    Map<Locale, StringManager> map = managers.get(packageName);
+    Map<Locale, StringManager> map = MANAGERS.get(packageName);
     if (map == null) {
-            /*
-             * Don't want the HashMap to be expanded beyond LOCALE_CACHE_SIZE.
-             * Expansion occurs when size() exceeds capacity. Therefore keep
-             * size at or below capacity.
-             * removeEldestEntry() executes after insertion therefore the test
-             * for removal needs to use one less than the maximum desired size
-             *
-             */
+      /*
+       * Don't want the HashMap to be expanded beyond LOCALE_CACHE_SIZE.
+       * Expansion occurs when size() exceeds capacity. Therefore keep
+       * size at or below capacity.
+       * removeEldestEntry() executes after insertion therefore the test
+       * for removal needs to use one less than the maximum desired size
+       *
+       */
       map = new LinkedHashMap<Locale, StringManager>(LOCALE_CACHE_SIZE, 1, true) {
         private static final long serialVersionUID = 1L;
 
@@ -137,7 +137,7 @@ public class StringManager {
           return size() > (LOCALE_CACHE_SIZE - 1);
         }
       };
-      managers.put(packageName, map);
+      MANAGERS.put(packageName, map);
     }
 
     StringManager mgr = map.get(locale);

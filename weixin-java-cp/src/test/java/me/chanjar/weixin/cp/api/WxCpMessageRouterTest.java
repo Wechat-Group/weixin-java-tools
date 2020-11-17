@@ -6,8 +6,8 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.cp.message.WxCpMessageHandler;
 import me.chanjar.weixin.cp.message.WxCpMessageMatcher;
 import me.chanjar.weixin.cp.message.WxCpMessageRouter;
-import me.chanjar.weixin.cp.bean.WxCpXmlMessage;
-import me.chanjar.weixin.cp.bean.WxCpXmlOutMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -69,7 +69,7 @@ public class WxCpMessageRouterTest {
     WxCpMessageRouter router = new WxCpMessageRouter(null);
     prepare(true, sb, router);
     router.route(message);
-    Thread.sleep(500l);
+    Thread.sleep(500);
     Assert.assertEquals(sb.toString(), expected);
   }
 
@@ -84,21 +84,18 @@ public class WxCpMessageRouterTest {
     }).end();
 
     final WxCpXmlMessage m = new WxCpXmlMessage();
-    Runnable r = new Runnable() {
-      @Override
-      public void run() {
-        router.route(m);
-        try {
-          Thread.sleep(1000l);
-        } catch (InterruptedException e) {
-        }
+    Runnable r = () -> {
+      router.route(m);
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
       }
     };
     for (int i = 0; i < 10; i++) {
       new Thread(r).start();
     }
 
-    Thread.sleep(1000l * 2);
+    Thread.sleep(2000);
   }
 
   @DataProvider(name = "messages-1")
@@ -184,7 +181,7 @@ public class WxCpMessageRouterTest {
     msg.setFromUserName("abc");
     router.route(msg);
 
-    Thread.sleep(2000l);
+    Thread.sleep(2000);
     Assert.assertEquals(ism.getActiveSessions(), 0);
 
   }
@@ -204,7 +201,7 @@ public class WxCpMessageRouterTest {
       msg.setFromUserName("abc");
       router.route(msg);
 
-      Thread.sleep(2000l);
+      Thread.sleep(2000);
       Assert.assertEquals(ism.getActiveSessions(), 0);
     }
     {
@@ -218,7 +215,7 @@ public class WxCpMessageRouterTest {
       msg.setFromUserName("abc");
       router.route(msg);
 
-      Thread.sleep(2000l);
+      Thread.sleep(2000);
       Assert.assertEquals(ism.getActiveSessions(), 0);
     }
 
@@ -238,7 +235,7 @@ public class WxCpMessageRouterTest {
     msg.setFromUserName("abc");
     router.route(msg);
 
-    Thread.sleep(2000l);
+    Thread.sleep(2000);
     Assert.assertEquals(ism.getActiveSessions(), 0);
 
   }
@@ -257,7 +254,7 @@ public class WxCpMessageRouterTest {
       msg.setFromUserName("abc");
       router.route(msg);
 
-      Thread.sleep(2000l);
+      Thread.sleep(2000);
       Assert.assertEquals(ism.getActiveSessions(), 0);
     }
 
@@ -271,7 +268,7 @@ public class WxCpMessageRouterTest {
       msg.setFromUserName("abc");
       router.route(msg);
 
-      Thread.sleep(2000l);
+      Thread.sleep(2000);
       Assert.assertEquals(ism.getActiveSessions(), 0);
     }
   }

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * <pre>
@@ -24,7 +25,7 @@ import java.util.Arrays;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayDownloadBillRequest extends WxPayBaseRequest {
+public class WxPayDownloadBillRequest extends BaseWxPayRequest {
   private static final String[] BILL_TYPES = new String[]{BillType.ALL, BillType.SUCCESS, BillType.REFUND, BillType.RECHARGE_REFUND};
   private static final String TAR_TYPE_GZIP = "GZIP";
 
@@ -95,4 +96,13 @@ public class WxPayDownloadBillRequest extends WxPayBaseRequest {
         Arrays.toString(BILL_TYPES), this.getBillType()));
     }
   }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("device_info", deviceInfo);
+    map.put("bill_type", billType);
+    map.put("bill_date", billDate);
+    map.put("tar_type", tarType);
+  }
+
 }

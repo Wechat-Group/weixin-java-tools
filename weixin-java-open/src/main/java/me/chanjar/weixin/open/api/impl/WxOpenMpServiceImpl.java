@@ -1,15 +1,22 @@
 package me.chanjar.weixin.open.api.impl;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
+import com.google.common.collect.ImmutableMap;
+import lombok.SneakyThrows;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
+import me.chanjar.weixin.open.api.WxOpenMpService;
+import me.chanjar.weixin.open.bean.mp.FastRegisterResult;
+
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
  */
-/* package */ class WxOpenMpServiceImpl extends WxMpServiceImpl {
+public class WxOpenMpServiceImpl extends WxMpServiceImpl implements WxOpenMpService {
   private WxOpenComponentService wxOpenComponentService;
   private WxMpConfigStorage wxMpConfigStorage;
   private String appId;
@@ -31,23 +38,18 @@ import me.chanjar.weixin.open.api.WxOpenComponentService;
     return wxOpenComponentService.getAuthorizerAccessToken(appId, forceRefresh);
   }
 
+  @SneakyThrows
   @Override
-  public WxMpOAuth2AccessToken oauth2getAccessToken(String code) throws WxErrorException {
-    return wxOpenComponentService.oauth2getAccessToken(appId, code);
-  }
-
-//  @Override
-//  public boolean checkSignature(String timestamp, String nonce, String signature) {
-//    return wxOpenComponentService.checkSignature(appId, timestamp, nonce, signature);
-//  }
-
-  @Override
-  public WxMpOAuth2AccessToken oauth2refreshAccessToken(String refreshToken) throws WxErrorException {
-    return wxOpenComponentService.oauth2refreshAccessToken(appId, refreshToken);
+  public String getFastRegisterAuthUrl(String redirectUri, Boolean copyWxVerify) {
+    String copyInfo = Objects.equals(copyWxVerify, false) ? "0" : "1";
+    String componentAppId = wxOpenComponentService.getWxOpenConfigStorage().getComponentAppId();
+    String encoded = URLEncoder.encode(redirectUri, "UTF-8");
+    return String.format(URL_FAST_REGISTER_AUTH, appId, componentAppId, copyInfo, encoded);
   }
 
   @Override
-  public String oauth2buildAuthorizationUrl(String redirectURI, String scope, String state) {
-    return wxOpenComponentService.oauth2buildAuthorizationUrl(appId, redirectURI, scope, state);
+  public FastRegisterResult fastRegister(String ticket) throws WxErrorException {
+    String json = post(API_FAST_REGISTER, ImmutableMap.of("ticket", ticket));
+    return FastRegisterResult.fromJson(json);
   }
 }

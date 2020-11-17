@@ -2,6 +2,9 @@ package me.chanjar.weixin.common.session;
 
 import java.util.Enumeration;
 
+/**
+ * @author Daniel Qian
+ */
 public class StandardSessionFacade implements WxSession {
 
   /**

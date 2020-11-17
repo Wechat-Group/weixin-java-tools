@@ -1,14 +1,13 @@
 package me.chanjar.weixin.mp.bean.result;
 
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
+
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * <pre>
- * 上传群发用的素材的结果
+ * 上传群发用的素材的结果.
  * 视频和图文消息需要在群发前上传素材
  * </pre>
  *
@@ -28,7 +27,7 @@ public class WxMpMassUploadResult implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

@@ -1,27 +1,31 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import lombok.RequiredArgsConstructor;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.URIUtil;
 import me.chanjar.weixin.common.util.json.GsonHelper;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpOAuth2Service;
 import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.bean.WxCpOauth2UserInfo;
+import me.chanjar.weixin.cp.bean.WxCpUserDetail;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import static me.chanjar.weixin.common.api.WxConsts.OAuth2Scope.*;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.OAuth2.*;
 
 /**
  * <pre>
- *
+ * oauth2相关接口实现类.
  * Created by Binary Wang on 2017-6-25.
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@RequiredArgsConstructor
 public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
-  private WxCpService mainService;
-
-  public WxCpOAuth2ServiceImpl(WxCpService mainService) {
-    this.mainService = mainService;
-  }
+  private final WxCpService mainService;
 
   @Override
   public String buildAuthorizationUrl(String state) {
@@ -33,34 +37,53 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
 
   @Override
   public String buildAuthorizationUrl(String redirectUri, String state) {
-    String url = "https://open.weixin.qq.com/connect/oauth2/authorize?";
-    url += "appid=" + this.mainService.getWxCpConfigStorage().getCorpId();
-    url += "&redirect_uri=" + URIUtil.encodeURIComponent(redirectUri);
-    url += "&response_type=code";
-    url += "&scope=snsapi_base";
-    if (state != null) {
-      url += "&state=" + state;
+    return this.buildAuthorizationUrl(redirectUri, state, SNSAPI_BASE);
+  }
+
+  @Override
+  public String buildAuthorizationUrl(String redirectUri, String state, String scope) {
+    StringBuilder url = new StringBuilder(URL_OAUTH2_AUTHORIZE);
+    url.append("?appid=").append(this.mainService.getWxCpConfigStorage().getCorpId());
+    url.append("&redirect_uri=").append(URIUtil.encodeURIComponent(redirectUri));
+    url.append("&response_type=code");
+    url.append("&scope=").append(scope);
+
+    if (SNSAPI_PRIVATEINFO.equals(scope) || SNSAPI_USERINFO.equals(scope)) {
+      url.append("&agentid=").append(this.mainService.getWxCpConfigStorage().getAgentId());
     }
-    url += "#wechat_redirect";
-    return url;
+
+    if (state != null) {
+      url.append("&state=").append(state);
+    }
+
+    url.append("#wechat_redirect");
+    return url.toString();
   }
 
   @Override
-  public String[] getUserInfo(String code) throws WxErrorException {
-    return getUserInfo(this.mainService.getWxCpConfigStorage().getAgentId(), code);
+  public WxCpOauth2UserInfo getUserInfo(String code) throws WxErrorException {
+    return this.getUserInfo(this.mainService.getWxCpConfigStorage().getAgentId(), code);
   }
 
   @Override
-  public String[] getUserInfo(Integer agentId, String code) throws WxErrorException {
-    String url = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?"
-      + "code=" + code
-      + "&agentid=" + agentId;
-    String responseText = this.mainService.get(url, null);
-    JsonElement je = new JsonParser().parse(responseText);
-    JsonObject jo = je.getAsJsonObject();
-    return new String[]{GsonHelper.getString(jo, "UserId"),
-      GsonHelper.getString(jo, "DeviceId"),
-      GsonHelper.getString(jo, "OpenId")};
+  public WxCpOauth2UserInfo getUserInfo(Integer agentId, String code) throws WxErrorException {
+    String responseText = this.mainService.get(String.format(this.mainService.getWxCpConfigStorage().getApiUrl(GET_USER_INFO), code, agentId), null);
+    JsonObject jo = GsonParser.parse(responseText);
+
+    return WxCpOauth2UserInfo.builder()
+      .userId(GsonHelper.getString(jo, "UserId"))
+      .deviceId(GsonHelper.getString(jo, "DeviceId"))
+      .openId(GsonHelper.getString(jo, "OpenId"))
+      .userTicket(GsonHelper.getString(jo, "user_ticket"))
+      .expiresIn(GsonHelper.getString(jo, "expires_in"))
+      .build();
   }
 
+  @Override
+  public WxCpUserDetail getUserDetail(String userTicket) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("user_ticket", userTicket);
+    String responseText = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(GET_USER_DETAIL), param.toString());
+    return WxCpGsonBuilder.create().fromJson(responseText, WxCpUserDetail.class);
+  }
 }

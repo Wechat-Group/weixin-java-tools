@@ -1,7 +1,8 @@
 package me.chanjar.weixin.open.util;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.io.BaseEncoding;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
-import org.apache.commons.codec.binary.Base64;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
@@ -24,6 +25,6 @@ public class WxOpenCryptUtil extends me.chanjar.weixin.common.util.crypto.WxCryp
 
     this.token = token;
     this.appidOrCorpid = appId;
-    this.aesKey = Base64.decodeBase64(encodingAesKey + "=");
+    this.aesKey = BaseEncoding.base64().decode(CharMatcher.whitespace().removeFrom(encodingAesKey));
   }
 }

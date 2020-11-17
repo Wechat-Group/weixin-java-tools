@@ -1,7 +1,7 @@
 package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
  * <pre>
@@ -12,6 +12,7 @@ import me.chanjar.weixin.common.exception.WxErrorException;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxCpMenuService {
+
   /**
    * <pre>
    * 自定义菜单创建接口

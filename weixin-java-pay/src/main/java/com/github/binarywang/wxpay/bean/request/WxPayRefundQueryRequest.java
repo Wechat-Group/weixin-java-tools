@@ -5,6 +5,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 /**
  * <pre>
  * Created by Binary Wang on 2016-11-24.
@@ -18,7 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayRefundQueryRequest extends WxPayBaseRequest {
+public class WxPayRefundQueryRequest extends BaseWxPayRequest {
   /**
    * <pre>
    * 设备号
@@ -87,8 +89,16 @@ public class WxPayRefundQueryRequest extends WxPayBaseRequest {
       && StringUtils.isBlank(outRefundNo) && StringUtils.isBlank(refundId)) ||
       (StringUtils.isNotBlank(transactionId) && StringUtils.isNotBlank(outTradeNo)
         && StringUtils.isNotBlank(outRefundNo) && StringUtils.isNotBlank(refundId))) {
-      throw new WxPayException("transaction_id，out_trade_no，out_refund_no，refund_id 必须四选一");
+      throw new WxPayException("transactionId，outRefundNo，transactionId，refundId 必须四选一");
     }
+  }
 
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("device_info", deviceInfo);
+    map.put("transaction_id", transactionId);
+    map.put("out_trade_no", outTradeNo);
+    map.put("out_refund_no", outRefundNo);
+    map.put("refund_id", refundId);
   }
 }

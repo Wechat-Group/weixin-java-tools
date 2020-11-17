@@ -1,13 +1,13 @@
 package me.chanjar.weixin.mp.api.test;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.concurrent.locks.Lock;
 
 @XStreamAlias("xml")
-public class TestConfigStorage extends WxMpInMemoryConfigStorage {
+public class TestConfigStorage extends WxMpDefaultConfigImpl {
 
   private String openid;
   private String kfAccount;
@@ -52,10 +52,12 @@ public class TestConfigStorage extends WxMpInMemoryConfigStorage {
     this.qrconnectRedirectUrl = qrconnectRedirectUrl;
   }
 
+  @Override
   public String getTemplateId() {
     return this.templateId;
   }
 
+  @Override
   public void setTemplateId(String templateId) {
     this.templateId = templateId;
   }

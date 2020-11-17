@@ -1,13 +1,17 @@
 package me.chanjar.weixin.common.util.http;
 
+import java.io.File;
+import java.io.IOException;
+
+import me.chanjar.weixin.common.enums.WxType;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpMediaDownloadRequestExecutor;
 
-import java.io.File;
-
 /**
- * 下载媒体文件请求执行器，请求的参数是String, 返回的结果是File
+ * 下载媒体文件请求执行器.
+ * 请求的参数是String, 返回的结果是File
  * 视频文件不支持下载
  *
  * @author Daniel Qian
@@ -19,6 +23,11 @@ public abstract class BaseMediaDownloadRequestExecutor<H, P> implements RequestE
   public BaseMediaDownloadRequestExecutor(RequestHttp<H, P> requestHttp, File tmpDirFile) {
     this.requestHttp = requestHttp;
     this.tmpDirFile = tmpDirFile;
+  }
+
+  @Override
+  public void execute(String uri, String data, ResponseHandler<File> handler, WxType wxType) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data, wxType));
   }
 
   public static RequestExecutor<File, String> create(RequestHttp requestHttp, File tmpDirFile) {

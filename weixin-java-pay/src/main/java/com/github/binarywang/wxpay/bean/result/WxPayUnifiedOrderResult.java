@@ -4,6 +4,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
+
+import java.io.Serializable;
 
 /**
  * <pre>
@@ -17,7 +20,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayUnifiedOrderResult extends WxPayBaseResult {
+public class WxPayUnifiedOrderResult extends BaseWxPayResult implements Serializable {
+  private static final long serialVersionUID = -4006038483273621997L;
 
   /**
    * 微信生成的预支付回话标识，用于后续接口调用中使用，该值有效期为2小时
@@ -42,5 +46,18 @@ public class WxPayUnifiedOrderResult extends WxPayBaseResult {
    */
   @XStreamAlias("code_url")
   private String codeURL;
+
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXml(Document d) {
+    prepayId = readXmlString(d, "prepay_id");
+    tradeType = readXmlString(d, "trade_type");
+    mwebUrl = readXmlString(d, "mweb_url");
+    codeURL = readXmlString(d, "code_url");
+  }
 
 }

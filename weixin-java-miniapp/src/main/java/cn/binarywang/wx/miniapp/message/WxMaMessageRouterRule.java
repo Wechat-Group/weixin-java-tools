@@ -3,20 +3,16 @@ package cn.binarywang.wx.miniapp.message;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaMessage;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMaMessageRouterRule {
-
   private final WxMaMessageRouter routerBuilder;
 
   private boolean async = true;
@@ -33,6 +29,8 @@ public class WxMaMessageRouterRule {
 
   private String rContent;
 
+  private String title;
+
   private WxMaMessageMatcher matcher;
 
   private boolean reEnter = false;
@@ -46,7 +44,7 @@ public class WxMaMessageRouterRule {
   }
 
   /**
-   * 设置是否异步执行，默认是true
+   * 设置是否异步执行，默认是true.
    */
   public WxMaMessageRouterRule async(boolean async) {
     this.async = async;
@@ -54,7 +52,7 @@ public class WxMaMessageRouterRule {
   }
 
   /**
-   * 如果msgType等于某值
+   * 如果msgType等于某值.
    */
   public WxMaMessageRouterRule msgType(String msgType) {
     this.msgType = msgType;
@@ -62,7 +60,17 @@ public class WxMaMessageRouterRule {
   }
 
   /**
-   * 如果event等于某值
+   * 标题,发送小程序页卡时有效
+   * @param title
+   * @return
+   */
+  public WxMaMessageRouterRule title(String title){
+    this.title = title;
+    return this;
+  }
+
+  /**
+   * 如果event等于某值.
    */
   public WxMaMessageRouterRule event(String event) {
     this.event = event;
@@ -70,7 +78,7 @@ public class WxMaMessageRouterRule {
   }
 
   /**
-   * 如果eventKey等于某值
+   * 如果eventKey等于某值.
    */
   public WxMaMessageRouterRule eventKey(String eventKey) {
     this.eventKey = eventKey;
@@ -78,7 +86,7 @@ public class WxMaMessageRouterRule {
   }
 
   /**
-   * 如果content等于某值
+   * 如果content等于某值.
    */
   public WxMaMessageRouterRule content(String content) {
     this.content = content;
@@ -86,7 +94,7 @@ public class WxMaMessageRouterRule {
   }
 
   /**
-   * 如果content匹配该正则表达式
+   * 如果content匹配该正则表达式.
    */
   public WxMaMessageRouterRule rContent(String regex) {
     this.rContent = regex;
@@ -94,15 +102,17 @@ public class WxMaMessageRouterRule {
   }
 
   /**
-   * 如果fromUser等于某值
+   * 如果fromUser等于某值.
    */
   public WxMaMessageRouterRule fromUser(String fromUser) {
     this.fromUser = fromUser;
     return this;
   }
 
+
+
   /**
-   * 如果消息匹配某个matcher，用在用户需要自定义更复杂的匹配规则的时候
+   * 如果消息匹配某个matcher，用在用户需要自定义更复杂的匹配规则的时候.
    */
   public WxMaMessageRouterRule matcher(WxMaMessageMatcher matcher) {
     this.matcher = matcher;
@@ -110,47 +120,43 @@ public class WxMaMessageRouterRule {
   }
 
   /**
-   * 设置微信消息拦截器
+   * 设置微信消息拦截器.
    */
   public WxMaMessageRouterRule interceptor(WxMaMessageInterceptor interceptor) {
     return interceptor(interceptor, (WxMaMessageInterceptor[]) null);
   }
 
   /**
-   * 设置微信消息拦截器
+   * 设置微信消息拦截器.
    */
   public WxMaMessageRouterRule interceptor(WxMaMessageInterceptor interceptor, WxMaMessageInterceptor... otherInterceptors) {
     this.interceptors.add(interceptor);
     if (otherInterceptors != null && otherInterceptors.length > 0) {
-      for (WxMaMessageInterceptor i : otherInterceptors) {
-        this.interceptors.add(i);
-      }
+      Collections.addAll(this.interceptors, otherInterceptors);
     }
     return this;
   }
 
   /**
-   * 设置微信消息处理器
+   * 设置微信消息处理器.
    */
   public WxMaMessageRouterRule handler(WxMaMessageHandler handler) {
     return handler(handler, (WxMaMessageHandler[]) null);
   }
 
   /**
-   * 设置微信消息处理器
+   * 设置微信消息处理器.
    */
   public WxMaMessageRouterRule handler(WxMaMessageHandler handler, WxMaMessageHandler... otherHandlers) {
     this.handlers.add(handler);
     if (otherHandlers != null && otherHandlers.length > 0) {
-      for (WxMaMessageHandler i : otherHandlers) {
-        this.handlers.add(i);
-      }
+      Collections.addAll(this.handlers, otherHandlers);
     }
     return this;
   }
 
   /**
-   * 规则结束，代表如果一个消息匹配该规则，那么它将不再会进入其他规则
+   * 规则结束，代表如果一个消息匹配该规则，那么它将不再会进入其他规则.
    */
   public WxMaMessageRouter end() {
     this.routerBuilder.getRules().add(this);
@@ -158,15 +164,17 @@ public class WxMaMessageRouterRule {
   }
 
   /**
-   * 规则结束，但是消息还会进入其他规则
+   * 规则结束，但是消息还会进入其他规则.
    */
   public WxMaMessageRouter next() {
     this.reEnter = true;
     return end();
   }
 
+
+
   /**
-   * 将微信自定义的事件修正为不区分大小写,
+   * 将微信自定义的事件修正为不区分大小写.
    * 比如框架定义的事件常量为click，但微信传递过来的却是CLICK
    */
   protected boolean test(WxMaMessage wxMessage) {
@@ -184,13 +192,16 @@ public class WxMaMessageRouterRule {
           .matches(this.rContent, wxMessage.getContent() == null ? "" : wxMessage.getContent().trim()))
         &&
         (this.matcher == null || this.matcher.match(wxMessage))
+        &&
+        (this.title == null || this.title
+          .equals(wxMessage.getTitle() == null ? null : wxMessage.getTitle().trim()))
       ;
   }
 
   /**
-   * 处理微信推送过来的消息
+   * 处理微信推送过来的消息.
    */
-  protected void service(WxMaMessage wxMessage,
+  protected WxMaXmlOutMessage service(WxMaMessage wxMessage,
                          Map<String, Object> context,
                          WxMaService wxMaService,
                          WxSessionManager sessionManager,
@@ -199,11 +210,12 @@ public class WxMaMessageRouterRule {
       context = new HashMap<>(16);
     }
 
+    WxMaXmlOutMessage outMessage = null;
     try {
       // 如果拦截器不通过
       for (WxMaMessageInterceptor interceptor : this.interceptors) {
         if (!interceptor.intercept(wxMessage, context, wxMaService, sessionManager)) {
-          return;
+          return null;
         }
       }
 
@@ -213,11 +225,13 @@ public class WxMaMessageRouterRule {
         if (handler == null) {
           continue;
         }
-        handler.handle(wxMessage, context, wxMaService, sessionManager);
+        outMessage = handler.handle(wxMessage, context, wxMaService, sessionManager);
       }
     } catch (WxErrorException e) {
       exceptionHandler.handle(e);
     }
+
+    return outMessage;
   }
 
   public WxMaMessageRouter getRouterBuilder() {

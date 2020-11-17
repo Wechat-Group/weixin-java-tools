@@ -1,11 +1,16 @@
 package cn.binarywang.wx.miniapp.util.xml;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import cn.binarywang.wx.miniapp.bean.WxMaMessage;
+import cn.binarywang.wx.miniapp.message.WxMaXmlOutMessage;
 import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
-
-import java.io.InputStream;
-import java.util.*;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -15,6 +20,7 @@ public class XStreamTransformer {
 
   static {
     registerClass(WxMaMessage.class);
+    registerClass(WxMaXmlOutMessage.class);
   }
 
   /**
@@ -45,7 +51,7 @@ public class XStreamTransformer {
    * @param clz     类型
    * @param xStream xml解析器
    */
-  private static void register(Class<?> clz, XStream xStream) {
+  public static void register(Class<?> clz, XStream xStream) {
     CLASS_2_XSTREAM_INSTANCE.put(clz, xStream);
   }
 
@@ -56,7 +62,6 @@ public class XStreamTransformer {
    */
   private static void registerClass(Class<?> clz) {
     XStream xstream = XStreamInitializer.getInstance();
-    xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
 
     xstream.processAnnotations(clz);
     xstream.processAnnotations(getInnerClasses(clz));

@@ -1,18 +1,17 @@
 package me.chanjar.weixin.mp.api;
 
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.WxMpShakeInfoResult;
 import me.chanjar.weixin.mp.bean.WxMpShakeQuery;
 import me.chanjar.weixin.mp.bean.shake.*;
 
 /**
- * 摇一摇周边的相关接口
+ * 摇一摇周边的相关接口.
  *
  * @author rememberber
  */
 public interface WxMpShakeService {
-
   /**
    * <pre>
    * 获取设备及用户信息<br/>

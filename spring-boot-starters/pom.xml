@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.github.binarywang</groupId>
+    <artifactId>wx-java</artifactId>
+    <version>3.9.9.B</version>
+  </parent>
+  <packaging>pom</packaging>
+  <artifactId>wx-java-spring-boot-starters</artifactId>
+  <name>WxJava - Spring Boot Starters</name>
+  <description>WxJava 各个模块的 Spring Boot Starter</description>
+
+  <properties>
+    <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
+  </properties>
+
+  <modules>
+    <module>wx-java-miniapp-spring-boot-starter</module>
+    <module>wx-java-mp-spring-boot-starter</module>
+    <module>wx-java-pay-spring-boot-starter</module>
+    <module>wx-java-open-spring-boot-starter</module>
+  </modules>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+      <version>${spring.boot.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <version>${spring.boot.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>

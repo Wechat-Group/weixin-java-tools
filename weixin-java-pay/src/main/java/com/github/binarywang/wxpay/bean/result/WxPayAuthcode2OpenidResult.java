@@ -4,6 +4,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
+
+import java.io.Serializable;
 
 /**
  * <pre>
@@ -17,10 +20,11 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayAuthcode2OpenidResult extends WxPayBaseResult {
+public class WxPayAuthcode2OpenidResult extends BaseWxPayResult implements Serializable {
+  private static final long serialVersionUID = -2409408725777108398L;
   /**
    * <pre>
-   *   用户标识
+   *   用户标识.
    *   openid
    *   是
    *   String(128)
@@ -29,5 +33,15 @@ public class WxPayAuthcode2OpenidResult extends WxPayBaseResult {
    */
   @XStreamAlias("openid")
   private String openid;
+
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXml(Document d) {
+    openid = readXmlString(d, "openid");
+  }
 
 }

@@ -10,4 +10,12 @@
   -->
   <keyPath>商户平台的证书文件地址</keyPath>
   <openid>某个openId</openid>
+
+  <!--
+  apiv3 模式下所需配置
+  <privateKeyPath>apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径.</privateKeyPath>
+  <privateCertPath>apiclient_cert.pem证书文件的绝对路径或者以classpath:开头的类路径.</privateCertPath>
+  <apiV3Key> apiV3 秘钥值.</apiV3Key>
+  <certSerialNo>apiV3 证书序列号值</certSerialNo>
+  -->
 </xml>

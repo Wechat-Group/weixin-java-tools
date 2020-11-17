@@ -1,9 +1,16 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.google.common.collect.Lists;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
+import me.chanjar.weixin.common.util.json.GsonParser;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.Document;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,7 +25,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayRefundQueryResult extends WxPayBaseResult {
+public class WxPayRefundQueryResult extends BaseWxPayResult implements Serializable {
+  private static final long serialVersionUID = 5392369423225328754L;
   /**
    * <pre>
    * 字段名：设备号.
@@ -126,6 +134,34 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
   private List<RefundRecord> refundRecords;
 
   /**
+   * 营销详情.
+   */
+  @XStreamAlias("promotion_detail")
+  private String promotionDetailString;
+
+  private List<WxPayRefundPromotionDetail> promotionDetails;
+
+  /**
+   * 组装生成营销详情信息.
+   */
+  public void composePromotionDetails() {
+    if (StringUtils.isEmpty(this.promotionDetailString)) {
+      return;
+    }
+
+    JsonObject tmpJson = GsonParser.parse(this.promotionDetailString);
+
+    final List<WxPayRefundPromotionDetail> promotionDetail = WxGsonBuilder.create()
+      .fromJson(tmpJson.get("promotion_detail"),
+        new TypeToken<List<WxPayRefundPromotionDetail>>() {
+        }.getType()
+      );
+
+    this.setPromotionDetails(promotionDetail);
+  }
+
+
+  /**
    * 组装生成退款记录属性的内容.
    */
   public void composeRefundRecords() {
@@ -141,7 +177,6 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
         refundRecord.setRefundChannel(this.getXmlValue("xml/refund_channel_" + i));
         refundRecord.setRefundFee(this.getXmlValueAsInt("xml/refund_fee_" + i));
         refundRecord.setSettlementRefundFee(this.getXmlValueAsInt("xml/settlement_refund_fee_" + i));
-        refundRecord.setCouponType(this.getXmlValue("xml/coupon_type_" + i));
         refundRecord.setCouponRefundFee(this.getXmlValueAsInt("xml/coupon_refund_fee_" + i));
         refundRecord.setCouponRefundCount(this.getXmlValueAsInt("xml/coupon_refund_count_" + i));
         refundRecord.setRefundStatus(this.getXmlValue("xml/refund_status_" + i));
@@ -152,12 +187,13 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
           continue;
         }
 
-        List<RefundRecord.RefundCoupon> coupons = Lists.newArrayList();
+        List<WxPayRefundCouponInfo> coupons = Lists.newArrayList();
         for (int j = 0; j < refundRecord.getCouponRefundCount(); j++) {
           coupons.add(
-            new RefundRecord.RefundCoupon(
+            new WxPayRefundCouponInfo(
               this.getXmlValue("xml/coupon_refund_id_" + i + "_" + j),
-              this.getXmlValueAsInt("xml/coupon_refund_fee_" + i + "_" + j)
+              this.getXmlValueAsInt("xml/coupon_refund_fee_" + i + "_" + j),
+              this.getXmlValue("xml/coupon_type_" + i + "_" + j)
             )
           );
         }
@@ -168,6 +204,26 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
     }
   }
 
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXml(Document d) {
+    deviceInfo = readXmlString(d, "device_info");
+    transactionId = readXmlString(d, "transaction_id");
+    outTradeNo = readXmlString(d, "out_trade_no");
+    totalFee = readXmlInteger(d, "total_fee");
+    settlementTotalFee = readXmlInteger(d, "settlement_total_fee");
+    feeType = readXmlString(d, "fee_type");
+    cashFee = readXmlInteger(d, "cash_fee");
+    refundCount = readXmlInteger(d, "refund_count");
+  }
+
+  /**
+   * The type Refund record.
+   */
   @Data
   @Builder(builderMethodName = "newBuilder")
   @NoArgsConstructor
@@ -253,19 +309,6 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
 
     /**
      * <pre>
-     * 字段名：代金券类型.
-     * 变量名：coupon_type_$n
-     * 是否必填：否
-     * 类型：Int
-     * 示例值：CASH
-     * 描述：CASH--充值代金券 , NO_CASH---非充值代金券。订单使用代金券时有返回（取值：CASH、NO_CASH）。$n为下标,从0开始编号，举例：coupon_type_$0
-     * </pre>
-     */
-    @XStreamAlias("coupon_type")
-    private String couponType;
-
-    /**
-     * <pre>
      * 字段名：代金券退款金额.
      * 变量名：coupon_refund_fee_$n
      * 是否必填：否
@@ -290,7 +333,7 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
     @XStreamAlias("coupon_refund_count")
     private Integer couponRefundCount;
 
-    private List<RefundCoupon> refundCoupons;
+    private List<WxPayRefundCouponInfo> refundCoupons;
 
     /**
      * <pre>
@@ -335,57 +378,6 @@ public class WxPayRefundQueryResult extends WxPayBaseResult {
      */
     @XStreamAlias("refund_success_time")
     private String refundSuccessTime;
-
-    @Data
-    @NoArgsConstructor
-    public static class RefundCoupon {
-      /**
-       * <pre>
-       * 字段名：退款代金券批次ID.
-       * 变量名：coupon_refund_batch_id_$n_$m
-       * 是否必填：否
-       * 类型：String(20)
-       * 示例值：100
-       * 描述：退款代金券批次ID ,$n为下标，$m为下标，从0开始编号
-       * </pre>
-       *
-       * @deprecated 貌似是被去掉了，但不知是何时！
-       */
-      @XStreamAlias("coupon_refund_batch_id")
-      private String couponRefundBatchId;
-
-      /**
-       * <pre>
-       * 字段名：退款代金券ID.
-       * 变量名：coupon_refund_id_$n_$m
-       * 是否必填：否
-       * 类型：String(20)
-       * 示例值：10000
-       * 描述：退款代金券ID, $n为下标，$m为下标，从0开始编号
-       * </pre>
-       */
-      @XStreamAlias("coupon_refund_id")
-      private String couponRefundId;
-
-      /**
-       * <pre>
-       * 字段名：单个退款代金券支付金额.
-       * 变量名：coupon_refund_fee_$n_$m
-       * 是否必填：否
-       * 类型：Int
-       * 示例值：100
-       * 描述：单个退款代金券支付金额, $n为下标，$m为下标，从0开始编号
-       * </pre>
-       */
-      @XStreamAlias("coupon_refund_fee")
-      private Integer couponRefundFee;
-
-      public RefundCoupon(String couponRefundId, Integer couponRefundFee) {
-        this.couponRefundId = couponRefundId;
-        this.couponRefundFee = couponRefundFee;
-      }
-
-    }
 
   }
 

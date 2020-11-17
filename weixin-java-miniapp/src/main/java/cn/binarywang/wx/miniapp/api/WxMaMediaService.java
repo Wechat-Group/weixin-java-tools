@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.io.File;
 import java.io.InputStream;
@@ -28,7 +28,9 @@ public interface WxMaMediaService {
    *
    * @param mediaType 媒体类型,
    * @param file      文件对象
-   * @see #uploadMedia(String, String, InputStream)
+   * @return the wx media upload result
+   * @throws WxErrorException the wx error exception
+   * @see #uploadMedia(String, String, InputStream) #uploadMedia(String, String, InputStream)
    */
   WxMediaUploadResult uploadMedia(String mediaType, File file) throws WxErrorException;
 
@@ -44,7 +46,9 @@ public interface WxMaMediaService {
    * @param mediaType   媒体类型
    * @param fileType    文件类型
    * @param inputStream 输入流
-   * @see #uploadMedia(java.lang.String, java.io.File)
+   * @return the wx media upload result
+   * @throws WxErrorException the wx error exception
+   * @see #uploadMedia(java.lang.String, java.io.File) #uploadMedia(java.lang.String, java.io.File)
    */
   WxMediaUploadResult uploadMedia(String mediaType, String fileType, InputStream inputStream) throws WxErrorException;
 
@@ -58,7 +62,8 @@ public interface WxMaMediaService {
    * </pre>
    *
    * @param mediaId 媒体Id
-   * @return 保存到本地的临时文件
+   * @return 保存到本地的临时文件 media
+   * @throws WxErrorException the wx error exception
    */
   File getMedia(String mediaId) throws WxErrorException;
 

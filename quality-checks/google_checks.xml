@@ -3,26 +3,10 @@
   "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
   "http://checkstyle.sourceforge.net/dtds/configuration_1_3.dtd">
 
-<!--
-    Checkstyle configuration that checks the Google coding conventions from Google Java Style
-    that can be found at https://google.github.io/styleguide/javaguide.html.
-
-    Checkstyle is very configurable. Be sure to read the documentation at
-    http://checkstyle.sf.net (or in your downloaded distribution).
-
-    To completely disable a check, just comment it out or delete it from the file.
-
-    Authors: Max Vetrenko, Ruslan Diachenko, Roman Ivanov.
- -->
-
-<module name = "Checker">
+<module name="Checker">
   <property name="charset" value="UTF-8"/>
-
   <property name="severity" value="warning"/>
-
   <property name="fileExtensions" value="java, properties, xml"/>
-  <!-- Checks for whitespace                               -->
-  <!-- See http://checkstyle.sf.net/config_whitespace.html -->
   <module name="FileTabCharacter">
     <property name="eachLine" value="true"/>
   </module>
@@ -32,7 +16,7 @@
     <module name="IllegalTokenText">
       <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
       <property name="format" value="\\u00(09|0(a|A)|0(c|C)|0(d|D)|22|27|5(C|c))|\\(0(10|11|12|14|15|42|47)|134)"/>
-      <property name="message" value="Consider using special escape sequence instead of octal value or Unicode escaped value."/>
+      <property name="message" value="考虑使用特殊的转义字符，而非八进制值或者Unicode转义值。"/>
     </module>
     <module name="AvoidEscapedUnicodeCharacters">
       <property name="allowEscapesForControlCharacters" value="true"/>
@@ -43,7 +27,6 @@
       <property name="max" value="120"/>
       <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
     </module>
-    <module name="AvoidStarImport"/>
     <module name="OneTopLevelClass"/>
     <module name="NoLineWrap"/>
     <module name="EmptyBlock">
@@ -56,12 +39,14 @@
     </module>
     <module name="RightCurly">
       <property name="id" value="RightCurlySame"/>
-      <property name="tokens" value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_DO"/>
+      <property name="tokens"
+                value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_DO"/>
     </module>
     <module name="RightCurly">
       <property name="id" value="RightCurlyAlone"/>
       <property name="option" value="alone"/>
-      <property name="tokens" value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT, INSTANCE_INIT"/>
+      <property name="tokens"
+                value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT, INSTANCE_INIT"/>
     </module>
     <module name="WhitespaceAround">
       <property name="allowEmptyConstructors" value="true"/>
@@ -69,9 +54,9 @@
       <property name="allowEmptyTypes" value="true"/>
       <property name="allowEmptyLoops" value="true"/>
       <message key="ws.notFollowed"
-               value="WhitespaceAround: ''{0}'' is not followed by whitespace. Empty blocks may only be represented as '{}' when not part of a multi-block statement (4.1.3)"/>
+               value="WhitespaceAround: ''{0}''后面没有空格。Empty blocks may only be represented as '{}' when not part of a multi-block statement (4.1.3)"/>
       <message key="ws.notPreceded"
-               value="WhitespaceAround: ''{0}'' is not preceded with whitespace."/>
+               value="WhitespaceAround: ''{0}''前面没有加空格。"/>
     </module>
     <module name="OneStatementPerLine"/>
     <module name="MultipleVariableDeclarations"/>
@@ -83,28 +68,14 @@
     <module name="EmptyLineSeparator">
       <property name="allowNoEmptyLineBetweenFields" value="true"/>
     </module>
-    <module name="SeparatorWrap">
-      <property name="id" value="SeparatorWrapDot"/>
-      <property name="tokens" value="DOT"/>
-      <property name="option" value="nl"/>
-    </module>
-    <module name="SeparatorWrap">
-      <property name="id" value="SeparatorWrapComma"/>
-      <property name="tokens" value="COMMA"/>
-      <property name="option" value="EOL"/>
-    </module>
-    <module name="SeparatorWrap">
-      <property name="id" value="SeparatorWrapMethodRef"/>
-      <property name="option" value="nl"/>
-    </module>
     <module name="PackageName">
       <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
       <message key="name.invalidPattern"
-               value="Package name ''{0}'' must match pattern ''{1}''."/>
+               value="包名 ''{0}'' 必须匹配模式：''{1}''。"/>
     </module>
     <module name="TypeName">
       <message key="name.invalidPattern"
-               value="Type name ''{0}'' must match pattern ''{1}''."/>
+               value="类型名 ''{0}'' 必须匹配模式：''{1}''。"/>
     </module>
     <module name="MemberName">
       <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
@@ -114,28 +85,28 @@
     <module name="ParameterName">
       <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
       <message key="name.invalidPattern"
-               value="Parameter name ''{0}'' must match pattern ''{1}''."/>
+               value="参数名''{0}'' 必须匹配模式：''{1}''。"/>
     </module>
     <module name="LocalVariableName">
       <property name="tokens" value="VARIABLE_DEF"/>
       <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
       <message key="name.invalidPattern"
-               value="Local variable name ''{0}'' must match pattern ''{1}''."/>
+               value="本地变量名 ''{0}'' 必须匹配模式：''{1}''。"/>
     </module>
     <module name="ClassTypeParameterName">
       <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
       <message key="name.invalidPattern"
-               value="Class type name ''{0}'' must match pattern ''{1}''."/>
+               value="类的类型名 ''{0}'' 必须匹配模式：''{1}''。"/>
     </module>
     <module name="MethodTypeParameterName">
       <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
       <message key="name.invalidPattern"
-               value="Method type name ''{0}'' must match pattern ''{1}''."/>
+               value="方法类型名 ''{0}'' 必须匹配模式：''{1}''。"/>
     </module>
     <module name="InterfaceTypeParameterName">
       <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
       <message key="name.invalidPattern"
-               value="Interface type name ''{0}'' must match pattern ''{1}''."/>
+               value="Interface type name ''{0}'' 必须匹配模式：''{1}''。"/>
     </module>
     <module name="NoFinalizer"/>
     <module name="GenericWhitespace">
@@ -148,33 +119,18 @@
       <message key="ws.notPreceded"
                value="GenericWhitespace ''{0}'' is not preceded with whitespace."/>
     </module>
-    <module name="Indentation">
-      <property name="basicOffset" value="2"/>
-      <property name="braceAdjustment" value="0"/>
-      <property name="caseIndent" value="2"/>
-      <property name="throwsIndent" value="4"/>
-      <property name="lineWrappingIndentation" value="4"/>
-      <property name="arrayInitIndent" value="2"/>
-    </module>
     <module name="AbbreviationAsWordInName">
       <property name="ignoreFinal" value="false"/>
       <property name="allowedAbbreviationLength" value="1"/>
     </module>
     <module name="OverloadMethodsDeclarationOrder"/>
     <module name="VariableDeclarationUsageDistance"/>
-    <module name="CustomImportOrder">
-      <property name="customImportOrderRules"
-                value="THIRD_PARTY_PACKAGE###SPECIAL_IMPORTS###STANDARD_JAVA_PACKAGE###STATIC"/>
-      <property name="specialImportsRegExp" value="^javax\."/>
-      <property name="standardPackageRegExp" value="^java\."/>
-      <property name="sortImportsInGroupAlphabetically" value="true"/>
-      <property name="separateLineBetweenGroups" value="false"/>
-    </module>
     <module name="MethodParamPad"/>
     <module name="ParenPad"/>
     <module name="OperatorWrap">
       <property name="option" value="NL"/>
-      <property name="tokens" value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR "/>
+      <property name="tokens"
+                value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR "/>
     </module>
     <module name="AnnotationLocation">
       <property name="id" value="AnnotationLocationMostCases"/>
@@ -186,9 +142,9 @@
       <property name="allowSamelineMultipleAnnotations" value="true"/>
     </module>
     <module name="NonEmptyAtclauseDescription"/>
-    <module name="JavadocTagContinuationIndentation"/>
     <module name="SummaryJavadoc">
-      <property name="forbiddenSummaryFragments" value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )"/>
+      <property name="forbiddenSummaryFragments"
+                value="^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )"/>
     </module>
     <module name="JavadocParagraph"/>
     <module name="AtclauseOrder">
@@ -207,7 +163,7 @@
     <module name="MethodName">
       <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9_]*$"/>
       <message key="name.invalidPattern"
-               value="Method name ''{0}'' must match pattern ''{1}''."/>
+               value="方法名 ''{0}'' 必须匹配模式：''{1}''."/>
     </module>
     <module name="SingleLineJavadoc">
       <property name="ignoreInlineTags" value="false"/>
@@ -215,6 +171,5 @@
     <module name="EmptyCatchBlock">
       <property name="exceptionVariableName" value="expected"/>
     </module>
-    <module name="CommentsIndentation"/>
   </module>
 </module>

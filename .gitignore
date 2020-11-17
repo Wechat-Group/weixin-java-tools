@@ -1,9 +1,6 @@
 *.class
 test-output
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
 *.jar
 *.war
@@ -28,10 +25,6 @@ test-config.xml
 /gradlew
 **/build/
 
-# OSX
-# Icon must end with two \r
-Icon
-
 
 ._*
 .DS_Store
@@ -42,6 +35,7 @@ Icon
 .Spotlight-V100
 .TemporaryItems
 .Trashes
+.vscode
 .VolumeIcon.icns
 .AppleDB
 .AppleDesktop
@@ -50,3 +44,10 @@ Temporary Items
 .apdisk
 /.sonar/
 sonar-project.properties
+
+!/.mvn/wrapper/maven-wrapper.jar
+*.versionsBackup
+
+# STS
+.factorypath
+*.zip

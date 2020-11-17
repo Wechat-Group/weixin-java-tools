@@ -1,14 +1,15 @@
 package me.chanjar.weixin.cp.api.impl;
 
+import java.util.List;
+
+import org.testng.annotations.*;
+
 import com.google.inject.Inject;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpDepart;
-import org.testng.annotations.*;
 
-import java.util.List;
-
-import static org.testng.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <pre>
@@ -28,26 +29,34 @@ public class WxCpDepartmentServiceImplTest {
   public void testCreate() throws Exception {
     WxCpDepart cpDepart = new WxCpDepart();
     cpDepart.setName("子部门" + System.currentTimeMillis());
-    cpDepart.setParentId(1);
+    cpDepart.setParentId(1L);
     cpDepart.setOrder(1L);
-    Integer departId = this.wxCpService.getDepartmentService().create(cpDepart);
+    Long departId = this.wxCpService.getDepartmentService().create(cpDepart);
     System.out.println(departId);
   }
 
-  @Test
-  public void testListAll() throws Exception {
+  @DataProvider
+  public Object[][] departIds(){
+    return new Object[][]{
+      {null},
+      {1},
+      {5}
+    };
+  }
+
+  @Test(dataProvider = "departIds")
+  public void testList(Long id) throws Exception {
     System.out.println("=================获取部门");
-    List<WxCpDepart> departList = this.wxCpService.getDepartmentService().listAll();
-    assertNotNull(departList);
-    assertTrue(departList.size() > 0);
+    List<WxCpDepart> departList = this.wxCpService.getDepartmentService().list(id);
+    assertThat(departList).isNotEmpty();
     for (WxCpDepart g : departList) {
       this.depart = g;
       System.out.println(this.depart.getId() + ":" + this.depart.getName());
-      assertNotNull(g.getName());
+      assertThat(g.getName()).isNotBlank();
     }
   }
 
-  @Test(dependsOnMethods = {"testListAll", "testCreate"})
+  @Test(dependsOnMethods = {"testList", "testCreate"})
   public void testUpdate() throws Exception {
     System.out.println("=================更新部门");
     this.depart.setName("子部门改名" + System.currentTimeMillis());

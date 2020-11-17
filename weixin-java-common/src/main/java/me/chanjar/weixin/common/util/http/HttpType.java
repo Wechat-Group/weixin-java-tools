@@ -4,5 +4,16 @@ package me.chanjar.weixin.common.util.http;
  * Created by ecoolper on 2017/4/28.
  */
 public enum HttpType {
-  JODD_HTTP, APACHE_HTTP, OK_HTTP;
+  /**
+   * jodd-http.
+   */
+  JODD_HTTP,
+  /**
+   * apache httpclient.
+   */
+  APACHE_HTTP,
+  /**
+   * okhttp.
+   */
+  OK_HTTP
 }

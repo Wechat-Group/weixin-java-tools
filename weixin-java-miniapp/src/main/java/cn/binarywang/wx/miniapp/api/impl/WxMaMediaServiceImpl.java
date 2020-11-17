@@ -2,9 +2,10 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaMediaService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import me.chanjar.weixin.common.bean.result.WxError;
+import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
@@ -19,12 +20,9 @@ import java.util.UUID;
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@AllArgsConstructor
 public class WxMaMediaServiceImpl implements WxMaMediaService {
-  private WxMaService wxMaService;
-
-  public WxMaMediaServiceImpl(WxMaService wxMaService) {
-    this.wxMaService = wxMaService;
-  }
+  private final WxMaService wxMaService;
 
   @Override
   public WxMediaUploadResult uploadMedia(String mediaType, String fileType, InputStream inputStream) throws WxErrorException {

@@ -1,7 +1,10 @@
 package com.github.binarywang.wxpay.bean.order;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * <pre>
@@ -12,7 +15,10 @@ import lombok.Data;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Data
-@Builder
-public class WxPayNativeOrderResult {
+@AllArgsConstructor
+@NoArgsConstructor
+public class WxPayNativeOrderResult implements Serializable {
+  private static final long serialVersionUID = 887792717425241444L;
+
   private String codeUrl;
 }

@@ -9,7 +9,7 @@ public class WxMpXmlOutTextMessageTest {
   public void test() {
     WxMpXmlOutTextMessage m = new WxMpXmlOutTextMessage();
     m.setContent("content");
-    m.setCreateTime(1122l);
+    m.setCreateTime(1122L);
     m.setFromUserName("from");
     m.setToUserName("to");
 

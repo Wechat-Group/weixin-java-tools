@@ -22,7 +22,7 @@ public class WxMpShakeInfoResult implements Serializable {
   private ShakeInfoData data;
 
   public static WxMpShakeInfoResult fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpShakeInfoResult.class);
+    return WxMpGsonBuilder.create().fromJson(json, WxMpShakeInfoResult.class);
   }
 
   @Data

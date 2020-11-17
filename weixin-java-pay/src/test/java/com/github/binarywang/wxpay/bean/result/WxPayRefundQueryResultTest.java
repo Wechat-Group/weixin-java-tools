@@ -7,10 +7,16 @@ import org.testng.annotations.*;
 /**
  * <pre>
  * Created by Binary Wang on 2016-12-29.
+ *  </pre>
+ *
  * @author <a href="https://github.com/binarywang">binarywang(Binary Wang)</a>
- * </pre>
  */
 public class WxPayRefundQueryResultTest {
+  /**
+   * Compose refund records.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void composeRefundRecords() throws Exception {
     /*

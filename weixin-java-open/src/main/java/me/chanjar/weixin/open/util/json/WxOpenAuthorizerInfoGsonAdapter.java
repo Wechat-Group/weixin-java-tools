@@ -23,6 +23,8 @@ public class WxOpenAuthorizerInfoGsonAdapter implements JsonDeserializer<WxOpenA
     authorizationInfo.setPrincipalName(GsonHelper.getString(jsonObject, "principal_name"));
     authorizationInfo.setAlias(GsonHelper.getString(jsonObject, "alias"));
     authorizationInfo.setQrcodeUrl(GsonHelper.getString(jsonObject, "qrcode_url"));
+    authorizationInfo.setSignature(GsonHelper.getString(jsonObject, "signature"));
+
     if (jsonObject.has("service_type_info")) {
       authorizationInfo.setServiceTypeInfo(GsonHelper.getInteger(jsonObject.getAsJsonObject("service_type_info"), "id"));
     }
@@ -33,6 +35,12 @@ public class WxOpenAuthorizerInfoGsonAdapter implements JsonDeserializer<WxOpenA
       new TypeToken<Map<String, Integer>>() {
       }.getType());
     authorizationInfo.setBusinessInfo(businessInfo);
+    if (jsonObject.has("MiniProgramInfo")) {
+      WxOpenAuthorizerInfo.MiniProgramInfo miniProgramInfo = WxOpenGsonBuilder.create().fromJson(jsonObject.get("MiniProgramInfo"),
+        new TypeToken<WxOpenAuthorizerInfo.MiniProgramInfo>() {
+        }.getType());
+      authorizationInfo.setMiniProgramInfo(miniProgramInfo);
+    }
     return authorizationInfo;
   }
 }

@@ -4,6 +4,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
+
+import java.io.Serializable;
 
 /**
  * <pre>
@@ -17,8 +20,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayOrderReverseResult extends WxPayBaseResult {
-
+public class WxPayOrderReverseResult extends BaseWxPayResult implements Serializable {
+  private static final long serialVersionUID = 3615350465758009338L;
   /**
    * <pre>
    * 是否重调
@@ -31,5 +34,15 @@ public class WxPayOrderReverseResult extends WxPayBaseResult {
    **/
   @XStreamAlias("recall")
   private String isRecall;
+
+  /**
+   * 从XML结构中加载额外的熟悉
+   *
+   * @param d Document
+   */
+  @Override
+  protected void loadXml(Document d) {
+    isRecall = readXmlString(d, "recall");
+  }
 
 }

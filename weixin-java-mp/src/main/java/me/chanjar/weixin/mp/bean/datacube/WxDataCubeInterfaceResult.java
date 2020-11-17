@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.util.List;
@@ -56,8 +57,8 @@ public class WxDataCubeInterfaceResult extends WxDataCubeBaseResult {
   private Integer maxTimeCost;
 
   public static List<WxDataCubeInterfaceResult> fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(
-      JSON_PARSER.parse(json).getAsJsonObject().get("list"),
+    return WxMpGsonBuilder.create().fromJson(
+      GsonParser.parse(json).get("list"),
       new TypeToken<List<WxDataCubeInterfaceResult>>() {
       }.getType());
   }

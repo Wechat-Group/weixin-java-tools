@@ -1,11 +1,3 @@
-/*
- * KINGSTAR MEDIA SOLUTIONS Co.,LTD. Copyright c 2005-2013. All rights reserved.
- *
- * This source code is the property of KINGSTAR MEDIA SOLUTIONS LTD. It is intended
- * only for the use of KINGSTAR MEDIA application development. Reengineering, reproduction
- * arose from modification of the original source, or other redistribution of this source
- * is not permitted without written permission of the KINGSTAR MEDIA SOLUTIONS LTD.
- */
 package me.chanjar.weixin.mp.util.json;
 
 import com.google.gson.JsonElement;
@@ -14,9 +6,15 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
 
+/**
+ * 群发消息json转换适配器.
+ *
+ * @author chanjarster
+ */
 public class WxMpMassTagMessageGsonAdapter implements JsonSerializer<WxMpMassTagMessage> {
 
   @Override
@@ -59,6 +57,11 @@ public class WxMpMassTagMessageGsonAdapter implements JsonSerializer<WxMpMassTag
     }
     messageJson.addProperty("msgtype", message.getMsgType());
     messageJson.addProperty("send_ignore_reprint", message.isSendIgnoreReprint() ? 0 : 1);
+
+    if (StringUtils.isNotEmpty(message.getClientMsgId())) {
+      messageJson.addProperty("clientmsgid", message.getClientMsgId());
+    }
+
     return messageJson;
   }
 

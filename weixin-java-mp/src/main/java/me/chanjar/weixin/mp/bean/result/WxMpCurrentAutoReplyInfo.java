@@ -1,23 +1,24 @@
 package me.chanjar.weixin.mp.bean.result;
 
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-import me.chanjar.weixin.common.util.json.WxBooleanTypeAdapter;
-import me.chanjar.weixin.common.util.json.WxDateTypeAdapter;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import me.chanjar.weixin.common.util.json.WxBooleanTypeAdapter;
+import me.chanjar.weixin.common.util.json.WxDateTypeAdapter;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
 /**
  * <pre>
- * 公众号的自动回复规则
+ * 公众号的自动回复规则.
+ * 参考文档地址：https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Getting_Rules_for_Auto_Replies.html
  * Created by Binary Wang on 2017-7-8.
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * </pre>
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Data
 public class WxMpCurrentAutoReplyInfo implements Serializable {
@@ -25,7 +26,7 @@ public class WxMpCurrentAutoReplyInfo implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
   public static WxMpCurrentAutoReplyInfo fromJson(String json) {
@@ -55,7 +56,7 @@ public class WxMpCurrentAutoReplyInfo implements Serializable {
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxMpGsonBuilder.create().toJson(this);
     }
 
     @SerializedName("rule_name")
@@ -82,7 +83,7 @@ public class WxMpCurrentAutoReplyInfo implements Serializable {
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxMpGsonBuilder.create().toJson(this);
     }
 
     private String type;
@@ -99,7 +100,7 @@ public class WxMpCurrentAutoReplyInfo implements Serializable {
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxMpGsonBuilder.create().toJson(this);
     }
 
     private List<NewsItem> list;
@@ -112,7 +113,7 @@ public class WxMpCurrentAutoReplyInfo implements Serializable {
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxMpGsonBuilder.create().toJson(this);
     }
 
     @SerializedName("cover_url")
@@ -136,7 +137,7 @@ public class WxMpCurrentAutoReplyInfo implements Serializable {
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxMpGsonBuilder.create().toJson(this);
     }
 
     private String type;
@@ -152,7 +153,7 @@ public class WxMpCurrentAutoReplyInfo implements Serializable {
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxMpGsonBuilder.create().toJson(this);
     }
 
     private List<AutoReplyRule> list;
@@ -164,7 +165,7 @@ public class WxMpCurrentAutoReplyInfo implements Serializable {
 
     @Override
     public String toString() {
-      return ToStringUtils.toSimpleString(this);
+      return WxMpGsonBuilder.create().toJson(this);
     }
 
     private String type;

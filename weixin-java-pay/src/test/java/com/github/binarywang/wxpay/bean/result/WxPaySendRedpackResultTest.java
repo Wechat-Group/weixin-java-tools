@@ -2,19 +2,29 @@ package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
-import org.testng.*;
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
+/**
+ * The type Wx pay send redpack result test.
+ */
 public class WxPaySendRedpackResultTest {
 
   private XStream xstream;
 
+  /**
+   * Sets .
+   */
   @BeforeTest
   public void setup() {
     this.xstream = XStreamInitializer.getInstance();
     this.xstream.processAnnotations(WxPaySendRedpackResult.class);
   }
 
+  /**
+   * Load success result.
+   */
   @Test
   public void loadSuccessResult() {
     final String successSample = "<xml>\n" +
@@ -37,6 +47,9 @@ public class WxPaySendRedpackResultTest {
     Assert.assertEquals("20150520102602", wxMpRedpackResult.getSendTime());
   }
 
+  /**
+   * Load failure result.
+   */
   @Test
   public void loadFailureResult() {
     final String failureSample = "<xml>\n" +
@@ -55,6 +68,6 @@ public class WxPaySendRedpackResultTest {
     Assert.assertEquals("FAIL", wxMpRedpackResult.getReturnCode());
     Assert.assertEquals("FAIL", wxMpRedpackResult.getResultCode());
     Assert.assertEquals("onqOjjmM1tad-3ROpncN-yUfa6uI", wxMpRedpackResult.getReOpenid());
-    Assert.assertEquals(1, wxMpRedpackResult.getTotalAmount());
+    Assert.assertEquals(1, wxMpRedpackResult.getTotalAmount().intValue());
   }
 }

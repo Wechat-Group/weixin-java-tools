@@ -1,5 +1,8 @@
 package me.chanjar.weixin.common.session;
 
+/**
+ * @author Daniel Qian
+ */
 public interface InternalSessionManager {
 
   /**

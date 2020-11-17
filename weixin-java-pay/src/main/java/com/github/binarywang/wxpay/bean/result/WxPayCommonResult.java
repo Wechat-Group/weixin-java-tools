@@ -1,6 +1,9 @@
 package com.github.binarywang.wxpay.bean.result;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.w3c.dom.Document;
+
+import java.io.Serializable;
 
 /**
  * <pre>
@@ -10,7 +13,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-
 @XStreamAlias("xml")
-public class WxPayCommonResult extends WxPayBaseResult {
+public class WxPayCommonResult extends BaseWxPayResult implements Serializable {
+  private static final long serialVersionUID = -8051324891539367420L;
+
+  @Override
+  protected void loadXml(Document d) {
+  }
 }

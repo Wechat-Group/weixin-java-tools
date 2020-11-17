@@ -1,10 +1,11 @@
 package com.github.binarywang.wxpay.bean.coupon;
 
-import com.github.binarywang.wxpay.bean.result.WxPayBaseResult;
+import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Document;
 
 /**
  * <pre>
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayCouponInfoQueryResult extends WxPayBaseResult {
+public class WxPayCouponInfoQueryResult extends BaseWxPayResult {
   /**
    * <pre>
    * 字段名：设备号.
@@ -74,15 +75,15 @@ public class WxPayCouponInfoQueryResult extends WxPayBaseResult {
   /**
    * <pre>
    * 字段名：代金券使用门槛.
-   * 变量名：coupon_mininum
+   * 变量名：coupon_minimum 微信文档有误
    * 是否必填：是
    * 示例值：10
    * 类型：Unsinged int
    * 说明：代金券使用最低限额,单位是分
    * </pre>
    */
-  @XStreamAlias("coupon_mininum")
-  private Integer couponMininum;
+  @XStreamAlias("coupon_minimum")
+  private Integer couponMinimum;
 
   /**
    * <pre>
@@ -227,4 +228,23 @@ public class WxPayCouponInfoQueryResult extends WxPayBaseResult {
   @XStreamAlias("is_partial_use")
   private String isPartialUse;
 
+  @Override
+  protected void loadXml(Document d) {
+    deviceInfo = readXmlString(d, "device_info");
+    couponStockId = readXmlString(d, "coupon_stock_id");
+    couponId = readXmlString(d, "coupon_id");
+    couponValue = readXmlInteger(d, "coupon_value");
+    couponMinimum = readXmlInteger(d, "coupon_minimum");
+    couponName = readXmlString(d, "coupon_name");
+    couponState = readXmlString(d, "coupon_state");
+    couponDesc = readXmlString(d, "coupon_desc");
+    couponUseValue = readXmlInteger(d, "coupon_use_value");
+    couponRemainValue = readXmlInteger(d, "coupon_remain_value");
+    beginTime = readXmlString(d, "begin_time");
+    endTime = readXmlString(d, "end_time");
+    sendTime = readXmlString(d, "send_time");
+    consumerMchId = readXmlString(d, "consumer_mch_id");
+    sendSource = readXmlString(d, "send_source");
+    isPartialUse = readXmlString(d, "is_partial_use");
+  }
 }

@@ -1,21 +1,13 @@
-/*
- * KINGSTAR MEDIA SOLUTIONS Co.,LTD. Copyright c 2005-2013. All rights reserved.
- *
- * This source code is the property of KINGSTAR MEDIA SOLUTIONS LTD. It is intended
- * only for the use of KINGSTAR MEDIA application development. Reengineering, reproduction
- * arose from modification of the original source, or other redistribution of this source
- * is not permitted without written permission of the KINGSTAR MEDIA SOLUTIONS LTD.
- */
 package me.chanjar.weixin.common.util.json;
-
 
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import jodd.util.MathUtil;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 
 import java.util.List;
-
 
 public class GsonHelper {
 
@@ -77,7 +69,7 @@ public class GsonHelper {
 
   public static long getAsPrimitiveLong(JsonElement element) {
     Long r = getAsLong(element);
-    return r == null ? 0l : r;
+    return r == null ? 0L : r;
   }
 
   public static Integer getAsInteger(JsonElement element) {
@@ -95,7 +87,7 @@ public class GsonHelper {
 
   public static boolean getAsPrimitiveBool(JsonElement element) {
     Boolean r = getAsBoolean(element);
-    return r != null && r.booleanValue();
+    return r != null && r;
   }
 
   public static Double getAsDouble(JsonElement element) {
@@ -130,6 +122,20 @@ public class GsonHelper {
     return result.toArray(new Integer[0]);
   }
 
+  public static String[] getStringArray(JsonObject o, String string) {
+    JsonArray jsonArray = getAsJsonArray(o.getAsJsonArray(string));
+    if (jsonArray == null) {
+      return null;
+    }
+
+    List<String> result = Lists.newArrayList();
+    for (int i = 0; i < jsonArray.size(); i++) {
+      result.add(jsonArray.get(i).getAsString());
+    }
+
+    return result.toArray(new String[0]);
+  }
+
   public static Long[] getLongArray(JsonObject o, String string) {
     JsonArray jsonArray = getAsJsonArray(o.getAsJsonArray(string));
     if (jsonArray == null) {
@@ -146,5 +152,55 @@ public class GsonHelper {
 
   public static JsonArray getAsJsonArray(JsonElement element) {
     return element == null ? null : element.getAsJsonArray();
+  }
+
+  /**
+   * 快速构建JsonObject对象，批量添加一堆属性
+   *
+   * @param keyOrValue 包含key或value的数组
+   * @return JsonObject对象.
+   */
+  public static JsonObject buildJsonObject(Object... keyOrValue) {
+    JsonObject result = new JsonObject();
+    put(result, keyOrValue);
+    return result;
+  }
+
+  /**
+   * 批量向JsonObject对象中添加属性
+   *
+   * @param jsonObject 原始JsonObject对象
+   * @param keyOrValue 包含key或value的数组
+   */
+  public static void put(JsonObject jsonObject, Object... keyOrValue) {
+    if (MathUtil.isOdd(keyOrValue.length)) {
+      throw new WxRuntimeException("参数个数必须为偶数");
+    }
+
+    for (int i = 0; i < keyOrValue.length / 2; i++) {
+      final Object key = keyOrValue[2 * i];
+      final Object value = keyOrValue[2 * i + 1];
+      if (value == null) {
+        jsonObject.add(key.toString(), null);
+        continue;
+      }
+
+      if (value instanceof Boolean) {
+        jsonObject.addProperty(key.toString(), (Boolean) value);
+      } else if (value instanceof Character) {
+        jsonObject.addProperty(key.toString(), (Character) value);
+      } else if (value instanceof Number) {
+        jsonObject.addProperty(key.toString(), (Number) value);
+      } else if (value instanceof JsonElement) {
+        jsonObject.add(key.toString(), (JsonElement) value);
+      } else if (value instanceof List) {
+        JsonArray array = new JsonArray();
+        ((List<?>) value).forEach(a -> array.add(a.toString()));
+        jsonObject.add(key.toString(), array);
+      } else {
+        jsonObject.addProperty(key.toString(), value.toString());
+      }
+    }
+
   }
 }

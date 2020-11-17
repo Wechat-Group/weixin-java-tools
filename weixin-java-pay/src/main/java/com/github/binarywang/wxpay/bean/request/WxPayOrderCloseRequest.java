@@ -3,6 +3,8 @@ package com.github.binarywang.wxpay.bean.request;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 
+import java.util.Map;
+
 /**
  * <pre>
  *  关闭订单请求对象类
@@ -17,7 +19,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayOrderCloseRequest extends WxPayBaseRequest {
+public class WxPayOrderCloseRequest extends BaseWxPayRequest {
 
   /**
    * <pre>
@@ -36,4 +38,10 @@ public class WxPayOrderCloseRequest extends WxPayBaseRequest {
   protected void checkConstraints() {
 
   }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("out_trade_no", outTradeNo);
+  }
+
 }

@@ -10,51 +10,49 @@ import jodd.http.ProxyInfo.ProxyType;
 import jodd.http.net.SSLSocketHttpConnectionProvider;
 import jodd.http.net.SocketHttpConnectionProvider;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.methods.HttpPost;
 
 import javax.net.ssl.SSLContext;
+import java.io.InputStream;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 /**
- * 微信支付请求实现类，jodd-http实现
+ * 微信支付请求实现类，jodd-http实现.
  * Created by Binary Wang on 2016/7/28.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class WxPayServiceJoddHttpImpl extends WxPayServiceAbstractImpl {
+public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
+  @Override
+  public byte[] postForBytes(String url, String requestStr, boolean useKey) throws WxPayException {
+    try {
+      HttpRequest request = this.buildHttpRequest(url, requestStr, useKey);
+      byte[] responseBytes = request.send().bodyBytes();
+      final String responseString = Base64.getEncoder().encodeToString(responseBytes);
+      this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据(Base64编码后)】：{}", url, requestStr, responseString);
+      if (this.getConfig().isIfSaveApiData()) {
+        wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
+      }
+      return responseBytes;
+    } catch (Exception e) {
+      this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
+      wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
+      throw new WxPayException(e.getMessage(), e);
+    }
+  }
 
   @Override
-  protected String post(String url, String requestStr, boolean useKey) throws WxPayException {
+  public String post(String url, String requestStr, boolean useKey) throws WxPayException {
     try {
-      HttpRequest request = HttpRequest
-        .post(url)
-        .timeout(this.getConfig().getHttpTimeout())
-        .connectionTimeout(this.getConfig().getHttpConnectionTimeout())
-        .bodyText(requestStr);
-
-      if (useKey) {
-        SSLContext sslContext = this.getConfig().getSslContext();
-        if (null == sslContext) {
-          sslContext = this.getConfig().initSSLContext();
-        }
-        final SSLSocketHttpConnectionProvider provider = new SSLSocketHttpConnectionProvider(sslContext);
-        request.withConnectionProvider(provider);
-      }
-
-      if (StringUtils.isNotBlank(this.getConfig().getHttpProxyHost()) && this.getConfig().getHttpProxyPort() > 0) {
-        ProxyInfo httpProxy = new ProxyInfo(ProxyType.HTTP, this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort(),
-          this.getConfig().getHttpProxyUsername(), this.getConfig().getHttpProxyPassword());
-        HttpConnectionProvider provider = request.connectionProvider();
-        if (null == provider) {
-          provider = new SocketHttpConnectionProvider();
-        }
-        provider.useProxy(httpProxy);
-        request.withConnectionProvider(provider);
-      }
-
+      HttpRequest request = this.buildHttpRequest(url, requestStr, useKey);
       String responseString = this.getResponseString(request.send());
 
       this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
-      wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
+      if (this.getConfig().isIfSaveApiData()) {
+        wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
+      }
       return responseString;
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
@@ -63,11 +61,69 @@ public class WxPayServiceJoddHttpImpl extends WxPayServiceAbstractImpl {
     }
   }
 
+  @Override
+  public String postV3(String url, String requestStr) throws WxPayException {
+    return null;
+  }
+
+  @Override
+  public String postV3WithWechatpaySerial(String url, String requestStr) throws WxPayException {
+    return null;
+  }
+
+  @Override
+  public String postV3(String url, HttpPost httpPost) throws WxPayException {
+    return null;
+  }
+
+  @Override
+  public String getV3(URI url) throws WxPayException {
+    return null;
+  }
+
+  @Override
+  public InputStream downloadV3(URI url) throws WxPayException {
+    return null;
+  }
+
+  private HttpRequest buildHttpRequest(String url, String requestStr, boolean useKey) throws WxPayException {
+    HttpRequest request = HttpRequest
+      .post(url)
+      .timeout(this.getConfig().getHttpTimeout())
+      .connectionTimeout(this.getConfig().getHttpConnectionTimeout())
+      .bodyText(requestStr);
+
+    if (useKey) {
+      SSLContext sslContext = this.getConfig().getSslContext();
+      if (null == sslContext) {
+        sslContext = this.getConfig().initSSLContext();
+      }
+      final SSLSocketHttpConnectionProvider provider = new SSLSocketHttpConnectionProvider(sslContext);
+      request.withConnectionProvider(provider);
+    }
+
+    if (StringUtils.isNotBlank(this.getConfig().getHttpProxyHost()) && this.getConfig().getHttpProxyPort() > 0) {
+      if (StringUtils.isEmpty(this.getConfig().getHttpProxyUsername())) {
+        this.getConfig().setHttpProxyUsername("whatever");
+      }
+
+      ProxyInfo httpProxy = new ProxyInfo(ProxyType.HTTP, this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort(),
+        this.getConfig().getHttpProxyUsername(), this.getConfig().getHttpProxyPassword());
+      HttpConnectionProvider provider = request.connectionProvider();
+      if (null == provider) {
+        provider = new SocketHttpConnectionProvider();
+      }
+      provider.useProxy(httpProxy);
+      request.withConnectionProvider(provider);
+    }
+    return request;
+  }
+
   private String getResponseString(HttpResponse response) throws WxPayException {
     try {
       this.log.debug("【微信服务器响应头信息】：\n{}", response.toString(false));
     } catch (NullPointerException e) {
-      throw new WxPayException("response.toString() 居然抛出空指针异常了", e);
+      this.log.warn("HttpResponse.toString() 居然抛出空指针异常了", e);
     }
 
     String responseString = response.bodyText();

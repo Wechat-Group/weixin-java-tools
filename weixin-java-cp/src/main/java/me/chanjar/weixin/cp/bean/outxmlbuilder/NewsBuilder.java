@@ -1,7 +1,7 @@
 package me.chanjar.weixin.cp.bean.outxmlbuilder;
 
-import me.chanjar.weixin.cp.bean.WxCpXmlOutNewsMessage;
-import me.chanjar.weixin.cp.bean.WxCpXmlOutNewsMessage.Item;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlOutNewsMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlOutNewsMessage.Item;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -11,7 +11,7 @@ public class WxMpMaterialArticleUpdate implements Serializable {
 
   private String mediaId;
   private int index;
-  private WxMpMaterialNews.WxMpMaterialNewsArticle articles;
+  private WxMpNewsArticle articles;
 
   public String toJson() {
     return WxMpGsonBuilder.create().toJson(this);

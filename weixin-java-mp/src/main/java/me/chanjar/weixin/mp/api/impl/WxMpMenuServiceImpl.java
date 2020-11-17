@@ -1,35 +1,35 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import me.chanjar.weixin.mp.enums.WxMpApiUrl;
+
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Menu.*;
 
 /**
  * Created by Binary Wang on 2016/7/21.
+ *
+ * @author Binary Wang
  */
+@Slf4j
+@RequiredArgsConstructor
 public class WxMpMenuServiceImpl implements WxMpMenuService {
-  private static final String API_URL_PREFIX = "https://api.weixin.qq.com/cgi-bin/menu";
-  private static Logger log = LoggerFactory.getLogger(WxMpMenuServiceImpl.class);
-
-  private WxMpService wxMpService;
-
-  public WxMpMenuServiceImpl(WxMpService wxMpService) {
-    this.wxMpService = wxMpService;
-  }
+  private final WxMpService wxMpService;
 
   @Override
   public String menuCreate(WxMenu menu) throws WxErrorException {
     String menuJson = menu.toJson();
-    String url = API_URL_PREFIX + "/create";
+    WxMpApiUrl.Menu url = MENU_CREATE;
     if (menu.getMatchRule() != null) {
-      url = API_URL_PREFIX + "/addconditional";
+      url = MENU_ADDCONDITIONAL;
     }
 
     log.debug("开始创建菜单：{}", menuJson);
@@ -38,7 +38,7 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
     log.debug("创建菜单：{},结果：{}", menuJson, result);
 
     if (menu.getMatchRule() != null) {
-      return new JsonParser().parse(result).getAsJsonObject().get("menuid").getAsString();
+      return GsonParser.parse(result).get("menuid").getAsString();
     }
 
     return null;
@@ -46,16 +46,15 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
 
   @Override
   public String menuCreate(String json) throws WxErrorException {
-    JsonParser jsonParser = new JsonParser();
-    JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
-    String url = API_URL_PREFIX + "/create";
+    JsonObject jsonObject = GsonParser.parse(json);
+    WxMpApiUrl.Menu url = MENU_CREATE;
     if (jsonObject.get("matchrule") != null) {
-      url = API_URL_PREFIX + "/addconditional";
+      url = MENU_ADDCONDITIONAL;
     }
 
     String result = this.wxMpService.post(url, json);
     if (jsonObject.get("matchrule") != null) {
-      return jsonParser.parse(result).getAsJsonObject().get("menuid").getAsString();
+      return GsonParser.parse(result).get("menuid").getAsString();
     }
 
     return null;
@@ -63,25 +62,22 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
 
   @Override
   public void menuDelete() throws WxErrorException {
-    String url = API_URL_PREFIX + "/delete";
-    String result = this.wxMpService.get(url, null);
+    String result = this.wxMpService.get(MENU_DELETE, null);
     log.debug("删除菜单结果：{}", result);
   }
 
   @Override
   public void menuDelete(String menuId) throws WxErrorException {
-    String url = API_URL_PREFIX + "/delconditional";
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("menuid", menuId);
-    String result = this.wxMpService.post(url, jsonObject.toString());
+    String result = this.wxMpService.post(MENU_DELCONDITIONAL, jsonObject.toString());
     log.debug("根据MeunId({})删除个性化菜单结果：{}", menuId, result);
   }
 
   @Override
   public WxMpMenu menuGet() throws WxErrorException {
-    String url = API_URL_PREFIX + "/get";
     try {
-      String resultContent = this.wxMpService.get(url, null);
+      String resultContent = this.wxMpService.get(MENU_GET, null);
       return WxMpMenu.fromJson(resultContent);
     } catch (WxErrorException e) {
       // 46003 不存在的菜单数据
@@ -94,11 +90,10 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
 
   @Override
   public WxMenu menuTryMatch(String userid) throws WxErrorException {
-    String url = API_URL_PREFIX + "/trymatch";
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("user_id", userid);
     try {
-      String resultContent = this.wxMpService.post(url, jsonObject.toString());
+      String resultContent = this.wxMpService.post(MENU_TRYMATCH, jsonObject.toString());
       return WxMenu.fromJson(resultContent);
     } catch (WxErrorException e) {
       // 46003 不存在的菜单数据；46002 不存在的菜单版本
@@ -112,8 +107,7 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
 
   @Override
   public WxMpGetSelfMenuInfoResult getSelfMenuInfo() throws WxErrorException {
-    String url = "https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info";
-    String resultContent = this.wxMpService.get(url, null);
+    String resultContent = this.wxMpService.get(GET_CURRENT_SELFMENU_INFO, null);
     return WxMpGetSelfMenuInfoResult.fromJson(resultContent);
   }
 }

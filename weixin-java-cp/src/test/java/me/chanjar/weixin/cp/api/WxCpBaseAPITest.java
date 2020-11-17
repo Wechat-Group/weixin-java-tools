@@ -1,7 +1,7 @@
 package me.chanjar.weixin.cp.api;
 
 import com.google.inject.Inject;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import org.apache.commons.lang3.StringUtils;

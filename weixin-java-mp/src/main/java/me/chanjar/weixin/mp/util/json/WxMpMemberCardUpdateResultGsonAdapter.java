@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
-import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateResult;
+import me.chanjar.weixin.mp.bean.card.membercard.WxMpMemberCardUpdateResult;
 
 import java.lang.reflect.Type;
 
@@ -29,7 +29,7 @@ public class WxMpMemberCardUpdateResultGsonAdapter implements JsonDeserializer<W
     result.setOpenId(GsonHelper.getString(jsonObject, "openid"));
     result.setErrorCode(GsonHelper.getString(jsonObject, "errcode"));
     result.setErrorMsg(GsonHelper.getString(jsonObject, "errmsg"));
-    result.setResultBalance(GsonHelper.getInteger(jsonObject, "result_balance"));
+    result.setResultBalance(GsonHelper.getDouble(jsonObject, "result_balance"));
     result.setResultBonus(GsonHelper.getInteger(jsonObject, "result_bonus"));
 
     return result;

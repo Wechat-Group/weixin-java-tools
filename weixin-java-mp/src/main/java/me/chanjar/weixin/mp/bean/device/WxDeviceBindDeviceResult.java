@@ -28,12 +28,12 @@ public class WxDeviceBindDeviceResult extends AbstractDeviceBean {
   }
 
   @Data
-  private class Device {
+  public static class Device {
     @SerializedName("device_type")
     private String deviceType;
+
     @SerializedName("device_id")
     private String deviceId;
-
   }
 
 }

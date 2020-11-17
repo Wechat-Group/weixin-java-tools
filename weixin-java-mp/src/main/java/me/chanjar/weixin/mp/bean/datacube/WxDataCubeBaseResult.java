@@ -1,11 +1,10 @@
 package me.chanjar.weixin.mp.bean.datacube;
 
-import com.google.gson.JsonParser;
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.common.util.ToStringUtils;
-
-import java.io.Serializable;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * <pre>
@@ -18,7 +17,6 @@ import java.io.Serializable;
 @Data
 public abstract class WxDataCubeBaseResult implements Serializable {
   private static final long serialVersionUID = 8780389911053297600L;
-  protected static final JsonParser JSON_PARSER = new JsonParser();
 
   /**
    * ref_date.
@@ -29,7 +27,7 @@ public abstract class WxDataCubeBaseResult implements Serializable {
 
   @Override
   public String toString() {
-    return ToStringUtils.toSimpleString(this);
+    return WxMpGsonBuilder.create().toJson(this);
   }
 
 }

@@ -1,8 +1,8 @@
 package me.chanjar.weixin.common.util.http;
 
 import jodd.http.HttpResponse;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import okhttp3.Response;
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -58,7 +58,7 @@ public class HttpResponseProxy {
   private String getFileName(CloseableHttpResponse response) throws WxErrorException {
     Header[] contentDispositionHeader = response.getHeaders("Content-disposition");
     if (contentDispositionHeader == null || contentDispositionHeader.length == 0) {
-      throw new WxErrorException(WxError.builder().errorMsg("无法获取到文件名").build());
+      throw new WxErrorException("无法获取到文件名，Content-disposition为空");
     }
 
     return this.extractFileNameFromContentString(contentDispositionHeader[0].getValue());
@@ -76,7 +76,7 @@ public class HttpResponseProxy {
 
   private String extractFileNameFromContentString(String content) throws WxErrorException {
     if (content == null || content.length() == 0) {
-      throw new WxErrorException(WxError.builder().errorMsg("无法获取到文件名").build());
+      throw new WxErrorException("无法获取到文件名，content为空");
     }
 
     Matcher m = PATTERN.matcher(content);
@@ -84,7 +84,7 @@ public class HttpResponseProxy {
       return m.group(1);
     }
 
-    throw new WxErrorException(WxError.builder().errorMsg("无法获取到文件名").build());
+    throw new WxErrorException("无法获取到文件名，header信息有问题");
   }
 
 }

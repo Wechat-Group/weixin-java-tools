@@ -1,15 +1,8 @@
-/*
- * KINGSTAR MEDIA SOLUTIONS Co.,LTD. Copyright c 2005-2013. All rights reserved.
- *
- * This source code is the property of KINGSTAR MEDIA SOLUTIONS LTD. It is intended
- * only for the use of KINGSTAR MEDIA application development. Reengineering, reproduction
- * arose from modification of the original source, or other redistribution of this source
- * is not permitted without written permission of the KINGSTAR MEDIA SOLUTIONS LTD.
- */
 package me.chanjar.weixin.mp.util.json;
 
 import com.google.gson.*;
-import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.api.WxConsts.KefuMsgType;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,68 +16,89 @@ public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMpKefuMessag
     messageJson.addProperty("touser", message.getToUser());
     messageJson.addProperty("msgtype", message.getMsgType());
 
-    if (WxConsts.KefuMsgType.TEXT.equals(message.getMsgType())) {
-      JsonObject text = new JsonObject();
-      text.addProperty("content", message.getContent());
-      messageJson.add("text", text);
-    }
-
-    if (WxConsts.KefuMsgType.IMAGE.equals(message.getMsgType())) {
-      JsonObject image = new JsonObject();
-      image.addProperty("media_id", message.getMediaId());
-      messageJson.add("image", image);
-    }
-
-    if (WxConsts.KefuMsgType.VOICE.equals(message.getMsgType())) {
-      JsonObject voice = new JsonObject();
-      voice.addProperty("media_id", message.getMediaId());
-      messageJson.add("voice", voice);
-    }
-
-    if (WxConsts.KefuMsgType.VIDEO.equals(message.getMsgType())) {
-      JsonObject video = new JsonObject();
-      video.addProperty("media_id", message.getMediaId());
-      video.addProperty("thumb_media_id", message.getThumbMediaId());
-      video.addProperty("title", message.getTitle());
-      video.addProperty("description", message.getDescription());
-      messageJson.add("video", video);
-    }
-
-    if (WxConsts.KefuMsgType.MUSIC.equals(message.getMsgType())) {
-      JsonObject music = new JsonObject();
-      music.addProperty("title", message.getTitle());
-      music.addProperty("description", message.getDescription());
-      music.addProperty("thumb_media_id", message.getThumbMediaId());
-      music.addProperty("musicurl", message.getMusicUrl());
-      music.addProperty("hqmusicurl", message.getHqMusicUrl());
-      messageJson.add("music", music);
-    }
-
-    if (WxConsts.KefuMsgType.NEWS.equals(message.getMsgType())) {
-      JsonObject newsJsonObject = new JsonObject();
-      JsonArray articleJsonArray = new JsonArray();
-      for (WxMpKefuMessage.WxArticle article : message.getArticles()) {
-        JsonObject articleJson = new JsonObject();
-        articleJson.addProperty("title", article.getTitle());
-        articleJson.addProperty("description", article.getDescription());
-        articleJson.addProperty("url", article.getUrl());
-        articleJson.addProperty("picurl", article.getPicUrl());
-        articleJsonArray.add(articleJson);
+    switch (message.getMsgType()) {
+      case KefuMsgType.TEXT:
+        JsonObject text = new JsonObject();
+        text.addProperty("content", message.getContent());
+        messageJson.add("text", text);
+        break;
+      case KefuMsgType.IMAGE:
+        JsonObject image = new JsonObject();
+        image.addProperty("media_id", message.getMediaId());
+        messageJson.add("image", image);
+        break;
+      case KefuMsgType.VOICE:
+        JsonObject voice = new JsonObject();
+        voice.addProperty("media_id", message.getMediaId());
+        messageJson.add("voice", voice);
+        break;
+      case KefuMsgType.VIDEO:
+        JsonObject video = new JsonObject();
+        video.addProperty("media_id", message.getMediaId());
+        video.addProperty("thumb_media_id", message.getThumbMediaId());
+        video.addProperty("title", message.getTitle());
+        video.addProperty("description", message.getDescription());
+        messageJson.add("video", video);
+        break;
+      case KefuMsgType.MUSIC:
+        JsonObject music = new JsonObject();
+        music.addProperty("title", message.getTitle());
+        music.addProperty("description", message.getDescription());
+        music.addProperty("thumb_media_id", message.getThumbMediaId());
+        music.addProperty("musicurl", message.getMusicUrl());
+        music.addProperty("hqmusicurl", message.getHqMusicUrl());
+        messageJson.add("music", music);
+        break;
+      case KefuMsgType.NEWS:
+        JsonObject newsJsonObject = new JsonObject();
+        JsonArray articleJsonArray = new JsonArray();
+        for (WxMpKefuMessage.WxArticle article : message.getArticles()) {
+          JsonObject articleJson = new JsonObject();
+          articleJson.addProperty("title", article.getTitle());
+          articleJson.addProperty("description", article.getDescription());
+          articleJson.addProperty("url", article.getUrl());
+          articleJson.addProperty("picurl", article.getPicUrl());
+          articleJsonArray.add(articleJson);
+        }
+        newsJsonObject.add("articles", articleJsonArray);
+        messageJson.add("news", newsJsonObject);
+        break;
+      case KefuMsgType.MPNEWS:
+        JsonObject json = new JsonObject();
+        json.addProperty("media_id", message.getMpNewsMediaId());
+        messageJson.add("mpnews", json);
+        break;
+      case KefuMsgType.WXCARD:
+        JsonObject wxcard = new JsonObject();
+        wxcard.addProperty("card_id", message.getCardId());
+        messageJson.add("wxcard", wxcard);
+        break;
+      case KefuMsgType.MINIPROGRAMPAGE:
+        JsonObject miniProgramPage = new JsonObject();
+        miniProgramPage.addProperty("title", message.getTitle());
+        miniProgramPage.addProperty("appid", message.getMiniProgramAppId());
+        miniProgramPage.addProperty("pagepath", message.getMiniProgramPagePath());
+        miniProgramPage.addProperty("thumb_media_id", message.getThumbMediaId());
+        messageJson.add("miniprogrampage", miniProgramPage);
+        break;
+      case KefuMsgType.MSGMENU: {
+          JsonObject msgmenuJsonObject = new JsonObject();
+          JsonArray listJsonArray = new JsonArray();
+          for (WxMpKefuMessage.MsgMenu list : message.getMsgMenus()) {
+            JsonObject listJson = new JsonObject();
+            listJson.addProperty("id", list.getId());
+            listJson.addProperty("content", list.getContent());
+            listJsonArray.add(listJson);
+          }
+          msgmenuJsonObject.addProperty("head_content",message.getHeadContent());
+          msgmenuJsonObject.add("list", listJsonArray);
+          msgmenuJsonObject.addProperty("tail_content",message.getTailContent());
+          messageJson.add("msgmenu", msgmenuJsonObject);
+        break;
       }
-      newsJsonObject.add("articles", articleJsonArray);
-      messageJson.add("news", newsJsonObject);
-    }
-
-    if (WxConsts.KefuMsgType.MPNEWS.equals(message.getMsgType())) {
-      JsonObject json = new JsonObject();
-      json.addProperty("media_id", message.getMpNewsMediaId());
-      messageJson.add("mpnews", json);
-    }
-
-    if (WxConsts.KefuMsgType.WXCARD.equals(message.getMsgType())) {
-      JsonObject wxcard = new JsonObject();
-      wxcard.addProperty("card_id", message.getCardId());
-      messageJson.add("wxcard", wxcard);
+      default: {
+        throw new WxRuntimeException("非法消息类型，暂不支持");
+      }
     }
 
     if (StringUtils.isNotBlank(message.getKfAccount())) {

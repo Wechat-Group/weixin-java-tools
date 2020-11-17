@@ -4,13 +4,18 @@ import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.*;
+import lombok.experimental.Accessors;
 import me.chanjar.weixin.common.annotation.Required;
+import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Map;
 
 /**
  * <pre>
- * 统一下单请求参数对象
+ * 统一下单请求参数对象.
  * 参考文档：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
  * Created by Binary Wang on 2016/9/25.
  * </pre>
@@ -23,10 +28,28 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
+@Accessors(chain = true)
+public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = 4611350167813931828L;
+
   /**
    * <pre>
-   * 字段名：设备号
+   * 字段名：接口版本号.
+   * 变量名：version
+   * 是否必填：单品优惠必填
+   * 类型：String(32)
+   * 示例值：1.0
+   * 描述：单品优惠新增字段，接口版本号，区分原接口，默认填写1.0。
+   * 入参新增version后，则支付通知接口也将返回单品优惠信息字段promotion_detail，请确保支付通知的签名验证能通过。
+   * 更多信息，详见文档：https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_102&index=2
+   * </pre>
+   */
+  @XStreamAlias("version")
+  private String version;
+
+  /**
+   * <pre>
+   * 字段名：设备号.
    * 变量名：device_info
    * 是否必填：否
    * 类型：String(32)
@@ -39,7 +62,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：商品描述
+   * 字段名：商品描述.
    * 变量名：body
    * 是否必填：是
    * 类型：String(128)
@@ -53,7 +76,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：商品详情
+   * 字段名：商品详情.
    * 变量名：detail
    * 是否必填：否
    * 类型：String(6000)
@@ -90,11 +113,12 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
    * </pre>
    */
   @XStreamAlias("detail")
+  @XStreamConverter(value = XStreamCDataConverter.class)
   private String detail;
 
   /**
    * <pre>
-   * 字段名：附加数据
+   * 字段名：附加数据.
    * 变量名：attach
    * 是否必填：否
    * 类型：String(127)
@@ -103,11 +127,12 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
    * </pre>
    */
   @XStreamAlias("attach")
+  @XStreamConverter(value = XStreamCDataConverter.class)
   private String attach;
 
   /**
    * <pre>
-   * 字段名：商户订单号
+   * 字段名：商户订单号.
    * 变量名：out_trade_no
    * 是否必填：是
    * 类型：String(32)
@@ -121,7 +146,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：货币类型
+   * 字段名：货币类型.
    * 变量名：fee_type
    * 是否必填：否
    * 类型：String(16)
@@ -134,7 +159,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：总金额
+   * 字段名：总金额.
    * 变量名：total_fee
    * 是否必填：是
    * 类型：Int
@@ -148,7 +173,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：终端IP
+   * 字段名：终端IP.
    * 变量名：spbill_create_ip
    * 是否必填：是
    * 类型：String(16)
@@ -162,7 +187,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：交易起始时间
+   * 字段名：交易起始时间.
    * 变量名：time_start
    * 是否必填：否
    * 类型：String(14)
@@ -175,7 +200,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：交易结束时间
+   * 字段名：交易结束时间.
    * 变量名：time_expire
    * 是否必填：否
    * 类型：String(14)
@@ -189,7 +214,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：商品标记
+   * 字段名：商品标记.
    * 变量名：goods_tag
    * 是否必填：否
    * 类型：String(32)
@@ -202,7 +227,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：通知地址
+   * 字段名：通知地址.
    * 变量名：notify_url
    * 是否必填：是
    * 类型：String(256)
@@ -212,11 +237,11 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
    */
   @Required
   @XStreamAlias("notify_url")
-  private String notifyURL;
+  private String notifyUrl;
 
   /**
    * <pre>
-   * 字段名：交易类型
+   * 字段名：交易类型.
    * 变量名：trade_type
    * 是否必填：是
    * 类型：String(16)
@@ -231,7 +256,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：商品Id
+   * 字段名：商品Id.
    * 变量名：product_id
    * 是否必填：否
    * 类型：String(32)
@@ -244,7 +269,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：指定支付方式
+   * 字段名：指定支付方式.
    * 变量名：limit_pay
    * 是否必填：否
    * 类型：String(32)
@@ -257,7 +282,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：用户标识
+   * 字段名：用户标识.
    * 变量名：openid
    * 是否必填：否
    * 类型：String(128)
@@ -272,7 +297,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：用户子标识
+   * 字段名：用户子标识.
    * 变量名：sub_openid
    * 是否必填：否
    * 类型：String(128)
@@ -287,7 +312,20 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   /**
    * <pre>
-   * 字段名：场景信息
+   * 字段名：电子发票入口开放标识.
+   * 变量名：	receipt
+   * 是否必填：否
+   * 类型：String(8)
+   * 示例值：Y
+   * 描述：Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
+   * </pre>
+   */
+  @XStreamAlias("receipt")
+  private String receipt;
+
+  /**
+   * <pre>
+   * 字段名：场景信息.
    * 变量名：scene_info
    * 是否必填：否，对H5支付来说是必填
    * 类型：String(256)
@@ -306,7 +344,7 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
   private String sceneInfo;
   /**
    * <pre>
-   * 字段名：浏览器指纹
+   * 字段名：浏览器指纹.
    * 变量名：fingerprint
    * 是否必填：否
    * 详细参考 https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_7&index=6
@@ -314,16 +352,29 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
    */
   @XStreamAlias("fingerprint")
   private String fingerprint;
+  /**
+   * <pre>
+   * 字段名：是否指定服务商分账.
+   * 变量名：profit_sharing
+   * 是否必填：否
+   * 详情：Y-是，需要分账  N-否，不分账，字母要求大写，不传默认不分账
+   * 详细参考 https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=24_3&index=3
+   * </pre>
+   */
+  @XStreamAlias("profit_sharing")
+  private String profitSharing;
 
   /**
-   * 如果配置中已经设置，可以不设置值
+   * 如果配置中已经设置，可以不设置值.
+   *
+   * @param notifyUrl 支付回调通知地址
    */
-  public void setNotifyURL(String notifyURL) {
-    this.notifyURL = notifyURL;
+  public void setNotifyUrl(String notifyUrl) {
+    this.notifyUrl = notifyUrl;
   }
 
   /**
-   * 如果配置中已经设置，可以不设置值
+   * 如果配置中已经设置，可以不设置值.
    *
    * @param tradeType 交易类型
    */
@@ -333,32 +384,48 @@ public class WxPayUnifiedOrderRequest extends WxPayBaseRequest {
 
   @Override
   protected void checkConstraints() throws WxPayException {
-    if (TradeType.JSAPI.equals(this.getTradeType())) {
-      if (StringUtils.isBlank(this.getSubAppId()) && StringUtils.isBlank(this.getOpenid())) {
-        throw new WxPayException("当trade_type是'JSAPI'时，需指定非空的openid值");
-      }
-
-      if (StringUtils.isNotBlank(this.getSubAppId()) && StringUtils.isBlank(this.getSubOpenid())) {
-        throw new WxPayException("在服务商模式下，当trade_type是'JSAPI'时，需指定非空的sub_openid值");
-      }
-    }
-
     if (TradeType.NATIVE.equals(this.getTradeType()) && StringUtils.isBlank(this.getProductId())) {
       throw new WxPayException("当trade_type是'NATIVE'时，需指定非空的product_id值");
     }
   }
 
   @Override
-  public void checkAndSign(WxPayConfig config, boolean isIgnoreSignType) throws WxPayException {
-    if (StringUtils.isBlank(this.getNotifyURL())) {
-      this.setNotifyURL(config.getNotifyUrl());
+  public void checkAndSign(WxPayConfig config) throws WxPayException {
+    if (StringUtils.isBlank(this.getNotifyUrl())) {
+      this.setNotifyUrl(config.getNotifyUrl());
     }
 
     if (StringUtils.isBlank(this.getTradeType())) {
       this.setTradeType(config.getTradeType());
     }
 
-    super.checkAndSign(config, isIgnoreSignType);
+    super.checkAndSign(config);
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("version", version);
+    map.put("device_info", deviceInfo);
+    map.put("body", body);
+    map.put("detail", detail);
+    map.put("attach", attach);
+    map.put("out_trade_no", outTradeNo);
+    map.put("fee_type", feeType);
+    map.put("total_fee", totalFee.toString());
+    map.put("spbill_create_ip", spbillCreateIp);
+    map.put("time_start", timeStart);
+    map.put("time_expire", timeExpire);
+    map.put("goods_tag", goodsTag);
+    map.put("notify_url", notifyUrl);
+    map.put("trade_type", tradeType);
+    map.put("product_id", productId);
+    map.put("limit_pay", limitPay);
+    map.put("openid", openid);
+    map.put("sub_openid", subOpenid);
+    map.put("receipt", receipt);
+    map.put("scene_info", sceneInfo);
+    map.put("fingerprint", fingerprint);
+    map.put("profit_sharing", profitSharing);
   }
 
 }

@@ -1,9 +1,11 @@
 package com.github.binarywang.wxpay.bean.coupon;
 
-import com.github.binarywang.wxpay.bean.request.WxPayBaseRequest;
+import com.github.binarywang.wxpay.bean.request.BaseWxPayRequest;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
+
+import java.util.Map;
 
 /**
  * <pre>
@@ -13,14 +15,13 @@ import me.chanjar.weixin.common.annotation.Required;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder(builderMethodName = "newBuilder")
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayCouponStockQueryRequest extends WxPayBaseRequest {
+public class WxPayCouponStockQueryRequest extends BaseWxPayRequest {
   /**
    * <pre>
    * 字段名：代金券批次id
@@ -90,6 +91,15 @@ public class WxPayCouponStockQueryRequest extends WxPayBaseRequest {
   @Override
   protected void checkConstraints() {
     //do nothing
+  }
+
+  @Override
+  protected void storeMap(Map<String, String> map) {
+    map.put("coupon_stock_id", couponStockId);
+    map.put("op_user_id", opUserId);
+    map.put("device_info", deviceInfo);
+    map.put("version", version);
+    map.put("type", type);
   }
 
 }
