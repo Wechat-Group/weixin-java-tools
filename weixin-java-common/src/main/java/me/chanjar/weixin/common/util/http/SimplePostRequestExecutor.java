@@ -1,14 +1,16 @@
 package me.chanjar.weixin.common.util.http;
 
+import java.io.IOException;
+
+import org.jetbrains.annotations.NotNull;
+
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheSimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpSimplePostRequestExecutor;
+import me.chanjar.weixin.common.util.http.nutz.NutzHttpSimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpSimplePostRequestExecutor;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 
 /**
  * 简单的POST请求执行器，请求的参数是String, 返回的结果也是String
@@ -36,6 +38,8 @@ public abstract class SimplePostRequestExecutor<H, P> implements RequestExecutor
         return new JoddHttpSimplePostRequestExecutor(requestHttp);
       case OK_HTTP:
         return new OkHttpSimplePostRequestExecutor(requestHttp);
+      case NUTZ_HTTP:
+    	  return new NutzHttpSimplePostRequestExecutor(requestHttp);
       default:
         throw new IllegalArgumentException("非法请求参数");
     }

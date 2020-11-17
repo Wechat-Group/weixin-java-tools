@@ -138,6 +138,12 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
+        <groupId>org.nutz</groupId>
+        <artifactId>nutz</artifactId>
+        <version>1.r.68.v20201011</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
         <groupId>com.squareup.okhttp3</groupId>
         <artifactId>okhttp</artifactId>
         <version>4.5.0</version>

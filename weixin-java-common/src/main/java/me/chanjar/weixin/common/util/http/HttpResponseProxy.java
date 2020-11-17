@@ -1,14 +1,14 @@
 package me.chanjar.weixin.common.util.http;
 
-import jodd.http.HttpResponse;
-import me.chanjar.weixin.common.error.WxError;
-import me.chanjar.weixin.common.error.WxErrorException;
-import okhttp3.Response;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import jodd.http.HttpResponse;
+import me.chanjar.weixin.common.error.WxErrorException;
+import okhttp3.Response;
 
 /**
  * <pre>
@@ -19,72 +19,84 @@ import java.util.regex.Pattern;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class HttpResponseProxy {
-  private static final Pattern PATTERN = Pattern.compile(".*filename=\"(.*)\"");
+	private static final Pattern PATTERN = Pattern.compile(".*filename=\"(.*)\"");
 
-  private CloseableHttpResponse apacheHttpResponse;
-  private HttpResponse joddHttpResponse;
-  private Response okHttpResponse;
+	private CloseableHttpResponse apacheHttpResponse;
+	private HttpResponse joddHttpResponse;
+	private Response okHttpResponse;
+	private org.nutz.http.Response nutzResponse;
 
-  public HttpResponseProxy(CloseableHttpResponse apacheHttpResponse) {
-    this.apacheHttpResponse = apacheHttpResponse;
-  }
+	public HttpResponseProxy(org.nutz.http.Response nutzResponse) {
+		this.nutzResponse = nutzResponse;
+	}
 
-  public HttpResponseProxy(HttpResponse joddHttpResponse) {
-    this.joddHttpResponse = joddHttpResponse;
-  }
+	private String getFileName(org.nutz.http.Response nutzResponse) throws WxErrorException {
+		String content = nutzResponse.getHeader().get("Content-disposition");
+		return this.extractFileNameFromContentString(content);
+	}
 
-  public HttpResponseProxy(Response okHttpResponse) {
-    this.okHttpResponse = okHttpResponse;
-  }
+	public HttpResponseProxy(CloseableHttpResponse apacheHttpResponse) {
+		this.apacheHttpResponse = apacheHttpResponse;
+	}
 
-  public String getFileName() throws WxErrorException {
-    //由于对象只能由一个构造方法实现，因此三个response对象必定且只有一个不为空
-    if (this.apacheHttpResponse != null) {
-      return this.getFileName(this.apacheHttpResponse);
-    }
+	public HttpResponseProxy(HttpResponse joddHttpResponse) {
+		this.joddHttpResponse = joddHttpResponse;
+	}
 
-    if (this.joddHttpResponse != null) {
-      return this.getFileName(this.joddHttpResponse);
-    }
+	public HttpResponseProxy(Response okHttpResponse) {
+		this.okHttpResponse = okHttpResponse;
+	}
 
-    if (this.okHttpResponse != null) {
-      return this.getFileName(this.okHttpResponse);
-    }
+	public String getFileName() throws WxErrorException {
+		// 由于对象只能由一个构造方法实现，因此三个response对象必定且只有一个不为空
+		if (this.apacheHttpResponse != null) {
+			return this.getFileName(this.apacheHttpResponse);
+		}
 
-    //cannot happen
-    return null;
-  }
+		if (this.joddHttpResponse != null) {
+			return this.getFileName(this.joddHttpResponse);
+		}
 
-  private String getFileName(CloseableHttpResponse response) throws WxErrorException {
-    Header[] contentDispositionHeader = response.getHeaders("Content-disposition");
-    if (contentDispositionHeader == null || contentDispositionHeader.length == 0) {
-      throw new WxErrorException("无法获取到文件名，Content-disposition为空");
-    }
+		if (this.okHttpResponse != null) {
+			return this.getFileName(this.okHttpResponse);
+		}
+		if (this.nutzResponse != null) {
+			return this.getFileName(this.nutzResponse);
+		}
+		// cannot happen
+		return null;
+	}
 
-    return this.extractFileNameFromContentString(contentDispositionHeader[0].getValue());
-  }
+	private String getFileName(CloseableHttpResponse response) throws WxErrorException {
+		Header[] contentDispositionHeader = response.getHeaders("Content-disposition");
+		if (contentDispositionHeader == null || contentDispositionHeader.length == 0) {
+			throw new WxErrorException("无法获取到文件名，Content-disposition为空");
+		}
 
-  private String getFileName(HttpResponse response) throws WxErrorException {
-    String content = response.header("Content-disposition");
-    return this.extractFileNameFromContentString(content);
-  }
+		return this.extractFileNameFromContentString(contentDispositionHeader[0].getValue());
+	}
 
-  private String getFileName(Response response) throws WxErrorException {
-    String content = response.header("Content-disposition");
-    return this.extractFileNameFromContentString(content);
-  }
+	private String getFileName(HttpResponse response) throws WxErrorException {
+		String content = response.header("Content-disposition");
+		return this.extractFileNameFromContentString(content);
+	}
 
-  private String extractFileNameFromContentString(String content) throws WxErrorException {
-    if (content == null || content.length() == 0) {
-      throw new WxErrorException("无法获取到文件名，content为空");
-    }
+	private String getFileName(Response response) throws WxErrorException {
+		String content = response.header("Content-disposition");
+		return this.extractFileNameFromContentString(content);
+	}
 
-    Matcher m = PATTERN.matcher(content);
-    if (m.matches()) {
-      return m.group(1);
-    }
+	private String extractFileNameFromContentString(String content) throws WxErrorException {
+		if (content == null || content.length() == 0) {
+			throw new WxErrorException("无法获取到文件名，content为空");
+		}
 
-    throw new WxErrorException("无法获取到文件名，header信息有问题");
-  }
+		Matcher m = PATTERN.matcher(content);
+		if (m.matches()) {
+			return m.group(1);
+		}
+
+		throw new WxErrorException("无法获取到文件名，header信息有问题");
+	}
 
 }
