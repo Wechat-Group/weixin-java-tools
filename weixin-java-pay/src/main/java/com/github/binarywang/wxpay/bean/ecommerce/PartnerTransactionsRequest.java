@@ -13,11 +13,14 @@ import java.util.List;
  * <pre>
  * 文档地址:https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/e_transactions.shtml
  * </pre>
+ *
+ * @author cloudX
  */
 @Data
 @NoArgsConstructor
 public class PartnerTransactionsRequest implements Serializable {
   private static final long serialVersionUID = -1550405819444680465L;
+
   /**
    * <pre>
    * 字段名：服务商公众号ID
@@ -100,7 +103,7 @@ public class PartnerTransactionsRequest implements Serializable {
    * </pre>
    */
   @SerializedName(value = "out_trade_no")
-  private String out_trade_no;
+  private String outTradeNo;
 
   /**
    * <pre>
@@ -225,6 +228,7 @@ public class PartnerTransactionsRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class Discount implements Serializable {
+    private static final long serialVersionUID = 1090134053810201492L;
 
     /**
      * <pre>
@@ -254,7 +258,7 @@ public class PartnerTransactionsRequest implements Serializable {
      * </pre>
      */
     @SerializedName(value = "invoice_id")
-    private Integer invoiceId;
+    private String invoiceId;
 
     /**
      * <pre>
@@ -274,6 +278,7 @@ public class PartnerTransactionsRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class Amount implements Serializable {
+    private static final long serialVersionUID = -4967636398225864273L;
 
     /**
      * <pre>
@@ -308,6 +313,7 @@ public class PartnerTransactionsRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class Payer implements Serializable {
+    private static final long serialVersionUID = -3946401119476159971L;
 
     /**
      * <pre>
@@ -341,7 +347,9 @@ public class PartnerTransactionsRequest implements Serializable {
 
   @Data
   @NoArgsConstructor
-  public static class SettleInfo implements Serializable{
+  public static class SettleInfo implements Serializable {
+    private static final long serialVersionUID = 4438958789491671746L;
+
     /**
      * <pre>
      * 字段名：是否指定分账
@@ -378,6 +386,7 @@ public class PartnerTransactionsRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class GoodsDetail implements Serializable {
+    private static final long serialVersionUID = -2574001236925022932L;
 
     /**
      * <pre>
@@ -453,6 +462,8 @@ public class PartnerTransactionsRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class SceneInfo implements Serializable {
+    private static final long serialVersionUID = 4678263124015070957L;
+
     /**
      * <pre>
      * 字段名：商户端设备号
@@ -514,6 +525,7 @@ public class PartnerTransactionsRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class H5Info implements Serializable {
+    private static final long serialVersionUID = -6865738707329486532L;
 
     /**
      * <pre>
@@ -593,6 +605,7 @@ public class PartnerTransactionsRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class StoreInfo implements Serializable {
+    private static final long serialVersionUID = -8002411737407580701L;
 
     /**
      * <pre>

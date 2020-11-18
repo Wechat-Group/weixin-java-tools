@@ -3,7 +3,6 @@ package me.chanjar.weixin.cp.tp.message;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 
 import java.util.Map;

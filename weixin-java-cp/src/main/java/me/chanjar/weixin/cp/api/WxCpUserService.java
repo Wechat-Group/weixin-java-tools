@@ -25,19 +25,24 @@ public interface WxCpUserService {
    * </pre>
    *
    * @param userId 用户id
+   * @throws WxErrorException the wx error exception
    */
   void authenticate(String userId) throws WxErrorException;
 
   /**
    * <pre>
-   * 获取部门成员(详情).
+   * 获取部门成员详情
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token=ACCESS_TOKEN&department_id=DEPARTMENT_ID&fetch_child=FETCH_CHILD
    *
-   * http://qydev.weixin.qq.com/wiki/index.php?title=管理成员#.E8.8E.B7.E5.8F.96.E9.83.A8.E9.97.A8.E6.88.90.E5.91.98.28.E8.AF.A6.E6.83.85.29
+   * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/90201
    * </pre>
    *
    * @param departId   必填。部门id
    * @param fetchChild 非必填。1/0：是否递归获取子部门下面的成员
    * @param status     非必填。0获取全部员工，1获取已关注成员列表，2获取禁用成员列表，4获取未关注成员列表。status可叠加
+   * @return the list
+   * @throws WxErrorException the wx error exception
    */
   List<WxCpUser> listByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException;
 
@@ -51,6 +56,8 @@ public interface WxCpUserService {
    * @param departId   必填。部门id
    * @param fetchChild 非必填。1/0：是否递归获取子部门下面的成员
    * @param status     非必填。0获取全部员工，1获取已关注成员列表，2获取禁用成员列表，4获取未关注成员列表。status可叠加
+   * @return the list
+   * @throws WxErrorException the wx error exception
    */
   List<WxCpUser> listSimpleByDepartment(Long departId, Boolean fetchChild, Integer status) throws WxErrorException;
 
@@ -58,6 +65,7 @@ public interface WxCpUserService {
    * 新建用户.
    *
    * @param user 用户对象
+   * @throws WxErrorException the wx error exception
    */
   void create(WxCpUser user) throws WxErrorException;
 
@@ -65,6 +73,7 @@ public interface WxCpUserService {
    * 更新用户.
    *
    * @param user 用户对象
+   * @throws WxErrorException the wx error exception
    */
   void update(WxCpUser user) throws WxErrorException;
 
@@ -75,6 +84,7 @@ public interface WxCpUserService {
    * </pre>
    *
    * @param userIds 员工UserID列表。对应管理端的帐号
+   * @throws WxErrorException the wx error exception
    */
   void delete(String... userIds) throws WxErrorException;
 
@@ -82,6 +92,8 @@ public interface WxCpUserService {
    * 获取用户.
    *
    * @param userid 用户id
+   * @return the by id
+   * @throws WxErrorException the wx error exception
    */
   WxCpUser getById(String userid) throws WxErrorException;
 
@@ -97,6 +109,8 @@ public interface WxCpUserService {
    * @param userIds  成员ID列表, 最多支持1000个。
    * @param partyIds 部门ID列表，最多支持100个。
    * @param tagIds   标签ID列表，最多支持100个。
+   * @return the wx cp invite result
+   * @throws WxErrorException the wx error exception
    */
   WxCpInviteResult invite(List<String> userIds, List<String> partyIds, List<String> tagIds) throws WxErrorException;
 
@@ -114,9 +128,8 @@ public interface WxCpUserService {
    *
    * @param userId  企业内的成员id
    * @param agentId 非必填，整型，仅用于发红包。其它场景该参数不要填，如微信支付、企业转账、电子发票
-   * @return map对象，可能包含以下值：
-   * - openid 企业微信成员userid对应的openid，若有传参agentid，则是针对该agentid的openid。否则是针对企业微信corpid的openid
-   * - appid 应用的appid，若请求包中不包含agentid则不返回appid。该appid在使用微信红包时会用到
+   * @return map对象 ，可能包含以下值： - openid 企业微信成员userid对应的openid，若有传参agentid，则是针对该agentid的openid。否则是针对企业微信corpid的openid - appid 应用的appid，若请求包中不包含agentid则不返回appid。该appid在使用微信红包时会用到
+   * @throws WxErrorException the wx error exception
    */
   Map<String, String> userId2Openid(String userId, Integer agentId) throws WxErrorException;
 
@@ -134,6 +147,7 @@ public interface WxCpUserService {
    *
    * @param openid 在使用微信支付、微信红包和企业转账之后，返回结果的openid
    * @return userid 该openid在企业微信对应的成员userid
+   * @throws WxErrorException the wx error exception
    */
   String openid2UserId(String openid) throws WxErrorException;
 
@@ -149,7 +163,7 @@ public interface WxCpUserService {
    * </pre>
    *
    * @param mobile 手机号码。长度为5~32个字节
-   * @return userid  mobile对应的成员userid
+   * @return userid mobile对应的成员userid
    * @throws WxErrorException .
    */
   String getUserId(String mobile) throws WxErrorException;
@@ -164,7 +178,7 @@ public interface WxCpUserService {
    * </pre>
    *
    * @param userId 外部联系人的userid
-   * @return 联系人详情
+   * @return 联系人详情 external contact
    * @throws WxErrorException .
    */
   WxCpExternalContactInfo getExternalContact(String userId) throws WxErrorException;

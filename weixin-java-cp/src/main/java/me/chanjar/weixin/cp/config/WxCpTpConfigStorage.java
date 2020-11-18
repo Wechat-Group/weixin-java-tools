@@ -26,67 +26,76 @@ public interface WxCpTpConfigStorage {
    */
   String getApiUrl(String path);
 
+  /**
+   * 第三方应用的suite access token相关
+   */
   String getSuiteAccessToken();
-
   boolean isSuiteAccessTokenExpired();
-
-  /**
-   * 强制将suite access token过期掉.
-   */
+  //强制将suite access token过期掉.
   void expireSuiteAccessToken();
-
   void updateSuiteAccessToken(WxAccessToken suiteAccessToken);
+  void updateSuiteAccessToken(String suiteAccessToken, int expiresInSeconds);
 
-  void updateSuiteAccessToken(String suiteAccessToken, int expiresIn);
-
+  /**
+   * 第三方应用的suite ticket相关
+   */
   String getSuiteTicket();
-
   boolean isSuiteTicketExpired();
-
-  /**
-   * 强制将suite ticket过期掉.
-   */
+  //强制将suite ticket过期掉.
   void expireSuiteTicket();
-
-  /**
-   * 应该是线程安全的.
-   */
+  //应该是线程安全的
   void updateSuiteTicket(String suiteTicket, int expiresInSeconds);
 
-  String getCorpId();
-
-  String getCorpSecret();
-
+  /**
+   * 第三方应用的其他配置，来自于企微配置
+   */
   String getSuiteId();
-
   String getSuiteSecret();
-
+  // 第三方应用的token，用来检查应用的签名
   String getToken();
-
+  //第三方应用的EncodingAESKey，用来检查签名
   String getAesKey();
 
-  long getExpiresTime();
-
-  String getHttpProxyHost();
-
-  int getHttpProxyPort();
-
-  String getHttpProxyUsername();
-
-  String getHttpProxyPassword();
-
-  File getTmpDirFile();
+  /**
+   * 企微服务商企业ID & 企业secret
+   */
+  String getCorpId();
+  String getCorpSecret();
 
   /**
-   * http client builder.
-   *
-   * @return ApacheHttpClientBuilder
+   * 授权企业的access token相关
    */
+  String getAccessToken(String authCorpId);
+  boolean isAccessTokenExpired(String authCorpId);
+  void updateAccessToken(String authCorpId, String accessToken, int expiredInSeconds);
+
+  /**
+   * 授权企业的js api ticket相关
+   */
+  String getAuthCorpJsApiTicket(String authCorpId);
+  boolean isAuthCorpJsApiTicketExpired(String authCorpId);
+  void updateAuthCorpJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds);
+
+  /**
+   * 授权企业的第三方应用js api ticket相关
+   */
+  String getAuthSuiteJsApiTicket(String authCorpId);
+  boolean isAuthSuiteJsApiTicketExpired(String authCorpId);
+  void updateAuthSuiteJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds);;
+
+  /**
+   * 网络代理相关
+   */
+  String getHttpProxyHost();
+  int getHttpProxyPort();
+  String getHttpProxyUsername();
+  String getHttpProxyPassword();
   ApacheHttpClientBuilder getApacheHttpClientBuilder();
 
-  /**
-   * 是否自动刷新token
-   * @return .
-   */
   boolean autoRefreshToken();
+
+  // 毫无相关性的代码
+  @Deprecated
+  File getTmpDirFile();
+
 }

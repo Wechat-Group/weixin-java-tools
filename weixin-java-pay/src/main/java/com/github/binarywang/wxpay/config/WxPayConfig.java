@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.v3.auth.*;
 import com.github.binarywang.wxpay.v3.util.PemUtils;
 import jodd.util.ResourcesUtil;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RegExUtils;
@@ -28,6 +29,7 @@ import java.util.Collections;
  * @author Binary Wang (https://github.com/binarywang)
  */
 @Data
+@EqualsAndHashCode(exclude = "verifier")
 public class WxPayConfig {
   private static final String DEFAULT_PAY_BASE_URL = "https://api.mch.weixin.qq.com";
   private static final String PROBLEM_MSG = "证书文件【%s】有问题，请核实！";

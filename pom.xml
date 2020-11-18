@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>3.9.7.B</version>
+  <version>3.9.9.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -177,7 +177,7 @@
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
-        <version>1.4.11.1</version>
+        <version>1.4.14</version>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>

@@ -31,4 +31,10 @@ public class WxPayConfigTest {
     this.testInitSSLContext_classpath();
     this.testInitSSLContext_http();
   }
+
+  @Test
+  @SuppressWarnings("ResultOfMethodCallIgnored")
+  public void testHashCode() {
+    payConfig.hashCode();
+  }
 }

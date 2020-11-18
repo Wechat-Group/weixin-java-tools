@@ -3,6 +3,8 @@ package cn.binarywang.wx.miniapp.bean;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  * 参考文档 https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.send.html
@@ -13,7 +15,9 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class WxMaTemplateData {
+public class WxMaTemplateData implements Serializable {
+  private static final long serialVersionUID = 855214313056578490L;
+
   private String name;
   private String value;
   private String color;
