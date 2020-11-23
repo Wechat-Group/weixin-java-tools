@@ -9,7 +9,7 @@ import static org.testng.Assert.assertNull;
 /**
  * @author m8cool
  */
-public class WxPayBillResultTest {
+public class WxPayTradeFundBillResultTest {
   private static final String PAY_BILL_RESULT_ALL_CONTENT = "交易时间,公众账号ID,商户号,特约商户号,设备号,微信订单号,商户订单号,用户标识,交易类型,交易状态,付款银行,货币种类,应结订单金额,代金券金额,微信退款单号,商户退款单号,退款金额,充值券退款金额,退款类型,退款状态,商品名称,商户数据包,手续费,费率,订单金额,申请退款金额,费率备注\n" +
     "`2019-07-25 08:35:41,`WWWW,`XXXXXXXX,`0,`,`XXXXXXXXXXXXX,`XXXXXXXXXX,`XXXXXXXXXXX,`JSAPI,`SUCCESS,`PSBC_DEBIT,`CNY,`6.00,`0.00,`0,`0,`0.00,`0.00,`,`,`XXXXXX,`XXXXXXX,`0.04000,`0.60%,`6.00,`0.00,`\n" +
     "总交易单数,应结订单总金额,退款总金额,充值券退款总金额,手续费总金额,订单总金额,申请退款总金额\n" +

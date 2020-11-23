@@ -1,7 +1,7 @@
 package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.ecommerce.*;
-import com.github.binarywang.wxpay.bean.ecommerce.enums.BillTypeEnum;
+import com.github.binarywang.wxpay.bean.ecommerce.enums.FundBillTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -394,12 +394,24 @@ public interface EcommerceService {
    * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/bill.shtml
    * </pre>
    *
-   * @param billType 账单类型。
-   * @param request 二级商户号。
-   * @return 返回数据 return bill result
+   * @param request 请求信息。
+   * @return 返回数据 return trade bill result
    * @throws WxPayException the wx pay exception
    */
-  BillResult applyBill(BillTypeEnum billType, BillRequest request) throws WxPayException;
+  TradeBillResult applyBill(TradeBillRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 申请资金账单API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/bill/chapter3_2.shtml
+   * </pre>
+   *
+   * @param billType 账单类型。
+   * @param request 请求信息。
+   * @return 返回数据 return fund bill result
+   * @throws WxPayException the wx pay exception
+   */
+  FundBillResult applyFundBill(FundBillTypeEnum billType, FundBillRequest request) throws WxPayException;
 
   /**
    * <pre>

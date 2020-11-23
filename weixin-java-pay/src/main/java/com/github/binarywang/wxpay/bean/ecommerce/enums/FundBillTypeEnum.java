@@ -10,17 +10,16 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum BillTypeEnum {
+public enum FundBillTypeEnum {
 
-  /**
-   * 交易账单
-   */
-  TRADE_BILL("%s/v3/bill/tradebill?%s"),
   /**
    * 资金账单
    */
-  FUND_FLOW_BILL("%s/v3/bill/fundflowbill?%s");
-
+  FUND_FLOW_BILL("%s/v3/bill/fundflowbill?%s"),
+  /**
+   * 二级商户资金账单
+   */
+  SUB_FUND_FLOW_BILL("%s/v3/ecommerce/bill/fundflowbill?%s");
 
   /**
    * url

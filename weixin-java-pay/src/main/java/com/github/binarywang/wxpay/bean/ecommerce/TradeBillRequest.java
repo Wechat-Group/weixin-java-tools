@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
 /**
- * 账单请求
+ * 交易账单请求
  * @author: f00lish
  * @date: 2020/09/28
  */
@@ -13,7 +13,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class BillRequest {
+public class TradeBillRequest {
 
   /**
    * <pre>
