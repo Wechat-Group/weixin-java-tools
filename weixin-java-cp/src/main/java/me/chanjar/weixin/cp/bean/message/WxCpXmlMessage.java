@@ -584,8 +584,6 @@ public class WxCpXmlMessage implements Serializable {
      */
     @XStreamAlias("Applyer")
     private Applier applier;
-
-
     /**
      * 审批申请单变化类型
      */
