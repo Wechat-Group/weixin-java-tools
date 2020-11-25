@@ -584,6 +584,8 @@ public class WxCpXmlMessage implements Serializable {
      */
     @XStreamAlias("Applyer")
     private Applier applier;
+
+
     /**
      * 审批申请单变化类型
      */
@@ -595,10 +597,45 @@ public class WxCpXmlMessage implements Serializable {
     public static class Applier implements Serializable {
       private static final long serialVersionUID = -979255011922209018L;
 
-      @XStreamAlias("Applyer")
+      @XStreamAlias("UserId")
       private String userId;
       @XStreamAlias("Party")
       private String party;
+    }
+    @XStreamAlias("SpRecord")
+    @Data
+    public static class SpRecord implements Serializable{
+
+      private static final long serialVersionUID = 1247535623941881764L;
+
+      @XStreamAlias("SpStatus")
+      private String spStatus;
+
+      @XStreamAlias("ApproverAttr")
+      private String approverAttr;
+
+      @XStreamAlias("Details")
+      private Details details;
+
+    }
+
+    @XStreamAlias("Details")
+    @Data
+    public static class Details implements Serializable{
+
+      private static final long serialVersionUID = -8446107461495047603L;
+
+      @XStreamAlias("SpStatus")
+      private String spStatus;
+
+      @XStreamAlias("Speech")
+      private String speech;
+
+      @XStreamAlias("Approver")
+      private String approver;
+
+      @XStreamAlias("SpTime")
+      private String spTime;
     }
 
   }
