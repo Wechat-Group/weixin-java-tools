@@ -600,15 +600,16 @@ public class WxCpXmlMessage implements Serializable {
 
     /**
      * 抄送信息，可能有多个抄送节点
+     * 这回查字典，notifier通知人，Notifyer这不知道是什么
      */
     @XStreamImplicit(itemFieldName="Notifyer")
-    private List<Notifyer> notorieties;
+    private List<Notifier> notifier;
 
     /**
      * 审批申请备注信息，可能有多个备注节点
      */
     @XStreamImplicit(itemFieldName="Comments")
-    private List<Comments> comments;
+    private List<Comment> comments;
 
     /**
      * 审批申请单变化类型
@@ -662,7 +663,7 @@ public class WxCpXmlMessage implements Serializable {
        * 审批节点详情。当节点为标签或上级时，一个节点可能有多个分支
        */
       @XStreamImplicit(itemFieldName="Details")
-      private List<Details> details;
+      private List<Detail> details;
 
     }
 
@@ -671,7 +672,7 @@ public class WxCpXmlMessage implements Serializable {
      */
     @XStreamAlias("Details")
     @Data
-    public static class Details implements Serializable{
+    public static class Detail implements Serializable{
 
       private static final long serialVersionUID = -8446107461495047603L;
 
@@ -727,7 +728,7 @@ public class WxCpXmlMessage implements Serializable {
      */
     @Data
     @XStreamAlias("Notifyer")
-    public static class Notifyer implements Serializable{
+    public static class Notifier implements Serializable{
 
       private static final long serialVersionUID = -4524071522890013920L;
 
@@ -743,7 +744,7 @@ public class WxCpXmlMessage implements Serializable {
      */
     @Data
     @XStreamAlias("Comments")
-    public static class Comments implements Serializable{
+    public static class Comment implements Serializable{
 
       private static final long serialVersionUID = 6912156206252719485L;
 
