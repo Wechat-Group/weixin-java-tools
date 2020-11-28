@@ -1,6 +1,7 @@
 package me.chanjar.weixin.cp.tp.service.impl;
 
 import com.google.common.base.Joiner;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -202,6 +203,30 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   public String getPreAuthUrl(String redirectUri, String state) throws WxErrorException {
     String result = get(configStorage.getApiUrl(GET_PREAUTH_CODE), null);
     WxCpTpPreauthCode preAuthCode = WxCpTpPreauthCode.fromJson(result);
+    String preAuthUrl = "https://open.work.weixin.qq.com/3rdapp/install?suite_id=" + configStorage.getSuiteId() +
+      "&pre_auth_code=" + preAuthCode.getPreAuthCode() + "&redirect_uri=" + URLEncoder.encode(redirectUri, "utf-8");
+    if (StringUtils.isNotBlank(state)) {
+      preAuthUrl += "&state=" + state;
+    }
+    return preAuthUrl;
+  }
+
+  @Override
+  @SneakyThrows
+  public String getPreAuthUrl(String redirectUri, String state, int authType) throws WxErrorException {
+    String result = get(configStorage.getApiUrl(GET_PREAUTH_CODE), null);
+    WxCpTpPreauthCode preAuthCode = WxCpTpPreauthCode.fromJson(result);
+    String setSessionUrl = "https://qyapi.weixin.qq.com/cgi-bin/service/set_session_info";
+
+    Map<String,Object> sessionInfo = new HashMap<>(1);
+    sessionInfo.put("auth_type", authType);
+    Map<String,Object> param = new HashMap<>(2);
+    param.put("pre_auth_code", preAuthCode.getPreAuthCode());
+    param.put("session_info", sessionInfo);
+    String postData = new Gson().toJson(param);
+
+    post(setSessionUrl, postData);
+
     String preAuthUrl = "https://open.work.weixin.qq.com/3rdapp/install?suite_id=" + configStorage.getSuiteId() +
       "&pre_auth_code=" + preAuthCode.getPreAuthCode() + "&redirect_uri=" + URLEncoder.encode(redirectUri, "utf-8");
     if (StringUtils.isNotBlank(state)) {

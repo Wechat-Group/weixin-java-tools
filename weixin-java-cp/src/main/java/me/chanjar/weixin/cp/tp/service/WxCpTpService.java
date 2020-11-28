@@ -155,6 +155,20 @@ public interface WxCpTpService {
   String getPreAuthUrl(String redirectUri, String state) throws WxErrorException;
 
   /**
+   * <pre>
+   *   获取预授权链接，测试环境下使用
+   *   @Link https://work.weixin.qq.com/api/doc/90001/90143/90602
+   * </pre>
+   *
+   * @param redirectUri 授权完成后的回调网址
+   * @param state       a-zA-Z0-9的参数值（不超过128个字节），用于第三方自行校验session，防止跨域攻击
+   * @param authType    授权类型：0 正式授权， 1 测试授权。
+   * @return pre auth url
+   * @throws WxErrorException the wx error exception
+   */
+  String getPreAuthUrl(String redirectUri, String state, int authType) throws WxErrorException;
+
+  /**
    * 获取企业的授权信息
    *
    * @param authCorpId    授权企业的corpId
@@ -278,7 +292,7 @@ public interface WxCpTpService {
    * <pre>
    * 获取访问用户敏感信息
    * </pre>
-   * 
+   *
    * @param userTicket
    * @return
    */
