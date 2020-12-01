@@ -1,7 +1,9 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.common.collect.Maps;
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -197,5 +199,13 @@ public class WxCpUserServiceImpl implements WxCpUserService {
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_EXTERNAL_CONTACT + userId);
     String responseContent = this.mainService.get(url, null);
     return WxCpExternalContactInfo.fromJson(responseContent);
+  }
+
+  @Override
+  public String getJoinQrCode(int sizeType) throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_JOIN_QR_CODE + sizeType);
+    String responseContent = this.mainService.get(url, null);
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("join_qrcode").getAsString();
   }
 }

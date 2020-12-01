@@ -161,6 +161,7 @@ public final class WxCpApiPathConsts {
     public static final String USER_CONVERT_TO_USERID = "/cgi-bin/user/convert_to_userid";
     public static final String GET_USER_ID = "/cgi-bin/user/getuserid";
     public static final String GET_EXTERNAL_CONTACT = "/cgi-bin/crm/get_external_contact?external_userid=";
+    public static final String GET_JOIN_QR_CODE = "/cgi-bin/corp/get_join_qrcode?size_type=";
   }
 
   @UtilityClass
