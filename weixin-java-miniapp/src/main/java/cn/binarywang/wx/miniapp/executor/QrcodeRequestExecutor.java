@@ -1,15 +1,15 @@
-package cn.binarywang.wx.miniapp.util;
+package cn.binarywang.wx.miniapp.executor;
 
 import cn.binarywang.wx.miniapp.bean.AbstractWxMaQrcodeWrapper;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.InputStreamResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.Utf8ResponseHandler;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -19,26 +19,28 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class QrcodeBytesRequestExecutor implements RequestExecutor<byte[], AbstractWxMaQrcodeWrapper> {
+public class QrcodeRequestExecutor implements RequestExecutor<File, AbstractWxMaQrcodeWrapper> {
   protected RequestHttp<CloseableHttpClient, HttpHost> requestHttp;
 
-  public QrcodeBytesRequestExecutor(RequestHttp requestHttp) {
+  public QrcodeRequestExecutor(RequestHttp requestHttp) {
     this.requestHttp = requestHttp;
   }
 
   @Override
-  public void execute(String uri, AbstractWxMaQrcodeWrapper data, ResponseHandler<byte[]> handler, WxType wxType) throws WxErrorException, IOException {
+  public void execute(String uri, AbstractWxMaQrcodeWrapper data, ResponseHandler<File> handler, WxType wxType) throws WxErrorException, IOException {
     handler.handle(this.execute(uri, data, wxType));
   }
 
   @Override
-  public byte[] execute(String uri, AbstractWxMaQrcodeWrapper qrcodeWrapper, WxType wxType) throws WxErrorException, IOException {
+  public File execute(String uri, AbstractWxMaQrcodeWrapper qrcodeWrapper, WxType wxType) throws WxErrorException, IOException {
     HttpPost httpPost = new HttpPost(uri);
     if (requestHttp.getRequestHttpProxy() != null) {
       httpPost.setConfig(
@@ -46,7 +48,7 @@ public class QrcodeBytesRequestExecutor implements RequestExecutor<byte[], Abstr
       );
     }
 
-    httpPost.setEntity(new StringEntity(qrcodeWrapper.toJson()));
+    httpPost.setEntity(new StringEntity(qrcodeWrapper.toJson(), ContentType.APPLICATION_JSON));
 
     try (final CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost);
          final InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response)) {
@@ -58,7 +60,7 @@ public class QrcodeBytesRequestExecutor implements RequestExecutor<byte[], Abstr
         throw new WxErrorException(WxError.fromJson(responseContent, wxType));
       }
 
-      return IOUtils.toByteArray(inputStream);
+      return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
     } finally {
       httpPost.releaseConnection();
     }

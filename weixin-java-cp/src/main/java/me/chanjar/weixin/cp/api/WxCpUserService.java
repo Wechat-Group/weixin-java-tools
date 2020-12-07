@@ -183,5 +183,20 @@ public interface WxCpUserService {
    */
   WxCpExternalContactInfo getExternalContact(String userId) throws WxErrorException;
 
-
+  /**
+   * <pre>
+   *
+   * 获取加入企业二维码。
+   *
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/corp/get_join_qrcode?access_token=ACCESS_TOKEN&size_type=SIZE_TYPE
+   *
+   * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/91714
+   * </pre>
+   *
+   * @param sizeType qrcode尺寸类型，1: 171 x 171; 2: 399 x 399; 3: 741 x 741; 4: 2052 x 2052
+   * @return join_qrcode 二维码链接，有效期7天
+   * @throws WxErrorException .
+   */
+  String getJoinQrCode(int sizeType) throws WxErrorException;
 }

@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.entpay.*;
+import com.github.binarywang.wxpay.bean.entwxpay.EntWxEmpPayRequest;
 import com.github.binarywang.wxpay.bean.request.WxPayDefaultRequest;
 import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
@@ -8,6 +9,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.EntPayService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.util.SignUtils;
+import lombok.RequiredArgsConstructor;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMParser;
@@ -30,17 +32,9 @@ import java.util.Base64;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@RequiredArgsConstructor
 public class EntPayServiceImpl implements EntPayService {
-  private WxPayService payService;
-
-  /**
-   * Instantiates a new Ent pay service.
-   *
-   * @param payService the pay service
-   */
-  public EntPayServiceImpl(WxPayService payService) {
-    this.payService = payService;
-  }
+  private final WxPayService payService;
 
   @Override
   public EntPayResult entPay(EntPayRequest request) throws WxPayException {
@@ -154,6 +148,24 @@ public class EntPayServiceImpl implements EntPayService {
     String url = this.payService.getPayBaseUrl() + "/mmpaymkttransfers/queryworkwxredpack";
     String responseContent = this.payService.post(url, request.toXML(), true);
     final EntPayRedpackQueryResult result = BaseWxPayResult.fromXML(responseContent, EntPayRedpackQueryResult.class);
+    result.checkResult(this.payService, request.getSignType(), true);
+    return result;
+  }
+
+  @Override
+  public EntPayResult toEmpPay(EntWxEmpPayRequest request) throws WxPayException {
+    //企业微信签名,需要在请求签名之前
+    request.setNonceStr(String.valueOf(System.currentTimeMillis()));
+    request.setWorkWxSign(SignUtils.createEntSign(request.getAmount(), request.getAppid(), request.getDescription(),
+      request.getMchId(), request.getNonceStr(), request.getOpenid(), request.getPartnerTradeNo(),
+      request.getWwMsgType(), payService.getConfig().getEntPayKey(), WxPayConstants.SignType.MD5));
+
+    request.checkAndSign(this.payService.getConfig());
+
+    String url = this.payService.getPayBaseUrl() + "/mmpaymkttransfers/promotion/paywwsptrans2pocket";
+    String responseContent = this.payService.post(url, request.toXML(), true);
+    final EntPayResult result = BaseWxPayResult.fromXML(responseContent, EntPayResult.class);
+
     result.checkResult(this.payService, request.getSignType(), true);
     return result;
   }

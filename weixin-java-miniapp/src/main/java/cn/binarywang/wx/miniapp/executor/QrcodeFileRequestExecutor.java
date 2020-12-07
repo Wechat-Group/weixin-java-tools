@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.util;
+package cn.binarywang.wx.miniapp.executor;
 
 import cn.binarywang.wx.miniapp.bean.AbstractWxMaQrcodeWrapper;
 import me.chanjar.weixin.common.enums.WxType;

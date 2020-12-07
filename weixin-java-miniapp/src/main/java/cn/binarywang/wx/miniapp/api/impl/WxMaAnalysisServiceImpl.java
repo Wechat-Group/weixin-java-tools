@@ -8,7 +8,7 @@ import cn.binarywang.wx.miniapp.bean.analysis.WxMaUserPortrait;
 import cn.binarywang.wx.miniapp.bean.analysis.WxMaVisitDistribution;
 import cn.binarywang.wx.miniapp.bean.analysis.WxMaVisitPage;
 import cn.binarywang.wx.miniapp.bean.analysis.WxMaVisitTrend;
-import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;

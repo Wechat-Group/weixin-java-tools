@@ -4,7 +4,7 @@ import cn.binarywang.wx.miniapp.builder.ImageMessageBuilder;
 import cn.binarywang.wx.miniapp.builder.LinkMessageBuilder;
 import cn.binarywang.wx.miniapp.builder.MaPageMessageBuilder;
 import cn.binarywang.wx.miniapp.builder.TextMessageBuilder;
-import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -17,6 +17,6 @@
 1. 开放平台 Demo：[GitHub](http://github.com/Wechat-Group/weixin-java-open-demo)、[码云](http://gitee.com/binary/weixin-java-open-demo) [![Build Status](https://travis-ci.org/Wechat-Group/weixin-java-open-demo.svg?branch=master)](https://travis-ci.org/Wechat-Group/weixin-java-open-demo)
 1. 公众号 Demo：
 	- 使用 `Spring MVC` 实现的公众号 Demo：[GitHub](http://github.com/binarywang/weixin-java-mp-demo-springmvc)、[码云](https://gitee.com/binary/weixin-java-mp-demo) [![Build Status](https://travis-ci.org/binarywang/weixin-java-mp-demo-springmvc.svg?branch=master)](https://travis-ci.org/binarywang/weixin-java-mp-demo-springmvc)
-	- 使用 `Spring Boot` 实现的公众号 Demo（支持多公众号）：[GitHub](http://github.com/binarywang/weixin-java-mp-demo-springboot)、[码云](http://gitee.com/binary/weixin-java-mp-demo-springboot) [![Build Status](https://travis-ci.org/binarywang/weixin-java-mp-demo-springboot.svg?branch=master)](https://travis-ci.org/binarywang/weixin-java-mp-demo-springboot)  
+	- 使用 `Spring Boot` 实现的公众号 Demo（支持多公众号）：[GitHub](http://github.com/binarywang/weixin-java-mp-demo)、[码云](http://gitee.com/binary/weixin-java-mp-demo-springboot) [![Build Status](https://travis-ci.org/binarywang/weixin-java-mp-demo.svg?branch=master)](https://travis-ci.org/binarywang/weixin-java-mp-demo)  
 	- 含公众号和部分微信支付代码的 Demo：[GitHub](http://github.com/Wechat-Group/weixin-java-demo-springmvc)、[码云](http://gitee.com/binary/weixin-java-tools-springmvc) [![Build Status](https://travis-ci.org/Wechat-Group/weixin-java-demo-springmvc.svg?branch=master)](https://travis-ci.org/Wechat-Group/weixin-java-demo-springmvc)
   

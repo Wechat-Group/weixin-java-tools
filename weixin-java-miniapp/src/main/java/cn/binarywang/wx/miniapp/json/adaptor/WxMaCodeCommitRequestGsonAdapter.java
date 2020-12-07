@@ -1,6 +1,7 @@
-package cn.binarywang.wx.miniapp.util.json;
+package cn.binarywang.wx.miniapp.json.adaptor;
 
 import cn.binarywang.wx.miniapp.bean.code.WxMaCodeCommitRequest;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;

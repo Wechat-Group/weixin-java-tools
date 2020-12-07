@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>3.9.9.B</version>
+  <version>4.0.0</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -121,7 +121,7 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <httpclient.version>4.5</httpclient.version>
-    <jetty.version>9.4.31.v20200723</jetty.version>
+    <jetty.version>9.4.35.v20201120</jetty.version>
   </properties>
 
   <dependencyManagement>

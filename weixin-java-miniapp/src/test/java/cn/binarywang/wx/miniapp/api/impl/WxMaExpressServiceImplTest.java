@@ -7,7 +7,7 @@ import cn.binarywang.wx.miniapp.bean.express.request.*;
 import cn.binarywang.wx.miniapp.bean.express.result.WxMaExpressOrderInfoResult;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
-import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;

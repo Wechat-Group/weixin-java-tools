@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.live.WxMaCreateRoomResult;
 import cn.binarywang.wx.miniapp.bean.live.WxMaLiveResult;
 import cn.binarywang.wx.miniapp.bean.live.WxMaLiveRoomInfo;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertNotNull;
 
 /**
@@ -50,8 +52,9 @@ public class WxMaLiveServiceImplTest {
     roomInfo.setCloseLike(0);
     roomInfo.setCloseGoods(0);
     roomInfo.setCloseComment(0);
-    Integer roomId = this.wxService.getLiveService().createRoom(roomInfo);
-    System.out.println(roomId);
+    WxMaCreateRoomResult result = this.wxService.getLiveService().createRoom(roomInfo);
+    assertNotNull(result);
+    assertThat(result.getRoomId()).isNotNull();
   }
 
   @Test

@@ -4,7 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaMsgService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.*;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
-import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.enums.WxType;

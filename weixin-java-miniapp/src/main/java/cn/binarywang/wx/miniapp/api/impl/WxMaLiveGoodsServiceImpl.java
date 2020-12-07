@@ -4,7 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaLiveGoodsService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.live.WxMaLiveGoodInfo;
 import cn.binarywang.wx.miniapp.bean.live.WxMaLiveResult;
-import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;

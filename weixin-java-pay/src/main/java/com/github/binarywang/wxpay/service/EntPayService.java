@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.entpay.*;
+import com.github.binarywang.wxpay.bean.entwxpay.EntWxEmpPayRequest;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 /**
@@ -143,4 +144,15 @@ public interface EntPayService {
    * @throws WxPayException the wx pay exception
    */
   EntPayRedpackQueryResult queryEnterpriseRedpack(EntPayRedpackQueryRequest request) throws WxPayException;
+
+  /**
+   * 向员工付款
+   * 文档详见 https://work.weixin.qq.com/api/doc/90000/90135/90278
+   * 接口链接 https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/paywwsptrans2pocket
+   *
+   * @param request 请求对象
+   * @return EntPayResult the ent pay result
+   * @throws WxPayException the wx pay exception
+   */
+  EntPayResult toEmpPay(EntWxEmpPayRequest request) throws WxPayException;
 }

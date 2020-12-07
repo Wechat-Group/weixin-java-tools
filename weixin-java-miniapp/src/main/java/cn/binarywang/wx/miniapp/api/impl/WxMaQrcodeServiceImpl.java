@@ -6,9 +6,9 @@ import cn.binarywang.wx.miniapp.bean.WxMaCodeLineColor;
 import cn.binarywang.wx.miniapp.bean.WxMaQrcode;
 import cn.binarywang.wx.miniapp.bean.WxaCode;
 import cn.binarywang.wx.miniapp.bean.WxaCodeUnlimit;
-import cn.binarywang.wx.miniapp.util.QrcodeBytesRequestExecutor;
-import cn.binarywang.wx.miniapp.util.QrcodeFileRequestExecutor;
-import cn.binarywang.wx.miniapp.util.QrcodeRequestExecutor;
+import cn.binarywang.wx.miniapp.executor.QrcodeBytesRequestExecutor;
+import cn.binarywang.wx.miniapp.executor.QrcodeFileRequestExecutor;
+import cn.binarywang.wx.miniapp.executor.QrcodeRequestExecutor;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 

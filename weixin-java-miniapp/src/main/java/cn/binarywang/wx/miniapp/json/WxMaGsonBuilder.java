@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.util.json;
+package cn.binarywang.wx.miniapp.json;
 
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaUniformMessage;
@@ -7,6 +7,7 @@ import cn.binarywang.wx.miniapp.bean.analysis.WxMaUserPortrait;
 import cn.binarywang.wx.miniapp.bean.analysis.WxMaVisitDistribution;
 import cn.binarywang.wx.miniapp.bean.code.WxMaCodeCommitRequest;
 import cn.binarywang.wx.miniapp.bean.code.WxMaCodeVersionDistribution;
+import cn.binarywang.wx.miniapp.json.adaptor.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

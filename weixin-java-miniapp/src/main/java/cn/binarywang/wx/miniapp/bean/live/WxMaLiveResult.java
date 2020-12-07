@@ -1,6 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.live;
 
-import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 

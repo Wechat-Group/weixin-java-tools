@@ -8,7 +8,7 @@ import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPath;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPrinter;
 import cn.binarywang.wx.miniapp.bean.express.request.*;
 import cn.binarywang.wx.miniapp.bean.express.result.WxMaExpressOrderInfoResult;
-import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 

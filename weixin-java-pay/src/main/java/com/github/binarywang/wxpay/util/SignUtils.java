@@ -127,6 +127,30 @@ public class SignUtils {
     sortedMap.put("total_amount", totalAmount + "");
     sortedMap.put("wxappid", wxAppId);
 
+    return toSignBuilder(sortedMap, signKey, signType);
+  }
+
+  /**
+   * 企业微信签名
+   * @param signType md5 目前接口要求使用的加密类型
+   */
+  public static String createEntSign(Integer totalAmount, String appId, String description, String mchId,
+                                     String nonceStr, String openid, String partnerTradeNo, String wwMsgType,
+                                     String signKey, String signType) {
+    Map<String, String> sortedMap = new HashMap<>(8);
+    sortedMap.put("amount", String.valueOf(totalAmount));
+    sortedMap.put("appid", appId);
+    sortedMap.put("desc", description);
+    sortedMap.put("mch_id", mchId);
+    sortedMap.put("nonce_str", nonceStr);
+    sortedMap.put("openid", openid);
+    sortedMap.put("partner_trade_no", partnerTradeNo);
+    sortedMap.put("ww_msg_type", wwMsgType);
+
+    return toSignBuilder(sortedMap, signKey, signType);
+  }
+
+  private static String toSignBuilder(Map<String, String> sortedMap, String signKey, String signType) {
     Iterator<Map.Entry<String, String>> iterator = new TreeMap<>(sortedMap).entrySet().iterator();
     StringBuilder toSign = new StringBuilder();
     while (iterator.hasNext()) {
@@ -148,7 +172,6 @@ public class SignUtils {
     } else {
       return DigestUtils.md5Hex(toSign.toString()).toUpperCase();
     }
-
   }
 
   /**

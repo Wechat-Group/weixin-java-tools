@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.util.json;
+package cn.binarywang.wx.miniapp.json.adaptor;
 
 import java.lang.reflect.Type;
 

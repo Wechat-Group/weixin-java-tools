@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.util.json;
+package cn.binarywang.wx.miniapp.json.adaptor;
 
 import cn.binarywang.wx.miniapp.bean.code.WxMaCodeVersionDistribution;
 import com.google.gson.JsonArray;

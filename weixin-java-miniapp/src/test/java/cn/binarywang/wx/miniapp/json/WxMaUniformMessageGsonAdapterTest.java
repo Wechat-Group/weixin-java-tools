@@ -1,4 +1,4 @@
-package cn.binarywang.wx.miniapp.util.json;
+package cn.binarywang.wx.miniapp.json;
 
 import cn.binarywang.wx.miniapp.bean.WxMaTemplateData;
 import cn.binarywang.wx.miniapp.bean.WxMaUniformMessage;

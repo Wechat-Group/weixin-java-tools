@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.bean;
 
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
-import cn.binarywang.wx.miniapp.util.json.WxMaGsonBuilder;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import lombok.*;
 
 import java.io.Serializable;

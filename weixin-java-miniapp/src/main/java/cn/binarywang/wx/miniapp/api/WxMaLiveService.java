@@ -1,9 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.live.WxMaAssistantResult;
-import cn.binarywang.wx.miniapp.bean.live.WxMaLiveAssistantInfo;
-import cn.binarywang.wx.miniapp.bean.live.WxMaLiveResult;
-import cn.binarywang.wx.miniapp.bean.live.WxMaLiveRoomInfo;
+import cn.binarywang.wx.miniapp.bean.live.*;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
@@ -41,7 +38,7 @@ public interface WxMaLiveService {
    * @return .
    * @throws WxErrorException .
    */
-  Integer createRoom(WxMaLiveRoomInfo roomInfo) throws WxErrorException;
+  WxMaCreateRoomResult createRoom(WxMaLiveRoomInfo roomInfo) throws WxErrorException;
 
   /**
    * 删除直播间
