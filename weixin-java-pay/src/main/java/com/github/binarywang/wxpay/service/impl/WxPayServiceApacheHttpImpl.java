@@ -2,6 +2,7 @@ package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.WxPayApiData;
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.StringUtils;
@@ -106,11 +107,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       } else {
         //有错误提示信息返回
         JsonObject jsonObject = GsonParser.parse(responseString);
-        throw new WxPayException(jsonObject.get("message").getAsString());
+        throw convertException(jsonObject);
       }
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
-      throw new WxPayException(e.getMessage(), e);
+      throw (e instanceof WxPayException) ? (WxPayException)e : new WxPayException(e.getMessage(), e);
     } finally {
       httpPost.releaseConnection();
     }
@@ -141,12 +142,12 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       } else {
         //有错误提示信息返回
         JsonObject jsonObject = GsonParser.parse(responseString);
-        throw new WxPayException(jsonObject.get("message").getAsString());
+        throw convertException(jsonObject);
       }
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
       e.printStackTrace();
-      throw new WxPayException(e.getMessage(), e);
+      throw (e instanceof WxPayException) ? (WxPayException)e : new WxPayException(e.getMessage(), e);
     } finally {
       httpPost.releaseConnection();
     }
@@ -172,11 +173,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       } else {
         //有错误提示信息返回
         JsonObject jsonObject = GsonParser.parse(responseString);
-        throw new WxPayException(jsonObject.get("message").getAsString());
+        throw convertException(jsonObject);
       }
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
-      throw new WxPayException(e.getMessage(), e);
+      throw (e instanceof WxPayException) ? (WxPayException)e : new WxPayException(e.getMessage(), e);
     } finally {
       httpPost.releaseConnection();
     }
@@ -198,11 +199,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       } else {
         //有错误提示信息返回
         JsonObject jsonObject = GsonParser.parse(responseString);
-        throw new WxPayException(jsonObject.get("message").getAsString());
+        throw convertException(jsonObject);
       }
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
-      throw new WxPayException(e.getMessage(), e);
+      throw (e instanceof WxPayException) ? (WxPayException)e : new WxPayException(e.getMessage(), e);
     } finally {
       httpGet.releaseConnection();
     }
@@ -223,11 +224,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
         //有错误提示信息返回
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         JsonObject jsonObject = GsonParser.parse(responseString);
-        throw new WxPayException(jsonObject.get("message").getAsString());
+        throw convertException(jsonObject);
       }
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
-      throw new WxPayException(e.getMessage(), e);
+      throw (e instanceof WxPayException) ? (WxPayException)e : new WxPayException(e.getMessage(), e);
     } finally {
       httpGet.releaseConnection();
     }
@@ -289,6 +290,18 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     SSLConnectionSocketFactory connectionSocketFactory = new SSLConnectionSocketFactory(sslContext,
       new DefaultHostnameVerifier());
     httpClientBuilder.setSSLSocketFactory(connectionSocketFactory);
+  }
+
+
+  private WxPayException convertException(JsonObject jsonObject) {
+    //todo 这里考虑使用新的适用于V3的异常
+    JsonElement codeElement = jsonObject.get("code");
+    String code = codeElement == null ? null : codeElement.getAsString();
+    String message = jsonObject.get("message").getAsString();
+    WxPayException wxPayException = new WxPayException(message);
+    wxPayException.setErrCode(code);
+    wxPayException.setErrCodeDes(message);
+    return wxPayException;
   }
 
 }
