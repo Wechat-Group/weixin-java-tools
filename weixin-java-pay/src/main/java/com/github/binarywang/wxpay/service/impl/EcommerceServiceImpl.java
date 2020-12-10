@@ -150,6 +150,13 @@ public class EcommerceServiceImpl implements EcommerceService {
   }
 
   @Override
+  public void closePartnerTransactions(PartnerTransactionsCloseRequest request) throws WxPayException {
+    String url = String.format("%s/v3/pay/partner/transactions/out-trade-no/%s/close", this.payService.getPayBaseUrl(), request.getOutTradeNo());
+    String response = this.payService.postV3(url, GSON.toJson(request));
+    System.out.println(response);
+  }
+
+  @Override
   public FundBalanceResult spNowBalance(SpAccountTypeEnum accountType) throws WxPayException {
     String url = String.format("%s/v3/merchant/fund/balance/%s", this.payService.getPayBaseUrl(), accountType);
     URI uri = URI.create(url);

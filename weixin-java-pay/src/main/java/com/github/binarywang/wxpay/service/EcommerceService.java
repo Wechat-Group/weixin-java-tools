@@ -168,6 +168,17 @@ public interface EcommerceService {
 
   /**
    * <pre>
+   * 关闭普通订单API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/e_transactions/chapter3_6.shtml
+   * </pre>
+   *
+   * @param request 关闭普通订单请求
+   * @throws WxPayException the wx pay exception
+   */
+  void closePartnerTransactions(PartnerTransactionsCloseRequest request) throws WxPayException;
+
+  /**
+   * <pre>
    * 服务商账户实时余额
    * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
    * </pre>
