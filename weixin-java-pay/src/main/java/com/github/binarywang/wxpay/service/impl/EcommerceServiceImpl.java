@@ -153,7 +153,6 @@ public class EcommerceServiceImpl implements EcommerceService {
   public void closePartnerTransactions(PartnerTransactionsCloseRequest request) throws WxPayException {
     String url = String.format("%s/v3/pay/partner/transactions/out-trade-no/%s/close", this.payService.getPayBaseUrl(), request.getOutTradeNo());
     String response = this.payService.postV3(url, GSON.toJson(request));
-    System.out.println(response);
   }
 
   @Override
