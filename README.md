@@ -10,8 +10,28 @@
 
 #### 支持包括微信支付、开放平台、公众号、企业微信/企业号、小程序等微信功能的后端开发。
 
-<table border="0">
-	<tbody>
+<p align="center">
+  <b>特别赞助商</b>
+</p>
+<br/>
+<table align="center" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td align="center" valign="middle" width="250">
+        <a href="https://www.duohui.cn/?utm_source=WxJava&utm_medium=web&utm_campaign=WxJava_github" title="多会" target="_blank">
+          <img height="60px" src="https://qiniu.cdn.duohui.co/brand/duohui.png" title="多会 - 活动服务销售平台">
+          <p>活动服务销售平台</p>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p align="center">
+  <b>相关推荐</b>
+</p>
+<table align="center" border="0">
+	<tbody >
 		<tr>
 			<td align="left" valign="middle">
         <a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect" target="_blank">
