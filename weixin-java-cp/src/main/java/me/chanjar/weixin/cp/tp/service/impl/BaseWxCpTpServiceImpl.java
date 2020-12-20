@@ -104,9 +104,14 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   }
 
   @Override
-  public void setSuiteTicket(String suiteTicket) throws WxErrorException {
+  public void setSuiteTicket(String suiteTicket){
+    setSuiteTicket(suiteTicket, 28 * 60);
+  }
+
+  @Override
+  public void setSuiteTicket(String suiteTicket, int expiresInSeconds){
     synchronized (globalSuiteTicketRefreshLock) {
-      this.configStorage.updateSuiteTicket(suiteTicket, 10 * 60);
+      this.configStorage.updateSuiteTicket(suiteTicket, expiresInSeconds);
     }
   }
 

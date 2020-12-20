@@ -70,12 +70,11 @@ public interface WxCpTpService {
    * 详情请见：https://work.weixin.qq.com/api/doc#90001/90143/90628
    * </pre>
    *
-   * @Deprecated 由于无法主动刷新，所以这个接口实际已经没有意义，需要在接收企业微信的主动推送后，保存这个ticket
-   * @see #setSuiteTicket(String)
-   *
    * @param forceRefresh 强制刷新
    * @return the suite ticket
    * @throws WxErrorException the wx error exception
+   * @Deprecated 由于无法主动刷新，所以这个接口实际已经没有意义，需要在接收企业微信的主动推送后，保存这个ticket
+   * @see #setSuiteTicket(String)
    */
   @Deprecated
   String getSuiteTicket(boolean forceRefresh) throws WxErrorException;
@@ -84,12 +83,28 @@ public interface WxCpTpService {
    * <pre>
    * 保存企业微信定时推送的suite_ticket,（每10分钟）
    * 详情请见：https://work.weixin.qq.com/api/doc#90001/90143/90628
+   *
+   * 注意：微信不是固定10分钟推送suite_ticket的, 且suite_ticket的有效期为30分钟
+   * https://work.weixin.qq.com/api/doc/10975#%E8%8E%B7%E5%8F%96%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E5%87%AD%E8%AF%81
    * </pre>
    *
    * @param suiteTicket
-   * @throws WxErrorException
    */
-  void setSuiteTicket(String suiteTicket) throws WxErrorException;
+  void setSuiteTicket(String suiteTicket);
+
+  /**
+   * <pre>
+   * 保存企业微信定时推送的suite_ticket,（每10分钟）
+   * 详情请见：https://work.weixin.qq.com/api/doc#90001/90143/90628
+   *
+   * 注意：微信不是固定10分钟推送suite_ticket的, 且suite_ticket的有效期为30分钟
+   * https://work.weixin.qq.com/api/doc/10975#%E8%8E%B7%E5%8F%96%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E5%87%AD%E8%AF%81
+   * </pre>
+   *
+   * @param suiteTicket
+   * @param expiresInSeconds
+   */
+  void setSuiteTicket(String suiteTicket, int expiresInSeconds);
 
   /**
    * 获取应用的 jsapi ticket
@@ -251,8 +266,8 @@ public interface WxCpTpService {
   /**
    * 获取WxMpConfigStorage 对象.
    *
-   * @Deprecated storage应该在service内部使用，提供这个接口，容易破坏这个封装
    * @return WxMpConfigStorage wx cp tp config storage
+   * @Deprecated storage应该在service内部使用，提供这个接口，容易破坏这个封装
    */
   @Deprecated
   WxCpTpConfigStorage getWxCpTpConfigStorage();
