@@ -143,6 +143,12 @@ public interface WxPayService {
   EcommerceService getEcommerceService();
 
   /**
+   * 微信支付通用媒体服务类
+   * @return
+   */
+  MerchantMediaService getMerchantMediaService();
+
+  /**
    * 设置企业付款服务类，允许开发者自定义实现类.
    *
    * @param entPayService the ent pay service
