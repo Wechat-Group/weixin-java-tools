@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
+import me.chanjar.weixin.cp.message.WxCpMessageRouterRule;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 import org.apache.commons.lang3.StringUtils;
 
@@ -71,6 +72,28 @@ public class WxCpTpMessageRouterRule {
    */
   public WxCpTpMessageRouterRule async(boolean async) {
     this.async = async;
+    return this;
+  }
+
+  /**
+   * 如果msgType等于某值
+   *
+   * @param msgType the msg type
+   * @return the wx cp tp message router rule
+   */
+  public WxCpTpMessageRouterRule msgType(String msgType) {
+    this.msgType = msgType;
+    return this;
+  }
+
+  /**
+   * 如果event等于某值
+   *
+   * @param event the event
+   * @return the wx cp tp message router rule
+   */
+  public WxCpTpMessageRouterRule event(String event) {
+    this.event = event;
     return this;
   }
 
@@ -191,6 +214,8 @@ public class WxCpTpMessageRouterRule {
         (this.agentId == null || this.agentId.equals(wxMessage.getAgentID()))
         &&
         (this.msgType == null || this.msgType.equalsIgnoreCase(wxMessage.getMsgType()))
+        &&
+        (this.event == null || this.event.equalsIgnoreCase(wxMessage.getEvent()))
         &&
         (this.infoType == null || this.infoType.equals(wxMessage.getInfoType()))
         &&
