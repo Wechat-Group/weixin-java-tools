@@ -1,8 +1,8 @@
-package com.binarywang.spring.starter.wxjava.mp.config;
+package com.binarywang.spring.starter.wxjava.qidian.config;
 
-import com.binarywang.spring.starter.wxjava.mp.enums.StorageType;
-import com.binarywang.spring.starter.wxjava.mp.properties.RedisProperties;
-import com.binarywang.spring.starter.wxjava.mp.properties.WxMpProperties;
+import com.binarywang.spring.starter.wxjava.qidian.enums.StorageType;
+import com.binarywang.spring.starter.wxjava.qidian.properties.RedisProperties;
+import com.binarywang.spring.starter.wxjava.qidian.properties.WxMpProperties;
 import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

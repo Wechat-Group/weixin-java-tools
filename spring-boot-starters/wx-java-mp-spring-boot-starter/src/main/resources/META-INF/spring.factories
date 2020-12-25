@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.binarywang.spring.starter.wxjava.mp.config.WxMpAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.binarywang.spring.starter.wxjava.qidian.config.WxMpAutoConfiguration

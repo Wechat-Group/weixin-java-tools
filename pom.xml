@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
-<project
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-  xmlns="http://maven.apache.org/POM/4.0.0">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
@@ -106,11 +103,12 @@
   <modules>
     <module>weixin-graal</module>
     <module>weixin-java-common</module>
-    <module>weixin-java-cp</module>
+    <!-- <module>weixin-java-cp</module>
     <module>weixin-java-mp</module>
     <module>weixin-java-pay</module>
     <module>weixin-java-miniapp</module>
-    <module>weixin-java-open</module>
+    <module>weixin-java-open</module> -->
+    <module>weixin-java-qidian</module>
     <module>spring-boot-starters</module>
     <!--module>weixin-java-osgi</module-->
   </modules>
