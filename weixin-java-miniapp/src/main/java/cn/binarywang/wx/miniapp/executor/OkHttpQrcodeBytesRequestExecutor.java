@@ -4,17 +4,13 @@ import cn.binarywang.wx.miniapp.bean.AbstractWxMaQrcodeWrapper;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.*;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Paths;
-import java.util.UUID;
 
 /**
  * @author wenqiang
