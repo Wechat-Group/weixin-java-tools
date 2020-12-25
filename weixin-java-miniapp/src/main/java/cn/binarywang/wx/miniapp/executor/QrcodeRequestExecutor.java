@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.executor;
 
 import cn.binarywang.wx.miniapp.bean.AbstractWxMaQrcodeWrapper;
+import cn.binarywang.wx.miniapp.bean.WxMaAuditMediaUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -27,10 +28,10 @@ import java.util.UUID;
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class QrcodeRequestExecutor implements RequestExecutor<File, AbstractWxMaQrcodeWrapper> {
-  protected RequestHttp<CloseableHttpClient, HttpHost> requestHttp;
+public abstract class QrcodeRequestExecutor<H, P> implements RequestExecutor<File, AbstractWxMaQrcodeWrapper> {
+  protected RequestHttp<H, P> requestHttp;
 
-  public QrcodeRequestExecutor(RequestHttp requestHttp) {
+  public QrcodeRequestExecutor(RequestHttp<H, P> requestHttp) {
     this.requestHttp = requestHttp;
   }
 
@@ -39,30 +40,30 @@ public class QrcodeRequestExecutor implements RequestExecutor<File, AbstractWxMa
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  @Override
-  public File execute(String uri, AbstractWxMaQrcodeWrapper qrcodeWrapper, WxType wxType) throws WxErrorException, IOException {
-    HttpPost httpPost = new HttpPost(uri);
-    if (requestHttp.getRequestHttpProxy() != null) {
-      httpPost.setConfig(
-        RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build()
-      );
+
+  public static RequestExecutor<File, AbstractWxMaQrcodeWrapper> create(RequestHttp requestHttp, String path) {
+    switch (requestHttp.getRequestType()) {
+      case APACHE_HTTP:
+        return new ApacheQrcodeFileRequestExecutor(requestHttp, path);
+      case JODD_HTTP:
+        return null;
+      case OK_HTTP:
+        return new OkHttpQrcodeFileRequestExecutor(requestHttp, path);
+      default:
+        return null;
     }
+  }
 
-    httpPost.setEntity(new StringEntity(qrcodeWrapper.toJson(), ContentType.APPLICATION_JSON));
-
-    try (final CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost);
-         final InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response)) {
-      Header[] contentTypeHeader = response.getHeaders("Content-Type");
-      if (contentTypeHeader != null && contentTypeHeader.length > 0
-        && ContentType.APPLICATION_JSON.getMimeType()
-        .equals(ContentType.parse(contentTypeHeader[0].getValue()).getMimeType())) {
-        String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-        throw new WxErrorException(WxError.fromJson(responseContent, wxType));
-      }
-
-      return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
-    } finally {
-      httpPost.releaseConnection();
+  public static RequestExecutor<File, AbstractWxMaQrcodeWrapper> create(RequestHttp requestHttp) {
+    switch (requestHttp.getRequestType()) {
+      case APACHE_HTTP:
+        return new ApacheQrcodeFileRequestExecutor(requestHttp, null);
+      case JODD_HTTP:
+        return null;
+      case OK_HTTP:
+        return new OkHttpQrcodeFileRequestExecutor(requestHttp, null);
+      default:
+        return null;
     }
   }
 }

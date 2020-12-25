@@ -19,14 +19,16 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class QrcodeBytesRequestExecutor implements RequestExecutor<byte[], AbstractWxMaQrcodeWrapper> {
-  protected RequestHttp<CloseableHttpClient, HttpHost> requestHttp;
+public abstract class QrcodeBytesRequestExecutor<H, P> implements RequestExecutor<byte[], AbstractWxMaQrcodeWrapper> {
+
+  protected RequestHttp<H, P> requestHttp;
 
   public QrcodeBytesRequestExecutor(RequestHttp requestHttp) {
     this.requestHttp = requestHttp;
@@ -37,30 +39,16 @@ public class QrcodeBytesRequestExecutor implements RequestExecutor<byte[], Abstr
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  @Override
-  public byte[] execute(String uri, AbstractWxMaQrcodeWrapper qrcodeWrapper, WxType wxType) throws WxErrorException, IOException {
-    HttpPost httpPost = new HttpPost(uri);
-    if (requestHttp.getRequestHttpProxy() != null) {
-      httpPost.setConfig(
-        RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build()
-      );
-    }
-
-    httpPost.setEntity(new StringEntity(qrcodeWrapper.toJson()));
-
-    try (final CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost);
-         final InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response)) {
-      Header[] contentTypeHeader = response.getHeaders("Content-Type");
-      if (contentTypeHeader != null && contentTypeHeader.length > 0
-        && ContentType.APPLICATION_JSON.getMimeType()
-        .equals(ContentType.parse(contentTypeHeader[0].getValue()).getMimeType())) {
-        String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-        throw new WxErrorException(WxError.fromJson(responseContent, wxType));
-      }
-
-      return IOUtils.toByteArray(inputStream);
-    } finally {
-      httpPost.releaseConnection();
+  public static RequestExecutor<byte[], AbstractWxMaQrcodeWrapper> create(RequestHttp requestHttp) {
+    switch (requestHttp.getRequestType()) {
+      case APACHE_HTTP:
+        return new ApacheQrcodeBytesRequestExecutor(requestHttp);
+      case JODD_HTTP:
+        return null;
+      case OK_HTTP:
+        return new OkHttpQrcodeBytesRequestExecutor(requestHttp);
+      default:
+        return null;
     }
   }
 }

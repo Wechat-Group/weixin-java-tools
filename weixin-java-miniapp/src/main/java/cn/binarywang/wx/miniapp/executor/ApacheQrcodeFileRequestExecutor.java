@@ -1,37 +1,45 @@
 package cn.binarywang.wx.miniapp.executor;
 
 import cn.binarywang.wx.miniapp.bean.AbstractWxMaQrcodeWrapper;
+import cn.binarywang.wx.miniapp.bean.WxMaAuditMediaUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.InputStreamResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.Utf8ResponseHandler;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import okhttp3.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
+import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.util.UUID;
 
 /**
- * @author <a href="https://github.com/gentryhuang">gentryhuang</a>
+ * @author wenqiang
+ * @since 2020/12/25
  */
-public class QrcodeFileRequestExecutor extends QrcodeRequestExecutor {
-  /**
-   * 二维码生成的文件路径，例如: /var/temp
-   */
+public class ApacheQrcodeFileRequestExecutor extends QrcodeRequestExecutor<CloseableHttpClient, HttpHost> {
+
   private final String filePath;
 
-  public QrcodeFileRequestExecutor(RequestHttp requestHttp, String filePath) {
+  public ApacheQrcodeFileRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp, String filePath) {
     super(requestHttp);
     this.filePath = filePath;
   }
@@ -69,7 +77,6 @@ public class QrcodeFileRequestExecutor extends QrcodeRequestExecutor {
       if (StringUtils.isBlank(filePath)) {
         return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
       }
-
       return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg", Paths.get(filePath).toFile());
     } finally {
       httpPost.releaseConnection();
