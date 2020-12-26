@@ -4,20 +4,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.locks.ReentrantLock;
 
-import me.chanjar.weixin.common.error.WxRuntimeException;
-import me.chanjar.weixin.qidian.api.impl.WxQidianServiceHttpClientImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.thoughtworks.xstream.XStream;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
-import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
-import me.chanjar.weixin.qidian.api.WxQidianService;
 
+import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.qidian.api.WxQidianService;
+import me.chanjar.weixin.qidian.api.impl.WxQidianServiceHttpClientImpl;
+import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
+
+@Slf4j
 public class ApiTestModule implements Module {
-  private final Logger log = LoggerFactory.getLogger(this.getClass());
   private static final String TEST_CONFIG_XML = "test-config.xml";
 
   @Override
@@ -37,7 +36,7 @@ public class ApiTestModule implements Module {
       binder.bind(WxQidianConfigStorage.class).toInstance(config);
       binder.bind(WxQidianService.class).toInstance(mpService);
     } catch (IOException e) {
-      this.log.error(e.getMessage(), e);
+      log.error(e.getMessage(), e);
     }
   }
 

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.GET_ACCESS_TOKEN_URL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_ACCESS_TOKEN_URL;
 
 /**
  * apache http client方式实现.
@@ -52,9 +52,8 @@ public class WxQidianServiceHttpClientImpl extends BaseWxQidianServiceImpl<Close
     }
 
     apacheHttpClientBuilder.httpProxyHost(configStorage.getHttpProxyHost())
-      .httpProxyPort(configStorage.getHttpProxyPort())
-      .httpProxyUsername(configStorage.getHttpProxyUsername())
-      .httpProxyPassword(configStorage.getHttpProxyPassword());
+        .httpProxyPort(configStorage.getHttpProxyPort()).httpProxyUsername(configStorage.getHttpProxyUsername())
+        .httpProxyPassword(configStorage.getHttpProxyPassword());
 
     if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
       this.httpProxy = new HttpHost(configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort());

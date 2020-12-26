@@ -12,7 +12,7 @@ import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.GET_ACCESS_TOKEN_URL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_ACCESS_TOKEN_URL;
 
 /**
  * jodd-http方式实现.
@@ -44,7 +44,8 @@ public class WxQidianServiceJoddHttpImpl extends BaseWxQidianServiceImpl<HttpCon
     WxQidianConfigStorage configStorage = this.getWxMpConfigStorage();
 
     if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
-      httpProxy = new ProxyInfo(ProxyInfo.ProxyType.HTTP, configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort(), configStorage.getHttpProxyUsername(), configStorage.getHttpProxyPassword());
+      httpProxy = new ProxyInfo(ProxyInfo.ProxyType.HTTP, configStorage.getHttpProxyHost(),
+          configStorage.getHttpProxyPort(), configStorage.getHttpProxyUsername(), configStorage.getHttpProxyPassword());
     }
 
     httpClient = new SocketHttpConnectionProvider();

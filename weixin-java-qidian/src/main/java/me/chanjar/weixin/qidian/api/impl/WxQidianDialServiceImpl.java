@@ -9,8 +9,8 @@ import me.chanjar.weixin.qidian.bean.dial.IVRDialRequest;
 import me.chanjar.weixin.qidian.bean.dial.IVRDialResponse;
 import me.chanjar.weixin.qidian.bean.dial.IVRListResponse;
 
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Dial.GET_IVR_LIST;
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Dial.IVR_DIAL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Dial.GET_IVR_LIST;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Dial.IVR_DIAL;
 
 /**
  * Created by Binary Wang on 2016/7/21.

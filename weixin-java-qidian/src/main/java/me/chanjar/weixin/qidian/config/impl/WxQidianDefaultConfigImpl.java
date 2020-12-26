@@ -6,7 +6,7 @@ import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.qidian.bean.WxQidianHostConfig;
 import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
-import me.chanjar.weixin.qidian.util.json.WxMpGsonBuilder;
+import me.chanjar.weixin.qidian.util.json.WxQidianGsonBuilder;
 
 import java.io.File;
 import java.io.Serializable;
@@ -175,7 +175,7 @@ public class WxQidianDefaultConfigImpl implements WxQidianConfigStorage, Seriali
 
   @Override
   public String toString() {
-    return WxMpGsonBuilder.create().toJson(this);
+    return WxQidianGsonBuilder.create().toJson(this);
   }
 
   @Override

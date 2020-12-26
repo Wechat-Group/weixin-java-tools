@@ -1,13 +1,12 @@
 package me.chanjar.weixin.qidian.api.impl;
 
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.CLEAR_QUOTA_URL;
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.GET_CALLBACK_IP_URL;
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.GET_CURRENT_AUTOREPLY_INFO_URL;
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.GET_TICKET_URL;
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.NETCHECK_URL;
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.QRCONNECT_URL;
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.SEMANTIC_SEMPROXY_SEARCH_URL;
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.SHORTURL_API_URL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.CLEAR_QUOTA_URL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_CALLBACK_IP_URL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_CURRENT_AUTOREPLY_INFO_URL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_TICKET_URL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.NETCHECK_URL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.QRCONNECT_URL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.SHORTURL_API_URL;
 
 import java.io.IOException;
 import java.util.Map;
@@ -45,11 +44,8 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.qidian.api.WxQidianCallDataService;
 import me.chanjar.weixin.qidian.api.WxQidianDialService;
 import me.chanjar.weixin.qidian.api.WxQidianService;
-import me.chanjar.weixin.qidian.bean.WxMpSemanticQuery;
-import me.chanjar.weixin.qidian.bean.result.WxMpCurrentAutoReplyInfo;
-import me.chanjar.weixin.qidian.bean.result.WxMpSemanticQueryResult;
 import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
-import me.chanjar.weixin.qidian.enums.WxMpApiUrl;
+import me.chanjar.weixin.qidian.enums.WxQidianApiUrl;
 import me.chanjar.weixin.qidian.util.WxQidianConfigStorageHolder;
 
 /**
@@ -156,12 +152,6 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   }
 
   @Override
-  public WxMpSemanticQueryResult semanticQuery(WxMpSemanticQuery semanticQuery) throws WxErrorException {
-    String responseContent = this.post(SEMANTIC_SEMPROXY_SEARCH_URL, semanticQuery.toJson());
-    return WxMpSemanticQueryResult.fromJson(responseContent);
-  }
-
-  @Override
   public String buildQrConnectUrl(String redirectUri, String scope, String state) {
     return String.format(QRCONNECT_URL.getUrl(this.getWxMpConfigStorage()), this.getWxMpConfigStorage().getAppId(),
         URIUtil.encodeURIComponent(redirectUri), scope, StringUtils.trimToEmpty(state));
@@ -189,11 +179,6 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   }
 
   @Override
-  public WxMpCurrentAutoReplyInfo getCurrentAutoReplyInfo() throws WxErrorException {
-    return WxMpCurrentAutoReplyInfo.fromJson(this.get(GET_CURRENT_AUTOREPLY_INFO_URL, null));
-  }
-
-  @Override
   public void clearQuota(String appid) throws WxErrorException {
     JsonObject o = new JsonObject();
     o.addProperty("appid", appid);
@@ -206,7 +191,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   }
 
   @Override
-  public String get(WxMpApiUrl url, String queryParam) throws WxErrorException {
+  public String get(WxQidianApiUrl url, String queryParam) throws WxErrorException {
     return this.get(url.getUrl(this.getWxMpConfigStorage()), queryParam);
   }
 
@@ -216,12 +201,12 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   }
 
   @Override
-  public String post(WxMpApiUrl url, String postData) throws WxErrorException {
+  public String post(WxQidianApiUrl url, String postData) throws WxErrorException {
     return this.post(url.getUrl(this.getWxMpConfigStorage()), postData);
   }
 
   @Override
-  public String post(WxMpApiUrl url, JsonObject jsonObject) throws WxErrorException {
+  public String post(WxQidianApiUrl url, JsonObject jsonObject) throws WxErrorException {
     return this.post(url.getUrl(this.getWxMpConfigStorage()), jsonObject.toString());
   }
 
@@ -241,7 +226,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   }
 
   @Override
-  public <T, E> T execute(RequestExecutor<T, E> executor, WxMpApiUrl url, E data) throws WxErrorException {
+  public <T, E> T execute(RequestExecutor<T, E> executor, WxQidianApiUrl url, E data) throws WxErrorException {
     return this.execute(executor, url.getUrl(this.getWxMpConfigStorage()), data);
   }
 

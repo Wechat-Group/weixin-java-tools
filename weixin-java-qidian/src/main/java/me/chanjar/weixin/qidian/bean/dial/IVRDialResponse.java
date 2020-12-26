@@ -3,7 +3,7 @@ package me.chanjar.weixin.qidian.bean.dial;
 import lombok.Data;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.qidian.bean.common.QidianResponse;
-import me.chanjar.weixin.qidian.util.json.WxMpGsonBuilder;
+import me.chanjar.weixin.qidian.util.json.WxQidianGsonBuilder;
 
 @Data
 public class IVRDialResponse extends QidianResponse {
@@ -15,6 +15,6 @@ public class IVRDialResponse extends QidianResponse {
 
     @Override
     public String toString() {
-        return WxMpGsonBuilder.create().toJson(this);
+        return WxQidianGsonBuilder.create().toJson(this);
     }
 }

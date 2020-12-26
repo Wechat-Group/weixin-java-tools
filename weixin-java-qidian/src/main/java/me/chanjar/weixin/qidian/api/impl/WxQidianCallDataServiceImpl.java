@@ -1,6 +1,6 @@
 package me.chanjar.weixin.qidian.api.impl;
 
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.CallData.GET_SWITCH_BOARD_LIST;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.CallData.GET_SWITCH_BOARD_LIST;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

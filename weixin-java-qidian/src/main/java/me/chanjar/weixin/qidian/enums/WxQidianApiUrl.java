@@ -9,13 +9,11 @@ import static me.chanjar.weixin.qidian.bean.WxQidianHostConfig.*;
 
 /**
  * <pre>
- *  公众号接口api地址
- *  Created by BinaryWang on 2019-06-03.
+ *  腾讯企点接口api地址
+ *  Created by alegria on 2020年12月26日.
  * </pre>
- *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public interface WxMpApiUrl {
+public interface WxQidianApiUrl {
 
   /**
    * 得到api完整地址.
@@ -48,7 +46,7 @@ public interface WxMpApiUrl {
 
   @AllArgsConstructor
   @Getter
-  enum OAuth2 implements WxMpApiUrl {
+  enum OAuth2 implements WxQidianApiUrl {
     /**
      * 用code换取oauth2的access token.
      */
@@ -80,7 +78,7 @@ public interface WxMpApiUrl {
 
   @AllArgsConstructor
   @Getter
-  enum Other implements WxMpApiUrl {
+  enum Other implements WxQidianApiUrl {
     /**
      * 获取access_token.
      */
@@ -126,7 +124,7 @@ public interface WxMpApiUrl {
 
   @AllArgsConstructor
   @Getter
-  enum Dial implements WxMpApiUrl {
+  enum Dial implements WxQidianApiUrl {
     /**
      * IVR外呼.
      */
@@ -143,7 +141,7 @@ public interface WxMpApiUrl {
 
   @AllArgsConstructor
   @Getter
-  enum CallData implements WxMpApiUrl {
+  enum CallData implements WxQidianApiUrl {
     /**
      * 总机号列表拉取.
      */

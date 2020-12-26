@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
-import static me.chanjar.weixin.qidian.enums.WxMpApiUrl.Other.GET_ACCESS_TOKEN_URL;
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_ACCESS_TOKEN_URL;
 
 /**
  * okhttp实现.
@@ -73,26 +73,22 @@ public class WxQidianServiceOkHttpImpl extends BaseWxQidianServiceImpl<OkHttpCli
   @Override
   public void initHttp() {
     WxQidianConfigStorage wxMpConfigStorage = getWxMpConfigStorage();
-    //设置代理
+    // 设置代理
     if (wxMpConfigStorage.getHttpProxyHost() != null && wxMpConfigStorage.getHttpProxyPort() > 0) {
-      httpProxy = OkHttpProxyInfo.httpProxy(wxMpConfigStorage.getHttpProxyHost(),
-        wxMpConfigStorage.getHttpProxyPort(),
-        wxMpConfigStorage.getHttpProxyUsername(),
-        wxMpConfigStorage.getHttpProxyPassword());
+      httpProxy = OkHttpProxyInfo.httpProxy(wxMpConfigStorage.getHttpProxyHost(), wxMpConfigStorage.getHttpProxyPort(),
+          wxMpConfigStorage.getHttpProxyUsername(), wxMpConfigStorage.getHttpProxyPassword());
     }
 
     OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
     if (httpProxy != null) {
       clientBuilder.proxy(getRequestHttpProxy().getProxy());
 
-      //设置授权
+      // 设置授权
       clientBuilder.authenticator(new Authenticator() {
         @Override
         public Request authenticate(Route route, Response response) throws IOException {
           String credential = Credentials.basic(httpProxy.getProxyUsername(), httpProxy.getProxyPassword());
-          return response.request().newBuilder()
-            .header("Authorization", credential)
-            .build();
+          return response.request().newBuilder().header("Authorization", credential).build();
         }
       });
     }

@@ -1,8 +1,8 @@
 package me.chanjar.weixin.qidian.util;
 
 /**
- * @author yd
- * @date 2019-03-20 22:06
+ * @author alegria
+ * @date 2020年12月26日
  */
 public class WxQidianConfigStorageHolder {
   private final static ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<String>() {
