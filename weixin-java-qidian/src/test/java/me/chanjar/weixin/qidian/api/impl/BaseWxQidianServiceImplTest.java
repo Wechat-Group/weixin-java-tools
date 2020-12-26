@@ -12,7 +12,7 @@ import me.chanjar.weixin.common.bean.WxNetCheckResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.qidian.api.WxQidianService;
 import me.chanjar.weixin.qidian.api.test.ApiTestModule;
-import me.chanjar.weixin.qidian.util.WxMpConfigStorageHolder;
+import me.chanjar.weixin.qidian.util.WxQidianConfigStorageHolder;
 import org.testng.Assert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
@@ -40,7 +40,7 @@ public class BaseWxQidianServiceImplTest {
   @Test
   public void testSwitchover() {
     assertTrue(this.wxService.switchover("another"));
-    assertThat(WxMpConfigStorageHolder.get()).isEqualTo("another");
+    assertThat(WxQidianConfigStorageHolder.get()).isEqualTo("another");
     assertFalse(this.wxService.switchover("whatever"));
     assertFalse(this.wxService.switchover("default"));
   }
@@ -48,7 +48,7 @@ public class BaseWxQidianServiceImplTest {
   @Test
   public void testSwitchoverTo() throws WxErrorException {
     assertThat(this.wxService.switchoverTo("another").getAccessToken()).isNotEmpty();
-    assertThat(WxMpConfigStorageHolder.get()).isEqualTo("another");
+    assertThat(WxQidianConfigStorageHolder.get()).isEqualTo("another");
   }
 
   @Test

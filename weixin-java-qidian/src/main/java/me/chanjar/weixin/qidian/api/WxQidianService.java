@@ -21,7 +21,7 @@ import me.chanjar.weixin.qidian.enums.WxMpApiUrl;
 /**
  * 腾讯企点API的Service.
  *
- * @author chanjarster
+ * @author alegria
  */
 public interface WxQidianService extends WxService {
   /**

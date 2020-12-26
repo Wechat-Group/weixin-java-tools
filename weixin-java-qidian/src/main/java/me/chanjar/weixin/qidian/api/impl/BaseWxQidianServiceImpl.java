@@ -32,8 +32,6 @@ import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
-import me.chanjar.weixin.common.session.StandardSessionManager;
-import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.DataUtils;
 import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
@@ -52,7 +50,7 @@ import me.chanjar.weixin.qidian.bean.result.WxMpCurrentAutoReplyInfo;
 import me.chanjar.weixin.qidian.bean.result.WxMpSemanticQueryResult;
 import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
 import me.chanjar.weixin.qidian.enums.WxMpApiUrl;
-import me.chanjar.weixin.qidian.util.WxMpConfigStorageHolder;
+import me.chanjar.weixin.qidian.util.WxQidianConfigStorageHolder;
 
 /**
  * 基础实现类.
@@ -61,8 +59,6 @@ import me.chanjar.weixin.qidian.util.WxMpConfigStorageHolder;
  */
 @Slf4j
 public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, RequestHttp<H, P> {
-  protected WxSessionManager sessionManager = new StandardSessionManager();
-
   @Getter
   private WxQidianDialService dialService = new WxQidianDialServiceImpl(this);
   @Getter
@@ -338,7 +334,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
       return this.configStorageMap.values().iterator().next();
     }
 
-    return this.configStorageMap.get(WxMpConfigStorageHolder.get());
+    return this.configStorageMap.get(WxQidianConfigStorageHolder.get());
   }
 
   protected String extractAccessToken(String resultContent) throws WxErrorException {
@@ -366,7 +362,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   @Override
   public void setMultiConfigStorages(Map<String, WxQidianConfigStorage> configStorages, String defaultMpId) {
     this.configStorageMap = Maps.newHashMap(configStorages);
-    WxMpConfigStorageHolder.set(defaultMpId);
+    WxQidianConfigStorageHolder.set(defaultMpId);
     this.initHttp();
   }
 
@@ -389,10 +385,10 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
         log.warn("已删除最后一个公众号配置：{}，须立即使用setWxMpConfigStorage或setMultiConfigStorages添加配置", mpId);
         return;
       }
-      if (WxMpConfigStorageHolder.get().equals(mpId)) {
+      if (WxQidianConfigStorageHolder.get().equals(mpId)) {
         this.configStorageMap.remove(mpId);
         final String defaultMpId = this.configStorageMap.keySet().iterator().next();
-        WxMpConfigStorageHolder.set(defaultMpId);
+        WxQidianConfigStorageHolder.set(defaultMpId);
         log.warn("已删除默认公众号配置，公众号【{}】被设为默认配置", defaultMpId);
         return;
       }
@@ -403,7 +399,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   @Override
   public WxQidianService switchoverTo(String mpId) {
     if (this.configStorageMap.containsKey(mpId)) {
-      WxMpConfigStorageHolder.set(mpId);
+      WxQidianConfigStorageHolder.set(mpId);
       return this;
     }
 
@@ -413,7 +409,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   @Override
   public boolean switchover(String mpId) {
     if (this.configStorageMap.containsKey(mpId)) {
-      WxMpConfigStorageHolder.set(mpId);
+      WxQidianConfigStorageHolder.set(mpId);
       return true;
     }
 
