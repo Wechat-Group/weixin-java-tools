@@ -57,6 +57,11 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
    */
   protected final Object globalJsApiTicketRefreshLock = new Object();
 
+  /**
+   * 全局的是否正在刷新auth_corp_jsapi_ticket的锁.
+   */
+  protected final Object globalAuthCorpJsApiTicketRefreshLock = new Object();
+
   protected WxCpTpConfigStorage configStorage;
 
   private WxSessionManager sessionManager = new StandardSessionManager();
@@ -117,7 +122,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
 
   @Override
   public String getSuiteJsApiTicket(String authCorpId) throws WxErrorException {
-    if (this.configStorage.isSuiteAccessTokenExpired()) {
+    if (this.configStorage.isAuthSuiteJsApiTicketExpired(authCorpId)) {
 
       String resp = get(configStorage.getApiUrl(GET_SUITE_JSAPI_TICKET),
         "type=agent_config&access_token=" + this.configStorage.getAccessToken(authCorpId));
@@ -135,12 +140,12 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
       }
     }
 
-    return configStorage.getSuiteAccessToken();
+    return configStorage.getAuthSuiteJsApiTicket(authCorpId);
   }
 
   @Override
   public String getAuthCorpJsApiTicket(String authCorpId) throws WxErrorException {
-    if (this.configStorage.isSuiteAccessTokenExpired()) {
+    if (this.configStorage.isAuthCorpJsApiTicketExpired(authCorpId)) {
 
       String resp = get(configStorage.getApiUrl(GET_AUTH_CORP_JSAPI_TICKET),
         "access_token=" + this.configStorage.getAccessToken(authCorpId));
@@ -150,7 +155,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
         String jsApiTicket = jsonObject.get("ticket").getAsString();
         int expiredInSeconds = jsonObject.get("expires_in").getAsInt();
 
-        synchronized (globalJsApiTicketRefreshLock) {
+        synchronized (globalAuthCorpJsApiTicketRefreshLock) {
           configStorage.updateAuthCorpJsApiTicket(authCorpId, jsApiTicket, expiredInSeconds);
         }
       }
@@ -159,7 +164,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
       }
     }
 
-    return configStorage.getSuiteAccessToken();
+    return configStorage.getAuthCorpJsApiTicket(authCorpId);
   }
 
   @Override
