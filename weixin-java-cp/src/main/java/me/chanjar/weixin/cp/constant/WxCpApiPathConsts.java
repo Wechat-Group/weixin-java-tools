@@ -119,6 +119,8 @@ public final class WxCpApiPathConsts {
     public static final String SCHEDULE_GET = "/cgi-bin/oa/schedule/get";
     public static final String SCHEDULE_DEL = "/cgi-bin/oa/schedule/del";
     public static final String SCHEDULE_LIST = "/cgi-bin/oa/schedule/get_by_calendar";
+
+    public static final String COPY_TEMPLATE = "/cgi-bin/oa/approval/copytemplate";
   }
 
   @UtilityClass
@@ -150,6 +152,10 @@ public final class WxCpApiPathConsts {
     public static final String GET_SUITE_JSAPI_TICKET = "/cgi-bin/ticket/get";
     public static final String GET_USERINFO3RD = "/cgi-bin/service/getuserinfo3rd";
     public static final String GET_USERDETAIL3RD = "/cgi-bin/service/getuserdetail3rd";
+    public static final String GET_LOGIN_INFO = "/cgi-bin/service/get_login_info";
+
+
+    public static final String CONTACT_SEARCH = "/cgi-bin/service/contact/search";
   }
 
   @UtilityClass

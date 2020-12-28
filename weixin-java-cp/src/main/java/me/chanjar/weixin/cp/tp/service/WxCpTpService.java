@@ -312,4 +312,79 @@ public interface WxCpTpService {
    * @return
    */
   WxCpTpUserDetail getUserDetail3rd(String userTicket) throws WxErrorException;
+
+  /**
+   * 企业用户登录信息
+   * @param authCode
+   * @return
+   * @throws WxErrorException
+   */
+  WxTpLoginInfo getLoginInfo(String authCode) throws WxErrorException;
+
+  /**
+   * 获取服务商providerToken
+   * @return
+   * @throws WxErrorException
+   */
+  String getWxCpProviderToken() throws WxErrorException;
+
+  /**
+   * get contact service
+   * @return WxCpTpContactService
+   */
+  WxCpTpContactService getWxCpTpContactService();
+
+  /**
+   * get department service
+   * @return WxCpTpDepartmentService
+   */
+  WxCpTpDepartmentService getWxCpTpDepartmentService();
+
+  /**
+   * get media service
+   * @return WxCpTpMediaService
+   */
+  WxCpTpMediaService getWxCpTpMediaService();
+
+  /**
+   * get oa service
+   * @return WxCpTpOAService
+   */
+  WxCpTpOAService getWxCpTpOAService();
+
+  /**
+   * get user service
+   * @return WxCpTpUserService
+   */
+  WxCpTpUserService getWxCpTpUserService();
+
+  /**
+   * set contact service
+   * @param wxCpTpContactService the contact service
+   */
+  void setWxCpTpContactService(WxCpTpContactService wxCpTpContactService);
+
+  /**
+   * set department service
+   * @param wxCpTpDepartmentService the department service
+   */
+  void setWxCpTpDepartmentService(WxCpTpDepartmentService wxCpTpDepartmentService);
+
+  /**
+   * set media service
+   * @param wxCpTpMediaService the media service
+   */
+  void setWxCpTpMediaService(WxCpTpMediaService wxCpTpMediaService);
+
+  /**
+   * set oa service
+   * @param wxCpTpOAService the oa service
+   */
+  void setWxCpTpOAService(WxCpTpOAService wxCpTpOAService);
+
+  /**
+   * set user service
+   * @param wxCpTpUserService the set user service
+   */
+  void setWxCpTpUserService(WxCpTpUserService wxCpTpUserService);
 }

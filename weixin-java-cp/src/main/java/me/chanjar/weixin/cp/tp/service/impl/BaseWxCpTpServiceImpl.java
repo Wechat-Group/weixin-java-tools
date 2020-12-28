@@ -22,7 +22,7 @@ import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.bean.*;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
-import me.chanjar.weixin.cp.tp.service.WxCpTpService;
+import me.chanjar.weixin.cp.tp.service.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -40,6 +40,12 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.*;
  */
 @Slf4j
 public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, RequestHttp<H, P> {
+
+  private WxCpTpContactService wxCpTpContactService = new WxCpTpContactServiceImpl(this);
+  private WxCpTpDepartmentService wxCpTpDepartmentService = new WxCpTpDepartmentServiceImpl(this);
+  private WxCpTpMediaService wxCpTpMediaService = new WxCpTpMediaServiceImpl(this);
+  private WxCpTpOAService wxCpTpOAService = new WxCpTpOAServiceImpl(this);
+  private WxCpTpUserService wxCpTpUserService = new WxCpTpUserServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -61,6 +67,8 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
    * 全局的是否正在刷新auth_corp_jsapi_ticket的锁.
    */
   protected final Object globalAuthCorpJsApiTicketRefreshLock = new Object();
+
+  protected final Object globalProviderTokenRefreshLock = new Object();
 
   protected WxCpTpConfigStorage configStorage;
 
@@ -109,12 +117,12 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   }
 
   @Override
-  public void setSuiteTicket(String suiteTicket){
+  public void setSuiteTicket(String suiteTicket) {
     setSuiteTicket(suiteTicket, 28 * 60);
   }
 
   @Override
-  public void setSuiteTicket(String suiteTicket, int expiresInSeconds){
+  public void setSuiteTicket(String suiteTicket, int expiresInSeconds) {
     synchronized (globalSuiteTicketRefreshLock) {
       this.configStorage.updateSuiteTicket(suiteTicket, expiresInSeconds);
     }
@@ -134,8 +142,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
         synchronized (globalJsApiTicketRefreshLock) {
           configStorage.updateAuthSuiteJsApiTicket(authCorpId, jsApiTicket, expiredInSeconds);
         }
-      }
-      else {
+      } else {
         throw new WxErrorException(WxError.fromJson(resp));
       }
     }
@@ -158,13 +165,11 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
         synchronized (globalAuthCorpJsApiTicketRefreshLock) {
           configStorage.updateAuthCorpJsApiTicket(authCorpId, jsApiTicket, expiredInSeconds);
         }
-      }
-      else {
+      } else {
         throw new WxErrorException(WxError.fromJson(resp));
       }
     }
-
-    return configStorage.getAuthCorpJsApiTicket(authCorpId);
+    return configStorage.getProviderToken();
   }
 
   @Override
@@ -228,9 +233,9 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     WxCpTpPreauthCode preAuthCode = WxCpTpPreauthCode.fromJson(result);
     String setSessionUrl = "https://qyapi.weixin.qq.com/cgi-bin/service/set_session_info";
 
-    Map<String,Object> sessionInfo = new HashMap<>(1);
+    Map<String, Object> sessionInfo = new HashMap<>(1);
     sessionInfo.put("auth_type", authType);
-    Map<String,Object> param = new HashMap<>(2);
+    Map<String, Object> param = new HashMap<>(2);
     param.put("pre_auth_code", preAuthCode.getPreAuthCode());
     param.put("session_info", sessionInfo);
     String postData = new Gson().toJson(param);
@@ -378,18 +383,97 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   }
 
   @Override
-  public WxCpTpUserInfo getUserInfo3rd(String code) throws WxErrorException{
+  public WxCpTpUserInfo getUserInfo3rd(String code) throws WxErrorException {
     String url = configStorage.getApiUrl(GET_USERINFO3RD);
-    String result = get(url+"?code="+code,null);
+    String result = get(url + "?code=" + code, null);
     return WxCpTpUserInfo.fromJson(result);
   }
 
   @Override
-  public WxCpTpUserDetail getUserDetail3rd(String userTicket) throws WxErrorException{
+  public WxCpTpUserDetail getUserDetail3rd(String userTicket) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("user_ticket", userTicket);
     String result = post(configStorage.getApiUrl(GET_USERDETAIL3RD), jsonObject.toString());
     return WxCpTpUserDetail.fromJson(result);
   }
 
+  @Override
+  public WxTpLoginInfo getLoginInfo(String authCode) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("auth_code", authCode);
+    jsonObject.addProperty("access_token", configStorage.getAccessToken(authCode));
+    String responseText = post(configStorage.getApiUrl(GET_LOGIN_INFO), jsonObject.toString());
+    return WxTpLoginInfo.fromJson(responseText);
+  }
+
+  @Override
+  public String getWxCpProviderToken() throws WxErrorException {
+    if (this.configStorage.isProviderTokenExpired()) {
+
+      JsonObject jsonObject = new JsonObject();
+      jsonObject.addProperty("corpid", configStorage.getCorpId());
+      jsonObject.addProperty("provider_secret", configStorage.getProviderSecret());
+      WxCpProviderToken wxCpProviderToken =
+        WxCpProviderToken.fromJson(this.post(this.configStorage.getApiUrl(GET_PROVIDER_TOKEN)
+          , jsonObject.toString()));
+      String providerAccessToken = wxCpProviderToken.getProviderAccessToken();
+      Integer expiresIn = wxCpProviderToken.getExpiresIn();
+
+      synchronized (globalProviderTokenRefreshLock) {
+        configStorage.updateProviderToken(providerAccessToken, expiresIn - 200);
+      }
+    }
+    return configStorage.getProviderToken();
+  }
+
+
+  @Override
+  public WxCpTpContactService getWxCpTpContactService() {
+    return wxCpTpContactService;
+  }
+
+  @Override
+  public WxCpTpDepartmentService getWxCpTpDepartmentService(){
+    return wxCpTpDepartmentService;
+  }
+
+  @Override
+  public WxCpTpMediaService getWxCpTpMediaService(){
+    return wxCpTpMediaService;
+  }
+
+  @Override
+  public WxCpTpOAService getWxCpTpOAService(){
+    return wxCpTpOAService;
+  }
+
+  @Override
+  public WxCpTpUserService getWxCpTpUserService(){
+    return wxCpTpUserService;
+  }
+
+  @Override
+  public void setWxCpTpContactService(WxCpTpContactService wxCpTpContactService) {
+    this.wxCpTpContactService = wxCpTpContactService;
+  }
+
+  @Override
+  public void setWxCpTpDepartmentService(WxCpTpDepartmentService wxCpTpDepartmentService) {
+    this.wxCpTpDepartmentService = wxCpTpDepartmentService;
+  }
+
+  @Override
+  public void setWxCpTpMediaService(WxCpTpMediaService wxCpTpMediaService) {
+    this.wxCpTpMediaService = wxCpTpMediaService;
+  }
+
+  @Override
+  public void setWxCpTpOAService(WxCpTpOAService wxCpTpOAService) {
+    this.wxCpTpOAService = wxCpTpOAService;
+  }
+
+  @Override
+  public void setWxCpTpUserService(WxCpTpUserService wxCpTpUserService) {
+    this.wxCpTpUserService = wxCpTpUserService;
+  }
 }

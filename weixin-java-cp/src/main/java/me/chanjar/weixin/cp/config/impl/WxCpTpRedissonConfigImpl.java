@@ -35,6 +35,8 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
 
   private final String authSuiteJsApiTicketKey = ":authSuiteJsApiTicketKey:";
 
+  private final String providerTokenKey = ":providerTokenKey:";
+
   private volatile String baseApiUrl;
   private volatile String httpProxyHost;
   private volatile int httpProxyPort;
@@ -59,6 +61,11 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   private volatile String corpId;
   private volatile String corpSecret;
 
+  /**
+   * 服务商secret
+   */
+  private volatile String providerSecret;
+
   @Override
   public void setBaseApiUrl(String baseUrl) {
     this.baseApiUrl = baseUrl;
@@ -69,7 +76,8 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
     if (baseApiUrl == null) {
       baseApiUrl = "https://qyapi.weixin.qq.com";
     }
-    return baseApiUrl + path;  }
+    return baseApiUrl + path;
+  }
 
 
   /**
@@ -164,6 +172,10 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
     return corpSecret;
   }
 
+  @Override
+  public String getProviderSecret() {
+    return providerSecret;
+  }
 
   /**
    * 授权企业的access token相关
@@ -203,7 +215,8 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
 
   @Override
   public void updateAuthCorpJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds) {
-    wxRedisOps.setValue(keyWithPrefix(authCorpId) + authCorpJsApiTicketKey, jsApiTicket, expiredInSeconds, TimeUnit.SECONDS);
+    wxRedisOps.setValue(keyWithPrefix(authCorpId) + authCorpJsApiTicketKey, jsApiTicket, expiredInSeconds,
+      TimeUnit.SECONDS);
   }
 
 
@@ -224,7 +237,24 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
 
   @Override
   public void updateAuthSuiteJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds) {
-    wxRedisOps.setValue(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey, jsApiTicket, expiredInSeconds, TimeUnit.SECONDS);
+    wxRedisOps.setValue(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey, jsApiTicket, expiredInSeconds,
+      TimeUnit.SECONDS);
+  }
+
+  @Override
+  public boolean isProviderTokenExpired() {
+    //remain time to live in seconds, or key not exist
+    return wxRedisOps.getExpire(keyWithPrefix(providerTokenKey)) == 0L || wxRedisOps.getExpire(keyWithPrefix(providerTokenKey)) == -2;
+  }
+
+  @Override
+  public void updateProviderToken(String providerToken, int expiredInSeconds) {
+    wxRedisOps.setValue(keyWithPrefix(providerTokenKey), providerToken, expiredInSeconds, TimeUnit.SECONDS);
+  }
+
+  @Override
+  public String getProviderToken() {
+    return wxRedisOps.getValue(keyWithPrefix(providerTokenKey));
   }
 
 

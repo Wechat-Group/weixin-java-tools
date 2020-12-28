@@ -63,6 +63,11 @@ public interface WxCpTpConfigStorage {
   String getCorpSecret();
 
   /**
+   * 服务商secret
+   */
+  String getProviderSecret();
+
+  /**
    * 授权企业的access token相关
    */
   String getAccessToken(String authCorpId);
@@ -82,6 +87,11 @@ public interface WxCpTpConfigStorage {
   String getAuthSuiteJsApiTicket(String authCorpId);
   boolean isAuthSuiteJsApiTicketExpired(String authCorpId);
   void updateAuthSuiteJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds);;
+
+  boolean isProviderTokenExpired();
+  void updateProviderToken(String providerToken, int expiredInSeconds);
+
+  String getProviderToken();
 
   /**
    * 网络代理相关
