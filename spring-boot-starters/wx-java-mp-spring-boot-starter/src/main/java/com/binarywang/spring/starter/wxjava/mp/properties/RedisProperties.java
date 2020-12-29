@@ -1,4 +1,4 @@
-package com.binarywang.spring.starter.wxjava.qidian.properties;
+package com.binarywang.spring.starter.wxjava.mp.properties;
 
 import lombok.Data;
 

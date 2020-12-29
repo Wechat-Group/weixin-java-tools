@@ -1,8 +1,8 @@
-package com.binarywang.spring.starter.wxjava.qidian.config;
+package com.binarywang.spring.starter.wxjava.mp.config;
 
-import com.binarywang.spring.starter.wxjava.qidian.enums.StorageType;
-import com.binarywang.spring.starter.wxjava.qidian.properties.RedisProperties;
-import com.binarywang.spring.starter.wxjava.qidian.properties.WxMpProperties;
+import com.binarywang.spring.starter.wxjava.mp.enums.StorageType;
+import com.binarywang.spring.starter.wxjava.mp.properties.RedisProperties;
+import com.binarywang.spring.starter.wxjava.mp.properties.WxMpProperties;
 import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -88,7 +88,7 @@ public class WxMpStorageAutoConfiguration {
     }
     WxRedisOps redisOps = new JedisWxRedisOps(jedisPool);
     WxMpRedisConfigImpl wxMpRedisConfig = new WxMpRedisConfigImpl(redisOps,
-      wxMpProperties.getConfigStorage().getKeyPrefix());
+        wxMpProperties.getConfigStorage().getKeyPrefix());
     setWxMpInfo(wxMpRedisConfig);
     return wxMpRedisConfig;
   }
@@ -114,7 +114,7 @@ public class WxMpStorageAutoConfiguration {
 
     WxRedisOps redisOps = new RedisTemplateWxRedisOps(redisTemplate);
     WxMpRedisConfigImpl wxMpRedisConfig = new WxMpRedisConfigImpl(redisOps,
-      wxMpProperties.getConfigStorage().getKeyPrefix());
+        wxMpProperties.getConfigStorage().getKeyPrefix());
 
     setWxMpInfo(wxMpRedisConfig);
     return wxMpRedisConfig;
@@ -161,6 +161,6 @@ public class WxMpStorageAutoConfiguration {
     }
 
     return new JedisPool(config, redis.getHost(), redis.getPort(), redis.getTimeout(), redis.getPassword(),
-      redis.getDatabase());
+        redis.getDatabase());
   }
 }

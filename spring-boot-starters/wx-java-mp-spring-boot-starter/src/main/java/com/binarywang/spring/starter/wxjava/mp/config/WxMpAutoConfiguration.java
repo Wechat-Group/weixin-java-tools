@@ -1,6 +1,6 @@
-package com.binarywang.spring.starter.wxjava.qidian.config;
+package com.binarywang.spring.starter.wxjava.mp.config;
 
-import com.binarywang.spring.starter.wxjava.qidian.properties.WxMpProperties;
+import com.binarywang.spring.starter.wxjava.mp.properties.WxMpProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -12,6 +12,6 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @EnableConfigurationProperties(WxMpProperties.class)
-@Import({WxMpStorageAutoConfiguration.class, WxMpServiceAutoConfiguration.class})
+@Import({ WxMpStorageAutoConfiguration.class, WxMpServiceAutoConfiguration.class })
 public class WxMpAutoConfiguration {
 }

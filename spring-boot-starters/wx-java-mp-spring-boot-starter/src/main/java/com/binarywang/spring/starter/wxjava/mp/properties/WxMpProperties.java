@@ -1,15 +1,14 @@
-package com.binarywang.spring.starter.wxjava.qidian.properties;
+package com.binarywang.spring.starter.wxjava.mp.properties;
 
-import com.binarywang.spring.starter.wxjava.qidian.enums.HttpClientType;
-import com.binarywang.spring.starter.wxjava.qidian.enums.StorageType;
+import com.binarywang.spring.starter.wxjava.mp.enums.HttpClientType;
+import com.binarywang.spring.starter.wxjava.mp.enums.StorageType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;
 
-import static com.binarywang.spring.starter.wxjava.qidian.enums.StorageType.Memory;
-import static com.binarywang.spring.starter.wxjava.qidian.properties.WxMpProperties.PREFIX;
-
+import static com.binarywang.spring.starter.wxjava.mp.enums.StorageType.Memory;
+import static com.binarywang.spring.starter.wxjava.mp.properties.WxMpProperties.PREFIX;
 
 /**
  * 微信接入相关配置属性.

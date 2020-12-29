@@ -103,11 +103,11 @@
   <modules>
     <module>weixin-graal</module>
     <module>weixin-java-common</module>
-    <!-- <module>weixin-java-cp</module>
+    <module>weixin-java-cp</module>
     <module>weixin-java-mp</module>
     <module>weixin-java-pay</module>
     <module>weixin-java-miniapp</module>
-    <module>weixin-java-open</module> -->
+    <module>weixin-java-open</module>
     <module>weixin-java-qidian</module>
     <module>spring-boot-starters</module>
     <!--module>weixin-java-osgi</module-->

@@ -1,4 +1,4 @@
-package com.binarywang.spring.starter.wxjava.qidian.enums;
+package com.binarywang.spring.starter.wxjava.mp.enums;
 
 /**
  * storage类型.

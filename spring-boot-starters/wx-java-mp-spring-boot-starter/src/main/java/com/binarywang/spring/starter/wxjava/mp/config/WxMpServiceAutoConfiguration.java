@@ -1,7 +1,7 @@
-package com.binarywang.spring.starter.wxjava.qidian.config;
+package com.binarywang.spring.starter.wxjava.mp.config;
 
-import com.binarywang.spring.starter.wxjava.qidian.enums.HttpClientType;
-import com.binarywang.spring.starter.wxjava.qidian.properties.WxMpProperties;
+import com.binarywang.spring.starter.wxjava.mp.enums.HttpClientType;
+import com.binarywang.spring.starter.wxjava.mp.properties.WxMpProperties;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceHttpClientImpl;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
