@@ -1,16 +1,17 @@
 package com.github.binarywang.wxpay.v3.auth;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.binarywang.wxpay.v3.Credentials;
 import com.github.binarywang.wxpay.v3.Validator;
 import com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder;
 import com.github.binarywang.wxpay.v3.util.AesUtils;
 import com.github.binarywang.wxpay.v3.util.PemUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -158,15 +159,15 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
    */
   private List<X509Certificate> deserializeToCerts(byte[] apiV3Key, String body) throws GeneralSecurityException, IOException {
     AesUtils aesUtils = new AesUtils(apiV3Key);
-    ObjectMapper mapper = new ObjectMapper();
-    JsonNode dataNode = mapper.readTree(body).get("data");
+    final JsonObject json = GsonParser.parse(body);
+    final JsonArray dataNode = json.getAsJsonArray("data");
     if (dataNode == null) {
       return Collections.emptyList();
     }
 
     List<X509Certificate> newCertList = new ArrayList<>();
     for (int i = 0, count = dataNode.size(); i < count; i++) {
-      JsonNode encryptCertificateNode = dataNode.get(i).get("encrypt_certificate");
+      final JsonObject encryptCertificateNode = ((JsonObject) dataNode.get(i)).getAsJsonObject("encrypt_certificate");
       //解密
       String cert = aesUtils.decryptToString(
         encryptCertificateNode.get("associated_data").toString().replaceAll("\"", "")
