@@ -98,6 +98,20 @@ public interface ProfitSharingService {
 
   /**
    * <pre>
+   * 服务商可通过调用此接口查询订单剩余待分金额。
+   * 接口频率：30QPS
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_10&index=7
+   * 接口链接：https://api.mch.weixin.qq.com/pay/profitsharingorderamountquery
+   * </pre>
+   *
+   * @param request .
+   * @return .
+   * @throws WxPayException .
+   */
+  ProfitSharingOrderAmountQueryResult profitSharingOrderAmountQuery(ProfitSharingOrderAmountQueryRequest request) throws WxPayException;
+
+  /**
+   * <pre>
    * 服务商可以查询子商户设置的允许服务商分账的最大比例。
    * 接口频率：30QPS
    * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_11&index=8
