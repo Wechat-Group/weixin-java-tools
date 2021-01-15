@@ -87,6 +87,17 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
   }
 
   @Override
+  public ProfitSharingMerchantRatioQueryResult profitSharingMerchantRatioQuery(ProfitSharingMerchantRatioQueryRequest request) throws WxPayException {
+    request.checkAndSign(this.payService.getConfig());
+    String url = this.payService.getPayBaseUrl() + "/pay/profitsharingmerchantratioquery";
+
+    final String responseContent = payService.post(url, request.toXML(), true);
+    ProfitSharingMerchantRatioQueryResult result = BaseWxPayResult.fromXML(responseContent, ProfitSharingMerchantRatioQueryResult.class);
+    result.checkResult(payService, request.getSignType(), true);
+    return result;
+  }
+
+  @Override
   public ProfitSharingReturnResult profitSharingReturn(ProfitSharingReturnRequest returnRequest) throws WxPayException {
     returnRequest.checkAndSign(this.payService.getConfig());
     String url = this.payService.getPayBaseUrl() + "/secapi/pay/profitsharingreturn";

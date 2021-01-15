@@ -101,6 +101,14 @@ public class ProfitSharingServiceImplTest {
   }
 
   @Test
+  public void testProfitSharingMerchantRatioQuery() throws WxPayException {
+    final String subMchId = "subMchid";
+    final ProfitSharingMerchantRatioQueryRequest request = new ProfitSharingMerchantRatioQueryRequest(subMchId);
+    final ProfitSharingMerchantRatioQueryResult result = payService.getProfitSharingService().profitSharingMerchantRatioQuery(request);
+    logger.info(result.toString());
+  }
+
+  @Test
   public void testProfitSharingReturn() throws WxPayException {
     ProfitSharingReturnRequest request = ProfitSharingReturnRequest
       .newBuilder()
