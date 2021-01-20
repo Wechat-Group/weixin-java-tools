@@ -12,6 +12,7 @@ import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
 import com.google.common.base.CaseFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import jdk.internal.joptsimple.internal.Strings;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanMap;
 
@@ -221,6 +222,24 @@ public class EcommerceServiceImpl implements EcommerceService {
   public ReturnOrdersResult returnOrders(ReturnOrdersRequest request) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/profitsharing/returnorders", this.payService.getPayBaseUrl());
     String response = this.payService.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, ReturnOrdersResult.class);
+  }
+
+  @Override
+  public ReturnOrdersResult queryReturnOrders(ReturnOrdersQueryRequest request) throws WxPayException {
+    String subMchid = request.getSubMchid();
+    String orderId = request.getOrderId();
+    String outOrderNo = request.getOutOrderNo();
+    String outReturnNo = request.getOutReturnNo();
+    String url = null;
+    if (Strings.isNullOrEmpty(orderId)) {
+      url = String.format("%s/v3/ecommerce/profitsharing/returnorders?sub_mchid=%s&out_order_no=%s&out_return_no=%s",
+        this.payService.getPayBaseUrl(), subMchid, outOrderNo, outReturnNo);
+    } else {
+      url = String.format("%s/v3/ecommerce/profitsharing/returnorders?sub_mchid=%s&order_id=%s&out_return_no=%s",
+        this.payService.getPayBaseUrl(), subMchid, orderId, outReturnNo);
+    }
+    String response = this.payService.getV3(URI.create(url));
     return GSON.fromJson(response, ReturnOrdersResult.class);
   }
 
