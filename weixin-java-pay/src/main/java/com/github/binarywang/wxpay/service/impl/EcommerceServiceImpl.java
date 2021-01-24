@@ -12,7 +12,7 @@ import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
 import com.google.common.base.CaseFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import jdk.internal.joptsimple.internal.Strings;
+import org.apache.commons.lang3.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanMap;
 
