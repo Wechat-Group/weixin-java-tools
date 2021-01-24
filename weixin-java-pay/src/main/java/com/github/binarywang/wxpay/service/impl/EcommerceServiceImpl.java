@@ -232,7 +232,7 @@ public class EcommerceServiceImpl implements EcommerceService {
     String outOrderNo = request.getOutOrderNo();
     String outReturnNo = request.getOutReturnNo();
     String url = null;
-    if (Strings.isNullOrEmpty(orderId)) {
+    if (StringUtils.isBlank(orderId)) {
       url = String.format("%s/v3/ecommerce/profitsharing/returnorders?sub_mchid=%s&out_order_no=%s&out_return_no=%s",
         this.payService.getPayBaseUrl(), subMchid, outOrderNo, outReturnNo);
     } else {
