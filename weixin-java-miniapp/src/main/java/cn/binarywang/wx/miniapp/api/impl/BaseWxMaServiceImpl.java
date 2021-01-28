@@ -47,6 +47,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaMediaService materialService = new WxMaMediaServiceImpl(this);
   private final WxMaUserService userService = new WxMaUserServiceImpl(this);
   private final WxMaQrcodeService qrCodeService = new WxMaQrcodeServiceImpl(this);
+  private final WxMaSchemeService schemeService = new WxMaSchemeServiceImpl(this);
   private final WxMaAnalysisService analysisService = new WxMaAnalysisServiceImpl(this);
   private final WxMaCodeService codeService = new WxMaCodeServiceImpl(this);
   private final WxMaSettingService settingService = new WxMaSettingServiceImpl(this);
@@ -411,6 +412,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaQrcodeService getQrcodeService() {
     return this.qrCodeService;
+  }
+
+  @Override
+  public WxMaSchemeService getWxMaSchemeService() {
+    return schemeService;
   }
 
   @Override

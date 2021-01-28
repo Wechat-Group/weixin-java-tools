@@ -230,6 +230,12 @@ public interface WxMaService extends WxService {
   WxMaQrcodeService getQrcodeService();
 
   /**
+   * 返回获取小程序scheme码实现对象，以方便调用其各个接口.
+   * @return WxMaSchemeService
+   */
+  WxMaSchemeService getWxMaSchemeService();
+
+  /**
    * 返回订阅消息配置相关接口方法的实现类对象, 以方便调用其各个接口.
    *
    * @return WxMaSubscribeService
