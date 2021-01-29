@@ -558,4 +558,22 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = post(FAST_REGISTER_WEAPP_SEARCH_URL, jsonObject.toString(), "component_access_token");
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
+
+  @Override
+  public WxOpenResult registerShop(String wxName, String idCardName, String idCardNumber, String channelId, Integer apiOpenstoreType, String authPageUrl) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("wx_name", wxName);
+    jsonObject.addProperty("id_card_name", idCardName);
+    jsonObject.addProperty("id_card_number", idCardNumber);
+    if (channelId != null && !channelId.isEmpty()) {
+      jsonObject.addProperty("channel_id", channelId);
+    }
+    jsonObject.addProperty("api_openstore_type", apiOpenstoreType);
+    if (authPageUrl != null && !authPageUrl.isEmpty()) {
+      jsonObject.addProperty("auth_page_url", authPageUrl);
+    }
+
+    String response = post(REGISTER_SHOP_URL, jsonObject.toString(), "component_access_token");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
 }

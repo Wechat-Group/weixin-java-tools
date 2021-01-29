@@ -126,6 +126,8 @@ public interface WxOpenComponentService {
    */
   String DELETE_TEMPLATE_URL = "https://api.weixin.qq.com/wxa/deletetemplate";
 
+  String REGISTER_SHOP_URL = "https://api.weixin.qq.com/product/register/register_shop";
+
   /**
    * Gets wx mp service by appid.
    *
@@ -486,4 +488,20 @@ public interface WxOpenComponentService {
    * @throws WxErrorException .
    */
   WxOpenResult fastRegisterWeappSearch(String name, String legalPersonaWechat, String legalPersonaName) throws WxErrorException;
+
+
+  /**
+   * https://api.weixin.qq.com/product/register/register_shop?component_access_token=xxxxxxxxx
+   * 注册小商店账号
+   *
+   * @param wxName                微信号（必填）
+   * @param idCardName            身份证姓名（必填）
+   * @param idCardNumber          身份证号（必填）
+   * @param channelId             渠道号，服务商后台生成渠道信息。（选填）
+   * @param apiOpenstoreType      1-整店打包（开通小商店），2-组件开放（开通小程序，并且已经完整的嵌入电商功能）（必填）
+   * @param authPageUrl           授权url（选填）
+   * @return the wx open result
+   * @throws WxErrorException
+   */
+  WxOpenResult registerShop(String wxName, String idCardName, String idCardNumber, String channelId, Integer apiOpenstoreType, String authPageUrl) throws WxErrorException;
 }
