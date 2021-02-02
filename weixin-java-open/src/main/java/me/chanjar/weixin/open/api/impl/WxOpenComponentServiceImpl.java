@@ -40,6 +40,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   private static final Map<String, WxOpenMpService> WX_OPEN_MP_SERVICE_MAP = new ConcurrentHashMap<>();
   private static final Map<String, WxOpenFastMaService> WX_OPEN_FAST_MA_SERVICE_MAP = new ConcurrentHashMap<>();
 
+  private static final Map<String, WxOpenMinishopService> WX_OPEN_MINISHOP_SERVICE_MAP = new ConcurrentHashMap<>();
+
   private final WxOpenService wxOpenService;
 
   @Override
@@ -86,6 +88,22 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       }
     }
     return fastMaService;
+  }
+
+  @Override
+  public WxOpenMinishopService getWxMinishopServiceByAppid(String appId) {
+    WxOpenMinishopService minishopService = WX_OPEN_MINISHOP_SERVICE_MAP.get(appId);
+    if (minishopService == null) {
+      synchronized (WX_OPEN_MINISHOP_SERVICE_MAP) {
+        minishopService = WX_OPEN_MINISHOP_SERVICE_MAP.get(appId);
+        if (minishopService == null) {
+          minishopService = new WxOpenMinishopServiceImpl(this, appId, getWxOpenConfigStorage().getWxMaConfig(appId));
+          WX_OPEN_MINISHOP_SERVICE_MAP.put(appId, minishopService);
+        }
+      }
+    }
+
+    return null;
   }
 
   public WxOpenService getWxOpenService() {

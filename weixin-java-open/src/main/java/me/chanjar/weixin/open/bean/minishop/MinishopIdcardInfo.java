@@ -1,6 +1,7 @@
 package me.chanjar.weixin.open.bean.minishop;
 
 
+import com.google.gson.JsonObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -33,16 +34,12 @@ public class MinishopIdcardInfo implements Serializable {
     /**
      * 人像面照片media_id
      */
-    private String portraitPicFileMediaId;
-
-    private String portraitPicFilePayMediaId;
+    private MinishopPicFile portraitPicFile;
 
     /**
      * 国徽面照片
      */
-    private String nationPicFileMediaId;
-
-    private String nationPicFilePayMediaId;
+    private MinishopPicFile nationPicFile;
 
     /**
      * 请填写经营者/法定代表人对应身份证的姓名，2~30个中文字符、英文字符、符号。
@@ -67,5 +64,15 @@ public class MinishopIdcardInfo implements Serializable {
      */
     private String endDate;
 
+    public JsonObject toJsonObject() {
+      JsonObject jsonObject = new JsonObject();
+      jsonObject.add("portrait_pic_file", portraitPicFile.toJsonObject());
+      jsonObject.add("nation_pic_file", nationPicFile.toJsonObject());
+      jsonObject.addProperty("id_card_name", idCardName);
+      jsonObject.addProperty("id_card_number", idCardNumber);
+      jsonObject.addProperty("start_date", startDate);
+      jsonObject.addProperty("end_date", endDate);
+      return jsonObject;
+    }
 
 }

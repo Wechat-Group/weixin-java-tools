@@ -1,6 +1,7 @@
 package me.chanjar.weixin.open.bean.minishop;
 
 
+import com.google.gson.JsonObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -58,4 +59,13 @@ public class MinishopSuperAdministratorInfo implements Serializable {
     private String mail;
 
 
+    public JsonObject toJsonObject() {
+      JsonObject jsonObject = new JsonObject();
+      jsonObject.addProperty("type", type);
+      jsonObject.addProperty("name", name);
+      jsonObject.addProperty("id_card_number", idCardNumber);
+      jsonObject.addProperty("phone", phone);
+      jsonObject.addProperty("mail", mail);
+      return jsonObject;
+    }
 }

@@ -1,5 +1,6 @@
 package me.chanjar.weixin.open.api;
 
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.result.WxOpenResult;
 
@@ -39,12 +40,12 @@ public interface WxOpenMinishopService {
    * @param merchantShoprtName
    * @return
    */
-  WxOpenResult submitMerchantInfo(String appId, String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName);
+  WxOpenResult submitMerchantInfo(String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName) throws WxErrorException;
 
 
-  WxOpenResult submitBasicInfo(String appId, MinishopNameInfo nameInfo, MinishopReturnInfo returnInfo);
+  WxOpenResult submitBasicInfo(MinishopNameInfo nameInfo, MinishopReturnInfo returnInfo);
 
-  MinishopAuditStatus checkAuditStatus(String wxName);
+  MinishopAuditStatus checkAuditStatus(String wxName) throws WxErrorException;
 
   MinishopPicFile uploadImagePicFile(Integer height, Integer width, File file);
 

@@ -152,6 +152,9 @@ public interface WxOpenComponentService {
    */
   WxOpenFastMaService getWxFastMaServiceByAppid(String appid);
 
+
+  WxOpenMinishopService getWxMinishopServiceByAppid(String appid);
+
   /**
    * Gets wx open config storage.
    *

@@ -1,6 +1,7 @@
 package me.chanjar.weixin.open.bean.minishop;
 
 
+import com.google.gson.JsonObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -33,12 +34,7 @@ public class MinishopBusiLicense implements Serializable {
     /**
      * 营业执照图片
      */
-    private String licenseMediaId;
-
-    /**
-     * 支付media_id，此处通过上传图片接口获得传入内容
-     */
-    private String payMediaId;
+    private MinishopPicFile picFile;
 
     /**
      * 请填写营业执照上的注册号/统一社会信用代码，
@@ -79,4 +75,18 @@ public class MinishopBusiLicense implements Serializable {
     private String endDate;
 
 
+    public JsonObject toJsonObject() {
+      JsonObject jsonObject = new JsonObject();
+      jsonObject.addProperty("license_type", this.licenseType);
+      jsonObject.add("pic_file", picFile.toJsonObject());
+      jsonObject.addProperty("registration_num", registrationNum);
+      jsonObject.addProperty("merchant_name", merchantName);
+      jsonObject.addProperty("legal_representative", legalRepresentative);
+      if (registeredAddrs != null) {
+        jsonObject.addProperty("registered_addrs", registeredAddrs);
+      }
+      jsonObject.addProperty("start_date", startDate);
+      jsonObject.addProperty("end_date", endDate);
+      return jsonObject;
+    }
 }

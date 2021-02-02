@@ -1,5 +1,6 @@
 package me.chanjar.weixin.open.bean.minishop;
 
+import com.google.gson.JsonObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -28,12 +29,7 @@ public class MinishopOrganizationCodeInfo implements Serializable {
     /**
      * 组织机构代码证图片
      */
-    private String mediaId;
-
-    /**
-     * 支付图片media_id
-     */
-    private String payMediaId;
+    private MinishopPicFile picFile;
 
     /**
      * 1、请填写组织机构代码证上的组织机构代码。
@@ -55,4 +51,12 @@ public class MinishopOrganizationCodeInfo implements Serializable {
     private String endDate;
 
 
+    public JsonObject toJsonObject() {
+      JsonObject jsonObject = new JsonObject();
+      jsonObject.add("pic_file", picFile.toJsonObject());
+      jsonObject.addProperty("organization_code", organizationCode);
+      jsonObject.addProperty("start_date", startDate);
+      jsonObject.addProperty("end_date", endDate);
+      return jsonObject;
+    }
 }
