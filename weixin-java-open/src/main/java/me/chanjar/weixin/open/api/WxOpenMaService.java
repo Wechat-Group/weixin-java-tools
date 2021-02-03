@@ -3,6 +3,7 @@ package me.chanjar.weixin.open.api;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.bean.ma.WxMaOpenCommitExtInfo;
+import me.chanjar.weixin.open.bean.ma.WxMaScheme;
 import me.chanjar.weixin.open.bean.message.WxOpenMaSubmitAuditMessage;
 import me.chanjar.weixin.open.bean.result.*;
 
@@ -219,6 +220,12 @@ public interface WxOpenMaService extends WxMaService {
    * 加急审核申请
    */
   String API_SPEED_AUDIT = "https://api.weixin.qq.com/wxa/speedupaudit";
+
+
+  /**
+   * 获取小程序scheme码
+   */
+  String API_GENERATE_SCHEME = "https://api.weixin.qq.com/wxa/generatescheme";
 
   /**
    * 获得小程序的域名配置信息
@@ -583,4 +590,9 @@ public interface WxOpenMaService extends WxMaService {
    * @throws WxErrorException the wx error exception
    */
   WxOpenResult publishQrcodeJump(String prefix) throws WxErrorException;
+
+
+
+  WxMaScheme generateMaScheme(String jumpWxaPath, String jumpWxaQuery, Boolean isExpire, Long expireTime) throws WxErrorException;
+
 }

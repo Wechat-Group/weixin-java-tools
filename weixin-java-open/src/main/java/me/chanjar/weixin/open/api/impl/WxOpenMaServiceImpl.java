@@ -12,6 +12,7 @@ import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMaService;
 import me.chanjar.weixin.open.bean.ma.WxMaOpenCommitExtInfo;
 import me.chanjar.weixin.open.bean.ma.WxMaQrcodeParam;
+import me.chanjar.weixin.open.bean.ma.WxMaScheme;
 import me.chanjar.weixin.open.bean.message.WxOpenMaSubmitAuditMessage;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.executor.MaQrCodeRequestExecutor;
@@ -346,6 +347,30 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     params.addProperty("prefix", prefix);
     String response = post(API_QRCODE_JUMP_PUBLISH, GSON.toJson(params));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxMaScheme generateMaScheme(String jumpWxaPath, String jumpWxaQuery, Boolean isExpire, Long expireTime) throws WxErrorException {
+    JsonObject jumpWxa = null;
+    if (jumpWxaPath != null && jumpWxaQuery != null) {
+      jumpWxa = new JsonObject();
+      jumpWxa.addProperty("path", jumpWxaPath);
+      jumpWxa.addProperty("query", jumpWxaQuery);
+    }
+
+    JsonObject params = new JsonObject();
+    if (jumpWxa != null) {
+      params.add("jump_wxa", jumpWxa);
+    }
+    if (isExpire != null) {
+      params.addProperty("is_expire", isExpire);
+    }
+    if (expireTime != null) {
+      params.addProperty("expire_time", expireTime);
+    }
+
+    String response = post(API_GENERATE_SCHEME, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxMaScheme.class);
   }
 
   private JsonArray toJsonArray(List<String> strList) {
