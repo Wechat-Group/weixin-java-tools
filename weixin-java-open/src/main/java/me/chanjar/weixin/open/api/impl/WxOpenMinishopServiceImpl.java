@@ -25,7 +25,7 @@ public class WxOpenMinishopServiceImpl extends WxMaServiceImpl implements WxOpen
   }
 
   @Override
-  public WxOpenResult submitMerchantInfo(String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName) throws WxErrorException {
+  public WxOpenResult submitMerchantInfo(String appId, String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("app_id", appId);
     jsonObject.addProperty("subject_type", subjectType);
@@ -38,15 +38,13 @@ public class WxOpenMinishopServiceImpl extends WxMaServiceImpl implements WxOpen
   }
 
   @Override
-  public WxOpenResult submitBasicInfo(MinishopNameInfo nameInfo, MinishopReturnInfo returnInfo) {
+  public WxOpenResult submitBasicInfo(String appId, MinishopNameInfo nameInfo, MinishopReturnInfo returnInfo) {
     return null;
   }
 
   @Override
   public MinishopAuditStatus checkAuditStatus(String wxName) throws WxErrorException {
-    JsonObject jsonObject = new JsonObject();
-    String response = post(checkAuditStatusUrl, jsonObject.toString());
-    return GSON.fromJson(response, MinishopAuditStatus.class);
+    return null;
   }
 
   @Override

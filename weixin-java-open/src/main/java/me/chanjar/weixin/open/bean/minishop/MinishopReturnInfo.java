@@ -1,5 +1,6 @@
 package me.chanjar.weixin.open.bean.minishop;
 
+import com.google.gson.JsonObject;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,4 +22,12 @@ public class MinishopReturnInfo implements Serializable {
    * 公司地址
    */
   private MinishopAddressInfo companyAddress;
+
+  public JsonObject toJsonObject() {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.add("address_info", addressInfo.toJsonObject());
+    jsonObject.addProperty("mail", email);
+    jsonObject.add("company_address", companyAddress.toJsonObject());
+    return jsonObject;
+  }
 }

@@ -1,5 +1,6 @@
 package me.chanjar.weixin.open.bean.minishop;
 
+import com.google.gson.JsonObject;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -36,4 +37,12 @@ public class MinishopNameInfo implements Serializable {
    * 补充材料，传media id数组，当返回210047时必填
    */
   private List<String> namingOtherStuff;
+
+  public JsonObject toJsonObject() {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("nickname", nickName);
+    jsonObject.addProperty("abbr", abbr);
+    jsonObject.addProperty("introduction", introduction);
+    return jsonObject;
+  }
 }

@@ -1,5 +1,6 @@
 package me.chanjar.weixin.open.bean.minishop;
 
+import com.google.gson.JsonObject;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -48,4 +49,16 @@ public class MinishopAddressInfo implements Serializable {
    */
   private String telNumber;
 
+  public JsonObject toJsonObject() {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("user_name", userName);
+    jsonObject.addProperty("postal_code", postalCode);
+    jsonObject.addProperty("province_name", province);
+    jsonObject.addProperty("city_name", cityName);
+    jsonObject.addProperty("county_name", countyName);
+    jsonObject.addProperty("detail_info", detailInfo);
+    jsonObject.addProperty("national_code", nationalCode);
+    jsonObject.addProperty("tel_number", telNumber);
+    return jsonObject;
+  }
 }

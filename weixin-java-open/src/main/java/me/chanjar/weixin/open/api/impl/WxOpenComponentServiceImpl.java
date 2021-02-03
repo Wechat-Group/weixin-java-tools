@@ -1,6 +1,7 @@
 package me.chanjar.weixin.open.api.impl;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
@@ -19,10 +20,12 @@ import me.chanjar.weixin.open.api.*;
 import me.chanjar.weixin.open.bean.*;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
+import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -593,5 +596,41 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
     String response = post(REGISTER_SHOP_URL, jsonObject.toString(), "component_access_token");
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public MinishopAuditStatus checkAuditStatus(String wxName) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("wx_name", wxName);
+    String response = post(CHECK_SHOP_AUDITSTATUS_URL, jsonObject.toString(), "component_access_token");
+    return WxOpenGsonBuilder.create().fromJson(response, MinishopAuditStatus.class);
+  }
+
+  @Override
+  public WxOpenResult submitMerchantInfo(String appId, String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("app_id", appId);
+    jsonObject.addProperty("subject_type", subjectType);
+    jsonObject.add("busi_license", busiLicense.toJsonObject());
+    jsonObject.add("organization_code_info", organizationCodeInfo.toJsonObject());
+    jsonObject.add("id_card_info", idcardInfo.toJsonObject());
+    jsonObject.add("super_administrator_info", superAdministratorInfo.toJsonObject());
+    String response = post(SUBMIT_MERCHANTINFO_URL, jsonObject.toString(), "component_access_token");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult submitBasicInfo(String appId, MinishopNameInfo nameInfo, MinishopReturnInfo returnInfo) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("appid", appId);
+    jsonObject.add("name_info", nameInfo.toJsonObject());
+    jsonObject.add("return_info", returnInfo.toJsonObject());
+    String response = post(SUBMIT_BASICINFO_URL, jsonObject.toString(), "component_access_token");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public MinishopPicFile uploadImagePicFile(Integer height, Integer width, File file) throws WxErrorException {
+    return null;
   }
 }

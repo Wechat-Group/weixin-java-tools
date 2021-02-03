@@ -7,8 +7,10 @@ import me.chanjar.weixin.open.bean.WxOpenCreateResult;
 import me.chanjar.weixin.open.bean.WxOpenGetResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
+import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.result.*;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -127,6 +129,16 @@ public interface WxOpenComponentService {
   String DELETE_TEMPLATE_URL = "https://api.weixin.qq.com/wxa/deletetemplate";
 
   String REGISTER_SHOP_URL = "https://api.weixin.qq.com/product/register/register_shop";
+
+  String CHECK_SHOP_AUDITSTATUS_URL = "https://api.weixin.qq.com/product/register/check_audit_status";
+
+  String SUBMIT_MERCHANTINFO_URL = "https://api.weixin.qq.com/product/register/submit_merchantinfo";
+
+  String SUBMIT_BASICINFO_URL = "https://api.weixin.qq.com/product/register/submit_basicinfo";
+
+  String UPLOAD_IMAGE_URL = "https://api.weixin.qq.com/product/img/upload";
+
+
 
   /**
    * Gets wx mp service by appid.
@@ -507,4 +519,49 @@ public interface WxOpenComponentService {
    * @throws WxErrorException
    */
   WxOpenResult registerShop(String wxName, String idCardName, String idCardNumber, String channelId, Integer apiOpenstoreType, String authPageUrl) throws WxErrorException;
+
+
+  /**
+   * https://api.weixin.qq.com/product/register/check_audit_status
+   * 异步状态查询
+   * @param wxName                微信号
+   * @return
+   */
+  MinishopAuditStatus checkAuditStatus(String wxName) throws WxErrorException;
+
+
+  /**
+   *
+   * @param appId
+   * @param subjectType
+   * @param busiLicense
+   * @param organizationCodeInfo
+   * @param idcardInfo
+   * @param superAdministratorInfo
+   * @param merchantShoprtName
+   * @return
+   */
+  WxOpenResult submitMerchantInfo(String appId, String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName) throws WxErrorException;
+
+  /**
+   *
+   * @param appId
+   * @param nameInfo
+   * @param returnInfo
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult submitBasicInfo(String appId, MinishopNameInfo nameInfo, MinishopReturnInfo returnInfo) throws WxErrorException;
+
+
+  /**
+   *
+   * @param height
+   * @param width
+   * @param file
+   * @return
+   * @throws WxErrorException
+   */
+  MinishopPicFile uploadImagePicFile(Integer height, Integer width, File file) throws WxErrorException;
+
 }

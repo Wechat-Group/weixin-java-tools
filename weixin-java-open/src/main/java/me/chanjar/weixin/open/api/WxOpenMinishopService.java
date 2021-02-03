@@ -15,7 +15,6 @@ public interface WxOpenMinishopService {
 
    String submitBasicInfoUrl = "https://api.weixin.qq.com/product/register/submit_basicinfo";
 
-  String checkAuditStatusUrl = "https://api.weixin.qq.com/product/register/check_audit_status";
 
   String uploadImageUrl = "https://api.weixin.qq.com/product/img/upload";
 
@@ -40,10 +39,10 @@ public interface WxOpenMinishopService {
    * @param merchantShoprtName
    * @return
    */
-  WxOpenResult submitMerchantInfo(String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName) throws WxErrorException;
+  WxOpenResult submitMerchantInfo(String appId, String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName) throws WxErrorException;
 
 
-  WxOpenResult submitBasicInfo(MinishopNameInfo nameInfo, MinishopReturnInfo returnInfo);
+  WxOpenResult submitBasicInfo(String appId, MinishopNameInfo nameInfo, MinishopReturnInfo returnInfo);
 
   MinishopAuditStatus checkAuditStatus(String wxName) throws WxErrorException;
 
