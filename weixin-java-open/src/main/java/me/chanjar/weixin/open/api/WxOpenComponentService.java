@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * .
- *
+ * xiaojintao
  * @author <a href="https://github.com/007gzs">007</a>
  */
 public interface WxOpenComponentService {
