@@ -5,6 +5,8 @@ import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -369,7 +371,10 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
       params.addProperty("expire_time", expireTime);
     }
 
-    String response = post(API_GENERATE_SCHEME, GSON.toJson(params));
+    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+
+    String response = post(API_GENERATE_SCHEME, gson.toJson(params));
+
     return WxMaGsonBuilder.create().fromJson(response, WxMaScheme.class);
   }
 
