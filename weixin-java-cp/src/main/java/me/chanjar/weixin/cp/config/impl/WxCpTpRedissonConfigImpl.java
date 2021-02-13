@@ -254,7 +254,7 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
 
   @Override
   public void expireAuthCorpJsApiTicket(String authCorpId) {
-    wxRedisOps.expire(keyWithPrefix(keyWithPrefix(authCorpId) + authCorpJsApiTicketKey), 0, TimeUnit.SECONDS);
+    wxRedisOps.expire(keyWithPrefix(authCorpId) + authCorpJsApiTicketKey, 0, TimeUnit.SECONDS);
   }
 
   @Override
@@ -281,7 +281,7 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
 
   @Override
   public void expireAuthSuiteJsApiTicket(String authCorpId) {
-    wxRedisOps.expire(keyWithPrefix(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey), 0, TimeUnit.SECONDS);
+    wxRedisOps.expire(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey, 0, TimeUnit.SECONDS);
   }
 
   @Override

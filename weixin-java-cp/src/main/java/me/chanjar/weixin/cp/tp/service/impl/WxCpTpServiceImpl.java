@@ -131,7 +131,10 @@ public class WxCpTpServiceImpl extends WxCpTpServiceApacheHttpClientImpl {
       if (!this.configStorage.isAuthCorpJsApiTicketExpired(authCorpId) && !forceRefresh) {
         return this.configStorage.getAuthCorpJsApiTicket(authCorpId);
       }
-      return super.getAuthCorpJsApiTicket(authCorpId, forceRefresh);
+      if (forceRefresh) {
+        this.configStorage.expireAuthCorpJsApiTicket(authCorpId);
+      }
+      return super.getAuthCorpJsApiTicket(authCorpId);
     } finally {
       lock.unlock();
     }
@@ -154,8 +157,10 @@ public class WxCpTpServiceImpl extends WxCpTpServiceApacheHttpClientImpl {
       if (!this.configStorage.isAuthSuiteJsApiTicketExpired(authCorpId) && !forceRefresh) {
         return this.configStorage.getAuthSuiteJsApiTicket(authCorpId);
       }
-
-      return super.getSuiteJsApiTicket(authCorpId, forceRefresh);
+      if (forceRefresh) {
+        this.configStorage.expireAuthSuiteJsApiTicket(authCorpId);
+      }
+      return super.getSuiteJsApiTicket(authCorpId);
     } finally {
       lock.unlock();
     }
