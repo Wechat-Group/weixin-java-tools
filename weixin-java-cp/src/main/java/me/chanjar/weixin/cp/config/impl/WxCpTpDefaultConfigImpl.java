@@ -2,13 +2,18 @@ package me.chanjar.weixin.cp.config.impl;
 
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
+import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 基于内存的微信配置provider，在实际生产环境中应该将这些配置持久化.
@@ -59,6 +64,12 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
 
   private volatile String baseApiUrl;
 
+  // locker
+  private final transient Map<String, Lock> providerAccessTokenLocker = new ConcurrentHashMap<>();
+  private final transient Map<String, Lock> suiteAccessTokenLocker = new ConcurrentHashMap<>();
+  private final transient Map<String, Lock> accessTokenLocker = new ConcurrentHashMap<>();
+  private final transient Map<String, Lock> authCorpJsapiTicketLocker = new ConcurrentHashMap<>();
+  private final transient Map<String, Lock> authSuiteJsapiTicketLocker = new ConcurrentHashMap<>();
 
   @Override
   public void setBaseApiUrl(String baseUrl) {
@@ -76,6 +87,15 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   @Override
   public String getSuiteAccessToken() {
     return this.suiteAccessToken;
+  }
+
+  @Override
+  public WxAccessToken getSuiteAccessTokenEntity() {
+    WxAccessToken accessToken = new WxAccessToken();
+    int expiresIn = Math.toIntExact((this.suiteAccessTokenExpiresTime - System.currentTimeMillis()) / 1000L);
+    accessToken.setExpiresIn(expiresIn <= 0 ? -1 : expiresIn);
+    accessToken.setAccessToken(this.suiteAccessToken);
+    return accessToken;
   }
 
   public void setSuiteAccessToken(String suiteAccessToken) {
@@ -219,6 +239,16 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   }
 
   @Override
+  public WxAccessToken getAccessTokenEntity(String authCorpId) {
+    String accessToken = authCorpAccessTokenMap.getOrDefault(authCorpId, StringUtils.EMPTY);
+    Long expire = authCorpAccessTokenExpireTimeMap.getOrDefault(authCorpId, 0L);
+    WxAccessToken accessTokenEntity = new WxAccessToken();
+    accessTokenEntity.setAccessToken(accessToken);
+    accessTokenEntity.setExpiresIn(Math.toIntExact(expire));
+    return accessTokenEntity;
+  }
+
+  @Override
   public boolean isAccessTokenExpired(String authCorpId) {
     return System.currentTimeMillis() > authCorpAccessTokenExpireTimeMap.get(authCorpId);
   }
@@ -247,6 +277,12 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   }
 
   @Override
+  public void expireAuthCorpJsApiTicket(String authCorpId) {
+    this.authCorpJsApiTicketMap.remove(authCorpId);
+    this.authCorpJsApiTicketExpireTimeMap.remove(authCorpId);
+  }
+
+  @Override
   public void updateAuthCorpJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds) {
     // 应该根据不同的授权企业做区分
     authCorpJsApiTicketMap.put(authCorpId, jsApiTicket);
@@ -267,6 +303,12 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
     } else {
       return true;
     }
+  }
+
+  @Override
+  public void expireAuthSuiteJsApiTicket(String authCorpId) {
+    this.authSuiteJsApiTicketMap.remove(authCorpId);
+    this.authSuiteJsApiTicketExpireTimeMap.remove(authCorpId);
   }
 
   @Override
@@ -291,6 +333,16 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   @Override
   public String getProviderToken() {
     return providerToken;
+  }
+
+  @Override
+  public WxCpProviderToken getProviderTokenEntity() {
+    return null;
+  }
+
+  @Override
+  public void expireProviderToken() {
+    this.providerTokenExpiresTime = 0L;
   }
 
   public void setOauth2redirectUri(String oauth2redirectUri) {
@@ -341,6 +393,35 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   @Override
   public File getTmpDirFile() {
     return this.tmpDirFile;
+  }
+
+  @Override
+  public Lock getProviderAccessTokenLock() {
+    return this.providerAccessTokenLocker
+      .computeIfAbsent(String.join(":", this.suiteId, this.corpId), key -> new ReentrantLock());
+  }
+
+  @Override
+  public Lock getSuiteAccessTokenLock() {
+    return this.suiteAccessTokenLocker.computeIfAbsent(this.suiteId, key -> new ReentrantLock());
+  }
+
+  @Override
+  public Lock getAccessTokenLock(String authCorpId) {
+    return this.accessTokenLocker
+      .computeIfAbsent(String.join(":", this.suiteId, authCorpId), key -> new ReentrantLock());
+  }
+
+  @Override
+  public Lock getAuthCorpJsapiTicketLock(String authCorpId) {
+    return this.authCorpJsapiTicketLocker
+      .computeIfAbsent(String.join(":", this.suiteId, authCorpId), key -> new ReentrantLock());
+  }
+
+  @Override
+  public Lock getSuiteJsapiTicketLock(String authCorpId) {
+    return this.authSuiteJsapiTicketLocker
+      .computeIfAbsent(String.join(":", this.suiteId, authCorpId), key -> new ReentrantLock());
   }
 
   public void setTmpDirFile(File tmpDirFile) {

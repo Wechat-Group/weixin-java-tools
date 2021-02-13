@@ -2,8 +2,10 @@ package me.chanjar.weixin.cp.config;
 
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
+import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 
 import java.io.File;
+import java.util.concurrent.locks.Lock;
 
 /**
  * 微信客户端（第三方应用）配置存储
@@ -30,6 +32,11 @@ public interface WxCpTpConfigStorage {
    * 第三方应用的suite access token相关
    */
   String getSuiteAccessToken();
+  /**
+   * 获取suite_access_token和剩余过期时间
+   * @return suite access token and the remaining expiration time
+   */
+  WxAccessToken getSuiteAccessTokenEntity();
   boolean isSuiteAccessTokenExpired();
   //强制将suite access token过期掉.
   void expireSuiteAccessToken();
@@ -71,6 +78,7 @@ public interface WxCpTpConfigStorage {
    * 授权企业的access token相关
    */
   String getAccessToken(String authCorpId);
+  WxAccessToken getAccessTokenEntity(String authCorpId);
   boolean isAccessTokenExpired(String authCorpId);
   void updateAccessToken(String authCorpId, String accessToken, int expiredInSeconds);
 
@@ -79,6 +87,7 @@ public interface WxCpTpConfigStorage {
    */
   String getAuthCorpJsApiTicket(String authCorpId);
   boolean isAuthCorpJsApiTicketExpired(String authCorpId);
+  void expireAuthCorpJsApiTicket(String authCorpId);
   void updateAuthCorpJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds);
 
   /**
@@ -86,12 +95,16 @@ public interface WxCpTpConfigStorage {
    */
   String getAuthSuiteJsApiTicket(String authCorpId);
   boolean isAuthSuiteJsApiTicketExpired(String authCorpId);
+  void expireAuthSuiteJsApiTicket(String authCorpId);
   void updateAuthSuiteJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds);;
 
   boolean isProviderTokenExpired();
   void updateProviderToken(String providerToken, int expiredInSeconds);
 
   String getProviderToken();
+  WxCpProviderToken getProviderTokenEntity();
+  // 强制过期
+  void expireProviderToken();
 
   /**
    * 网络代理相关
@@ -108,4 +121,9 @@ public interface WxCpTpConfigStorage {
   @Deprecated
   File getTmpDirFile();
 
+  Lock getProviderAccessTokenLock();
+  Lock getSuiteAccessTokenLock();
+  Lock getAccessTokenLock(String authCorpId);
+  Lock getAuthCorpJsapiTicketLock(String authCorpId);
+  Lock getSuiteJsapiTicketLock(String authCorpId);
 }

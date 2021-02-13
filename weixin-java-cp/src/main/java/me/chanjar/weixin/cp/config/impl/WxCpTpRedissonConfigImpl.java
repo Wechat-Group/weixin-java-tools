@@ -6,12 +6,15 @@ import lombok.NonNull;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
+import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 /**
  * 企业微信各种固定、授权配置的Redisson存储实现
@@ -66,6 +69,14 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
    */
   private volatile String providerSecret;
 
+  // lock key
+  protected static final String LOCK_KEY = "wechat_tp_lock:";
+  protected static final String LOCKER_PROVIDER_ACCESS_TOKEN = "providerAccessTokenLock";
+  protected static final String LOCKER_SUITE_ACCESS_TOKEN = "suiteAccessTokenLock";
+  protected static final String LOCKER_ACCESS_TOKEN = "accessTokenLock";
+  protected static final String LOCKER_CORP_JSAPI_TICKET = "corpJsapiTicketLock";
+  protected static final String LOCKER_SUITE_JSAPI_TICKET = "suiteJsapiTicketLock";
+
   @Override
   public void setBaseApiUrl(String baseUrl) {
     this.baseApiUrl = baseUrl;
@@ -86,6 +97,20 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   @Override
   public String getSuiteAccessToken() {
     return wxRedisOps.getValue(keyWithPrefix(suiteAccessTokenKey));
+  }
+
+  @Override
+  public WxAccessToken getSuiteAccessTokenEntity() {
+    String suiteAccessToken = wxRedisOps.getValue(keyWithPrefix(suiteAccessTokenKey));
+    Long expireIn = wxRedisOps.getExpire(keyWithPrefix(suiteAccessTokenKey));
+    if (StringUtils.isBlank(suiteAccessToken) || expireIn == null || expireIn == 0 || expireIn == -2) {
+      return new WxAccessToken();
+    }
+
+    WxAccessToken suiteAccessTokenEntity = new WxAccessToken();
+    suiteAccessTokenEntity.setAccessToken(suiteAccessToken);
+    suiteAccessTokenEntity.setExpiresIn(Math.max(Math.toIntExact(expireIn), 0));
+    return suiteAccessTokenEntity;
   }
 
   @Override
@@ -186,6 +211,20 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   }
 
   @Override
+  public WxAccessToken getAccessTokenEntity(String authCorpId) {
+    String accessToken = wxRedisOps.getValue(keyWithPrefix(authCorpId) + accessTokenKey);
+    Long expire = wxRedisOps.getExpire(keyWithPrefix(authCorpId) + accessTokenKey);
+    if (StringUtils.isBlank(accessToken) || expire == null || expire == 0 || expire == -2) {
+      return new WxAccessToken();
+    }
+
+    WxAccessToken accessTokenEntity = new WxAccessToken();
+    accessTokenEntity.setAccessToken(accessToken);
+    accessTokenEntity.setExpiresIn(Math.max(Math.toIntExact(expire), 0));
+    return accessTokenEntity;
+  }
+
+  @Override
   public boolean isAccessTokenExpired(String authCorpId) {
     //没有设置或者TTL为0，都是过期
     return wxRedisOps.getExpire(keyWithPrefix(authCorpId) + accessTokenKey) == 0L
@@ -214,6 +253,11 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   }
 
   @Override
+  public void expireAuthCorpJsApiTicket(String authCorpId) {
+    wxRedisOps.expire(keyWithPrefix(keyWithPrefix(authCorpId) + authCorpJsApiTicketKey), 0, TimeUnit.SECONDS);
+  }
+
+  @Override
   public void updateAuthCorpJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds) {
     wxRedisOps.setValue(keyWithPrefix(authCorpId) + authCorpJsApiTicketKey, jsApiTicket, expiredInSeconds,
       TimeUnit.SECONDS);
@@ -233,6 +277,11 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
     //没有设置或者TTL为0，都是过期
     return wxRedisOps.getExpire(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey) == 0L
       || wxRedisOps.getExpire(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey) == -2;
+  }
+
+  @Override
+  public void expireAuthSuiteJsApiTicket(String authCorpId) {
+    wxRedisOps.expire(keyWithPrefix(keyWithPrefix(authCorpId) + authSuiteJsApiTicketKey), 0, TimeUnit.SECONDS);
   }
 
   @Override
@@ -257,6 +306,25 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
     return wxRedisOps.getValue(keyWithPrefix(providerTokenKey));
   }
 
+  @Override
+  public WxCpProviderToken getProviderTokenEntity() {
+    String providerToken = wxRedisOps.getValue(keyWithPrefix(providerTokenKey));
+    Long expire = wxRedisOps.getExpire(keyWithPrefix(providerTokenKey));
+
+    if (StringUtils.isBlank(providerToken) || expire == null || expire == 0 || expire == -2) {
+      return new WxCpProviderToken();
+    }
+
+    WxCpProviderToken wxCpProviderToken = new WxCpProviderToken();
+    wxCpProviderToken.setProviderAccessToken(providerToken);
+    wxCpProviderToken.setExpiresIn(Math.max(Math.toIntExact(expire), 0));
+    return wxCpProviderToken;
+  }
+
+  @Override
+  public void expireProviderToken() {
+    wxRedisOps.expire(keyWithPrefix(providerTokenKey), 0, TimeUnit.SECONDS);
+  }
 
   /**
    * 网络代理相关
@@ -284,6 +352,37 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   @Override
   public File getTmpDirFile() {
     return tmpDirFile;
+  }
+
+  @Override
+  public Lock getProviderAccessTokenLock() {
+    return getLockByKey(String.join(":", this.corpId, LOCKER_PROVIDER_ACCESS_TOKEN));
+  }
+
+  @Override
+  public Lock getSuiteAccessTokenLock() {
+    return getLockByKey(LOCKER_SUITE_ACCESS_TOKEN);
+  }
+
+  @Override
+  public Lock getAccessTokenLock(String authCorpId) {
+    return getLockByKey(String.join(":", authCorpId, LOCKER_ACCESS_TOKEN));
+  }
+
+  @Override
+  public Lock getAuthCorpJsapiTicketLock(String authCorpId) {
+    return getLockByKey(String.join(":", authCorpId, LOCKER_CORP_JSAPI_TICKET));
+  }
+
+  @Override
+  public Lock getSuiteJsapiTicketLock(String authCorpId) {
+    return getLockByKey(String.join(":", authCorpId, LOCKER_SUITE_JSAPI_TICKET));
+  }
+
+  private Lock getLockByKey(String key) {
+    // 最终key的模式：(keyPrefix:)wechat_tp_lock:suiteId:(authCorpId):lockKey
+    // 其中keyPrefix目前不支持外部配置，authCorpId只有涉及到corpAccessToken, suiteJsapiTicket, authCorpJsapiTicket时才会拼上
+    return this.wxRedisOps.getLock(String.join(":", keyWithPrefix(LOCK_KEY + this.suiteId), key));
   }
 
   @Override
