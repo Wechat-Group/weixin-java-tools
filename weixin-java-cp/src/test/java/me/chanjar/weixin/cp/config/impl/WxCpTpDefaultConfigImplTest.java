@@ -18,7 +18,6 @@ public class WxCpTpDefaultConfigImplTest {
     storage.setSuiteAccessTokenExpiresTime(System.currentTimeMillis() + (testExpireTime - 200) * 1000L);
     TimeUnit.SECONDS.sleep(restTime);
     WxAccessToken accessToken = storage.getSuiteAccessTokenEntity();
-    System.out.println(accessToken);
     Assert.assertEquals(accessToken.getAccessToken(), testAccessToken, "accessToken不一致");
     Assert.assertTrue(accessToken.getExpiresIn() <= testExpireTime - restTime, "过期时间计算有误");
   }

@@ -232,6 +232,11 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   }
 
   @Override
+  public void expireAccessToken(String authCorpId) {
+    wxRedisOps.expire(keyWithPrefix(authCorpId) + accessTokenKey, 0, TimeUnit.SECONDS);
+  }
+
+  @Override
   public void updateAccessToken(String authCorpId, String accessToken, int expiredInSeconds) {
     wxRedisOps.setValue(keyWithPrefix(authCorpId) + accessTokenKey, accessToken, expiredInSeconds, TimeUnit.SECONDS);
   }

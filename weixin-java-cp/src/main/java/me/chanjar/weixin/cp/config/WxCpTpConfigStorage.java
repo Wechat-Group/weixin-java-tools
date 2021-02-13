@@ -80,6 +80,7 @@ public interface WxCpTpConfigStorage {
   String getAccessToken(String authCorpId);
   WxAccessToken getAccessTokenEntity(String authCorpId);
   boolean isAccessTokenExpired(String authCorpId);
+  void expireAccessToken(String authCorpId);
   void updateAccessToken(String authCorpId, String accessToken, int expiredInSeconds);
 
   /**

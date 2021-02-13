@@ -253,7 +253,13 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
     return System.currentTimeMillis() > authCorpAccessTokenExpireTimeMap.get(authCorpId);
   }
 
-  @Override
+	@Override
+	public void expireAccessToken(String authCorpId) {
+    authCorpAccessTokenMap.remove(authCorpId);
+    authCorpAccessTokenExpireTimeMap.remove(authCorpId);
+	}
+
+	@Override
   public void updateAccessToken(String authCorpId, String accessToken, int expiredInSeconds) {
     authCorpAccessTokenMap.put(authCorpId, accessToken);
     // 预留200秒的时间
