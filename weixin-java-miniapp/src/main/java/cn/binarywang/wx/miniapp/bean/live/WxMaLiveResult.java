@@ -109,6 +109,10 @@ public class WxMaLiveResult implements Serializable {
     private Integer closeGoods;
     @SerializedName("close_comment")
     private Integer closeComment;
+    @SerializedName("creater_openid")
+    private String createrOpenid;
+    @SerializedName("feeds_img")
+    private String feedsImg;
     private List<Goods> goods;
   }
 
