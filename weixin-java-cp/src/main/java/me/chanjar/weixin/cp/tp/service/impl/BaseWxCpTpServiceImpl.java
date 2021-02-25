@@ -548,6 +548,31 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     return doCreateWxJsapiSignature(url, authCorpId, this.getSuiteJsApiTicket(authCorpId));
   }
 
+  @Override
+  public void expireSuiteAccessToken() {
+    this.configStorage.expireSuiteAccessToken();
+  }
+
+  @Override
+  public void expireAccessToken(String authCorpId) {
+    this.configStorage.expireAccessToken(authCorpId);
+  }
+
+  @Override
+  public void expireAuthCorpJsApiTicket(String authCorpId) {
+    this.configStorage.expireAuthCorpJsApiTicket(authCorpId);
+  }
+
+  @Override
+  public void expireAuthSuiteJsApiTicket(String authCorpId) {
+    this.configStorage.expireAuthSuiteJsApiTicket(authCorpId);
+  }
+
+  @Override
+  public void expireProviderToken() {
+    this.configStorage.expireProviderToken();
+  }
+
   private WxJsapiSignature doCreateWxJsapiSignature(String url, String authCorpId, String jsapiTicket) {
     long timestamp = System.currentTimeMillis() / 1000;
     String noncestr = RandomUtils.getRandomStr();

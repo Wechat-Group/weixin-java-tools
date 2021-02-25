@@ -491,4 +491,32 @@ public interface WxCpTpService {
    */
   WxJsapiSignature createSuiteJsApiTicketSignature(String url, String authCorpId) throws WxErrorException;
 
+  /**
+   * 使套件accessToken缓存失效
+   */
+  void expireSuiteAccessToken();
+
+  /**
+   * 使机构accessToken缓存失效
+   * @param authCorpId 机构id
+   */
+  void expireAccessToken(String authCorpId);
+
+  /**
+   * 使机构jsapiticket缓存失效
+   * @param authCorpId 机构id
+   */
+  void expireAuthCorpJsApiTicket(String authCorpId);
+
+  /**
+   * 使应用jsapiticket失效
+   * @param authCorpId 机构id
+   */
+  void expireAuthSuiteJsApiTicket(String authCorpId);
+
+  /**
+   * 使供应商accessToken失效
+   */
+  void expireProviderToken();
+
 }
