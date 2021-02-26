@@ -61,6 +61,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final PayScoreService payScoreService = new PayScoreServiceImpl(this);
   private final EcommerceService ecommerceService = new EcommerceServiceImpl(this);
   private final MerchantMediaService merchantMediaService = new MerchantMediaServiceImpl(this);
+  private final MarketingMediaService marketingMediaService = new MarketingMediaServiceImpl(this);
+  private final MarketingFavorService marketingFavorService = new MarketingFavorServiceImpl(this);
 
   protected WxPayConfig config;
 
@@ -92,6 +94,16 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public MerchantMediaService getMerchantMediaService() {
     return this.merchantMediaService;
+  }
+
+  @Override
+  public MarketingMediaService getMarketingMediaService() {
+    return this.marketingMediaService;
+  }
+
+  @Override
+  public MarketingFavorService getMarketingFavorService() {
+    return this.marketingFavorService;
   }
 
   @Override
