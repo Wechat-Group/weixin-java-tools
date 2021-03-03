@@ -210,6 +210,8 @@ public class FavorStocksCreateRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class StockUseRule implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
      * <pre>
      * 字段名：发放总上限
@@ -312,6 +314,8 @@ public class FavorStocksCreateRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class PatternInfo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
      * <pre>
      * 字段名：使用说明
@@ -393,6 +397,8 @@ public class FavorStocksCreateRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class CouponUseRule implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
      * <pre>
      * 字段名：券生效时间
@@ -666,6 +672,8 @@ public class FavorStocksCreateRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class FixedNormalCoupon implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
      * <pre>
      * 字段名：面额
@@ -703,6 +711,8 @@ public class FavorStocksCreateRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class LimitCard implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
      * <pre>
      * 字段名：银行卡名称

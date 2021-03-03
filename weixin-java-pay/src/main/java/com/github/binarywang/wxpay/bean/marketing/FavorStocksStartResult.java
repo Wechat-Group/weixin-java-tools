@@ -3,7 +3,8 @@ package com.github.binarywang.wxpay.bean.marketing;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+
+import java.io.Serializable;
 
 /**
  * 激活代金券批次返回结果对象
@@ -12,11 +13,9 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
  */
 @NoArgsConstructor
 @Data
-public class FavorStocksStartResult {
+public class FavorStocksStartResult implements Serializable {
 
-  public static FavorStocksStartResult fromJson(String json) {
-    return WxGsonBuilder.create().fromJson(json, FavorStocksStartResult.class);
-  }
+  private static final long serialVersionUID = 1L;
 
   /**
    * 生效时间

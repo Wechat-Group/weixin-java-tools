@@ -3,7 +3,6 @@ package com.github.binarywang.wxpay.bean.marketing;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,11 +14,9 @@ import java.util.List;
  */
 @NoArgsConstructor
 @Data
-public class FavorStocksGetResult {
+public class FavorStocksGetResult implements Serializable {
 
-  public static FavorStocksGetResult fromJson(String json) {
-    return WxGsonBuilder.create().fromJson(json, FavorStocksGetResult.class);
-  }
+  private static final long serialVersionUID = 1L;
 
   /**
    * 批次号
@@ -180,6 +177,8 @@ public class FavorStocksGetResult {
   @Data
   @NoArgsConstructor
   public static class CutToMessage implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
      * 可用优惠的商品最高单价
      * <p>
@@ -202,6 +201,8 @@ public class FavorStocksGetResult {
   @Data
   @NoArgsConstructor
   public static class StockUseRule implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
      * 发放总上限
      * <p>
@@ -298,6 +299,8 @@ public class FavorStocksGetResult {
   @Data
   @NoArgsConstructor
   public static class FixedNormalCoupon implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
      * 面额
      * <p>

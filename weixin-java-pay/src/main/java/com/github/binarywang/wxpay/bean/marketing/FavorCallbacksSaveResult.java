@@ -3,7 +3,8 @@ package com.github.binarywang.wxpay.bean.marketing;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+
+import java.io.Serializable;
 
 /**
  * 设置消息通知地址返回结果对象
@@ -12,11 +13,9 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
  */
 @NoArgsConstructor
 @Data
-public class FavorCallbacksSaveResult {
+public class FavorCallbacksSaveResult implements Serializable {
 
-  public static FavorCallbacksSaveResult fromJson(String json) {
-    return WxGsonBuilder.create().fromJson(json, FavorCallbacksSaveResult.class);
-  }
+  private static final long serialVersionUID = 1L;
 
   /**
    * 修改时间
