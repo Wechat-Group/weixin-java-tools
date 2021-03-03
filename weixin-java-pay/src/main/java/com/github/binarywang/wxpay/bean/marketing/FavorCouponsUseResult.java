@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 核销事件回调内容
  *
- * @author star
+ * @author thinsstar
  */
 @NoArgsConstructor
 @Data

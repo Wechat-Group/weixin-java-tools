@@ -154,6 +154,13 @@ public interface WxPayService {
   EcommerceService getEcommerceService();
 
   /**
+   * 获取微信支付智慧商圈服务类
+   *
+   * @return the business circle service
+   */
+  BusinessCircleService getBusinessCircleService();
+
+  /**
    * 获取微信支付通用媒体服务类
    *
    * @return the merchant media service
