@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.service;
 
+import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
 import com.github.binarywang.wxpay.bean.marketing.*;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
@@ -172,13 +173,39 @@ public interface MarketingFavorService {
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/callbacks
    * </pre>
    *
-   * @param request 批次号
+   * @param request 请求对象
    * @return FavorCallbacksSaveResult 微信返回的结果信息。
    * @throws WxPayException the wx pay exception
    */
   FavorCallbacksSaveResult saveFavorCallbacksV3(FavorCallbacksSaveRequest request) throws WxPayException;
 
+  /**
+   * <pre>
+   * 代金券接口-暂停代金券批次API
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_13.shtml
+   * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks/{stock_id}/pause
+   * </pre>
+   *
+   * @param request 请求对象
+   * @return FavorCallbacksSaveResult 微信返回的结果信息。
+   * @throws WxPayException the wx pay exception
+   */
   FavorStocksStartResult pauseFavorStocksV3(String stockId, FavorStocksSetRequest request) throws WxPayException;
 
+  /**
+   * <pre>
+   * 代金券接口-重启代金券批次API
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_14.shtml
+   * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks/{stock_id}/restart
+   * </pre>
+   *
+   * @param request 请求对象
+   * @return FavorCallbacksSaveResult 微信返回的结果信息。
+   * @throws WxPayException the wx pay exception
+   */
   FavorStocksStartResult restartFavorStocksV3(String stockId, FavorStocksSetRequest request) throws WxPayException;
+
+  UseNotifyData parseNotifyData(String data, SignatureHeader header) throws WxPayException;
+
+  FavorCouponsUseResult decryptNotifyDataResource(UseNotifyData data) throws WxPayException;
 }
