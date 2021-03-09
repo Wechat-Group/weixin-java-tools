@@ -244,13 +244,15 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
     Long expire = authCorpAccessTokenExpireTimeMap.getOrDefault(authCorpId, 0L);
     WxAccessToken accessTokenEntity = new WxAccessToken();
     accessTokenEntity.setAccessToken(accessToken);
-    accessTokenEntity.setExpiresIn(Math.toIntExact(expire));
+    accessTokenEntity.setExpiresIn((int)((expire - System.currentTimeMillis()) / 1000 + 200));
     return accessTokenEntity;
   }
 
   @Override
   public boolean isAccessTokenExpired(String authCorpId) {
-    return System.currentTimeMillis() > authCorpAccessTokenExpireTimeMap.get(authCorpId);
+    //不存在或者过期
+    return authCorpAccessTokenExpireTimeMap.get(authCorpId) == null
+        || System.currentTimeMillis() > authCorpAccessTokenExpireTimeMap.get(authCorpId);
   }
 
 	@Override

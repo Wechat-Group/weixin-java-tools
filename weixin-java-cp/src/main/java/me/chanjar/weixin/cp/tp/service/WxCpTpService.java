@@ -308,9 +308,9 @@ public interface WxCpTpService {
   void initHttp();
 
   /**
-   * 获取WxMpConfigStorage 对象.
+   * 获取WxCpTpConfigStorage 对象.
    *
-   * @return WxMpConfigStorage wx cp tp config storage
+   * @return WxCpTpConfigStorage wx cp tp config storage
    * @deprecated storage应该在service内部使用 ，提供这个接口，容易破坏这个封装
    */
   @Deprecated
