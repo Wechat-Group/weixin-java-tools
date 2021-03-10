@@ -119,7 +119,7 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <httpclient.version>4.5</httpclient.version>
-    <jetty.version>9.4.35.v20201120</jetty.version>
+    <jetty.version>11.0.1</jetty.version>
   </properties>
 
   <dependencyManagement>
