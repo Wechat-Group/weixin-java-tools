@@ -122,18 +122,6 @@ public interface WxQidianService extends WxService {
 
   /**
    * <pre>
-   * 长链接转短链接接口.
-   * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=长链接转短链接接口
-   * </pre>
-   *
-   * @param longUrl 长url
-   * @return 生成的短地址 string
-   * @throws WxErrorException .
-   */
-  String shortUrl(String longUrl) throws WxErrorException;
-
-  /**
-   * <pre>
    * 构造第三方使用网站应用授权登录的url.
    * 详情请见: <a href=
   "https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=&lang=zh_CN">网站应用微信登录开发指南</a>

@@ -66,17 +66,6 @@ public class BaseWxQidianServiceImplTest {
     Assert.assertNotEquals(ipArray.length, 0);
   }
 
-  public void testShortUrl() throws WxErrorException {
-    String shortUrl = this.wxService.shortUrl("http://www.baidu.com/test?access_token=123");
-    assertThat(shortUrl).isNotEmpty();
-    System.out.println(shortUrl);
-  }
-
-  @Test(expectedExceptions = WxErrorException.class)
-  public void testShortUrl_with_exceptional_url() throws WxErrorException {
-    this.wxService.shortUrl("http://www.baidu.com/test?redirect_count=1&access_token=123");
-  }
-
   @Test
   public void refreshAccessTokenDuplicatelyTest() throws InterruptedException {
     // 测试多线程刷新accessToken时是否重复刷新

@@ -127,18 +127,6 @@ public interface WxMpService extends WxService {
 
   /**
    * <pre>
-   * 长链接转短链接接口.
-   * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=长链接转短链接接口
-   * </pre>
-   *
-   * @param longUrl 长url
-   * @return 生成的短地址 string
-   * @throws WxErrorException .
-   */
-  String shortUrl(String longUrl) throws WxErrorException;
-
-  /**
-   * <pre>
    * 语义查询接口.
    * 详情请见：http://mp.weixin.qq.com/wiki/index.php?title=语义理解
    * </pre>

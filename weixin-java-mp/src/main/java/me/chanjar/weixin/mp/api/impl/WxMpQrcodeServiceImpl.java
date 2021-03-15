@@ -100,23 +100,13 @@ public class WxMpQrcodeServiceImpl implements WxMpQrcodeService {
   }
 
   @Override
-  public String qrCodePictureUrl(String ticket, boolean needShortUrl) throws WxErrorException {
+  public String qrCodePictureUrl(String ticket) throws WxErrorException {
     try {
-      String resultUrl = String.format(SHOW_QRCODE_WITH_TICKET.getUrl(this.wxMpService.getWxMpConfigStorage()),
+      return String.format(SHOW_QRCODE_WITH_TICKET.getUrl(this.wxMpService.getWxMpConfigStorage()),
         URLEncoder.encode(ticket, StandardCharsets.UTF_8.name()));
-      if (needShortUrl) {
-        return this.wxMpService.shortUrl(resultUrl);
-      }
-
-      return resultUrl;
     } catch (UnsupportedEncodingException e) {
       throw new WxErrorException(e.getMessage());
     }
-  }
-
-  @Override
-  public String qrCodePictureUrl(String ticket) throws WxErrorException {
-    return this.qrCodePictureUrl(ticket, false);
   }
 
 }

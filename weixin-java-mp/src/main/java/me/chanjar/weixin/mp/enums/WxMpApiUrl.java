@@ -131,10 +131,6 @@ public interface WxMpApiUrl {
      */
     GET_TICKET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/ticket/getticket?type="),
     /**
-     * 长链接转短链接接口.
-     */
-    SHORTURL_API_URL(API_DEFAULT_HOST_URL, "/cgi-bin/shorturl"),
-    /**
      * 语义查询接口.
      */
     SEMANTIC_SEMPROXY_SEARCH_URL(API_DEFAULT_HOST_URL, "/semantic/semproxy/search"),

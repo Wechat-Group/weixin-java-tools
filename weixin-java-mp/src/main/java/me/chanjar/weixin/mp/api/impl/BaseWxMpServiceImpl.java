@@ -209,20 +209,6 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   }
 
   @Override
-  public String shortUrl(String longUrl) throws WxErrorException {
-    if (longUrl.contains("&access_token=")) {
-      throw new WxErrorException("要转换的网址中存在非法字符｛&access_token=｝，" +
-        "会导致微信接口报错，属于微信bug，请调整地址，否则不建议使用此方法！");
-    }
-
-    JsonObject o = new JsonObject();
-    o.addProperty("action", "long2short");
-    o.addProperty("long_url", longUrl);
-    String responseContent = this.post(SHORTURL_API_URL, o.toString());
-    return GsonParser.parse(responseContent).get("short_url").getAsString();
-  }
-
-  @Override
   public WxMpSemanticQueryResult semanticQuery(WxMpSemanticQuery semanticQuery) throws WxErrorException {
     String responseContent = this.post(SEMANTIC_SEMPROXY_SEARCH_URL, semanticQuery.toJson());
     return WxMpSemanticQueryResult.fromJson(responseContent);

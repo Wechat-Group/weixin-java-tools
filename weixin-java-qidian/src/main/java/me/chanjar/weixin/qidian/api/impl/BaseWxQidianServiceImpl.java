@@ -2,11 +2,9 @@ package me.chanjar.weixin.qidian.api.impl;
 
 import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.CLEAR_QUOTA_URL;
 import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_CALLBACK_IP_URL;
-import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_CURRENT_AUTOREPLY_INFO_URL;
 import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_TICKET_URL;
 import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.NETCHECK_URL;
 import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.QRCONNECT_URL;
-import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.SHORTURL_API_URL;
 
 import java.io.IOException;
 import java.util.Map;
@@ -136,19 +134,6 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   @Override
   public String getAccessToken() throws WxErrorException {
     return getAccessToken(false);
-  }
-
-  @Override
-  public String shortUrl(String longUrl) throws WxErrorException {
-    if (longUrl.contains("&access_token=")) {
-      throw new WxErrorException("要转换的网址中存在非法字符｛&access_token=｝，" + "会导致微信接口报错，属于微信bug，请调整地址，否则不建议使用此方法！");
-    }
-
-    JsonObject o = new JsonObject();
-    o.addProperty("action", "long2short");
-    o.addProperty("long_url", longUrl);
-    String responseContent = this.post(SHORTURL_API_URL, o.toString());
-    return GsonParser.parse(responseContent).get("short_url").getAsString();
   }
 
   @Override
