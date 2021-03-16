@@ -599,11 +599,13 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public MinishopAuditStatus checkAuditStatus(String wxName) throws WxErrorException {
+  public String checkAuditStatus(String wxName) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("wx_name", wxName);
-    String response = post(CHECK_SHOP_AUDITSTATUS_URL, jsonObject.toString(), "component_access_token");
-    return WxOpenGsonBuilder.create().fromJson(response, MinishopAuditStatus.class);
+    String url = CHECK_SHOP_AUDITSTATUS_URL + "?access_token=" + getComponentAccessToken(false);
+    String response = post(url, jsonObject.toString());
+    log.info("CHECK_SHOP_AUDITSTATUS_URL: " + response);
+    return response;
   }
 
   @Override

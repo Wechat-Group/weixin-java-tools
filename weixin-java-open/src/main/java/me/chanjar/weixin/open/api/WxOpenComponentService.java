@@ -527,7 +527,7 @@ public interface WxOpenComponentService {
    * @param wxName                微信号
    * @return
    */
-  MinishopAuditStatus checkAuditStatus(String wxName) throws WxErrorException;
+  String checkAuditStatus(String wxName) throws WxErrorException;
 
 
   /**
