@@ -7,6 +7,8 @@ import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
@@ -106,7 +108,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       }
     }
 
-    return null;
+    return minishopService;
   }
 
   public WxOpenService getWxOpenService() {
@@ -632,7 +634,12 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public MinishopPicFile uploadImagePicFile(Integer height, Integer width, File file) throws WxErrorException {
-    return null;
+  public WxMinishopImageUploadResult uploadMinishopImagePicFile(String appId, Integer height, Integer width, File file) throws WxErrorException {
+    String url = WxOpenMinishopService.UPLOAD_IMG_MINISHOP_FILE_URL + "?access_token="+getAuthorizerAccessToken(appId, false)+"&height="+height+"&width="+width;
+    log.info("upload url: " + url);
+//    String response = (url, file);
+    WxMinishopImageUploadResult result = getWxOpenService().uploadMinishopMediaFile(url, file);
+
+    return result;
   }
 }

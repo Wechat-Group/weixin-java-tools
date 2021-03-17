@@ -16,7 +16,7 @@ public interface WxOpenMinishopService {
    String submitBasicInfoUrl = "https://api.weixin.qq.com/product/register/submit_basicinfo";
 
 
-  String uploadImageUrl = "https://api.weixin.qq.com/product/img/upload";
+  public final static String UPLOAD_IMG_MINISHOP_FILE_URL = "https://api.weixin.qq.com/product/img/upload";
 
   String getCategoryUrl = "https://api.weixin.qq.com/product/category/get";
 
@@ -46,7 +46,7 @@ public interface WxOpenMinishopService {
 
   MinishopAuditStatus checkAuditStatus(String wxName) throws WxErrorException;
 
-  MinishopPicFile uploadImagePicFile(Integer height, Integer width, File file);
+  String uploadImagePicFile(Integer height, Integer width, File file) throws WxErrorException;
 
   MinishopCategories getCategory(Integer fCatId);
 

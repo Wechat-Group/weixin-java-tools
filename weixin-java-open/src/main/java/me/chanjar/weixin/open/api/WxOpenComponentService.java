@@ -1,6 +1,8 @@
 package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.open.bean.WxOpenCreateResult;
@@ -165,6 +167,12 @@ public interface WxOpenComponentService {
   WxOpenFastMaService getWxFastMaServiceByAppid(String appid);
 
 
+  /**
+   * 获取指定appid的小商店服务
+   *
+   * @param appid
+   * @return
+   */
   WxOpenMinishopService getWxMinishopServiceByAppid(String appid);
 
   /**
@@ -562,6 +570,6 @@ public interface WxOpenComponentService {
    * @return
    * @throws WxErrorException
    */
-  MinishopPicFile uploadImagePicFile(Integer height, Integer width, File file) throws WxErrorException;
+  WxMinishopImageUploadResult uploadMinishopImagePicFile(String appId, Integer height, Integer width, File file) throws WxErrorException;
 
 }
