@@ -619,7 +619,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.add("organization_code_info", organizationCodeInfo.toJsonObject());
     jsonObject.add("id_card_info", idcardInfo.toJsonObject());
     jsonObject.add("super_administrator_info", superAdministratorInfo.toJsonObject());
-    String response = post(SUBMIT_MERCHANTINFO_URL, jsonObject.toString(), "component_access_token");
+    String url = SUBMIT_MERCHANTINFO_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    String response = getWxOpenService().post(url, jsonObject.getAsString());
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
@@ -629,7 +630,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("appid", appId);
     jsonObject.add("name_info", nameInfo.toJsonObject());
     jsonObject.add("return_info", returnInfo.toJsonObject());
-    String response = post(SUBMIT_BASICINFO_URL, jsonObject.toString(), "component_access_token");
+    String url = SUBMIT_MERCHANTINFO_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    String response = getWxOpenService().post(url, jsonObject.getAsString());
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
