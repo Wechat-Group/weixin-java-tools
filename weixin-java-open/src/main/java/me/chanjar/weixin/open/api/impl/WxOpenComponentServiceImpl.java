@@ -616,11 +616,21 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("app_id", appId);
     jsonObject.addProperty("subject_type", subjectType);
     jsonObject.add("busi_license", busiLicense.toJsonObject());
-    jsonObject.add("organization_code_info", organizationCodeInfo.toJsonObject());
-    jsonObject.add("id_card_info", idcardInfo.toJsonObject());
-    jsonObject.add("super_administrator_info", superAdministratorInfo.toJsonObject());
+    if (organizationCodeInfo != null) {
+      jsonObject.add("organization_code_info", organizationCodeInfo.toJsonObject());
+    }
+    if (idcardInfo != null) {
+      jsonObject.add("id_card_info", idcardInfo.toJsonObject());
+    }
+    if (superAdministratorInfo != null) {
+      jsonObject.add("super_administrator_info", superAdministratorInfo.toJsonObject());
+    }
+
+    if (merchantShoprtName != null) {
+      jsonObject.addProperty("merchant_shortname", merchantShoprtName);
+    }
     String url = SUBMIT_MERCHANTINFO_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
-    String response = getWxOpenService().post(url, jsonObject.getAsString());
+    String response = getWxOpenService().post(url, jsonObject.toString());
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
@@ -631,7 +641,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.add("name_info", nameInfo.toJsonObject());
     jsonObject.add("return_info", returnInfo.toJsonObject());
     String url = SUBMIT_MERCHANTINFO_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
-    String response = getWxOpenService().post(url, jsonObject.getAsString());
+    String response = getWxOpenService().post(url, jsonObject.toString());
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
