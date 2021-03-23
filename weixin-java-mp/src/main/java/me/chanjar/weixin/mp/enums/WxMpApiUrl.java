@@ -1129,6 +1129,26 @@ public interface WxMpApiUrl {
      * 获取关联商户
      */
     GET_PAY_MCH_SET_BIZ_ATTR(API_DEFAULT_HOST_URL, "/card/invoice/setbizattr?action=get_pay_mch"),
+
+    /**
+     * 报销方查询报销发票信息
+     */
+    GET_INVOICE_INFO(API_DEFAULT_HOST_URL,"/card/invoice/reimburse/getinvoiceinfo"),
+
+    /**
+     * 报销方批量查询报销发票信息
+     */
+    GET_INVOICE_BATCH(API_DEFAULT_HOST_URL,"/card/invoice/reimburse/getinvoicebatch"),
+
+    /**
+     * 报销方更新发票状态
+     */
+    UPDATE_INVOICE_STATUS(API_DEFAULT_HOST_URL,"/card/invoice/reimburse/updateinvoicestatus"),
+
+    /**
+     * 报销方批量更新发票状态
+     */
+    UPDATE_STATUS_BATCH(API_DEFAULT_HOST_URL,"/card/invoice/reimburse/updatestatusbatch"),
     ;
     private final String prefix;
     private final String path;

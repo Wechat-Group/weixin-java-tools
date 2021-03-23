@@ -129,6 +129,10 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Setter
   private WxOAuth2Service oAuth2Service = new WxMpOAuth2ServiceImpl(this);
 
+  @Getter
+  @Setter
+  private WxMpReimburseInvoiceService reimburseInvoiceService = new WxMpReimburseInvoiceServiceImpl(this);
+
   private Map<String, WxMpConfigStorage> configStorageMap;
 
   private int retrySleepMillis = 1000;

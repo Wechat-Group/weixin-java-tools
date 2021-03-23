@@ -534,6 +534,18 @@ public interface WxMpService extends WxService {
   WxImgProcService getImgProcService();
 
   /**
+   * 返回电子发票报销方相关接口
+   * @return WxMpReimburseInvoiceService
+   */
+  WxMpReimburseInvoiceService getReimburseInvoiceService();
+
+  /**
+   * .
+   * @param reimburseInvoiceService .
+   */
+  void setReimburseInvoiceService(WxMpReimburseInvoiceService reimburseInvoiceService);
+
+  /**
    * .
    *
    * @param kefuService .
