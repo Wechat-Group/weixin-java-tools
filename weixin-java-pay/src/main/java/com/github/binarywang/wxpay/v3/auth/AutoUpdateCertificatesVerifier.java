@@ -16,8 +16,8 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.joda.time.Instant;
-import org.joda.time.Minutes;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -110,7 +110,7 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
    * 检查证书是否在有效期内，如果不在有效期内则进行更新
    */
   private void checkAndAutoUpdateCert() {
-    if (instant == null || Minutes.minutesBetween(instant, Instant.now()).getMinutes() >= minutesInterval) {
+    if (instant == null || instant.plus(minutesInterval, ChronoUnit.MINUTES).compareTo(Instant.now()) >= 0) {
       if (lock.tryLock()) {
         try {
           autoUpdateCert();
