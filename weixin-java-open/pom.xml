@@ -91,6 +91,11 @@
       <groupId>org.redisson</groupId>
       <artifactId>redisson</artifactId>
     </dependency>
+      <dependency>
+          <groupId>io.swagger</groupId>
+          <artifactId>swagger-annotations</artifactId>
+          <version>1.5.24</version>
+      </dependency>
   </dependencies>
 
   <build>

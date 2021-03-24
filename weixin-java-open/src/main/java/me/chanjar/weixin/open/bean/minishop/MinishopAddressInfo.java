@@ -1,52 +1,63 @@
 package me.chanjar.weixin.open.bean.minishop;
 
 import com.google.gson.JsonObject;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
+@ApiModel("小商店地址信息")
 public class MinishopAddressInfo implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
    * 收货人姓名
    */
+  @ApiModelProperty("收货人姓名 必填")
   private String userName;
 
   /**
    * 邮政编码
    */
+  @ApiModelProperty("邮政编码 必填")
   private String postalCode;
 
   /**
    * 省份，格式：广东省 北京市
    */
+  @ApiModelProperty("省份，格式：广东省 北京市 必填")
   private String province;
 
   /**
    * 城市，格式：广州市
    */
+  @ApiModelProperty("城市，格式：广州市 必填")
   private String cityName;
 
   /**
    * 区，格式：海珠区
    */
+  @ApiModelProperty("区，格式：海珠区 必填")
   private String countyName;
 
   /**
    * 详细地址
    */
+  @ApiModelProperty("详细地址，必填")
   private String detailInfo;
 
   /**
    * 国家码
    */
+  @ApiModelProperty("国家码，选填")
   private String nationalCode;
 
   /**
    * 电话号码
    */
+  @ApiModelProperty("电话号码")
   private String telNumber;
 
   public JsonObject toJsonObject() {

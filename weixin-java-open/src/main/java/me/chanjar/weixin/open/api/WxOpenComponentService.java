@@ -140,6 +140,14 @@ public interface WxOpenComponentService {
 
   String UPLOAD_IMAGE_URL = "https://api.weixin.qq.com/product/img/upload";
 
+  String MINISHOP_CATEGORY_GET_URL = "https://api.weixin.qq.com/product/category/get";
+
+  String MINISHOP_BRAND_GET_URL = "https://api.weixin.qq.com/product/brand/get";
+
+  String MINISHOP_DELIVERY_TEMPLATE_GET_URL = "https://api.weixin.qq.com/product/delivery/get_freight_template";
+
+  String MINISHOP_SHOPCATEGORY_GET_URL = "https://api.weixin.qq.com/product/store/get_shopcat";
+
 
 
   /**
@@ -571,5 +579,38 @@ public interface WxOpenComponentService {
    * @throws WxErrorException
    */
   WxMinishopImageUploadResult uploadMinishopImagePicFile(String appId, Integer height, Integer width, File file) throws WxErrorException;
+
+
+  /**
+   * 获取小商店的类目详情
+   * @param appId：小商店APPID
+   * @param fCatId：父类目ID，可先填0获取根部类目
+   * @return 小商店类目信息列表
+   */
+  MinishopCategories getMinishopCategories(String appId, Integer fCatId) throws WxErrorException;
+
+
+  /**
+   * 获取小商店品牌信息
+   * @param appId：小商店appID
+   * @return
+   */
+  MinishopBrandList getMinishopBrands(String appId) throws WxErrorException;
+
+
+  /**
+   * 获取小商店运费模版信息
+   * @param appId：小商店appID
+   * @return
+   */
+  MinishopDeliveryTemplateResult getMinishopDeliveryTemplate(String appId) throws WxErrorException;
+
+
+  /**
+   * 获取小商店商品分类信息
+   * @param appId
+   * @return
+   */
+  MinishopShopCatList getMinishopCatList(String appId) throws WxErrorException;
 
 }

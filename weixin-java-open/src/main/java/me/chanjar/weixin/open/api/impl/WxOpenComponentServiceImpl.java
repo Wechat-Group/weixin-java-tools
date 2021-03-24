@@ -2,6 +2,7 @@ package me.chanjar.weixin.open.api.impl;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -640,7 +642,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("appid", appId);
     jsonObject.add("name_info", nameInfo.toJsonObject());
     jsonObject.add("return_info", returnInfo.toJsonObject());
-    String url = SUBMIT_MERCHANTINFO_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    String url = SUBMIT_BASICINFO_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
     String response = getWxOpenService().post(url, jsonObject.toString());
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
@@ -653,5 +655,134 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     WxMinishopImageUploadResult result = getWxOpenService().uploadMinishopMediaFile(url, file);
 
     return result;
+  }
+
+  @Override
+  public MinishopCategories getMinishopCategories(String appId, Integer fCatId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("f_cat_id", fCatId);
+    String url = MINISHOP_CATEGORY_GET_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    MinishopCategories categories = new MinishopCategories();
+    categories.setErrcode(respJson.get("errcode").getAsInt());
+    categories.setErrmsg(respJson.get("errmsg").getAsString());
+    if (categories.getErrcode() == 0) {
+      JsonArray catListJson = respJson.getAsJsonArray("cat_list");
+      if (catListJson != null || catListJson.size() > 0) {
+        List<MinishopCategory> categoryList = new ArrayList<>();
+        for (int i = 0; i < catListJson.size(); i++) {
+          JsonObject catJson = catListJson.get(i).getAsJsonObject();
+          MinishopCategory cate = new MinishopCategory();
+          cate.setCatId(catJson.get("cat_id").getAsInt());
+          cate.setFCatId(catJson.get("f_cat_id").getAsInt());
+          cate.setName(catJson.get("name").getAsString());
+          categoryList.add(cate);
+        }
+
+        categories.setCatList(categoryList);
+      }
+    }
+    return categories;
+  }
+
+  @Override
+  public MinishopBrandList getMinishopBrands(String appId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    String url = MINISHOP_BRAND_GET_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    MinishopBrandList brandList = new MinishopBrandList();
+    brandList.setErrcode(respJson.get("errcode").getAsInt());
+    brandList.setErrmsg(respJson.get("errmsg").getAsString());
+    if (brandList.getErrcode() == 0) {
+      JsonArray brandArrayJson = respJson.get("brands").getAsJsonArray();
+      if (brandArrayJson.size() > 0) {
+        List<MinishopBrand> brands = new ArrayList<>();
+        for (int i = 0; i < brandArrayJson.size(); i++) {
+          JsonObject brandJson = brandArrayJson.get(i).getAsJsonObject();
+          MinishopBrand brand = new MinishopBrand();
+          brand.setFirstCatId(brandJson.get("first_cat_id").getAsInt());
+          brand.setSecondCatId(brandJson.get("second_cat_id").getAsInt());
+          brand.setThirdCatId(brandJson.get("third_cat_id").getAsInt());
+          MinishopBrand.MinishopBrandInfo brandInfo = new MinishopBrand.MinishopBrandInfo();
+          JsonObject brandInfoJson = brandJson.get("brand_info").getAsJsonObject();
+          brandInfo.setBrandId(brandInfoJson.get("brand_id").getAsInt());
+          brandInfo.setBrandName(brandInfoJson.get("brand_name").getAsString());
+          brand.setBrandInfo(brandInfo);
+
+          brands.add(brand);
+
+        }
+
+        brandList.setBrands(brands);
+      }
+    }
+    return brandList;
+  }
+
+  @Override
+  public MinishopDeliveryTemplateResult getMinishopDeliveryTemplate(String appId) throws WxErrorException {
+    String url = MINISHOP_DELIVERY_TEMPLATE_GET_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    MinishopDeliveryTemplateResult templateResult = new MinishopDeliveryTemplateResult();
+    templateResult.setErrCode(respJson.get("errcode").getAsInt());
+    templateResult.setErrMsg(respJson.get("errmsg").getAsString());
+    if (templateResult.getErrCode() == 0) {
+      JsonArray templateArrayJson = respJson.get("template_list").getAsJsonArray();
+      if (templateArrayJson.size() > 0) {
+        List<MinishopDeliveryTemplate> templateList = new ArrayList<>();
+        for (int i = 0; i < templateArrayJson.size(); i++) {
+          JsonObject templateJson = templateArrayJson.get(i).getAsJsonObject();
+          MinishopDeliveryTemplate template = new MinishopDeliveryTemplate();
+          template.setTemplateId(templateJson.get("template_id").getAsInt());
+          template.setName(templateJson.get("name").getAsString());
+          template.setValuationType(templateJson.get("valuation_type").getAsInt() == 1 ? MinishopDeliveryTemplate.ValuationType.WEIGHT : MinishopDeliveryTemplate.ValuationType.PACKAGE);
+
+
+          templateList.add(template);
+
+        }
+
+        templateResult.setTemplateList(templateList);
+      }
+    }
+    return templateResult;
+  }
+
+  @Override
+  public MinishopShopCatList getMinishopCatList(String appId) throws WxErrorException {
+    String url = MINISHOP_SHOPCATEGORY_GET_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    MinishopShopCatList shopCatList = new MinishopShopCatList();
+    shopCatList.setErrcode(respJson.get("errcode").getAsInt());
+    shopCatList.setErrmsg(respJson.get("errmsg").getAsString());
+    if (shopCatList.getErrcode() == 0) {
+      JsonArray shopcatArrayJson = respJson.get("shopcat_list").getAsJsonArray();
+      if (shopcatArrayJson.size() > 0) {
+        List<MinishopShopCat> shopCats = new ArrayList<>();
+        for (int i = 0; i < shopcatArrayJson.size(); i++) {
+          JsonObject shopCatJson = shopcatArrayJson.get(i).getAsJsonObject();
+          MinishopShopCat shopCat = new MinishopShopCat();
+          shopCat.setShopCatId(shopCatJson.get("shopcat_id").getAsInt());
+          shopCat.setShopCatName(shopCatJson.get("shopcat_name").getAsString());
+          shopCat.setFShopCatId(shopCatJson.get("f_shopcat_id").getAsInt());
+          shopCat.setCatLevel(shopCatJson.get("cat_level").getAsInt());
+
+          shopCats.add(shopCat);
+
+        }
+
+        shopCatList.setShopCatList(shopCats);
+      }
+    }
+    return shopCatList;
   }
 }
