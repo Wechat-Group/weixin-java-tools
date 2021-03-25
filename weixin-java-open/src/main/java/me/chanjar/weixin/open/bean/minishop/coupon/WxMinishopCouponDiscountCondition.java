@@ -1,5 +1,8 @@
 package me.chanjar.weixin.open.bean.minishop.coupon;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,4 +21,15 @@ public class WxMinishopCouponDiscountCondition {
 
   @ApiModelProperty(value = "商品价格，满减券需填写", required = false)
   private Integer productPrice;
+
+  public JsonObject toJsonObject() {
+    JsonObject jsonObject = new JsonObject();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    jsonObject.addProperty("product_cnt", productCnt);
+    jsonObject.add("product_ids", gson.toJsonTree(productIds));
+    jsonObject.addProperty("product_price", productPrice);
+
+    return jsonObject;
+  }
 }

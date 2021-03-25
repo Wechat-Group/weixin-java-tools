@@ -1,5 +1,6 @@
 package me.chanjar.weixin.open.bean.minishop.coupon;
 
+import com.google.gson.JsonObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,6 +10,7 @@ import java.io.Serializable;
 @Data
 @ApiModel("小商店优惠券信息")
 public class WxMinishopCoupon implements Serializable {
+
   @ApiModelProperty(value = "优惠券类型: 1 商品条件折券, discount_condition.product_ids, discount_condition.product_cnt, discount_info.discount_num 必填" +
     "2 商品满减券, discount_condition.product_ids, discount_condition.product_price, discount_info.discount_fee 必填" +
     "3 商品统一折扣券, discount_condition.product_ids, discount_info.discount_num必填" +
@@ -36,4 +38,31 @@ public class WxMinishopCoupon implements Serializable {
 
   @ApiModelProperty(value = "优惠券有效期信息", required = true)
   private WxMinishopCouponValidInfo validInfo;
+
+  public JsonObject toJsonObject() {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("type", type);
+    jsonObject.addProperty("name", name);
+    if (discountInfo != null) {
+      jsonObject.add("discount_info", discountInfo.toJsonObject());
+    }
+
+    if (extInfo != null) {
+      jsonObject.add("ext_info", extInfo.toJsonObject());
+    }
+
+    if(promoteInfo != null) {
+      jsonObject.add("promote_info", promoteInfo.toJsonObject());
+    }
+
+    if (receiveInfo != null) {
+      jsonObject.add("receive_info", receiveInfo.toJsonObject());
+    }
+
+    if (validInfo != null) {
+      jsonObject.add("valid_info", validInfo.toJsonObject());
+    }
+
+    return jsonObject;
+  }
 }

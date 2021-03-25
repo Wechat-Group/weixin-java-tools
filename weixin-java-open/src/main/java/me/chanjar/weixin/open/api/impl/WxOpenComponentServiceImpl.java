@@ -24,6 +24,10 @@ import me.chanjar.weixin.open.bean.*;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.minishop.*;
+import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCoupon;
+import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCouponStock;
+import me.chanjar.weixin.open.bean.minishop.goods.WxMinishopSku;
+import me.chanjar.weixin.open.bean.minishop.goods.WxMinishopSpu;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -784,5 +788,94 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       }
     }
     return shopCatList;
+  }
+
+  @Override
+  public Integer minishopCreateCoupon(String appId, WxMinishopCoupon couponInfo) throws WxErrorException {
+    String url = MINISHOP_CREATE_COUPON_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = couponInfo.toJsonObject();
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    Integer couponId = -1;
+    if (respJson.get("errcode").getAsInt() == 0) {
+      JsonObject dataJson = respJson.get("data").getAsJsonObject();
+      couponId = dataJson.get("coupon_id").getAsInt();
+    }
+    return couponId;
+  }
+
+  @Override
+  public WxMinishopCouponStock minishopGetCouponList(String appId, String startCreateTime, String endCreateTime, Integer status, Integer page, Integer pageSize) throws WxErrorException {
+    String url = MINISHOP_GET_COUPON_LIST + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopPushCouponToUser(String appId, String openId, Integer couponId) throws WxErrorException {
+    String url = MINISHOP_PUSH_COUPON + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("openid", openId);
+    jsonObject.addProperty("coupon_id", couponId);
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsAddSpu(String appId, WxMinishopSpu spu) throws WxErrorException {
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsDelSpu(String appId, Long productId, Long outProductId) throws WxErrorException {
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsUpdateSpu(String appId, WxMinishopSpu spu) throws WxErrorException {
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsListingSpu(String appId, Long productId, Long outProductId) throws WxErrorException {
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsDelistingSpu(String appId, Long productId, Long outProductId) throws WxErrorException {
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishiopGoodsAddSku(String appId, WxMinishopSku sku) throws WxErrorException {
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsBatchAddSku(String appId, List<WxMinishopSku> skuList) throws WxErrorException {
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsDelSku(String appId, Long productId, Long outProductId, String outSkuId, Long skuId) throws WxErrorException {
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsUpdateSku(String appId, WxMinishopSku sku) throws WxErrorException {
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsUpdateSkuPrice(String appId, Long productId, Long outProductId, String outSkuId, Long skuId, Long salePrice, Long marketPrice) throws WxErrorException {
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsUpdateSkuStock(String appId, Long productId, Long outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws WxErrorException {
+    return null;
   }
 }

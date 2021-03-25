@@ -10,6 +10,10 @@ import me.chanjar.weixin.open.bean.WxOpenGetResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.minishop.*;
+import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCoupon;
+import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCouponStock;
+import me.chanjar.weixin.open.bean.minishop.goods.WxMinishopSku;
+import me.chanjar.weixin.open.bean.minishop.goods.WxMinishopSpu;
 import me.chanjar.weixin.open.bean.result.*;
 
 import java.io.File;
@@ -147,6 +151,12 @@ public interface WxOpenComponentService {
   String MINISHOP_DELIVERY_TEMPLATE_GET_URL = "https://api.weixin.qq.com/product/delivery/get_freight_template";
 
   String MINISHOP_SHOPCATEGORY_GET_URL = "https://api.weixin.qq.com/product/store/get_shopcat";
+
+  String MINISHOP_CREATE_COUPON_URL = "https://api.weixin.qq.com/product/coupon/create";
+
+  String MINISHOP_GET_COUPON_LIST = "https://api.weixin.qq.com/product/coupon/get_list";
+
+  String MINISHOP_PUSH_COUPON = "https://api.weixin.qq.com/product/coupon/push";
 
 
 
@@ -613,4 +623,190 @@ public interface WxOpenComponentService {
    */
   MinishopShopCatList getMinishopCatList(String appId) throws WxErrorException;
 
+
+  /**
+   * 创建小商店优惠券
+   * @param appId：小商店的appId
+   * @param couponInfo： 优惠券信息
+   * @return couponId: 优惠券ID
+   * @throws WxErrorException
+   */
+  Integer minishopCreateCoupon(String appId, WxMinishopCoupon couponInfo) throws  WxErrorException;
+
+
+  /**
+   * 与小商店对接，获取小商店的优惠券信息
+   * @param appId：小商店的appId
+   * @param startCreateTime：优惠券创建时间的搜索开始时间
+   * @param endCreateTime：优惠券创建时间的搜索结束时间
+   * @param status：优惠券状态
+   * @param page：第几页（最小填1）
+   * @param pageSize：每页数量(不超过10,000)
+   * @return
+   * @throws WxErrorException
+   */
+  WxMinishopCouponStock minishopGetCouponList(String appId, String startCreateTime, String endCreateTime, Integer status, Integer page, Integer pageSize) throws WxErrorException;
+
+
+  /**
+   * 与小商店对接，将优惠券发送给某人
+   * @param appid：小商店appId
+   * @param openId：优惠券接收人的openId
+   * @param couponId: 优惠券ID
+   * @return
+   */
+  WxOpenResult minishopPushCouponToUser(String appid, String openId, Integer couponId)  throws WxErrorException;
+
+
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //小商店spu接口
+  String MINISHOP_ADD_SPU_URL = "https://api.weixin.qq.com/product/spu/add";
+
+  String MINISHOP_DEL_SPU_URL = "https://api.weixin.qq.com/product/spu/del";
+
+  String MINISHOP_UPDATE_SPU_URL = "https://api.weixin.qq.com/product/spu/update";
+
+  String MINISHOP_LISTING_SPU_URL = "https://api.weixin.qq.com/product/spu/listing";
+
+  String MINISHOP_DELISTING_SPU_URL = "https://api.weixin.qq.com/product/spu/delisting";
+  /**
+   * 小商店添加商品接口，添加商品后只是添加到草稿箱，需要通过调用上架商品，并通过审核才能在商城中显示。
+   * @param appId
+   * @param spu
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopGoodsAddSpu(String appId, WxMinishopSpu spu) throws WxErrorException;
+
+
+  /**
+   * 小商店删除商品接口，直接删除，不会存在小商店回收站里面。
+   * @param appId
+   * @param productId
+   * @param outProductId
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopGoodsDelSpu(String appId, Long productId, Long outProductId) throws  WxErrorException;
+
+
+  /**
+   * 小商店更新商品接口，不会直接影响上架商品的信息，而是存在草稿箱，需要调用上架商品接口，并通过审核才能在商城中显示。
+   * @param appId
+   * @param spu
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopGoodsUpdateSpu(String appId, WxMinishopSpu spu) throws WxErrorException;
+
+
+  /**
+   * 上架商品。
+   * @param appId
+   * @param productId
+   * @param outProductId
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopGoodsListingSpu(String appId, Long productId, Long outProductId) throws WxErrorException;
+
+
+  /**
+   * 下架商品
+   * @param appId
+   * @param productId
+   * @param outProductId
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopGoodsDelistingSpu(String appId, Long productId, Long outProductId) throws WxErrorException;
+
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //小商店sku接口
+  String MINISHOP_ADD_SKU_URL = "https://api.weixin.qq.com/product/sku/add";
+
+  String MINISHOP_BATCH_ADD_SKU_URL = "https://api.weixin.qq.com/product/sku/batch_add";
+
+  String MINISHOP_DEL_SKU_URL = "https://api.weixin.qq.com/product/sku/del";
+
+  String MINISHOP_UPDATE_SKU_URL = "https://api.weixin.qq.com/product/sku/update";
+
+  String MINISHOP_UPDATE_SKU_PRICE_URL = "https://api.weixin.qq.com/product/sku/update_price";
+
+  String MINISHOP_UPDATE_SKU_STOCK_URL = "https://api.weixin.qq.com/product/stock/update";
+
+  /**
+   * 小商店新增sku信息
+   * @param appId
+   * @param sku
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishiopGoodsAddSku(String appId, WxMinishopSku sku) throws WxErrorException;
+
+
+  /**
+   * 小商店批量新增sku信息
+   * @param appId
+   * @param skuList
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopGoodsBatchAddSku(String appId, List<WxMinishopSku> skuList) throws WxErrorException;
+
+
+  /**
+   * 小商店删除sku消息
+   * @param appId
+   * @param productId
+   * @param outProductId
+   * @param outSkuId
+   * @param skuId
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopGoodsDelSku(String appId, Long productId, Long outProductId, String outSkuId, Long skuId) throws  WxErrorException;
+
+
+  /**
+   * 小商店更新sku
+   * @param appId
+   * @param sku
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopGoodsUpdateSku(String appId, WxMinishopSku sku) throws WxErrorException;
+
+
+  /**
+   * 小商店更新sku价格
+   * @param appId
+   * @param productId
+   * @param outProductId
+   * @param outSkuId
+   * @param skuId
+   * @param salePrice
+   * @param marketPrice
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopGoodsUpdateSkuPrice(String appId, Long productId, Long outProductId, String outSkuId, Long skuId, Long salePrice, Long marketPrice) throws WxErrorException;
+
+
+  /**
+   * 小商店更新sku库存
+   * @param appId
+   * @param productId
+   * @param outProductId
+   * @param outSkuId
+   * @param skuId
+   * @param type
+   * @param stockNum
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopGoodsUpdateSkuStock(String appId, Long productId, Long outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws  WxErrorException;
 }
