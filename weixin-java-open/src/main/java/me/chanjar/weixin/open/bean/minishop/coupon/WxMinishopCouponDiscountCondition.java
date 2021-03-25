@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @ApiModel("小商店商品折扣券详细信息")
-public class MinishopCouponDiscountCondition {
+public class WxMinishopCouponDiscountCondition {
   @ApiModelProperty(value = "商品折扣券打折金额", required = false)
   private Integer productCnt;
 

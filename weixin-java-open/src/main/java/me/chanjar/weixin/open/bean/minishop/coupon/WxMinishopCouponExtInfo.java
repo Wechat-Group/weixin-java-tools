@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @ApiModel("小商店优惠券的扩展信息")
-public class MinishopCouponExtInfo implements Serializable {
+public class WxMinishopCouponExtInfo implements Serializable {
   @ApiModelProperty("备注信息")
   private String notes;
 

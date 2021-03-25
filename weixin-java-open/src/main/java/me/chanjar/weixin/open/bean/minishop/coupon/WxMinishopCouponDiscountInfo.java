@@ -6,10 +6,10 @@ import lombok.Data;
 
 @Data
 @ApiModel("小商店商品折扣券信息")
-public class MinishopCouponDiscountInfo {
+public class WxMinishopCouponDiscountInfo {
 
   @ApiModelProperty(value = "小商店商品折扣详情")
-  private MinishopCouponDiscountCondition discountCondition;
+  private WxMinishopCouponDiscountCondition discountCondition;
 
   @ApiModelProperty(value = "满减金额", required = true)
   private Integer discountFee;
