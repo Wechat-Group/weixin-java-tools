@@ -157,6 +157,8 @@ public interface WxOpenComponentService {
 
   String MINISHOP_PUSH_COUPON = "https://api.weixin.qq.com/product/coupon/push";
 
+  String MINISHOP_GET_DELIVERY_COMPANY_URL = "https://api.weixin.qq.com/product/delivery/get_company_list";
+
 
 
   /**
@@ -621,6 +623,15 @@ public interface WxOpenComponentService {
    * @return
    */
   MinishopShopCatList getMinishopCatList(String appId) throws WxErrorException;
+
+
+  /**
+   * 获取小商店的快递公司列表
+   * @param appId
+   * @return
+   * @throws WxErrorException
+   */
+  WxMinishopAddGoodsSpuResult<List<WxMinishopDeliveryCompany>> getMinishopDeliveryCompany(String appId) throws WxErrorException;
 
 
   /**
