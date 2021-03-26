@@ -12,8 +12,7 @@ import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCoupon;
 import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCouponStock;
-import me.chanjar.weixin.open.bean.minishop.goods.WxMinishopSku;
-import me.chanjar.weixin.open.bean.minishop.goods.WxMinishopSpu;
+import me.chanjar.weixin.open.bean.minishop.goods.*;
 import me.chanjar.weixin.open.bean.result.*;
 
 import java.io.File;
@@ -678,7 +677,7 @@ public interface WxOpenComponentService {
    * @return
    * @throws WxErrorException
    */
-  WxOpenResult minishopGoodsAddSpu(String appId, WxMinishopSpu spu) throws WxErrorException;
+  WxMinishopAddGoodsSpuResult<WxMinishopAddGoodsSpuData> minishopGoodsAddSpu(String appId, WxMinishopSpu spu) throws WxErrorException;
 
 
   /**
@@ -699,7 +698,7 @@ public interface WxOpenComponentService {
    * @return
    * @throws WxErrorException
    */
-  WxOpenResult minishopGoodsUpdateSpu(String appId, WxMinishopSpu spu) throws WxErrorException;
+  WxMinishopAddGoodsSpuResult<WxMinishopAddGoodsSpuData> minishopGoodsUpdateSpu(String appId, WxMinishopSpu spu) throws WxErrorException;
 
 
   /**
@@ -745,7 +744,7 @@ public interface WxOpenComponentService {
    * @return
    * @throws WxErrorException
    */
-  WxOpenResult minishiopGoodsAddSku(String appId, WxMinishopSku sku) throws WxErrorException;
+  WxMinishopAddGoodsSpuResult<WxMinishopAddGoodsSkuData> minishiopGoodsAddSku(String appId, WxMinishopSku sku) throws WxErrorException;
 
 
   /**

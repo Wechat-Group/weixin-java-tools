@@ -2,7 +2,6 @@ package me.chanjar.weixin.open.bean.minishop.goods;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.sun.tools.corba.se.idl.StringGen;
 import lombok.Data;
 import me.chanjar.weixin.open.bean.minishop.MinishopShopCat;
 
