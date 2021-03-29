@@ -4,6 +4,7 @@ package me.chanjar.weixin.mp.bean.invoice.reimburse;
 import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
@@ -40,6 +41,13 @@ public class InvoiceInfoRequest implements Serializable {
   */
   @SerializedName("encrypt_code")
   private String encryptCode;
+
+  /**
+   * 无参构造方法
+   */
+  @Tolerate
+  InvoiceInfoRequest() {}
+
 
 
   public String toJson() {
