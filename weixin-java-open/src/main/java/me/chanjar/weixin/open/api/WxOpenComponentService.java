@@ -157,6 +157,10 @@ public interface WxOpenComponentService {
 
   String MINISHOP_PUSH_COUPON = "https://api.weixin.qq.com/product/coupon/push";
 
+  String MINISHOP_UPDATE_COUPON_URL = "https://api.weixin.qq.com/product/coupon/update";
+
+  String MINISHOP_UPDATE_COUPON_STATUS_URL = "https://api.weixin.qq.com/product/coupon/update_status";
+
   String MINISHOP_GET_DELIVERY_COMPANY_URL = "https://api.weixin.qq.com/product/delivery/get_company_list";
 
 
@@ -633,7 +637,8 @@ public interface WxOpenComponentService {
    */
   WxMinishopAddGoodsSpuResult<List<WxMinishopDeliveryCompany>> getMinishopDeliveryCompany(String appId) throws WxErrorException;
 
-
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //小商店优惠券接口
   /**
    * 创建小商店优惠券
    * @param appId：小商店的appId
@@ -668,6 +673,25 @@ public interface WxOpenComponentService {
   WxOpenResult minishopPushCouponToUser(String appid, String openId, Integer couponId)  throws WxErrorException;
 
 
+  /**
+   * 与小商店对接，更新商城优惠券
+   * @param appId
+   * @param couponInfo
+   * @return
+   * @throws WxErrorException
+   */
+  Integer minishopUpdateCoupon(String appId, WxMinishopCoupon couponInfo) throws WxErrorException;
+
+
+  /**
+   * 从优惠券创建后status=1，可流转到2,4,5, COUPON_STATUS_VALID = 2 ;//生效 COUPON_STATUS_INVALID = 4 ;//已作废 COUPON_STATUS_DEL = 5;//删除
+   * @param appId
+   * @param couponId
+   * @param status
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult minishopUpdateCouponStatus(String appId, Integer couponId, Integer status) throws  WxErrorException;
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

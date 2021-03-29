@@ -227,6 +227,11 @@ public interface WxOpenMaService extends WxMaService {
    */
   String API_GENERATE_SCHEME = "https://api.weixin.qq.com/wxa/generatescheme";
 
+
+  /**
+   * 通过此接口开通自定义版交易组件，将同步返回接入结果，不再有异步事件回调。
+   */
+  String API_REGISTER_SHOP_COMPONENT = "https://api.weixin.qq.com/shop/register/apply";
   /**
    * 获得小程序的域名配置信息
    *
@@ -595,4 +600,10 @@ public interface WxOpenMaService extends WxMaService {
 
   WxMaScheme generateMaScheme(String jumpWxaPath, String jumpWxaQuery, Boolean isExpire, Long expireTime) throws WxErrorException;
 
+
+  /**
+   * 为小程序开通小商店组件
+   * @return
+   */
+  WxOpenResult registerShopComponent() throws WxErrorException;
 }

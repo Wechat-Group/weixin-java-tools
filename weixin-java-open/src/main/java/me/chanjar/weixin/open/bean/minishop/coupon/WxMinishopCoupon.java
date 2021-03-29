@@ -11,6 +11,12 @@ import java.io.Serializable;
 @ApiModel("小商店优惠券信息")
 public class WxMinishopCoupon implements Serializable {
 
+  //新增完成之后可以看到这个couponId
+  private Integer couponId;
+
+  //优惠券状态
+  private Integer status;
+
   @ApiModelProperty(value = "优惠券类型: 1 商品条件折券, discount_condition.product_ids, discount_condition.product_cnt, discount_info.discount_num 必填" +
     "2 商品满减券, discount_condition.product_ids, discount_condition.product_price, discount_info.discount_fee 必填" +
     "3 商品统一折扣券, discount_condition.product_ids, discount_info.discount_num必填" +
@@ -41,6 +47,13 @@ public class WxMinishopCoupon implements Serializable {
 
   public JsonObject toJsonObject() {
     JsonObject jsonObject = new JsonObject();
+    if (couponId != null) {
+      jsonObject.addProperty("coupon_id", couponId);
+    }
+
+    if (status != null) {
+      jsonObject.addProperty("status", status);
+    }
     jsonObject.addProperty("type", type);
     jsonObject.addProperty("name", name);
     if (discountInfo != null) {

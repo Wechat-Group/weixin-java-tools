@@ -856,6 +856,33 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
+  public Integer minishopUpdateCoupon(String appId, WxMinishopCoupon couponInfo) throws WxErrorException {
+    String url = MINISHOP_UPDATE_COUPON_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = couponInfo.toJsonObject();
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    Integer couponId = -1;
+    if (respJson.get("errcode").getAsInt() == 0) {
+      JsonObject dataJson = respJson.get("data").getAsJsonObject();
+      couponId = dataJson.get("coupon_id").getAsInt();
+    }
+    return couponId;
+  }
+
+  @Override
+  public WxOpenResult minishopUpdateCouponStatus(String appId, Integer couponId, Integer status) throws WxErrorException {
+    String url = MINISHOP_UPDATE_COUPON_STATUS_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("coupon_id", couponId);
+    jsonObject.addProperty("status", status);
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
   public WxMinishopAddGoodsSpuResult<WxMinishopAddGoodsSpuData> minishopGoodsAddSpu(String appId, WxMinishopSpu spu) throws WxErrorException {
     String url = MINISHOP_ADD_SPU_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
     JsonObject jsonObject = spu.toJsonObject();

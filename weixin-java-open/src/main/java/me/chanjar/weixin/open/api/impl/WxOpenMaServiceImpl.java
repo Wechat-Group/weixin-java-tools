@@ -378,6 +378,13 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return WxMaGsonBuilder.create().fromJson(response, WxMaScheme.class);
   }
 
+  @Override
+  public WxOpenResult registerShopComponent() throws WxErrorException {
+    JsonObject params = new JsonObject();
+    String response = post(API_REGISTER_SHOP_COMPONENT, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
   private JsonArray toJsonArray(List<String> strList) {
     JsonArray jsonArray = new JsonArray();
     if (strList != null && !strList.isEmpty()) {
