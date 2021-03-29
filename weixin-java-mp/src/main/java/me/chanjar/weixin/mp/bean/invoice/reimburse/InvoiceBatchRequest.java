@@ -1,9 +1,10 @@
 package me.chanjar.weixin.mp.bean.invoice.reimburse;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.Tolerate;
+import lombok.NoArgsConstructor;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
@@ -18,6 +19,8 @@ import java.util.List;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class InvoiceBatchRequest implements Serializable {
 
   private static final long serialVersionUID = -9121443117105107231L;
@@ -31,11 +34,6 @@ public class InvoiceBatchRequest implements Serializable {
   @SerializedName("item_list")
   private List<InvoiceInfoRequest> itemList;
 
-  /**
-   * 无参构造方法
-   */
-  @Tolerate
-  InvoiceBatchRequest() {}
 
   public String toJson() {
     return WxMpGsonBuilder.create().toJson(this);
