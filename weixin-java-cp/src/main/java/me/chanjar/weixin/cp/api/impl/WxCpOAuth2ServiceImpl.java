@@ -76,7 +76,7 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
       .openId(GsonHelper.getString(jo, "OpenId"))
       .userTicket(GsonHelper.getString(jo, "user_ticket"))
       .expiresIn(GsonHelper.getString(jo, "expires_in"))
-      .externalUserid(GsonHelper.getString(jo, "external_userid"))
+      .externalUserId(GsonHelper.getString(jo, "external_userid"))
       .build();
   }
 
