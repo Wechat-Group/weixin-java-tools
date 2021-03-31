@@ -25,4 +25,5 @@ public class WxCpOauth2UserInfo {
   private String userId;
   private String userTicket;
   private String expiresIn;
+  private String externalUserid;
 }
