@@ -53,8 +53,18 @@ public class WxMaLiveRoomInfo implements Serializable {
   private String shareImg;
   /**
    * 购物直播频道封面图，填入mediaID（mediaID获取后，三天内有效）；图片mediaID的获取，请参考以下文档： https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html; 购物直播频道封面图，图片规则：建议像素800*800，大小不超过100KB；
+   * <p>
+   * 该字段仅用于<a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/live_player/studio-api.html#6">编辑直播间</a>，不用于创建直播间
+   * </p>
    **/
   private String feedsImg;
+  /**
+   * 直播间分享图，填入mediaID（mediaID获取后，三天内有效）；图片规则：建议像素1080*1920，大小不超过2M；图片mediaID的获取，请参考以下文档： https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html；
+   * <p>
+   * 该字段仅用于<a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/live_player/studio-api.html#1">创建直播间</a>，不用于编辑直播间
+   * </p>
+   **/
+  private String anchorImg;
   /**
    * 是否开启官方收录 【1: 开启，0：关闭】，默认开启收录
    **/
