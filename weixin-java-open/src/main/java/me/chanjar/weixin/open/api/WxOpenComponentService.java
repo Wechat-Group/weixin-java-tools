@@ -843,4 +843,15 @@ public interface WxOpenComponentService {
    * @throws WxErrorException
    */
   WxOpenResult minishopGoodsUpdateSkuStock(String appId, Long productId, Long outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws  WxErrorException;
+
+
+  /**
+   * 小商店通用Post接口
+   * @param appId
+   * @param url
+   * @param requestParam
+   * @return
+   * @throws WxErrorException
+   */
+  String minishopCommonPost(String appId, String url, String requestParam) throws WxErrorException;
 }

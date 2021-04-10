@@ -1072,4 +1072,9 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
+
+  @Override
+  public String minishopCommonPost(String appId, String url, String requestParam) throws WxErrorException {
+    return null;
+  }
 }
