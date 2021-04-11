@@ -2,6 +2,7 @@ package me.chanjar.weixin.open.api.impl;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -27,12 +28,16 @@ import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCoupon;
 import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCouponStock;
 import me.chanjar.weixin.open.bean.minishop.goods.*;
+import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountGoods;
+import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountSku;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -1075,6 +1080,76 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public String minishopCommonPost(String appId, String url, String requestParam) throws WxErrorException {
+
     return null;
+  }
+
+  @Override
+  public Integer addLimitDiscountGoods(String appId, LimitDiscountGoods limitDiscountGoods) throws WxErrorException {
+    String url = API_MINISHOP_ADD_LIMIT_DISCOUNT_URL + "access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = limitDiscountGoods.toJsonObject();
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respObj = GsonParser.parse(response);
+    Integer taskId = 0;
+    if (respObj.get("errcode").getAsInt() == 0) {
+      taskId = respObj.get("task_id").getAsInt();
+    }
+    return taskId;
+  }
+
+  @Override
+  public List<LimitDiscountGoods> getLimitDiscountList(String appId, Integer status) throws WxErrorException {
+    String url = API_MINISHOP_GET_LIMIT_DISCOUNT_URL + "access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+    if (status != null) {
+      jsonObject.addProperty("status", status);
+    }
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respObj = GsonParser.parse(response);
+    List<LimitDiscountGoods> limitDiscountGoodsList = new ArrayList<>();
+    if (respObj.get("errcode").getAsInt() == 0) {
+      //成功获取到秒杀活动列表
+
+      JsonArray jsonArray = respObj.get("limited_discount_list").getAsJsonArray();
+      if (jsonArray != null && jsonArray.size() > 0) {
+        for (int i = 0; i < jsonArray.size(); i ++) {
+          JsonObject goodsObj = jsonArray.get(i).getAsJsonObject();
+          LimitDiscountGoods discountGoods = new LimitDiscountGoods();
+          discountGoods.setTaskId(goodsObj.get("task_id").getAsLong());
+          discountGoods.setStatus(goodsObj.get("status").getAsInt());
+          discountGoods.setStartTime(new Date(goodsObj.get("start_time").getAsLong()*1000));
+          discountGoods.setEndTime(new Date(goodsObj.get("end_time").getAsLong()*1000));
+
+          List<LimitDiscountSku> skuList = new ArrayList<>();
+          JsonArray skuArray = goodsObj.get("limited_discount_sku_list").getAsJsonArray();
+          if (skuArray != null && skuArray.size() > 0) {
+            for (int j = 0; j < skuArray.size(); j ++) {
+              JsonObject skuObj = skuArray.get(i).getAsJsonObject();
+              LimitDiscountSku sku = new LimitDiscountSku();
+              sku.setSkuId(skuObj.get("sku_id").getAsLong());
+              sku.setSalePrice(new BigDecimal(skuObj.get("sale_price").getAsDouble() / 100));
+              sku.setSaleStock(skuObj.get("sale_stock").getAsInt());
+              skuList.add(sku);
+            }
+
+            discountGoods.setLimitDiscountSkuList(skuList);
+          }
+
+          limitDiscountGoodsList.add(discountGoods);
+        }
+      }
+    }
+    return limitDiscountGoodsList;
+  }
+
+  @Override
+  public WxOpenResult updateLimitDiscountStatus(String appId, Long taskId, Integer status) throws WxErrorException  {
+    String url = API_MINISHOP_UPDATE_LIMIT_DICOUNT_STATUS_URL + "access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("task_id", taskId);
+    jsonObject.addProperty("status", status);
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 }

@@ -13,6 +13,7 @@ import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCoupon;
 import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCouponStock;
 import me.chanjar.weixin.open.bean.minishop.goods.*;
+import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountGoods;
 import me.chanjar.weixin.open.bean.result.*;
 
 import java.io.File;
@@ -854,4 +855,43 @@ public interface WxOpenComponentService {
    * @throws WxErrorException
    */
   String minishopCommonPost(String appId, String url, String requestParam) throws WxErrorException;
+
+
+
+  //////////////////////////////////////////////////////////////
+  //商品抢购任务-秒杀活动
+  String API_MINISHOP_ADD_LIMIT_DISCOUNT_URL = "https://api.weixin.qq.com/product/limiteddiscount/add/";
+
+  String API_MINISHOP_GET_LIMIT_DISCOUNT_URL = "https://api.weixin.qq.com/product/limiteddiscount/get_list/";
+
+  String API_MINISHOP_UPDATE_LIMIT_DICOUNT_STATUS_URL = "https://api.weixin.qq.com/product/limiteddiscount/update_status/";
+
+  /**
+   * 添加抢购任务
+   * 每个商品(SPU)同一时间只能有一个抢购任务。 如果当前有抢购任务没有结束，无论是否开始，都不允许创建第二个抢购任务 可以提前修改抢购任务状态为结束后，再创建新的任务。 每次创建抢购任务时，必须填充该SPU下 所有SKU的抢购信息
+   * @param appId
+   * @param limitDiscountGoods
+   * @return
+   * @throws WxErrorException
+   */
+  Integer addLimitDiscountGoods(String appId, LimitDiscountGoods limitDiscountGoods) throws WxErrorException;
+
+  /**
+   * status为0代表 还未结束的抢购任务，无论是否开始 status为1代表已经结束的 抢购任务 如果不填status，则两种都拉取
+   * @param appId
+   * @param status
+   * @return
+   */
+  List<LimitDiscountGoods> getLimitDiscountList(String appId, Integer status) throws WxErrorException;
+
+
+  /**
+   * 修改抢购任务状态
+   * 用于提前结束抢购任务，无论抢购任务是否在执行中，都可以关闭。 也可以直接删除抢购任务 注意：结束后不允许再开启，状态不可逆
+   * @param appId
+   * @param taskId
+   * @param status
+   * @return
+   */
+  WxOpenResult updateLimitDiscountStatus(String appId, Long taskId, Integer status) throws WxErrorException;
 }
