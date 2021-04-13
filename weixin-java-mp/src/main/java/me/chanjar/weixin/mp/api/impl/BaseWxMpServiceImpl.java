@@ -331,15 +331,16 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       try {
         return this.executeInternal(executor, uri, data);
       } catch (WxErrorException e) {
-        if (retryTimes + 1 > this.maxRetryTimes) {
-          log.warn("重试达到最大次数【{}】", maxRetryTimes);
-          //最后一次重试失败后，直接抛出异常，不再等待
-          throw new WxRuntimeException("微信服务端异常，超出重试次数");
-        }
-
         WxError error = e.getError();
         // -1 系统繁忙, 1000ms后重试
         if (error.getErrorCode() == -1) {
+          // 判断是否已经超了最大重试次数
+          if (retryTimes + 1 > this.maxRetryTimes) {
+            log.warn("重试达到最大次数【{}】", maxRetryTimes);
+            //最后一次重试失败后，直接抛出异常，不再等待
+            throw new WxRuntimeException("微信服务端异常，超出重试次数");
+          }
+
           int sleepMillis = this.retrySleepMillis * (1 << retryTimes);
           try {
             log.warn("微信系统繁忙，{} ms 后重试(第{}次)", sleepMillis, retryTimes + 1);
