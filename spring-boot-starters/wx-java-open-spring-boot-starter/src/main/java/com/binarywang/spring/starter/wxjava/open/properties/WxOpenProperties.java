@@ -2,6 +2,7 @@ package com.binarywang.spring.starter.wxjava.open.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
 
@@ -62,6 +63,7 @@ public class WxOpenProperties {
     /**
      * redis连接配置.
      */
+    @NestedConfigurationProperty
     private RedisProperties redis = new RedisProperties();
 
     /**
@@ -96,10 +98,6 @@ public class WxOpenProperties {
      * 内存.
      */
     memory,
-    /**
-     * redis.
-     */
-    redis,
     /**
      * jedis.
      */
