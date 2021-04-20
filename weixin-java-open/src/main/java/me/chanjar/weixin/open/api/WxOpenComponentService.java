@@ -563,6 +563,15 @@ public interface WxOpenComponentService {
 
 
   /**
+   * 已经获取到小商店的appId，那么需要通过accesstoken来获取该小商店的状态
+   * @param appId
+   * @param wxName
+   * @return
+   * @throws WxErrorException
+   */
+  String checkAuditStatus(String appId, String wxName) throws  WxErrorException;
+
+  /**
    *
    * @param appId
    * @param subjectType

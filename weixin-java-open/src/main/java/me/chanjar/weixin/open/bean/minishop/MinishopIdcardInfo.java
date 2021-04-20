@@ -36,12 +36,22 @@ public class MinishopIdcardInfo implements Serializable {
      */
     private MinishopPicFile portraitPicFile;
 
-    /**
+  /**
+   * 人像面照片url
+   */
+    private String protraitPicFileUrl;
+
+  /**
      * 国徽面照片
      */
     private MinishopPicFile nationPicFile;
 
-    /**
+  /**
+   * 国徽面照片url
+   */
+  private String nationPicFileUrl;
+
+  /**
      * 请填写经营者/法定代表人对应身份证的姓名，2~30个中文字符、英文字符、符号。
      */
     private String idCardName;

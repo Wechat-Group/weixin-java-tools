@@ -36,8 +36,14 @@ public class MinishopBusiLicense implements Serializable {
      */
     private MinishopPicFile picFile;
 
-    /**
-     * 请填写营业执照上的注册号/统一社会信用代码，
+
+  /**
+   * 营业执照图片url
+   */
+    private String picFileUrl;
+
+  /**
+   * 请填写营业执照上的注册号/统一社会信用代码，
 须为15位数字或18位数字大写字母。
 示例值：123456789012345678 特殊规则：长度最小15个字节
      */

@@ -621,6 +621,16 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
+  public String checkAuditStatus(String appId, String wxName) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("wx_name", wxName);
+    String url = CHECK_SHOP_AUDITSTATUS_URL + "?access_token=" + getAuthorizerAccessToken(appId,  false);
+    String response = post(url, jsonObject.toString());
+    log.info("CHECK_SHOP_AUDITSTATUS_URL: " + response);
+    return response;
+  }
+
+  @Override
   public WxOpenResult submitMerchantInfo(String appId, String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("app_id", appId);
