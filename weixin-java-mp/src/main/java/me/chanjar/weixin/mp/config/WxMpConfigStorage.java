@@ -173,6 +173,22 @@ public interface WxMpConfigStorage {
   String getHttpProxyPassword();
 
   /**
+   * http 请求重试间隔
+   * <pre>
+   *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setRetrySleepMillis(int)}
+   * </pre>
+   */
+  int getRetrySleepMillis();
+
+  /**
+   * http 请求最大重试次数
+   * <pre>
+   *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setMaxRetryTimes(int)}
+   * </pre>
+   */
+  int getMaxRetryTimes();
+
+  /**
    * Gets tmp dir file.
    *
    * @return the tmp dir file

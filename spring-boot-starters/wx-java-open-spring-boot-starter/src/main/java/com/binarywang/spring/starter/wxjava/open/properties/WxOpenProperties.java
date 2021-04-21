@@ -91,6 +91,23 @@ public class WxOpenProperties {
      */
     private String httpProxyPassword;
 
+    /**
+     * http 请求重试间隔
+     * <pre>
+     *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setRetrySleepMillis(int)}
+     *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setRetrySleepMillis(int)}
+     * </pre>
+     */
+    private int retrySleepMillis = 1000;
+    /**
+     * http 请求最大重试次数
+     * <pre>
+     *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setMaxRetryTimes(int)}
+     *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setMaxRetryTimes(int)}
+     * </pre>
+     */
+    private int maxRetryTimes = 5;
+
   }
 
   public enum StorageType {

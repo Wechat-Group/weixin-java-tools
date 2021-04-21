@@ -27,7 +27,7 @@ import redis.clients.jedis.JedisPoolConfig;
 )
 @ConditionalOnClass({JedisPool.class, JedisPoolConfig.class})
 @RequiredArgsConstructor
-public class WxOpenInRedisConfigStorageConfiguration {
+public class WxOpenInJedisConfigStorageConfiguration {
   private final WxOpenProperties properties;
   private final ApplicationContext applicationContext;
 
@@ -44,6 +44,8 @@ public class WxOpenInRedisConfigStorageConfiguration {
     if (configStorageProperties.getHttpProxyPort() != null) {
       config.setHttpProxyPort(configStorageProperties.getHttpProxyPort());
     }
+    config.setRetrySleepMillis(configStorageProperties.getRetrySleepMillis());
+    config.setMaxRetryTimes(configStorageProperties.getMaxRetryTimes());
     return config;
   }
 

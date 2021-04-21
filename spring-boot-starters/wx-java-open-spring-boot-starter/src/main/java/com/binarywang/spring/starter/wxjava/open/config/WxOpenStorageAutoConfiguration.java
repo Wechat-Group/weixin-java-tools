@@ -1,7 +1,7 @@
 package com.binarywang.spring.starter.wxjava.open.config;
 
+import com.binarywang.spring.starter.wxjava.open.config.storage.WxOpenInJedisConfigStorageConfiguration;
 import com.binarywang.spring.starter.wxjava.open.config.storage.WxOpenInMemoryConfigStorageConfiguration;
-import com.binarywang.spring.starter.wxjava.open.config.storage.WxOpenInRedisConfigStorageConfiguration;
 import com.binarywang.spring.starter.wxjava.open.config.storage.WxOpenInRedisTemplateConfigStorageConfiguration;
 import com.binarywang.spring.starter.wxjava.open.config.storage.WxOpenInRedissonConfigStorageConfiguration;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
 @Import({
   WxOpenInMemoryConfigStorageConfiguration.class,
   WxOpenInRedisTemplateConfigStorageConfiguration.class,
-  WxOpenInRedisConfigStorageConfiguration.class,
+  WxOpenInJedisConfigStorageConfiguration.class,
   WxOpenInRedissonConfigStorageConfiguration.class
 })
 public class WxOpenStorageAutoConfiguration {

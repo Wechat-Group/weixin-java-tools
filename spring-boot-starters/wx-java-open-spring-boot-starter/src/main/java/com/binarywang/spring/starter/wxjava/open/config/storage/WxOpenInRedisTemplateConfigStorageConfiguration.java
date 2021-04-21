@@ -41,6 +41,8 @@ public class WxOpenInRedisTemplateConfigStorageConfiguration {
     if (configStorageProperties.getHttpProxyPort() != null) {
       config.setHttpProxyPort(configStorageProperties.getHttpProxyPort());
     }
+    config.setRetrySleepMillis(configStorageProperties.getRetrySleepMillis());
+    config.setMaxRetryTimes(configStorageProperties.getMaxRetryTimes());
     return config;
   }
 
