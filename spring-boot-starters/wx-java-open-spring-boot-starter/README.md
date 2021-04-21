@@ -27,9 +27,9 @@
     wx.open.config-storage.http-proxy-port=
     wx.open.config-storage.http-proxy-username=
     wx.open.config-storage.http-proxy-password=
-    # 最大重试次数，默认：5 次
+    # 最大重试次数，默认：5 次，如果小于 0，则为 0
     wx.open.config-storage.max-retry-times=5
-    # 重试时间间隔步进，默认：1000 毫秒
+    # 重试时间间隔步进，默认：1000 毫秒，如果小于 0，则为 1000
     wx.open.config-storage.retry-sleep-millis=1000
     ```
 3. 支持自动注入的类型: `WxOpenService, WxOpenMessageRouter, WxOpenComponentService`
