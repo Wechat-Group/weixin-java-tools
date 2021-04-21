@@ -27,7 +27,7 @@ import redis.clients.jedis.JedisPoolConfig;
 )
 @ConditionalOnClass({JedisPool.class, JedisPoolConfig.class})
 @RequiredArgsConstructor
-public class WxOpenInJedisConfigStorageConfiguration {
+public class WxOpenInJedisConfigStorageConfiguration extends AbstractWxOpenConfigStorageConfiguration {
   private final WxOpenProperties properties;
   private final ApplicationContext applicationContext;
 
@@ -35,18 +35,7 @@ public class WxOpenInJedisConfigStorageConfiguration {
   @ConditionalOnMissingBean(WxOpenConfigStorage.class)
   public WxOpenConfigStorage wxOpenConfigStorage() {
     WxOpenInMemoryConfigStorage config = getWxOpenInRedisConfigStorage();
-
-    WxOpenProperties.ConfigStorage configStorageProperties = properties.getConfigStorage();
-    config.setWxOpenInfo(properties.getAppId(), properties.getSecret(), properties.getToken(), properties.getAesKey());
-    config.setHttpProxyHost(configStorageProperties.getHttpProxyHost());
-    config.setHttpProxyUsername(configStorageProperties.getHttpProxyUsername());
-    config.setHttpProxyPassword(configStorageProperties.getHttpProxyPassword());
-    if (configStorageProperties.getHttpProxyPort() != null) {
-      config.setHttpProxyPort(configStorageProperties.getHttpProxyPort());
-    }
-    config.setRetrySleepMillis(configStorageProperties.getRetrySleepMillis());
-    config.setMaxRetryTimes(configStorageProperties.getMaxRetryTimes());
-    return config;
+    return this.config(config, properties);
   }
 
   private WxOpenInRedisConfigStorage getWxOpenInRedisConfigStorage() {
