@@ -222,7 +222,8 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
   public List<WxMaAssistantResult.Assistant> getAssistantList(Integer roomId) throws WxErrorException {
     Map<String, Object> map = new HashMap<>(2);
     map.put(ROOM_ID, roomId);
-    String responseContent = this.wxMaService.post(Room.GET_ASSISTANT_LIST, WxMaGsonBuilder.create().toJson(map));
+    String responseContent = this.wxMaService.get(Room.GET_ASSISTANT_LIST,
+      Joiner.on("&").withKeyValueSeparator("=").join(map));
     JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
