@@ -13,6 +13,7 @@ import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
+import com.github.binarywang.wxpay.config.WxPayConfigHolder;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
@@ -21,6 +22,7 @@ import com.github.binarywang.wxpay.service.*;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.github.binarywang.wxpay.util.XmlConfig;
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import jodd.io.ZipUtil;
 import me.chanjar.weixin.common.error.WxRuntimeException;
@@ -60,9 +62,12 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final RedpackService redpackService = new RedpackServiceImpl(this);
   private final PayScoreService payScoreService = new PayScoreServiceImpl(this);
   private final EcommerceService ecommerceService = new EcommerceServiceImpl(this);
+  private final BusinessCircleService businessCircleService = new BusinessCircleServiceImpl(this);
   private final MerchantMediaService merchantMediaService = new MerchantMediaServiceImpl(this);
+  private final MarketingMediaService marketingMediaService = new MarketingMediaServiceImpl(this);
+  private final MarketingFavorService marketingFavorService = new MarketingFavorServiceImpl(this);
 
-  protected WxPayConfig config;
+  protected Map<String, WxPayConfig> configMap;
 
   @Override
   public EntPayService getEntPayService() {
@@ -90,8 +95,23 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public BusinessCircleService getBusinessCircleService() {
+    return this.businessCircleService;
+  }
+
+  @Override
   public MerchantMediaService getMerchantMediaService() {
     return this.merchantMediaService;
+  }
+
+  @Override
+  public MarketingMediaService getMarketingMediaService() {
+    return this.marketingMediaService;
+  }
+
+  @Override
+  public MarketingFavorService getMarketingFavorService() {
+    return this.marketingFavorService;
   }
 
   @Override
@@ -101,12 +121,78 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public WxPayConfig getConfig() {
-    return this.config;
+    if (this.configMap.size() == 1) {
+      // 只有一个商户号，直接返回其配置即可
+      return this.configMap.values().iterator().next();
+    }
+    return this.configMap.get(WxPayConfigHolder.get());
   }
 
   @Override
   public void setConfig(WxPayConfig config) {
-    this.config = config;
+    final String defaultMchId = config.getMchId();
+    this.setMultiConfig(ImmutableMap.of(defaultMchId, config), defaultMchId);
+  }
+
+  @Override
+  public void addConfig(String mchId, WxPayConfig wxPayConfig) {
+    synchronized (this) {
+      if (this.configMap == null) {
+        this.setConfig(wxPayConfig);
+      } else {
+        WxPayConfigHolder.set(mchId);
+        this.configMap.put(mchId, wxPayConfig);
+      }
+    }
+  }
+
+  @Override
+  public void removeConfig(String mchId) {
+    synchronized (this) {
+      if (this.configMap.size() == 1) {
+        this.configMap.remove(mchId);
+        log.warn("已删除最后一个商户号配置：{}，须立即使用setConfig或setMultiConfig添加配置", mchId);
+        return;
+      }
+      if (WxPayConfigHolder.get().equals(mchId)) {
+        this.configMap.remove(mchId);
+        final String defaultMpId = this.configMap.keySet().iterator().next();
+        WxPayConfigHolder.set(defaultMpId);
+        log.warn("已删除默认商户号配置，商户号【{}】被设为默认配置", defaultMpId);
+        return;
+      }
+      this.configMap.remove(mchId);
+    }
+  }
+
+  @Override
+  public void setMultiConfig(Map<String, WxPayConfig> wxPayConfigs) {
+    this.setMultiConfig(wxPayConfigs, wxPayConfigs.keySet().iterator().next());
+  }
+
+  @Override
+  public void setMultiConfig(Map<String, WxPayConfig> wxPayConfigs, String defaultMchId) {
+    this.configMap = Maps.newHashMap(wxPayConfigs);
+    WxPayConfigHolder.set(defaultMchId);
+  }
+
+  @Override
+  public boolean switchover(String mchId) {
+    if (this.configMap.containsKey(mchId)) {
+      WxPayConfigHolder.set(mchId);
+      return true;
+    }
+    log.error("无法找到对应【{}】的商户号配置信息，请核实！", mchId);
+    return false;
+  }
+
+  @Override
+  public WxPayService switchoverTo(String mchId) {
+    if (this.configMap.containsKey(mchId)) {
+      WxPayConfigHolder.set(mchId);
+      return this;
+    }
+    throw new WxRuntimeException(String.format("无法找到对应【%s】的商户号配置信息，请核实！", mchId));
   }
 
   @Override

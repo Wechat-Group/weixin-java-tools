@@ -15,7 +15,6 @@ import org.apache.http.client.methods.HttpRequestBase;
 
 import java.io.File;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.Date;
 import java.util.Map;
 
@@ -35,6 +34,53 @@ public interface WxPayService {
    * @return the pay base url
    */
   String getPayBaseUrl();
+
+  /**
+   * Map里 加入新的 {@link WxPayConfig}，适用于动态添加新的微信公众号配置.
+   *
+   * @param mchId          商户号id
+   * @param wxPayConfig 新的微信配置
+   */
+  void addConfig(String mchId, WxPayConfig wxPayConfig);
+
+  /**
+   * 从 Map中 移除 {@link String mchId} 所对应的 {@link WxPayConfig}，适用于动态移除微信公众号配置.
+   *
+   * @param mchId 对应公众号的标识
+   */
+  void removeConfig(String mchId);
+
+  /**
+   * 注入多个 {@link WxPayConfig} 的实现. 并为每个 {@link WxPayConfig} 赋予不同的 {@link String mchId} 值
+   * 随机采用一个{@link String mchId}进行Http初始化操作
+   *
+   * @param wxPayConfigs WxPayConfig map
+   */
+  void setMultiConfig(Map<String, WxPayConfig> wxPayConfigs);
+
+  /**
+   * 注入多个 {@link WxPayConfig} 的实现. 并为每个 {@link WxPayConfig} 赋予不同的 {@link String label} 值
+   *
+   * @param wxPayConfigs WxPayConfig map
+   * @param defaultMchId    设置一个{@link WxPayConfig} 所对应的{@link String mchId}进行Http初始化
+   */
+  void setMultiConfig(Map<String, WxPayConfig> wxPayConfigs, String defaultMchId);
+
+  /**
+   * 进行相应的公众号切换.
+   *
+   * @param mchId 公众号标识
+   * @return 切换是否成功 boolean
+   */
+  boolean switchover(String mchId);
+
+  /**
+   * 进行相应的公众号切换.
+   *
+   * @param mchId 公众号标识
+   * @return 切换成功 ，则返回当前对象，方便链式调用，否则抛出异常
+   */
+  WxPayService switchoverTo(String mchId);
 
   /**
    * 发送post请求，得到响应字节数组.
@@ -155,11 +201,32 @@ public interface WxPayService {
   EcommerceService getEcommerceService();
 
   /**
+   * 获取微信支付智慧商圈服务类
+   *
+   * @return the business circle service
+   */
+  BusinessCircleService getBusinessCircleService();
+
+  /**
    * 获取微信支付通用媒体服务类
    *
    * @return the merchant media service
    */
   MerchantMediaService getMerchantMediaService();
+
+  /**
+   * 获取微信支付营销媒体服务类
+   *
+   * @return the marketing media service
+   */
+  MarketingMediaService getMarketingMediaService();
+
+  /**
+   * 获取微信支付营销代金券服务类
+   *
+   * @return the marketing favor service
+   */
+  MarketingFavorService getMarketingFavorService();
 
   /**
    * 设置企业付款服务类，允许开发者自定义实现类.

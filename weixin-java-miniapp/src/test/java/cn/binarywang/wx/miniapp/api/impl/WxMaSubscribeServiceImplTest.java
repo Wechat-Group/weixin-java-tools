@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import me.chanjar.weixin.common.bean.subscribemsg.CategoryData;
 import me.chanjar.weixin.common.bean.subscribemsg.PubTemplateKeyword;
 import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
@@ -63,5 +64,11 @@ public class WxMaSubscribeServiceImplTest {
     final List<CategoryData> categoryData = this.wxService.getSubscribeService().getCategory();
     assertThat(categoryData).isNotNull();
     System.out.println(categoryData);
+  }
+
+  @Test
+  public void testSendSubscribeMsg() throws WxErrorException {
+    // TODO 待完善补充
+    this.wxService.getSubscribeService().sendSubscribeMsg(WxMaSubscribeMessage.builder().build());
   }
 }

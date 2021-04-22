@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.w3c.dom.Document;
 
+import java.io.Serializable;
+
 /**
  * @author Wang GuangXin 2019/10/22 14:54
  * @version 1.0
@@ -15,7 +17,7 @@ import org.w3c.dom.Document;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class ProfitSharingReceiverResult extends BaseWxPayResult {
+public class ProfitSharingReceiverResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = 876204163877798066L;
   /**
    * 分账接收方.

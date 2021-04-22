@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.w3c.dom.Document;
 
+import java.io.Serializable;
+
 /**
  * 红包发送记录查询返回
  *
@@ -17,7 +19,8 @@ import org.w3c.dom.Document;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class EntPayRedpackQueryResult extends BaseWxPayResult {
+public class EntPayRedpackQueryResult extends BaseWxPayResult implements Serializable {
+  private static final long serialVersionUID = 3127509905347445197L;
 
   /**
    * 商户订单号

@@ -317,9 +317,11 @@ public class WxCpXmlMessage implements Serializable {
 
   /**
    * 部门Id.
+   * 或者客户联系回调标签/标签组id
    */
   @XStreamAlias("Id")
-  private Long id;
+  @XStreamConverter(XStreamCDataConverter.class)
+  private String id;
 
   /**
    * 父部门id.
@@ -369,6 +371,20 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamAlias("DelPartyItems")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String delPartyItems;
+
+  /**
+   * 客户联系回调: 客户接替失败的原因
+   */
+  @XStreamAlias("FailReason")
+  @XStreamConverter(XStreamCDataConverter.class)
+  private String failReason;
+
+  /**
+   * 客户联系回调: 标签类型
+   */
+  @XStreamAlias("TagType")
+  @XStreamConverter(XStreamCDataConverter.class)
+  private String tagType;
 
 
   ///////////////////////////////////////

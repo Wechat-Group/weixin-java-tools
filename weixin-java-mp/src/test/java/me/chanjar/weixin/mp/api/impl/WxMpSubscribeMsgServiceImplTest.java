@@ -76,4 +76,8 @@ public class WxMpSubscribeMsgServiceImplTest {
   @Test
   public void testSend() {
   }
+
+  @Test
+  public void testSendOnce() {
+  }
 }

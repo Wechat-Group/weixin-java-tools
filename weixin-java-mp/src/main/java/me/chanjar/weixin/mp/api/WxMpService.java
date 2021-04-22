@@ -135,6 +135,7 @@ public interface WxMpService extends WxService {
    * @return 生成的短地址 string
    * @throws WxErrorException .
    */
+  @Deprecated
   String shortUrl(String longUrl) throws WxErrorException;
 
   /**
@@ -532,6 +533,18 @@ public interface WxMpService extends WxService {
    * @return WxImgProcService img proc service
    */
   WxImgProcService getImgProcService();
+
+  /**
+   * 返回电子发票报销方相关接口
+   * @return WxMpReimburseInvoiceService
+   */
+  WxMpReimburseInvoiceService getReimburseInvoiceService();
+
+  /**
+   * .
+   * @param reimburseInvoiceService .
+   */
+  void setReimburseInvoiceService(WxMpReimburseInvoiceService reimburseInvoiceService);
 
   /**
    * .

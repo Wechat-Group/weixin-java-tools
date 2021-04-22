@@ -1,0 +1,26 @@
+package cn.binarywang.wx.miniapp.bean.shop.response;
+
+import cn.binarywang.wx.miniapp.bean.shop.WxMaShopGetSpuResult;
+import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
+import lombok.Data;
+
+/**
+ * @author leiin
+ * @date 2021/3/23
+ * @description:
+ */
+@Data
+public class WxMaShopGetSpuResponse extends WxMaShopBaseResponse implements Serializable {
+
+  private static final long serialVersionUID = -3781992184787152637L;
+
+  /**
+   * spu信息
+   * <pre>
+   * 是否必填：
+   * </pre>
+   */
+  @SerializedName("spu")
+  private WxMaShopGetSpuResult spu;
+}

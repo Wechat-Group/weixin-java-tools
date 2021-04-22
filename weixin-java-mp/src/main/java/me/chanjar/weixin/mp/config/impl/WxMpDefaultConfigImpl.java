@@ -4,8 +4,8 @@ import lombok.Data;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-import me.chanjar.weixin.mp.config.WxMpHostConfig;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
+import me.chanjar.weixin.mp.config.WxMpHostConfig;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.File;
@@ -36,6 +36,9 @@ public class WxMpDefaultConfigImpl implements WxMpConfigStorage, Serializable {
   protected volatile int httpProxyPort;
   protected volatile String httpProxyUsername;
   protected volatile String httpProxyPassword;
+
+  protected volatile int retrySleepMillis = 1000;
+  protected volatile int maxRetryTimes = 5;
 
   protected volatile String jsapiTicket;
   protected volatile long jsapiTicketExpiresTime;

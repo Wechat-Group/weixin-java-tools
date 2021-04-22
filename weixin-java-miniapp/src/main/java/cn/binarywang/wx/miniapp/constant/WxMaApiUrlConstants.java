@@ -296,4 +296,24 @@ public class WxMaApiUrlConstants {
     String COMM = "https://api.weixin.qq.com/cv/ocr/comm?img_url=%s";
     String FILE_COMM = "https://api.weixin.qq.com/cv/ocr/comm";
   }
+
+  public interface Shop {
+    interface Spu {
+      String SPU_ADD_URL = "https://api.weixin.qq.com/shop/spu/add";
+      String SPU_DEL_URL = "https://api.weixin.qq.com/shop/spu/del";
+      String SPU_GET_URL = "https://api.weixin.qq.com/shop/spu/get";
+      String SPU_GET_LIST_URL = "https://api.weixin.qq.com/shop/spu/get_list";
+      String SPU_UPDATE_URL = "https://api.weixin.qq.com/shop/spu/update";
+      String SPU_UPDATE_WITHOUT_URL = "https://api.weixin.qq.com/shop/spu/update_without_audit";
+      String SPU_LISTING_URL = "https://api.weixin.qq.com/shop/spu/listing";
+      String SPU_DELISTING_URL = "https://api.weixin.qq.com/shop/spu/delisting";
+    }
+
+    interface Order {
+      String ORDER_CHECK_SCENE = "https://api.weixin.qq.com/shop/scene/check";
+      String ORDER_ADD = "https://api.weixin.qq.com/shop/order/add";
+      String ORDER_PAY = "https://api.weixin.qq.com/shop/order/pay";
+      String ORDER_GET = "https://api.weixin.qq.com/shop/order/get";
+    }
+  }
 }

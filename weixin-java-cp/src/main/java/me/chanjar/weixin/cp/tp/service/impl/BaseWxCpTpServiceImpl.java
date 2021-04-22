@@ -440,8 +440,8 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   public WxTpLoginInfo getLoginInfo(String authCode) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("auth_code", authCode);
-    jsonObject.addProperty("access_token", configStorage.getProviderToken());
-    String responseText = post(configStorage.getApiUrl(GET_LOGIN_INFO), jsonObject.toString());
+    String access_token = getWxCpProviderToken();
+    String responseText = post(configStorage.getApiUrl(GET_LOGIN_INFO) + "?access_token=" + access_token, jsonObject.toString());
     return WxTpLoginInfo.fromJson(responseText);
   }
 
@@ -546,6 +546,31 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   @Override
   public WxJsapiSignature createSuiteJsApiTicketSignature(String url, String authCorpId) throws WxErrorException {
     return doCreateWxJsapiSignature(url, authCorpId, this.getSuiteJsApiTicket(authCorpId));
+  }
+
+  @Override
+  public void expireSuiteAccessToken() {
+    this.configStorage.expireSuiteAccessToken();
+  }
+
+  @Override
+  public void expireAccessToken(String authCorpId) {
+    this.configStorage.expireAccessToken(authCorpId);
+  }
+
+  @Override
+  public void expireAuthCorpJsApiTicket(String authCorpId) {
+    this.configStorage.expireAuthCorpJsApiTicket(authCorpId);
+  }
+
+  @Override
+  public void expireAuthSuiteJsApiTicket(String authCorpId) {
+    this.configStorage.expireAuthSuiteJsApiTicket(authCorpId);
+  }
+
+  @Override
+  public void expireProviderToken() {
+    this.configStorage.expireProviderToken();
   }
 
   private WxJsapiSignature doCreateWxJsapiSignature(String url, String authCorpId, String jsapiTicket) {

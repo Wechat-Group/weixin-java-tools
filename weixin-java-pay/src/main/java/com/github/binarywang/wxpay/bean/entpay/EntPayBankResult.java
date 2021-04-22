@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.w3c.dom.Document;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  * 企业付款到银行卡的响应结果.
@@ -19,7 +21,7 @@ import org.w3c.dom.Document;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class EntPayBankResult extends BaseWxPayResult {
+public class EntPayBankResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = 3449707749935227689L;
 
   /**

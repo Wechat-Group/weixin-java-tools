@@ -21,6 +21,7 @@ import java.io.Serializable;
 @XStreamAlias("xml")
 public class WxPaySandboxSignKeyResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = -5793375529340378941L;
+
   /**
    * <pre>
    * 沙箱密钥
