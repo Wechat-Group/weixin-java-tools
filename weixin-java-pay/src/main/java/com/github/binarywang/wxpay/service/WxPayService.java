@@ -38,7 +38,7 @@ public interface WxPayService {
   /**
    * Map里 加入新的 {@link WxPayConfig}，适用于动态添加新的微信公众号配置.
    *
-   * @param mchId          商户号id
+   * @param mchId       商户号id
    * @param wxPayConfig 新的微信配置
    */
   void addConfig(String mchId, WxPayConfig wxPayConfig);
@@ -62,7 +62,7 @@ public interface WxPayService {
    * 注入多个 {@link WxPayConfig} 的实现. 并为每个 {@link WxPayConfig} 赋予不同的 {@link String label} 值
    *
    * @param wxPayConfigs WxPayConfig map
-   * @param defaultMchId    设置一个{@link WxPayConfig} 所对应的{@link String mchId}进行Http初始化
+   * @param defaultMchId 设置一个{@link WxPayConfig} 所对应的{@link String mchId}进行Http初始化
    */
   void setMultiConfig(Map<String, WxPayConfig> wxPayConfigs, String defaultMchId);
 
@@ -115,6 +115,16 @@ public interface WxPayService {
   String postV3(String url, String requestStr) throws WxPayException;
 
   /**
+   * 发送patch请求，得到响应字符串.
+   *
+   * @param url        请求地址
+   * @param requestStr 请求信息
+   * @return 返回请求结果字符串 string
+   * @throws WxPayException the wx pay exception
+   */
+  String patchV3(String url, String requestStr) throws WxPayException;
+
+  /**
    * 发送post请求，得到响应字符串.
    * <p>
    * 部分字段会包含敏感信息，所以在提交前需要在请求头中会包含"Wechatpay-Serial"信息
@@ -139,7 +149,7 @@ public interface WxPayService {
   /**
    * 发送http请求，得到响应字符串.
    *
-   * @param url      请求地址
+   * @param url         请求地址
    * @param httpRequest 请求信息，可以是put，post，get，delete等请求
    * @return 返回请求结果字符串 string
    * @throws WxPayException the wx pay exception
@@ -227,6 +237,13 @@ public interface WxPayService {
    * @return the marketing favor service
    */
   MarketingFavorService getMarketingFavorService();
+
+  /**
+   * 获取微信支付营销商家券服务类
+   *
+   * @return the marketing favor service
+   */
+  MarketingBusiFavorService getMarketingBusiFavorService();
 
   /**
    * 设置企业付款服务类，允许开发者自定义实现类.
@@ -350,7 +367,7 @@ public interface WxPayService {
    * @param request 请求对象，注意一些参数如appid、mchid等不用设置，方法内会自动从配置对象中获取到（前提是对应配置中已经设置）
    * @return the pay info
    * @throws WxPayException the wx pay exception
-   * @deprecated 建议使用 {@link com.github.binarywang.wxpay.service.WxPayService#createOrder(WxPayUnifiedOrderRequest)}
+   * @deprecated 建议使用 {@link WxPayService#createOrder(WxPayUnifiedOrderRequest)}
    */
   @Deprecated
   Map<String, String> getPayInfo(WxPayUnifiedOrderRequest request) throws WxPayException;

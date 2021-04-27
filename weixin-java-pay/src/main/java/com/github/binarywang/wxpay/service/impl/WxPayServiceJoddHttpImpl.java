@@ -67,6 +67,11 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
   }
 
   @Override
+  public String patchV3(String url, String requestStr) throws WxPayException {
+    return null;
+  }
+
+  @Override
   public String postV3WithWechatpaySerial(String url, String requestStr) throws WxPayException {
     return null;
   }
