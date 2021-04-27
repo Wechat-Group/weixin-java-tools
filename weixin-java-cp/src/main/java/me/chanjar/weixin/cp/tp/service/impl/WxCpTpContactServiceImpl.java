@@ -22,7 +22,7 @@ public class WxCpTpContactServiceImpl implements WxCpTpContactService {
   @Override
   public WxCpTpContactSearchResp contactSearch(WxCpTpContactSearch wxCpTpContactSearch) throws WxErrorException {
     String responseText =
-      mainService.post(mainService.getWxCpTpConfigStorage().getApiUrl(CONTACT_SEARCH) + "?provider_access_token=" + mainService.getWxCpTpConfigStorage().getCorpSecret(), wxCpTpContactSearch.toJson());
+      mainService.post(mainService.getWxCpTpConfigStorage().getApiUrl(CONTACT_SEARCH) + "?provider_access_token=" + mainService.getWxCpProviderToken(), wxCpTpContactSearch.toJson());
     return WxCpTpContactSearchResp.fromJson(responseText);
   }
 
