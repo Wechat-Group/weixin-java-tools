@@ -43,7 +43,7 @@ public class WxCpTpMediaServiceImpl implements WxCpTpMediaService {
     @Override
     public String uploadImg(File file, String corpId) throws WxErrorException {
         String url = mainService.getWxCpTpConfigStorage().getApiUrl(IMG_UPLOAD);
-        url += "&access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
+        url += "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
         return this.mainService.execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()), url, file)
                 .getUrl();
     }
