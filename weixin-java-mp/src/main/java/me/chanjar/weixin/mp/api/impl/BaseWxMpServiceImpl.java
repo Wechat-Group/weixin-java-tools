@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.service.WxImgProcService;
-import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
@@ -19,7 +17,9 @@ import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.service.WxOAuth2Service;
+import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.DataUtils;
@@ -124,6 +124,18 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Getter
   @Setter
   private WxMpGuideService guideService = new WxMpGuideServiceImpl(this);
+  @Getter
+  @Setter
+  private WxMpGuideBuyerService guideBuyerService = new WxMpGuideBuyerServiceImpl(this);
+  @Getter
+  @Setter
+  private WxMpGuideTagService guideTagService = new WxMpGuideTagServiceImpl(this);
+  @Getter
+  @Setter
+  private WxMpGuideMassedJobService guideMassedJobService = new WxMpGuideMassedJobServiceImpl(this);
+  @Getter
+  @Setter
+  private WxMpGuideMaterialService guideMaterialService = new WxMpGuideMaterialServiceImpl(this);
 
   @Getter
   @Setter

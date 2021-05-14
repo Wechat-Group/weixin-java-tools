@@ -2,8 +2,8 @@ package me.chanjar.weixin.mp.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import me.chanjar.weixin.mp.config.WxMpHostConfig;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
+import me.chanjar.weixin.mp.config.WxMpHostConfig;
 
 import static me.chanjar.weixin.mp.config.WxMpHostConfig.*;
 
@@ -290,27 +290,27 @@ public interface WxMpApiUrl {
     /**
      * 获取模板标题下的关键词列表.
      */
-      GET_PUB_TEMPLATE_TITLE_LIST_URL (API_DEFAULT_HOST_URL,  "/wxaapi/newtmpl/getpubtemplatetitles"),
+    GET_PUB_TEMPLATE_TITLE_LIST_URL(API_DEFAULT_HOST_URL, "/wxaapi/newtmpl/getpubtemplatetitles"),
     /**
      * 获取模板标题下的关键词列表.
      */
-      GET_PUB_TEMPLATE_KEY_WORDS_BY_ID_URL (API_DEFAULT_HOST_URL,  "/wxaapi/newtmpl/getpubtemplatekeywords"),
+    GET_PUB_TEMPLATE_KEY_WORDS_BY_ID_URL(API_DEFAULT_HOST_URL, "/wxaapi/newtmpl/getpubtemplatekeywords"),
     /**
      * 组合模板并添加至帐号下的个人模板库.
      */
-      TEMPLATE_ADD_URL(API_DEFAULT_HOST_URL,  "/wxaapi/newtmpl/addtemplate"),
+    TEMPLATE_ADD_URL(API_DEFAULT_HOST_URL, "/wxaapi/newtmpl/addtemplate"),
     /**
      * 获取当前帐号下的个人模板列表.
      */
-      TEMPLATE_LIST_URL(API_DEFAULT_HOST_URL,  "/wxaapi/newtmpl/gettemplate"),
+    TEMPLATE_LIST_URL(API_DEFAULT_HOST_URL, "/wxaapi/newtmpl/gettemplate"),
     /**
      * 删除帐号下的某个模板.
      */
-    TEMPLATE_DEL_URL(API_DEFAULT_HOST_URL,  "/wxaapi/newtmpl/deltemplate"),
+    TEMPLATE_DEL_URL(API_DEFAULT_HOST_URL, "/wxaapi/newtmpl/deltemplate"),
     /**
      * 获取小程序账号的类目
      */
-    GET_CATEGORY_URL (API_DEFAULT_HOST_URL,  "/wxaapi/newtmpl/getcategory"),
+    GET_CATEGORY_URL(API_DEFAULT_HOST_URL, "/wxaapi/newtmpl/getcategory"),
     UNIFORM_MSG_SEND_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/wxopen/template/uniform_send"),
     ACTIVITY_ID_CREATE_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/wxopen/activityid/create"),
     UPDATABLE_MSG_SEND_URL(API_DEFAULT_HOST_URL, "/cgi-bin/message/wxopen/updatablemsg/send");
@@ -1133,22 +1133,22 @@ public interface WxMpApiUrl {
     /**
      * 报销方查询报销发票信息
      */
-    GET_INVOICE_INFO(API_DEFAULT_HOST_URL,"/card/invoice/reimburse/getinvoiceinfo"),
+    GET_INVOICE_INFO(API_DEFAULT_HOST_URL, "/card/invoice/reimburse/getinvoiceinfo"),
 
     /**
      * 报销方批量查询报销发票信息
      */
-    GET_INVOICE_BATCH(API_DEFAULT_HOST_URL,"/card/invoice/reimburse/getinvoicebatch"),
+    GET_INVOICE_BATCH(API_DEFAULT_HOST_URL, "/card/invoice/reimburse/getinvoicebatch"),
 
     /**
      * 报销方更新发票状态
      */
-    UPDATE_INVOICE_STATUS(API_DEFAULT_HOST_URL,"/card/invoice/reimburse/updateinvoicestatus"),
+    UPDATE_INVOICE_STATUS(API_DEFAULT_HOST_URL, "/card/invoice/reimburse/updateinvoicestatus"),
 
     /**
      * 报销方批量更新发票状态
      */
-    UPDATE_STATUS_BATCH(API_DEFAULT_HOST_URL,"/card/invoice/reimburse/updatestatusbatch"),
+    UPDATE_STATUS_BATCH(API_DEFAULT_HOST_URL, "/card/invoice/reimburse/updatestatusbatch"),
     ;
     private final String prefix;
     private final String path;
@@ -1180,7 +1180,190 @@ public interface WxMpApiUrl {
     /**
      * 获取服务号顾问列表
      */
-    LIST_GUIDE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguideacctlist");
+    LIST_GUIDE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguideacctlist"),
+    /**
+     * 生成顾问二维码
+     */
+    CREATE_QR_CODE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/guidecreateqrcode"),
+    /**
+     * 获取顾问聊天记录
+     */
+    GET_GUIDE_CHAT_RECORD(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidebuyerchatrecord"),
+    /**
+     * 设置快捷回复与关注自动回复
+     */
+    SET_GUIDE_CONFIG(API_DEFAULT_HOST_URL, "/cgi-bin/guide/setguideconfig"),
+    /**
+     * 获取快捷回复与关注自动回复
+     */
+    GET_GUIDE_CONFIG(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguideconfig"),
+    /**
+     * 为服务号设置敏感词与离线自动回复
+     */
+    SET_GUIDE_ACCT_CONFIG(API_DEFAULT_HOST_URL, "/cgi-bin/guide/setguideacctconfig"),
+    /**
+     * 获取服务号敏感词与离线自动回复
+     */
+    GET_GUIDE_ACCT_CONFIG(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguideacctconfig"),
+    /**
+     * 允许微信用户复制小程序页面路径
+     */
+    PUSH_SHOW_WX_PATH_MENU(API_DEFAULT_HOST_URL, "/cgi-bin/guide/pushshowwxapathmenu"),
+    /**
+     * 新建顾问分组
+     */
+    NEW_GUIDE_GROUP(API_DEFAULT_HOST_URL, "/cgi-bin/guide/newguidegroup"),
+    /**
+     * 获取服务号下所有顾问分组的列表
+     */
+    GET_GUIDE_GROUP_LIST(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidegrouplist"),
+    /**
+     * 获取指定顾问分组内顾问信息
+     */
+    GET_GROUP_GUIDE_INFO(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getgroupinfo"),
+    /**
+     * 分组内添加顾问
+     */
+    ADD_GROUP_GUIDE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/addguide2guidegroup"),
+    /**
+     * 分组内删除顾问
+     */
+    DEL_GROUP_GUIDE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/delguide2guidegroup"),
+    /**
+     * 获取顾问所在分组
+     */
+    GET_GROUP_ON_GUIDE(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getgroupbyguide"),
+    /**
+     * 删除指定顾问分组
+     */
+    DEL_GROUP(API_DEFAULT_HOST_URL, "/cgi-bin/guide/delguidegroup"),
+    /**
+     * 为顾问分配客户
+     */
+    ADD_GUIDE_BUYER_RELATION(API_DEFAULT_HOST_URL, "/cgi-bin/guide/addguidebuyerrelation"),
+    /**
+     * 为顾问移除客户
+     */
+    DEL_GUIDE_BUYER_RELATION(API_DEFAULT_HOST_URL, "/cgi-bin/guide/delguidebuyerrelation"),
+    /**
+     * 获取顾问的客户列表
+     */
+    GET_GUIDE_BUYER_RELATION_LIST(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidebuyerrelationlist"),
+    /**
+     * 为客户更换顾问
+     */
+    REBIND_GUIDE_ACCT_FOR_BUYER(API_DEFAULT_HOST_URL, "/cgi-bin/guide/rebindguideacctforbuyer"),
+    /**
+     * 修改客户昵称
+     */
+    UPDATE_GUIDE_BUYER_RELATION(API_DEFAULT_HOST_URL, "/cgi-bin/guide/updateguidebuyerrelation"),
+    /**
+     * 查询客户所属顾问
+     */
+    GET_GUIDE_BUYER_RELATION_BY_BUYER(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidebuyerrelationbybuyer"),
+    /**
+     * 查询指定顾问和客户的关系
+     */
+    GET_GUIDE_BUYER_RELATION(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidebuyerrelation"),
+    /**
+     * 新建标签类型
+     */
+    NEW_GUIDE_TAG_OPTION(API_DEFAULT_HOST_URL, "/cgi-bin/guide/newguidetagoption"),
+    /**
+     * 删除标签类型
+     */
+    DEL_GUIDE_TAG_OPTION(API_DEFAULT_HOST_URL, "/cgi-bin/guide/delguidetagoption"),
+    /**
+     * 为标签添加可选值
+     */
+    ADD_GUIDE_TAG_OPTION(API_DEFAULT_HOST_URL, "/cgi-bin/guide/addguidetagoption"),
+    /**
+     * 获取标签和可选值
+     */
+    GET_GUIDE_TAG_OPTION(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidetagoption"),
+    /**
+     * 为客户设置标签
+     */
+    ADD_GUIDE_BUYER_TAG(API_DEFAULT_HOST_URL, "/cgi-bin/guide/addguidebuyertag"),
+    /**
+     * 查询客户标签
+     */
+    GET_GUIDE_BUYER_TAG(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidebuyertag"),
+    /**
+     * 根据标签值筛选客户
+     */
+    QUERY_GUIDE_BUYER_BY_TAG(API_DEFAULT_HOST_URL, "/cgi-bin/guide/queryguidebuyerbytag"),
+    /**
+     * 删除客户标签
+     */
+    DEL_GUIDE_BUYER_TAG(API_DEFAULT_HOST_URL, "/cgi-bin/guide/delguidebuyertag"),
+    /**
+     * 设置自定义客户信息
+     */
+    ADD_GUIDE_BUYER_DISPLAY_TAG(API_DEFAULT_HOST_URL, "/cgi-bin/guide/addguidebuyerdisplaytag"),
+    /**
+     * 获取自定义客户信息
+     */
+    GET_GUIDE_BUYER_DISPLAY_TAG(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidebuyerdisplaytag"),
+    /**
+     * 添加小程序卡片素材
+     */
+    SET_GUIDE_CARD_MATERIAL(API_DEFAULT_HOST_URL, "/cgi-bin/guide/setguidecardmaterial"),
+    /**
+     * 查询小程序卡片素材
+     */
+    GET_GUIDE_CARD_MATERIAL(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidecardmaterial"),
+    /**
+     * 删除小程序卡片素材
+     */
+    DEL_GUIDE_CARD_MATERIAL(API_DEFAULT_HOST_URL, "/cgi-bin/guide/delguidecardmaterial"),
+    /**
+     * 添加图片素材
+     */
+    SET_GUIDE_IMAGE_MATERIAL(API_DEFAULT_HOST_URL, "/cgi-bin/guide/setguideimagematerial"),
+    /**
+     * 查询图片素材
+     */
+    GET_GUIDE_IMAGE_MATERIAL(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguideimagematerial"),
+    /**
+     * 删除图片素材
+     */
+    DEL_GUIDE_IMAGE_MATERIAL(API_DEFAULT_HOST_URL, "/cgi-bin/guide/delguideimagematerial"),
+    /**
+     * 添加文字素材
+     */
+    SET_GUIDE_WORD_MATERIAL(API_DEFAULT_HOST_URL, "/cgi-bin/guide/setguidewordmaterial"),
+    /**
+     * 查询文字素材
+     */
+    GET_GUIDE_WORD_MATERIAL(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidewordmaterial"),
+    /**
+     * 删除文字素材
+     */
+    DEL_GUIDE_WORD_MATERIAL(API_DEFAULT_HOST_URL, "/cgi-bin/guide/delguidewordmaterial"),
+    /**
+     * 添加群发任务
+     */
+    ADD_GUIDE_MASSED_JOB(API_DEFAULT_HOST_URL, "/cgi-bin/guide/addguidemassendjob"),
+    /**
+     * 获取群发任务列表
+     */
+    GET_GUIDE_MASSED_JOB_LIST(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidemassendjoblist"),
+    /**
+     * 获取指定群发任务信息
+     */
+    GET_GUIDE_MASSED_JOB(API_DEFAULT_HOST_URL, "/cgi-bin/guide/getguidemassendjob"),
+    /**
+     * 修改群发任务
+     */
+    UPDATE_GUIDE_MASSED_JOB(API_DEFAULT_HOST_URL, "/cgi-bin/guide/updateguidemassendjob"),
+    /**
+     * 取消群发任务
+     */
+    CANCEL_GUIDE_MASSED_JOB(API_DEFAULT_HOST_URL, "/cgi-bin/guide/cancelguidemassendjob"),
+    ;
+
+
     private final String prefix;
     private final String path;
 
