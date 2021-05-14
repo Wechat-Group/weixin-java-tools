@@ -2,11 +2,10 @@ package com.binarywang.spring.starter.wxjava.open.config.storage;
 
 import com.binarywang.spring.starter.wxjava.open.properties.WxOpenProperties;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
-import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
-import me.chanjar.weixin.open.api.impl.WxOpenInRedisConfigStorage;
+import me.chanjar.weixin.open.api.impl.WxOpenInRedisTemplateConfigStorage;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -35,9 +34,8 @@ public class WxOpenInRedisTemplateConfigStorageConfiguration extends AbstractWxO
     return this.config(config, properties);
   }
 
-  private WxOpenInRedisConfigStorage getWxOpenInRedisTemplateConfigStorage() {
+  private WxOpenInRedisTemplateConfigStorage getWxOpenInRedisTemplateConfigStorage() {
     StringRedisTemplate redisTemplate = applicationContext.getBean(StringRedisTemplate.class);
-    WxRedisOps redisOps = new RedisTemplateWxRedisOps(redisTemplate);
-    return new WxOpenInRedisConfigStorage(redisOps, properties.getConfigStorage().getKeyPrefix());
+    return new WxOpenInRedisTemplateConfigStorage(redisTemplate, properties.getConfigStorage().getKeyPrefix());
   }
 }
