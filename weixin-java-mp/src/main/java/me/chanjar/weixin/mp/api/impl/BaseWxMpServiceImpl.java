@@ -341,7 +341,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
     int retryTimes = 0;
     do {
       try {
-        return this.executeInternal(executor, uri, data);
+        return this.executeInternal(executor, uri, data, false);
       } catch (WxErrorException e) {
         WxError error = e.getError();
         // -1 系统繁忙, 1000ms后重试
@@ -370,7 +370,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
     throw new WxRuntimeException("微信服务端异常，超出重试次数");
   }
 
-  protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data, boolean doNotAutoRefresh) throws WxErrorException {
     E dataForLog = DataUtils.handleDataWithSecret(data);
 
     if (uri.contains("access_token=")) {
@@ -399,9 +399,11 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
         } finally {
           lock.unlock();
         }
-        if (this.getWxMpConfigStorage().autoRefreshToken()) {
+        if (this.getWxMpConfigStorage().autoRefreshToken() && !doNotAutoRefresh) {
           log.warn("即将重新获取新的access_token，错误代码：{}，错误信息：{}", error.getErrorCode(), error.getErrorMsg());
-          return this.execute(executor, uri, data);
+          //下一次不再自动重试
+          //当小程序误调用第三方平台专属接口时,第三方无法使用小程序的access token,如果可以继续自动获取token会导致无限循环重试,直到栈溢出
+          return this.executeInternal(executor, uri, data, true);
         }
       }
 
