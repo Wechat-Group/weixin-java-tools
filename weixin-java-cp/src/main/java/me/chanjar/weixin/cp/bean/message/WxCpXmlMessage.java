@@ -505,7 +505,9 @@ public class WxCpXmlMessage implements Serializable {
 
     @XStreamAlias("Item")
     @Data
-    public static class Item {
+    public static class Item implements Serializable {
+      private static final long serialVersionUID = -3418685294606228837L;
+
       @XStreamAlias("Name")
       @XStreamConverter(value = XStreamCDataConverter.class)
       private String name;
@@ -529,7 +531,9 @@ public class WxCpXmlMessage implements Serializable {
 
     @XStreamAlias("item")
     @Data
-    public static class Item {
+    public static class Item implements Serializable {
+      private static final long serialVersionUID = -6549728838848064881L;
+      
       @XStreamAlias("PicMd5Sum")
       @XStreamConverter(value = XStreamCDataConverter.class)
       private String picMd5Sum;

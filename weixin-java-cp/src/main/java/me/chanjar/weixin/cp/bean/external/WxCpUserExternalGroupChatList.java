@@ -6,6 +6,7 @@ import lombok.Setter;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class WxCpUserExternalGroupChatList extends WxCpBaseResp {
 
   @Getter
   @Setter
-  public static class ChatStatus {
+  public static class ChatStatus implements Serializable {
 
     /**
      * 客户群ID

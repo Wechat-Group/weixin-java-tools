@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.*;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,7 +18,9 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class WxCpUserExternalContactInfo {
+public class WxCpUserExternalContactInfo implements Serializable {
+  private static final long serialVersionUID = -5696099236344075582L;
+
   @SerializedName("external_contact")
   private ExternalContact externalContact;
 
@@ -26,7 +29,9 @@ public class WxCpUserExternalContactInfo {
 
   @Getter
   @Setter
-  public static class ExternalContact {
+  public static class ExternalContact implements Serializable {
+    private static final long serialVersionUID = -5696099236344075582L;
+
     @SerializedName("external_userid")
     private String externalUserId;
 
@@ -60,7 +65,9 @@ public class WxCpUserExternalContactInfo {
 
   @Setter
   @Getter
-  public static class ExternalProfile {
+  public static class ExternalProfile implements Serializable {
+    private static final long serialVersionUID = -5696099236344075582L;
+
     @SerializedName("external_attr")
     private List<ExternalAttribute> externalAttrs;
   }
@@ -69,23 +76,30 @@ public class WxCpUserExternalContactInfo {
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class ExternalAttribute {
+  public static class ExternalAttribute implements Serializable {
+    private static final long serialVersionUID = -5696099236344075582L;
     @Setter
     @Getter
-    public static class Text {
+    public static class Text implements Serializable {
+      private static final long serialVersionUID = -5696099236344075582L;
+
       private String value;
     }
 
     @Setter
     @Getter
-    public static class Web {
+    public static class Web implements Serializable {
+      private static final long serialVersionUID = -5696099236344075582L;
+
       private String title;
       private String url;
     }
 
     @Setter
     @Getter
-    public static class MiniProgram {
+    public static class MiniProgram implements Serializable {
+      private static final long serialVersionUID = -5696099236344075582L;
+
       @SerializedName("pagepath")
       private String pagePath;
       private String appid;
@@ -106,7 +120,9 @@ public class WxCpUserExternalContactInfo {
 
   @Setter
   @Getter
-  public static class FollowedUser {
+  public static class FollowedUser implements Serializable {
+    private static final long serialVersionUID = -5696099236344075582L;
+    
     @SerializedName("userid")
     private String userId;
     private String remark;
@@ -132,7 +148,9 @@ public class WxCpUserExternalContactInfo {
 
   @Setter
   @Getter
-  public static class Tag {
+  public static class Tag implements Serializable {
+    private static final long serialVersionUID = -5696099236344075582L;
+
     @SerializedName("group_name")
     private String groupName;
     @SerializedName("tag_name")

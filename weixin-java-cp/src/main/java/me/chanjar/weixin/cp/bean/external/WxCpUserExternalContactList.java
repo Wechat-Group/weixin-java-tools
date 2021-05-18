@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,9 @@ import java.util.List;
  *
  * @author <a href="https://github.com/JoeCao">Joe Cao</a>
  */
-public class WxCpUserExternalContactList {
+public class WxCpUserExternalContactList implements Serializable {
+  private static final long serialVersionUID = -4301684507150486556L;
+  
   @SerializedName("errcode")
   @Expose
   private Long errcode;

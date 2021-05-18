@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.bean;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +21,9 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class WxCpOauth2UserInfo {
+public class WxCpOauth2UserInfo implements Serializable {
+  private static final long serialVersionUID = -4301684507150486556L;
+  
   private String openId;
   private String deviceId;
   private String userId;

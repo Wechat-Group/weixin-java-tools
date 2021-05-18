@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.bean.taskcard;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +20,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskCardButton {
+public class TaskCardButton implements Serializable {
+  private static final long serialVersionUID = -4301684507150486556L;
+  
   private String key;
   private String name;
   private String replaceName;

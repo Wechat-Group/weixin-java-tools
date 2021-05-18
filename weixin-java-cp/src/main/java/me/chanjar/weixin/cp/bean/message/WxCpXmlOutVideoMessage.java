@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.bean.message;
 
+import java.io.Serializable;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
@@ -46,7 +48,8 @@ public class WxCpXmlOutVideoMessage extends WxCpXmlOutMessage {
 
   @Data
   @XStreamAlias("Video")
-  public static class Video {
+  public static class Video implements Serializable {
+    private static final long serialVersionUID = -8672761162722733622L;
 
     @XStreamAlias("MediaId")
     @XStreamConverter(value = XStreamCDataConverter.class)
