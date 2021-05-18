@@ -19,7 +19,7 @@
     <tr>
 			<td align="left" valign="middle">
         <a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect" target="_blank">
-				  <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/master/images/qrcodes/mp.png">
+				  <img height="120" src="http://binarywang.com/qrcodes/mp.png">
         </a>
 			</td>
       <td align="center" valign="middle" width="250">
@@ -30,12 +30,12 @@
       </td>
 			<td align="center" valign="middle">
 				<a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=7makzf5h" target="_blank">
-					<img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/master/images/banners/aliyun.jpg">
+					<img height="120" src="http://binarywang.com/banners/aliyun.jpg">
 				</a>
 			</td>
 			<td align="center" valign="middle">
 				<a href="https://cloud.tencent.com/redirect.php?redirect=1014&cps_key=a4c06ffe004dbcda44036daa1bf8f876&from=console" target="_blank">
-					<img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/master/images/banners/tcloud.jpg">
+					<img height="120" src="http://binarywang.com/banners/tcloud.jpg">
 				</a>
 			</td>
 		</tr>
@@ -113,6 +113,7 @@
 - wx-manage（微信公众号管理项目）：https://github.com/niefy/wx-manage
 - 基于若依开发的微信公众号管理系统：https://gitee.com/joolun/JooLun-wx
 - SAAS微信小程序电商：https://gitee.com/wei-it/weiit-saas
+- mall4j 电商商城系统：https://gitee.com/gz-yami/mall4j
 
 #### 小程序：
 - （京东）友家铺子，友家铺子店长版，京粉精选
@@ -129,6 +130,8 @@
 - 王朝社区（比亚迪新能源社区）
 - 极吼吼手机上门回收换新
 - 未来信封 
+- 5G惠享
+- 生菜wordpress转小程序
 
 #### 公众号：
 - 中国电信上海网厅（sh_189）
@@ -145,10 +148,13 @@
 - 好行景区直通车以及全国40多个公众号
 - 我奥篮球公众号
 - 未来信封官微
+- 银川智云问诊
+- 5G惠享
 
-#### 企业号/企业微信：
+#### 企业微信：
 - HTC企业微信
 - 掌上史丹利
+- 药店益
 
 #### 其他：
 - 高善人力资源

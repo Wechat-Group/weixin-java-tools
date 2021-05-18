@@ -20,7 +20,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @XStreamAlias("xml")
 public class EntPayRedpackResult extends BaseWxPayResult implements Serializable {
-
   private static final long serialVersionUID = 1L;
 
   /**

@@ -24,6 +24,8 @@ public interface WxMpDataCubeService {
    *
    * @param beginDate 开始时间
    * @param endDate   最大时间跨度7天，endDate不能早于begingDate
+   * @return the user summary
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeUserSummary> getUserSummary(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -36,6 +38,8 @@ public interface WxMpDataCubeService {
    *
    * @param beginDate 开始时间
    * @param endDate   最大时间跨度7天，endDate不能早于begingDate
+   * @return the user cumulate
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeUserCumulate> getUserCumulate(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -50,6 +54,8 @@ public interface WxMpDataCubeService {
    *
    * @param beginDate 开始时间
    * @param endDate   最大时间跨度1天，endDate不能早于begingDate
+   * @return the article summary
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeArticleResult> getArticleSummary(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -60,7 +66,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getarticletotal?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度1天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度1天，endDate不能早于begingDate
+   * @return the article total
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeArticleTotal> getArticleTotal(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -71,7 +79,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getuserread?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度3天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度3天，endDate不能早于begingDate
+   * @return the user read
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeArticleResult> getUserRead(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -82,7 +92,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getuserreadhour?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度1天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度1天，endDate不能早于begingDate
+   * @return the user read hour
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeArticleResult> getUserReadHour(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -93,7 +105,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getusershare?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度7天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度7天，endDate不能早于begingDate
+   * @return the user share
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeArticleResult> getUserShare(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -104,7 +118,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getusersharehour?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度1天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度1天，endDate不能早于begingDate
+   * @return the user share hour
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeArticleResult> getUserShareHour(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -117,7 +133,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getupstreammsg?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度7天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度7天，endDate不能早于begingDate
+   * @return the upstream msg
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeMsgResult> getUpstreamMsg(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -128,7 +146,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getupstreammsghour?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度1天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度1天，endDate不能早于begingDate
+   * @return the upstream msg hour
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeMsgResult> getUpstreamMsgHour(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -139,7 +159,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getupstreammsgweek?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度30天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度30天，endDate不能早于begingDate
+   * @return the upstream msg week
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeMsgResult> getUpstreamMsgWeek(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -150,7 +172,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getupstreammsgmonth?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度30天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度30天，endDate不能早于begingDate
+   * @return the upstream msg month
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeMsgResult> getUpstreamMsgMonth(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -161,7 +185,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getupstreammsgdist?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度15天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度15天，endDate不能早于begingDate
+   * @return the upstream msg dist
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeMsgResult> getUpstreamMsgDist(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -172,7 +198,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getupstreammsgdistweek?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度30天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度30天，endDate不能早于begingDate
+   * @return the upstream msg dist week
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeMsgResult> getUpstreamMsgDistWeek(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -183,7 +211,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getupstreammsgdistmonth?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度30天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度30天，endDate不能早于begingDate
+   * @return the upstream msg dist month
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeMsgResult> getUpstreamMsgDistMonth(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -196,7 +226,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getinterfacesummary?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度30天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度30天，endDate不能早于begingDate
+   * @return the interface summary
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeInterfaceResult> getInterfaceSummary(Date beginDate, Date endDate) throws WxErrorException;
 
@@ -207,7 +239,9 @@ public interface WxMpDataCubeService {
    * 接口url格式：https://api.weixin.qq.com/datacube/getinterfacesummaryhour?access_token=ACCESS_TOKEN
    *
    * @param beginDate 开始时间
-   * @param endDate   最大时间跨度1天，endDate不能早于begingDate
+   * @param endDate 最大时间跨度1天，endDate不能早于begingDate
+   * @return the interface summary hour
+   * @throws WxErrorException the wx error exception
    */
   List<WxDataCubeInterfaceResult> getInterfaceSummaryHour(Date beginDate, Date endDate) throws WxErrorException;
 

@@ -40,9 +40,12 @@ public interface WxCpTpMediaService {
      *
      * @param mediaType 媒体类型
      * @param file      文件对象
+     * @param corpId 授权企业的corpid
      * @see #upload(String, String, InputStream, String)
+     * @throws WxErrorException 异常信息
      */
     WxMediaUploadResult upload(String mediaType, File file, String corpId) throws WxErrorException;
+
 
     /**
      * <pre>
@@ -52,9 +55,10 @@ public interface WxCpTpMediaService {
      * 每个企业每天最多可上传100张图片
      * 接口url格式：https://qyapi.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN
      * </pre>
-     *
      * @param file 上传的文件对象
+     * @param corpId 授权企业的corpid
      * @return 返回图片url
+     * @throws WxErrorException 异常信息
      */
     String uploadImg(File file, String corpId) throws WxErrorException;
 }

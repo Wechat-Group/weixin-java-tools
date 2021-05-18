@@ -63,6 +63,8 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaLiveMemberService liveMemberService = new WxMaLiveMemberServiceImpl(this);
   private final WxOcrService ocrService = new WxMaOcrServiceImpl(this);
   private final WxImgProcService imgProcService = new WxMaImgProcServiceImpl(this);
+  private final WxMaShopSpuService shopSpuService = new WxMaShopSpuServiceImpl(this);
+  private final WxMaShopOrderService shopOrderService = new WxMaShopOrderServiceImpl(this);
   private Map<String, WxMaConfig> configMap;
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -499,4 +501,13 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     return this.imgProcService;
   }
 
+  @Override
+  public WxMaShopSpuService getShopSpuService() {
+    return this.shopSpuService;
+  }
+
+  @Override
+  public WxMaShopOrderService getShopOrderService() {
+    return this.shopOrderService;
+  }
 }
