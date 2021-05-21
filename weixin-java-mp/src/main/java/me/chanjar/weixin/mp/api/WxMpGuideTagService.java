@@ -7,6 +7,8 @@ import me.chanjar.weixin.mp.bean.guide.WxMpGuideTagInfo;
 import java.util.List;
 
 /**
+ * 微信导购助手（现在叫对话能力）标签相关接口.
+ *
  * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a>
  * @date 2021/5/13/013
  */

@@ -14,11 +14,11 @@ public interface WxOAuth2Service {
   /**
    * <pre>
    * 构造oauth2授权的url连接.
-   * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=网页授权获取用户基本信息
+   * 详情请见: https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html
    * </pre>
    *
    * @param redirectUri 用户授权完成后的重定向链接，无需urlencode, 方法内会进行encode
-   * @param scope       scope
+   * @param scope       scope,静默:snsapi_base, 带信息授权:snsapi_userinfo
    * @param state       state
    * @return url
    */

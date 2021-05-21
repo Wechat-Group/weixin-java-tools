@@ -106,7 +106,7 @@ public class WxMpGuideTagServiceImpl implements WxMpGuideTagService {
     body.put(ACCOUNT, account);
     body.put(OPENID, openid);
     body.put("push_count", pushCount);
-    body.put("tag_value", value);
+    body.put("tag_values", value);
     String returnString = this.mpService.post(WxMpApiUrl.Guide.QUERY_GUIDE_BUYER_BY_TAG, body);
     return WxGsonBuilder.create().fromJson(GsonParser.parse(returnString).getAsJsonArray("openid_list"),
       new TypeToken<List<String>>() {
