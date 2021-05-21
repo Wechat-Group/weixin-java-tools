@@ -23,7 +23,8 @@ public class WxCpTpAdmin extends WxCpBaseResp {
 
   @Getter
   @Setter
-  public static class Admin {
+  public static class Admin extends WxCpBaseResp {
+    private static final long serialVersionUID = -5028321625140879571L;
 
     @SerializedName("userid")
     private String userId;
