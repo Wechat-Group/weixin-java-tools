@@ -26,7 +26,8 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   private final WxRedisOps wxRedisOps;
 
   //redis里面key的统一前缀
-  private final String keyPrefix = "";
+  //private final String keyPrefix = "";//4.0.9.B 有final为不可设置,去掉final改为可设置
+  private String keyPrefix = "";
 
   private final String suiteAccessTokenKey = ":suiteAccessTokenKey:";
 
@@ -298,23 +299,23 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   @Override
   public boolean isProviderTokenExpired() {
     //remain time to live in seconds, or key not exist
-    return wxRedisOps.getExpire(keyWithPrefix(providerTokenKey)) == 0L || wxRedisOps.getExpire(keyWithPrefix(providerTokenKey)) == -2;
+    return wxRedisOps.getExpire(providerKeyWithPrefix(providerTokenKey)) == 0L || wxRedisOps.getExpire(providerKeyWithPrefix(providerTokenKey)) == -2;
   }
 
   @Override
   public void updateProviderToken(String providerToken, int expiredInSeconds) {
-    wxRedisOps.setValue(keyWithPrefix(providerTokenKey), providerToken, expiredInSeconds, TimeUnit.SECONDS);
+    wxRedisOps.setValue(providerKeyWithPrefix(providerTokenKey), providerToken, expiredInSeconds, TimeUnit.SECONDS);
   }
 
   @Override
   public String getProviderToken() {
-    return wxRedisOps.getValue(keyWithPrefix(providerTokenKey));
+    return wxRedisOps.getValue(providerKeyWithPrefix(providerTokenKey));
   }
 
   @Override
   public WxCpProviderToken getProviderTokenEntity() {
-    String providerToken = wxRedisOps.getValue(keyWithPrefix(providerTokenKey));
-    Long expire = wxRedisOps.getExpire(keyWithPrefix(providerTokenKey));
+    String providerToken = wxRedisOps.getValue(providerKeyWithPrefix(providerTokenKey));
+    Long expire = wxRedisOps.getExpire(providerKeyWithPrefix(providerTokenKey));
 
     if (StringUtils.isBlank(providerToken) || expire == null || expire == 0 || expire == -2) {
       return new WxCpProviderToken();
@@ -328,7 +329,7 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
 
   @Override
   public void expireProviderToken() {
-    wxRedisOps.expire(keyWithPrefix(providerTokenKey), 0, TimeUnit.SECONDS);
+    wxRedisOps.expire(providerKeyWithPrefix(providerTokenKey), 0, TimeUnit.SECONDS);
   }
 
   /**
@@ -361,7 +362,7 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
 
   @Override
   public Lock getProviderAccessTokenLock() {
-    return getLockByKey(String.join(":", this.corpId, LOCKER_PROVIDER_ACCESS_TOKEN));
+    return getProviderLockByKey(String.join(":", this.corpId, LOCKER_PROVIDER_ACCESS_TOKEN));
   }
 
   @Override
@@ -390,6 +391,15 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
     return this.wxRedisOps.getLock(String.join(":", keyWithPrefix(LOCK_KEY + this.suiteId), key));
   }
 
+  /**
+   * 单独处理provider,且不应和suite 有关系
+   * @param key
+   * @return
+   */
+  private Lock getProviderLockByKey(String key) {
+    return this.wxRedisOps.getLock(String.join(":", providerKeyWithPrefix(LOCK_KEY), key));
+  }
+
   @Override
   public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
     return this.apacheHttpClientBuilder;
@@ -406,7 +416,22 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
     return WxCpGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * 一个provider 会有多个suite,需要唯一标识作为前缀
+   * @param key
+   * @return
+   */
   private String keyWithPrefix(String key) {
-    return keyPrefix + key;
+    return keyPrefix +":"+suiteId+":" + key;
+  }
+
+  /**
+   * provider 应该独享一个key,且不和任何suite关联
+   * 一个provider  会有多个suite,不同的suite 都应该指向同一个provider 的数据
+   * @param key
+   * @return
+   */
+  private String providerKeyWithPrefix(String key) {
+    return keyPrefix +":"+corpId+":" + key;
   }
 }
