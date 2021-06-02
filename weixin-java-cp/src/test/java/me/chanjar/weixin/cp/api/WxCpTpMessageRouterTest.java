@@ -7,6 +7,7 @@ import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import me.chanjar.weixin.cp.tp.message.WxCpTpMessageHandler;
 import me.chanjar.weixin.cp.tp.message.WxCpTpMessageRouter;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
+import me.chanjar.weixin.cp.tp.service.impl.WxCpTpServiceApacheHttpClientImpl;
 import me.chanjar.weixin.cp.tp.service.impl.WxCpTpServiceImpl;
 import org.testng.annotations.Test;
 
@@ -21,7 +22,7 @@ public class WxCpTpMessageRouterTest {
 
   @Test
   public void testMessageRouter() {
-    WxCpTpService service = new WxCpTpServiceImpl();
+    WxCpTpService service = new WxCpTpServiceApacheHttpClientImpl();
     WxCpTpMessageRouter router = new WxCpTpMessageRouter(service);
 
     String xml = "<xml>\n" +

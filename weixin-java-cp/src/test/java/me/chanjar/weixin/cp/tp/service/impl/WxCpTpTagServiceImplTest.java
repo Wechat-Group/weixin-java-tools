@@ -30,7 +30,7 @@ import static org.testng.Assert.*;
 public class WxCpTpTagServiceImplTest {
 
   @Mock
-  private WxCpTpServiceImpl wxCpTpService;
+  private WxCpTpServiceApacheHttpClientImpl wxCpTpService;
 
   private WxCpTpConfigStorage configStorage;
 

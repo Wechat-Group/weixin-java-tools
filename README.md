@@ -38,7 +38,7 @@
 </table>
 
 ### 重要信息
-1. **2020-11-29 发布 [【4.0.0正式版】](https://mp.weixin.qq.com/s/OPoICwLifOZGVN_ZX_BBhw)**！
+1. **2021-06-02 发布 [【4.1.0正式版】](https://mp.weixin.qq.com/s/nIk_xOf6dxkhKfqq830Cuw)**！
 1. 新手重要提示：本项目仅是一个SDK开发工具包，未提供Web实现，建议使用 `maven` 或 `gradle` 引用本项目即可使用本SDK提供的各种功能，详情可参考 **[【Demo项目】](demo.md)** 或本项目中的部分单元测试代码；另外微信开发新手请务必阅读[【开发文档 Wiki 首页】](https://github.com/Wechat-Group/WxJava/wiki)的常见问题部分，可以少走很多弯路，节省不少时间。
 1. 技术交流群：想获得QQ群/微信群/钉钉企业群等信息的同学，请使用微信扫描上面的微信公众号二维码关注 `WxJava` 后点击相关菜单即可获取加入方式，同时也可以在微信中搜索 `weixin-java-tools` 或 `WxJava` 后选择正确的公众号进行关注，该公众号会及时通知SDK相关更新信息，并不定期分享微信Java开发相关技术知识；
 1. 钉钉技术交流群： `30294972`（技术交流群），`35724728`（通知群，实时通知Github项目变更记录）。
@@ -67,7 +67,7 @@
 <dependency>
   <groupId>com.github.binarywang</groupId>
   <artifactId>（不同模块参考下文）</artifactId>
-  <version>4.0.0</version>
+  <version>4.1.0</version>
 </dependency>
 ```
 
