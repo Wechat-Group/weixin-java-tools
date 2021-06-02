@@ -99,7 +99,7 @@
 
 #### 开源项目：
 - 基于微信公众号的签到、抽奖、发送弹幕程序：https://github.com/workcheng/weiya
-- XxPay聚合支付：https://github.com/jmdhappy/xxpay-master
+- Jeepay 支付系统：https://gitee.com/jeequan/jeepay
 - 微同商城：https://gitee.com/fuyang_lipengjun/platform
 - 微信点餐系统：https://github.com/sqmax/springboot-project
 - 专注批量推送的小而美的工具：https://github.com/rememberber/WePush
