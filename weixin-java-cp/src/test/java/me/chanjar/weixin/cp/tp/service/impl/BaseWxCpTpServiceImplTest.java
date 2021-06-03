@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @date 2019-08-18
  */
 public class BaseWxCpTpServiceImplTest {
-  private final WxCpTpService tpService = Mockito.spy(new WxCpTpServiceImpl());
+  private final WxCpTpService tpService = Mockito.spy(new WxCpTpServiceApacheHttpClientImpl());
 
   @Test
   public void testCheckSignature() {
