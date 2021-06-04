@@ -28,12 +28,16 @@ public class XStreamInitializer {
         private static final String SUFFIX_CDATA = "]]>";
         private static final String PREFIX_MEDIA_ID = "<MediaId>";
         private static final String SUFFIX_MEDIA_ID = "</MediaId>";
+        private static final String PREFIX_REPLACE_NAME = "<ReplaceName>";
+        private static final String SUFFIX_REPLACE_NAME = "</ReplaceName>";
 
         @Override
         protected void writeText(QuickWriter writer, String text) {
           if (text.startsWith(PREFIX_CDATA) && text.endsWith(SUFFIX_CDATA)) {
             writer.write(text);
           } else if (text.startsWith(PREFIX_MEDIA_ID) && text.endsWith(SUFFIX_MEDIA_ID)) {
+            writer.write(text);
+          } else if (text.startsWith(PREFIX_REPLACE_NAME) && text.endsWith(SUFFIX_REPLACE_NAME)){
             writer.write(text);
           } else {
             super.writeText(writer, text);
