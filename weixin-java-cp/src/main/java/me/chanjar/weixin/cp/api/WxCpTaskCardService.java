@@ -25,7 +25,7 @@ public interface WxCpTaskCardService {
    *
    * @param userIds    企业的成员ID列表
    * @param taskId     任务卡片ID
-   * @param clickedKey 已点击按钮的Key
+   * @param replaceName 替换文案
    */
-  void update(List<String> userIds, String taskId, String clickedKey) throws WxErrorException;
+  void update(List<String> userIds, String taskId, String replaceName) throws WxErrorException;
 }

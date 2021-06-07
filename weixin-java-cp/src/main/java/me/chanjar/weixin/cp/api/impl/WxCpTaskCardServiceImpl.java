@@ -26,14 +26,14 @@ public class WxCpTaskCardServiceImpl implements WxCpTaskCardService {
   private final WxCpService mainService;
 
   @Override
-  public void update(List<String> userIds, String taskId, String clickedKey) throws WxErrorException {
+  public void update(List<String> userIds, String taskId, String replaceName) throws WxErrorException {
     Integer agentId = this.mainService.getWxCpConfigStorage().getAgentId();
 
     Map<String, Object> data = new HashMap<>(4);
     data.put("userids", userIds);
     data.put("agentid", agentId);
     data.put("task_id", taskId);
-    data.put("clicked_key", clickedKey);
+    data.put("replace_name", replaceName);
 
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_TASK_CARD);
     this.mainService.post(url, WxGsonBuilder.create().toJson(data));
