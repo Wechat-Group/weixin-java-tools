@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializable {
   private static final long serialVersionUID = 6678780920621872824L;
-  // locker
+
   private final transient Map<String, Lock> providerAccessTokenLocker = new ConcurrentHashMap<>();
   private final transient Map<String, Lock> suiteAccessTokenLocker = new ConcurrentHashMap<>();
   private final transient Map<String, Lock> accessTokenLocker = new ConcurrentHashMap<>();
@@ -319,10 +319,10 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   public boolean isAuthCorpJsApiTicketExpired(String authCorpId) {
     Long t = this.authCorpJsApiTicketExpireTimeMap.get(authCorpId);
     if (t == null) {
-      return System.currentTimeMillis() > t;
-    } else {
       return true;
     }
+
+    return System.currentTimeMillis() > t;
   }
 
   @Override
@@ -348,10 +348,10 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   public boolean isAuthSuiteJsApiTicketExpired(String authCorpId) {
     Long t = authSuiteJsApiTicketExpireTimeMap.get(authCorpId);
     if (t == null) {
-      return System.currentTimeMillis() > t;
-    } else {
       return true;
     }
+
+    return System.currentTimeMillis() > t;
   }
 
   @Override
