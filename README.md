@@ -179,3 +179,11 @@
 ### GitHub Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/Wechat-Group/WxJava.svg)](https://starchart.cc/Wechat-Group/WxJava)     
+
+
+### salus little mind
+> 为什么不提pr? pr纯粹看心情,而且又不赚钱  
+> 为什么不设置仓库权限? 因为fork了,github不让设置
+
+1. 实现了部分第三方云开发平台接口  
+2. 完善第三方平台的小程序数据分析接口

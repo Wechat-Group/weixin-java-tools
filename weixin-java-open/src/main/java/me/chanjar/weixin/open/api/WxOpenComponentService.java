@@ -159,6 +159,13 @@ public interface WxOpenComponentService {
   WxOpenConfigStorage getWxOpenConfigStorage();
 
   /**
+   * Gets wx open ma batch cloud service.
+   *
+   * @return wx open ma batch cloud service
+   */
+  WxOpenMaBatchCloudService getWxOpenMaBatchCloudService();
+
+  /**
    * Check signature boolean.
    *
    * @param timestamp the timestamp

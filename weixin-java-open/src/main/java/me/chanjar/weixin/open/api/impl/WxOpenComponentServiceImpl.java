@@ -15,12 +15,7 @@ import me.chanjar.weixin.common.util.http.URIUtil;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.open.api.WxOpenComponentService;
-import me.chanjar.weixin.open.api.WxOpenConfigStorage;
-import me.chanjar.weixin.open.api.WxOpenFastMaService;
-import me.chanjar.weixin.open.api.WxOpenMaService;
-import me.chanjar.weixin.open.api.WxOpenMpService;
-import me.chanjar.weixin.open.api.WxOpenService;
+import me.chanjar.weixin.open.api.*;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenCreateResult;
@@ -54,6 +49,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   private static final Map<String, WxOpenFastMaService> WX_OPEN_FAST_MA_SERVICE_MAP = new ConcurrentHashMap<>();
 
   private final WxOpenService wxOpenService;
+
+  private final WxOpenMaBatchCloudService wxOpenMaBatchCloudService = new WxOpenMaBatchCloudServiceImpl(this);
 
   @Override
   public WxOpenMpService getWxMpServiceByAppid(String appId) {
@@ -119,6 +116,11 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   @Override
   public WxOpenConfigStorage getWxOpenConfigStorage() {
     return wxOpenService.getWxOpenConfigStorage();
+  }
+
+  @Override
+  public WxOpenMaBatchCloudService getWxOpenMaBatchCloudService() {
+    return null;
   }
 
   @Override
