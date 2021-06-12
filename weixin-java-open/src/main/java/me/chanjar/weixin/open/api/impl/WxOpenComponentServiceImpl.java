@@ -120,7 +120,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public WxOpenMaBatchCloudService getWxOpenMaBatchCloudService() {
-    return null;
+    return wxOpenMaBatchCloudService;
   }
 
   @Override

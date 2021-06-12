@@ -3,6 +3,7 @@ package me.chanjar.weixin.open.bean.result;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
 import java.util.List;
 
@@ -33,5 +34,11 @@ public class WxOpenMaBatchCloudGetEnvIdResult extends WxOpenResult {
      */
     @SerializedName("env_list")
     private List<String> envList;
+  }
+
+
+  @Override
+  public String toString() {
+    return WxOpenGsonBuilder.create().toJson(this);
   }
 }

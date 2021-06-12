@@ -3,6 +3,7 @@ package me.chanjar.weixin.open.bean.result;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
 import java.util.List;
 
@@ -50,5 +51,10 @@ public class WxOpenMaBatchCloudStaticFileListResult extends WxOpenResult {
      */
     @SerializedName("size")
     private String size;
+  }
+
+  @Override
+  public String toString() {
+    return WxOpenGsonBuilder.create().toJson(this);
   }
 }

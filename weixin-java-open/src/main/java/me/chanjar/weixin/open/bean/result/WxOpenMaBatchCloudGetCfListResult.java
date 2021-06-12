@@ -3,6 +3,7 @@ package me.chanjar.weixin.open.bean.result;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
 import java.io.Serializable;
 
@@ -49,5 +50,11 @@ public class WxOpenMaBatchCloudGetCfListResult extends WxOpenResult {
      */
     @SerializedName("status")
     private String status;
+  }
+
+
+  @Override
+  public String toString() {
+    return WxOpenGsonBuilder.create().toJson(this);
   }
 }
