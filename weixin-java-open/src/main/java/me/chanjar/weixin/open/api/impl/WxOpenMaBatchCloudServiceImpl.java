@@ -153,7 +153,7 @@ public class WxOpenMaBatchCloudServiceImpl implements WxOpenMaBatchCloudService 
     jsonObject.addProperty("prefix", prefix);
     jsonObject.addProperty("delimiter", delimiter);
     jsonObject.addProperty("marker", marker);
-    String response = wxOpenComponentService.post(API_DESCRIBE_SS, jsonObject.toString());
+    String response = wxOpenComponentService.post(API_LIST_STATIC_FILE, jsonObject.toString());
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaBatchCloudStaticFileListResult.class);
   }
 
@@ -162,7 +162,7 @@ public class WxOpenMaBatchCloudServiceImpl implements WxOpenMaBatchCloudService 
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("env", env);
     jsonObject.addProperty("filename", fileName);
-    String response = wxOpenComponentService.post(API_DESCRIBE_SS, jsonObject.toString());
+    String response = wxOpenComponentService.post(API_GET_STATIC_FILE_URL, jsonObject.toString());
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaBatchCloudStaticUploadFileResult.class);
   }
 }
