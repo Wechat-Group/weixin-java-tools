@@ -222,6 +222,10 @@ public class WxMaApiUrlConstants {
     String GENERATE_SCHEME_URL = "https://api.weixin.qq.com/wxa/generatescheme";
   }
 
+  public interface Link {
+    String GENERATE_URLLINK_URL = "https://api.weixin.qq.com/wxa/generate_urllink";
+  }
+
   public interface SecCheck {
     String IMG_SEC_CHECK_URL = "https://api.weixin.qq.com/wxa/img_sec_check";
     String MSG_SEC_CHECK_URL = "https://api.weixin.qq.com/wxa/msg_sec_check";
@@ -315,5 +319,31 @@ public class WxMaApiUrlConstants {
       String ORDER_PAY = "https://api.weixin.qq.com/shop/order/pay";
       String ORDER_GET = "https://api.weixin.qq.com/shop/order/get";
     }
+  }
+
+  /**
+   * 电子发票报销方
+   */
+  public interface Invoice{
+
+    /**
+     * 报销方查询报销发票信息
+     */
+    String GET_INVOICE_INFO = "https://api.weixin.qq.com/card/invoice/reimburse/getinvoiceinfo";
+
+    /**
+     * 报销方批量查询报销发票信息
+     */
+    String GET_INVOICE_BATCH = "https://api.weixin.qq.com/card/invoice/reimburse/getinvoicebatch";
+
+    /**
+     * 报销方更新发票状态
+     */
+    String UPDATE_INVOICE_STATUS = "https://api.weixin.qq.com/card/invoice/reimburse/updateinvoicestatus";
+
+    /**
+     * 报销方批量更新发票状态
+     */
+    String UPDATE_STATUS_BATCH = "https://api.weixin.qq.com/card/invoice/reimburse/updatestatusbatch";
   }
 }
