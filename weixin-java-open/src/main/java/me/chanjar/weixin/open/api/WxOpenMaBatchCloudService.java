@@ -243,6 +243,7 @@ public interface WxOpenMaBatchCloudService {
    * @param zipFile 包含函数代码文件的 zip 格式文件，使用该接口时要求将 zip 文件的内容转成 base64 编码，最大支持20M
    * @param vpcId   VPC唯一标识
    * @return the wx open result
+   * @throws WxErrorException the wx error exception
    */
   WxOpenResult batchCreateCf(List<String> envs, String zipFile, String vpcId) throws WxErrorException;
 
@@ -253,6 +254,7 @@ public interface WxOpenMaBatchCloudService {
    * @param zipFile      the zip file
    * @param functionName the function name
    * @return the wx open result
+   * @throws WxErrorException the wx error exception
    */
   WxOpenResult batchUpdateCf(List<String> envs, String zipFile, String functionName) throws WxErrorException;
 
@@ -261,6 +263,7 @@ public interface WxOpenMaBatchCloudService {
    *
    * @param wxOpenMaBatchCloudUpdateCfConfigMessage the wx open ma batch cloud update cf config message
    * @return the wx open result
+   * @throws WxErrorException the wx error exception
    */
   WxOpenResult updateCfConfig(WxOpenMaBatchCloudUpdateCfConfigMessage wxOpenMaBatchCloudUpdateCfConfigMessage) throws WxErrorException;
 
@@ -270,6 +273,7 @@ public interface WxOpenMaBatchCloudService {
    * @param env          the env
    * @param functionName the function name
    * @return the wx open result
+   * @throws WxErrorException the wx error exception
    */
   WxOpenResult deleteCf(String env, String functionName) throws WxErrorException;
 
@@ -281,6 +285,7 @@ public interface WxOpenMaBatchCloudService {
    * @param offset    the offset
    * @param searchKey the search key
    * @return the cf list result
+   * @throws WxErrorException the wx error exception
    */
   WxOpenMaBatchCloudGetCfListResult getCfListResult(String env, Long limit, Long offset, String searchKey) throws WxErrorException;
 
@@ -290,6 +295,7 @@ public interface WxOpenMaBatchCloudService {
    * @param env          the env
    * @param functionName the function name
    * @return the triggers
+   * @throws WxErrorException the wx error exception
    */
   WxOpenMaBatchCloudGetTriggersResult getTriggers(String env, String functionName) throws WxErrorException;
 
@@ -298,8 +304,54 @@ public interface WxOpenMaBatchCloudService {
    *
    * @param wxOpenMaBatchCloudBatchUpdateTriggerMessage the wx open ma batch cloud batch update trigger message
    * @return the wx open ma batch cloud batch update trigger result
+   * @throws WxErrorException the wx error exception
    */
   WxOpenMaBatchCloudBatchUpdateTriggerResult batchUpdateTrigger(WxOpenMaBatchCloudBatchUpdateTriggerMessage wxOpenMaBatchCloudBatchUpdateTriggerMessage) throws WxErrorException;
   // ss
 
+  /**
+   * 开通静态网站
+   *
+   * @param env the env
+   * @return the wx open result
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenResult createStaticStore(String env) throws WxErrorException;
+
+  /**
+   * 查看静态网站状态
+   *
+   * @param env the env
+   * @return the wx open ma batch cloud describe static store result
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenMaBatchCloudDescribeStaticStoreResult describeStaticStore(String env) throws WxErrorException;
+
+  /**
+   * 获取静态网站文件列表
+   *
+   * @param env       the env
+   * @param prefix    the prefix
+   * @param delimiter the delimiter
+   * @param marker    the marker
+   * @return the wx open ma batch cloud static file list result
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenMaBatchCloudStaticFileListResult staticFileList(String env, String prefix, String delimiter, String marker) throws WxErrorException;
+
+  /**
+   * 获取上传静态网站文件链接
+   * <pre>
+   *   请求方法为 PUT
+   *   url 为返回包的 signed_url 字段
+   *   需增加 key 为 x-cos-security-token，value 为返回包的中token字段的Header
+   *   请求体为需上传的文件内容
+   * </pre>
+   *
+   * @param env      the env
+   * @param fileName the file name
+   * @return the wx open ma batch cloud static upload file result
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenMaBatchCloudStaticUploadFileResult staticUploadFile(String env, String fileName) throws WxErrorException;
 }

@@ -129,4 +129,40 @@ public class WxOpenMaBatchCloudServiceImpl implements WxOpenMaBatchCloudService 
     String response = wxOpenComponentService.post(API_BATCH_UPDATE_TRIGGER, WxOpenGsonBuilder.create().toJson(wxOpenMaBatchCloudBatchUpdateTriggerMessage));
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaBatchCloudBatchUpdateTriggerResult.class);
   }
+
+  @Override
+  public WxOpenResult createStaticStore(String env) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("env", env);
+    String response = wxOpenComponentService.post(API_CREATE_SS, jsonObject.toString());
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenMaBatchCloudDescribeStaticStoreResult describeStaticStore(String env) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("env", env);
+    String response = wxOpenComponentService.post(API_DESCRIBE_SS, jsonObject.toString());
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaBatchCloudDescribeStaticStoreResult.class);
+  }
+
+  @Override
+  public WxOpenMaBatchCloudStaticFileListResult staticFileList(String env, String prefix, String delimiter, String marker) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("env", env);
+    jsonObject.addProperty("prefix", prefix);
+    jsonObject.addProperty("delimiter", delimiter);
+    jsonObject.addProperty("marker", marker);
+    String response = wxOpenComponentService.post(API_DESCRIBE_SS, jsonObject.toString());
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaBatchCloudStaticFileListResult.class);
+  }
+
+  @Override
+  public WxOpenMaBatchCloudStaticUploadFileResult staticUploadFile(String env, String fileName) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("env", env);
+    jsonObject.addProperty("filename", fileName);
+    String response = wxOpenComponentService.post(API_DESCRIBE_SS, jsonObject.toString());
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaBatchCloudStaticUploadFileResult.class);
+  }
 }
