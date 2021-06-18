@@ -65,6 +65,11 @@ public abstract class BaseWxPayResult {
   @XStreamAlias("err_code")
   private String errCode;
   /**
+   * 错误代码.
+   */
+  @XStreamAlias("error_code")
+  private String errorCode;
+  /**
    * 错误代码描述.
    */
   @XStreamAlias("err_code_des")
@@ -167,6 +172,7 @@ public abstract class BaseWxPayResult {
     returnMsg = readXmlString(d, "return_msg");
     resultCode = readXmlString(d, "result_code");
     errCode = readXmlString(d, "err_code");
+    errorCode = readXmlString(d, "error_code");
     errCodeDes = readXmlString(d, "err_code_des");
     appid = readXmlString(d, "appid");
     mchId = readXmlString(d, "mch_id");
@@ -355,6 +361,9 @@ public abstract class BaseWxPayResult {
         }
         if (getErrCode() != null) {
           errorMsg.append("，错误代码：").append(getErrCode());
+        }
+        if (getErrorCode() != null) {
+          errorMsg.append("，错误代码：").append(getErrorCode());
         }
         if (getErrCodeDes() != null) {
           errorMsg.append("，错误详情：").append(getErrCodeDes());

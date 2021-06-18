@@ -13,7 +13,6 @@ import java.util.Map;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMaUserService {
-  String SET_USER_STORAGE = "https://api.weixin.qq.com/wxa/set_user_storage?appid=%s&signature=%s&openid=%s&sig_method=%s";
 
   /**
    * 获取登录后的session信息.

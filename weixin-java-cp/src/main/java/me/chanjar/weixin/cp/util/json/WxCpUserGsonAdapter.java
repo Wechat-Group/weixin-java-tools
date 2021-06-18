@@ -189,6 +189,9 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     if (user.getUserId() != null) {
       o.addProperty("userid", user.getUserId());
     }
+    if (user.getNewUserId() != null) {
+      o.addProperty("new_userid", user.getNewUserId());
+    }
     if (user.getName() != null) {
       o.addProperty("name", user.getName());
     }

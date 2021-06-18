@@ -4,7 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaSecCheckService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaMediaAsyncCheckResult;
 import com.google.gson.JsonObject;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.SecCheck.*;
+
 /**
  * <pre>
  *
@@ -23,9 +25,9 @@ import java.net.URL;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
-  private WxMaService service;
+  private final WxMaService service;
 
   @Override
   public boolean checkImage(File file) throws WxErrorException {
@@ -43,7 +45,7 @@ public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("文件地址读取异常").build(), e);
     }
-    
+
     return this.checkImage(file);
   }
 

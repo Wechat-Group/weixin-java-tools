@@ -1,13 +1,13 @@
 package me.chanjar.weixin.mp.api;
 
 import com.google.gson.JsonObject;
-import me.chanjar.weixin.common.service.WxImgProcService;
-import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.bean.WxNetCheckResult;
 import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.service.WxOAuth2Service;
+import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.service.WxService;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -135,6 +135,7 @@ public interface WxMpService extends WxService {
    * @return 生成的短地址 string
    * @throws WxErrorException .
    */
+  @Deprecated
   String shortUrl(String longUrl) throws WxErrorException;
 
   /**
@@ -258,6 +259,16 @@ public interface WxMpService extends WxService {
    * @throws WxErrorException 异常
    */
   String post(WxMpApiUrl url, String postData) throws WxErrorException;
+
+  /**
+   * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的POST请求.
+   *
+   * @param url      请求接口地址
+   * @param obj 请求参数
+   * @return 接口响应字符串 string
+   * @throws WxErrorException 异常
+   */
+  String post(WxMpApiUrl url, Object obj) throws WxErrorException;
 
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的POST请求.
@@ -524,6 +535,18 @@ public interface WxMpService extends WxService {
   WxImgProcService getImgProcService();
 
   /**
+   * 返回电子发票报销方相关接口
+   * @return WxMpReimburseInvoiceService
+   */
+  WxMpReimburseInvoiceService getReimburseInvoiceService();
+
+  /**
+   * .
+   * @param reimburseInvoiceService .
+   */
+  void setReimburseInvoiceService(WxMpReimburseInvoiceService reimburseInvoiceService);
+
+  /**
    * .
    *
    * @param kefuService .
@@ -697,4 +720,60 @@ public interface WxMpService extends WxService {
    * @param guideService the guide service
    */
   void setGuideService(WxMpGuideService guideService);
+
+  /**
+   * Gets guideBuyer service.
+   *
+   * @return the guideBuyer service
+   */
+  WxMpGuideBuyerService getGuideBuyerService();
+
+  /**
+   * Sets guideBuyer service.
+   *
+   * @param guideBuyerService the guideBuyer service
+   */
+  void setGuideBuyerService(WxMpGuideBuyerService guideBuyerService);
+
+  /**
+   * Gets guideTag service.
+   *
+   * @return the guide service
+   */
+  WxMpGuideTagService getGuideTagService();
+
+  /**
+   * Sets guideTag service.
+   *
+   * @param guideTagService the guideTag service
+   */
+  void setGuideTagService(WxMpGuideTagService guideTagService);
+
+  /**
+   * Gets guideMaterial service.
+   *
+   * @return the guideMaterial service
+   */
+  WxMpGuideMaterialService getGuideMaterialService();
+
+  /**
+   * Sets guideMaterial service.
+   *
+   * @param guideMaterialService the guideMaterial service
+   */
+  void setGuideMaterialService(WxMpGuideMaterialService guideMaterialService);
+
+  /**
+   * Gets guideMassedJob service.
+   *
+   * @return the guideMassedJob service
+   */
+  WxMpGuideMassedJobService getGuideMassedJobService();
+
+  /**
+   * Sets guide service.
+   *
+   * @param guideMassedJobService the guide service
+   */
+  void setGuideMassedJobService(WxMpGuideMassedJobService guideMassedJobService);
 }

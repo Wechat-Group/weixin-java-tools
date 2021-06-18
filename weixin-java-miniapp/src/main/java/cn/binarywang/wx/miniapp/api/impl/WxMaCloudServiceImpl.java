@@ -4,8 +4,8 @@ import cn.binarywang.wx.miniapp.api.WxMaCloudService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.cloud.*;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
-import cn.binarywang.wx.miniapp.util.JoinerUtils;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
+import cn.binarywang.wx.miniapp.util.JoinerUtils;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
@@ -20,7 +20,12 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Cloud.*;
 
 /**
  * 云开发相关接口实现类.
@@ -31,7 +36,6 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 public class WxMaCloudServiceImpl implements WxMaCloudService {
-
   private final WxMaService wxMaService;
 
   @Override

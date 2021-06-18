@@ -4,19 +4,21 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaSettingService;
 import cn.binarywang.wx.miniapp.bean.WxMaDomainAction;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Setting.*;
+
 /**
  * @author <a href="https://github.com/charmingoh">Charming</a>
  * @since 2018-04-27 15:46
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WxMaSettingServiceImpl implements WxMaSettingService {
-  private WxMaService wxMaService;
+  private final WxMaService wxMaService;
 
   @Override
   public WxMaDomainAction modifyDomain(WxMaDomainAction domainAction) throws WxErrorException {

@@ -21,7 +21,7 @@ public class WxMpSubscribeMsgServiceImplTest {
   protected WxMpService wxService;
 
   @Test
-  public void testSendSubscribeMessage() throws WxErrorException {
+  public void testSendSubscribeOnceMessage() throws WxErrorException {
     TestConfigStorage configStorage = (TestConfigStorage) this.wxService
       .getWxMpConfigStorage();
 
@@ -34,7 +34,7 @@ public class WxMpSubscribeMsgServiceImplTest {
       .build();
 
     try {
-      boolean send = this.wxService.getSubscribeMsgService().sendSubscribeMessage(message);
+      boolean send = this.wxService.getSubscribeMsgService().sendOnce(message);
       Assert.assertTrue(send);
     } catch (WxErrorException e) {
       // 当用户没有授权，获取之前的授权已使用。微信会返回错误代码 {"errcode":43101,"errmsg":"user refuse to accept the msg hint: [xxxxxxxxxxx]"}
@@ -45,4 +45,39 @@ public class WxMpSubscribeMsgServiceImplTest {
 
   }
 
+  @Test
+  public void testSubscribeMsgAuthorizationUrl() {
+  }
+
+  @Test
+  public void testGetPubTemplateTitleList() {
+  }
+
+  @Test
+  public void testGetPubTemplateKeyWordsById() {
+  }
+
+  @Test
+  public void testAddTemplate() {
+  }
+
+  @Test
+  public void testGetTemplateList() {
+  }
+
+  @Test
+  public void testDelTemplate() {
+  }
+
+  @Test
+  public void testGetCategory() {
+  }
+
+  @Test
+  public void testSend() {
+  }
+
+  @Test
+  public void testSendOnce() {
+  }
 }

@@ -29,6 +29,7 @@ import java.util.List;
 @XStreamAlias("xml")
 public class WxPayRefundResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = -3392333879907788033L;
+
   /**
    * 微信订单号.
    */

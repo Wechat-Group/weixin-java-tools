@@ -11,14 +11,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.service.WxImgProcService;
-import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.service.WxImgProcService;
+import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.util.DataUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -41,12 +41,12 @@ import java.util.concurrent.locks.Lock;
  */
 @Slf4j
 public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestHttp<H, P> {
-  private Map<String, WxMaConfig> configMap;
-
+  protected static final Gson GSON = new Gson();
   private final WxMaMsgService kefuService = new WxMaMsgServiceImpl(this);
   private final WxMaMediaService materialService = new WxMaMediaServiceImpl(this);
   private final WxMaUserService userService = new WxMaUserServiceImpl(this);
   private final WxMaQrcodeService qrCodeService = new WxMaQrcodeServiceImpl(this);
+  private final WxMaSchemeService schemeService = new WxMaSchemeServiceImpl(this);
   private final WxMaAnalysisService analysisService = new WxMaAnalysisServiceImpl(this);
   private final WxMaCodeService codeService = new WxMaCodeServiceImpl(this);
   private final WxMaSettingService settingService = new WxMaSettingServiceImpl(this);
@@ -60,13 +60,16 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaCloudService cloudService = new WxMaCloudServiceImpl(this);
   private final WxMaLiveService liveService = new WxMaLiveServiceImpl(this);
   private final WxMaLiveGoodsService liveGoodsService = new WxMaLiveGoodsServiceImpl(this);
+  private final WxMaLiveMemberService liveMemberService = new WxMaLiveMemberServiceImpl(this);
   private final WxOcrService ocrService = new WxMaOcrServiceImpl(this);
   private final WxImgProcService imgProcService = new WxMaImgProcServiceImpl(this);
-
+  private final WxMaShopSpuService shopSpuService = new WxMaShopSpuServiceImpl(this);
+  private final WxMaShopOrderService shopOrderService = new WxMaShopOrderServiceImpl(this);
+  private final WxMaLinkService linkService = new WxMaLinkServiceImpl(this);
+  private final WxMaReimburseInvoiceService reimburseInvoiceService = new WxMaReimburseInvoiceServiceImpl(this);
+  private Map<String, WxMaConfig> configMap;
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
-
-  protected static final Gson GSON = new Gson();
 
   @Override
   public RequestHttp getRequestHttp() {
@@ -187,6 +190,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   public String post(String url, Object obj) throws WxErrorException {
     return this.execute(SimplePostRequestExecutor.create(this), url, WxGsonBuilder.create().toJson(obj));
   }
+
   @Override
   public String post(String url, ToJson obj) throws WxErrorException {
     return this.post(url, obj.toJson());
@@ -196,6 +200,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   public String post(String url, JsonObject jsonObject) throws WxErrorException {
     return this.post(url, jsonObject.toString());
   }
+
   /**
    * 向微信端发送请求，在这里执行的策略是当发生access_token过期时才去刷新，然后重新执行请求，而不是全局定时请求
    */
@@ -204,7 +209,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     int retryTimes = 0;
     do {
       try {
-        return this.executeInternal(executor, uri, data);
+        return this.executeInternal(executor, uri, data, false);
       } catch (WxErrorException e) {
         if (retryTimes + 1 > this.maxRetryTimes) {
           log.warn("重试达到最大次数【{}】", maxRetryTimes);
@@ -235,13 +240,17 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     throw new WxRuntimeException("微信服务端异常，超出重试次数");
   }
 
-  private <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  private <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data, boolean doNotAutoRefreshToken) throws WxErrorException {
     E dataForLog = DataUtils.handleDataWithSecret(data);
 
     if (uri.contains("access_token=")) {
       throw new IllegalArgumentException("uri参数中不允许有access_token: " + uri);
     }
     String accessToken = getAccessToken(false);
+
+    if (StringUtils.isNotEmpty(this.getWxMaConfig().getApiHostUrl())) {
+      uri = uri.replace("https://api.weixin.qq.com", this.getWxMaConfig().getApiHostUrl());
+    }
 
     String uriWithAccessToken = uri + (uri.contains("?") ? "&" : "?") + "access_token=" + accessToken;
 
@@ -264,9 +273,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
         } finally {
           lock.unlock();
         }
-        if (this.getWxMaConfig().autoRefreshToken()) {
+        if (this.getWxMaConfig().autoRefreshToken() && !doNotAutoRefreshToken) {
           log.warn("即将重新获取新的access_token，错误代码：{}，错误信息：{}", error.getErrorCode(), error.getErrorMsg());
-          return this.execute(executor, uri, data);
+          //下一次不再自动重试
+          //当小程序误调用第三方平台专属接口时,第三方无法使用小程序的access token,如果可以继续自动获取token会导致无限循环重试,直到栈溢出
+          return this.executeInternal(executor, uri, data, true);
         }
       }
 
@@ -328,12 +339,13 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
-  public void addConfig(String mpId, WxMaConfig configStorages) {
+  public void addConfig(String miniappId, WxMaConfig configStorages) {
     synchronized (this) {
       if (this.configMap == null) {
         this.setWxMaConfig(configStorages);
       } else {
-        this.configMap.put(mpId, configStorages);
+        WxMaConfigHolder.set(miniappId);
+        this.configMap.put(miniappId, configStorages);
       }
     }
   }
@@ -409,6 +421,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
+  public WxMaSchemeService getWxMaSchemeService() {
+    return schemeService;
+  }
+
+  @Override
   public WxMaSubscribeService getSubscribeService() {
     return this.subscribeService;
   }
@@ -474,6 +491,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
+  public WxMaLiveMemberService getLiveMemberService() {
+    return this.liveMemberService;
+  }
+
+  @Override
   public WxOcrService getOcrService() {
     return this.ocrService;
   }
@@ -483,4 +505,23 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     return this.imgProcService;
   }
 
+  @Override
+  public WxMaShopSpuService getShopSpuService() {
+    return this.shopSpuService;
+  }
+
+  @Override
+  public WxMaShopOrderService getShopOrderService() {
+    return this.shopOrderService;
+  }
+
+  @Override
+  public WxMaLinkService getLinkService() {
+    return this.linkService;
+  }
+
+  @Override
+  public WxMaReimburseInvoiceService getReimburseInvoiceService() {
+    return this.reimburseInvoiceService;
+  }
 }

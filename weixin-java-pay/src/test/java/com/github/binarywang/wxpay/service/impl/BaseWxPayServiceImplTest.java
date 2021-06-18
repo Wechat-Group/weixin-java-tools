@@ -9,6 +9,7 @@ import com.github.binarywang.wxpay.bean.order.WxPayMpOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
+import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.constant.WxPayConstants.AccountType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.BillType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
@@ -18,8 +19,11 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
 import com.github.binarywang.wxpay.testbase.XmlWxPayConfig;
 import com.github.binarywang.wxpay.util.XmlConfig;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.util.RandomUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
@@ -702,6 +706,73 @@ public class BaseWxPayServiceImplTest {
     final WxPayQueryExchangeRateResult result = this.payService.queryExchangeRate("USD", "20200425");
     assertThat(result).isNotNull();
     System.out.println(result);
+  }
+
+  private static final Gson GSON = new GsonBuilder().create();
+
+  @Test
+  public void testUnifiedOrderV3() throws WxPayException {
+    String outTradeNo = RandomUtils.getRandomStr();
+    String notifyUrl = "https://api.qq.com/";
+    System.out.println("outTradeNo = " + outTradeNo);
+    WxPayUnifiedOrderV3Request request = new WxPayUnifiedOrderV3Request();
+    request.setOutTradeNo(outTradeNo);
+    request.setNotifyUrl(notifyUrl);
+    request.setDescription("test");
+
+    WxPayUnifiedOrderV3Request.Payer payer = new WxPayUnifiedOrderV3Request.Payer();
+    payer.setOpenid("openid");
+    request.setPayer(payer);
+
+    //构建金额信息
+    WxPayUnifiedOrderV3Request.Amount amount = new WxPayUnifiedOrderV3Request.Amount();
+    //设置币种信息
+    amount.setCurrency("CNY");
+    //设置金额
+    amount.setTotal(1);
+    request.setAmount(amount);
+
+    WxPayUnifiedOrderV3Result.JsapiResult result = this.payService.createOrderV3(TradeTypeEnum.JSAPI, request);
+
+    System.out.println(GSON.toJson(result));
+  }
+
+  @Test
+  public void testQueryOrderV3() throws WxPayException {
+    WxPayOrderQueryV3Request request = new WxPayOrderQueryV3Request();
+    request.setOutTradeNo("n1ZvYqjAg3D3LUBa");
+    WxPayOrderQueryV3Result result = this.payService.queryOrderV3(request);
+    System.out.println(GSON.toJson(result));
+  }
+
+  @Test
+  public void testCloseOrderV3() throws WxPayException {
+    WxPayOrderCloseV3Request request = new WxPayOrderCloseV3Request();
+    request.setOutTradeNo("n1ZvYqjAg3D3LUBa");
+    this.payService.closeOrderV3(request);
+  }
+
+  @Test
+  public void testRefundV3() throws WxPayException {
+    String outRefundNo = RandomUtils.getRandomStr();
+    String notifyUrl = "https://api.qq.com/";
+    System.out.println("outRefundNo = " + outRefundNo);
+    WxPayRefundV3Request request = new WxPayRefundV3Request();
+    request.setOutTradeNo("n1ZvYqjAg3D3LUBa");
+    request.setOutRefundNo(outRefundNo);
+    request.setNotifyUrl(notifyUrl);
+    request.setAmount(new WxPayRefundV3Request.Amount().setRefund(100).setTotal(100).setCurrency("CNY"));
+    WxPayRefundV3Result result = this.payService.refundV3(request);
+    System.out.println(GSON.toJson(result));
+  }
+
+  @Test
+  public void testRefundQueryV3() throws WxPayException {
+    WxPayRefundQueryV3Request request = new WxPayRefundQueryV3Request();
+//    request.setOutTradeNo("n1ZvYqjAg3D7LUBa");
+    request.setOutTradeNo("123456789011");
+    WxPayRefundQueryV3Result result = this.payService.refundQueryV3(request);
+    System.out.println(GSON.toJson(result));
   }
 
 }

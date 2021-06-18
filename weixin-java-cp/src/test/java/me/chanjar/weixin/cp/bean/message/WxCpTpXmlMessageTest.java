@@ -147,6 +147,7 @@ public class WxCpTpXmlMessageTest {
       "   <MsgType><![CDATA[text]]></MsgType>\n" +
       "   <Content><![CDATA[this is a test]]></Content>\n" +
       "   <MsgId>1234567890123456</MsgId>\n" +
+      "   <Id><![CDATA[etEsNADQAAaiB0cWCSDFiJ2qCap-ww9A]]></Id>" +
       "   <AgentID>1</AgentID>\n" +
       "</xml>";
 
@@ -156,6 +157,7 @@ public class WxCpTpXmlMessageTest {
     assertEquals(wxXmlMessage.getCreateTime(), Long.valueOf(1348831860));
     assertEquals(wxXmlMessage.getMsgType(), "text");
     assertEquals(wxXmlMessage.getMsgId(), "1234567890123456");
+    assertEquals(wxXmlMessage.getId(), "etEsNADQAAaiB0cWCSDFiJ2qCap-ww9A");
   }
 
   @Test
@@ -230,5 +232,28 @@ public class WxCpTpXmlMessageTest {
     assertNotNull(wxXmlMessage.getApprovalInfo().getNotifyNodes().get(0));
     assertEquals(wxXmlMessage.getApprovalInfo().getNotifyNodes().get(0).getItemImage(), "http://www.qq.com/xxx.png");
     assertEquals(wxXmlMessage.getApprovalInfo().getNotifyNodes().get(0).getItemUserId(), Integer.valueOf(3));
+  }
+
+  @Test
+  public void testFromXml() {
+    String xml = "<xml>\n" +
+      "   <ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "   <FromUserName><![CDATA[fromUser]]></FromUserName> \n" +
+      "   <CreateTime>1348831860</CreateTime>\n" +
+      "   <MsgType><![CDATA[text]]></MsgType>\n" +
+      "   <Content><![CDATA[this is a test]]></Content>\n" +
+      "   <MsgId>1234567890123456</MsgId>\n" +
+      "   <Id>2</Id>\n" +
+      "   <AgentID>1</AgentID>\n" +
+      "</xml>";
+
+    WxCpTpXmlMessage wxXmlMessage = WxCpTpXmlMessage.fromXml(xml);
+    assertEquals(wxXmlMessage.getToUserName(), "toUser");
+    assertEquals(wxXmlMessage.getFromUserName(), "fromUser");
+    assertEquals(wxXmlMessage.getCreateTime(), Long.valueOf(1348831860));
+    assertEquals(wxXmlMessage.getMsgType(), "text");
+    assertEquals(wxXmlMessage.getMsgId(), "1234567890123456");
+    assertEquals(wxXmlMessage.getId(), "2");
+
   }
 }

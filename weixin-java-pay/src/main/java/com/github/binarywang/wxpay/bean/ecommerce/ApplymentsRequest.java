@@ -128,6 +128,7 @@ public class ApplymentsRequest implements Serializable {
    * </pre>
    */
   @SerializedName(value = "id_doc_info")
+  @SpecEncrypt
   private IdDocInfo idDocInfo;
 
   /**
@@ -497,6 +498,7 @@ public class ApplymentsRequest implements Serializable {
      * </pre>
      */
     @SerializedName(value = "id_doc_name")
+    @SpecEncrypt
     private String idDocName;
 
     /**
@@ -511,6 +513,7 @@ public class ApplymentsRequest implements Serializable {
      * </pre>
      */
     @SerializedName(value = "id_doc_number")
+    @SpecEncrypt
     private String idDocNumber;
 
     /**

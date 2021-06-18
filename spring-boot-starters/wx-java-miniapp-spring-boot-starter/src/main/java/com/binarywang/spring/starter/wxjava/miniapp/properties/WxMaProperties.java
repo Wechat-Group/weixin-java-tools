@@ -4,6 +4,9 @@ import com.binarywang.spring.starter.wxjava.miniapp.enums.HttpClientType;
 import com.binarywang.spring.starter.wxjava.miniapp.enums.StorageType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
+
+import static com.binarywang.spring.starter.wxjava.miniapp.properties.WxMaProperties.PREFIX;
 
 /**
  * 属性配置类.
@@ -12,8 +15,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2019-08-10
  */
 @Data
-@ConfigurationProperties(prefix = "wx.miniapp")
+@ConfigurationProperties(prefix = PREFIX)
 public class WxMaProperties {
+  public static final String PREFIX = "wx.miniapp";
+
   /**
    * 设置微信小程序的appid.
    */
@@ -60,6 +65,7 @@ public class WxMaProperties {
     /**
      * redis连接配置.
      */
+    @NestedConfigurationProperty
     private final RedisProperties redis = new RedisProperties();
 
     /**
@@ -86,6 +92,21 @@ public class WxMaProperties {
      * http代理密码.
      */
     private String httpProxyPassword;
+
+    /**
+     * http 请求重试间隔
+     * <pre>
+     *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setRetrySleepMillis(int)}
+     * </pre>
+     */
+    private int retrySleepMillis = 1000;
+    /**
+     * http 请求最大重试次数
+     * <pre>
+     *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setMaxRetryTimes(int)}
+     * </pre>
+     */
+    private int maxRetryTimes = 5;
   }
 
 }

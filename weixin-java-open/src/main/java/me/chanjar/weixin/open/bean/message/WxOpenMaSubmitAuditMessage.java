@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Data
 public class WxOpenMaSubmitAuditMessage implements Serializable {
+  private static final long serialVersionUID = 8881103449144288927L;
 
   /**
    * 提交审核项的一个列表（至少填写1项，至多填写5项）
@@ -27,7 +28,7 @@ public class WxOpenMaSubmitAuditMessage implements Serializable {
    * 预览信息（小程序页面截图和操作录屏）
    */
   @SerializedName("preview_info")
-  private List<WxOpenMaPreviewInfo> previewInfo;
+  private WxOpenMaPreviewInfo previewInfo;
 
   /**
    * 小程序版本说明和功能解释

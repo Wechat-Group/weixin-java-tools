@@ -8,6 +8,7 @@ import jodd.util.ResourcesUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
+import lombok.ToString;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +30,7 @@ import java.util.Collections;
  * @author Binary Wang (https://github.com/binarywang)
  */
 @Data
+@ToString(exclude = "verifier")
 @EqualsAndHashCode(exclude = "verifier")
 public class WxPayConfig {
   private static final String DEFAULT_PAY_BASE_URL = "https://api.mch.weixin.qq.com";

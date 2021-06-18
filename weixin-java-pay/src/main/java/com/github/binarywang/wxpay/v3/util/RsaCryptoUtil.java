@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
+import java.util.Collection;
 
 /**
  * 微信支付敏感信息加密
@@ -53,8 +54,18 @@ public class RsaCryptoUtil {
         } else {
           field.setAccessible(true);
           Object obj = field.get(encryptObject);
-          if (obj != null) {
-            encryptField(field.get(encryptObject), certificate);
+          if (obj == null) {
+            continue;
+          }
+          if (obj instanceof Collection) {
+            Collection collection = (Collection) obj;
+            for (Object o : collection) {
+              if (o != null) {
+                encryptField(o, certificate);
+              }
+            }
+          } else {
+            encryptField(obj, certificate);
           }
         }
       }

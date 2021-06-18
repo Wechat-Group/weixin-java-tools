@@ -10,7 +10,6 @@ import me.chanjar.weixin.open.api.WxOpenMpService;
 import me.chanjar.weixin.open.bean.mp.FastRegisterResult;
 
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -22,9 +21,11 @@ public class WxOpenMpServiceImpl extends WxMpServiceImpl implements WxOpenMpServ
   private String appId;
 
   public WxOpenMpServiceImpl(WxOpenComponentService wxOpenComponentService, String appId, WxMpConfigStorage wxMpConfigStorage) {
+//    wxOpenComponentService.oauth2getAccessToken(appId)
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMpConfigStorage = wxMpConfigStorage;
+    setOAuth2Service(new WxOpenMpOAuth2ServiceImpl(wxOpenComponentService, getOAuth2Service(), wxMpConfigStorage));
     initHttp();
   }
 

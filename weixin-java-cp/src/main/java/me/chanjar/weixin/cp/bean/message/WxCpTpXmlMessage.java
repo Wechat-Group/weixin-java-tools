@@ -25,8 +25,8 @@ import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 @Slf4j
 @Data
 public class WxCpTpXmlMessage implements Serializable {
-
   private static final long serialVersionUID = 6031833682211475786L;
+
   /**
    * 使用dom4j解析的存放所有xml属性和值的map.
    */
@@ -109,8 +109,8 @@ public class WxCpTpXmlMessage implements Serializable {
   protected String telephone;
 
   @XStreamAlias("Id")
-  @XStreamConverter(value = IntConverter.class)
-  protected Integer id;
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  protected String id;
 
   @XStreamAlias("Name")
   @XStreamConverter(value = XStreamCDataConverter.class)
@@ -121,7 +121,7 @@ public class WxCpTpXmlMessage implements Serializable {
   protected String parentId;
 
   @XStreamAlias("Order")
-  @XStreamConverter(value = XStreamCDataConverter.class)
+  @XStreamConverter(value = IntConverter.class)
   protected Integer order;
 
   @XStreamAlias("TagId")
@@ -205,7 +205,7 @@ public class WxCpTpXmlMessage implements Serializable {
   protected String msgId;
 
   @XStreamAlias("AgentID")
-  protected Integer agentID;
+  protected String agentID;
 
   @XStreamAlias("PicUrl")
   @XStreamConverter(value = XStreamCDataConverter.class)
@@ -283,7 +283,9 @@ public class WxCpTpXmlMessage implements Serializable {
 
   @Data
   @XStreamAlias("ContactSync")
-  public static class ContactSync {
+  public static class ContactSync implements Serializable {
+    private static final long serialVersionUID = 6031833682211475786L;
+
     @XStreamAlias("AccessToken")
     @XStreamConverter(value = XStreamCDataConverter.class)
     protected String accessToken;
@@ -294,7 +296,7 @@ public class WxCpTpXmlMessage implements Serializable {
 
   @Data
   @XStreamAlias("AuthUserInfo")
-  public static class AuthUserInfo {
+  public static class AuthUserInfo implements Serializable {
     @XStreamAlias("UserId")
     @XStreamConverter(value = XStreamCDataConverter.class)
     protected String userId;
@@ -302,7 +304,9 @@ public class WxCpTpXmlMessage implements Serializable {
 
   @Data
   @XStreamAlias("BatchJob")
-  public static class BatchJob {
+  public static class BatchJob implements Serializable {
+    private static final long serialVersionUID = 6031833682211475786L;
+
     @XStreamAlias("JobId")
     @XStreamConverter(value = XStreamCDataConverter.class)
     protected String JobId;
@@ -322,7 +326,9 @@ public class WxCpTpXmlMessage implements Serializable {
 
   @Data
   @XStreamAlias("ApprovalInfo")
-  public static class ApprovalInfo {
+  public static class ApprovalInfo implements Serializable {
+    private static final long serialVersionUID = 6031833682211475786L;
+
     @XStreamAlias("ThirdNo")
     protected Long thirdNo;
 
@@ -365,7 +371,9 @@ public class WxCpTpXmlMessage implements Serializable {
     //2.自建/第三方应用调用审批流程引擎发起申请之后，在“审批中”状态，有任意审批人进行审批操作时
     @Data
     @XStreamAlias("ApprovalNode")
-    public static class ApprovalNode {
+    public static class ApprovalNode implements Serializable {
+      private static final long serialVersionUID = 6031833682211475786L;
+
       @XStreamAlias("NodeStatus")
       protected Integer nodeStatus;
 
@@ -380,7 +388,9 @@ public class WxCpTpXmlMessage implements Serializable {
 
       @Data
       @XStreamAlias("Item")
-      public static class Item {
+      public static class Item implements Serializable {
+        private static final long serialVersionUID = 6031833682211475786L;
+
         @XStreamAlias("ItemName")
         protected String itemName;
         @XStreamAlias("ItemUserId")
@@ -398,7 +408,9 @@ public class WxCpTpXmlMessage implements Serializable {
 
     @Data
     @XStreamAlias("NotifyNode")
-    public static class NotifyNode {
+    public static class NotifyNode implements Serializable {
+      private static final long serialVersionUID = 6031833682211475786L;
+
       @XStreamAlias("ItemName")
       protected String itemName;
       @XStreamAlias("ItemUserId")

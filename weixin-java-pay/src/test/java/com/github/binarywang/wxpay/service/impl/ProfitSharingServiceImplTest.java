@@ -101,6 +101,24 @@ public class ProfitSharingServiceImplTest {
   }
 
   @Test
+  public void testProfitSharingMerchantRatioQuery() throws WxPayException {
+    final String subMchId = "subMchid";
+    final ProfitSharingMerchantRatioQueryRequest request = new ProfitSharingMerchantRatioQueryRequest(subMchId);
+    final ProfitSharingMerchantRatioQueryResult result = payService.getProfitSharingService().profitSharingMerchantRatioQuery(request);
+    logger.info(result.toString());
+  }
+
+  @Test
+    public void testProfitSharingOrderAmountQuery() throws WxPayException {
+    final String transactionId = "4200000916202012281633853127";
+    final ProfitSharingOrderAmountQueryRequest request = ProfitSharingOrderAmountQueryRequest.newBuilder()
+      .transactionId(transactionId)
+      .build();
+    final ProfitSharingOrderAmountQueryResult result = payService.getProfitSharingService().profitSharingOrderAmountQuery(request);
+    logger.info(result.toString());
+  }
+
+  @Test
   public void testProfitSharingReturn() throws WxPayException {
     ProfitSharingReturnRequest request = ProfitSharingReturnRequest
       .newBuilder()

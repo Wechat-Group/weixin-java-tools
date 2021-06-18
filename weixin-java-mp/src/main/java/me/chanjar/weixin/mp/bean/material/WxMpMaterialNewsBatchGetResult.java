@@ -1,11 +1,11 @@
 package me.chanjar.weixin.mp.bean.material;
 
+import lombok.Data;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import lombok.Data;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 @Data
 public class WxMpMaterialNewsBatchGetResult implements Serializable {
@@ -21,7 +21,9 @@ public class WxMpMaterialNewsBatchGetResult implements Serializable {
   }
 
   @Data
-  public static class WxMaterialNewsBatchGetNewsItem {
+  public static class WxMaterialNewsBatchGetNewsItem implements Serializable {
+    private static final long serialVersionUID = -5227864606579602345L;
+
     private String mediaId;
     private Date updateTime;
     private WxMpMaterialNews content;

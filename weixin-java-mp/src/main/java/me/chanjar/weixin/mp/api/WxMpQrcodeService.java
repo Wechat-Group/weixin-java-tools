@@ -88,6 +88,7 @@ public interface WxMpQrcodeService {
    * @return the string
    * @throws WxErrorException the wx error exception
    */
+  @Deprecated
   String qrCodePictureUrl(String ticket, boolean needShortUrl) throws WxErrorException;
 
   /**

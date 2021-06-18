@@ -166,7 +166,7 @@ public class WxCryptUtil {
    * @param plainText 需要加密的明文
    * @return 加密后base64编码的字符串
    */
-  protected String encrypt(String randomStr, String plainText) {
+  public String encrypt(String randomStr, String plainText) {
     ByteGroup byteCollector = new ByteGroup();
     byte[] randomStringBytes = randomStr.getBytes(CHARSET);
     byte[] plainTextBytes = plainText.getBytes(CHARSET);

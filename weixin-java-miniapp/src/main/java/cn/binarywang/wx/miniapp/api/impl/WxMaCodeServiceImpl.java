@@ -1,5 +1,20 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
+import cn.binarywang.wx.miniapp.api.WxMaCodeService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.code.*;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import lombok.RequiredArgsConstructor;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
+import me.chanjar.weixin.common.util.http.RequestExecutor;
+import me.chanjar.weixin.common.util.json.GsonHelper;
+import me.chanjar.weixin.common.util.json.GsonParser;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -8,54 +23,35 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import me.chanjar.weixin.common.util.json.GsonParser;
-import org.apache.commons.lang3.StringUtils;
-
-import cn.binarywang.wx.miniapp.api.WxMaCodeService;
-import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCategory;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCodeAuditStatus;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCodeCommitRequest;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCodeSubmitAuditRequest;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCodeVersionDistribution;
-import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-import me.chanjar.weixin.common.error.WxError;
-import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
-import me.chanjar.weixin.common.util.http.RequestExecutor;
-import me.chanjar.weixin.common.util.json.GsonHelper;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Code.*;
 
 /**
  * @author <a href="https://github.com/charmingoh">Charming</a>
  * @since 2018-04-26 20:00
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WxMaCodeServiceImpl implements WxMaCodeService {
-
-  private WxMaService wxMaService;
+  private final WxMaService service;
 
   @Override
   public void commit(WxMaCodeCommitRequest commitRequest) throws WxErrorException {
-    this.wxMaService.post(COMMIT_URL, commitRequest.toJson());
+    this.service.post(COMMIT_URL, commitRequest.toJson());
   }
 
   @Override
   public byte[] getQrCode(String path) throws WxErrorException {
-    String appId = this.wxMaService.getWxMaConfig().getAppid();
+    String appId = this.service.getWxMaConfig().getAppid();
     Path qrCodeFilePath = null;
     try {
       RequestExecutor<File, String> executor = BaseMediaDownloadRequestExecutor
-        .create(this.wxMaService.getRequestHttp(), Files.createTempDirectory("wxjava-ma-" + appId).toFile());
+        .create(this.service.getRequestHttp(), Files.createTempDirectory("wxjava-ma-" + appId).toFile());
 
       final StringBuilder url = new StringBuilder(GET_QRCODE_URL);
       if (StringUtils.isNotBlank(path)) {
         url.append("?path=").append(URLEncoder.encode(path, StandardCharsets.UTF_8.name()));
       }
 
-      qrCodeFilePath = this.wxMaService.execute(executor, url.toString(), null).toPath();
+      qrCodeFilePath = this.service.execute(executor, url.toString(), null).toPath();
       return Files.readAllBytes(qrCodeFilePath);
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);
@@ -72,7 +68,7 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
 
   @Override
   public List<WxMaCategory> getCategory() throws WxErrorException {
-    String responseContent = this.wxMaService.get(GET_CATEGORY_URL, null);
+    String responseContent = this.service.get(GET_CATEGORY_URL, null);
     JsonObject jsonObject = GsonParser.parse(responseContent);
     boolean hasCategoryList = jsonObject.has("category_list");
     if (hasCategoryList) {
@@ -86,7 +82,7 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
 
   @Override
   public List<String> getPage() throws WxErrorException {
-    String responseContent = this.wxMaService.get(GET_PAGE_URL, null);
+    String responseContent = this.service.get(GET_PAGE_URL, null);
     JsonObject jsonObject = GsonParser.parse(responseContent);
     boolean hasPageList = jsonObject.has("page_list");
     if (hasPageList) {
@@ -100,7 +96,7 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
 
   @Override
   public long submitAudit(WxMaCodeSubmitAuditRequest auditRequest) throws WxErrorException {
-    String responseContent = this.wxMaService.post(SUBMIT_AUDIT_URL, auditRequest.toJson());
+    String responseContent = this.service.post(SUBMIT_AUDIT_URL, auditRequest.toJson());
     JsonObject jsonObject = GsonParser.parse(responseContent);
     return GsonHelper.getLong(jsonObject, "auditid");
   }
@@ -109,36 +105,36 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
   public WxMaCodeAuditStatus getAuditStatus(long auditId) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("auditid", auditId);
-    String responseContent = this.wxMaService.post(GET_AUDIT_STATUS_URL, param.toString());
+    String responseContent = this.service.post(GET_AUDIT_STATUS_URL, param.toString());
     return WxMaCodeAuditStatus.fromJson(responseContent);
   }
 
   @Override
   public WxMaCodeAuditStatus getLatestAuditStatus() throws WxErrorException {
-    String responseContent = this.wxMaService.get(GET_LATEST_AUDIT_STATUS_URL, null);
+    String responseContent = this.service.get(GET_LATEST_AUDIT_STATUS_URL, null);
     return WxMaCodeAuditStatus.fromJson(responseContent);
   }
 
   @Override
   public void release() throws WxErrorException {
-    this.wxMaService.post(RELEASE_URL, "{}");
+    this.service.post(RELEASE_URL, "{}");
   }
 
   @Override
   public void changeVisitStatus(String action) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("action", action);
-    this.wxMaService.post(CHANGE_VISIT_STATUS_URL, param.toString());
+    this.service.post(CHANGE_VISIT_STATUS_URL, param.toString());
   }
 
   @Override
   public void revertCodeRelease() throws WxErrorException {
-    this.wxMaService.get(REVERT_CODE_RELEASE_URL, null);
+    this.service.get(REVERT_CODE_RELEASE_URL, null);
   }
 
   @Override
   public WxMaCodeVersionDistribution getSupportVersion() throws WxErrorException {
-    String responseContent = this.wxMaService.post(GET_SUPPORT_VERSION_URL, "{}");
+    String responseContent = this.service.post(GET_SUPPORT_VERSION_URL, "{}");
     return WxMaCodeVersionDistribution.fromJson(responseContent);
   }
 
@@ -146,11 +142,11 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
   public void setSupportVersion(String version) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("version", version);
-    this.wxMaService.post(SET_SUPPORT_VERSION_URL, param.toString());
+    this.service.post(SET_SUPPORT_VERSION_URL, param.toString());
   }
 
   @Override
   public void undoCodeAudit() throws WxErrorException {
-    this.wxMaService.get(UNDO_CODE_AUDIT_URL, null);
+    this.service.get(UNDO_CODE_AUDIT_URL, null);
   }
 }

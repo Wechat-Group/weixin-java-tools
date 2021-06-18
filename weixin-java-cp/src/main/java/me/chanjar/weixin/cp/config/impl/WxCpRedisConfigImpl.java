@@ -17,9 +17,9 @@ import java.util.concurrent.locks.ReentrantLock;
  *    使用说明：本实现仅供参考，并不完整.
  *    比如为减少项目依赖，未加入redis分布式锁的实现，如有需要请自行实现。
  * </pre>
- * @deprecated 不建议使用，如有需要，请自行改造实现，加入到自己的项目中并引用
  *
  * @author gaigeshen
+ * @deprecated 不建议使用 ，如有需要，请自行改造实现，加入到自己的项目中并引用
  */
 @Deprecated
 public class WxCpRedisConfigImpl implements WxCpConfigStorage {
@@ -31,6 +31,10 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   private static final String AGENT_JSAPI_TICKET_EXPIRES_TIME_KEY = "WX_CP_AGENT_%s_JSAPI_TICKET_EXPIRES_TIME";
 
   private final JedisPool jedisPool;
+  /**
+   * The Base api url.
+   */
+  protected volatile String baseApiUrl;
   private volatile String corpId;
   private volatile String corpSecret;
   private volatile String token;
@@ -43,10 +47,64 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   private volatile String httpProxyPassword;
   private volatile File tmpDirFile;
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
-
-  protected volatile String baseApiUrl;
-
   private volatile String webhookKey;
+
+  /**
+   * Instantiates a new Wx cp redis config.
+   *
+   * @param jedisPool the jedis pool
+   */
+  public WxCpRedisConfigImpl(JedisPool jedisPool) {
+    this.jedisPool = jedisPool;
+  }
+
+  /**
+   * Instantiates a new Wx cp redis config.
+   *
+   * @param host the host
+   * @param port the port
+   */
+  public WxCpRedisConfigImpl(String host, int port) {
+    jedisPool = new JedisPool(host, port);
+  }
+
+  /**
+   * Instantiates a new Wx cp redis config.
+   *
+   * @param poolConfig the pool config
+   * @param host       the host
+   * @param port       the port
+   */
+  public WxCpRedisConfigImpl(JedisPoolConfig poolConfig, String host, int port) {
+    jedisPool = new JedisPool(poolConfig, host, port);
+  }
+
+  /**
+   * Instantiates a new Wx cp redis config.
+   *
+   * @param poolConfig the pool config
+   * @param host       the host
+   * @param port       the port
+   * @param timeout    the timeout
+   * @param password   the password
+   */
+  public WxCpRedisConfigImpl(JedisPoolConfig poolConfig, String host, int port, int timeout, String password) {
+    jedisPool = new JedisPool(poolConfig, host, port, timeout, password);
+  }
+
+  /**
+   * Instantiates a new Wx cp redis config.
+   *
+   * @param poolConfig the pool config
+   * @param host       the host
+   * @param port       the port
+   * @param timeout    the timeout
+   * @param password   the password
+   * @param database   the database
+   */
+  public WxCpRedisConfigImpl(JedisPoolConfig poolConfig, String host, int port, int timeout, String password, int database) {
+    jedisPool = new JedisPool(poolConfig, host, port, timeout, password, database);
+  }
 
   @Override
   public void setBaseApiUrl(String baseUrl) {
@@ -59,26 +117,6 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
       baseApiUrl = WxCpApiPathConsts.DEFAULT_CP_BASE_URL;
     }
     return baseApiUrl + path;
-  }
-
-  public WxCpRedisConfigImpl(JedisPool jedisPool) {
-    this.jedisPool = jedisPool;
-  }
-
-  public WxCpRedisConfigImpl(String host, int port) {
-    jedisPool = new JedisPool(host, port);
-  }
-
-  public WxCpRedisConfigImpl(JedisPoolConfig poolConfig, String host, int port) {
-    jedisPool = new JedisPool(poolConfig, host, port);
-  }
-
-  public WxCpRedisConfigImpl(JedisPoolConfig poolConfig, String host, int port, int timeout, String password) {
-    jedisPool = new JedisPool(poolConfig, host, port, timeout, password);
-  }
-
-  public WxCpRedisConfigImpl(JedisPoolConfig poolConfig, String host, int port, int timeout, String password, int database) {
-    jedisPool = new JedisPool(poolConfig, host, port, timeout, password, database);
   }
 
   /**
@@ -226,6 +264,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.corpId;
   }
 
+  /**
+   * Sets corp id.
+   *
+   * @param corpId the corp id
+   */
   public void setCorpId(String corpId) {
     this.corpId = corpId;
   }
@@ -235,6 +278,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.corpSecret;
   }
 
+  /**
+   * Sets corp secret.
+   *
+   * @param corpSecret the corp secret
+   */
   public void setCorpSecret(String corpSecret) {
     this.corpSecret = corpSecret;
   }
@@ -244,6 +292,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.agentId;
   }
 
+  /**
+   * Sets agent id.
+   *
+   * @param agentId the agent id
+   */
   public void setAgentId(Integer agentId) {
     this.agentId = agentId;
   }
@@ -253,6 +306,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.token;
   }
 
+  /**
+   * Sets token.
+   *
+   * @param token the token
+   */
   public void setToken(String token) {
     this.token = token;
   }
@@ -262,6 +320,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.aesKey;
   }
 
+  /**
+   * Sets aes key.
+   *
+   * @param aesKey the aes key
+   */
   public void setAesKey(String aesKey) {
     this.aesKey = aesKey;
   }
@@ -285,6 +348,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.oauth2redirectUri;
   }
 
+  /**
+   * Sets oauth 2 redirect uri.
+   *
+   * @param oauth2redirectUri the oauth 2 redirect uri
+   */
   public void setOauth2redirectUri(String oauth2redirectUri) {
     this.oauth2redirectUri = oauth2redirectUri;
   }
@@ -294,6 +362,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.httpProxyHost;
   }
 
+  /**
+   * Sets http proxy host.
+   *
+   * @param httpProxyHost the http proxy host
+   */
   public void setHttpProxyHost(String httpProxyHost) {
     this.httpProxyHost = httpProxyHost;
   }
@@ -303,6 +376,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.httpProxyPort;
   }
 
+  /**
+   * Sets http proxy port.
+   *
+   * @param httpProxyPort the http proxy port
+   */
   public void setHttpProxyPort(int httpProxyPort) {
     this.httpProxyPort = httpProxyPort;
   }
@@ -314,6 +392,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
 
   // ============================ Setters below
 
+  /**
+   * Sets http proxy username.
+   *
+   * @param httpProxyUsername the http proxy username
+   */
   public void setHttpProxyUsername(String httpProxyUsername) {
     this.httpProxyUsername = httpProxyUsername;
   }
@@ -323,6 +406,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.httpProxyPassword;
   }
 
+  /**
+   * Sets http proxy password.
+   *
+   * @param httpProxyPassword the http proxy password
+   */
   public void setHttpProxyPassword(String httpProxyPassword) {
     this.httpProxyPassword = httpProxyPassword;
   }
@@ -332,6 +420,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.tmpDirFile;
   }
 
+  /**
+   * Sets tmp dir file.
+   *
+   * @param tmpDirFile the tmp dir file
+   */
   public void setTmpDirFile(File tmpDirFile) {
     this.tmpDirFile = tmpDirFile;
   }
@@ -339,6 +432,15 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   @Override
   public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
     return this.apacheHttpClientBuilder;
+  }
+
+  /**
+   * Sets apache http client builder.
+   *
+   * @param apacheHttpClientBuilder the apache http client builder
+   */
+  public void setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
+    this.apacheHttpClientBuilder = apacheHttpClientBuilder;
   }
 
   @Override
@@ -349,10 +451,6 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   @Override
   public String getWebhookKey() {
     return this.getWebhookKey();
-  }
-
-  public void setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
-    this.apacheHttpClientBuilder = apacheHttpClientBuilder;
   }
 
 }

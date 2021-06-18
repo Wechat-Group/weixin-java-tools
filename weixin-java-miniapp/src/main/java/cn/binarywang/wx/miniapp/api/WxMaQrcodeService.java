@@ -17,9 +17,6 @@ import java.io.File;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMaQrcodeService {
-  String CREATE_QRCODE_URL = "https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode";
-  String GET_WXACODE_URL = "https://api.weixin.qq.com/wxa/getwxacode";
-  String GET_WXACODE_UNLIMIT_URL = "https://api.weixin.qq.com/wxa/getwxacodeunlimit";
 
   /**
    * 接口C: 获取小程序页面二维码.
@@ -196,7 +193,7 @@ public interface WxMaQrcodeService {
    * @param scene     最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，
    *                  其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
    * @param page      必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面
-   * @param width     默认false 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
+   * @param width     默认430 二维码的宽度
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
    * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
    * @param isHyaline 是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码
@@ -219,7 +216,7 @@ public interface WxMaQrcodeService {
    *                  其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
    * @param page      必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面
    * @param filePath  二维码生成的文件路径，例如: /var/temp
-   * @param width     默认false 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
+   * @param width     默认430 二维码的宽度
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
    * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
    * @param isHyaline 是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码
@@ -241,7 +238,7 @@ public interface WxMaQrcodeService {
    * @param scene     最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，
    *                  其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
    * @param page      必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面
-   * @param width     默认false 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
+   * @param width     默认430 二维码的宽度
    * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
    * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
    * @param isHyaline 是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码

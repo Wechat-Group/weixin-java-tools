@@ -1,8 +1,9 @@
 package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.open.bean.WxOpenCreateResult;
 import me.chanjar.weixin.open.bean.WxOpenGetResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
@@ -330,7 +331,10 @@ public interface WxOpenComponentService {
    * @param code  the code
    * @return the wx mp o auth 2 access token
    * @throws WxErrorException the wx error exception
+   * @see WxMpService#getOAuth2Service()
+   * @deprecated 2021-05-21: 已修正公众号相关接口,请使用:WxOpenCommpentService.getWxMpServiceByAppid(mpAppId).getOAuth2Service().getAccessToken(code)
    */
+  @Deprecated
   WxOAuth2AccessToken oauth2getAccessToken(String appid, String code) throws WxErrorException;
 
   /**
@@ -362,7 +366,10 @@ public interface WxOpenComponentService {
    * @param scope       the scope
    * @param state       the state
    * @return the string
+   * @see WxMpService#getOAuth2Service()
+   * @deprecated 2021-05-21: 已修正公众号相关接口,请使用:WxOpenCommpentService.getWxMpServiceByAppid(mpAppId).getOAuth2Service().buildAuthorizationUrl(redirectUri, scope, state)
    */
+  @Deprecated
   String oauth2buildAuthorizationUrl(String appid, String redirectUri, String scope, String state);
 
   /**

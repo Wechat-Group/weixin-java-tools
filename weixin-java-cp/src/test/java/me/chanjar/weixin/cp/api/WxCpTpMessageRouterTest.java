@@ -7,13 +7,12 @@ import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import me.chanjar.weixin.cp.tp.message.WxCpTpMessageHandler;
 import me.chanjar.weixin.cp.tp.message.WxCpTpMessageRouter;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
-import me.chanjar.weixin.cp.tp.service.impl.WxCpTpServiceImpl;
+import me.chanjar.weixin.cp.tp.service.impl.WxCpTpServiceApacheHttpClientImpl;
 import org.testng.annotations.Test;
 
 import java.util.Map;
 
 import static org.testng.Assert.assertNotNull;
-import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertNull;
 
 public class WxCpTpMessageRouterTest {
@@ -21,7 +20,7 @@ public class WxCpTpMessageRouterTest {
 
   @Test
   public void testMessageRouter() {
-    WxCpTpService service = new WxCpTpServiceImpl();
+    WxCpTpService service = new WxCpTpServiceApacheHttpClientImpl();
     WxCpTpMessageRouter router = new WxCpTpMessageRouter(service);
 
     String xml = "<xml>\n" +
@@ -49,7 +48,6 @@ public class WxCpTpMessageRouterTest {
     }).end();
 
     assertNull(router.route(wxXmlMessage));
-
 
     System.out.println("over");
   }

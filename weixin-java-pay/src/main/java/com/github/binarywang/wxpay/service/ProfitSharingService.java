@@ -97,6 +97,34 @@ public interface ProfitSharingService {
   ProfitSharingQueryResult profitSharingQuery(ProfitSharingQueryRequest request) throws WxPayException;
 
   /**
+   * <pre>
+   * 服务商可通过调用此接口查询订单剩余待分金额。
+   * 接口频率：30QPS
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_10&index=7
+   * 接口链接：https://api.mch.weixin.qq.com/pay/profitsharingorderamountquery
+   * </pre>
+   *
+   * @param request .
+   * @return .
+   * @throws WxPayException .
+   */
+  ProfitSharingOrderAmountQueryResult profitSharingOrderAmountQuery(ProfitSharingOrderAmountQueryRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 服务商可以查询子商户设置的允许服务商分账的最大比例。
+   * 接口频率：30QPS
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_11&index=8
+   * 接口链接：	https://api.mch.weixin.qq.com/pay/profitsharingmerchantratioquery
+   * </pre>
+   *
+   * @param request .
+   * @return .
+   * @throws WxPayException .
+   */
+  ProfitSharingMerchantRatioQueryResult profitSharingMerchantRatioQuery(ProfitSharingMerchantRatioQueryRequest request) throws WxPayException;
+
+  /**
    * TODO:这个接口用真实的数据返回【参数不正确】，我对比官方文档除了缺少sub_mch_id，和sub_appid之外其他相同，当我随便填了一个商户id的时候，提示【回退方没有开通分账回退功能】
    * <pre>
    * 仅对订单进行退款时，如果订单已经分账，可以先调用此接口将指定的金额从分账接收方（仅限商户类型的分账接收方）回退给特约商户，然后再退款。

@@ -16,14 +16,6 @@ import java.util.List;
  * @author <a href="https://github.com/lipengjun92">lipengjun (939961241@qq.com)</a>
  */
 public interface WxMaLiveGoodsService {
-  String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/add";
-  String RESET_AUDIT_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/resetaudit";
-  String AUDIT_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/audit";
-  String DELETE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/delete";
-  String UPDATE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/update";
-  String GET_GOODS_WARE_HOUSE = "https://api.weixin.qq.com/wxa/business/getgoodswarehouse";
-  String GET_APPROVED_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getapproved";
-
   /**
    * 商品添加并提审
    * <pre>

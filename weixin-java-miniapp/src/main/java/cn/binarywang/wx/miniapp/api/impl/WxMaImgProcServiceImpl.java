@@ -2,18 +2,20 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcAiCropResult;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcQrCodeResult;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcSuperResolutionResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.requestexecuter.ocr.OcrDiscernRequestExecutor;
+import me.chanjar.weixin.common.service.WxImgProcService;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.ImgProc.*;
 
 
 /**
@@ -23,35 +25,6 @@ import java.nio.charset.StandardCharsets;
  */
 @RequiredArgsConstructor
 public class WxMaImgProcServiceImpl implements WxImgProcService {
-  /**
-   * 二维码/条码识别
-   */
-  private static final String QRCODE = "/cv/img/qrcode?img_url=%s";
-
-  /**
-   * 二维码/条码识别(文件)
-   */
-  private static final String FILE_QRCODE = "/cv/img/qrcode";
-
-  /**
-   * 图片高清化
-   */
-  private static final String SUPER_RESOLUTION = "/cv/img/superresolution?img_url=%s";
-
-  /**
-   * 图片高清化(文件)
-   */
-  private static final String FILE_SUPER_RESOLUTION = "/cv/img/superresolution";
-
-  /**
-   * 图片智能裁剪
-   */
-  private static final String AI_CROP = "/cv/img/aicrop?img_url=%s&ratios=%s";
-
-  /**
-   * 图片智能裁剪(文件)
-   */
-  private static final String FILE_AI_CROP = "/cv/img/aicrop?ratios=%s";
   private final WxMaService service;
 
   @Override

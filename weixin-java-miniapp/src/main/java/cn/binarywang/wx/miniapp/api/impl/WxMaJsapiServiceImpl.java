@@ -3,7 +3,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaJsapiService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.google.gson.JsonObject;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.RandomUtils;
@@ -12,6 +12,8 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 
 import java.util.concurrent.locks.Lock;
 
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Jsapi.GET_JSAPI_TICKET_URL;
+
 /**
  * <pre>
  *  Created by BinaryWang on 2018/8/5.
@@ -19,11 +21,9 @@ import java.util.concurrent.locks.Lock;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WxMaJsapiServiceImpl implements WxMaJsapiService {
-
-
-  private WxMaService wxMaService;
+  private final WxMaService service;
 
   @Override
   public String getCardApiTicket() throws WxErrorException {
@@ -32,27 +32,26 @@ public class WxMaJsapiServiceImpl implements WxMaJsapiService {
 
   @Override
   public String getCardApiTicket(boolean forceRefresh) throws WxErrorException {
-
     if (forceRefresh) {
-      this.wxMaService.getWxMaConfig().expireCardApiTicket();
+      this.service.getWxMaConfig().expireCardApiTicket();
     }
 
-    if (this.wxMaService.getWxMaConfig().isCardApiTicketExpired()) {
-      Lock lock = this.wxMaService.getWxMaConfig().getCardApiTicketLock();
+    if (this.service.getWxMaConfig().isCardApiTicketExpired()) {
+      Lock lock = this.service.getWxMaConfig().getCardApiTicketLock();
       lock.lock();
       try {
-        if (this.wxMaService.getWxMaConfig().isCardApiTicketExpired()) {
-          String responseContent = this.wxMaService.get(GET_JSAPI_TICKET_URL + "?type=wx_card", null);
+        if (this.service.getWxMaConfig().isCardApiTicketExpired()) {
+          String responseContent = this.service.get(GET_JSAPI_TICKET_URL + "?type=wx_card", null);
           JsonObject tmpJsonObject = GsonParser.parse(responseContent);
           String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
           int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
-          this.wxMaService.getWxMaConfig().updateCardApiTicket(jsapiTicket, expiresInSeconds);
+          this.service.getWxMaConfig().updateCardApiTicket(jsapiTicket, expiresInSeconds);
         }
       } finally {
         lock.unlock();
       }
     }
-    return this.wxMaService.getWxMaConfig().getCardApiTicket();
+    return this.service.getWxMaConfig().getCardApiTicket();
   }
 
   @Override
@@ -62,24 +61,24 @@ public class WxMaJsapiServiceImpl implements WxMaJsapiService {
 
   @Override
   public String getJsapiTicket(boolean forceRefresh) throws WxErrorException {
-    Lock lock = this.wxMaService.getWxMaConfig().getJsapiTicketLock();
+    Lock lock = this.service.getWxMaConfig().getJsapiTicketLock();
     lock.lock();
     try {
       if (forceRefresh) {
-        this.wxMaService.getWxMaConfig().expireJsapiTicket();
+        this.service.getWxMaConfig().expireJsapiTicket();
       }
 
-      if (this.wxMaService.getWxMaConfig().isJsapiTicketExpired()) {
-        String responseContent = this.wxMaService.get(GET_JSAPI_TICKET_URL + "?type=jsapi", null);
+      if (this.service.getWxMaConfig().isJsapiTicketExpired()) {
+        String responseContent = this.service.get(GET_JSAPI_TICKET_URL + "?type=jsapi", null);
         JsonObject tmpJsonObject = GsonParser.parse(responseContent);
         String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
         int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
-        this.wxMaService.getWxMaConfig().updateJsapiTicket(jsapiTicket, expiresInSeconds);
+        this.service.getWxMaConfig().updateJsapiTicket(jsapiTicket, expiresInSeconds);
       }
     } finally {
       lock.unlock();
     }
-    return this.wxMaService.getWxMaConfig().getJsapiTicket();
+    return this.service.getWxMaConfig().getJsapiTicket();
   }
 
   @Override
@@ -91,7 +90,7 @@ public class WxMaJsapiServiceImpl implements WxMaJsapiService {
       "noncestr=" + randomStr, "timestamp=" + timestamp, "url=" + url);
     return WxJsapiSignature
       .builder()
-      .appId(this.wxMaService.getWxMaConfig().getAppid())
+      .appId(this.service.getWxMaConfig().getAppid())
       .timestamp(timestamp)
       .nonceStr(randomStr)
       .url(url)

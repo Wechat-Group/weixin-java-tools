@@ -6,11 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.ImageBuilder;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.NewsBuilder;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.TextBuilder;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.VideoBuilder;
-import me.chanjar.weixin.cp.bean.outxmlbuilder.VoiceBuilder;
+import me.chanjar.weixin.cp.bean.outxmlbuilder.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
@@ -76,6 +72,12 @@ public abstract class WxCpXmlOutMessage implements Serializable {
     return new NewsBuilder();
   }
 
+  /**
+   * 获得任务卡片消息builder.
+   */
+  public static TaskCardBuilder TASK_CARD() {
+    return new TaskCardBuilder();
+  }
   protected String toXml() {
     return XStreamTransformer.toXml((Class) this.getClass(), this);
   }

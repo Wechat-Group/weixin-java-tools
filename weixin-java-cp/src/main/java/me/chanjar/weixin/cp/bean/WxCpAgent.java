@@ -95,7 +95,7 @@ public class WxCpAgent implements Serializable {
   @Data
   public class Parties {
     @SerializedName("partyid")
-    private List<Integer> partyIds = null;
+    private List<Long> partyIds = null;
   }
 
   @Data

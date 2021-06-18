@@ -25,6 +25,13 @@ public class WxFastMaAccountBasicInfoGsonAdapter implements JsonDeserializer<WxF
     accountBasicInfo.setPrincipalType(GsonHelper.getInteger(jsonObject, "principal_type"));
     accountBasicInfo.setPrincipalName(GsonHelper.getString(jsonObject, "principal_name"));
     accountBasicInfo.setRealnameStatus(GsonHelper.getInteger(jsonObject, "realname_status"));
+    accountBasicInfo.setNickname(GsonHelper.getString(jsonObject, "nickname"));
+
+    WxFastMaAccountBasicInfoResult.NicknameInfo nicknameInfo = WxOpenGsonBuilder.create()
+      .fromJson(jsonObject.get("nickname_info"),
+        new TypeToken<WxFastMaAccountBasicInfoResult.NicknameInfo>() {
+        }.getType());
+    accountBasicInfo.setNicknameInfo(nicknameInfo);
 
     WxFastMaAccountBasicInfoResult.WxVerifyInfo verifyInfo = WxOpenGsonBuilder.create()
       .fromJson(jsonObject.get("wx_verify_info"),

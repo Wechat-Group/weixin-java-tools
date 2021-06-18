@@ -2,9 +2,9 @@ package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.service.WxOcrService;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.service.WxService;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -13,6 +13,8 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import java.util.Map;
 
 /**
+ * The interface Wx ma service.
+ *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMaService extends WxService {
@@ -21,6 +23,9 @@ public interface WxMaService extends WxService {
    */
   String GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
+  /**
+   * The constant JSCODE_TO_SESSION_URL.
+   */
   String JSCODE_TO_SESSION_URL = "https://api.weixin.qq.com/sns/jscode2session";
   /**
    * getPaidUnionId
@@ -36,6 +41,8 @@ public interface WxMaService extends WxService {
    * 获取登录后的session信息.
    *
    * @param jsCode 登录时获取的 code
+   * @return the wx ma jscode 2 session result
+   * @throws WxErrorException the wx error exception
    */
   WxMaJscode2SessionResult jsCode2SessionInfo(String jsCode) throws WxErrorException;
 
@@ -47,10 +54,10 @@ public interface WxMaService extends WxService {
    * http请求方式：POST http(s)://api.weixin.qq.com/wxa/setdynamicdata?access_token=ACCESS_TOKEN
    * </pre>
    *
-   * @param data     推送到微信后台的数据列表，该数据被微信用于流量分配，注意该字段为string类型而不是object
    * @param lifespan 数据有效时间，秒为单位，一般为86400，一天一次导入的频率
-   * @param scene    1代表用于搜索的数据
    * @param type     用于标识数据所属的服务类目
+   * @param scene    1代表用于搜索的数据
+   * @param data     推送到微信后台的数据列表，该数据被微信用于流量分配，注意该字段为string类型而不是object
    * @throws WxErrorException .
    */
   void setDynamicData(int lifespan, String type, int scene, String data) throws WxErrorException;
@@ -60,13 +67,20 @@ public interface WxMaService extends WxService {
    * 验证消息的确来自微信服务器.
    * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319&token=&lang=zh_CN
    * </pre>
+   *
+   * @param timestamp the timestamp
+   * @param nonce     the nonce
+   * @param signature the signature
+   * @return the boolean
    */
   boolean checkSignature(String timestamp, String nonce, String signature);
 
   /**
    * 获取access_token, 不强制刷新access_token.
    *
-   * @see #getAccessToken(boolean)
+   * @return the access token
+   * @throws WxErrorException the wx error exception
+   * @see #getAccessToken(boolean) #getAccessToken(boolean)
    */
   String getAccessToken() throws WxErrorException;
 
@@ -83,6 +97,8 @@ public interface WxMaService extends WxService {
    * </pre>
    *
    * @param forceRefresh 强制刷新
+   * @return the access token
+   * @throws WxErrorException the wx error exception
    */
   String getAccessToken(boolean forceRefresh) throws WxErrorException;
 
@@ -99,7 +115,7 @@ public interface WxMaService extends WxService {
    * @param transactionId 非必填 微信支付订单号
    * @param mchId         非必填 微信支付分配的商户号，和商户订单号配合使用
    * @param outTradeNo    非必填  微信支付商户订单号，和商户号配合使用
-   * @return UnionId.
+   * @return UnionId. paid union id
    * @throws WxErrorException .
    */
   String getPaidUnionId(String openid, String transactionId, String mchId, String outTradeNo) throws WxErrorException;
@@ -111,12 +127,13 @@ public interface WxMaService extends WxService {
    * 可以参考，{@link MediaUploadRequestExecutor}的实现方法
    * </pre>
    *
-   * @param <E>      .
    * @param <T>      .
-   * @param data     参数或请求数据
+   * @param <E>      .
    * @param executor 执行器
    * @param uri      接口请求地址
-   * @return .
+   * @param data     参数或请求数据
+   * @return . t
+   * @throws WxErrorException the wx error exception
    */
   <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException;
 
@@ -143,7 +160,7 @@ public interface WxMaService extends WxService {
   /**
    * 获取WxMaConfig 对象.
    *
-   * @return WxMaConfig
+   * @return WxMaConfig wx ma config
    */
   WxMaConfig getWxMaConfig();
 
@@ -189,7 +206,7 @@ public interface WxMaService extends WxService {
    * 进行相应的公众号切换.
    *
    * @param mpId 公众号标识
-   * @return 切换是否成功
+   * @return 切换是否成功 boolean
    */
   boolean switchover(String mpId);
 
@@ -197,98 +214,105 @@ public interface WxMaService extends WxService {
    * 进行相应的公众号切换.
    *
    * @param miniappId 小程序标识
-   * @return 切换成功，则返回当前对象，方便链式调用，否则抛出异常
+   * @return 切换成功 ，则返回当前对象，方便链式调用，否则抛出异常
    */
   WxMaService switchoverTo(String miniappId);
 
   /**
    * 返回消息（客服消息和模版消息）发送接口方法实现类，以方便调用其各个接口.
    *
-   * @return WxMaMsgService
+   * @return WxMaMsgService msg service
    */
   WxMaMsgService getMsgService();
 
   /**
    * 返回素材相关接口方法的实现类对象，以方便调用其各个接口.
    *
-   * @return WxMaMediaService
+   * @return WxMaMediaService media service
    */
   WxMaMediaService getMediaService();
 
   /**
    * 返回用户相关接口方法的实现类对象，以方便调用其各个接口.
    *
-   * @return WxMaUserService
+   * @return WxMaUserService user service
    */
   WxMaUserService getUserService();
 
   /**
    * 返回二维码相关接口方法的实现类对象，以方便调用其各个接口.
    *
-   * @return WxMaQrcodeService
+   * @return WxMaQrcodeService qrcode service
    */
   WxMaQrcodeService getQrcodeService();
 
   /**
+   * 返回获取小程序scheme码实现对象，以方便调用其各个接口.
+   *
+   * @return WxMaSchemeService wx ma scheme service
+   */
+  WxMaSchemeService getWxMaSchemeService();
+
+  /**
    * 返回订阅消息配置相关接口方法的实现类对象, 以方便调用其各个接口.
    *
-   * @return WxMaSubscribeService
+   * @return WxMaSubscribeService subscribe service
    */
   WxMaSubscribeService getSubscribeService();
 
   /**
    * 数据分析相关查询服务.
    *
-   * @return WxMaAnalysisService
+   * @return WxMaAnalysisService analysis service
    */
   WxMaAnalysisService getAnalysisService();
 
   /**
    * 返回代码操作相关的 API.
    *
-   * @return WxMaCodeService
+   * @return WxMaCodeService code service
    */
   WxMaCodeService getCodeService();
 
   /**
    * 返回jsapi操作相关的 API服务类对象.
    *
-   * @return WxMaJsapiService
+   * @return WxMaJsapiService jsapi service
    */
   WxMaJsapiService getJsapiService();
 
   /**
    * 小程序修改服务器地址、成员管理 API.
    *
-   * @return WxMaSettingService
+   * @return WxMaSettingService setting service
    */
   WxMaSettingService getSettingService();
 
   /**
    * 返回分享相关查询服务.
    *
-   * @return WxMaShareService
+   * @return WxMaShareService share service
    */
   WxMaShareService getShareService();
 
   /**
    * 返回微信运动相关接口服务对象.
    *
-   * @return WxMaShareService
+   * @return WxMaShareService run service
    */
   WxMaRunService getRunService();
 
   /**
    * 返回内容安全相关接口服务对象.
    *
-   * @return WxMaShareService
+   * @return WxMaShareService sec check service
    */
   WxMaSecCheckService getSecCheckService();
 
   /**
    * 返回插件相关接口服务对象.
    *
-   * @return WxMaPluginService
+   * @return WxMaPluginService plugin service
    */
   WxMaPluginService getPluginService();
 
@@ -300,37 +324,44 @@ public interface WxMaService extends WxService {
   /**
    * 请求http请求相关信息.
    *
-   * @return .
+   * @return . request http
    */
   RequestHttp getRequestHttp();
 
   /**
    * 获取物流助手接口服务对象
    *
-   * @return .
+   * @return . express service
    */
   WxMaExpressService getExpressService();
 
   /**
    * 获取云开发接口服务对象
    *
-   * @return .
+   * @return . cloud service
    */
   WxMaCloudService getCloudService();
 
   /**
    * 获取直播接口服务对象
    *
-   * @return .
+   * @return . live service
    */
   WxMaLiveService getLiveService();
 
   /**
    * 获取直播间商品服务对象
    *
-   * @return .
+   * @return . live goods service
    */
   WxMaLiveGoodsService getLiveGoodsService();
+
+  /**
+   * 获取直播成员管理接口服务对象
+   *
+   * @return . live service
+   */
+  WxMaLiveMemberService getLiveMemberService();
 
   /**
    * 获取ocr实现接口服务对象
@@ -342,8 +373,45 @@ public interface WxMaService extends WxService {
   /**
    * 返回图像处理接口的实现类对象，以方便调用其各个接口.
    *
-   * @return WxImgProcService
+   * @return WxImgProcService img proc service
    */
   WxImgProcService getImgProcService();
 
+//  /**
+//   * 返回小程序交易组件-售后服务接口
+//   * @return
+//   */
+//  WxMaShopAfterSaleService getShopAfterSaleService();
+//
+//
+//  /**
+//   * 返回小程序交易组件-物流服务接口
+//   * @return
+//   */
+//  WxMaShopDeliveryService getShopDeliveryService();
+
+
+  /**
+   * 返回小程序交易组件-订单服务接口
+   * @return
+   */
+  WxMaShopOrderService getShopOrderService();
+
+  /**
+   * 返回小程序交易组件-spu商品服务接口
+   * @return
+   */
+  WxMaShopSpuService getShopSpuService();
+
+  /**
+   * 获取小程序 URL Link服务接口
+   * @return
+   */
+  WxMaLinkService getLinkService();
+
+  /**
+   * 获取电子发票报销方服务接口
+   * @return
+   */
+  WxMaReimburseInvoiceService getReimburseInvoiceService();
 }

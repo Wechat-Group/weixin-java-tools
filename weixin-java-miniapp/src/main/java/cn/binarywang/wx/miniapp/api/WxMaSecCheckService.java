@@ -1,9 +1,9 @@
 package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaMediaAsyncCheckResult;
-import java.io.File;
-
 import me.chanjar.weixin.common.error.WxErrorException;
+
+import java.io.File;
 
 /**
  * <pre>
@@ -14,13 +14,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMaSecCheckService {
-
-  String IMG_SEC_CHECK_URL = "https://api.weixin.qq.com/wxa/img_sec_check";
-
-  String MSG_SEC_CHECK_URL = "https://api.weixin.qq.com/wxa/msg_sec_check";
-
-  String MEDIA_CHECK_ASYNC_URL = "https://api.weixin.qq.com/wxa/media_check_async";
-
   /**
    * <pre>
    * 校验一张图片是否含有违法违规内容.
@@ -29,13 +22,18 @@ public interface WxMaSecCheckService {
    * 2）敏感人脸识别：用户头像；媒体类用户文章里的图片检测；社交类用户上传的图片检测等。频率限制：单个 appId 调用上限为 1000 次/分钟，100,000 次/天
    * 详情请见: https://developers.weixin.qq.com/miniprogram/dev/api/open-api/sec-check/imgSecCheck.html
    * </pre>
+   *
+   * @param file the file
+   * @return the boolean
+   * @throws WxErrorException the wx error exception
    */
   boolean checkImage(File file) throws WxErrorException;
 
   /**
    * 校验一张图片是否含有违法违规内容
+   *
    * @param fileUrl 文件网络地址
-   * @return 是否违规
+   * @return 是否违规 boolean
    * @throws WxErrorException .
    */
   boolean checkImage(String fileUrl) throws WxErrorException;
@@ -49,6 +47,10 @@ public interface WxMaSecCheckService {
    * 游戏类用户编辑上传的素材(如答题类小游戏用户上传的问题及答案)检测等。 频率限制：单个 appId 调用上限为 4000 次/分钟，2,000,000 次/天*
    * 详情请见: https://developers.weixin.qq.com/miniprogram/dev/api/open-api/sec-check/msgSecCheck.html
    * </pre>
+   *
+   * @param msgString the msg string
+   * @return the boolean
+   * @throws WxErrorException the wx error exception
    */
   boolean checkMessage(String msgString) throws WxErrorException;
 
@@ -65,10 +67,12 @@ public interface WxMaSecCheckService {
    * 详情请见:
    * https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.mediaCheckAsync.html
    * </pre>
-   * @param mediaUrl 要检测的多媒体url
+   *
+   * @param mediaUrl  要检测的多媒体url
    * @param mediaType 媒体类型,{@link cn.binarywang.wx.miniapp.constant.WxMaConstants.SecCheckMediaType}
-   * @return
+   * @return wx ma media async check result
+   * @throws WxErrorException the wx error exception
    */
-  WxMaMediaAsyncCheckResult mediaCheckAsync(String mediaUrl,int mediaType) throws WxErrorException;
+  WxMaMediaAsyncCheckResult mediaCheckAsync(String mediaUrl, int mediaType) throws WxErrorException;
 
 }

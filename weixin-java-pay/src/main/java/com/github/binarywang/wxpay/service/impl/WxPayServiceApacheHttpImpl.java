@@ -13,9 +13,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.*;
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.ContentType;
@@ -28,7 +26,6 @@ import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.SSLContext;
 import java.io.InputStream;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -104,7 +101,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       String responseString;
       if (response.getEntity() == null) {
         responseString = null;
-      }else {
+      } else {
         responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
       }
       if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
@@ -117,12 +114,52 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
-      throw (e instanceof WxPayException) ? (WxPayException)e : new WxPayException(e.getMessage(), e);
+      throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
       httpPost.releaseConnection();
     }
 
 
+  }
+
+  @Override
+  public String patchV3(String url, String requestStr) throws WxPayException {
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
+    HttpPatch httpPatch = new HttpPatch(url);
+    httpPatch.setEntity(this.createEntry(requestStr));
+
+    httpPatch.setConfig(RequestConfig.custom()
+      .setConnectionRequestTimeout(this.getConfig().getHttpConnectionTimeout())
+      .setConnectTimeout(this.getConfig().getHttpConnectionTimeout())
+      .setSocketTimeout(this.getConfig().getHttpTimeout())
+      .build());
+
+    httpPatch.addHeader("Accept", "application/json");
+    httpPatch.addHeader("Content-Type", "application/json");
+    try (CloseableHttpResponse response = httpClient.execute(httpPatch)) {
+      //v3已经改为通过状态码判断200 204 成功
+      int statusCode = response.getStatusLine().getStatusCode();
+      //post方法有可能会没有返回值的情况
+      String responseString;
+      if (response.getEntity() == null) {
+        responseString = null;
+      } else {
+        responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+      }
+      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
+        this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
+        return responseString;
+      } else {
+        //有错误提示信息返回
+        JsonObject jsonObject = GsonParser.parse(responseString);
+        throw convertException(jsonObject);
+      }
+    } catch (Exception e) {
+      this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
+      throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
+    } finally {
+      httpPatch.releaseConnection();
+    }
   }
 
   @Override
@@ -153,7 +190,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
       e.printStackTrace();
-      throw (e instanceof WxPayException) ? (WxPayException)e : new WxPayException(e.getMessage(), e);
+      throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
       httpPost.releaseConnection();
     }
@@ -161,22 +198,26 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public String postV3(String url, HttpPost httpPost) throws WxPayException {
+    return this.requestV3(url, httpPost);
+  }
 
-    httpPost.setConfig(RequestConfig.custom()
+  @Override
+  public String requestV3(String url, HttpRequestBase httpRequest) throws WxPayException {
+    httpRequest.setConfig(RequestConfig.custom()
       .setConnectionRequestTimeout(this.getConfig().getHttpConnectionTimeout())
       .setConnectTimeout(this.getConfig().getHttpConnectionTimeout())
       .setSocketTimeout(this.getConfig().getHttpTimeout())
       .build());
 
     CloseableHttpClient httpClient = this.createApiV3HttpClient();
-    try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+    try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
       //v3已经改为通过状态码判断200 204 成功
       int statusCode = response.getStatusLine().getStatusCode();
       //post方法有可能会没有返回值的情况
       String responseString;
       if (response.getEntity() == null) {
         responseString = null;
-      }else {
+      } else {
         responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
       }
       if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
@@ -189,40 +230,22 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
-      throw (e instanceof WxPayException) ? (WxPayException)e : new WxPayException(e.getMessage(), e);
+      throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
-      httpPost.releaseConnection();
+      httpRequest.releaseConnection();
     }
   }
 
   @Override
-  public String getV3(URI url) throws WxPayException {
-    CloseableHttpClient httpClient = this.createApiV3HttpClient();
+  public String getV3(String url) throws WxPayException {
     HttpGet httpGet = new HttpGet(url);
     httpGet.addHeader("Accept", "application/json");
     httpGet.addHeader("Content-Type", "application/json");
-    try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
-      //v3已经改为通过状态码判断200 204 成功
-      int statusCode = response.getStatusLine().getStatusCode();
-      String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
-        this.log.info("\n【请求地址】：{}\n【响应数据】：{}", url, responseString);
-        return responseString;
-      } else {
-        //有错误提示信息返回
-        JsonObject jsonObject = GsonParser.parse(responseString);
-        throw convertException(jsonObject);
-      }
-    } catch (Exception e) {
-      this.log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
-      throw (e instanceof WxPayException) ? (WxPayException)e : new WxPayException(e.getMessage(), e);
-    } finally {
-      httpGet.releaseConnection();
-    }
+    return this.requestV3(url.toString(), httpGet);
   }
 
   @Override
-  public InputStream downloadV3(URI url) throws WxPayException {
+  public InputStream downloadV3(String url) throws WxPayException {
     CloseableHttpClient httpClient = this.createApiV3HttpClient();
     HttpGet httpGet = new HttpGet(url);
     httpGet.addHeader("Accept", ContentType.WILDCARD.getMimeType());
@@ -240,7 +263,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
     } catch (Exception e) {
       this.log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
-      throw (e instanceof WxPayException) ? (WxPayException)e : new WxPayException(e.getMessage(), e);
+      throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
       httpGet.releaseConnection();
     }

@@ -1,12 +1,9 @@
 <?xml version="1.0"?>
-<project
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-  xmlns="http://maven.apache.org/POM/4.0.0">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>4.0.1.B</version>
+  <version>4.1.0</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -111,6 +108,7 @@
     <module>weixin-java-pay</module>
     <module>weixin-java-miniapp</module>
     <module>weixin-java-open</module>
+    <module>weixin-java-qidian</module>
     <module>spring-boot-starters</module>
     <!--module>weixin-java-osgi</module-->
   </modules>
@@ -120,8 +118,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <httpclient.version>4.5</httpclient.version>
-    <jetty.version>9.4.35.v20201120</jetty.version>
+    <httpclient.version>4.5.13</httpclient.version>
+    <jetty.version>9.4.38.v20210224</jetty.version>
   </properties>
 
   <dependencyManagement>
@@ -162,7 +160,7 @@
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
-        <version>2.5</version>
+        <version>2.7</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
@@ -177,12 +175,12 @@
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
-        <version>1.4.15</version>
+        <version>1.4.17</version>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>29.0-jre</version>
+        <version>30.0-jre</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.gson</groupId>
@@ -277,6 +275,11 @@
         <artifactId>lombok</artifactId>
         <version>1.18.8</version>
         <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcpkix-jdk15on</artifactId>
+        <version>1.68</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

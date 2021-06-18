@@ -1,7 +1,5 @@
 package me.chanjar.weixin.cp.api;
 
-import com.google.gson.JsonObject;
-import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.service.WxService;
@@ -39,7 +37,7 @@ public interface WxCpService extends WxService {
    *
    * @return the access token
    * @throws WxErrorException the wx error exception
-   * @see #getAccessToken(boolean) #getAccessToken(boolean)
+   * @see #getAccessToken(boolean) #getAccessToken(boolean)#getAccessToken(boolean)
    */
   String getAccessToken() throws WxErrorException;
 
@@ -63,7 +61,7 @@ public interface WxCpService extends WxService {
    *
    * @return the jsapi ticket
    * @throws WxErrorException the wx error exception
-   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)
+   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)
    */
   String getJsapiTicket() throws WxErrorException;
 
@@ -90,7 +88,7 @@ public interface WxCpService extends WxService {
    *
    * @return the agent jsapi ticket
    * @throws WxErrorException the wx error exception
-   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)
+   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)
    */
   String getAgentJsapiTicket() throws WxErrorException;
 
@@ -276,9 +274,9 @@ public interface WxCpService extends WxService {
   void initHttp();
 
   /**
-   * 获取WxMpConfigStorage 对象
+   * 获取WxCpConfigStorage 对象
    *
-   * @return WxMpConfigStorage wx cp config storage
+   * @return WxCpConfigStorage wx cp config storage
    */
   WxCpConfigStorage getWxCpConfigStorage();
 
@@ -376,9 +374,16 @@ public interface WxCpService extends WxService {
   /**
    * 获取日历相关接口的服务类对象
    *
-   * @return the menu service
+   * @return the oa calendar service
    */
   WxCpOaCalendarService getOaCalendarService();
+
+  /**
+   * 获取日程相关接口的服务类对象
+   *
+   * @return the oa schedule service
+   */
+  WxCpOaScheduleService getOaScheduleService();
 
   /**
    * 获取群机器人消息推送服务
@@ -387,11 +392,11 @@ public interface WxCpService extends WxService {
    */
   WxCpGroupRobotService getGroupRobotService();
 
-  /*
+  /**
    * 获取工作台服务
    *
    * @return the workbench service
-   * */
+   */
   WxCpAgentWorkBenchService getWorkBenchService();
 
   /**

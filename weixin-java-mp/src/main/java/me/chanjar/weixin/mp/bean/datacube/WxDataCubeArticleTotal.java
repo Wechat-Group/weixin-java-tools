@@ -28,11 +28,16 @@ public class WxDataCubeArticleTotal extends WxDataCubeBaseResult {
   private String msgId;
 
   /**
-   * title.
    * 图文消息的标题
    */
   @SerializedName("title")
   private String title;
+
+  /**
+   * 文章地址
+   */
+  @SerializedName("url")
+  private String url;
 
   /**
    * details.
@@ -40,6 +45,14 @@ public class WxDataCubeArticleTotal extends WxDataCubeBaseResult {
    */
   @SerializedName("details")
   private List<WxDataCubeArticleTotalDetail> details;
+
+  /**
+   * user_source
+   * 在获取图文统计数据、图文阅读分时数据时才有该字段，代表用户从哪里进入来阅读该图文。
+   * 99999999.全部；0:会话;1.好友;2.朋友圈;3.腾讯微博;4.历史消息页;5.其他;6.看一看;7.搜一搜；
+   */
+  @SerializedName("user_source")
+  private Integer userSource;
 
   public static List<WxDataCubeArticleTotal> fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(

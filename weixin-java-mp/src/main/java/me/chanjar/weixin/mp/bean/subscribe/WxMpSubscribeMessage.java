@@ -1,12 +1,13 @@
 package me.chanjar.weixin.mp.bean.subscribe;
 
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Mklaus
@@ -64,6 +65,15 @@ public class WxMpSubscribeMessage {
    */
   private String contentColor;
 
+  /**
+   * 跳转网页时填写.
+   */
+  private String page;
+
+  /**
+   * 订阅通知消息专用
+   */
+  private Map<String, String> dataMap;
 
   public String toJson() {
     return WxMpGsonBuilder.create().toJson(this);

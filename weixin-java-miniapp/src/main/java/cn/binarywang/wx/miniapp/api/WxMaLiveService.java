@@ -14,17 +14,6 @@ import java.util.List;
  * @author <a href="https://github.com/yjwang3300300">yjwang</a>
  */
 public interface WxMaLiveService {
-  String GET_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/getliveinfo";
-  String CREATE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/create";
-  String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/addgoods";
-  String DELETE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/deleteroom";
-  String EDIT_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/editroom";
-  String GET_PUSH_URL = "https://api.weixin.qq.com/wxaapi/broadcast/room/getpushurl";
-  String GET_SHARED_CODE = "https://api.weixin.qq.com/wxaapi/broadcast/room/getsharedcode";
-  String ADD_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/addassistant";
-  String MODIFY_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/modifyassistant";
-  String REMOVE_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/removeassistant";
-  String GET_ASSISTANT_LIST = "https://api.weixin.qq.com/wxaapi/broadcast/room/getassistantlist";
 
   /**
    * 创建直播间
@@ -95,6 +84,7 @@ public interface WxMaLiveService {
    * @throws WxErrorException .
    */
   String getSharedCode(Integer roomId, String params) throws WxErrorException;
+
   /**
    * 获取直播房间列表.（分页）
    *
@@ -153,6 +143,7 @@ public interface WxMaLiveService {
    * @throws WxErrorException .
    */
   boolean addGoodsToRoom(Integer roomId, List<Integer> goodsIds) throws WxErrorException;
+
   /**
    * 添加管理直播间小助手
    * <p>
@@ -168,6 +159,7 @@ public interface WxMaLiveService {
    * @throws WxErrorException .
    */
   boolean addAssistant(Integer roomId, List<WxMaLiveAssistantInfo> users) throws WxErrorException;
+
   /**
    * 修改直播间小助手昵称
    * <p>
@@ -183,7 +175,8 @@ public interface WxMaLiveService {
    * @return 修改小助手昵称是否成功
    * @throws WxErrorException .
    */
-  boolean modifyAssistant(Integer roomId, String username,String nickname) throws WxErrorException;
+  boolean modifyAssistant(Integer roomId, String username, String nickname) throws WxErrorException;
+
   /**
    * 删除直播间小助手
    * <p>
@@ -199,6 +192,7 @@ public interface WxMaLiveService {
    * @throws WxErrorException .
    */
   boolean removeAssistant(Integer roomId, String username) throws WxErrorException;
+
   /**
    * 查询直播间小助手
    * <p>

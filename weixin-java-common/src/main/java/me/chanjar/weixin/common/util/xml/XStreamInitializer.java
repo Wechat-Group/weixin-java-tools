@@ -14,6 +14,11 @@ import com.thoughtworks.xstream.security.WildcardTypePermission;
 
 import java.io.Writer;
 
+/**
+ * The type X stream initializer.
+ *
+ * @author Daniel Qian
+ */
 public class XStreamInitializer {
   private static final XppDriver XPP_DRIVER = new XppDriver() {
     @Override
@@ -23,12 +28,16 @@ public class XStreamInitializer {
         private static final String SUFFIX_CDATA = "]]>";
         private static final String PREFIX_MEDIA_ID = "<MediaId>";
         private static final String SUFFIX_MEDIA_ID = "</MediaId>";
+        private static final String PREFIX_REPLACE_NAME = "<ReplaceName>";
+        private static final String SUFFIX_REPLACE_NAME = "</ReplaceName>";
 
         @Override
         protected void writeText(QuickWriter writer, String text) {
           if (text.startsWith(PREFIX_CDATA) && text.endsWith(SUFFIX_CDATA)) {
             writer.write(text);
           } else if (text.startsWith(PREFIX_MEDIA_ID) && text.endsWith(SUFFIX_MEDIA_ID)) {
+            writer.write(text);
+          } else if (text.startsWith(PREFIX_REPLACE_NAME) && text.endsWith(SUFFIX_REPLACE_NAME)){
             writer.write(text);
           } else {
             super.writeText(writer, text);
@@ -45,6 +54,11 @@ public class XStreamInitializer {
     }
   };
 
+  /**
+   * Gets instance.
+   *
+   * @return the instance
+   */
   public static XStream getInstance() {
     XStream xstream = new XStream(new PureJavaReflectionProvider(), XPP_DRIVER) {
       // only register the converters we need; other converters generate a private access warning in the console on Java9+...

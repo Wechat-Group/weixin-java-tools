@@ -4,12 +4,12 @@ import com.binarywang.spring.starter.wxjava.mp.enums.HttpClientType;
 import com.binarywang.spring.starter.wxjava.mp.enums.StorageType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
 
 import static com.binarywang.spring.starter.wxjava.mp.enums.StorageType.Memory;
 import static com.binarywang.spring.starter.wxjava.mp.properties.WxMpProperties.PREFIX;
-
 
 /**
  * 微信接入相关配置属性.
@@ -49,7 +49,7 @@ public class WxMpProperties {
   /**
    * 存储策略
    */
-  private ConfigStorage configStorage = new ConfigStorage();
+  private final ConfigStorage configStorage = new ConfigStorage();
 
   @Data
   public static class ConfigStorage implements Serializable {
@@ -68,7 +68,8 @@ public class WxMpProperties {
     /**
      * redis连接配置.
      */
-    private RedisProperties redis = new RedisProperties();
+    @NestedConfigurationProperty
+    private final RedisProperties redis = new RedisProperties();
 
     /**
      * http客户端类型.

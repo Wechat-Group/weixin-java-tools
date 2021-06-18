@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.*;
@@ -22,7 +23,9 @@ import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.*;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Data
-public class WxCpGroupRobotMessage {
+public class WxCpGroupRobotMessage implements Serializable {
+  private static final long serialVersionUID = -4301684507150486556L;
+  
   /**
    * 消息类型
    */
