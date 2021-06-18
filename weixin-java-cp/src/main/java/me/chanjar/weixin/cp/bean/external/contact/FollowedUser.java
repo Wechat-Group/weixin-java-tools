@@ -12,7 +12,9 @@ import java.io.Serializable;
  * @date 2020-11-04
  */
 @Data
-public class FollowedUser {
+public class FollowedUser implements Serializable {
+  private static final long serialVersionUID = -4301684507150486556L;
+  
   @SerializedName("userid")
   private String userId;
 

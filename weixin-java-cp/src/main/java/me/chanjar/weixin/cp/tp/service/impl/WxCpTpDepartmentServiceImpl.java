@@ -58,7 +58,7 @@ public class WxCpTpDepartmentServiceImpl implements WxCpTpDepartmentService {
     JsonObject tmpJsonObject = GsonParser.parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(tmpJsonObject.get("department"),
-        new TypeToken<List<WxCpDepart>>() {
+        new TypeToken<List<WxCpTpDepart>>() {
         }.getType()
       );
   }

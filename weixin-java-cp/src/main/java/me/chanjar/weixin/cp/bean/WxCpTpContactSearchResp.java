@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -23,7 +24,8 @@ public class WxCpTpContactSearchResp extends WxCpBaseResp {
     private QueryResult queryResult;
 
     @Data
-    public static class QueryResult {
+    public static class QueryResult implements Serializable {
+        private static final long serialVersionUID = -4301684507150486556L;
 
         @SerializedName("user")
         private User user;
@@ -31,7 +33,8 @@ public class WxCpTpContactSearchResp extends WxCpBaseResp {
         private Party party;
 
         @Data
-        public static class User {
+        public static class User implements Serializable {
+            private static final long serialVersionUID = -4301684507150486556L;
             @SerializedName("userid")
             private List<String> userid;
             @SerializedName("open_userid")
@@ -39,7 +42,9 @@ public class WxCpTpContactSearchResp extends WxCpBaseResp {
         }
 
         @Data
-        public static class Party {
+        public static class Party implements Serializable {
+            private static final long serialVersionUID = -4301684507150486556L;
+
             @SerializedName("department_id")
             private List<Integer> departmentId;
         }

@@ -41,6 +41,10 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   private volatile int httpProxyPort;
   private volatile String httpProxyUsername;
   private volatile String httpProxyPassword;
+
+  private volatile int retrySleepMillis = 1000;
+  private volatile int maxRetryTimes = 5;
+
   private volatile String jsapiTicket;
   private volatile long jsapiTicketExpiresTime;
   /**
@@ -255,6 +259,24 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
 
   public void setHttpProxyPassword(String httpProxyPassword) {
     this.httpProxyPassword = httpProxyPassword;
+  }
+
+  @Override
+  public int getRetrySleepMillis() {
+    return this.retrySleepMillis;
+  }
+
+  public void setRetrySleepMillis(int retrySleepMillis) {
+    this.retrySleepMillis = retrySleepMillis;
+  }
+
+  @Override
+  public int getMaxRetryTimes() {
+    return this.maxRetryTimes;
+  }
+
+  public void setMaxRetryTimes(int maxRetryTimes) {
+    this.maxRetryTimes = maxRetryTimes;
   }
 
   @Override

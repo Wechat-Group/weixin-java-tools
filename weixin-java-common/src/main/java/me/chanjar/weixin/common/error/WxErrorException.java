@@ -8,8 +8,10 @@ public class WxErrorException extends Exception {
 
   private final WxError error;
 
+  private static final int DEFAULT_ERROR_CODE = -99;
+
   public WxErrorException(String message) {
-    this(WxError.builder().errorCode(-1).errorMsg(message).build());
+    this(WxError.builder().errorCode(DEFAULT_ERROR_CODE).errorMsg(message).build());
   }
 
   public WxErrorException(WxError error) {
@@ -24,12 +26,10 @@ public class WxErrorException extends Exception {
 
   public WxErrorException(Throwable cause) {
     super(cause.getMessage(), cause);
-    this.error = WxError.builder().errorCode(-1).errorMsg(cause.getMessage()).build();
+    this.error = WxError.builder().errorCode(DEFAULT_ERROR_CODE).errorMsg(cause.getMessage()).build();
   }
 
   public WxError getError() {
     return this.error;
   }
-
-
 }

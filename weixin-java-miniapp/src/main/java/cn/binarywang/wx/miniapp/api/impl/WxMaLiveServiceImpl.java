@@ -18,7 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.*;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.GET_LIVE_INFO;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.Room;
 
 /**
  * <pre>
@@ -36,13 +37,20 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
 
   @Override
   public WxMaCreateRoomResult createRoom(WxMaLiveRoomInfo roomInfo) throws WxErrorException {
-    String responseContent = this.wxMaService.post(Room.CREATE_ROOM, WxMaGsonBuilder.create().toJson(roomInfo));
-    JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
-      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    try {
+      String responseContent = this.wxMaService.post(Room.CREATE_ROOM, WxMaGsonBuilder.create().toJson(roomInfo));
+      JsonObject jsonObject = GsonParser.parse(responseContent);
+      if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+        throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+      }
+      return WxMaGsonBuilder.create().fromJson(responseContent, WxMaCreateRoomResult.class);
+    } catch (WxErrorException e) {
+      if (e.getError().getErrorCode() == 300036) {
+        return WxMaGsonBuilder.create().fromJson(e.getError().getJson(), WxMaCreateRoomResult.class);
+      } else {
+        throw e;
+      }
     }
-
-    return WxMaGsonBuilder.create().fromJson(responseContent, WxMaCreateRoomResult.class);
   }
 
   @Override
@@ -214,7 +222,8 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
   public List<WxMaAssistantResult.Assistant> getAssistantList(Integer roomId) throws WxErrorException {
     Map<String, Object> map = new HashMap<>(2);
     map.put(ROOM_ID, roomId);
-    String responseContent = this.wxMaService.post(Room.GET_ASSISTANT_LIST, WxMaGsonBuilder.create().toJson(map));
+    String responseContent = this.wxMaService.get(Room.GET_ASSISTANT_LIST,
+      Joiner.on("&").withKeyValueSeparator("=").join(map));
     JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));

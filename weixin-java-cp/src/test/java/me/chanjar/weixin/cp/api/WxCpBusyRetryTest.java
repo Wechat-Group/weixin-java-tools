@@ -22,7 +22,7 @@ public class WxCpBusyRetryTest {
 
       @Override
       public synchronized <T, E> T executeInternal(
-        RequestExecutor<T, E> executor, String uri, E data)
+        RequestExecutor<T, E> executor, String uri, E data, boolean doNotAutoRefresh)
         throws WxErrorException {
         log.info("Executed");
         throw new WxErrorException("something");

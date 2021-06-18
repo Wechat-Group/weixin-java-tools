@@ -44,6 +44,7 @@ public class WxConsts {
     public static final String DEVICE_STATUS = "device_status";
     public static final String HARDWARE = "hardware";
     public static final String TRANSFER_CUSTOMER_SERVICE = "transfer_customer_service";
+    public static final String UPDATE_TASKCARD = "update_taskcard";
   }
 
   /**

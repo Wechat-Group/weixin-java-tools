@@ -63,6 +63,10 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaLiveMemberService liveMemberService = new WxMaLiveMemberServiceImpl(this);
   private final WxOcrService ocrService = new WxMaOcrServiceImpl(this);
   private final WxImgProcService imgProcService = new WxMaImgProcServiceImpl(this);
+  private final WxMaShopSpuService shopSpuService = new WxMaShopSpuServiceImpl(this);
+  private final WxMaShopOrderService shopOrderService = new WxMaShopOrderServiceImpl(this);
+  private final WxMaLinkService linkService = new WxMaLinkServiceImpl(this);
+  private final WxMaReimburseInvoiceService reimburseInvoiceService = new WxMaReimburseInvoiceServiceImpl(this);
   private Map<String, WxMaConfig> configMap;
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -205,7 +209,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     int retryTimes = 0;
     do {
       try {
-        return this.executeInternal(executor, uri, data);
+        return this.executeInternal(executor, uri, data, false);
       } catch (WxErrorException e) {
         if (retryTimes + 1 > this.maxRetryTimes) {
           log.warn("重试达到最大次数【{}】", maxRetryTimes);
@@ -236,7 +240,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     throw new WxRuntimeException("微信服务端异常，超出重试次数");
   }
 
-  private <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  private <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data, boolean doNotAutoRefreshToken) throws WxErrorException {
     E dataForLog = DataUtils.handleDataWithSecret(data);
 
     if (uri.contains("access_token=")) {
@@ -269,9 +273,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
         } finally {
           lock.unlock();
         }
-        if (this.getWxMaConfig().autoRefreshToken()) {
+        if (this.getWxMaConfig().autoRefreshToken() && !doNotAutoRefreshToken) {
           log.warn("即将重新获取新的access_token，错误代码：{}，错误信息：{}", error.getErrorCode(), error.getErrorMsg());
-          return this.execute(executor, uri, data);
+          //下一次不再自动重试
+          //当小程序误调用第三方平台专属接口时,第三方无法使用小程序的access token,如果可以继续自动获取token会导致无限循环重试,直到栈溢出
+          return this.executeInternal(executor, uri, data, true);
         }
       }
 
@@ -499,4 +505,23 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     return this.imgProcService;
   }
 
+  @Override
+  public WxMaShopSpuService getShopSpuService() {
+    return this.shopSpuService;
+  }
+
+  @Override
+  public WxMaShopOrderService getShopOrderService() {
+    return this.shopOrderService;
+  }
+
+  @Override
+  public WxMaLinkService getLinkService() {
+    return this.linkService;
+  }
+
+  @Override
+  public WxMaReimburseInvoiceService getReimburseInvoiceService() {
+    return this.reimburseInvoiceService;
+  }
 }

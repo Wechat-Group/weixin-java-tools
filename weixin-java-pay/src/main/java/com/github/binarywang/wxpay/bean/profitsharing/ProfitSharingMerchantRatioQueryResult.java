@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.w3c.dom.Document;
 
+import java.io.Serializable;
+
 /**
  * @author : cofedream
  * @date : 2020-12-28
@@ -15,7 +17,9 @@ import org.w3c.dom.Document;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class ProfitSharingMerchantRatioQueryResult extends BaseWxPayResult {
+public class ProfitSharingMerchantRatioQueryResult extends BaseWxPayResult implements Serializable {
+  private static final long serialVersionUID = 7556620112016338659L;
+
   /**
    * 服务商模式下的子商户号.<br/>
    * 2000<br/>

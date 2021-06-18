@@ -9,6 +9,7 @@ import lombok.Setter;
 import me.chanjar.weixin.cp.util.json.WxCpConclusionAdapter;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,14 +19,17 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public class WxCpContactWayInfo {
+public class WxCpContactWayInfo implements Serializable {
+  private static final long serialVersionUID = -8697184659526210472L;
 
   @SerializedName("contact_way")
   private ContactWay contactWay;
 
   @Getter
   @Setter
-  public static class ContactWay {
+  public static class ContactWay implements Serializable {
+    private static final long serialVersionUID = -8697184659526210472L;
+
     /**
      * 联系方式的配置id
      */
@@ -166,7 +170,9 @@ public class WxCpContactWayInfo {
      */
     @Data
     @JsonAdapter(WxCpConclusionAdapter.class)
-    public static class Conclusion {
+    public static class Conclusion implements Serializable {
+      private static final long serialVersionUID = -8697184659526210472L;
+      
       private String textContent;
       private String imgMediaId;
       private String imgPicUrl;
