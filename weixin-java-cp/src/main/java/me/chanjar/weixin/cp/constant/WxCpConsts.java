@@ -334,4 +334,24 @@ public class WxCpConsts {
     * */
     public static final String WEBVIEW = "webview";
   }
+
+  @UtilityClass
+  public static class WelcomeMsgType {
+    /**
+     * 图片消息.
+     */
+    public static final String IMAGE = "image";
+    /**
+     * 图文消息.
+     */
+    public static final String LINK = "link";
+    /**
+     * 视频消息.
+     */
+    public static final String VIDEO = "video";
+    /**
+     * 小程序消息.
+     */
+    public static final String MINIPROGRAM = "miniprogram";
+  }
 }
