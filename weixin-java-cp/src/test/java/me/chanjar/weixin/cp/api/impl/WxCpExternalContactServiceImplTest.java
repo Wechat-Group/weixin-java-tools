@@ -16,6 +16,7 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -196,11 +197,60 @@ public class WxCpExternalContactServiceImplTest {
   }
 
   @Test
-  public void testListGroupChat() {
+  public void testTransferCustomer() throws WxErrorException {
+    WxCpUserTransferCustomerReq req = new WxCpUserTransferCustomerReq();
+    req.setExternalUserid(Collections.emptyList());
+    req.setHandOverUserid("123");
+    req.setTakeOverUserid("234");
+    WxCpBaseResp result = this.wxCpService.getExternalContactService().transferCustomer(req);
+
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testTrnsferResult() throws WxErrorException {
+    WxCpUserTransferResultResp result = this.wxCpService.getExternalContactService().trnsferResult("123", "234", "");
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testresignedTransferCustomer() throws WxErrorException {
+    WxCpUserTransferCustomerReq req = new WxCpUserTransferCustomerReq();
+    req.setExternalUserid(Collections.emptyList());
+    req.setHandOverUserid("123");
+    req.setTakeOverUserid("234");
+    WxCpBaseResp result = this.wxCpService.getExternalContactService().resignedTransferCustomer(req);
+
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testresignedTrnsferResult() throws WxErrorException {
+    WxCpUserTransferResultResp result = this.wxCpService.getExternalContactService().resignedTrnsferResult("123", "234", "");
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testListGroupChat() throws WxErrorException {
+    WxCpUserExternalGroupChatList result = this.wxCpService.getExternalContactService().listGroupChat(0, 100 ,0,new String[1],new String[1]);
+    System.out.println(result);
+    assertNotNull(result);
   }
 
   @Test
   public void testGetGroupChat() {
+  }
+
+  @Test
+  public void testTransferGroupChat() throws WxErrorException {
+    String[] str = {"wri1_QEAAATfnZl_VJ4hlQda0e4Mgf1A"};
+    WxCpUserExternalGroupChatTransferResp result = this.wxCpService.getExternalContactService().transferGroupChat(str, "123");
+    System.out.println(result);
+    assertNotNull(result);
   }
 
   @Test
