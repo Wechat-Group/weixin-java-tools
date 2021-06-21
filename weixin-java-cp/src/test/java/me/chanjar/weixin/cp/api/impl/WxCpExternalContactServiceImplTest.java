@@ -8,6 +8,9 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
+import me.chanjar.weixin.cp.bean.external.msg.Attachment;
+import me.chanjar.weixin.cp.bean.external.msg.Image;
+import me.chanjar.weixin.cp.bean.external.msg.Video;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
@@ -214,8 +217,22 @@ public class WxCpExternalContactServiceImplTest {
 
   @Test
   public void testSendWelcomeMsg() throws WxErrorException {
+    Image image = new Image();
+    image.setMediaId("123123");
+    Attachment attachment = new Attachment();
+    attachment.setImage(image);
+
+    Video video = new Video();
+    video.setMediaId("video_media_id");
+    Attachment attachment2 = new Attachment();
+    attachment2.setVideo(video);
+
+    List<Attachment> attachments = new ArrayList<>();
+    attachments.add(attachment);
+    attachments.add(attachment2);
     this.wxCpService.getExternalContactService().sendWelcomeMsg(WxCpWelcomeMsg.builder()
       .welcomeCode("abc")
+      .attachments(attachments)
       .build());
   }
 
