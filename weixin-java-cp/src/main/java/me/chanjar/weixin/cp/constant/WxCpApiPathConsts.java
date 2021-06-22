@@ -175,6 +175,7 @@ public interface WxCpApiPathConsts {
     String CLOSE_TEMP_CHAT = "/cgi-bin/externalcontact/close_temp_chat";
     String GET_FOLLOW_USER_LIST = "/cgi-bin/externalcontact/get_follow_user_list";
     String GET_CONTACT_DETAIL = "/cgi-bin/externalcontact/get?external_userid=";
+    String CONVERT_TO_OPENID = "/cgi-bin/externalcontact/convert_to_openid";
     String GET_CONTACT_DETAIL_BATCH = "/cgi-bin/externalcontact/batch/get_by_user?";
     String UPDATE_REMARK = "/cgi-bin/externalcontact/remark";
     String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";

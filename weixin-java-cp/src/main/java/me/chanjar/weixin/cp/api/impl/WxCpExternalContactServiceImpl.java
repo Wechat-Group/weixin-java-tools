@@ -8,6 +8,7 @@ import me.chanjar.weixin.common.error.WxCpErrorMsgEnum;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.BeanUtils;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpExternalContactService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
@@ -106,6 +107,16 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CONTACT_DETAIL + userId);
     String responseContent = this.mainService.get(url, null);
     return WxCpExternalContactInfo.fromJson(responseContent);
+  }
+
+  @Override
+  public String convertToOpenid(@NotNull String externalUserId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("external_userid", externalUserId);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(CONVERT_TO_OPENID);
+    String responseContent = this.mainService.post(url, json.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("openid").getAsString();
   }
 
   @Override
