@@ -273,7 +273,7 @@ public interface WxCpExternalContactService {
    * @return 客户转接接口实体
    * @throws WxErrorException the wx error exception
    */
-  WxCpUserTransferResultResp trnsferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor)  throws WxErrorException;
+  WxCpUserTransferResultResp transferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor)  throws WxErrorException;
 
   /**
    * 企业可通过此接口，分配离职成员的客户给其他成员。
@@ -311,7 +311,7 @@ public interface WxCpExternalContactService {
    * @return 客户转接接口实体
    * @throws WxErrorException the wx error exception
    */
-  WxCpUserTransferResultResp resignedTrnsferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor)  throws WxErrorException;
+  WxCpUserTransferResultResp resignedTransferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor)  throws WxErrorException;
 
   /**
    * <pre>

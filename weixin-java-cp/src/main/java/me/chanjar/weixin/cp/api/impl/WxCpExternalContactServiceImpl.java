@@ -198,7 +198,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpUserTransferResultResp trnsferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor) throws WxErrorException {
+  public WxCpUserTransferResultResp transferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("cursor", cursor);
     json.addProperty("handover_userid", handOverUserid);
@@ -217,7 +217,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpUserTransferResultResp resignedTrnsferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor) throws WxErrorException {
+  public WxCpUserTransferResultResp resignedTransferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("cursor", cursor);
     json.addProperty("handover_userid", handOverUserid);

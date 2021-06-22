@@ -210,7 +210,7 @@ public class WxCpExternalContactServiceImplTest {
 
   @Test
   public void testTrnsferResult() throws WxErrorException {
-    WxCpUserTransferResultResp result = this.wxCpService.getExternalContactService().trnsferResult("123", "234", "");
+    WxCpUserTransferResultResp result = this.wxCpService.getExternalContactService().transferResult("123", "234", "");
     System.out.println(result);
     assertNotNull(result);
   }
@@ -229,7 +229,7 @@ public class WxCpExternalContactServiceImplTest {
 
   @Test
   public void testresignedTrnsferResult() throws WxErrorException {
-    WxCpUserTransferResultResp result = this.wxCpService.getExternalContactService().resignedTrnsferResult("123", "234", "");
+    WxCpUserTransferResultResp result = this.wxCpService.getExternalContactService().resignedTransferResult("123", "234", "");
     System.out.println(result);
     assertNotNull(result);
   }
