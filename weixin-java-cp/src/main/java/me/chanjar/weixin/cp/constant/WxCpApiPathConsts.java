@@ -175,13 +175,20 @@ public interface WxCpApiPathConsts {
     String CLOSE_TEMP_CHAT = "/cgi-bin/externalcontact/close_temp_chat";
     String GET_FOLLOW_USER_LIST = "/cgi-bin/externalcontact/get_follow_user_list";
     String GET_CONTACT_DETAIL = "/cgi-bin/externalcontact/get?external_userid=";
+    String CONVERT_TO_OPENID = "/cgi-bin/externalcontact/convert_to_openid";
     String GET_CONTACT_DETAIL_BATCH = "/cgi-bin/externalcontact/batch/get_by_user?";
     String UPDATE_REMARK = "/cgi-bin/externalcontact/remark";
     String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";
     String LIST_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/get_unassigned_list";
+    @Deprecated
     String TRANSFER_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/transfer";
+    String TRANSFER_CUSTOMER = "/cgi-bin/externalcontact/transfer_customer";
+    String TRANSFER_RESULT = "/cgi-bin/externalcontact/transfer_result";
+    String RESIGNED_TRANSFER_CUSTOMER = "/cgi-bin/externalcontact/resigned/transfer_customer";
+    String RESIGNED_TRANSFER_RESULT = "/cgi-bin/externalcontact/resigned/transfer_result";
     String GROUP_CHAT_LIST = "/cgi-bin/externalcontact/groupchat/list";
     String GROUP_CHAT_INFO = "/cgi-bin/externalcontact/groupchat/get";
+    String GROUP_CHAT_TRANSFER = "/cgi-bin/externalcontact/groupchat/transfer";
     String LIST_USER_BEHAVIOR_DATA = "/cgi-bin/externalcontact/get_user_behavior_data";
     String LIST_GROUP_CHAT_DATA = "/cgi-bin/externalcontact/groupchat/statistic";
     String ADD_MSG_TEMPLATE = "/cgi-bin/externalcontact/add_msg_template";
