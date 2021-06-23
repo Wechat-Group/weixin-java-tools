@@ -18,11 +18,13 @@ public class WxCpLinkedCorpMessageSendResult extends WxCpBaseResp {
   private static final long serialVersionUID = 3990693822996824333L;
 
   @SerializedName("invaliduser")
-  private String[] invaliduser;
+  private String[] invalidUser;
+
   @SerializedName("invalidparty")
-  private String[] invalidparty;
+  private String[] invalidParty;
+
   @SerializedName("invalidtag")
-  private String[] invalidtag;
+  private String[] invalidTag;
 
   @Override
   public String toString() {
