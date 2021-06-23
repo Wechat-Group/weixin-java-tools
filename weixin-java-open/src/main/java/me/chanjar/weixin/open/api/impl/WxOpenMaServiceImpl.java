@@ -7,8 +7,10 @@ import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import lombok.Getter;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
+import me.chanjar.weixin.open.api.WxOpenMaBasicService;
 import me.chanjar.weixin.open.api.WxOpenMaService;
 import me.chanjar.weixin.open.bean.ma.WxMaOpenCommitExtInfo;
 import me.chanjar.weixin.open.bean.ma.WxMaQrcodeParam;
@@ -34,11 +36,14 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   private final WxOpenComponentService wxOpenComponentService;
   private final WxMaConfig wxMaConfig;
   private final String appId;
+  @Getter
+  private final WxOpenMaBasicService basicService;
 
   public WxOpenMaServiceImpl(WxOpenComponentService wxOpenComponentService, String appId, WxMaConfig wxMaConfig) {
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMaConfig = wxMaConfig;
+    this.basicService = new WxOpenMaBasicServiceImpl(this);
     initHttp();
   }
 
@@ -245,6 +250,12 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   public WxOpenResult revertCodeRelease() throws WxErrorException {
     String response = get(API_REVERT_CODE_RELEASE, null);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenMaHistoryVersionResult getHistoryVersion() throws WxErrorException {
+    String response = get(API_REVERT_CODE_RELEASE, "action=get_history_version");
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaHistoryVersionResult.class);
   }
 
   @Override
