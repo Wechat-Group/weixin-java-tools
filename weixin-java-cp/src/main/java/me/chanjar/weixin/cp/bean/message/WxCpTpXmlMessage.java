@@ -25,8 +25,8 @@ import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 @Slf4j
 @Data
 public class WxCpTpXmlMessage implements Serializable {
-
   private static final long serialVersionUID = 6031833682211475786L;
+
   /**
    * 使用dom4j解析的存放所有xml属性和值的map.
    */
@@ -109,8 +109,8 @@ public class WxCpTpXmlMessage implements Serializable {
   protected String telephone;
 
   @XStreamAlias("Id")
-  @XStreamConverter(value = IntConverter.class)
-  protected Integer id;
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  protected String id;
 
   @XStreamAlias("Name")
   @XStreamConverter(value = XStreamCDataConverter.class)
@@ -205,7 +205,7 @@ public class WxCpTpXmlMessage implements Serializable {
   protected String msgId;
 
   @XStreamAlias("AgentID")
-  protected Integer agentID;
+  protected String agentID;
 
   @XStreamAlias("PicUrl")
   @XStreamConverter(value = XStreamCDataConverter.class)
@@ -410,7 +410,7 @@ public class WxCpTpXmlMessage implements Serializable {
     @XStreamAlias("NotifyNode")
     public static class NotifyNode implements Serializable {
       private static final long serialVersionUID = 6031833682211475786L;
-      
+
       @XStreamAlias("ItemName")
       protected String itemName;
       @XStreamAlias("ItemUserId")
