@@ -402,4 +402,16 @@ public interface WxMaService extends WxService {
    * @return
    */
   WxMaShopSpuService getShopSpuService();
+
+  /**
+   * 获取小程序 URL Link服务接口
+   * @return
+   */
+  WxMaLinkService getLinkService();
+
+  /**
+   * 获取电子发票报销方服务接口
+   * @return
+   */
+  WxMaReimburseInvoiceService getReimburseInvoiceService();
 }
