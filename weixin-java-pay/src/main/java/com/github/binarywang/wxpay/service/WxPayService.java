@@ -189,11 +189,20 @@ public interface WxPayService {
 
   /**
    * 获取分账服务类.
+   * <p>
+   *   V3接口 {@link WxPayService#getProfitSharingV3Service()}
+   * </p>
    *
    * @return the ent pay service
    */
   ProfitSharingService getProfitSharingService();
 
+  /**
+   * 获取V3分账服务类.
+   *
+   * @return the ent pay service
+   */
+  ProfitSharingV3Service getProfitSharingV3Service();
 
   /**
    * 获取支付分服务类.
