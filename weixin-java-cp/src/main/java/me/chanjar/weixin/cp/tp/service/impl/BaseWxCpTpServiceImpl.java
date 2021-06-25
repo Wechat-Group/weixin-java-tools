@@ -146,7 +146,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     if (this.configStorage.isAuthSuiteJsApiTicketExpired(authCorpId)) {
 
       String resp = get(configStorage.getApiUrl(GET_SUITE_JSAPI_TICKET),
-        "type=agent_config&access_token=" + this.configStorage.getAccessToken(authCorpId));
+        "type=agent_config&access_token=" + this.configStorage.getAccessToken(authCorpId), true);
 
       JsonObject jsonObject = GsonParser.parse(resp);
       if (jsonObject.get("errcode").getAsInt() == 0) {
@@ -176,7 +176,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     if (this.configStorage.isAuthCorpJsApiTicketExpired(authCorpId)) {
 
       String resp = get(configStorage.getApiUrl(GET_AUTH_CORP_JSAPI_TICKET),
-        "access_token=" + this.configStorage.getAccessToken(authCorpId));
+        "access_token=" + this.configStorage.getAccessToken(authCorpId), true);
 
       JsonObject jsonObject = GsonParser.parse(resp);
       if (jsonObject.get("errcode").getAsInt() == 0) {
@@ -301,6 +301,11 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   @Override
   public String get(String url, String queryParam) throws WxErrorException {
     return execute(SimpleGetRequestExecutor.create(this), url, queryParam);
+  }
+
+  @Override
+  public String get(String url, String queryParam, boolean withoutSuiteAccessToken) throws WxErrorException {
+    return execute(SimpleGetRequestExecutor.create(this), url, queryParam, withoutSuiteAccessToken);
   }
 
   @Override
