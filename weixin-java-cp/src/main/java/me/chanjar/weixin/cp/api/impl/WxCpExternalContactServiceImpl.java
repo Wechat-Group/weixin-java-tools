@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxCpErrorMsgEnum;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.util.BeanUtils;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpExternalContactService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
@@ -15,6 +17,7 @@ import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.Date;
@@ -107,6 +110,16 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public String convertToOpenid(@NotNull String externalUserId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("external_userid", externalUserId);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(CONVERT_TO_OPENID);
+    String responseContent = this.mainService.post(url, json.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("openid").getAsString();
+  }
+
+  @Override
   public WxCpExternalContactBatchInfo getContactDetailBatch(String userId,
                                                             String cursor,
                                                             Integer limit)
@@ -177,6 +190,44 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpUserTransferCustomerResp transferCustomer(WxCpUserTransferCustomerReq req) throws WxErrorException {
+    BeanUtils.checkRequiredFields(req);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(TRANSFER_CUSTOMER);
+    final String result = this.mainService.post(url, req.toJson());
+    return WxCpUserTransferCustomerResp.fromJson(result);
+  }
+
+  @Override
+  public WxCpUserTransferResultResp transferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("cursor", cursor);
+    json.addProperty("handover_userid", handOverUserid);
+    json.addProperty("takeover_userid", takeOverUserid);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(TRANSFER_RESULT);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpUserTransferResultResp.fromJson(result);
+  }
+
+  @Override
+  public WxCpUserTransferCustomerResp resignedTransferCustomer(WxCpUserTransferCustomerReq req) throws WxErrorException {
+    BeanUtils.checkRequiredFields(req);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(RESIGNED_TRANSFER_CUSTOMER);
+    final String result = this.mainService.post(url, req.toJson());
+    return WxCpUserTransferCustomerResp.fromJson(result);
+  }
+
+  @Override
+  public WxCpUserTransferResultResp resignedTransferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("cursor", cursor);
+    json.addProperty("handover_userid", handOverUserid);
+    json.addProperty("takeover_userid", takeOverUserid);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(RESIGNED_TRANSFER_RESULT);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpUserTransferResultResp.fromJson(result);
+  }
+
+  @Override
   public WxCpUserExternalGroupChatList listGroupChat(Integer pageIndex, Integer pageSize, int status, String[] userIds, String[] partyIds) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("offset", pageIndex == null ? 0 : pageIndex);
@@ -204,6 +255,18 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GROUP_CHAT_INFO);
     final String result = this.mainService.post(url, json.toString());
     return WxCpUserExternalGroupChatInfo.fromJson(result);
+  }
+
+  @Override
+  public WxCpUserExternalGroupChatTransferResp transferGroupChat(String[] chatIds, String newOwner) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    if (ArrayUtils.isNotEmpty(chatIds)) {
+      json.add("chat_id_list", new Gson().toJsonTree(chatIds).getAsJsonArray());
+    }
+    json.addProperty("new_owner", newOwner);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GROUP_CHAT_TRANSFER);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpUserExternalGroupChatTransferResp.fromJson(result);
   }
 
   @Override

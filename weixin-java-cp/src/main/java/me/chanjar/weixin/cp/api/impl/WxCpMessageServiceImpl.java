@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpMessageService;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.message.WxCpLinkedCorpMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpMessageSendResult;
-import me.chanjar.weixin.cp.bean.message.WxCpMessageSendStatistics;
+import me.chanjar.weixin.cp.bean.message.*;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Message;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
@@ -40,13 +37,13 @@ public class WxCpMessageServiceImpl implements WxCpMessageService {
   }
 
   @Override
-  public WxCpMessageSendResult sendLinkedCorpMessage(WxCpLinkedCorpMessage message) throws WxErrorException {
+  public WxCpLinkedCorpMessageSendResult sendLinkedCorpMessage(WxCpLinkedCorpMessage message) throws WxErrorException {
     Integer agentId = message.getAgentId();
     if (null == agentId) {
       message.setAgentId(this.cpService.getWxCpConfigStorage().getAgentId());
     }
 
-    return WxCpMessageSendResult.fromJson(this.cpService.post(this.cpService.getWxCpConfigStorage()
+    return WxCpLinkedCorpMessageSendResult.fromJson(this.cpService.post(this.cpService.getWxCpConfigStorage()
       .getApiUrl(Message.LINKEDCORP_MESSAGE_SEND), message.toJson()));
   }
 }

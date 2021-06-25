@@ -26,6 +26,9 @@ public class WxCpExternalContactInfo implements Serializable {
   @SerializedName("follow_user")
   private List<FollowedUser> followedUsers;
 
+  @SerializedName("next_cursor")
+  private String nextCursor;
+
   public static WxCpExternalContactInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpExternalContactInfo.class);
   }
