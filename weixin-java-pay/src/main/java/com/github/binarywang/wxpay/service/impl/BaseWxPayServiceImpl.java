@@ -64,6 +64,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   private EntPayService entPayService = new EntPayServiceImpl(this);
   private final ProfitSharingService profitSharingService = new ProfitSharingServiceImpl(this);
+  private final ProfitSharingV3Service profitSharingV3Service = new ProfitSharingV3ServiceImpl(this);
   private final RedpackService redpackService = new RedpackServiceImpl(this);
   private final PayScoreService payScoreService = new PayScoreServiceImpl(this);
   private final EcommerceService ecommerceService = new EcommerceServiceImpl(this);
@@ -83,6 +84,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public ProfitSharingService getProfitSharingService() {
     return profitSharingService;
+  }
+
+  @Override
+  public ProfitSharingV3Service getProfitSharingV3Service() {
+    return profitSharingV3Service;
   }
 
   @Override
