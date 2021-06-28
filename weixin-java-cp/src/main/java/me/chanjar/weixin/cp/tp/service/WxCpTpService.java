@@ -256,6 +256,17 @@ public interface WxCpTpService {
   String get(String url, String queryParam) throws WxErrorException;
 
   /**
+   * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求.
+   *
+   * @param url        接口地址
+   * @param queryParam 请求参数
+   * @param withoutSuiteAccessToken 请求是否忽略SuiteAccessToken 默认不忽略-false
+   * @return the string
+   * @throws WxErrorException the wx error exception
+   */
+  String get(String url, String queryParam, boolean withoutSuiteAccessToken) throws WxErrorException;
+
+  /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的POST请求.
    *
    * @param url      接口地址
