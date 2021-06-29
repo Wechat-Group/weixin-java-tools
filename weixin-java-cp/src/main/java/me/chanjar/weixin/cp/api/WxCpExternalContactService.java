@@ -321,6 +321,7 @@ public interface WxCpExternalContactService {
    * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92119
    * </pre>
    *
+   * @deprecated 请使用 {@link WxCpExternalContactService#listGroupChat(Integer, String, int, String[])}
    * @param pageIndex the page index
    * @param pageSize  the page size
    * @param status    the status
@@ -329,7 +330,25 @@ public interface WxCpExternalContactService {
    * @return the wx cp user external group chat list
    * @throws WxErrorException the wx error exception
    */
+  @Deprecated
   WxCpUserExternalGroupChatList listGroupChat(Integer pageIndex, Integer pageSize, int status, String[] userIds, String[] partyIds) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 该接口用于获取配置过客户群管理的客户群列表。
+   * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
+   * 暂不支持第三方调用。
+   * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92119
+   * </pre>
+   *
+   * @param limit     分页，预期请求的数据量，取值范围 1 ~ 1000
+   * @param cursor    用于分页查询的游标，字符串类型，由上一次调用返回，首次调用不填
+   * @param status    客户群跟进状态过滤。0 - 所有列表(即不过滤)  1 - 离职待继承  2 - 离职继承中  3 - 离职继承完成 默认为0
+   * @param userIds   群主过滤。如果不填，表示获取应用可见范围内全部群主的数据（但是不建议这么用，如果可见范围人数超过1000人，为了防止数据包过大，会报错 81017）;用户ID列表。最多100个
+   * @return the wx cp user external group chat list
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpUserExternalGroupChatList listGroupChat(Integer limit, String cursor, int status, String[] userIds) throws WxErrorException;
 
   /**
    * <pre>

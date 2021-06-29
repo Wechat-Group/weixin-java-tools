@@ -249,6 +249,24 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpUserExternalGroupChatList listGroupChat(Integer limit, String cursor, int status, String[] userIds) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("cursor", cursor == null ? "" : cursor);
+    json.addProperty("limit", limit == null ? 100 : limit);
+    json.addProperty("status_filter", status);
+    if (ArrayUtils.isNotEmpty(userIds)) {
+      JsonObject ownerFilter = new JsonObject();
+      if (ArrayUtils.isNotEmpty(userIds)) {
+        ownerFilter.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
+      }
+      json.add("owner_filter", ownerFilter);
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GROUP_CHAT_LIST);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpUserExternalGroupChatList.fromJson(result);
+  }
+
+  @Override
   public WxCpUserExternalGroupChatInfo getGroupChat(String chatId) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("chat_id", chatId);
