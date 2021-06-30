@@ -485,6 +485,14 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
+  public void addToTemplate(long draftId,int templateType) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("draft_id", draftId);
+    param.addProperty("template_type", templateType);
+    post(ADD_TO_TEMPLATE_URL, param.toString(), "access_token");
+  }
+
+  @Override
   public void deleteTemplate(long templateId) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("template_id", templateId);

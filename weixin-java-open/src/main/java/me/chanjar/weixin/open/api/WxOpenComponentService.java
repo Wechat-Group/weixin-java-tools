@@ -401,13 +401,26 @@ public interface WxOpenComponentService {
   List<WxOpenMaCodeTemplate> getTemplateList() throws WxErrorException;
 
   /**
+   * 请参考并使用 {@link #addToTemplate(long,int)}.
    * 将草稿箱的草稿选为小程序代码模版.
    *
    * @param draftId 草稿ID，本字段可通过“获取草稿箱内的所有临时代码草稿”接口获得
    * @throws WxErrorException 操作失败时抛出，具体错误码请看此接口的注释文档
    * @see #getTemplateDraftList #getTemplateDraftList
    */
+  @Deprecated
   void addToTemplate(long draftId) throws WxErrorException;
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/code_template/addtotemplate.html
+   * 将草稿添加到代码模板库.
+   *
+   * @param draftId 草稿ID，本字段可通过“获取草稿箱内的所有临时代码草稿”接口获得
+   * @param templateType 代码模版类型，【普通模板:0, 标准模板：1】
+   * @throws WxErrorException 操作失败时抛出，具体错误码请看此接口的注释文档
+   * @see #getTemplateDraftList #getTemplateDraftList
+   */
+  void addToTemplate(long draftId, int templateType) throws WxErrorException;
 
   /**
    * 删除指定小程序代码模版.
