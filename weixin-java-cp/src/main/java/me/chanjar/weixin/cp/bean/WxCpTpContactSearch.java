@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.bean;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -12,7 +14,8 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
  */
 @Data
 @Accessors(chain = true)
-public class WxCpTpContactSearch {
+public class WxCpTpContactSearch implements Serializable {
+    private static final long serialVersionUID = -4301684507150486556L;
 
     /**
      * 查询的企业corpid

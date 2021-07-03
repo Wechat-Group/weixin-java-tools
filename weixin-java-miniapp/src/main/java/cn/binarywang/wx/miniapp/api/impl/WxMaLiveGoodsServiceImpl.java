@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
 
 import java.io.Serializable;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.LiveGoods.*;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.Goods.*;
 
 /**
  * <pre>
@@ -34,32 +35,26 @@ public class WxMaLiveGoodsServiceImpl implements WxMaLiveGoodsService {
   @Override
   public WxMaLiveResult addGoods(WxMaLiveGoodInfo goods) throws WxErrorException {
     return WxMaLiveResult.fromJson(this.wxMaService.post(ADD_GOODS,
-      WxMaGsonBuilder.create().toJson(ImmutableMap.of("goodsInfo", goods))));
+      GsonHelper.buildJsonObject("goodsInfo", goods)));
   }
 
   @Override
   public boolean resetAudit(Integer auditId, Integer goodsId) throws WxErrorException {
-    Map<String, Integer> map = new HashMap<>(4);
-    map.put("auditId", auditId);
-    map.put("goodsId", goodsId);
-    this.wxMaService.post(RESET_AUDIT_GOODS, WxMaGsonBuilder.create().toJson(map));
+    this.wxMaService.post(RESET_AUDIT_GOODS,
+      GsonHelper.buildJsonObject("auditId", auditId, "goodsId", goodsId));
     return true;
   }
 
   @Override
   public String auditGoods(Integer goodsId) throws WxErrorException {
-    Map<String, Integer> map = new HashMap<>(2);
-    map.put("goodsId", goodsId);
-    String responseContent = this.wxMaService.post(AUDIT_GOODS, WxMaGsonBuilder.create().toJson(map));
-    JsonObject jsonObject = GsonParser.parse(responseContent);
-    return jsonObject.get("auditId").getAsString();
+    String responseContent = this.wxMaService.post(AUDIT_GOODS,
+      GsonHelper.buildJsonObject("goodsId", goodsId));
+    return GsonParser.parse(responseContent).get("auditId").getAsString();
   }
 
   @Override
   public boolean deleteGoods(Integer goodsId) throws WxErrorException {
-    Map<String, Integer> map = new HashMap<>(2);
-    map.put("goodsId", goodsId);
-    this.wxMaService.post(DELETE_GOODS, WxMaGsonBuilder.create().toJson(map));
+    this.wxMaService.post(DELETE_GOODS, GsonHelper.buildJsonObject("goodsId", goodsId));
     return true;
   }
 

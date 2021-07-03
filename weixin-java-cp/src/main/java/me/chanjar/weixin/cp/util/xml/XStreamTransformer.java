@@ -6,15 +6,8 @@ import java.util.Map;
 
 import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
-import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
+import me.chanjar.weixin.cp.bean.message.*;
 import me.chanjar.weixin.cp.bean.WxCpTpXmlPackage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutImageMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutNewsMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutTextMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutVideoMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutVoiceMessage;
 
 public class XStreamTransformer {
 
@@ -60,6 +53,7 @@ public class XStreamTransformer {
     map.put(WxCpXmlOutImageMessage.class, configWxCpXmlOutImageMessage());
     map.put(WxCpXmlOutVideoMessage.class, configWxCpXmlOutVideoMessage());
     map.put(WxCpXmlOutVoiceMessage.class, configWxCpXmlOutVoiceMessage());
+    map.put(WxCpXmlOutTaskCardMessage.class, configWxCpXmlOutTaskCardMessage());
     map.put(WxCpTpXmlPackage.class, configWxCpTpXmlPackage());
     map.put(WxCpTpXmlMessage.class, configWxCpTpXmlMessage());
     return map;
@@ -115,6 +109,14 @@ public class XStreamTransformer {
 
     xstream.processAnnotations(WxCpXmlOutMessage.class);
     xstream.processAnnotations(WxCpXmlOutVoiceMessage.class);
+    return xstream;
+  }
+
+  private static XStream configWxCpXmlOutTaskCardMessage() {
+    XStream xstream = XStreamInitializer.getInstance();
+
+    xstream.processAnnotations(WxCpXmlOutMessage.class);
+    xstream.processAnnotations(WxCpXmlOutTaskCardMessage.class);
     return xstream;
   }
 

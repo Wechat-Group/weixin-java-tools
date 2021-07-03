@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.0.3.B</version>
+    <version>4.1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -43,7 +43,6 @@
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcpkix-jdk15on</artifactId>
-      <version>1.65</version>
     </dependency>
 
     <dependency>
@@ -73,11 +72,6 @@
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
 

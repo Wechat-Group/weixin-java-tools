@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class WxCpUserExternalGroupChatStatistic extends WxCpBaseResp implements Serializable {
+public class WxCpUserExternalGroupChatStatistic extends WxCpBaseResp {
   private static final long serialVersionUID = -3548998672207956622L;
 
   @SerializedName("total")

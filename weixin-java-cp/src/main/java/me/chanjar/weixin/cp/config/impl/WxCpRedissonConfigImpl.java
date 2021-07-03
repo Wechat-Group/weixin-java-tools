@@ -14,33 +14,72 @@ import java.util.concurrent.locks.Lock;
  * 基于Redisson的实现
  *
  * @author yuanqixun
- * @date 2020/5/13
+ * @date 2020 /5/13
  */
 public class WxCpRedissonConfigImpl extends WxCpDefaultConfigImpl {
+  /**
+   * The constant LOCK_KEY.
+   */
   protected final static String LOCK_KEY = "wechat_cp_lock:";
+  /**
+   * The constant CP_ACCESS_TOKEN_KEY.
+   */
   protected final static String CP_ACCESS_TOKEN_KEY = "wechat_cp_access_token_key:";
+  /**
+   * The constant CP_JSAPI_TICKET_KEY.
+   */
   protected final static String CP_JSAPI_TICKET_KEY = "wechat_cp_jsapi_ticket_key:";
+  /**
+   * The constant CP_AGENT_JSAPI_TICKET_KEY.
+   */
   protected final static String CP_AGENT_JSAPI_TICKET_KEY = "wechat_cp_agent_jsapi_ticket_key:";
-
+  private final WxRedisOps redisOps;
   /**
    * redis 存储的 key 的前缀，可为空
    */
   protected String keyPrefix;
+  /**
+   * The Access token key.
+   */
   protected String accessTokenKey;
+  /**
+   * The Jsapi ticket key.
+   */
   protected String jsapiTicketKey;
+  /**
+   * The Agent jsapi ticket key.
+   */
   protected String agentJsapiTicketKey;
+  /**
+   * The Lock key.
+   */
   protected String lockKey;
 
-  private final WxRedisOps redisOps;
-
+  /**
+   * Instantiates a new Wx cp redisson config.
+   *
+   * @param redissonClient the redisson client
+   * @param keyPrefix      the key prefix
+   */
   public WxCpRedissonConfigImpl(@NonNull RedissonClient redissonClient, String keyPrefix) {
     this(new RedissonWxRedisOps(redissonClient), keyPrefix);
   }
 
+  /**
+   * Instantiates a new Wx cp redisson config.
+   *
+   * @param redissonClient the redisson client
+   */
   public WxCpRedissonConfigImpl(@NonNull RedissonClient redissonClient) {
     this(redissonClient, null);
   }
 
+  /**
+   * Instantiates a new Wx cp redisson config.
+   *
+   * @param redisOps  the redis ops
+   * @param keyPrefix the key prefix
+   */
   public WxCpRedissonConfigImpl(@NonNull WxRedisOps redisOps, String keyPrefix) {
     this.redisOps = redisOps;
     this.keyPrefix = keyPrefix;
@@ -63,6 +102,12 @@ public class WxCpRedissonConfigImpl extends WxCpDefaultConfigImpl {
     agentJsapiTicketKey = prefix + CP_AGENT_JSAPI_TICKET_KEY.concat(ukey);
   }
 
+  /**
+   * Gets lock by key.
+   *
+   * @param key the key
+   * @return the lock by key
+   */
   protected Lock getLockByKey(String key) {
     return redisOps.getLock(key);
   }

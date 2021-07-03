@@ -3,10 +3,10 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaSubscribeService;
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
-import cn.binarywang.wx.miniapp.bean.subscribemsg.CategoryData;
-import cn.binarywang.wx.miniapp.bean.subscribemsg.PubTemplateKeyword;
-import cn.binarywang.wx.miniapp.bean.subscribemsg.TemplateInfo;
-import cn.binarywang.wx.miniapp.bean.template.WxMaPubTemplateTitleListResult;
+import me.chanjar.weixin.common.bean.subscribemsg.CategoryData;
+import me.chanjar.weixin.common.bean.subscribemsg.PubTemplateKeyword;
+import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
+import me.chanjar.weixin.common.bean.subscribemsg.PubTemplateTitleListResult;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.common.base.Joiner;
@@ -34,12 +34,12 @@ public class WxMaSubscribeServiceImpl implements WxMaSubscribeService {
   private final WxMaService service;
 
   @Override
-  public WxMaPubTemplateTitleListResult getPubTemplateTitleList(String[] ids, int start, int limit) throws WxErrorException {
+  public PubTemplateTitleListResult getPubTemplateTitleList(String[] ids, int start, int limit) throws WxErrorException {
     ImmutableMap<String, ? extends Serializable> params = ImmutableMap.of("ids", StringUtils.join(ids, ","),
       "start", start, "limit", limit);
     String responseText = this.service.get(GET_PUB_TEMPLATE_TITLE_LIST_URL,
       Joiner.on("&").withKeyValueSeparator("=").join(params));
-    return WxMaPubTemplateTitleListResult.fromJson(responseText);
+    return PubTemplateTitleListResult.fromJson(responseText);
   }
 
   @Override

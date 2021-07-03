@@ -44,14 +44,14 @@ public class EcommerceServiceImpl implements EcommerceService {
   @Override
   public ApplymentsStatusResult queryApplyStatusByApplymentId(String applymentId) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/applyments/%s", this.payService.getPayBaseUrl(), applymentId);
-    String result = this.payService.getV3(URI.create(url));
+    String result = this.payService.getV3(url);
     return GSON.fromJson(result, ApplymentsStatusResult.class);
   }
 
   @Override
   public ApplymentsStatusResult queryApplyStatusByOutRequestNo(String outRequestNo) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/applyments/out-request-no/%s", this.payService.getPayBaseUrl(), outRequestNo);
-    String result = this.payService.getV3(URI.create(url));
+    String result = this.payService.getV3(url);
     return GSON.fromJson(result, ApplymentsStatusResult.class);
   }
 
@@ -96,7 +96,7 @@ public class EcommerceServiceImpl implements EcommerceService {
   @Override
   public CombineTransactionsResult queryCombineTransactions(String outTradeNo) throws WxPayException {
     String url = String.format("%s/v3/combine-transactions/out-trade-no/%s", this.payService.getPayBaseUrl(), outTradeNo);
-    String response = this.payService.getV3(URI.create(url));
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, CombineTransactionsResult.class);
   }
 
@@ -145,46 +145,41 @@ public class EcommerceServiceImpl implements EcommerceService {
       url = String.format("%s/v3/pay/partner/transactions/id/%s", this.payService.getPayBaseUrl(), request.getTransactionId());
     }
     String query = String.format("?sp_mchid=%s&sub_mchid=%s", request.getSpMchid(), request.getSubMchid());
-    URI uri = URI.create(url + query);
-    String response = this.payService.getV3(uri);
+    String response = this.payService.getV3(url + query);
     return GSON.fromJson(response, PartnerTransactionsResult.class);
   }
 
   @Override
-  public void closePartnerTransactions(PartnerTransactionsCloseRequest request) throws WxPayException {
+  public String closePartnerTransactions(PartnerTransactionsCloseRequest request) throws WxPayException {
     String url = String.format("%s/v3/pay/partner/transactions/out-trade-no/%s/close", this.payService.getPayBaseUrl(), request.getOutTradeNo());
-    String response = this.payService.postV3(url, GSON.toJson(request));
+    return this.payService.postV3(url, GSON.toJson(request));
   }
 
   @Override
   public FundBalanceResult spNowBalance(SpAccountTypeEnum accountType) throws WxPayException {
     String url = String.format("%s/v3/merchant/fund/balance/%s", this.payService.getPayBaseUrl(), accountType);
-    URI uri = URI.create(url);
-    String response = this.payService.getV3(uri);
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, FundBalanceResult.class);
   }
 
   @Override
   public FundBalanceResult spDayEndBalance(SpAccountTypeEnum accountType, String date) throws WxPayException {
     String url = String.format("%s/v3/merchant/fund/dayendbalance/%s?date=%s", this.payService.getPayBaseUrl(), accountType, date);
-    URI uri = URI.create(url);
-    String response = this.payService.getV3(uri);
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, FundBalanceResult.class);
   }
 
   @Override
   public FundBalanceResult subNowBalance(String subMchid) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/fund/balance/%s", this.payService.getPayBaseUrl(), subMchid);
-    URI uri = URI.create(url);
-    String response = this.payService.getV3(uri);
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, FundBalanceResult.class);
   }
 
   @Override
   public FundBalanceResult subDayEndBalance(String subMchid, String date) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/fund/enddaybalance/%s?date=%s", this.payService.getPayBaseUrl(), subMchid, date);
-    URI uri = URI.create(url);
-    String response = this.payService.getV3(uri);
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, FundBalanceResult.class);
   }
 
@@ -200,7 +195,7 @@ public class EcommerceServiceImpl implements EcommerceService {
   public ProfitSharingResult queryProfitSharing(ProfitSharingQueryRequest request) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/profitsharing/orders?sub_mchid=%s&transaction_id=%s&out_order_no=%s",
       this.payService.getPayBaseUrl(), request.getSubMchid(), request.getTransactionId(), request.getOutOrderNo());
-    String response = this.payService.getV3(URI.create(url));
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, ProfitSharingResult.class);
   }
 
@@ -239,7 +234,7 @@ public class EcommerceServiceImpl implements EcommerceService {
       url = String.format("%s/v3/ecommerce/profitsharing/returnorders?sub_mchid=%s&order_id=%s&out_return_no=%s",
         this.payService.getPayBaseUrl(), subMchid, orderId, outReturnNo);
     }
-    String response = this.payService.getV3(URI.create(url));
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, ReturnOrdersResult.class);
   }
 
@@ -260,14 +255,14 @@ public class EcommerceServiceImpl implements EcommerceService {
   @Override
   public RefundQueryResult queryRefundByRefundId(String subMchid, String refundId) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/refunds/id/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), refundId, subMchid);
-    String response = this.payService.getV3(URI.create(url));
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, RefundQueryResult.class);
   }
 
   @Override
   public RefundQueryResult queryRefundByOutRefundNo(String subMchid, String outRefundNo) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/refunds/out-refund-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outRefundNo, subMchid);
-    String response = this.payService.getV3(URI.create(url));
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, RefundQueryResult.class);
   }
 
@@ -309,14 +304,14 @@ public class EcommerceServiceImpl implements EcommerceService {
   @Override
   public SubWithdrawStatusResult querySubWithdrawByOutRequestNo(String subMchid, String outRequestNo) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/fund/withdraw/out-request-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outRequestNo, subMchid);
-    String response = this.payService.getV3(URI.create(url));
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, SubWithdrawStatusResult.class);
   }
 
   @Override
   public SpWithdrawStatusResult querySpWithdrawByOutRequestNo(String outRequestNo) throws WxPayException {
     String url = String.format("%s/v3/merchant/fund/withdraw/out-request-no/%s", this.payService.getPayBaseUrl(), outRequestNo);
-    String response = this.payService.getV3(URI.create(url));
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, SpWithdrawStatusResult.class);
   }
 
@@ -330,27 +325,27 @@ public class EcommerceServiceImpl implements EcommerceService {
   @Override
   public SettlementResult querySettlement(String subMchid) throws WxPayException {
     String url = String.format("%s/v3/apply4sub/sub_merchants/%s/settlement", this.payService.getPayBaseUrl(), subMchid);
-    String response = this.payService.getV3(URI.create(url));
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, SettlementResult.class);
   }
 
   @Override
   public TradeBillResult applyBill(TradeBillRequest request) throws WxPayException {
     String url = String.format("%s/v3/bill/tradebill?%s", this.payService.getPayBaseUrl(), this.parseURLPair(request));
-    String response = this.payService.getV3(URI.create(url));
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, TradeBillResult.class);
   }
 
   @Override
   public FundBillResult applyFundBill(FundBillTypeEnum billType, FundBillRequest request) throws WxPayException {
     String url = String.format(billType.getUrl(), this.payService.getPayBaseUrl(), this.parseURLPair(request));
-    String response = this.payService.getV3(URI.create(url));
+    String response = this.payService.getV3(url);
     return GSON.fromJson(response, FundBillResult.class);
   }
 
   @Override
   public InputStream downloadBill(String url) throws WxPayException {
-    return this.payService.downloadV3(URI.create(url));
+    return this.payService.downloadV3(url);
   }
 
   /**
@@ -380,8 +375,10 @@ public class EcommerceServiceImpl implements EcommerceService {
     StringBuilder sb = new StringBuilder();
     while (it.hasNext()) {
       Map.Entry<Object, Object> e = it.next();
-      if ( !"class".equals(e.getKey()) && e.getValue() != null)
-        sb.append(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, String.valueOf(e.getKey()))).append("=").append(e.getValue()).append("&");
+      if ( !"class".equals(e.getKey()) && e.getValue() != null) {
+        sb.append(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, String.valueOf(e.getKey())))
+          .append("=").append(e.getValue()).append("&");
+      }
     }
     return sb.deleteCharAt(sb.length() - 1).toString();
   }

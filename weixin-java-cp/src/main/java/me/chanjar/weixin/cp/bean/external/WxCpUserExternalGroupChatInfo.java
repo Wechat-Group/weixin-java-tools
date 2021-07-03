@@ -6,6 +6,7 @@ import lombok.Setter;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -21,7 +22,9 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
 
   @Getter
   @Setter
-  public static class GroupChat {
+  public static class GroupChat implements Serializable {
+    private static final long serialVersionUID = -4301684507150486556L;
+
     @SerializedName("chat_id")
     private String chatId;
 
@@ -40,11 +43,15 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     @SerializedName("member_list")
     private List<GroupMember> memberList;
 
+    @SerializedName("admin_list")
+    private List<GroupAdmin> adminList;
   }
 
   @Getter
   @Setter
-  public static class GroupMember {
+  public static class GroupMember implements Serializable {
+    private static final long serialVersionUID = -4301684507150486556L;
+
     @SerializedName("userid")
     private String userId;
 
@@ -58,7 +65,7 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
 
     @SerializedName("join_time")
     private Long joinTime;
-    
+
     /**
     * 外部联系人在微信开放平台的唯一身份标识（微信unionid）
     * 通过此字段企业可将外部联系人与公众号/小程序用户关联起来
@@ -76,6 +83,33 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     @SerializedName("join_scene")
     private int joinScene;
 
+    /**
+     * 邀请者。目前仅当是由本企业内部成员邀请入群时会返回该值
+     */
+    @SerializedName("invitor")
+    private Invitor invitor;
+  }
+
+  @Getter
+  @Setter
+  public static class Invitor{
+
+    /**
+     * 邀请者的userid
+     */
+    @SerializedName("userid")
+    private String userId;
+  }
+
+  @Getter
+  @Setter
+  public static class GroupAdmin{
+
+    /**
+     * 群管理员userid
+     */
+    @SerializedName("userid")
+    private String userId;
   }
 
   public static WxCpUserExternalGroupChatInfo fromJson(String json) {

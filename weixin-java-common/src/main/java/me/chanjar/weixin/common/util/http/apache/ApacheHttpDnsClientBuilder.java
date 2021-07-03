@@ -1,12 +1,7 @@
 package me.chanjar.weixin.common.util.http.apache;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
-import org.apache.http.annotation.NotThreadSafe;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -25,9 +20,12 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.protocol.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.concurrent.NotThreadSafe;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * httpclient 连接管理器 自带DNS解析.
@@ -50,12 +48,7 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
 
   private DnsResolver dnsResover;
 
-  private HttpRequestRetryHandler httpRequestRetryHandler = new HttpRequestRetryHandler() {
-    @Override
-    public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
-      return false;
-    }
-  };
+  private HttpRequestRetryHandler httpRequestRetryHandler = (exception, executionCount, context) -> false;
   private SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactory.getSocketFactory();
   private PlainConnectionSocketFactory plainConnectionSocketFactory = PlainConnectionSocketFactory.getSocketFactory();
   private String httpProxyHost;

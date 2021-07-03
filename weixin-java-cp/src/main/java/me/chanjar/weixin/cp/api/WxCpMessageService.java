@@ -1,10 +1,7 @@
 package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.cp.bean.message.WxCpLinkedCorpMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpMessageSendResult;
-import me.chanjar.weixin.cp.bean.message.WxCpMessageSendStatistics;
+import me.chanjar.weixin.cp.bean.message.*;
 
 /**
  * 消息推送接口.
@@ -52,5 +49,5 @@ public interface WxCpMessageService {
    * @return the wx cp message send result
    * @throws WxErrorException the wx error exception
    */
-  WxCpMessageSendResult sendLinkedCorpMessage(WxCpLinkedCorpMessage message) throws WxErrorException;
+  WxCpLinkedCorpMessageSendResult sendLinkedCorpMessage(WxCpLinkedCorpMessage message) throws WxErrorException;
 }

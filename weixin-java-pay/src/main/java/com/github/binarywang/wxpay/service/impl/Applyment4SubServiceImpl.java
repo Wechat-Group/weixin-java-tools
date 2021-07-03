@@ -10,13 +10,11 @@ import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.net.URI;
 import java.security.cert.X509Certificate;
 
 @Slf4j
 @RequiredArgsConstructor
 public class Applyment4SubServiceImpl implements Applyment4SubService {
-
   private static final Gson GSON = new GsonBuilder().create();
   private final WxPayService payService;
 
@@ -41,28 +39,28 @@ public class Applyment4SubServiceImpl implements Applyment4SubService {
   @Override
   public ApplymentStateQueryResult queryApplyStatusByBusinessCode(String businessCode) throws WxPayException {
     String url = String.format("%s/v3/applyment4sub/applyment/business_code/%s", this.payService.getPayBaseUrl(), businessCode);
-    String result = payService.getV3(URI.create(url));
+    String result = payService.getV3(url);
     return GSON.fromJson(result, ApplymentStateQueryResult.class);
   }
 
   @Override
   public ApplymentStateQueryResult queryApplyStatusByApplymentId(String applymentId) throws WxPayException {
     String url = String.format("%s/v3/applyment4sub/applyment/applyment_id/%s", this.payService.getPayBaseUrl(), applymentId);
-    String result = payService.getV3(URI.create(url));
+    String result = payService.getV3(url);
     return GSON.fromJson(result, ApplymentStateQueryResult.class);
   }
 
   @Override
   public SettlementInfoResult querySettlementBySubMchid(String subMchid) throws WxPayException {
     String url = String.format("%s/v3/apply4sub/sub_merchants/%s/settlement", this.payService.getPayBaseUrl(), subMchid);
-    String result = payService.getV3(URI.create(url));
+    String result = payService.getV3(url);
     return GSON.fromJson(result, SettlementInfoResult.class);
   }
 
   @Override
-  public void modifySettlement(String subMchid,ModifySettlementRequest request) throws WxPayException {
+  public String modifySettlement(String subMchid, ModifySettlementRequest request) throws WxPayException {
     String url = String.format("%s/v3/apply4sub/sub_merchants/%s/modify-settlement", this.payService.getPayBaseUrl(), subMchid);
     encryptFiled(request);
-    String result = payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
+    return payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
   }
 }

@@ -174,8 +174,9 @@ public interface EcommerceService {
    *
    * @param request 关闭普通订单请求
    * @throws WxPayException the wx pay exception
+   * @return
    */
-  void closePartnerTransactions(PartnerTransactionsCloseRequest request) throws WxPayException;
+  String closePartnerTransactions(PartnerTransactionsCloseRequest request) throws WxPayException;
 
   /**
    * <pre>

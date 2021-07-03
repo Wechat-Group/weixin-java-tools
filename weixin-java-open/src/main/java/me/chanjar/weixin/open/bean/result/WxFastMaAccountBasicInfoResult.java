@@ -45,6 +45,17 @@ public class WxFastMaAccountBasicInfoResult extends WxOpenResult {
   @SerializedName("realname_status")
   private Integer realnameStatus;
 
+  /**
+   * 小程序名称
+   */
+  @SerializedName("nickname")
+  private String nickname;
+
+  /**
+   * 名称信息
+   */
+  @SerializedName("nickname_info")
+  private NicknameInfo nicknameInfo;
 
   /**
    * 微信认证信息
@@ -61,6 +72,26 @@ public class WxFastMaAccountBasicInfoResult extends WxOpenResult {
    */
   @SerializedName("head_image_info")
   private HeadImageInfo headImageInfo;
+
+  @Data
+  public static class NicknameInfo {
+    /**
+     * 小程序名称
+     */
+    @SerializedName("nickname")
+    private String nickname;
+    /**
+     * 小程序名称已使用修改次数（本年）
+     */
+    @SerializedName("modify_used_count")
+    private Integer modifyUsedCount;
+    /**
+     * 小程序名称修改次数总额度（本年）
+     */
+    @SerializedName("modify_quota")
+    private Integer modifyQuota;
+  }
+
 
   @Data
   public static class WxVerifyInfo {

@@ -6,6 +6,7 @@ import lombok.Setter;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,13 +16,17 @@ import java.util.List;
 @Getter
 @Setter
 public class WxCpUserExternalGroupChatList extends WxCpBaseResp {
+  private static final long serialVersionUID = 1907272035492110236L;
 
   @SerializedName("group_chat_list")
   private List<ChatStatus> groupChatList;
 
+  @SerializedName("next_cursor")
+  private String nextCursor;
+
   @Getter
   @Setter
-  public static class ChatStatus {
+  public static class ChatStatus implements Serializable {
 
     /**
      * 客户群ID

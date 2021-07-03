@@ -206,6 +206,22 @@ public interface WxMaConfig {
   String getHttpProxyPassword();
 
   /**
+   * http 请求重试间隔
+   * <pre>
+   *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setRetrySleepMillis(int)}
+   * </pre>
+   */
+  int getRetrySleepMillis();
+
+  /**
+   * http 请求最大重试次数
+   * <pre>
+   *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setMaxRetryTimes(int)}
+   * </pre>
+   */
+  int getMaxRetryTimes();
+
+  /**
    * http client builder
    *
    * @return ApacheHttpClientBuilder apache http client builder
@@ -231,7 +247,7 @@ public interface WxMaConfig {
    * 获取自定义的apiHost地址，用于替换原请求中的https://api.weixin.qq.com
    * 具体取值，可以参考https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Interface_field_description.html
    *
-   * @return  自定义的api域名地址
+   * @return 自定义的api域名地址
    */
   String getApiHostUrl();
 }

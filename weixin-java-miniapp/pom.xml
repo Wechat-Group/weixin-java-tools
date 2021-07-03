@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.0.3.B</version>
+    <version>4.1.0</version>
   </parent>
 
   <artifactId>weixin-java-miniapp</artifactId>
@@ -74,7 +74,6 @@
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcpkix-jdk15on</artifactId>
-      <version>1.65</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>

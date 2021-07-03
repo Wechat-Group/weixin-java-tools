@@ -241,7 +241,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     int retryTimes = 0;
     do {
       try {
-        return this.executeInternal(executor, uri, data);
+        return this.executeInternal(executor, uri, data, false);
       } catch (WxErrorException e) {
         if (retryTimes + 1 > this.maxRetryTimes) {
           log.warn("重试达到最大次数【{}】", this.maxRetryTimes);
@@ -271,7 +271,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     throw new WxRuntimeException("微信服务端异常，超出重试次数");
   }
 
-  protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data, boolean doNotAutoRefresh) throws WxErrorException {
     E dataForLog = DataUtils.handleDataWithSecret(data);
 
     if (uri.contains("access_token=")) {
@@ -291,9 +291,11 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       if (WxConsts.ACCESS_TOKEN_ERROR_CODES.contains(error.getErrorCode())) {
         // 强制设置wxCpConfigStorage它的access token过期了，这样在下一次请求里就会刷新access token
         this.configStorage.expireAccessToken();
-        if (this.getWxCpConfigStorage().autoRefreshToken()) {
+        if (this.getWxCpConfigStorage().autoRefreshToken() && !doNotAutoRefresh) {
           log.warn("即将重新获取新的access_token，错误代码：{}，错误信息：{}", error.getErrorCode(), error.getErrorMsg());
-          return this.execute(executor, uri, data);
+          //下一次不再自动重试
+          //当小程序误调用第三方平台专属接口时,第三方无法使用小程序的access token,如果可以继续自动获取token会导致无限循环重试,直到栈溢出
+          return this.executeInternal(executor, uri, data, true);
         }
       }
 

@@ -1,10 +1,10 @@
 package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
-import cn.binarywang.wx.miniapp.bean.subscribemsg.CategoryData;
-import cn.binarywang.wx.miniapp.bean.subscribemsg.PubTemplateKeyword;
-import cn.binarywang.wx.miniapp.bean.subscribemsg.TemplateInfo;
-import cn.binarywang.wx.miniapp.bean.template.WxMaPubTemplateTitleListResult;
+import me.chanjar.weixin.common.bean.subscribemsg.CategoryData;
+import me.chanjar.weixin.common.bean.subscribemsg.PubTemplateKeyword;
+import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
+import me.chanjar.weixin.common.bean.subscribemsg.PubTemplateTitleListResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public interface WxMaSubscribeService {
    * @return .
    * @throws WxErrorException .
    */
-  WxMaPubTemplateTitleListResult getPubTemplateTitleList(String[] ids, int start, int limit) throws WxErrorException;
+  PubTemplateTitleListResult getPubTemplateTitleList(String[] ids, int start, int limit) throws WxErrorException;
 
   /**
    * <pre>

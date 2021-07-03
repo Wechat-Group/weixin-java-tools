@@ -157,28 +157,46 @@ public class WxMaApiUrlConstants {
     String GET_JSAPI_TICKET_URL = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
   }
 
-  public interface LiveGoods {
-    String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/add";
-    String RESET_AUDIT_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/resetaudit";
-    String AUDIT_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/audit";
-    String DELETE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/delete";
-    String UPDATE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/update";
-    String GET_GOODS_WARE_HOUSE = "https://api.weixin.qq.com/wxa/business/getgoodswarehouse";
-    String GET_APPROVED_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getapproved";
-  }
-
-  public interface Live {
+  public interface Broadcast {
     String GET_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/getliveinfo";
-    String CREATE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/create";
-    String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/addgoods";
-    String DELETE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/deleteroom";
-    String EDIT_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/editroom";
-    String GET_PUSH_URL = "https://api.weixin.qq.com/wxaapi/broadcast/room/getpushurl";
-    String GET_SHARED_CODE = "https://api.weixin.qq.com/wxaapi/broadcast/room/getsharedcode";
-    String ADD_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/addassistant";
-    String MODIFY_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/modifyassistant";
-    String REMOVE_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/removeassistant";
-    String GET_ASSISTANT_LIST = "https://api.weixin.qq.com/wxaapi/broadcast/room/getassistantlist";
+
+    /**
+     * 直播间管理相关接口
+     */
+    interface Room {
+      String CREATE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/create";
+      String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/addgoods";
+      String DELETE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/deleteroom";
+      String EDIT_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/editroom";
+      String GET_PUSH_URL = "https://api.weixin.qq.com/wxaapi/broadcast/room/getpushurl";
+      String GET_SHARED_CODE = "https://api.weixin.qq.com/wxaapi/broadcast/room/getsharedcode";
+      String ADD_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/addassistant";
+      String MODIFY_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/modifyassistant";
+      String REMOVE_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/removeassistant";
+      String GET_ASSISTANT_LIST = "https://api.weixin.qq.com/wxaapi/broadcast/room/getassistantlist";
+    }
+
+    /**
+     * 直播商品管理相关接口
+     */
+    interface Goods {
+      String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/add";
+      String RESET_AUDIT_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/resetaudit";
+      String AUDIT_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/audit";
+      String DELETE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/delete";
+      String UPDATE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/update";
+      String GET_GOODS_WARE_HOUSE = "https://api.weixin.qq.com/wxa/business/getgoodswarehouse";
+      String GET_APPROVED_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getapproved";
+    }
+
+    /**
+     * 小程序直播成员管理接口
+     */
+    interface Role {
+      String ADD_ROLE = "https://api.weixin.qq.com/wxaapi/broadcast/role/addrole";
+      String DELETE_ROLE = "https://api.weixin.qq.com/wxaapi/broadcast/role/deleterole";
+      String LIST_BY_ROLE = "https://api.weixin.qq.com/wxaapi/broadcast/role/getrolelist";
+    }
   }
 
   public interface Media {
@@ -202,6 +220,10 @@ public class WxMaApiUrlConstants {
 
   public interface Scheme {
     String GENERATE_SCHEME_URL = "https://api.weixin.qq.com/wxa/generatescheme";
+  }
+
+  public interface Link {
+    String GENERATE_URLLINK_URL = "https://api.weixin.qq.com/wxa/generate_urllink";
   }
 
   public interface SecCheck {
@@ -277,5 +299,51 @@ public class WxMaApiUrlConstants {
     String FILE_BIZ_LICENSE = "https://api.weixin.qq.com/cv/ocr/bizlicense";
     String COMM = "https://api.weixin.qq.com/cv/ocr/comm?img_url=%s";
     String FILE_COMM = "https://api.weixin.qq.com/cv/ocr/comm";
+  }
+
+  public interface Shop {
+    interface Spu {
+      String SPU_ADD_URL = "https://api.weixin.qq.com/shop/spu/add";
+      String SPU_DEL_URL = "https://api.weixin.qq.com/shop/spu/del";
+      String SPU_GET_URL = "https://api.weixin.qq.com/shop/spu/get";
+      String SPU_GET_LIST_URL = "https://api.weixin.qq.com/shop/spu/get_list";
+      String SPU_UPDATE_URL = "https://api.weixin.qq.com/shop/spu/update";
+      String SPU_UPDATE_WITHOUT_URL = "https://api.weixin.qq.com/shop/spu/update_without_audit";
+      String SPU_LISTING_URL = "https://api.weixin.qq.com/shop/spu/listing";
+      String SPU_DELISTING_URL = "https://api.weixin.qq.com/shop/spu/delisting";
+    }
+
+    interface Order {
+      String ORDER_CHECK_SCENE = "https://api.weixin.qq.com/shop/scene/check";
+      String ORDER_ADD = "https://api.weixin.qq.com/shop/order/add";
+      String ORDER_PAY = "https://api.weixin.qq.com/shop/order/pay";
+      String ORDER_GET = "https://api.weixin.qq.com/shop/order/get";
+    }
+  }
+
+  /**
+   * 电子发票报销方
+   */
+  public interface Invoice{
+
+    /**
+     * 报销方查询报销发票信息
+     */
+    String GET_INVOICE_INFO = "https://api.weixin.qq.com/card/invoice/reimburse/getinvoiceinfo";
+
+    /**
+     * 报销方批量查询报销发票信息
+     */
+    String GET_INVOICE_BATCH = "https://api.weixin.qq.com/card/invoice/reimburse/getinvoicebatch";
+
+    /**
+     * 报销方更新发票状态
+     */
+    String UPDATE_INVOICE_STATUS = "https://api.weixin.qq.com/card/invoice/reimburse/updateinvoicestatus";
+
+    /**
+     * 报销方批量更新发票状态
+     */
+    String UPDATE_STATUS_BATCH = "https://api.weixin.qq.com/card/invoice/reimburse/updatestatusbatch";
   }
 }

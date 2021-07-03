@@ -19,7 +19,7 @@
     <tr>
 			<td align="left" valign="middle">
         <a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect" target="_blank">
-				  <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/master/images/qrcodes/mp.png">
+				  <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png">
         </a>
 			</td>
       <td align="center" valign="middle" width="250">
@@ -30,12 +30,7 @@
       </td>
 			<td align="center" valign="middle">
 				<a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=7makzf5h" target="_blank">
-					<img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/master/images/banners/aliyun.jpg">
-				</a>
-			</td>
-			<td align="center" valign="middle">
-				<a href="https://cloud.tencent.com/redirect.php?redirect=1014&cps_key=a4c06ffe004dbcda44036daa1bf8f876&from=console" target="_blank">
-					<img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/master/images/banners/tcloud.jpg">
+					<img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/banners/aliyun.jpg">
 				</a>
 			</td>
 		</tr>
@@ -43,10 +38,9 @@
 </table>
 
 ### 重要信息
-1. **2020-11-29 发布 [【4.0.0正式版】](https://mp.weixin.qq.com/s/OPoICwLifOZGVN_ZX_BBhw)**！
+1. **2021-06-02 发布 [【4.1.0正式版】](https://mp.weixin.qq.com/s/nIk_xOf6dxkhKfqq830Cuw)**！
 1. 新手重要提示：本项目仅是一个SDK开发工具包，未提供Web实现，建议使用 `maven` 或 `gradle` 引用本项目即可使用本SDK提供的各种功能，详情可参考 **[【Demo项目】](demo.md)** 或本项目中的部分单元测试代码；另外微信开发新手请务必阅读[【开发文档 Wiki 首页】](https://github.com/Wechat-Group/WxJava/wiki)的常见问题部分，可以少走很多弯路，节省不少时间。
 1. 技术交流群：想获得QQ群/微信群/钉钉企业群等信息的同学，请使用微信扫描上面的微信公众号二维码关注 `WxJava` 后点击相关菜单即可获取加入方式，同时也可以在微信中搜索 `weixin-java-tools` 或 `WxJava` 后选择正确的公众号进行关注，该公众号会及时通知SDK相关更新信息，并不定期分享微信Java开发相关技术知识；
-1. 付费QQ群：（**注意：刚入群会有5分钟禁言，稍等片刻即可正常发言**） [![加入QQ群](https://img.shields.io/badge/QQ群-343954419-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=731dc3e7ea31ebe25376cc1a791445468612c63fd0e9e05399b088ec81fd9e15) 或 [![加入QQ群](https://img.shields.io/badge/QQ群-343954419-blue.svg)](http://jq.qq.com/?_wv=1027&k=40lRskK)，或者请自行搜索群号`343954419`进行添加；当然由于某种原因无法入群的，可关注公众号后获取其他群的加入方式；
 1. 钉钉技术交流群： `30294972`（技术交流群），`35724728`（通知群，实时通知Github项目变更记录）。
 1. 微信开发新手或者Java开发新手在群内提问或新开Issue提问前，请先阅读[【提问的智慧】](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)，并确保已查阅过 [【开发文档Wiki】](https://github.com/wechat-group/WxJava/wiki) ，避免浪费大家的宝贵时间；
 1. 寻求帮助时需贴代码或大长串异常信息的，请利用 http://paste.ubuntu.com 
@@ -73,7 +67,7 @@
 <dependency>
   <groupId>com.github.binarywang</groupId>
   <artifactId>（不同模块参考下文）</artifactId>
-  <version>4.0.0</version>
+  <version>4.1.0</version>
 </dependency>
 ```
 
@@ -105,7 +99,7 @@
 
 #### 开源项目：
 - 基于微信公众号的签到、抽奖、发送弹幕程序：https://github.com/workcheng/weiya
-- XxPay聚合支付：https://github.com/jmdhappy/xxpay-master
+- Jeepay 支付系统：https://gitee.com/jeequan/jeepay
 - 微同商城：https://gitee.com/fuyang_lipengjun/platform
 - 微信点餐系统：https://github.com/sqmax/springboot-project
 - 专注批量推送的小而美的工具：https://github.com/rememberber/WePush
@@ -113,6 +107,7 @@
 - wx-manage（微信公众号管理项目）：https://github.com/niefy/wx-manage
 - 基于若依开发的微信公众号管理系统：https://gitee.com/joolun/JooLun-wx
 - SAAS微信小程序电商：https://gitee.com/wei-it/weiit-saas
+- mall4j 电商商城系统：https://gitee.com/gz-yami/mall4j
 
 #### 小程序：
 - （京东）友家铺子，友家铺子店长版，京粉精选
@@ -129,6 +124,8 @@
 - 王朝社区（比亚迪新能源社区）
 - 极吼吼手机上门回收换新
 - 未来信封 
+- 5G惠享
+- 生菜wordpress转小程序
 
 #### 公众号：
 - 中国电信上海网厅（sh_189）
@@ -145,10 +142,13 @@
 - 好行景区直通车以及全国40多个公众号
 - 我奥篮球公众号
 - 未来信封官微
+- 银川智云问诊
+- 5G惠享
 
-#### 企业号/企业微信：
+#### 企业微信：
 - HTC企业微信
 - 掌上史丹利
+- 药店益
 
 #### 其他：
 - 高善人力资源

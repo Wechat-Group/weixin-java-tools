@@ -5,6 +5,8 @@ import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.open.bean.WxOpenCreateResult;
 import me.chanjar.weixin.open.bean.WxOpenGetResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
@@ -187,7 +189,9 @@ public interface WxOpenComponentService {
    *
    * @param appid .
    * @return . wx fast ma service by appid
+   * @deprecated 2021-06-23 本接口原有方法并非仅快速创建小程序的专用接口，普通小程序授权到第三方平台皆可使用，所以请使用 {@link WxOpenMaBasicService} 类替代。获取方法: WxOpenMaService.getBasicService()
    */
+  @Deprecated
   WxOpenFastMaService getWxFastMaServiceByAppid(String appid);
 
 
@@ -379,7 +383,10 @@ public interface WxOpenComponentService {
    * @param code  the code
    * @return the wx mp o auth 2 access token
    * @throws WxErrorException the wx error exception
+   * @see WxMpService#getOAuth2Service()
+   * @deprecated 2021-05-21: 已修正公众号相关接口,请使用:WxOpenCommpentService.getWxMpServiceByAppid(mpAppId).getOAuth2Service().getAccessToken(code)
    */
+  @Deprecated
   WxOAuth2AccessToken oauth2getAccessToken(String appid, String code) throws WxErrorException;
 
   /**
@@ -411,7 +418,10 @@ public interface WxOpenComponentService {
    * @param scope       the scope
    * @param state       the state
    * @return the string
+   * @see WxMpService#getOAuth2Service()
+   * @deprecated 2021-05-21: 已修正公众号相关接口,请使用:WxOpenCommpentService.getWxMpServiceByAppid(mpAppId).getOAuth2Service().buildAuthorizationUrl(redirectUri, scope, state)
    */
+  @Deprecated
   String oauth2buildAuthorizationUrl(String appid, String redirectUri, String scope, String state);
 
   /**
@@ -441,13 +451,26 @@ public interface WxOpenComponentService {
   List<WxOpenMaCodeTemplate> getTemplateList() throws WxErrorException;
 
   /**
+   * 请参考并使用 {@link #addToTemplate(long,int)}.
    * 将草稿箱的草稿选为小程序代码模版.
    *
    * @param draftId 草稿ID，本字段可通过“获取草稿箱内的所有临时代码草稿”接口获得
    * @throws WxErrorException 操作失败时抛出，具体错误码请看此接口的注释文档
    * @see #getTemplateDraftList #getTemplateDraftList
    */
+  @Deprecated
   void addToTemplate(long draftId) throws WxErrorException;
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/code_template/addtotemplate.html
+   * 将草稿添加到代码模板库.
+   *
+   * @param draftId 草稿ID，本字段可通过“获取草稿箱内的所有临时代码草稿”接口获得
+   * @param templateType 代码模版类型，【普通模板:0, 标准模板：1】
+   * @throws WxErrorException 操作失败时抛出，具体错误码请看此接口的注释文档
+   * @see #getTemplateDraftList #getTemplateDraftList
+   */
+  void addToTemplate(long draftId, int templateType) throws WxErrorException;
 
   /**
    * 删除指定小程序代码模版.

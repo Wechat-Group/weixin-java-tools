@@ -274,9 +274,9 @@ public interface WxCpService extends WxService {
   void initHttp();
 
   /**
-   * 获取WxMpConfigStorage 对象
+   * 获取WxCpConfigStorage 对象
    *
-   * @return WxMpConfigStorage wx cp config storage
+   * @return WxCpConfigStorage wx cp config storage
    */
   WxCpConfigStorage getWxCpConfigStorage();
 

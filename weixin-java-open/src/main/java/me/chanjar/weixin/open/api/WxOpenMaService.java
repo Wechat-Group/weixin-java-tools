@@ -465,6 +465,16 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenResult revertCodeRelease() throws WxErrorException;
 
   /**
+   * 获取可回退的小程序版本
+   * 调用本接口可以获取可回退的小程序版本（最多保存最近发布或回退的5个版本
+   * 文档地址: https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_history_version.html
+   *
+   * @return 历史版本信息
+   * @throws WxErrorException 如果调用微信接口失败抛出此异常
+   */
+  WxOpenMaHistoryVersionResult getHistoryVersion() throws WxErrorException;
+
+  /**
    * 15. 小程序审核撤回
    * <p>
    * 单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次。
@@ -596,14 +606,18 @@ public interface WxOpenMaService extends WxMaService {
    */
   WxOpenResult publishQrcodeJump(String prefix) throws WxErrorException;
 
-
-
   WxMaScheme generateMaScheme(String jumpWxaPath, String jumpWxaQuery, Boolean isExpire, Long expireTime) throws WxErrorException;
-
 
   /**
    * 为小程序开通小商店组件
    * @return
    */
   WxOpenResult registerShopComponent() throws WxErrorException;
+  
+  /**
+   * 小程序基础信息服务  (小程序名称、头像、描述、类目等信息设置)
+   *
+   * @return 小程序基础信息服务
+   */
+  WxOpenMaBasicService getBasicService();
 }

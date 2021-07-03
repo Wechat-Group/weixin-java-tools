@@ -25,6 +25,10 @@ public enum SubjectTypeEnum {
    * （其他组织）：不属于企业、政府/事业单位的组织机构（如社会团体、民办非企业、基金会），要求机构已办理组织机构代码证。
    */
   SUBJECT_TYPE_OTHERS,
+  /**
+   * (小微)：无营业执照、免办理工商注册登记的实体商户
+   */
+  SUBJECT_TYPE_MICRO,
   ;
 
 }

@@ -67,7 +67,8 @@ public interface Applyment4SubService {
    * @param subMchid 特约商户号
    * @param request  修改结算账户请求对象信息
    * @throws WxPayException the wx pay exception
+   * @return
    */
-  void modifySettlement(String subMchid, ModifySettlementRequest request) throws WxPayException;
+  String modifySettlement(String subMchid, ModifySettlementRequest request) throws WxPayException;
 
 }

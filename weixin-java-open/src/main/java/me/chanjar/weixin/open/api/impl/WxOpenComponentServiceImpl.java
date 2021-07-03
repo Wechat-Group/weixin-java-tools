@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
+import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
@@ -19,9 +20,17 @@ import me.chanjar.weixin.common.util.http.URIUtil;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
-import me.chanjar.weixin.open.api.*;
-import me.chanjar.weixin.open.bean.*;
+import me.chanjar.weixin.open.api.WxOpenComponentService;
+import me.chanjar.weixin.open.api.WxOpenConfigStorage;
+import me.chanjar.weixin.open.api.WxOpenFastMaService;
+import me.chanjar.weixin.open.api.WxOpenMaService;
+import me.chanjar.weixin.open.api.WxOpenMpService;
+import me.chanjar.weixin.open.api.WxOpenService;
+import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
+import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
+import me.chanjar.weixin.open.bean.WxOpenCreateResult;
+import me.chanjar.weixin.open.bean.WxOpenGetResult;
+import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.minishop.*;
@@ -31,6 +40,11 @@ import me.chanjar.weixin.open.bean.minishop.goods.*;
 import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountGoods;
 import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountSku;
 import me.chanjar.weixin.open.bean.result.*;
+import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
+import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerListResult;
+import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
+import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
+import me.chanjar.weixin.open.bean.result.WxOpenResult;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
@@ -66,8 +80,11 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       synchronized (WX_OPEN_MP_SERVICE_MAP) {
         wxMpService = WX_OPEN_MP_SERVICE_MAP.get(appId);
         if (wxMpService == null) {
-          wxMpService = new WxOpenMpServiceImpl(this, appId, getWxOpenConfigStorage().getWxMpConfigStorage(appId));
-
+          WxOpenConfigStorage storage = this.getWxOpenConfigStorage();
+          wxMpService = new WxOpenMpServiceImpl(this, appId, storage.getWxMpConfigStorage(appId));
+          // 配置重试次数和重试间隔
+          wxMpService.setMaxRetryTimes(storage.getMaxRetryTimes());
+          wxMpService.setRetrySleepMillis(storage.getRetrySleepMillis());
           WX_OPEN_MP_SERVICE_MAP.put(appId, wxMpService);
         }
       }
@@ -82,7 +99,11 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       synchronized (WX_OPEN_MA_SERVICE_MAP) {
         wxOpenMaService = WX_OPEN_MA_SERVICE_MAP.get(appId);
         if (wxOpenMaService == null) {
-          wxOpenMaService = new WxOpenMaServiceImpl(this, appId, getWxOpenConfigStorage().getWxMaConfig(appId));
+          WxOpenConfigStorage storage = this.getWxOpenConfigStorage();
+          wxOpenMaService = new WxOpenMaServiceImpl(this, appId, storage.getWxMaConfig(appId));
+          // 配置重试次数和重试间隔
+          wxOpenMaService.setMaxRetryTimes(storage.getMaxRetryTimes());
+          wxOpenMaService.setRetrySleepMillis(storage.getRetrySleepMillis());
           WX_OPEN_MA_SERVICE_MAP.put(appId, wxOpenMaService);
         }
       }
@@ -97,7 +118,11 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       synchronized (WX_OPEN_FAST_MA_SERVICE_MAP) {
         fastMaService = WX_OPEN_FAST_MA_SERVICE_MAP.get(appId);
         if (fastMaService == null) {
-          fastMaService = new WxOpenFastMaServiceImpl(this, appId, getWxOpenConfigStorage().getWxMaConfig(appId));
+          WxOpenConfigStorage storage = this.getWxOpenConfigStorage();
+          fastMaService = new WxOpenFastMaServiceImpl(this, appId, storage.getWxMaConfig(appId));
+          // 配置重试次数和重试间隔
+          fastMaService.setMaxRetryTimes(storage.getMaxRetryTimes());
+          fastMaService.setRetrySleepMillis(storage.getRetrySleepMillis());
           WX_OPEN_FAST_MA_SERVICE_MAP.put(appId, fastMaService);
         }
       }
@@ -136,7 +161,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       return SHA1.gen(getWxOpenConfigStorage().getComponentToken(), timestamp, nonce)
         .equals(signature);
     } catch (Exception e) {
-      this.log.error("Checking signature failed, and the reason is :" + e.getMessage());
+      log.error("Checking signature failed, and the reason is :" + e.getMessage());
       return false;
     }
   }
@@ -490,6 +515,14 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   public void addToTemplate(long draftId) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("draft_id", draftId);
+    post(ADD_TO_TEMPLATE_URL, param.toString(), "access_token");
+  }
+
+  @Override
+  public void addToTemplate(long draftId,int templateType) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("draft_id", draftId);
+    param.addProperty("template_type", templateType);
     post(ADD_TO_TEMPLATE_URL, param.toString(), "access_token");
   }
 

@@ -76,7 +76,7 @@ public class WxCpGroupRobotServiceImpl implements WxCpGroupRobotService {
 
   @Override
   public void sendImage(String webhookUrl, String base64, String md5) throws WxErrorException {
-    this.cpService.postWithoutToken(this.getWebhookUrl(), new WxCpGroupRobotMessage()
+    this.cpService.postWithoutToken(webhookUrl, new WxCpGroupRobotMessage()
       .setMsgType(GroupRobotMsgType.IMAGE)
       .setBase64(base64)
       .setMd5(md5).toJson());
@@ -84,7 +84,7 @@ public class WxCpGroupRobotServiceImpl implements WxCpGroupRobotService {
 
   @Override
   public void sendNews(String webhookUrl, List<NewArticle> articleList) throws WxErrorException {
-    this.cpService.postWithoutToken(this.getWebhookUrl(), new WxCpGroupRobotMessage()
+    this.cpService.postWithoutToken(webhookUrl, new WxCpGroupRobotMessage()
       .setMsgType(GroupRobotMsgType.NEWS)
       .setArticles(articleList).toJson());
   }

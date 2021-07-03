@@ -2,27 +2,35 @@ package me.chanjar.weixin.mp.api.impl;
 
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
-import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.bean.WxNetCheckResult;
+import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxMpErrorMsgEnum;
+import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
+import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
+import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.testng.Assert.*;
 
 /**
  * <pre>
@@ -93,7 +101,7 @@ public class BaseWxMpServiceImplTest {
 
     final int threadNumber = 10;
     ExecutorService executorService = Executors.newFixedThreadPool(threadNumber);
-    for ( int i = 0; i < threadNumber; i++ ) {
+    for (int i = 0; i < threadNumber; i++) {
       executorService.submit(r);
     }
     executorService.shutdown();
@@ -190,7 +198,57 @@ public class BaseWxMpServiceImplTest {
   }
 
   @Test
-  public void testExecute() {
+  public void testExecute() throws WxErrorException, IOException {
+
+  }
+
+  @Test
+  public void testExecuteAutoRefreshToken() throws WxErrorException, IOException {
+    //测试access token获取时的重试机制
+    BaseWxMpServiceImpl<Object, Object> service = new BaseWxMpServiceImpl() {
+      @Override
+      public String getAccessToken(boolean forceRefresh) throws WxErrorException {
+        return "模拟一个过期的access token:" + System.currentTimeMillis();
+      }
+
+      @Override
+      public void initHttp() {
+
+      }
+
+      @Override
+      public Object getRequestHttpClient() {
+        return null;
+      }
+
+      @Override
+      public Object getRequestHttpProxy() {
+        return null;
+      }
+
+      @Override
+      public HttpType getRequestType() {
+        return null;
+      }
+    };
+    WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl();
+    config.setAppId("1");
+    service.setWxMpConfigStorage(config);
+    RequestExecutor<Object, Object> re = mock(RequestExecutor.class);
+
+    AtomicInteger counter = new AtomicInteger();
+    Mockito.when(re.execute(Mockito.anyString(), Mockito.any(), Mockito.any())).thenAnswer(invocation -> {
+      counter.incrementAndGet();
+      WxError error = WxError.builder().errorCode(WxMpErrorMsgEnum.CODE_40001.getCode()).errorMsg(WxMpErrorMsgEnum.CODE_40001.getMsg()).build();
+      throw new WxErrorException(error);
+    });
+    try {
+      Object execute = service.execute(re, "http://baidu.com", new HashMap<>());
+      Assert.assertTrue(false, "代码应该不会执行到这里");
+    } catch (WxErrorException e) {
+      Assert.assertEquals(WxMpErrorMsgEnum.CODE_40001.getCode(), e.getError().getErrorCode());
+      Assert.assertEquals(2, counter.get());
+    }
   }
 
   @Test

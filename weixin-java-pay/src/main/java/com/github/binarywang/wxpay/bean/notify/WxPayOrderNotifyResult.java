@@ -15,6 +15,7 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import org.w3c.dom.Document;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayOrderNotifyResult extends BaseWxPayResult {
+public class WxPayOrderNotifyResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = 5389718115223345496L;
 
   /**
