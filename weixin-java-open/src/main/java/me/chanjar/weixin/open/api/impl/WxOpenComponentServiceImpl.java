@@ -1,12 +1,14 @@
 package me.chanjar.weixin.open.api.impl;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
+import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
@@ -15,27 +17,24 @@ import me.chanjar.weixin.common.util.http.URIUtil;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.open.api.WxOpenComponentService;
-import me.chanjar.weixin.open.api.WxOpenConfigStorage;
-import me.chanjar.weixin.open.api.WxOpenFastMaService;
-import me.chanjar.weixin.open.api.WxOpenMaService;
-import me.chanjar.weixin.open.api.WxOpenMpService;
-import me.chanjar.weixin.open.api.WxOpenService;
-import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
-import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
-import me.chanjar.weixin.open.bean.WxOpenCreateResult;
-import me.chanjar.weixin.open.bean.WxOpenGetResult;
-import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
+import me.chanjar.weixin.open.api.*;
+import me.chanjar.weixin.open.bean.*;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
-import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerInfoResult;
-import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerListResult;
-import me.chanjar.weixin.open.bean.result.WxOpenAuthorizerOptionResult;
-import me.chanjar.weixin.open.bean.result.WxOpenQueryAuthResult;
-import me.chanjar.weixin.open.bean.result.WxOpenResult;
+import me.chanjar.weixin.open.bean.minishop.*;
+import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCoupon;
+import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCouponStock;
+import me.chanjar.weixin.open.bean.minishop.goods.*;
+import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountGoods;
+import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountSku;
+import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -52,6 +51,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   private static final Map<String, WxOpenMaService> WX_OPEN_MA_SERVICE_MAP = new ConcurrentHashMap<>();
   private static final Map<String, WxOpenMpService> WX_OPEN_MP_SERVICE_MAP = new ConcurrentHashMap<>();
   private static final Map<String, WxOpenFastMaService> WX_OPEN_FAST_MA_SERVICE_MAP = new ConcurrentHashMap<>();
+
+  private static final Map<String, WxOpenMinishopService> WX_OPEN_MINISHOP_SERVICE_MAP = new ConcurrentHashMap<>();
 
   private final WxOpenService wxOpenService;
 
@@ -110,6 +111,22 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       }
     }
     return fastMaService;
+  }
+
+  @Override
+  public WxOpenMinishopService getWxMinishopServiceByAppid(String appId) {
+    WxOpenMinishopService minishopService = WX_OPEN_MINISHOP_SERVICE_MAP.get(appId);
+    if (minishopService == null) {
+      synchronized (WX_OPEN_MINISHOP_SERVICE_MAP) {
+        minishopService = WX_OPEN_MINISHOP_SERVICE_MAP.get(appId);
+        if (minishopService == null) {
+          minishopService = new WxOpenMinishopServiceImpl(this, appId, getWxOpenConfigStorage().getWxMaConfig(appId));
+          WX_OPEN_MINISHOP_SERVICE_MAP.put(appId, minishopService);
+        }
+      }
+    }
+
+    return minishopService;
   }
 
   public WxOpenService getWxOpenService() {
@@ -485,6 +502,14 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
+  public void addToTemplate(long draftId, int templateType) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("draft_id", draftId);
+    param.addProperty("template_type", templateType);
+    post(ADD_TO_TEMPLATE_URL, param.toString(), "access_token");
+  }
+
+  @Override
   public void deleteTemplate(long templateId) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("template_id", templateId);
@@ -580,6 +605,575 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("legal_persona_wechat", legalPersonaWechat);
     jsonObject.addProperty("legal_persona_name", legalPersonaName);
     String response = post(FAST_REGISTER_WEAPP_SEARCH_URL, jsonObject.toString(), "component_access_token");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult registerShop(String wxName, String idCardName, String idCardNumber, String channelId, Integer apiOpenstoreType, String authPageUrl) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("wx_name", wxName);
+    jsonObject.addProperty("id_card_name", idCardName);
+    jsonObject.addProperty("id_card_number", idCardNumber);
+    if (channelId != null && !channelId.isEmpty()) {
+      jsonObject.addProperty("channel_id", channelId);
+    }
+    jsonObject.addProperty("api_openstore_type", apiOpenstoreType);
+    if (authPageUrl != null && !authPageUrl.isEmpty()) {
+      jsonObject.addProperty("auth_page_url", authPageUrl);
+    }
+
+    String response = post(REGISTER_SHOP_URL, jsonObject.toString(), "component_access_token");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public String checkAuditStatus(String wxName) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("wx_name", wxName);
+    String url = CHECK_SHOP_AUDITSTATUS_URL + "?access_token=" + getComponentAccessToken(false);
+    String response = post(url, jsonObject.toString());
+    log.info("CHECK_SHOP_AUDITSTATUS_URL: " + response);
+    return response;
+  }
+
+  @Override
+  public String checkAuditStatus(String appId, String wxName) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("wx_name", wxName);
+    String url = CHECK_SHOP_AUDITSTATUS_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    String response = post(url, jsonObject.toString());
+    log.info("CHECK_SHOP_AUDITSTATUS_URL: " + response);
+    return response;
+  }
+
+  @Override
+  public WxOpenResult submitMerchantInfo(String appId, String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("app_id", appId);
+    jsonObject.addProperty("subject_type", subjectType);
+    jsonObject.add("busi_license", busiLicense.toJsonObject());
+    if (organizationCodeInfo != null) {
+      jsonObject.add("organization_code_info", organizationCodeInfo.toJsonObject());
+    }
+    if (idcardInfo != null) {
+      jsonObject.add("id_card_info", idcardInfo.toJsonObject());
+    }
+    if (superAdministratorInfo != null) {
+      jsonObject.add("super_administrator_info", superAdministratorInfo.toJsonObject());
+    }
+
+    if (merchantShoprtName != null) {
+      jsonObject.addProperty("merchant_shortname", merchantShoprtName);
+    }
+    String url = SUBMIT_MERCHANTINFO_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult submitBasicInfo(String appId, MinishopNameInfo nameInfo, MinishopReturnInfo returnInfo) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("appid", appId);
+    jsonObject.add("name_info", nameInfo.toJsonObject());
+    jsonObject.add("return_info", returnInfo.toJsonObject());
+    String url = SUBMIT_BASICINFO_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxMinishopImageUploadResult uploadMinishopImagePicFile(String appId, Integer height, Integer width, File file) throws WxErrorException {
+    String url = WxOpenMinishopService.UPLOAD_IMG_MINISHOP_FILE_URL + "?access_token=" + getAuthorizerAccessToken(appId, false) + "&height=" + height + "&width=" + width;
+    log.info("upload url: " + url);
+//    String response = (url, file);
+    WxMinishopImageUploadResult result = getWxOpenService().uploadMinishopMediaFile(url, file);
+
+    return result;
+  }
+
+  @Override
+  public MinishopCategories getMinishopCategories(String appId, Integer fCatId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("f_cat_id", fCatId);
+    String url = MINISHOP_CATEGORY_GET_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    log.info("response: " + response);
+    JsonObject respJson = GsonParser.parse(response);
+    MinishopCategories categories = new MinishopCategories();
+    categories.setErrcode(respJson.get("errcode").getAsInt());
+    if (categories.getErrcode() == 0) {
+      JsonArray catListJson = respJson.getAsJsonArray("cat_list");
+      if (catListJson != null || catListJson.size() > 0) {
+        List<MinishopCategory> categoryList = new ArrayList<>();
+        for (int i = 0; i < catListJson.size(); i++) {
+          JsonObject catJson = catListJson.get(i).getAsJsonObject();
+          MinishopCategory cate = new MinishopCategory();
+          cate.setCatId(catJson.get("cat_id").getAsInt());
+          cate.setFCatId(catJson.get("f_cat_id").getAsInt());
+          cate.setName(catJson.get("name").getAsString());
+          categoryList.add(cate);
+        }
+
+        categories.setCatList(categoryList);
+      }
+    } else {
+      categories.setErrmsg(respJson.get("errmsg").getAsString());
+    }
+    return categories;
+  }
+
+  @Override
+  public MinishopBrandList getMinishopBrands(String appId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    String url = MINISHOP_BRAND_GET_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    MinishopBrandList brandList = new MinishopBrandList();
+    brandList.setErrcode(respJson.get("errcode").getAsInt());
+    if (brandList.getErrcode() == 0) {
+      JsonArray brandArrayJson = respJson.get("brands").getAsJsonArray();
+      if (brandArrayJson.size() > 0) {
+        List<MinishopBrand> brands = new ArrayList<>();
+        for (int i = 0; i < brandArrayJson.size(); i++) {
+          JsonObject brandJson = brandArrayJson.get(i).getAsJsonObject();
+          MinishopBrand brand = new MinishopBrand();
+          brand.setFirstCatId(brandJson.get("first_cat_id").getAsInt());
+          brand.setSecondCatId(brandJson.get("second_cat_id").getAsInt());
+          brand.setThirdCatId(brandJson.get("third_cat_id").getAsInt());
+          MinishopBrand.MinishopBrandInfo brandInfo = new MinishopBrand.MinishopBrandInfo();
+          JsonObject brandInfoJson = brandJson.get("brand_info").getAsJsonObject();
+          brandInfo.setBrandId(brandInfoJson.get("brand_id").getAsInt());
+          brandInfo.setBrandName(brandInfoJson.get("brand_name").getAsString());
+          brand.setBrandInfo(brandInfo);
+
+          brands.add(brand);
+
+        }
+
+        brandList.setBrands(brands);
+      }
+    } else {
+      brandList.setErrmsg(respJson.get("errmsg").getAsString());
+    }
+    return brandList;
+  }
+
+  @Override
+  public MinishopDeliveryTemplateResult getMinishopDeliveryTemplate(String appId) throws WxErrorException {
+    String url = MINISHOP_DELIVERY_TEMPLATE_GET_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    MinishopDeliveryTemplateResult templateResult = new MinishopDeliveryTemplateResult();
+    templateResult.setErrCode(respJson.get("errcode").getAsInt());
+    if (templateResult.getErrCode() == 0) {
+      JsonArray templateArrayJson = respJson.get("template_list").getAsJsonArray();
+      if (templateArrayJson.size() > 0) {
+        List<MinishopDeliveryTemplate> templateList = new ArrayList<>();
+        for (int i = 0; i < templateArrayJson.size(); i++) {
+          JsonObject templateJson = templateArrayJson.get(i).getAsJsonObject();
+          MinishopDeliveryTemplate template = new MinishopDeliveryTemplate();
+          template.setTemplateId(templateJson.get("template_id").getAsInt());
+          template.setName(templateJson.get("name").getAsString());
+          template.setValuationType(templateJson.get("valuation_type").getAsInt() == 1 ? MinishopDeliveryTemplate.ValuationType.WEIGHT : MinishopDeliveryTemplate.ValuationType.PACKAGE);
+
+
+          templateList.add(template);
+
+        }
+
+        templateResult.setTemplateList(templateList);
+      }
+    } else {
+      templateResult.setErrMsg(respJson.get("errmsg").getAsString());
+    }
+    return templateResult;
+  }
+
+  @Override
+  public MinishopShopCatList getMinishopCatList(String appId) throws WxErrorException {
+    String url = MINISHOP_SHOPCATEGORY_GET_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    MinishopShopCatList shopCatList = new MinishopShopCatList();
+    shopCatList.setErrcode(respJson.get("errcode").getAsInt());
+    if (shopCatList.getErrcode() == 0) {
+      JsonArray shopcatArrayJson = respJson.get("shopcat_list").getAsJsonArray();
+      if (shopcatArrayJson.size() > 0) {
+        List<MinishopShopCat> shopCats = new ArrayList<>();
+        for (int i = 0; i < shopcatArrayJson.size(); i++) {
+          JsonObject shopCatJson = shopcatArrayJson.get(i).getAsJsonObject();
+          MinishopShopCat shopCat = new MinishopShopCat();
+          shopCat.setShopCatId(shopCatJson.get("shopcat_id").getAsInt());
+          shopCat.setShopCatName(shopCatJson.get("shopcat_name").getAsString());
+          shopCat.setFShopCatId(shopCatJson.get("f_shopcat_id").getAsInt());
+          shopCat.setCatLevel(shopCatJson.get("cat_level").getAsInt());
+
+          shopCats.add(shopCat);
+
+        }
+
+        shopCatList.setShopCatList(shopCats);
+      }
+    } else {
+      shopCatList.setErrmsg(respJson.get("errmsg").getAsString());
+    }
+    return shopCatList;
+  }
+
+  @Override
+  public WxMinishopAddGoodsSpuResult<List<WxMinishopDeliveryCompany>> getMinishopDeliveryCompany(String appId) throws WxErrorException {
+    String url = MINISHOP_GET_DELIVERY_COMPANY_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    JsonObject respObj = GsonParser.parse(response);
+    WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
+    result.setErrcode(respObj.get("errcode").getAsInt());
+    if (result.getErrcode() == 0) {
+      JsonArray companyArray = respObj.get("company_list").getAsJsonArray();
+      List<WxMinishopDeliveryCompany> companies = new ArrayList<>();
+      for (int i = 0; i < companyArray.size(); i++) {
+        JsonObject company = companyArray.get(i).getAsJsonObject();
+        WxMinishopDeliveryCompany resultData = new WxMinishopDeliveryCompany();
+        resultData.setDeliveryId(company.get("delivery_id").getAsString());
+        resultData.setDeliveryName(company.get("delivery_name").getAsString());
+        companies.add(resultData);
+      }
+      result.setData(companies);
+    } else {
+      result.setErrmsg(respObj.get("errmsg").getAsString());
+    }
+    return result;
+  }
+
+  @Override
+  public Integer minishopCreateCoupon(String appId, WxMinishopCoupon couponInfo) throws WxErrorException {
+    String url = MINISHOP_CREATE_COUPON_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = couponInfo.toJsonObject();
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    Integer couponId = -1;
+    if (respJson.get("errcode").getAsInt() == 0) {
+      JsonObject dataJson = respJson.get("data").getAsJsonObject();
+      couponId = dataJson.get("coupon_id").getAsInt();
+    }
+    return couponId;
+  }
+
+  @Override
+  public WxMinishopCouponStock minishopGetCouponList(String appId, String startCreateTime, String endCreateTime, Integer status, Integer page, Integer pageSize) throws WxErrorException {
+    String url = MINISHOP_GET_COUPON_LIST + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+    return null;
+  }
+
+  @Override
+  public WxOpenResult minishopPushCouponToUser(String appId, String openId, Integer couponId) throws WxErrorException {
+    String url = MINISHOP_PUSH_COUPON + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("openid", openId);
+    jsonObject.addProperty("coupon_id", couponId);
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public Integer minishopUpdateCoupon(String appId, WxMinishopCoupon couponInfo) throws WxErrorException {
+    String url = MINISHOP_UPDATE_COUPON_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = couponInfo.toJsonObject();
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respJson = GsonParser.parse(response);
+    Integer couponId = -1;
+    if (respJson.get("errcode").getAsInt() == 0) {
+      JsonObject dataJson = respJson.get("data").getAsJsonObject();
+      couponId = dataJson.get("coupon_id").getAsInt();
+    }
+    return couponId;
+  }
+
+  @Override
+  public WxOpenResult minishopUpdateCouponStatus(String appId, Integer couponId, Integer status) throws WxErrorException {
+    String url = MINISHOP_UPDATE_COUPON_STATUS_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("coupon_id", couponId);
+    jsonObject.addProperty("status", status);
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxMinishopAddGoodsSpuResult<WxMinishopAddGoodsSpuData> minishopGoodsAddSpu(String appId, WxMinishopSpu spu) throws WxErrorException {
+    String url = MINISHOP_ADD_SPU_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = spu.toJsonObject();
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    JsonObject respObj = GsonParser.parse(response);
+    WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
+    result.setErrcode(respObj.get("errcode").getAsInt());
+
+    if (result.getErrcode() == 0) {
+      JsonObject dataObj = respObj.get("data").getAsJsonObject();
+      WxMinishopAddGoodsSpuData resultData = new WxMinishopAddGoodsSpuData();
+      resultData.setProductId(dataObj.get("product_id").getAsLong());
+      resultData.setOutProductId(dataObj.get("out_product_id").getAsString());
+      resultData.setCreateTime(dataObj.get("create_time").getAsString());
+      result.setData(resultData);
+    } else {
+      result.setErrmsg(respObj.get("errmsg").getAsString());
+
+    }
+    return result;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsDelSpu(String appId, Long productId, Long outProductId) throws WxErrorException {
+    String url = MINISHOP_DEL_SPU_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("product_id", productId);
+    jsonObject.addProperty("out_product_id", outProductId.toString());
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxMinishopAddGoodsSpuResult<WxMinishopAddGoodsSpuData> minishopGoodsUpdateSpu(String appId, WxMinishopSpu spu) throws WxErrorException {
+    String url = MINISHOP_UPDATE_SPU_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = spu.toJsonObject();
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    JsonObject respObj = GsonParser.parse(response);
+    WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
+    result.setErrcode(respObj.get("errcode").getAsInt());
+    if (result.getErrcode() == 0) {
+      JsonObject dataObj = respObj.get("data").getAsJsonObject();
+      WxMinishopAddGoodsSpuData resultData = new WxMinishopAddGoodsSpuData();
+      resultData.setProductId(dataObj.get("product_id").getAsLong());
+      resultData.setOutProductId(dataObj.get("out_product_id").getAsString());
+      resultData.setCreateTime(dataObj.get("update_time").getAsString());
+      result.setData(resultData);
+    } else {
+      result.setErrmsg(respObj.get("errmsg").getAsString());
+    }
+
+    return result;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsListingSpu(String appId, Long productId, Long outProductId) throws WxErrorException {
+    String url = MINISHOP_LISTING_SPU_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("product_id", productId);
+    jsonObject.addProperty("out_product_id", outProductId.toString());
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsDelistingSpu(String appId, Long productId, Long outProductId) throws WxErrorException {
+    String url = MINISHOP_DELISTING_SPU_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("product_id", productId);
+    jsonObject.addProperty("out_product_id", outProductId.toString());
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxMinishopAddGoodsSpuResult<WxMinishopAddGoodsSkuData> minishiopGoodsAddSku(String appId, WxMinishopSku sku) throws WxErrorException {
+    String url = MINISHOP_ADD_SKU_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = sku.toJsonObject();
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    JsonObject respObj = GsonParser.parse(response);
+    WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
+    result.setErrcode(respObj.get("errcode").getAsInt());
+    if (result.getErrcode() == 0) {
+      JsonObject dataObj = respObj.get("data").getAsJsonObject();
+      WxMinishopAddGoodsSkuData resultData = new WxMinishopAddGoodsSkuData();
+      resultData.setSkuId(dataObj.get("sku_id").getAsLong());
+      resultData.setCreateTime(dataObj.get("create_time").getAsString());
+      result.setData(resultData);
+    } else {
+      result.setErrmsg(respObj.get("errmsg").getAsString());
+    }
+
+    return result;
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsBatchAddSku(String appId, List<WxMinishopSku> skuList) throws WxErrorException {
+    String url = MINISHOP_BATCH_ADD_SKU_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+    JsonArray jsonArray = new JsonArray();
+
+    for (WxMinishopSku sku : skuList) {
+      jsonArray.add(sku.toJsonObject());
+    }
+
+    jsonObject.add("skus", jsonArray);
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsDelSku(String appId, Long productId, Long outProductId, String outSkuId, Long skuId) throws WxErrorException {
+    String url = MINISHOP_DEL_SKU_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("product_id", productId);
+    jsonObject.addProperty("out_product_id", outProductId);
+    jsonObject.addProperty("sku_id", skuId);
+    jsonObject.addProperty("out_sku_id", outSkuId);
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsUpdateSku(String appId, WxMinishopSku sku) throws WxErrorException {
+    String url = MINISHOP_UPDATE_SKU_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = sku.toJsonObject();
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsUpdateSkuPrice(String appId, Long productId, Long outProductId, String outSkuId, Long skuId, Long salePrice, Long marketPrice) throws WxErrorException {
+    String url = MINISHOP_UPDATE_SKU_PRICE_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("product_id", productId);
+    jsonObject.addProperty("out_product_id", outProductId);
+    jsonObject.addProperty("sku_id", skuId);
+    jsonObject.addProperty("out_sku_id", outSkuId);
+    jsonObject.addProperty("sale_price", outSkuId);
+    jsonObject.addProperty("market_price", outSkuId);
+
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult minishopGoodsUpdateSkuStock(String appId, Long productId, Long outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws WxErrorException {
+    String url = MINISHOP_UPDATE_SKU_STOCK_URL + "?access_token=" + getAuthorizerAccessToken(appId, true);
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("product_id", productId);
+    jsonObject.addProperty("out_product_id", outProductId);
+    jsonObject.addProperty("sku_id", skuId);
+    jsonObject.addProperty("out_sku_id", outSkuId);
+    jsonObject.addProperty("type", type);
+    jsonObject.addProperty("stock_num", stockNum);
+
+
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public String minishopCommonPost(String appId, String url, String requestParam) throws WxErrorException {
+
+    return null;
+  }
+
+  @Override
+  public Integer addLimitDiscountGoods(String appId, LimitDiscountGoods limitDiscountGoods) throws WxErrorException {
+    String url = API_MINISHOP_ADD_LIMIT_DISCOUNT_URL + "access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = limitDiscountGoods.toJsonObject();
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respObj = GsonParser.parse(response);
+    Integer taskId = 0;
+    if (respObj.get("errcode").getAsInt() == 0) {
+      taskId = respObj.get("task_id").getAsInt();
+    }
+    return taskId;
+  }
+
+  @Override
+  public List<LimitDiscountGoods> getLimitDiscountList(String appId, Integer status) throws WxErrorException {
+    String url = API_MINISHOP_GET_LIMIT_DISCOUNT_URL + "access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+    if (status != null) {
+      jsonObject.addProperty("status", status);
+    }
+    String response = getWxOpenService().post(url, jsonObject.toString());
+    JsonObject respObj = GsonParser.parse(response);
+    List<LimitDiscountGoods> limitDiscountGoodsList = new ArrayList<>();
+    if (respObj.get("errcode").getAsInt() == 0) {
+      //成功获取到秒杀活动列表
+
+      JsonArray jsonArray = respObj.get("limited_discount_list").getAsJsonArray();
+      if (jsonArray != null && jsonArray.size() > 0) {
+        for (int i = 0; i < jsonArray.size(); i++) {
+          JsonObject goodsObj = jsonArray.get(i).getAsJsonObject();
+          LimitDiscountGoods discountGoods = new LimitDiscountGoods();
+          discountGoods.setTaskId(goodsObj.get("task_id").getAsLong());
+          discountGoods.setStatus(goodsObj.get("status").getAsInt());
+          discountGoods.setStartTime(new Date(goodsObj.get("start_time").getAsLong() * 1000));
+          discountGoods.setEndTime(new Date(goodsObj.get("end_time").getAsLong() * 1000));
+
+          List<LimitDiscountSku> skuList = new ArrayList<>();
+          JsonArray skuArray = goodsObj.get("limited_discount_sku_list").getAsJsonArray();
+          if (skuArray != null && skuArray.size() > 0) {
+            for (int j = 0; j < skuArray.size(); j++) {
+              JsonObject skuObj = skuArray.get(i).getAsJsonObject();
+              LimitDiscountSku sku = new LimitDiscountSku();
+              sku.setSkuId(skuObj.get("sku_id").getAsLong());
+              sku.setSalePrice(new BigDecimal(skuObj.get("sale_price").getAsDouble() / 100));
+              sku.setSaleStock(skuObj.get("sale_stock").getAsInt());
+              skuList.add(sku);
+            }
+
+            discountGoods.setLimitDiscountSkuList(skuList);
+          }
+
+          limitDiscountGoodsList.add(discountGoods);
+        }
+      }
+    }
+    return limitDiscountGoodsList;
+  }
+
+  @Override
+  public WxOpenResult updateLimitDiscountStatus(String appId, Long taskId, Integer status) throws WxErrorException {
+    String url = API_MINISHOP_UPDATE_LIMIT_DICOUNT_STATUS_URL + "access_token=" + getAuthorizerAccessToken(appId, false);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("task_id", taskId);
+    jsonObject.addProperty("status", status);
+    String response = getWxOpenService().post(url, jsonObject.toString());
+
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 }

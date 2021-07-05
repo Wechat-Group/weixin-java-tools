@@ -105,7 +105,7 @@ public class WxPayRefundNotifyV3Result implements Serializable {
      *  SUCCESS：退款成功
      *  CLOSE：退款关闭
      *  ABNORMAL：退款异常，退款到银行发现用户的卡作废或者冻结了，导致原路退款银行卡失败，可前往【商户平台—>交易中心】，手动处理此笔退款
-     * 示例值：SUCCESS
+     *  示例值：SUCCESS
      * </pre>
      */
     @SerializedName(value = "refund_status")
@@ -158,6 +158,7 @@ public class WxPayRefundNotifyV3Result implements Serializable {
   @Data
   @NoArgsConstructor
   public static class Amount implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * <pre>
      * 字段名：订单金额

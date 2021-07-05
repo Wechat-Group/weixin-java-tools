@@ -476,6 +476,20 @@ public interface WxCpExternalContactService {
 
   /**
    * <pre>
+   * 企业可通过此接口获取企业客户标签详情。
+   * 若tag_id和group_id均为空，则返回所有标签。
+   * 同时传递tag_id和group_id时，忽略tag_id，仅以group_id作为过滤条件。
+   * </pre>
+   *
+   * @param tagId the tag id
+   * @param groupId the tagGroup id
+   * @return corp tag list
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpUserExternalTagGroupList getCorpTagList(String[] tagId, String[] groupId) throws WxErrorException;
+
+  /**
+   * <pre>
    * 企业可通过此接口向客户标签库中添加新的标签组和标签，每个企业最多可配置3000个企业标签。
    * 暂不支持第三方调用。
    * </pre>

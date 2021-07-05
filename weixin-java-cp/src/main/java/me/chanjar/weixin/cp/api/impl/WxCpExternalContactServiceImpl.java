@@ -353,6 +353,20 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpUserExternalTagGroupList getCorpTagList(String[] tagId, String[] groupId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    if (ArrayUtils.isNotEmpty(tagId)) {
+      json.add("tag_id", new Gson().toJsonTree(tagId).getAsJsonArray());
+    }
+    if (ArrayUtils.isNotEmpty(groupId)) {
+      json.add("group_id", new Gson().toJsonTree(groupId).getAsJsonArray());
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CORP_TAG_LIST);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpUserExternalTagGroupList.fromJson(result);
+  }
+
+  @Override
   public WxCpUserExternalTagGroupInfo addCorpTag(WxCpUserExternalTagGroupInfo tagGroup) throws WxErrorException {
 
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(ADD_CORP_TAG);
