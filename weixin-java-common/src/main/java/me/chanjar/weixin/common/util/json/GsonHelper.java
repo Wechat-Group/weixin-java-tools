@@ -198,7 +198,7 @@ public class GsonHelper {
         ((List<?>) value).forEach(a -> array.add(a.toString()));
         jsonObject.add(key.toString(), array);
       } else {
-        jsonObject.addProperty(key.toString(), value.toString());
+        jsonObject.add(key.toString(), WxGsonBuilder.create().toJsonTree(value));
       }
     }
 
