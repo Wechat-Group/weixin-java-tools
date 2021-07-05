@@ -242,6 +242,13 @@ public class WxCpExternalContactServiceImplTest {
   }
 
   @Test
+  public void testListGroupChatV3() throws WxErrorException {
+    WxCpUserExternalGroupChatList result = this.wxCpService.getExternalContactService().listGroupChat(100, "" ,0,new String[1]);
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
   public void testGetGroupChat() {
   }
 

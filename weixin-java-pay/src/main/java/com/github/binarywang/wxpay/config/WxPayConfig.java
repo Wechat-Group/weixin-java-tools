@@ -1,14 +1,11 @@
 package com.github.binarywang.wxpay.config;
 
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.util.ResourcesUtils;
 import com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder;
 import com.github.binarywang.wxpay.v3.auth.*;
 import com.github.binarywang.wxpay.v3.util.PemUtils;
-import jodd.util.ResourcesUtil;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.SneakyThrows;
-import lombok.ToString;
+import lombok.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -239,10 +236,10 @@ public class WxPayConfig {
    * @author doger.wang
    **/
   public CloseableHttpClient initApiV3HttpClient() throws WxPayException {
-    String privateKeyPath = this.getPrivateKeyPath();
-    String privateCertPath = this.getPrivateCertPath();
-    String serialNo = this.getCertSerialNo();
-    String apiV3Key = this.getApiV3Key();
+    val privateKeyPath = this.getPrivateKeyPath();
+    val privateCertPath = this.getPrivateCertPath();
+    val serialNo = this.getCertSerialNo();
+    val apiV3Key = this.getApiV3Key();
     if (StringUtils.isBlank(privateKeyPath)) {
       throw new WxPayException("请确保privateKeyPath已设置");
     }
@@ -301,7 +298,7 @@ public class WxPayConfig {
         path = "/" + path;
       }
       try {
-        inputStream = ResourcesUtil.getResourceAsStream(path);
+        inputStream = ResourcesUtils.getResourceAsStream(path);
         if (inputStream == null) {
           throw new WxPayException(fileNotFoundMsg);
         }

@@ -249,6 +249,24 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpUserExternalGroupChatList listGroupChat(Integer limit, String cursor, int status, String[] userIds) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("cursor", cursor == null ? "" : cursor);
+    json.addProperty("limit", limit == null ? 100 : limit);
+    json.addProperty("status_filter", status);
+    if (ArrayUtils.isNotEmpty(userIds)) {
+      JsonObject ownerFilter = new JsonObject();
+      if (ArrayUtils.isNotEmpty(userIds)) {
+        ownerFilter.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
+      }
+      json.add("owner_filter", ownerFilter);
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GROUP_CHAT_LIST);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpUserExternalGroupChatList.fromJson(result);
+  }
+
+  @Override
   public WxCpUserExternalGroupChatInfo getGroupChat(String chatId) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("chat_id", chatId);
@@ -328,6 +346,20 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     JsonObject json = new JsonObject();
     if (ArrayUtils.isNotEmpty(tagId)) {
       json.add("tag_id", new Gson().toJsonTree(tagId).getAsJsonArray());
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CORP_TAG_LIST);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpUserExternalTagGroupList.fromJson(result);
+  }
+
+  @Override
+  public WxCpUserExternalTagGroupList getCorpTagList(String[] tagId, String[] groupId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    if (ArrayUtils.isNotEmpty(tagId)) {
+      json.add("tag_id", new Gson().toJsonTree(tagId).getAsJsonArray());
+    }
+    if (ArrayUtils.isNotEmpty(groupId)) {
+      json.add("group_id", new Gson().toJsonTree(groupId).getAsJsonArray());
     }
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CORP_TAG_LIST);
     final String result = this.mainService.post(url, json.toString());
