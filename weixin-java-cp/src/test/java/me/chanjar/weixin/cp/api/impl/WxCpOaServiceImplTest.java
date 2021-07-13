@@ -1,11 +1,15 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.oa.*;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
@@ -45,6 +49,48 @@ public class WxCpOaServiceImplTest {
     System.out.println("results ");
     System.out.println(gson.toJson(results));
 
+  }
+
+  @Test
+  public void testGetCheckinDayData() throws ParseException, WxErrorException {
+    Date startTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-07-01");
+    Date endTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-07-31");
+
+    List<WxCpCheckinDayData> results = wxService.getOaService()
+      .getCheckinDayData(startTime, endTime, Lists.newArrayList("12003648"));
+
+    assertThat(results).isNotNull();
+
+
+    System.out.println("results ");
+    System.out.println(gson.toJson(results));
+
+  }
+
+  @Test
+  public void testGetCheckinMonthData() throws ParseException, WxErrorException {
+    Date startTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-07-01");
+    Date endTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-07-31");
+
+    List<WxCpCheckinMonthData> results = wxService.getOaService()
+      .getCheckinMonthData(startTime, endTime, Lists.newArrayList("12003648"));
+
+    assertThat(results).isNotNull();
+    System.out.println("results ");
+    System.out.println(gson.toJson(results));
+  }
+
+  @Test
+  public void testGetCheckinScheduleData() throws ParseException, WxErrorException {
+    Date startTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-07-01");
+    Date endTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-07-31");
+
+    WxCpCheckinSchedule results = wxService.getOaService()
+      .getCheckinScheduleList(startTime, endTime, Lists.newArrayList("12003648"));
+
+    assertThat(results).isNotNull();
+    System.out.println("results ");
+    System.out.println(gson.toJson(results));
   }
 
   @Test
