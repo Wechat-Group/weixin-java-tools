@@ -1,10 +1,8 @@
 package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
-import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
+import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.open.bean.WxOpenCreateResult;
@@ -31,6 +29,10 @@ public interface WxOpenComponentService {
    * The constant API_COMPONENT_TOKEN_URL.
    */
   String API_COMPONENT_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/component/api_component_token";
+  /**
+   * 启动ticket推送服务
+   */
+  String API_START_PUSH_TICKET = "https://api.weixin.qq.com/cgi-bin/component/api_start_push_ticket";
   /**
    * The constant API_CREATE_PREAUTHCODE_URL.
    */
@@ -219,6 +221,13 @@ public interface WxOpenComponentService {
    * @return the boolean
    */
   boolean checkSignature(String timestamp, String nonce, String signature);
+
+  /**
+   * 启动ticket推送服务 该 API 用于启动ticket推送服务
+   *
+   * @throws WxErrorException 如果调用失败返回此异常
+   */
+  void startPushTicket() throws WxErrorException;
 
   /**
    * Gets component access token.
