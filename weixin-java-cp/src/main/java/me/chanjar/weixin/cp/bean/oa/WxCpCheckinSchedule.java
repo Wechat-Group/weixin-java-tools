@@ -13,132 +13,122 @@ import java.util.List;
 @Data
 public class WxCpCheckinSchedule implements Serializable {
 
-  private static final long serialVersionUID = 5399197385827384108L;
+  private static final long serialVersionUID = 5515056962298169806L;
 
   /**
-   * schedule_list 排班表信息
+   * userid 打卡人员userid
    */
-  @SerializedName("schedule_list")
-  private List<UserScheduleInfo> scheduleList;
+  @SerializedName("userid")
+  private String userid;
+
+  /**
+   * yearmonth 排班表月份，格式为年月，如202011
+   */
+  @SerializedName("yearmonth")
+  private Integer yearmonth;
+
+  /**
+   * groupid 打卡规则id
+   */
+  @SerializedName("groupid")
+  private Integer groupid;
+
+  /**
+   * groupname 打卡规则名
+   */
+  @SerializedName("groupname")
+  private String groupName;
+
+  /**
+   * schedule 个人排班信息
+   */
+  @SerializedName("schedule")
+  private UserSchedule schedule;
 
   @Data
-  public class UserScheduleInfo implements Serializable {
-    private static final long serialVersionUID = 5515056962298169806L;
+  public class UserSchedule implements Serializable {
+    private static final long serialVersionUID = 9138985222324576857L;
     /**
-     * userid 打卡人员userid
+     * scheduleList 个人排班表信息
      */
-    @SerializedName("userid")
-    private String userid;
-
-    /**
-     * yearmonth 排班表月份，格式为年月，如202011
-     */
-    @SerializedName("yearmonth")
-    private Integer yearmonth;
-
-    /**
-     * groupid 打卡规则id
-     */
-    @SerializedName("groupid")
-    private Integer groupid;
-
-    /**
-     * groupname 打卡规则名
-     */
-    @SerializedName("groupname")
-    private String groupName;
-
-    /**
-     * schedule 个人排班信息
-     */
-    @SerializedName("schedule")
-    private UserSchedule schedule;
+    @SerializedName("scheduleList")
+    private List<Schedule> scheduleList;
 
     @Data
-    public class UserSchedule implements Serializable {
-      private static final long serialVersionUID = 9138985222324576857L;
+    public class Schedule implements Serializable {
+
+      private static final long serialVersionUID = 8344153237512495728L;
+
       /**
-       * scheduleList 个人排班表信息
+       * day 排班日期，为表示当月第几天的数字
        */
-      @SerializedName("scheduleList")
-      private List<Schedule> scheduleList;
+      @SerializedName("day")
+      private Integer day;
+
+      /**
+       * schedule_info 排班日期，为表示当月第几天的数字
+       */
+      @SerializedName("schedule_info")
+      private ScheduleInfo scheduleInfo;
 
       @Data
-      public class Schedule implements Serializable{
-
-        private static final long serialVersionUID = 8344153237512495728L;
+      public class ScheduleInfo implements Serializable {
+        private static final long serialVersionUID = 1317096341116256963L;
+        /**
+         * schedule_id 当日安排班次id，班次id也可在打卡规则中查询获得
+         */
+        @SerializedName("schedule_id")
+        private Integer scheduleId;
 
         /**
-         * day 排班日期，为表示当月第几天的数字
+         * schedule_name 排班日期，为表示当月第几天的数字
          */
-        @SerializedName("day")
-        private Integer day;
+        @SerializedName("schedule_name")
+        private String scheduleName;
 
         /**
-         * schedule_info 排班日期，为表示当月第几天的数字
+         * time_section 排班日期，为表示当月第几天的数字
          */
-        @SerializedName("schedule_info")
-        private ScheduleInfo scheduleInfo;
+        @SerializedName("time_section")
+        private List<TimeSection> timeSection;
+
 
         @Data
-        public class ScheduleInfo implements Serializable {
-          private static final long serialVersionUID = 1317096341116256963L;
+        public class TimeSection implements Serializable {
+          private static final long serialVersionUID = -3447467962751285748L;
           /**
-           * schedule_id 当日安排班次id，班次id也可在打卡规则中查询获得
+           * id 时段id，为班次中某一堆上下班时间组合的id
            */
-          @SerializedName("schedule_id")
-          private Integer scheduleId;
-
-          /**
-           * schedule_name 排班日期，为表示当月第几天的数字
-           */
-          @SerializedName("schedule_name")
-          private String scheduleName;
+          @SerializedName("id")
+          private Integer id;
 
           /**
-           * time_section 排班日期，为表示当月第几天的数字
+           * work_sec 上班时间。距当天00:00的秒数
            */
-          @SerializedName("time_section")
-          private List<TimeSection> timeSection;
+          @SerializedName("work_sec")
+          private Integer workSec;
 
+          /**
+           * off_work_sec 下班时间。距当天00:00的秒数
+           */
+          @SerializedName("off_work_sec")
+          private Integer offWorkSec;
 
-          @Data
-          public class TimeSection implements Serializable {
-            private static final long serialVersionUID = -3447467962751285748L;
-            /**
-             * id 时段id，为班次中某一堆上下班时间组合的id
-             */
-            @SerializedName("id")
-            private Integer id;
+          /**
+           * remind_work_sec 上班提醒时间。距当天00:00的秒数
+           */
+          @SerializedName("remind_work_sec")
+          private Integer remindWorkSec;
 
-            /**
-             * work_sec 上班时间。距当天00:00的秒数
-             */
-            @SerializedName("work_sec")
-            private Integer workSec;
-
-            /**
-             * off_work_sec 下班时间。距当天00:00的秒数
-             */
-            @SerializedName("off_work_sec")
-            private Integer offWorkSec;
-
-            /**
-             * remind_work_sec 上班提醒时间。距当天00:00的秒数
-             */
-            @SerializedName("remind_work_sec")
-            private Integer remindWorkSec;
-
-            /**
-             * remind_off_work_sec 下班提醒时间。距当天00:00的秒数
-             */
-            @SerializedName("remind_off_work_sec")
-            private Integer remindOffWorkSec;
-          }
+          /**
+           * remind_off_work_sec 下班提醒时间。距当天00:00的秒数
+           */
+          @SerializedName("remind_off_work_sec")
+          private Integer remindOffWorkSec;
         }
       }
-
-
     }
+
+
   }
 }

@@ -285,7 +285,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
   }
 
   @Override
-  public WxCpCheckinSchedule getCheckinScheduleList(Date startTime, Date endTime, List<String> userIdList) throws WxErrorException {
+  public List<WxCpCheckinSchedule> getCheckinScheduleList(Date startTime, Date endTime, List<String> userIdList) throws WxErrorException {
     if (startTime == null || endTime == null) {
       throw new WxRuntimeException("starttime and endtime can't be null");
     }
@@ -298,9 +298,6 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     long endTimestamp = endTime.getTime() / 1000L;
     long startTimestamp = startTime.getTime() / 1000L;
 
-    if (endTimestamp - startTimestamp < 0 || endTimestamp - startTimestamp >= MONTH_SECONDS) {
-      throw new WxRuntimeException("获取记录时间跨度不超过一个月");
-    }
 
     JsonObject jsonObject = new JsonObject();
     JsonArray jsonArray = new JsonArray();
@@ -318,8 +315,8 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     JsonObject tmpJson = GsonParser.parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(
-        tmpJson,
-        new TypeToken<WxCpCheckinSchedule>() {
+        tmpJson.get("schedule_list"),
+        new TypeToken<List<WxCpCheckinSchedule>>() {
         }.getType()
       );
   }

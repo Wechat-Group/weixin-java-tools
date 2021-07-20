@@ -165,7 +165,7 @@ public interface WxCpOaService {
    * @return 排班表信息
    * @throws WxErrorException the wx error exception
    */
-  WxCpCheckinSchedule getCheckinScheduleList(Date startTime, Date endTime, List<String> userIdList) throws WxErrorException;
+  List<WxCpCheckinSchedule> getCheckinScheduleList(Date startTime, Date endTime, List<String> userIdList) throws WxErrorException;
 
 
 }

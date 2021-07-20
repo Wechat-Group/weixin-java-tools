@@ -85,7 +85,7 @@ public class WxCpOaServiceImplTest {
     Date startTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-07-01");
     Date endTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-07-31");
 
-    WxCpCheckinSchedule results = wxService.getOaService()
+    List<WxCpCheckinSchedule> results = wxService.getOaService()
       .getCheckinScheduleList(startTime, endTime, Lists.newArrayList("12003648"));
 
     assertThat(results).isNotNull();
