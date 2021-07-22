@@ -53,7 +53,7 @@ public class WxCpOaServiceImplTest {
 
   @Test
   public void testGetCheckinDayData() throws ParseException, WxErrorException {
-    Date startTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-07-01");
+    Date startTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-06-30");
     Date endTime = DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.parse("2021-07-31");
 
     List<WxCpCheckinDayData> results = wxService.getOaService()
@@ -98,6 +98,16 @@ public class WxCpOaServiceImplTest {
 
     Date now = new Date();
     List<WxCpCheckinOption> results = wxService.getOaService().getCheckinOption(now, Lists.newArrayList("binary"));
+    assertThat(results).isNotNull();
+    System.out.println("results ");
+    System.out.println(gson.toJson(results));
+  }
+
+  @Test
+  public void testGetCropCheckinOption() throws WxErrorException {
+
+    Date now = new Date();
+    List<WxCpCropCheckinOption> results = wxService.getOaService().getCropCheckinOption();
     assertThat(results).isNotNull();
     System.out.println("results ");
     System.out.println(gson.toJson(results));

@@ -113,6 +113,22 @@ public class WxCpOaServiceImpl implements WxCpOaService {
   }
 
   @Override
+  public List<WxCpCropCheckinOption> getCropCheckinOption() throws WxErrorException {
+
+    JsonObject jsonObject = new JsonObject();
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CORP_CHECKIN_OPTION);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+
+    return WxCpGsonBuilder.create()
+      .fromJson(
+        tmpJson.get("group"),
+        new TypeToken<List<WxCpCropCheckinOption>>() {
+        }.getType()
+      );
+  }
+
+  @Override
   public WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime,
                                           Integer cursor, Integer size, List<WxCpApprovalInfoQueryFilter> filters) throws WxErrorException {
 

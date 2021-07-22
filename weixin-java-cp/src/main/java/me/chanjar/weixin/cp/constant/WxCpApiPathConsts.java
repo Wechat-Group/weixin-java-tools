@@ -91,6 +91,7 @@ public interface WxCpApiPathConsts {
   }
 
   interface Oa {
+    String GET_CORP_CHECKIN_OPTION = "/cgi-bin/checkin/getcorpcheckinoption";
     String GET_CHECKIN_DATA = "/cgi-bin/checkin/getcheckindata";
     String GET_CHECKIN_OPTION = "/cgi-bin/checkin/getcheckinoption";
     String GET_CHECKIN_DAY_DATA = "/cgi-bin/checkin/getcheckin_daydata";
