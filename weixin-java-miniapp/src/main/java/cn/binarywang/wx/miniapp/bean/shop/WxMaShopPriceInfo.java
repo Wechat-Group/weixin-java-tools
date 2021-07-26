@@ -1,18 +1,18 @@
 package cn.binarywang.wx.miniapp.bean.shop;
 
 import com.google.gson.annotations.SerializedName;
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author leiin
  * @date 2021/3/23
- * @description:
  */
 @Data
 public class WxMaShopPriceInfo implements Serializable {
-
   private static final long serialVersionUID = 1588840927992523263L;
+
   /**
    * 该订单最终的金额（单位：分）
    * <pre>

@@ -17,15 +17,13 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.DataUtils;
 import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
-import me.chanjar.weixin.common.util.http.RequestExecutor;
-import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
-import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
+import me.chanjar.weixin.common.util.http.*;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.*;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -392,6 +390,13 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   public String getTaskResult(String joinId) throws WxErrorException {
     String url = this.configStorage.getApiUrl(BATCH_GET_RESULT + joinId);
     return get(url, null);
+  }
+
+  @Override
+  public String buildQrConnectUrl(String redirectUri, String state) {
+    return String.format("https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid=%s&agentid=%s&redirect_uri=%s&state=%s",
+      this.configStorage.getCorpId(), this.configStorage.getAgentId(),
+      URIUtil.encodeURIComponent(redirectUri), StringUtils.trimToEmpty(state));
   }
 
   public File getTmpDirFile() {

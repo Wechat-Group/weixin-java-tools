@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.OAuth2.*;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.QRCONNECT_URL;
 
 /**
  * oauth2接口实现.
@@ -28,7 +29,7 @@ public class WxOpenOAuth2ServiceImpl extends WxOpenServiceImpl implements WxOAut
 
   @Override
   public String buildAuthorizationUrl(String redirectUri, String scope, String state) {
-    return String.format(CONNECT_OAUTH2_AUTHORIZE_URL.getUrl(null),
+    return String.format(QRCONNECT_URL.getUrl(null),
       this.appId, URIUtil.encodeURIComponent(redirectUri), scope, StringUtils.trimToEmpty(state));
   }
 

@@ -7,11 +7,9 @@ import lombok.Data;
 /**
  * @author leiin
  * @date 2021/3/23
- * @description:
  */
 @Data
 public class WxMaShopOrderPayRequest implements Serializable {
-
   private static final long serialVersionUID = -954667936670521398L;
 
   /**

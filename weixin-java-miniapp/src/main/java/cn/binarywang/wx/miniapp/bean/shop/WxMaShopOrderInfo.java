@@ -4,9 +4,12 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import lombok.Data;
 
+/**
+ * @author Boris
+ * @date 2021/3/23
+ */
 @Data
 public class WxMaShopOrderInfo implements Serializable {
-
   private static final long serialVersionUID = -159624260640727372L;
 
   /**

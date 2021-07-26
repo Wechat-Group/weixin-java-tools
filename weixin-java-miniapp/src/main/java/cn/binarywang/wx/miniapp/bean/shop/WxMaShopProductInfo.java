@@ -3,13 +3,16 @@ package cn.binarywang.wx.miniapp.bean.shop;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author leiin
  * @date 2021/3/23
- * @description:
  */
 @Data
-public class WxMaShopProductInfo {
+public class WxMaShopProductInfo implements Serializable {
+  private static final long serialVersionUID = 8979181840150112093L;
+
   /**
    * 商家自定义商品ID
    * <pre>
@@ -79,5 +82,11 @@ public class WxMaShopProductInfo {
    */
   @SerializedName("sku_id")
   private Integer skuId;
+
+  /**
+   * 扣除优惠后单件sku的分摊价格（单位：分），如果没优惠则与sale_price一致
+   */
+  @SerializedName("real_price")
+  private Integer realPrice;
 }
 

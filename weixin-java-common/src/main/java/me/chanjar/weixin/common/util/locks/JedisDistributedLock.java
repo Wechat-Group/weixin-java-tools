@@ -11,9 +11,11 @@ import redis.clients.jedis.util.Pool;
 
 /**
  * JedisPool 分布式锁
+ * @deprecated 不建议使用jedis-lock这个过期组件，不可靠
  *
  * @author <a href="https://github.com/007gzs">007</a>
  */
+@Deprecated
 public class JedisDistributedLock implements Lock {
   private final Pool<Jedis> jedisPool;
   private final JedisLock lock;
