@@ -297,6 +297,9 @@ public class WxCpTpXmlMessage implements Serializable {
   @Data
   @XStreamAlias("AuthUserInfo")
   public static class AuthUserInfo implements Serializable {
+
+    private static final long serialVersionUID = -2918558288134346848L;
+
     @XStreamAlias("UserId")
     @XStreamConverter(value = XStreamCDataConverter.class)
     protected String userId;
