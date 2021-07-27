@@ -104,6 +104,11 @@ public abstract class BaseWxPayResult {
    */
   @XStreamAlias("sign")
   private String sign;
+  /**
+   * 签名.
+   */
+  @XStreamAlias("sign_type")
+  private String signType;
 
   //以下为辅助属性
   /**
@@ -180,6 +185,7 @@ public abstract class BaseWxPayResult {
     subMchId = readXmlString(d, "sub_mch_id");
     nonceStr = readXmlString(d, "nonce_str");
     sign = readXmlString(d, "sign");
+    signType = readXmlString(d, "sign_type");
   }
 
   protected static Integer readXmlInteger(Node d, String tagName) {
