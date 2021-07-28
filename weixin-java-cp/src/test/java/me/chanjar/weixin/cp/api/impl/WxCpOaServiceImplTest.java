@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +92,19 @@ public class WxCpOaServiceImplTest {
     assertThat(results).isNotNull();
     System.out.println("results ");
     System.out.println(gson.toJson(results));
+  }
+
+  @Test
+  public void testSetCheckinScheduleList() throws WxErrorException {
+    WxCpSetCheckinSchedule wxCpSetCheckinSchedule = new WxCpSetCheckinSchedule();
+    wxCpSetCheckinSchedule.setGroupId(3);
+    wxCpSetCheckinSchedule.setYearmonth(202108);
+    WxCpSetCheckinSchedule.Item item = new WxCpSetCheckinSchedule.Item();
+    item.setScheduleId(0);
+    item.setDay(20);
+    item.setUserid("12003648");
+    wxCpSetCheckinSchedule.setItems(Arrays.asList(item));
+    wxService.getOaService().setCheckinScheduleList(wxCpSetCheckinSchedule);
   }
 
   @Test

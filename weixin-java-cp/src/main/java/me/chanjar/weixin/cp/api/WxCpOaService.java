@@ -180,4 +180,11 @@ public interface WxCpOaService {
   List<WxCpCheckinSchedule> getCheckinScheduleList(Date startTime, Date endTime, List<String> userIdList) throws WxErrorException;
 
 
+  /**
+   * 为打卡人员排班
+   *
+   * @param wxCpSetCheckinSchedule the wx cp set checkin schedule
+   * @throws WxErrorException the wx error exception
+   */
+  void setCheckinScheduleList(WxCpSetCheckinSchedule wxCpSetCheckinSchedule) throws WxErrorException;
 }
