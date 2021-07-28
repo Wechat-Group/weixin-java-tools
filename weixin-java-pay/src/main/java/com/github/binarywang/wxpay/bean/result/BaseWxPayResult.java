@@ -105,7 +105,7 @@ public abstract class BaseWxPayResult {
   @XStreamAlias("sign")
   private String sign;
   /**
-   * 签名.
+   * 签名类型.
    */
   @XStreamAlias("sign_type")
   private String signType;
