@@ -157,7 +157,17 @@ public interface WxMpApiUrl {
     /**
      * 公众号调用或第三方平台帮公众号调用对公众号的所有api调用（包括第三方帮其调用）次数进行清零.
      */
-    CLEAR_QUOTA_URL(API_DEFAULT_HOST_URL, "/cgi-bin/clear_quota");
+    CLEAR_QUOTA_URL(API_DEFAULT_HOST_URL, "/cgi-bin/clear_quota"),
+
+    /**
+     * 短key托管(生成短key的url)
+     */
+    GEN_SHORTEN_URL(API_DEFAULT_HOST_URL, "/cgi-bin/shorten/gen"),
+
+    /**
+     * 短key解析(解析短key的url)
+     */
+    FETCH_SHORTEN_URL(API_DEFAULT_HOST_URL, "/cgi-bin/shorten/fetch");
 
     private final String prefix;
     private final String path;

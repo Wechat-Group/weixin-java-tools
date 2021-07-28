@@ -32,6 +32,7 @@ import me.chanjar.weixin.mp.api.*;
 import me.chanjar.weixin.mp.bean.WxMpSemanticQuery;
 import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
 import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
+import me.chanjar.weixin.mp.bean.result.WxMpShortKeyResult;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
@@ -149,6 +150,24 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
+
+  @Override
+  public String genShorten(String longData, Integer expireSeconds) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("long_data", longData);
+    param.addProperty("expire_seconds", expireSeconds);
+    String responseContent = this.post(GEN_SHORTEN_URL, param.toString());
+    JsonObject tmpJsonObject = GsonParser.parse(responseContent);
+    return tmpJsonObject.get("short_key").getAsString();
+  }
+
+  @Override
+  public WxMpShortKeyResult fetchShorten(String shortKey) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("short_key", shortKey);
+    String responseContent = this.post(FETCH_SHORTEN_URL, param.toString());
+    return WxMpShortKeyResult.fromJson(responseContent);
+  }
 
   @Override
   public boolean checkSignature(String timestamp, String nonce, String signature) {
