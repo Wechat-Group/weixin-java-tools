@@ -1,17 +1,17 @@
 package cn.binarywang.wx.miniapp.bean.shop.request;
 
 import com.google.gson.annotations.SerializedName;
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author leiin
  * @date 2021/3/23
- * @description: spu分页参数
+ * spu分页参数
  */
 @Data
 public class WxMaShopSpuPageRequest implements Serializable {
-
   private static final long serialVersionUID = -4927300283039328661L;
 
   /**

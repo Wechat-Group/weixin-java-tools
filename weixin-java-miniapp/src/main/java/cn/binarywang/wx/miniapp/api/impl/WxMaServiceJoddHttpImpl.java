@@ -7,6 +7,7 @@ import jodd.http.HttpRequest;
 import jodd.http.ProxyInfo;
 import jodd.http.net.SocketHttpConnectionProvider;
 import me.chanjar.weixin.common.util.http.HttpType;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
@@ -45,7 +46,11 @@ public class WxMaServiceJoddHttpImpl extends BaseWxMaServiceImpl<HttpConnectionP
 
   @Override
   protected String doGetAccessTokenRequest() throws IOException {
-    String url = String.format(WxMaService.GET_ACCESS_TOKEN_URL, this.getWxMaConfig().getAppid(), this.getWxMaConfig().getSecret());
+    String url = StringUtils.isNotEmpty(this.getWxMaConfig().getApiHostUrl()) ?
+      WxMaService.GET_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", this.getWxMaConfig().getApiHostUrl()) :
+      WxMaService.GET_ACCESS_TOKEN_URL;
+
+    url = String.format(url, this.getWxMaConfig().getAppid(), this.getWxMaConfig().getSecret());
     HttpRequest request = HttpRequest.get(url);
     if (this.getRequestHttpProxy() != null) {
       SocketHttpConnectionProvider provider = new SocketHttpConnectionProvider();

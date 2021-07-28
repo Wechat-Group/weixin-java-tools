@@ -1,7 +1,7 @@
 ## WxJava - 微信开发 Java SDK（开发工具包） [![LICENSE](https://img.shields.io/badge/License-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE) [![Badge](https://img.shields.io/badge/Link-996.icu-red.svg)](https://996.icu/#/zh_CN) 
 
 [![码云Gitee](https://gitee.com/binary/weixin-java-tools/badge/star.svg?theme=blue)](https://gitee.com/binary/weixin-java-tools)
-[![Github](http://github-svg-buttons.herokuapp.com/star.svg?user=Wechat-Group&repo=WxJava&style=flat&background=1081C1)](https://github.com/Wechat-Group/WxJava)
+[![Github](https://img.shields.io/github/stars/Wechat-Group/WxJava?logo=github&style=flat)](https://github.com/Wechat-Group/WxJava)
 [![GitHub release](https://img.shields.io/github/release/Wechat-Group/WxJava.svg)](https://github.com/Wechat-Group/WxJava/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.binarywang/wx-java.svg)](http://mvnrepository.com/artifact/com.github.binarywang/wx-java)
 [![Build Status](https://travis-ci.org/Wechat-Group/WxJava.svg?branch=develop)](https://travis-ci.org/Wechat-Group/WxJava)
@@ -21,18 +21,18 @@
         <a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect" target="_blank">
 				  <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png">
         </a>
-			</td>
-      <td align="center" valign="middle" width="250">
-        <a href="https://www.duohui.cn/?utm_source=WxJava&utm_medium=web&utm_campaign=WxJava_github" title="多会" target="_blank">
-          <img height="60px" src="https://qiniu.cdn.duohui.co/brand/duohui.png" title="多会 - 活动服务销售平台">
-          <p>活动服务销售平台</p>
-        </a>
-      </td>
-			<td align="center" valign="middle">
 				<a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=7makzf5h" target="_blank">
 					<img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/banners/aliyun.jpg">
 				</a>
 			</td>
+      <td align="center" valign="middle" width="450">
+        <a href="http://ccflow.org/?from=WxJava" title="驰骋BPM" target="_blank">
+          <img height="60px" src="http://ccflow.org/ccflowAD_Title.png" title="驰骋BPM官网">
+          <p>1. 驰骋快速开发平台、工作流引擎、表单引擎采用GPL协议.</p>
+<p>2. 驰骋.net版称为ccflow, java版称为jflow,代码100%开源.</p>
+<p>3. 支持10多个国内外数据库. 单机版\集团版\SAAS版本.</p>
+        </a>
+      </td>
 		</tr>
 	</tbody>
 </table>

@@ -23,6 +23,8 @@ public interface WxMaLiveGoodsService {
    * 注意：开发者必须保存【商品ID】与【审核单ID】，如果丢失，则无法调用其他相关接口
    * 调用额度：500次/一天
    * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/goods/add?access_token=ACCESS_TOKEN
+   *
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/commodity-api.html#1
    * </pre>
    *
    * @param goods 商品

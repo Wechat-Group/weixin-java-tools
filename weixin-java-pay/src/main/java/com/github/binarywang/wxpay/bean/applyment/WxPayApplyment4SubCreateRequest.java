@@ -478,7 +478,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
     @NoArgsConstructor
     @AllArgsConstructor
     @Accessors(chain = true)
-    public static class MicroBizInfo implements Serializable{
+    public static class MicroBizInfo implements Serializable {
       private static final long serialVersionUID = -5679477993681265764L;
       /**
        * 小微经营类型
@@ -512,7 +512,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
       @NoArgsConstructor
       @AllArgsConstructor
       @Accessors(chain = true)
-      public static class MicroStoreInfo implements Serializable{
+      public static class MicroStoreInfo implements Serializable {
         private static final long serialVersionUID = 5277440587305558389L;
         /**
          * 门店名称
@@ -521,6 +521,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
         private String microName;
         /**
          * 门店省市编码 填写门店省市编码，只能由数字组成，详细参见《微信支付提供的省市对照表》
+         *
          * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/download/%E7%9C%81%E5%B8%82%E5%8C%BA%E7%BC%96%E5%8F%B7%E5%AF%B9%E7%85%A7%E8%A1%A8.xlsx'>下载微信支付提供的省市对照表</a>
          */
         @SerializedName("micro_address_code")
@@ -533,8 +534,8 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
         /**
          * 门店门头照片
          * <per>
-         *  1、提交门店门口照片，要求招牌清晰可见
-         *  2、可上传1张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
+         * 1、提交门店门口照片，要求招牌清晰可见
+         * 2、可上传1张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
          * </per>
          *
          * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
@@ -544,8 +545,8 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
         /**
          * 店内环境照片
          * <per>
-         *  1、提交店内环境照片
-         *  2、可上传1张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
+         * 1、提交店内环境照片
+         * 2、可上传1张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
          * </per>
          *
          * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
@@ -572,7 +573,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
       @NoArgsConstructor
       @AllArgsConstructor
       @Accessors(chain = true)
-      public static class MicroMobileInfo implements Serializable{
+      public static class MicroMobileInfo implements Serializable {
         private static final long serialVersionUID = -1308090894511066935L;
         /**
          * 经营/服务名称
@@ -595,10 +596,11 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
          * 1、提交经营/服务现场照片
          * 2、可上传多张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
          * </per>
+         *
          * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
          */
         @SerializedName("micro_mobile_pics")
-        private String micro_mobile_pics;
+        private String microMobilePics;
       }
 
       /**
@@ -609,7 +611,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
       @NoArgsConstructor
       @AllArgsConstructor
       @Accessors(chain = true)
-      public static class MicroOnlineInfo implements Serializable{
+      public static class MicroOnlineInfo implements Serializable {
         private static final long serialVersionUID = 9029168841403055743L;
         /**
          * 线上店铺名称
@@ -627,6 +629,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
          * 1、店铺二维码或店铺链接二选一必填
          * 2、可上传多张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
          * </per>
+         *
          * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
          */
         @SerializedName("micro_qrcode")

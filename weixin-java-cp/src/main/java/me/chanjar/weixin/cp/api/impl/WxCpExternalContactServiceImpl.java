@@ -12,7 +12,25 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpExternalContactService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.external.*;
+import me.chanjar.weixin.cp.bean.external.WxCpContactWayInfo;
+import me.chanjar.weixin.cp.bean.external.WxCpContactWayResult;
+import me.chanjar.weixin.cp.bean.external.WxCpMsgTemplate;
+import me.chanjar.weixin.cp.bean.external.WxCpMsgTemplateAddResult;
+import me.chanjar.weixin.cp.bean.external.WxCpUpdateRemarkRequest;
+import me.chanjar.weixin.cp.bean.external.WxCpUserExternalContactList;
+import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatInfo;
+import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatList;
+import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatStatistic;
+import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatTransferResp;
+import me.chanjar.weixin.cp.bean.external.WxCpUserExternalTagGroupInfo;
+import me.chanjar.weixin.cp.bean.external.WxCpUserExternalTagGroupList;
+import me.chanjar.weixin.cp.bean.external.WxCpUserExternalUnassignList;
+import me.chanjar.weixin.cp.bean.external.WxCpUserExternalUserBehaviorStatistic;
+import me.chanjar.weixin.cp.bean.external.WxCpUserTransferCustomerReq;
+import me.chanjar.weixin.cp.bean.external.WxCpUserTransferCustomerResp;
+import me.chanjar.weixin.cp.bean.external.WxCpUserTransferResultResp;
+import me.chanjar.weixin.cp.bean.external.WxCpUserWithExternalPermission;
+import me.chanjar.weixin.cp.bean.external.WxCpWelcomeMsg;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
 import org.apache.commons.lang3.ArrayUtils;
@@ -267,9 +285,10 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpUserExternalGroupChatInfo getGroupChat(String chatId) throws WxErrorException {
+  public WxCpUserExternalGroupChatInfo getGroupChat(String chatId, Integer needName) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("chat_id", chatId);
+    json.addProperty("need_name", needName);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GROUP_CHAT_INFO);
     final String result = this.mainService.post(url, json.toString());
     return WxCpUserExternalGroupChatInfo.fromJson(result);

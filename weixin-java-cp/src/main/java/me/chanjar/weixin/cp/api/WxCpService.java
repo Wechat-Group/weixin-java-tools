@@ -288,6 +288,14 @@ public interface WxCpService extends WxService {
   void setWxCpConfigStorage(WxCpConfigStorage wxConfigProvider);
 
   /**
+   * 构造扫码登录链接 - 构造独立窗口登录二维码
+   * @param redirectUri 重定向地址，需要进行UrlEncode
+   * @param state 用于保持请求和回调的状态，授权请求后原样带回给企业。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议企业带上该参数，可设置为简单的随机数加session进行校验
+   * @return .
+   */
+  String buildQrConnectUrl(String redirectUri, String state);
+
+  /**
    * 获取部门相关接口的服务类对象
    *
    * @return the department service

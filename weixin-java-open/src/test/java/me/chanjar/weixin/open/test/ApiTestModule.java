@@ -5,6 +5,7 @@ import com.google.inject.Module;
 import com.thoughtworks.xstream.XStream;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMaService;
 import me.chanjar.weixin.open.api.WxOpenMpService;
 import me.chanjar.weixin.open.api.WxOpenService;
@@ -33,6 +34,7 @@ public class ApiTestModule implements Module {
 
       binder.bind(TestConfigStorage.class).toInstance(config);
       binder.bind(WxOpenService.class).toInstance(service);
+      binder.bind(WxOpenComponentService.class).toInstance(service.getWxOpenComponentService());
 
       if (config.getTestMpAppId() != null && !config.getTestMpAppId().isEmpty()) {
         //如果配置了测试公众号,则构建公众号服务依赖

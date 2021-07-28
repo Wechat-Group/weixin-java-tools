@@ -3,8 +3,11 @@ package com.github.binarywang.wxpay.bean.ecommerce;
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * 交易账单结果
+ *
  * @author: f00lish
  * @date: 2020/09/28
  */
@@ -13,7 +16,8 @@ import lombok.*;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class TradeBillResult {
+public class TradeBillResult implements Serializable {
+  private static final long serialVersionUID = 6928601792206656068L;
 
   /**
    * <pre>

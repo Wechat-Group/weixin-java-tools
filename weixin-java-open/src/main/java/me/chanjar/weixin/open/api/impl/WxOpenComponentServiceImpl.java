@@ -150,6 +150,17 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
+  public void startPushTicket() throws WxErrorException {
+    WxOpenConfigStorage config = getWxOpenConfigStorage();
+
+    JsonObject json = new JsonObject();
+    json.addProperty("component_appid", config.getComponentAppId());
+    json.addProperty("component_secret", config.getComponentAppSecret());
+
+    getWxOpenService().post(API_START_PUSH_TICKET, json.toString());
+  }
+
+  @Override
   public String getComponentAccessToken(boolean forceRefresh) throws WxErrorException {
     final WxOpenConfigStorage config = this.getWxOpenConfigStorage();
     if (!config.isComponentAccessTokenExpired() && !forceRefresh) {

@@ -1,5 +1,10 @@
 package me.chanjar.weixin.open.api.impl;
 
+import com.google.inject.Inject;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.open.api.WxOpenComponentService;
+import me.chanjar.weixin.open.test.ApiTestModule;
+import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 /**
@@ -8,153 +13,162 @@ import org.testng.annotations.Test;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * @date 2020-06-06
  */
+@Guice(modules = ApiTestModule.class)
 public class WxOpenComponentServiceImplTest {
 
-    @Test
-    public void testGetWxMpServiceByAppid() {
-    }
+  @Inject
+  WxOpenComponentService wxOpenComponentService;
 
-    @Test
-    public void testGetWxMaServiceByAppid() {
-    }
+  @Test
+  public void testGetWxMpServiceByAppid() {
+  }
 
-    @Test
-    public void testGetWxFastMaServiceByAppid() {
-    }
+  @Test
+  public void testGetWxMaServiceByAppid() {
+  }
 
-    @Test
-    public void testGetWxOpenService() {
-    }
+  @Test
+  public void testGetWxFastMaServiceByAppid() {
+  }
 
-    @Test
-    public void testGetWxOpenConfigStorage() {
-    }
+  @Test
+  public void testGetWxOpenService() {
+  }
 
-    @Test
-    public void testCheckSignature() {
-    }
+  @Test
+  public void testGetWxOpenConfigStorage() {
+  }
 
-    @Test
-    public void testGetComponentAccessToken() {
-    }
+  @Test
+  public void testCheckSignature() {
+  }
 
-    @Test
-    public void testPost() {
-    }
+  @Test
+  public void testGetComponentAccessToken() {
+  }
 
-    @Test
-    public void testTestPost() {
-    }
+  @Test
+  public void testPost() {
+  }
 
-    @Test
-    public void testGet() {
-    }
+  @Test
+  public void testTestPost() {
+  }
 
-    @Test
-    public void testTestGet() {
-    }
+  @Test
+  public void testGet() {
+  }
 
-    @Test
-    public void testGetPreAuthUrl() {
-    }
+  @Test
+  public void testTestGet() {
+  }
 
-    @Test
-    public void testTestGetPreAuthUrl() {
-    }
+  @Test
+  public void testGetPreAuthUrl() {
+  }
 
-    @Test
-    public void testGetMobilePreAuthUrl() {
-    }
+  @Test
+  public void testTestGetPreAuthUrl() {
+  }
 
-    @Test
-    public void testTestGetMobilePreAuthUrl() {
-    }
+  @Test
+  public void testGetMobilePreAuthUrl() {
+  }
 
-    @Test
-    public void testRoute() {
-    }
+  @Test
+  public void testTestGetMobilePreAuthUrl() {
+  }
 
-    @Test
-    public void testGetQueryAuth() {
-    }
+  @Test
+  public void testRoute() {
+  }
 
-    @Test
-    public void testGetAuthorizerInfo() {
-    }
+  @Test
+  public void testGetQueryAuth() {
+  }
 
-    @Test
-    public void testGetAuthorizerList() {
-    }
+  @Test
+  public void testGetAuthorizerInfo() {
+  }
 
-    @Test
-    public void testGetAuthorizerOption() {
-    }
+  @Test
+  public void testGetAuthorizerList() {
+  }
 
-    @Test
-    public void testSetAuthorizerOption() {
-    }
+  @Test
+  public void testGetAuthorizerOption() {
+  }
 
-    @Test
-    public void testGetAuthorizerAccessToken() {
-    }
+  @Test
+  public void testSetAuthorizerOption() {
+  }
 
-    @Test
-    public void testOauth2getAccessToken() {
-    }
+  @Test
+  public void testGetAuthorizerAccessToken() {
+  }
 
-    @Test
-    public void testTestCheckSignature() {
-    }
+  @Test
+  public void testOauth2getAccessToken() {
+  }
 
-    @Test
-    public void testOauth2refreshAccessToken() {
-    }
+  @Test
+  public void testTestCheckSignature() {
+  }
 
-    @Test
-    public void testOauth2buildAuthorizationUrl() {
-    }
+  @Test
+  public void testOauth2refreshAccessToken() {
+  }
 
-    @Test
-    public void testMiniappJscode2Session() {
-    }
+  @Test
+  public void testOauth2buildAuthorizationUrl() {
+  }
 
-    @Test
-    public void testGetTemplateDraftList() {
-    }
+  @Test
+  public void testMiniappJscode2Session() {
+  }
 
-    @Test
-    public void testGetTemplateList() {
-    }
+  @Test
+  public void testGetTemplateDraftList() {
+  }
 
-    @Test
-    public void testAddToTemplate() {
-    }
+  @Test
+  public void testGetTemplateList() {
+  }
 
-    @Test
-    public void testDeleteTemplate() {
-    }
+  @Test
+  public void testAddToTemplate() {
+  }
 
-    @Test
-    public void testCreateOpenAccount() {
-    }
+  @Test
+  public void testDeleteTemplate() {
+  }
 
-    @Test
-    public void testBindOpenAccount() {
-    }
+  @Test
+  public void testCreateOpenAccount() {
+  }
 
-    @Test
-    public void testUnbindOpenAccount() {
-    }
+  @Test
+  public void testBindOpenAccount() {
+  }
 
-    @Test
-    public void testGetOpenAccount() {
-    }
+  @Test
+  public void testUnbindOpenAccount() {
+  }
 
-    @Test
-    public void testFastRegisterWeapp() {
-    }
+  @Test
+  public void testGetOpenAccount() {
+  }
 
-    @Test
-    public void testFastRegisterWeappSearch() {
-    }
+  @Test
+  public void testFastRegisterWeapp() {
+  }
+
+  @Test
+  public void testFastRegisterWeappSearch() {
+  }
+
+  @Test
+  public void testStartPushTicket() throws WxErrorException {
+    wxOpenComponentService.startPushTicket();
+  }
 }
