@@ -32,6 +32,13 @@ public class WxOpenMaCodeTemplate implements Serializable {
    */
   @SerializedName(value = "userDesc", alternate = "user_desc")
   private String userDesc;
+
+  /**
+   * 模板类型 0对应普通模板，1对应标准模板
+   */
+  @SerializedName(value = "templateType", alternate = "template_type")
+  private Integer template_type;
+
   /**
    * 开发者上传草稿时间 / 被添加为模版的时间
    */
