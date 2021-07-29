@@ -3,7 +3,7 @@ package me.chanjar.weixin.common.error;
 /**
  * @author Daniel Qian
  */
-public class WxErrorException extends Exception {
+public class WxErrorException extends RuntimeException {
   private static final long serialVersionUID = -6357149550353160810L;
 
   private final WxError error;
