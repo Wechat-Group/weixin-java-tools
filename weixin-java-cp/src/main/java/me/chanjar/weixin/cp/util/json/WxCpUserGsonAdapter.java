@@ -30,6 +30,7 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
   private static final String EXTERNAL_POSITION = "external_position";
   private static final String DEPARTMENT = "department";
   private static final String EXTERNAL_CORP_NAME = "external_corp_name";
+  private static final String WECHAT_CHANNELS = "wechat_channels";
 
   @Override
   public WxCpUser deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -95,6 +96,11 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
 
     if (GsonHelper.isNotNull(o.get(EXTERNAL_PROFILE))) {
       user.setExternalCorpName(GsonHelper.getString(o.getAsJsonObject().get(EXTERNAL_PROFILE).getAsJsonObject(), EXTERNAL_CORP_NAME));
+      JsonElement jsonElement = o.get(EXTERNAL_PROFILE).getAsJsonObject().get(WECHAT_CHANNELS);
+      if(jsonElement !=null){
+        JsonObject asJsonObject = jsonElement.getAsJsonObject();
+        user.setWechatChannels(WechatChannels.builder().nickname(GsonHelper.getString(asJsonObject,"nickname")).status(GsonHelper.getInteger(asJsonObject,"status")).build());
+      }
       this.buildExternalAttrs(o, user);
     }
 
@@ -319,6 +325,10 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
 
     if (user.getExternalCorpName() != null) {
       attrsJson.addProperty(EXTERNAL_CORP_NAME, user.getExternalCorpName());
+    }
+
+    if(user.getWechatChannels() != null){
+      attrsJson.add(WECHAT_CHANNELS,GsonHelper.buildJsonObject("nickname", user.getWechatChannels().getNickname(), "status", user.getWechatChannels().getStatus()));
     }
 
     if (!user.getExternalAttrs().isEmpty()) {
