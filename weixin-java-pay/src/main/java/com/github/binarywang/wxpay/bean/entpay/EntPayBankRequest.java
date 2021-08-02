@@ -110,7 +110,6 @@ public class EntPayBankRequest extends BaseWxPayRequest {
    * 描述：企业付款到银行卡付款说明,即订单备注（UTF8编码，允许100个字符以内）
    * </pre>
    */
-  @Required
   @XStreamAlias("desc")
   private String description;
 
