@@ -336,4 +336,10 @@ public class WxCpOaServiceImpl implements WxCpOaService {
         }.getType()
       );
   }
+
+  @Override
+  public void setCheckinScheduleList(WxCpSetCheckinSchedule wxCpSetCheckinSchedule) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(SET_CHECKIN_SCHEDULE_DATA);
+    this.mainService.post(url, WxCpGsonBuilder.create().toJson(wxCpSetCheckinSchedule));
+  }
 }

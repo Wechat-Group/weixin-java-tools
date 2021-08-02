@@ -68,6 +68,10 @@ public class WxCpUser implements Serializable {
   private List<ExternalAttribute> externalAttrs = new ArrayList<>();
   private String externalPosition;
   private String externalCorpName;
+  private WechatChannels wechatChannels;
+
+
+
 
   public void addExternalAttr(ExternalAttribute externalAttr) {
     this.externalAttrs.add(externalAttr);
@@ -113,7 +117,7 @@ public class WxCpUser implements Serializable {
   @AllArgsConstructor
   public static class ExternalAttribute implements Serializable {
     private static final long serialVersionUID = -5696099236344075582L;
-    
+
     /**
      * 属性类型: 0-本文 1-网页 2-小程序.
      */
@@ -143,5 +147,19 @@ public class WxCpUser implements Serializable {
      * 小程序的页面路径.
      */
     private String pagePath;
+  }
+
+
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class WechatChannels implements Serializable {
+    private static final long serialVersionUID = -5696099236344075582L;
+
+    private String nickname;
+
+    private Integer status;
+
   }
 }

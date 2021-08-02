@@ -97,6 +97,7 @@ public interface WxCpApiPathConsts {
     String GET_CHECKIN_DAY_DATA = "/cgi-bin/checkin/getcheckin_daydata";
     String GET_CHECKIN_MONTH_DATA = "/cgi-bin/checkin/getcheckin_monthdata";
     String GET_CHECKIN_SCHEDULE_DATA = "/cgi-bin/checkin/getcheckinschedulist";
+    String SET_CHECKIN_SCHEDULE_DATA = "/cgi-bin/checkin/setcheckinschedulist";
     String GET_APPROVAL_INFO = "/cgi-bin/oa/getapprovalinfo";
     String GET_APPROVAL_DETAIL = "/cgi-bin/oa/getapprovaldetail";
     String GET_DIAL_RECORD = "/cgi-bin/dial/get_dial_record";
