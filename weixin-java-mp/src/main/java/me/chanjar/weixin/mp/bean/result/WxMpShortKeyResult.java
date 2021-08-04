@@ -16,7 +16,7 @@ public class WxMpShortKeyResult implements Serializable {
   private static final long serialVersionUID = 5770641374997158852L;
 
   /**
-   * 创建的时间戳
+   * 长信息
    */
   protected String longData;
   /**
