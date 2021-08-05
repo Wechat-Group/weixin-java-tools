@@ -1,8 +1,12 @@
 package me.chanjar.weixin.cp.bean.external;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.*;
-import me.chanjar.weixin.cp.bean.external.msg.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import me.chanjar.weixin.cp.bean.external.msg.Attachment;
+import me.chanjar.weixin.cp.bean.external.msg.Text;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;

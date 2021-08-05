@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class WxCpUserExternalContactList implements Serializable {
   private static final long serialVersionUID = -4301684507150486556L;
-  
+
   @SerializedName("errcode")
   @Expose
   private Long errcode;

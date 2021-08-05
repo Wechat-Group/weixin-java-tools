@@ -64,13 +64,13 @@ public class WxCpUserExternalTagGroupInfo extends WxCpBaseResp {
     private String name;
 
     @SerializedName("create_time")
-    private Long  createTime;
+    private Long createTime;
 
     @SerializedName("order")
-    private Integer  order;
+    private Integer order;
 
     @SerializedName("deleted")
-    private Boolean  deleted;
+    private Boolean deleted;
 
   }
 

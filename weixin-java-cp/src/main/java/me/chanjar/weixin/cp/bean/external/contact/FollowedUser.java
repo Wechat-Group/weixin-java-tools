@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Data
 public class FollowedUser implements Serializable {
   private static final long serialVersionUID = -4301684507150486556L;
-  
+
   @SerializedName("userid")
   private String userId;
 
