@@ -1,6 +1,7 @@
 package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaAuditMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.bean.ma.WxMaOpenCommitExtInfo;
 import me.chanjar.weixin.open.bean.ma.WxMaScheme;
@@ -232,6 +233,12 @@ public interface WxOpenMaService extends WxMaService {
    * 通过此接口开通自定义版交易组件，将同步返回接入结果，不再有异步事件回调。
    */
   String API_REGISTER_SHOP_COMPONENT = "https://api.weixin.qq.com/shop/register/apply";
+
+  /**
+   * 小程序审核 提审素材上传接口
+   */
+  String API_AUDIT_UPLOAD_MEDIA = "https://api.weixin.qq.com/wxa/uploadmedia";
+
   /**
    * 获得小程序的域名配置信息
    *
@@ -613,11 +620,17 @@ public interface WxOpenMaService extends WxMaService {
    * @return
    */
   WxOpenResult registerShopComponent() throws WxErrorException;
-  
+
   /**
    * 小程序基础信息服务  (小程序名称、头像、描述、类目等信息设置)
    *
    * @return 小程序基础信息服务
    */
   WxOpenMaBasicService getBasicService();
+
+  /**
+   * 小程序审核 提审素材上传接口
+   * @return
+   */
+  WxMaAuditMediaUploadResult uploadMedia(File file) throws WxErrorException;
 }
