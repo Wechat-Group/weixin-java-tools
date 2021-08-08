@@ -2,8 +2,10 @@ package me.chanjar.weixin.open.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
+import cn.binarywang.wx.miniapp.bean.WxMaAuditMediaUploadResult;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.executor.AuditMediaUploadRequestExecutor;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -394,6 +396,11 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     JsonObject params = new JsonObject();
     String response = post(API_REGISTER_SHOP_COMPONENT, GSON.toJson(params));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxMaAuditMediaUploadResult uploadMedia(File file) throws WxErrorException {
+    return (WxMaAuditMediaUploadResult) this.execute(AuditMediaUploadRequestExecutor.create(getRequestHttp()), API_AUDIT_UPLOAD_MEDIA, file);
   }
 
   private JsonArray toJsonArray(List<String> strList) {

@@ -404,6 +404,12 @@ public interface WxMaService extends WxService {
   WxMaShopSpuService getShopSpuService();
 
   /**
+   * 返回小程序交易组件-接入申请接口
+   * @return
+   */
+  WxMaShopRegisterService getShopRegisterService();
+
+  /**
    * 获取小程序 URL Link服务接口
    * @return
    */
