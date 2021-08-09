@@ -90,15 +90,22 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
   @Data
   @Accessors(chain = true)
   public static class AppResult implements Serializable {
-    private static final long serialVersionUID = 5465773025172875110L;
+    private static final long serialVersionUID = 2L;
 
     private String appid;
-    private String partnerId;
-    private String prepayId;
+    private String partnerid;
+    private String prepayid;
+    /**
+     * 注意微信要求的字段是package，但是这是java关键字，请自行在序列化时/前端处理
+     */
     private String packageValue;
     private String noncestr;
     private String timestamp;
+    private String sign;
 
+    private String getSignStr() {
+      return String.format("%s\n%s\n%s\n%s\n", appid, timestamp, noncestr, prepayid);
+    }
   }
 
   public <T> T getPayInfo(TradeTypeEnum tradeType, String appId, String mchId, PrivateKey privateKey) {
@@ -116,10 +123,11 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
         return (T) this.h5Url;
       case APP:
         AppResult appResult = new AppResult();
-        appResult.setAppid(appId).setPrepayId(this.prepayId).setPartnerId(mchId)
+        appResult.setAppid(appId).setPrepayid(this.prepayId).setPartnerid(mchId)
           .setNoncestr(nonceStr).setTimestamp(timestamp)
           //暂填写固定值Sign=WXPay
-          .setPackageValue("Sign=WXPay");
+          .setPackageValue("Sign=WXPay")
+          .setSign(SignUtils.sign(appResult.getSignStr(), privateKey));
         return (T) appResult;
       case NATIVE:
         return (T) this.codeUrl;
