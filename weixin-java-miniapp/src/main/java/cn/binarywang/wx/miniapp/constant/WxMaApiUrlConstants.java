@@ -333,6 +333,10 @@ public class WxMaApiUrlConstants {
       String UPDATE_INFO = "https://api.weixin.qq.com/shop/account/update_info";
       String GET_INFO = "https://api.weixin.qq.com/shop/account/get_info";
     }
+
+    interface Cat {
+      String GET_CAT = "https://api.weixin.qq.com/shop/cat/get";
+    }
   }
 
   /**
