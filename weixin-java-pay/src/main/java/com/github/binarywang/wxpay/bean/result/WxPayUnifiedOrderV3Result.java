@@ -83,7 +83,7 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
     private String paySign;
 
     private String getSignStr() {
-      return String.format("%s%n%s%n%s%n%s%n", appId, timeStamp, nonceStr, packageValue);
+      return String.format("%s\n%s\n%s\n%s\n", appId, timeStamp, nonceStr, packageValue);
     }
   }
 
