@@ -68,6 +68,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaShopRegisterService shopRegisterService = new WxMaShopRegisterServiceImpl(this);
   private final WxMaShopAccountService shopAccountService = new WxMaShopAccountServiceImpl(this);
   private final WxMaShopCatService shopCatService = new WxMaShopCatServiceImpl(this);
+  private final WxMaShopImgService shopImgService = new WxMaShopImgServiceImpl(this);
   private final WxMaLinkService linkService = new WxMaLinkServiceImpl(this);
   private final WxMaReimburseInvoiceService reimburseInvoiceService = new WxMaReimburseInvoiceServiceImpl(this);
   private Map<String, WxMaConfig> configMap;
@@ -532,6 +533,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaShopCatService getShopCatService() {
     return this.shopCatService;
+  }
+
+  @Override
+  public WxMaShopImgService getShopImgService() {
+    return this.shopImgService;
   }
 
   @Override

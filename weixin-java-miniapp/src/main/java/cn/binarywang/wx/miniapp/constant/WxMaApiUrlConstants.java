@@ -337,6 +337,10 @@ public class WxMaApiUrlConstants {
     interface Cat {
       String GET_CAT = "https://api.weixin.qq.com/shop/cat/get";
     }
+
+    interface Img {
+      String IMG_UPLOAD = "https://api.weixin.qq.com/shop/img/upload";
+    }
   }
 
   /**

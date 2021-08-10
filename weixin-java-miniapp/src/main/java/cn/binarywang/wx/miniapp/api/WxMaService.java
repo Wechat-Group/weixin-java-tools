@@ -427,6 +427,13 @@ public interface WxMaService extends WxService {
   WxMaShopCatService getShopCatService();
 
   /**
+   * 小程序交易组件-接入商品前必需接口-上传图片
+   *
+   * @return
+   */
+  WxMaShopImgService getShopImgService();
+
+  /**
    * 获取小程序 URL Link服务接口
    *
    * @return
