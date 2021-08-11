@@ -40,12 +40,8 @@ public class WxCpOaServiceImpl implements WxCpOaService {
   }
 
   @Override
-  public List<WxCpCheckinData> getCheckinData(Integer openCheckinDataType, Date startTime, Date endTime,
+  public List<WxCpCheckinData> getCheckinData(Integer openCheckinDataType, @NonNull Date startTime, @NonNull Date endTime,
                                               List<String> userIdList) throws WxErrorException {
-    if (startTime == null || endTime == null) {
-      throw new WxRuntimeException("starttime and endtime can't be null");
-    }
-
     if (userIdList == null || userIdList.size() > USER_IDS_LIMIT) {
       throw new WxRuntimeException("用户列表不能为空，不超过 " + USER_IDS_LIMIT + " 个，若用户超过 " + USER_IDS_LIMIT + " 个，请分批获取");
     }
@@ -73,20 +69,14 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CHECKIN_DATA);
     String responseContent = this.mainService.post(url, jsonObject.toString());
     JsonObject tmpJson = GsonParser.parse(responseContent);
-    return WxCpGsonBuilder.create()
-      .fromJson(
-        tmpJson.get("checkindata"),
-        new TypeToken<List<WxCpCheckinData>>() {
-        }.getType()
-      );
+    return WxCpGsonBuilder.create().fromJson(tmpJson.get("checkindata"),
+      new TypeToken<List<WxCpCheckinData>>() {
+      }.getType()
+    );
   }
 
   @Override
-  public List<WxCpCheckinOption> getCheckinOption(Date datetime, List<String> userIdList) throws WxErrorException {
-    if (datetime == null) {
-      throw new WxRuntimeException("datetime can't be null");
-    }
-
+  public List<WxCpCheckinOption> getCheckinOption(@NonNull Date datetime, List<String> userIdList) throws WxErrorException {
     if (userIdList == null || userIdList.size() > USER_IDS_LIMIT) {
       throw new WxRuntimeException("用户列表不能为空，不超过 " + USER_IDS_LIMIT + " 个，若用户超过 " + USER_IDS_LIMIT + " 个，请分批获取");
     }
@@ -104,18 +94,29 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     String responseContent = this.mainService.post(url, jsonObject.toString());
     JsonObject tmpJson = GsonParser.parse(responseContent);
 
-    return WxCpGsonBuilder.create()
-      .fromJson(
-        tmpJson.get("info"),
-        new TypeToken<List<WxCpCheckinOption>>() {
-        }.getType()
-      );
+    return WxCpGsonBuilder.create().fromJson(tmpJson.get("info"),
+      new TypeToken<List<WxCpCheckinOption>>() {
+      }.getType()
+    );
+  }
+
+  @Override
+  public List<WxCpCropCheckinOption> getCropCheckinOption() throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CORP_CHECKIN_OPTION);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+
+    return WxCpGsonBuilder.create().fromJson(tmpJson.get("group"),
+      new TypeToken<List<WxCpCropCheckinOption>>() {
+      }.getType()
+    );
   }
 
   @Override
   public WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime,
-                                          Integer cursor, Integer size, List<WxCpApprovalInfoQueryFilter> filters) throws WxErrorException {
-
+                                          Integer cursor, Integer size, List<WxCpApprovalInfoQueryFilter> filters)
+    throws WxErrorException {
     if (cursor == null) {
       cursor = 0;
     }
@@ -155,7 +156,6 @@ public class WxCpOaServiceImpl implements WxCpOaService {
 
   @Override
   public WxCpApprovalDetailResult getApprovalDetail(@NonNull String spNo) throws WxErrorException {
-
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("sp_no", spNo);
 
@@ -182,7 +182,6 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     jsonObject.addProperty("limit", limit);
 
     if (startTime != null && endTime != null) {
-
       long endtimestamp = endTime.getTime() / 1000L;
       long starttimestamp = startTime.getTime() / 1000L;
 
@@ -211,5 +210,102 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_TEMPLATE_DETAIL);
     String responseContent = this.mainService.post(url, jsonObject.toString());
     return WxCpGsonBuilder.create().fromJson(responseContent, WxCpTemplateResult.class);
+  }
+
+  @Override
+  public List<WxCpCheckinDayData> getCheckinDayData(@NonNull Date startTime, @NonNull Date endTime, List<String> userIdList)
+    throws WxErrorException {
+    if (userIdList == null || userIdList.size() > USER_IDS_LIMIT) {
+      throw new WxRuntimeException("用户列表不能为空，不超过 " + USER_IDS_LIMIT + " 个，若用户超过 " + USER_IDS_LIMIT + " 个，请分批获取");
+    }
+
+    long endTimestamp = endTime.getTime() / 1000L;
+    long startTimestamp = startTime.getTime() / 1000L;
+
+    JsonObject jsonObject = new JsonObject();
+    JsonArray jsonArray = new JsonArray();
+
+    jsonObject.addProperty("starttime", startTimestamp);
+    jsonObject.addProperty("endtime", endTimestamp);
+
+    for (String userid : userIdList) {
+      jsonArray.add(userid);
+    }
+    jsonObject.add("useridlist", jsonArray);
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CHECKIN_DAY_DATA);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return WxCpGsonBuilder.create().fromJson(tmpJson.get("datas"),
+      new TypeToken<List<WxCpCheckinDayData>>() {
+      }.getType()
+    );
+  }
+
+  @Override
+  public List<WxCpCheckinMonthData> getCheckinMonthData(@NonNull Date startTime, @NonNull Date endTime, List<String> userIdList)
+    throws WxErrorException {
+    if (userIdList == null || userIdList.size() > USER_IDS_LIMIT) {
+      throw new WxRuntimeException("用户列表不能为空，不超过 " + USER_IDS_LIMIT + " 个，若用户超过 " + USER_IDS_LIMIT + " 个，请分批获取");
+    }
+
+    long endTimestamp = endTime.getTime() / 1000L;
+    long startTimestamp = startTime.getTime() / 1000L;
+
+    JsonObject jsonObject = new JsonObject();
+    JsonArray jsonArray = new JsonArray();
+
+    jsonObject.addProperty("starttime", startTimestamp);
+    jsonObject.addProperty("endtime", endTimestamp);
+
+    for (String userid : userIdList) {
+      jsonArray.add(userid);
+    }
+    jsonObject.add("useridlist", jsonArray);
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CHECKIN_MONTH_DATA);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return WxCpGsonBuilder.create().fromJson(tmpJson.get("datas"),
+      new TypeToken<List<WxCpCheckinMonthData>>() {
+      }.getType()
+    );
+  }
+
+  @Override
+  public List<WxCpCheckinSchedule> getCheckinScheduleList(@NonNull Date startTime, @NonNull Date endTime, List<String> userIdList)
+    throws WxErrorException {
+    if (userIdList == null || userIdList.size() > USER_IDS_LIMIT) {
+      throw new WxRuntimeException("用户列表不能为空，不超过 " + USER_IDS_LIMIT + " 个，若用户超过 " + USER_IDS_LIMIT + " 个，请分批获取");
+    }
+
+    long endTimestamp = endTime.getTime() / 1000L;
+    long startTimestamp = startTime.getTime() / 1000L;
+
+
+    JsonObject jsonObject = new JsonObject();
+    JsonArray jsonArray = new JsonArray();
+
+    jsonObject.addProperty("starttime", startTimestamp);
+    jsonObject.addProperty("endtime", endTimestamp);
+
+    for (String userid : userIdList) {
+      jsonArray.add(userid);
+    }
+    jsonObject.add("useridlist", jsonArray);
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CHECKIN_SCHEDULE_DATA);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return WxCpGsonBuilder.create().fromJson(tmpJson.get("schedule_list"),
+      new TypeToken<List<WxCpCheckinSchedule>>() {
+      }.getType()
+    );
+  }
+
+  @Override
+  public void setCheckinScheduleList(WxCpSetCheckinSchedule wxCpSetCheckinSchedule) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(SET_CHECKIN_SCHEDULE_DATA);
+    this.mainService.post(url, WxCpGsonBuilder.create().toJson(wxCpSetCheckinSchedule));
   }
 }

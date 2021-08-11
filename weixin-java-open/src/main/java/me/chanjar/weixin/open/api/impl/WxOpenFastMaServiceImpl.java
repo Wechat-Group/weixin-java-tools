@@ -20,7 +20,9 @@ import java.util.Map;
  *
  * @author Hipple
  * @since 2019/1/23 15:27
+ * @deprecated 请使用 {@link WxOpenMaServiceImpl} 替代
  */
+@Deprecated
 public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFastMaService {
   private final WxOpenComponentService wxOpenComponentService;
   private final WxMaConfig wxMaConfig;

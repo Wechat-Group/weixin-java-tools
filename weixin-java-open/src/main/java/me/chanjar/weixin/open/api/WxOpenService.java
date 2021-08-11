@@ -1,6 +1,10 @@
 package me.chanjar.weixin.open.api;
 
+import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
+
+import java.io.File;
 
 /**
  * The interface Wx open service.
@@ -48,5 +52,8 @@ public interface WxOpenService {
    * @throws WxErrorException the wx error exception
    */
   String post(String url, String postData) throws WxErrorException;
+
+
+  WxMinishopImageUploadResult uploadMinishopMediaFile(String url, File file) throws WxErrorException;
 
 }

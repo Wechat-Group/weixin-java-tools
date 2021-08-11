@@ -67,6 +67,22 @@ public class ApplymentsStatusResult implements Serializable {
 
   /**
    * <pre>
+   * 字段名：签约状态
+   * 变量名：sign_state
+   * 是否必填：否
+   * 类型：string(16)
+   * 描述：
+   *  1、UNSIGNED：未签约。该状态下，电商平台可查询获取签约链接，引导二级商户的超级管理员完成签约；
+   *  2、SIGNED ：已签约。指二级商户的超级管理员已完成签约。注意：若申请单被驳回，商户修改了商户主体名称、法人名称、超级管理员信息、主体类型等信息，则需重新签约。
+   *  3、NOT_SIGNABLE：不可签约。该状态下，暂不支持超级管理员签约。一般为申请单处于已驳回、已冻结、机器校验中状态，无法签约。
+   *  示例值：https://pay.weixin.qq.com/public/apply4ec_sign/s?applymentId=2000002126198476&sign=b207b673049a32c858f3aabd7d27c7ec
+   * </pre>
+   */
+  @SerializedName(value = "sign_state")
+  private String signState;
+
+  /**
+   * <pre>
    * 字段名：电商平台二级商户号
    * 变量名：sub_mchid
    * 是否必填：否

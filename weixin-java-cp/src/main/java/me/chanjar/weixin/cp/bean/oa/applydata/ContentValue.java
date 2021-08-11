@@ -67,8 +67,8 @@ public class ContentValue implements Serializable {
 
   @Data
   public static class Member implements Serializable {
-
     private static final long serialVersionUID = 1316551341955496067L;
+
     @SerializedName("userid")
     private String userId;
     private String name;
@@ -96,7 +96,6 @@ public class ContentValue implements Serializable {
     private static final long serialVersionUID = -3500102073821161558L;
     private List<ApplyDataContent> list;
   }
-
 
   @Data
   public static class Attendance implements Serializable {

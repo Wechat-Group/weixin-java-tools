@@ -172,7 +172,7 @@ public class WxCpContactWayInfo implements Serializable {
     @JsonAdapter(WxCpConclusionAdapter.class)
     public static class Conclusion implements Serializable {
       private static final long serialVersionUID = -8697184659526210472L;
-      
+
       private String textContent;
       private String imgMediaId;
       private String imgPicUrl;

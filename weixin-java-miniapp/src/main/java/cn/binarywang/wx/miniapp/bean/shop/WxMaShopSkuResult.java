@@ -1,18 +1,18 @@
 package cn.binarywang.wx.miniapp.bean.shop;
 
 import com.google.gson.annotations.SerializedName;
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author leiin
  * @date 2021/3/23
- * @description:
  */
 @Data
 public class WxMaShopSkuResult implements Serializable {
-
   private static final long serialVersionUID = 7127892618805299305L;
+
   /**
    * 交易组件平台自定义skuID
    * <pre>

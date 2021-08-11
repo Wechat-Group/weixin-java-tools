@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>4.1.0</version>
+  <version>4.1.5.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -118,8 +118,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <httpclient.version>4.5</httpclient.version>
-    <jetty.version>9.4.38.v20210224</jetty.version>
+    <httpclient.version>4.5.13</httpclient.version>
+    <jetty.version>9.4.41.v20210516</jetty.version>
   </properties>
 
   <dependencyManagement>
@@ -180,7 +180,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>29.0-jre</version>
+        <version>30.0-jre</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.gson</groupId>

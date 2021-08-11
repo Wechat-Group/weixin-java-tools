@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
  *
  * @author zhangq <zhangq002@gmail.com>
  */
-public class WxCpTpServiceImplTest {
+public class WxCpTpServiceApacheHttpClientImplTest {
 
   public static final String API_URL = "https://qyapi.weixin.qq.com";
   public static final String SUITE_ID = "xxxxxx";
@@ -41,7 +41,7 @@ public class WxCpTpServiceImplTest {
 
   @BeforeMethod
   public void setUp() {
-    wxCpTpService = new WxCpTpServiceImpl();
+    wxCpTpService = new WxCpTpServiceApacheHttpClientImpl();
     wxCpTpService.setWxCpTpConfigStorage(wxCpTpConfigStorage());
   }
 

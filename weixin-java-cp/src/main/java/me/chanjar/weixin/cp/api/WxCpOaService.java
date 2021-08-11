@@ -26,7 +26,7 @@ public interface WxCpOaService {
    * </pre>
    *
    * @param request 请求
-   * @return 表单提交成功后，返回的表单编号
+   * @return 表单提交成功后 ，返回的表单编号
    * @throws WxErrorException .
    */
   String apply(WxCpOaApplyEventRequest request) throws WxErrorException;
@@ -41,7 +41,7 @@ public interface WxCpOaService {
    * @param startTime           获取打卡记录的开始时间
    * @param endTime             获取打卡记录的结束时间
    * @param userIdList          需要获取打卡记录的用户列表
-   * @return 打卡数据列表
+   * @return 打卡数据列表 checkin data
    * @throws WxErrorException 异常
    */
   List<WxCpCheckinData> getCheckinData(Integer openCheckinDataType, Date startTime, Date endTime,
@@ -55,10 +55,22 @@ public interface WxCpOaService {
    *
    * @param datetime   需要获取规则的当天日期
    * @param userIdList 需要获取打卡规则的用户列表
-   * @return 打卡规则列表
+   * @return 打卡规则列表 checkin option
    * @throws WxErrorException .
    */
   List<WxCpCheckinOption> getCheckinOption(Date datetime, List<String> userIdList) throws WxErrorException;
+
+
+  /**
+   * <pre>
+   *   获取企业所有打卡规则
+   *   API doc : https://work.weixin.qq.com/api/doc/90000/90135/93384
+   * </pre>
+   *
+   * @return 打卡规则列表
+   * @throws WxErrorException the wx error exception
+   */
+  List<WxCpCropCheckinOption> getCropCheckinOption() throws WxErrorException;
 
   /**
    * <pre>
@@ -78,7 +90,7 @@ public interface WxCpOaService {
    * @param cursor    分页查询游标，默认为0，后续使用返回的next_cursor进行分页拉取
    * @param size      一次请求拉取审批单数量，默认值为100，上限值为100
    * @param filters   筛选条件，可对批量拉取的审批申请设置约束条件，支持设置多个条件,nullable
-   * @return WxCpApprovalInfo
+   * @return WxCpApprovalInfo approval info
    * @throws WxErrorException .
    */
   WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime, Integer cursor, Integer size,
@@ -89,9 +101,9 @@ public interface WxCpOaService {
    *
    * @param startTime 开始时间
    * @param endTime   结束时间
-   * @return WxCpApprovalInfo
+   * @return WxCpApprovalInfo approval info
    * @throws WxErrorException .
-   * @see me.chanjar.weixin.cp.api.WxCpOaService#getApprovalInfo
+   * @see me.chanjar.weixin.cp.api.WxCpOaService#getApprovalInfo me.chanjar.weixin.cp.api.WxCpOaService#getApprovalInfo
    */
   WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime) throws WxErrorException;
 
@@ -105,7 +117,7 @@ public interface WxCpOaService {
    * </pre>
    *
    * @param spNo 审批单编号。
-   * @return WxCpApprovaldetail
+   * @return WxCpApprovaldetail approval detail
    * @throws WxErrorException .
    */
   WxCpApprovalDetailResult getApprovalDetail(@NonNull String spNo) throws WxErrorException;
@@ -117,7 +129,7 @@ public interface WxCpOaService {
    * @param endTime   查询的结束时间戳
    * @param offset    分页查询的偏移量
    * @param limit     分页查询的每页大小,默认为100条，如该参数大于100则按100处理
-   * @return .
+   * @return . dial record
    * @throws WxErrorException .
    */
   List<WxCpDialRecord> getDialRecord(Date startTime, Date endTime, Integer offset,
@@ -127,9 +139,52 @@ public interface WxCpOaService {
    * 获取审批模板详情
    *
    * @param templateId 模板ID
-   * @return .
+   * @return . template detail
    * @throws WxErrorException .
    */
   WxCpTemplateResult getTemplateDetail(@NonNull String templateId) throws WxErrorException;
 
+
+  /**
+   * 获取打卡日报数据
+   *
+   * @param startTime  获取日报的开始时间
+   * @param endTime    获取日报的结束时间
+   * @param userIdList 获取日报的userid列表
+   * @return 日报数据列表 checkin day data
+   * @throws WxErrorException the wx error exception
+   */
+  List<WxCpCheckinDayData> getCheckinDayData(Date startTime, Date endTime, List<String> userIdList) throws WxErrorException;
+
+
+  /**
+   * 获取打卡月报数据
+   *
+   * @param startTime  获取月报的开始时间
+   * @param endTime    获取月报的结束时间
+   * @param userIdList 获取月报的userid列表
+   * @return 月报数据列表
+   * @throws WxErrorException the wx error exception
+   */
+  List<WxCpCheckinMonthData> getCheckinMonthData(Date startTime, Date endTime, List<String> userIdList) throws WxErrorException;
+
+  /**
+   * 获取打卡人员排班信息
+   *
+   * @param startTime  获取排班信息的开始时间。Unix时间戳
+   * @param endTime    获取排班信息的结束时间。Unix时间戳（与starttime跨度不超过一个月）
+   * @param userIdList 需要获取排班信息的用户列表（不超过100个）
+   * @return 排班表信息
+   * @throws WxErrorException the wx error exception
+   */
+  List<WxCpCheckinSchedule> getCheckinScheduleList(Date startTime, Date endTime, List<String> userIdList) throws WxErrorException;
+
+
+  /**
+   * 为打卡人员排班
+   *
+   * @param wxCpSetCheckinSchedule the wx cp set checkin schedule
+   * @throws WxErrorException the wx error exception
+   */
+  void setCheckinScheduleList(WxCpSetCheckinSchedule wxCpSetCheckinSchedule) throws WxErrorException;
 }

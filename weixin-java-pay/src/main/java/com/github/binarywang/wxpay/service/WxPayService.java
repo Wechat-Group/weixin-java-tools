@@ -189,11 +189,20 @@ public interface WxPayService {
 
   /**
    * 获取分账服务类.
+   * <p>
+   *   V3接口 {@link WxPayService#getProfitSharingV3Service()}
+   * </p>
    *
    * @return the ent pay service
    */
   ProfitSharingService getProfitSharingService();
 
+  /**
+   * 获取V3分账服务类.
+   *
+   * @return the ent pay service
+   */
+  ProfitSharingV3Service getProfitSharingV3Service();
 
   /**
    * 获取支付分服务类.
@@ -339,6 +348,19 @@ public interface WxPayService {
 
   /**
    * <pre>
+   * 合单查询订单API
+   * 请求URL: https://api.mch.weixin.qq.com/v3/combine-transactions/out-trade-no/{combine_out_trade_no}
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_11.shtml
+   * </pre>
+   *
+   * @param combineOutTradeNo 合单商户订单号
+   * @return 合单支付订单信息
+   * @throws WxPayException the wx pay exception
+   */
+  CombineQueryResult queryCombine(String combineOutTradeNo) throws WxPayException;
+
+  /**
+   * <pre>
    * 关闭订单.
    * 应用场景
    * 以下情况需要调用关单接口：
@@ -408,6 +430,18 @@ public interface WxPayService {
   void closeOrderV3(WxPayOrderCloseV3Request request) throws WxPayException;
 
   /**
+   * <pre>
+   * 合单关闭订单API
+   * 请求URL: https://api.mch.weixin.qq.com/v3/combine-transactions/out-trade-no/{combine_out_trade_no}/close
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_12.shtml
+   * </pre>
+   *
+   * @param request 请求对象
+   * @throws WxPayException the wx pay exception
+   */
+  void closeCombine(CombineCloseRequest request) throws WxPayException;
+
+  /**
    * 调用统一下单接口，并组装生成支付所需参数对象.
    *
    * @param <T>     请使用{@link com.github.binarywang.wxpay.bean.order}包下的类
@@ -458,6 +492,42 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayUnifiedOrderV3Result unifiedOrderV3(TradeTypeEnum tradeType, WxPayUnifiedOrderV3Request request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 合单支付API(APP支付、JSAPI支付、H5支付、NATIVE支付).
+   * 请求URL:
+   *  https://api.mch.weixin.qq.com/v3/combine-transactions/app
+   *  https://api.mch.weixin.qq.com/v3/combine-transactions/h5
+   *  https://api.mch.weixin.qq.com/v3/combine-transactions/jsapi
+   *  https://api.mch.weixin.qq.com/v3/combine-transactions/native
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_9_3.shtml
+   * </pre>
+   *
+   * @param tradeType 支付方式
+   * @param request   请求对象
+   * @return 微信合单支付返回 combine transactions result
+   * @throws WxPayException the wx pay exception
+   */
+  CombineTransactionsResult combine(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 合单支付API(APP支付、JSAPI支付、H5支付、NATIVE支付).
+   * 请求URL:
+   *  https://api.mch.weixin.qq.com/v3/combine-transactions/app
+   *  https://api.mch.weixin.qq.com/v3/combine-transactions/h5
+   *  https://api.mch.weixin.qq.com/v3/combine-transactions/jsapi
+   *  https://api.mch.weixin.qq.com/v3/combine-transactions/native
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_9_3.shtml
+   * </pre>
+   *
+   * @param tradeType 支付方式
+   * @param request   请求对象
+   * @return 调起支付需要的参数 t
+   * @throws WxPayException the wx pay exception
+   */
+  <T> T combineTransactions(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
 
   /**
    * 该接口调用“统一下单”接口，并拼装发起支付请求需要的参数.
@@ -673,6 +743,19 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayOrderNotifyV3Result parseOrderNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * <pre>
+   * 合单支付通知回调数据处理
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_13.shtml
+   * </pre>
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return 解密后通知数据 combine transactions notify result
+   * @throws WxPayException the wx pay exception
+   */
+  CombineNotifyResult parseCombineNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * 解析退款结果通知
@@ -896,6 +979,59 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayFundFlowResult downloadFundFlow(WxPayDownloadFundFlowRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 申请交易账单API
+   * 微信支付按天提供交易账单文件，商户可以通过该接口获取账单文件的下载地址。文件内包含交易相关的金额、时间、营销等信息，供商户核对订单、退款、银行到账等情况。
+   * 注意：
+   * • 微信侧未成功下单的交易不会出现在对账单中。支付成功后撤销的交易会出现在对账单中，跟原支付单订单号一致；
+   * • 对账单中涉及金额的字段单位为“元”；
+   * • 对账单接口只能下载三个月以内的账单。
+   * 接口链接：https://api.mch.weixin.qq.com/v3/bill/tradebill
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_6.shtml">申请交易账单</a>
+   * </pre>
+   *
+   * @param request 申请账单请求
+   * @return Result对象 apply trade bill result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayApplyBillV3Result applyTradeBill(WxPayApplyTradeBillV3Request request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 申请资金账单API
+   * 微信支付按天提供微信支付账户的资金流水账单文件，商户可以通过该接口获取账单文件的下载地址。文件内包含该账户资金操作相关的业务单号、收支金额、记账时间等信息，供商户进行核对。
+   * 注意：
+   * • 资金账单中的数据反映的是商户微信支付账户资金变动情况；
+   * • 对账单中涉及金额的字段单位为“元”。
+   * 接口链接：https://api.mch.weixin.qq.com/v3/bill/fundflowbill
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_7.shtml">申请资金账单</a>
+   * </pre>
+   *
+   * @param request 申请账单请求
+   * @return Result对象 apply fund flow bill result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayApplyBillV3Result applyFundFlowBill(WxPayApplyFundFlowBillV3Request request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 下载账单API
+   * 下载账单API为通用接口，交易/资金账单都可以通过该接口获取到对应的账单。
+   * 注意：
+   * • 账单文件的下载地址的有效时间为30s。
+   * • 强烈建议商户将实际账单文件的哈希值和之前从接口获取到的哈希值进行比对，以确认数据的完整性。
+   * • 该接口响应的信息请求头中不包含微信接口响应的签名值，因此需要跳过验签的流程
+   * 接口链接：通过申请账单接口获取到“download_url”，URL有效期30s
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_8.shtml">下载账单</a>
+   * </pre>
+   *
+   * @param url 微信返回的账单地址。
+   * @return 返回数据 return input stream
+   * @throws WxPayException the wx pay exception
+   */
+  InputStream downloadBill(String url) throws WxPayException;
 
   /**
    * <pre>

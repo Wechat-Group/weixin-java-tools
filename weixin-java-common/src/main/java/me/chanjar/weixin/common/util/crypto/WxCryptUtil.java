@@ -36,19 +36,16 @@ public class WxCryptUtil {
   private static final Base64 BASE64 = new Base64();
   private static final Charset CHARSET = StandardCharsets.UTF_8;
 
-  private static final ThreadLocal<DocumentBuilder> BUILDER_LOCAL = new ThreadLocal<DocumentBuilder>() {
-    @Override
-    protected DocumentBuilder initialValue() {
-      try {
-        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setExpandEntityReferences(false);
-        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        return factory.newDocumentBuilder();
-      } catch (ParserConfigurationException exc) {
-        throw new IllegalArgumentException(exc);
-      }
+  private static final ThreadLocal<DocumentBuilder> BUILDER_LOCAL = ThreadLocal.withInitial(() -> {
+    try {
+      final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      factory.setExpandEntityReferences(false);
+      factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      return factory.newDocumentBuilder();
+    } catch (ParserConfigurationException exc) {
+      throw new IllegalArgumentException(exc);
     }
-  };
+  });
 
   protected byte[] aesKey;
   protected String token;
@@ -67,7 +64,7 @@ public class WxCryptUtil {
   public WxCryptUtil(String token, String encodingAesKey, String appidOrCorpid) {
     this.token = token;
     this.appidOrCorpid = appidOrCorpid;
-    this.aesKey = BaseEncoding.base64().decode(CharMatcher.whitespace().removeFrom(encodingAesKey));
+    this.aesKey = Base64.decodeBase64(CharMatcher.whitespace().removeFrom(encodingAesKey));
   }
 
   private static String extractEncryptPart(String xml) {

@@ -10,6 +10,7 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import static org.testng.Assert.assertNotNull;
@@ -34,8 +35,8 @@ public class WxMaLiveGoodsServiceImplTest {
     WxMaLiveGoodInfo goods = new WxMaLiveGoodInfo();
     goods.setCoverImgUrl(mediaUpload.getMediaId());
     goods.setName("宫廷奢华真丝四件套");
-    goods.setPrice("1599");
-    goods.setPrice2("0");
+    goods.setPrice(new BigDecimal("1599"));
+    goods.setPrice2(new BigDecimal("0"));
     goods.setPriceType(1);
     goods.setUrl("pages/goods/goods?id=b7c4fbf95493bd294054fe4296d0d9ad");
     WxMaLiveResult liveResult = this.wxService.getLiveGoodsService().addGoods(goods);
@@ -68,8 +69,8 @@ public class WxMaLiveGoodsServiceImplTest {
     goods.setGoodsId(8);
     goods.setName("宫廷奢华真丝四件套");
     goods.setCoverImgUrl("http://mmbiz.qpic.cn/mmbiz_png/omYktZNGamuUQE0WPVfqdnLV61JDhluXOac7PiaoZeticFpcR7wvicC0aXUC2VXkl7r1gN0QSKosv2satn6oCFeiaQ/0");
-    goods.setPrice("2299");
-    goods.setPrice2("0");
+    goods.setPrice(new BigDecimal("2299"));
+    goods.setPrice2(new BigDecimal("0"));
     goods.setPriceType(1);
     goods.setUrl("pages/goods/goods?id=b7c4fbf95493bd294054fe4296d0d9ad");
     boolean maLiveInfo = this.wxService.getLiveGoodsService().updateGoods(goods);

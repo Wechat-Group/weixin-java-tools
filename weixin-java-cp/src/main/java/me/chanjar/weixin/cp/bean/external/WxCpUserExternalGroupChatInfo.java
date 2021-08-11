@@ -67,10 +67,10 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     private Long joinTime;
 
     /**
-    * 外部联系人在微信开放平台的唯一身份标识（微信unionid）
-    * 通过此字段企业可将外部联系人与公众号/小程序用户关联起来
-    * 仅当群成员类型是微信用户（包括企业成员未添加好友），且企业或第三方服务商绑定了微信开发者ID有此字段
-    */
+     * 外部联系人在微信开放平台的唯一身份标识（微信unionid）
+     * 通过此字段企业可将外部联系人与公众号/小程序用户关联起来
+     * 仅当群成员类型是微信用户（包括企业成员未添加好友），且企业或第三方服务商绑定了微信开发者ID有此字段
+     */
     @SerializedName("unionid")
     private String unionId;
 
@@ -84,6 +84,20 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     private int joinScene;
 
     /**
+     * 在群里的昵称
+     */
+    @SerializedName("group_nickname")
+    private String groupNickname;
+
+    /**
+     * 名字。仅当 need_name = 1 时返回
+     * 如果是微信用户，则返回其在微信中设置的名字
+     * 如果是企业微信联系人，则返回其设置对外展示的别名或实名
+     */
+    @SerializedName("name")
+    private String name;
+
+    /**
      * 邀请者。目前仅当是由本企业内部成员邀请入群时会返回该值
      */
     @SerializedName("invitor")
@@ -92,7 +106,7 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
 
   @Getter
   @Setter
-  public static class Invitor{
+  public static class Invitor {
 
     /**
      * 邀请者的userid
@@ -103,7 +117,7 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
 
   @Getter
   @Setter
-  public static class GroupAdmin{
+  public static class GroupAdmin {
 
     /**
      * 群管理员userid
