@@ -64,25 +64,25 @@ public class WxCpChatServiceImplTest {
   public Object[][] messages() {
     return new Object[][]{
       {WxCpAppChatMessage.builder()
-        .msgType(AppChatMsgType.TEXT)
+        .msgType(AppChatMsgType.TEXT.toString())
         .chatId(chatId)
         .content("你的快递已到\n请携带工卡前往邮件中心领取")
         .build()
       },
       {WxCpAppChatMessage.builder()
-        .msgType(AppChatMsgType.IMAGE)
+        .msgType(AppChatMsgType.IMAGE.toString())
         .chatId(chatId)
         .mediaId("3_xWGPXZhpOKZrlRISWrjhPrDUZqZ-jIEVzxd56jLuqM")
         .build()
       },
       {WxCpAppChatMessage.builder()
-        .msgType(AppChatMsgType.VOICE)
+        .msgType(AppChatMsgType.VOICE.toString())
         .chatId(chatId)
         .mediaId("3X5t6HkdN1hUgB7OzrdRnc8v0yI0CqlAxFxnCkS3msTnTLanpYrV4esLv4foZVnlf")
         .build()
       },
       {WxCpAppChatMessage.builder()
-        .msgType(AppChatMsgType.VIDEO)
+        .msgType(AppChatMsgType.VIDEO.toString())
         .chatId(chatId)
         .mediaId("3otWyy_acbID8fyltmCOW5hGVD8oa0_p0za5jhukxKTUDoGT71lqTvtQAWoycXpQf")
         .title("aaaa")
@@ -90,13 +90,13 @@ public class WxCpChatServiceImplTest {
         .build()
       },
       {WxCpAppChatMessage.builder()
-        .msgType(AppChatMsgType.FILE)
+        .msgType(AppChatMsgType.FILE.toString())
         .chatId(chatId)
         .mediaId("34AyVyDdndVhB4Z2tT-_FYKZ7Xqrr47LPC11GHH4oy7o")
         .build()
       },
       {WxCpAppChatMessage.builder()
-        .msgType(AppChatMsgType.TEXTCARD)
+        .msgType(AppChatMsgType.TEXTCARD.toString())
         .chatId(chatId)
         .btnTxt("更多")
         .title("领奖通知")
@@ -105,7 +105,7 @@ public class WxCpChatServiceImplTest {
         .build()
       },
       {WxCpAppChatMessage.builder()
-        .msgType(AppChatMsgType.NEWS)
+        .msgType(AppChatMsgType.NEWS.toString())
         .chatId(chatId)
         .articles(Lists.newArrayList(NewArticle.builder()
           .title("领奖通知")
@@ -117,7 +117,7 @@ public class WxCpChatServiceImplTest {
         .build()
       },
       {WxCpAppChatMessage.builder()
-        .msgType(AppChatMsgType.MPNEWS)
+        .msgType(AppChatMsgType.MPNEWS.toString())
         .chatId(chatId)
         .mpnewsArticles(Lists.newArrayList(MpnewsArticle.newBuilder()
           .title("地球一小时")
@@ -131,7 +131,7 @@ public class WxCpChatServiceImplTest {
         .build()
       },
       {WxCpAppChatMessage.builder()
-        .msgType(AppChatMsgType.MARKDOWN)
+        .msgType(AppChatMsgType.MARKDOWN.toString())
         .chatId(chatId)
         .content("您的会议室已经预定，稍后会同步到`邮箱` \n" +
           "                >**事项详情** \n" +

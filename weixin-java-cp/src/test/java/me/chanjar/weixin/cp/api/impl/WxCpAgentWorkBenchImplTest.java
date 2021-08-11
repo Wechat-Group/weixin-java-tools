@@ -48,7 +48,7 @@ public class WxCpAgentWorkBenchImplTest {
       {WxCpAgentWorkBench.builder()
         .agentId(1000011L)
         .replaceUserData(true)
-        .type(WxCpConsts.WorkBenchType.IMAGE)
+        .type(WxCpConsts.WorkBenchType.IMAGE.toString())
         .url("http://www.qq.com")
         .jumpUrl("http://www.qq.com")
         .pagePath("pages/index")
@@ -63,7 +63,7 @@ public class WxCpAgentWorkBenchImplTest {
       {WxCpAgentWorkBench.builder()
         .agentId(1000011L)
         .userId("HaHa")
-        .type(WxCpConsts.WorkBenchType.IMAGE)
+        .type(WxCpConsts.WorkBenchType.IMAGE.toString())
         .url("http://www.qq.com")
         .jumpUrl("http://www.qq.com")
         .pagePath("pages/index")
@@ -76,7 +76,7 @@ public class WxCpAgentWorkBenchImplTest {
   public void testKeyDataTemplateSet() throws WxErrorException {
     WxCpAgentWorkBench template = new WxCpAgentWorkBench();
     template.setAgentId(1000011L);
-    template.setType(WxCpConsts.WorkBenchType.KEYDATA);
+    template.setType(WxCpConsts.WorkBenchType.KEYDATA.toString());
     List<WorkBenchKeyData> workBenchKeyDataList = new ArrayList<>();
     for(int i = 1;i < 4;i++){
       WorkBenchKeyData workBenchKeyData = new WorkBenchKeyData();
@@ -96,7 +96,7 @@ public class WxCpAgentWorkBenchImplTest {
     WxCpAgentWorkBench template = new WxCpAgentWorkBench();
     template.setAgentId(1000011L);
     template.setUserId("HaHa");
-    template.setType(WxCpConsts.WorkBenchType.KEYDATA);
+    template.setType(WxCpConsts.WorkBenchType.KEYDATA.toString());
     List<WorkBenchKeyData> workBenchKeyDataList = new ArrayList<>();
     WorkBenchKeyData workBenchKeyData = new WorkBenchKeyData();
     workBenchKeyData.setKey("待审批");
@@ -112,7 +112,7 @@ public class WxCpAgentWorkBenchImplTest {
   public void testListTemplateSet() throws WxErrorException {
     WxCpAgentWorkBench template = new WxCpAgentWorkBench();
     template.setAgentId(1000011L);
-    template.setType(WxCpConsts.WorkBenchType.LIST);
+    template.setType(WxCpConsts.WorkBenchType.LIST.toString());
     List<WorkBenchList> workBenchListArray = new ArrayList<>();
     for(int i = 0;i < 2;i++){
       WorkBenchList workBenchlist = new WorkBenchList();

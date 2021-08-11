@@ -44,7 +44,7 @@ public class Attachment implements Serializable {
 
   public void setImage(Image image) {
     this.image = image;
-    this.msgType = WxCpConsts.WelcomeMsgType.IMAGE;
+    this.msgType = WxCpConsts.WelcomeMsgType.IMAGE.toString();
   }
 
   public Link getLink() {
@@ -53,7 +53,7 @@ public class Attachment implements Serializable {
 
   public void setLink(Link link) {
     this.link = link;
-    this.msgType = WxCpConsts.WelcomeMsgType.LINK;
+    this.msgType = WxCpConsts.WelcomeMsgType.LINK.toString();
   }
 
   public MiniProgram getMiniprogram() {
@@ -62,7 +62,7 @@ public class Attachment implements Serializable {
 
   public void setMiniprogram(MiniProgram miniprogram) {
     this.miniprogram = miniprogram;
-    this.msgType = WxCpConsts.WelcomeMsgType.MINIPROGRAM;
+    this.msgType = WxCpConsts.WelcomeMsgType.MINIPROGRAM.toString();
   }
 
   public Video getVideo() {
@@ -71,6 +71,6 @@ public class Attachment implements Serializable {
 
   public void setVideo(Video video) {
     this.video = video;
-    this.msgType = WxCpConsts.WelcomeMsgType.VIDEO;
+    this.msgType = WxCpConsts.WelcomeMsgType.VIDEO.toString();
   }
 }

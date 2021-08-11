@@ -77,7 +77,7 @@ public class WxCpDemoServer {
         .handler(oauth2handler)
         .end()
         .rule()
-        .event(WxCpConsts.EventType.CHANGE_CONTACT)
+        .event(WxCpConsts.EventType.CHANGE_CONTACT.toString())
         .handler((wxMessage, context, wxCpService, sessionManager) -> {
           System.out.println("通讯录发生变更");
           return null;
