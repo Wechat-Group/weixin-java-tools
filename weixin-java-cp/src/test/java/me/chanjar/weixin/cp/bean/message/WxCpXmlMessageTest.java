@@ -1,6 +1,7 @@
 package me.chanjar.weixin.cp.bean.message;
 
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.constant.WxCpConsts;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
@@ -60,7 +61,7 @@ public class WxCpXmlMessageTest {
       + "  <Poiname><![CDATA[wo de poi]]></Poiname>\n"
       + "</SendLocationInfo>"
       + "</xml>";
-    WxCpXmlMessage wxMessage = WxCpXmlMessage.fromXml(xml);
+    WxCpXmlMessage wxMessage = XmlUtil.toObject(xml,WxCpXmlMessage.class);
     assertEquals(wxMessage.getToUserName(), "toUser");
     assertEquals(wxMessage.getFromUserName(), "fromUser");
     assertEquals(wxMessage.getCreateTime(), new Long(1348831860));
@@ -87,7 +88,7 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getScanCodeInfo().getScanType(), "qrcode");
     assertEquals(wxMessage.getScanCodeInfo().getScanResult(), "1");
     assertEquals(wxMessage.getSendPicsInfo().getCount(), new Long(1));
-    assertEquals(wxMessage.getSendPicsInfo().getPicList().get(0).getPicMd5Sum(), "1b5f7c23b5bf75682a53e7b6d163e185");
+    assertEquals(wxMessage.getSendPicsInfo().getPicList().get(0).getItem().getPicMd5Sum(), "1b5f7c23b5bf75682a53e7b6d163e185");
     assertEquals(wxMessage.getSendLocationInfo().getLocationX(), "23");
     assertEquals(wxMessage.getSendLocationInfo().getLocationY(), "113");
     assertEquals(wxMessage.getSendLocationInfo().getScale(), "15");
@@ -120,8 +121,8 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getEventKey(), "faceSimilarity");
     assertNotNull(wxMessage.getSendPicsInfo());
     assertEquals(wxMessage.getSendPicsInfo().getCount(), new Long(2L));
-    assertEquals(wxMessage.getSendPicsInfo().getPicList().get(0).getPicMd5Sum(), "aef52ae501537e552725c5d7f99c1741");
-    assertEquals(wxMessage.getSendPicsInfo().getPicList().get(1).getPicMd5Sum(), "c4564632a4fab91378c39bea6aad6f9e");
+    assertEquals(wxMessage.getSendPicsInfo().getPicList().get(0).getItem().getPicMd5Sum(), "aef52ae501537e552725c5d7f99c1741");
+    assertEquals(wxMessage.getSendPicsInfo().getPicList().get(1).getItem().getPicMd5Sum(), "c4564632a4fab91378c39bea6aad6f9e");
   }
 
   public void testExtAttr() {
