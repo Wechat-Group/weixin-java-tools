@@ -21,7 +21,7 @@ import java.util.concurrent.locks.Lock;
  * 企业微信各种固定、授权配置的Redisson存储实现
  */
 @Builder
-public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializable {
+public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable {
   private static final long serialVersionUID = -5385639031981770319L;
 
   /**
@@ -105,6 +105,10 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
     return baseApiUrl + path;
   }
 
+  public WxCpTpRedisConfigImpl(@NonNull WxRedisOps wxRedisOps, String keyPrefix) {
+    this.wxRedisOps = wxRedisOps;
+    this.keyPrefix = keyPrefix;
+  }
 
   /**
    * 第三方应用的suite access token相关
@@ -199,6 +203,31 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   }
 
 
+  public void setSuiteId(String suiteId) {
+    this.suiteId = suiteId;
+  }
+
+  public void setSuiteSecret(String suiteSecret) {
+    this.suiteSecret = suiteSecret;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
+  }
+
+  public void setAesKey(String aesKey) {
+    this.aesKey = aesKey;
+  }
+
+  public void setCorpId(String corpId) {
+    this.corpId = corpId;
+  }
+
+  public void setCorpSecret(String corpSecret) {
+    this.corpSecret = corpSecret;
+  }
+
+
   /**
    * 企微服务商企业ID & 企业secret, 来自于企微配置
    */
@@ -210,6 +239,10 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   @Override
   public String getCorpSecret() {
     return corpSecret;
+  }
+
+  public void setProviderSecret(String providerSecret) {
+    this.providerSecret = providerSecret;
   }
 
   @Override

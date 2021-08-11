@@ -23,7 +23,6 @@
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-redis</artifactId>
       <version>${spring.boot.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>joda-time</groupId>

@@ -42,6 +42,10 @@ public class WxCpConfiguration {
 
   }
 
+  public WxCpService getService(Integer agentId){
+    return wxCpServiceMap.get(agentId);
+  }
+
   @PostConstruct
   public void initService() {
     wxCpServiceMap = this.wxCpProperties.getAppConfigs().stream().map(a -> {

@@ -5,7 +5,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.redis.RedissonWxRedisOps;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
-import me.chanjar.weixin.cp.config.impl.WxCpTpRedissonConfigImpl;
+import me.chanjar.weixin.cp.config.impl.WxCpTpRedisConfigImpl;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
@@ -46,7 +46,7 @@ public class WxCpTpServiceApacheHttpClientImplTest {
   }
 
   public WxCpTpConfigStorage wxCpTpConfigStorage() {
-    return WxCpTpRedissonConfigImpl.builder().baseApiUrl(API_URL).suiteId(SUITE_ID).suiteSecret(SUITE_SECRET)
+    return WxCpTpRedisConfigImpl.builder().baseApiUrl(API_URL).suiteId(SUITE_ID).suiteSecret(SUITE_SECRET)
       .token(TOKEN).aesKey(AES_KEY).corpId(PROVIDER_CORP_ID).corpSecret(CORP_SECRET).providerSecret(PROVIDER_SECRET)
       .wxRedisOps(new RedissonWxRedisOps(redissonClient())).build();
   }
