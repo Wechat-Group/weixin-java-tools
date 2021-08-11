@@ -49,7 +49,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     long endTimestamp = endTime.getTime() / 1000L;
     long startTimestamp = startTime.getTime() / 1000L;
 
-    if (endTimestamp - startTimestamp < 0 || endTimestamp - startTimestamp >= MONTH_SECONDS * 1000L) {
+    if (endTimestamp - startTimestamp < 0 || endTimestamp - startTimestamp >= MONTH_SECONDS) {
       throw new WxRuntimeException("获取记录时间跨度不超过一个月");
     }
 
