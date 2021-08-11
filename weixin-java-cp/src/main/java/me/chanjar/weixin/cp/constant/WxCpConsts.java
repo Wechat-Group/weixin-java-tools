@@ -152,22 +152,22 @@ public class WxCpConsts {
     /**
      * 新增外部联系人
      */
-     ADD_EXTERNAL_CONTACT( "add_external_contact"),
+    ADD_EXTERNAL_CONTACT("add_external_contact"),
     /**
      * 删除外部联系人
      */
-     DEL_EXTERNAL_CONTACT( "del_external_contact"),
+    DEL_EXTERNAL_CONTACT("del_external_contact"),
 
     /**
      * 外部联系人免验证添加成员事件
      */
-     ADD_HALF_EXTERNAL_CONTACT( "add_half_external_contact"),
+    ADD_HALF_EXTERNAL_CONTACT("add_half_external_contact"),
     /**
      * 删除跟进成员事件
      */
-     DEL_FOLLOW_USER( "del_follow_user");
+    DEL_FOLLOW_USER("del_follow_user");
 
-     private final String name;
+    private final String name;
 
     ExternalContactChangeType(String name) {
       this.name = name;
@@ -190,37 +190,37 @@ public class WxCpConsts {
     /**
      * 新增成员事件.
      */
-    CREATE_USER ( "create_user"),
+    CREATE_USER("create_user"),
 
     /**
      * 更新成员事件.
      */
-    UPDATE_USER ( "update_user"),
+    UPDATE_USER("update_user"),
 
     /**
      * 删除成员事件.
      */
-    DELETE_USER ( "delete_user"),
+    DELETE_USER("delete_user"),
 
     /**
      * 新增部门事件.
      */
-    CREATE_PARTY ( "create_party"),
+    CREATE_PARTY("create_party"),
 
     /**
      * 更新部门事件.
      */
-    UPDATE_PARTY ( "update_party"),
+    UPDATE_PARTY("update_party"),
 
     /**
      * 删除部门事件.
      */
-    DELETE_PARTY ( "delete_party"),
+    DELETE_PARTY("delete_party"),
 
     /**
      * 标签成员变更事件.
      */
-    UPDATE_TAG ( "update_tag");
+    UPDATE_TAG("update_tag");
 
     private final String name;
 
@@ -245,41 +245,41 @@ public class WxCpConsts {
     /**
      * 文本消息.
      */
-    TEXT ( "text"),
+    TEXT("text"),
     /**
      * 图片消息.
      */
-    IMAGE ( "image"),
+    IMAGE("image"),
     /**
      * 视频消息.
      */
-    VIDEO ( "video"),
+    VIDEO("video"),
     /**
      * 图文消息（点击跳转到外链）.
      */
-    NEWS ( "news"),
+    NEWS("news"),
     /**
      * 图文消息（点击跳转到图文消息页面）.
      */
-    MPNEWS ( "mpnews"),
+    MPNEWS("mpnews"),
     /**
      * markdown消息.
      * （目前仅支持markdown语法的子集，微工作台（原企业号）不支持展示markdown消息）
      */
-    MARKDOWN ( "markdown"),
+    MARKDOWN("markdown"),
     /**
      * 发送文件.
      */
-    FILE ( "file"),
+    FILE("file"),
     /**
      * 文本卡片消息.
      */
-    TEXTCARD ( "textcard"),
+    TEXTCARD("textcard"),
 
     /**
      * 小程序通知消息.
      */
-    MINIPROGRAM_NOTICE ( "miniprogram_notice");
+    MINIPROGRAM_NOTICE("miniprogram_notice");
 
     private final String name;
 
@@ -295,6 +295,15 @@ public class WxCpConsts {
     public String toString() {
       return this.name;
     }
+
+    public static LinkedCorpMsgType getType(String name){
+      for (LinkedCorpMsgType value : values()) {
+        if(value.getName().equals(name)){
+          return value;
+        }
+      }
+      return null;
+    }
   }
 
   /**
@@ -304,22 +313,22 @@ public class WxCpConsts {
     /**
      * 文本消息.
      */
-    TEXT ( "text"),
+    TEXT("text"),
 
     /**
      * 图片消息.
      */
-    IMAGE ( "image"),
+    IMAGE("image"),
 
     /**
      * markdown消息.
      */
-    MARKDOWN ( "markdown"),
+    MARKDOWN("markdown"),
 
     /**
      * 图文消息（点击跳转到外链）.
      */
-    NEWS ( "news");
+    NEWS("news");
 
     private final String name;
 
@@ -335,6 +344,15 @@ public class WxCpConsts {
     public String toString() {
       return this.name;
     }
+
+    public static GroupRobotMsgType getType(String name){
+      for (GroupRobotMsgType value : values()) {
+        if(value.getName().equals(name)){
+          return value;
+        }
+      }
+      return null;
+    }
   }
 
   /**
@@ -344,39 +362,39 @@ public class WxCpConsts {
     /**
      * 文本消息.
      */
-    TEXT ( "text"),
+    TEXT("text"),
     /**
      * 图片消息.
      */
-    IMAGE ( "image"),
+    IMAGE("image"),
     /**
      * 语音消息.
      */
-    VOICE ( "voice"),
+    VOICE("voice"),
     /**
      * 视频消息.
      */
-    VIDEO ( "video"),
+    VIDEO("video"),
     /**
      * 发送文件（CP专用）.
      */
-    FILE ( "file"),
+    FILE("file"),
     /**
      * 文本卡片消息（CP专用）.
      */
-    TEXTCARD ( "textcard"),
+    TEXTCARD("textcard"),
     /**
      * 图文消息（点击跳转到外链）.
      */
-    NEWS ( "news"),
+    NEWS("news"),
     /**
      * 图文消息（点击跳转到图文消息页面）.
      */
-    MPNEWS ( "mpnews"),
+    MPNEWS("mpnews"),
     /**
      * markdown消息.
      */
-    MARKDOWN ( "markdown");
+    MARKDOWN("markdown");
 
     private final String name;
 
@@ -392,25 +410,34 @@ public class WxCpConsts {
     public String toString() {
       return this.name;
     }
+
+    public static AppChatMsgType getType(String name) {
+      for (AppChatMsgType value : values()) {
+        if (value.getName().equals(name)) {
+          return value;
+        }
+      }
+      return null;
+    }
   }
 
   public static enum WorkBenchType {
     /**
      * 关键数据型
      */
-    KEYDATA ( "keydata"),
+    KEYDATA("keydata"),
     /**
      * 图片型
      */
-    IMAGE ( "image"),
+    IMAGE("image"),
     /**
      * 列表型
      */
-    LIST ( "list"),
+    LIST("list"),
     /**
      * webview型
      */
-    WEBVIEW ( "webview");
+    WEBVIEW("webview");
 
     private final String name;
 
@@ -426,25 +453,34 @@ public class WxCpConsts {
     public String toString() {
       return this.name;
     }
+
+    public static WorkBenchType getType(String name){
+      for (WorkBenchType value : values()) {
+        if(value.getName().equals(name)){
+          return value;
+        }
+      }
+      return null;
+    }
   }
 
   public static enum WelcomeMsgType {
     /**
      * 图片消息.
      */
-    IMAGE ( "image"),
+    IMAGE("image"),
     /**
      * 图文消息.
      */
-    LINK ( "link"),
+    LINK("link"),
     /**
      * 视频消息.
      */
-    VIDEO ( "video"),
+    VIDEO("video"),
     /**
      * 小程序消息.
      */
-    MINIPROGRAM ( "miniprogram");
+    MINIPROGRAM("miniprogram");
 
     private final String name;
 

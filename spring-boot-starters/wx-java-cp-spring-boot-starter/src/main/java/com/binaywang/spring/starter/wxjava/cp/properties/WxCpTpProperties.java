@@ -25,6 +25,10 @@ public class WxCpTpProperties implements Serializable {
    */
   private String providerSecret;
 
+  private String token;
+
+  private String aesKey;
+
   /**
    * 应用配置
    */

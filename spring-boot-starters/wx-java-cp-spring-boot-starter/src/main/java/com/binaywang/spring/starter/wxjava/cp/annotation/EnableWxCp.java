@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * 强依赖redis template
+ *
  * @author caiqy
  */
 @Target(ElementType.TYPE)

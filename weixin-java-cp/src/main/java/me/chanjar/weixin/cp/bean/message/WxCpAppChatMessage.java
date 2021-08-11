@@ -78,7 +78,7 @@ public class WxCpAppChatMessage implements Serializable {
    */
   public static WxCpAppChatMessage buildTextMsg(String chatId, String content, boolean safe) {
     final WxCpAppChatMessage message = new WxCpAppChatMessage();
-    message.setMsgType(AppChatMsgType.TEXT);
+    message.setMsgType(AppChatMsgType.TEXT.getName());
     message.setContent(content);
     message.setChatId(chatId);
     message.setSafe(safe);
@@ -103,20 +103,24 @@ public class WxCpAppChatMessage implements Serializable {
   }
 
   private void handleMsgType(JsonObject messageJson) {
-    switch (this.getMsgType()) {
-      case AppChatMsgType.TEXT: {
+    AppChatMsgType type = AppChatMsgType.getType(this.getMsgType());
+    if (type == null) {
+      return;
+    }
+    switch (type) {
+      case TEXT: {
         JsonObject text = new JsonObject();
         text.addProperty("content", this.getContent());
         messageJson.add("text", text);
         break;
       }
-      case AppChatMsgType.MARKDOWN: {
+      case MARKDOWN: {
         JsonObject text = new JsonObject();
         text.addProperty("content", this.getContent());
         messageJson.add("markdown", text);
         break;
       }
-      case AppChatMsgType.TEXTCARD: {
+      case TEXTCARD: {
         JsonObject text = new JsonObject();
         text.addProperty("title", this.getTitle());
         text.addProperty("description", this.getDescription());
@@ -125,25 +129,25 @@ public class WxCpAppChatMessage implements Serializable {
         messageJson.add("textcard", text);
         break;
       }
-      case AppChatMsgType.IMAGE: {
+      case IMAGE: {
         JsonObject image = new JsonObject();
         image.addProperty("media_id", this.getMediaId());
         messageJson.add("image", image);
         break;
       }
-      case AppChatMsgType.FILE: {
+      case FILE: {
         JsonObject image = new JsonObject();
         image.addProperty("media_id", this.getMediaId());
         messageJson.add("file", image);
         break;
       }
-      case AppChatMsgType.VOICE: {
+      case VOICE: {
         JsonObject voice = new JsonObject();
         voice.addProperty("media_id", this.getMediaId());
         messageJson.add("voice", voice);
         break;
       }
-      case AppChatMsgType.VIDEO: {
+      case VIDEO: {
         JsonObject video = new JsonObject();
         video.addProperty("media_id", this.getMediaId());
         video.addProperty("title", this.getTitle());
@@ -151,7 +155,7 @@ public class WxCpAppChatMessage implements Serializable {
         messageJson.add("video", video);
         break;
       }
-      case AppChatMsgType.NEWS: {
+      case NEWS: {
         JsonObject newsJsonObject = new JsonObject();
         JsonArray articleJsonArray = new JsonArray();
         for (NewArticle article : this.getArticles()) {
@@ -166,7 +170,7 @@ public class WxCpAppChatMessage implements Serializable {
         messageJson.add("news", newsJsonObject);
         break;
       }
-      case AppChatMsgType.MPNEWS: {
+      case MPNEWS: {
         JsonObject newsJsonObject = new JsonObject();
         if (this.getMediaId() != null) {
           newsJsonObject.addProperty("media_id", this.getMediaId());

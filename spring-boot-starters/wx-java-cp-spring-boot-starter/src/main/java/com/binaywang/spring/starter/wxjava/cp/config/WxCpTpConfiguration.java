@@ -4,6 +4,7 @@ import com.binaywang.spring.starter.wxjava.cp.handler.WxCpTpMessageMatchHandler;
 import com.binaywang.spring.starter.wxjava.cp.properties.WxCpTpProperties;
 import lombok.val;
 import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
+import me.chanjar.weixin.common.redis.RedissonWxRedisOps;
 import me.chanjar.weixin.cp.config.impl.WxCpTpRedisConfigImpl;
 import me.chanjar.weixin.cp.tp.message.WxCpTpMessageRouter;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
@@ -48,13 +49,17 @@ public class WxCpTpConfiguration {
   @PostConstruct
   public void initService() {
     wxCpTpServiceMap = this.wxCpTpProperties.getSuites().stream().map(prop -> {
-      val configStorage = new WxCpTpRedisConfigImpl(new RedisTemplateWxRedisOps(stringRedisTemplate), "wx::cp:tp");
-      configStorage.setCorpId(this.wxCpTpProperties.getCorpId());
-      configStorage.setProviderSecret(this.wxCpTpProperties.getProviderSecret());
-      configStorage.setSuiteId(prop.getSuiteId());
-      configStorage.setSuiteSecret(prop.getSuiteSecret());
-      configStorage.setToken(prop.getToken());
-      configStorage.setAesKey(prop.getAesKey());
+      val configStorage =   WxCpTpRedisConfigImpl
+        .builder()
+        .suiteId(prop.getSuiteId())
+        .suiteSecret(prop.getSuiteSecret())
+        .token(prop.getToken())
+        .aesKey(prop.getAesKey())
+        .corpId(wxCpTpProperties.getCorpId())
+        .providerSecret(wxCpTpProperties.getProviderSecret())
+        .wxRedisOps(new RedisTemplateWxRedisOps(stringRedisTemplate))
+        .keyPrefix("wx::cp::tp")
+        .build();
       val service = new WxCpTpServiceImpl();
       service.setWxCpTpConfigStorage(configStorage);
       routers.put(prop.getSuiteId(), this.newRouter(service));

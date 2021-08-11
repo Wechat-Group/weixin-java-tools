@@ -26,32 +26,32 @@ public class WxCpAgentWorkBench implements Serializable {
   private static final long serialVersionUid = 1L;
 
   /*
-  * 展示类型，目前支持 “keydata”、 “image”、 “list” 、”webview”
-  * */
+   * 展示类型，目前支持 “keydata”、 “image”、 “list” 、”webview”
+   * */
   private String type;
   /*
-  * 用户的userid
-  * */
+   * 用户的userid
+   * */
   private String userId;
   /*
-  * 应用id
-  * */
+   * 应用id
+   * */
   private Long agentId;
   /*
-  * 点击跳转url，若不填且应用设置了主页url，则跳转到主页url，否则跳到应用会话窗口
-  * */
+   * 点击跳转url，若不填且应用设置了主页url，则跳转到主页url，否则跳到应用会话窗口
+   * */
   private String jumpUrl;
   /*
-  * 若应用为小程序类型，该字段填小程序pagepath，若未设置，跳到小程序主页
-  * */
+   * 若应用为小程序类型，该字段填小程序pagepath，若未设置，跳到小程序主页
+   * */
   private String pagePath;
   /*
-  * 图片url:图片的最佳比例为3.35:1;webview:渲染展示的url
-  * */
+   * 图片url:图片的最佳比例为3.35:1;webview:渲染展示的url
+   * */
   private String url;
   /*
-  * 是否覆盖用户工作台的数据。设置为true的时候，会覆盖企业所有用户当前设置的数据。若设置为false,则不会覆盖用户当前设置的所有数据
-  * */
+   * 是否覆盖用户工作台的数据。设置为true的时候，会覆盖企业所有用户当前设置的数据。若设置为false,则不会覆盖用户当前设置的所有数据
+   * */
   private Boolean replaceUserData;
 
   private List<WorkBenchKeyData> keyDataList;
@@ -82,8 +82,9 @@ public class WxCpAgentWorkBench implements Serializable {
 
   // 处理不用类型的工作台数据
   private void handle(JsonObject templateObject) {
-    switch (this.getType()) {
-      case WxCpConsts.WorkBenchType.KEYDATA: {
+    WxCpConsts.WorkBenchType workBenchType = WxCpConsts.WorkBenchType.getType(this.getType());
+    switch (workBenchType) {
+      case KEYDATA: {
         JsonArray keyDataArray = new JsonArray();
         JsonObject itemsObject = new JsonObject();
         for (WorkBenchKeyData keyDataItem : this.keyDataList) {
@@ -98,7 +99,7 @@ public class WxCpAgentWorkBench implements Serializable {
         templateObject.add("keydata", itemsObject);
         break;
       }
-      case WxCpConsts.WorkBenchType.IMAGE: {
+      case IMAGE: {
         JsonObject image = new JsonObject();
         image.addProperty("url", this.url);
         image.addProperty("jump_url", this.jumpUrl);
@@ -106,7 +107,7 @@ public class WxCpAgentWorkBench implements Serializable {
         templateObject.add("image", image);
         break;
       }
-      case WxCpConsts.WorkBenchType.LIST: {
+      case LIST: {
         JsonArray listArray = new JsonArray();
         JsonObject itemsObject = new JsonObject();
         for (WorkBenchList listItem : this.lists) {
@@ -116,11 +117,11 @@ public class WxCpAgentWorkBench implements Serializable {
           listObject.addProperty("pagepath", listItem.getPagePath());
           listArray.add(listObject);
         }
-        itemsObject.add("items",listArray);
+        itemsObject.add("items", listArray);
         templateObject.add("list", itemsObject);
         break;
       }
-      case WxCpConsts.WorkBenchType.WEBVIEW: {
+      case WEBVIEW: {
         JsonObject webview = new JsonObject();
         webview.addProperty("url", this.url);
         webview.addProperty("jump_url", this.jumpUrl);

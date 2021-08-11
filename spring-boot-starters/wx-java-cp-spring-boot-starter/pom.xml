@@ -10,7 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>wx-java-cp-spring-boot-starter</artifactId>
-  <name>WxJava - Spring Boot Starter for Wxcp</name>
+  <name>WxJava - Spring Boot Starter for WxCp</name>
   <description>企业微信的 Spring Boot Starter</description>
 
   <dependencies>

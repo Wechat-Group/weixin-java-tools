@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
+import me.chanjar.weixin.cp.constant.WxCpConsts;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,7 +26,7 @@ import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.*;
 @Data
 public class WxCpGroupRobotMessage implements Serializable {
   private static final long serialVersionUID = -4301684507150486556L;
-  
+
   /**
    * 消息类型
    */
@@ -60,8 +61,8 @@ public class WxCpGroupRobotMessage implements Serializable {
   public String toJson() {
     JsonObject messageJson = new JsonObject();
     messageJson.addProperty("msgtype", this.getMsgType());
-
-    switch (this.getMsgType()) {
+    WxCpConsts.GroupRobotMsgType groupRobotMsgType = WxCpConsts.GroupRobotMsgType.getType(this.getMsgType());
+    switch (groupRobotMsgType) {
       case TEXT: {
         JsonObject text = new JsonObject();
         JsonArray uidJsonArray = new JsonArray();

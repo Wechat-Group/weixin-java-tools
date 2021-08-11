@@ -86,6 +86,7 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
    * 企微服务商企业ID & 企业secret，来自于企微配置
    */
   private volatile String corpId;
+  @Deprecated
   private volatile String corpSecret;
   /**
    * 服务商secret
@@ -103,11 +104,6 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
       baseApiUrl = "https://qyapi.weixin.qq.com";
     }
     return baseApiUrl + path;
-  }
-
-  public WxCpTpRedisConfigImpl(@NonNull WxRedisOps wxRedisOps, String keyPrefix) {
-    this.wxRedisOps = wxRedisOps;
-    this.keyPrefix = keyPrefix;
   }
 
   /**
@@ -202,32 +198,6 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
     return aesKey;
   }
 
-
-  public void setSuiteId(String suiteId) {
-    this.suiteId = suiteId;
-  }
-
-  public void setSuiteSecret(String suiteSecret) {
-    this.suiteSecret = suiteSecret;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
-  }
-
-  public void setAesKey(String aesKey) {
-    this.aesKey = aesKey;
-  }
-
-  public void setCorpId(String corpId) {
-    this.corpId = corpId;
-  }
-
-  public void setCorpSecret(String corpSecret) {
-    this.corpSecret = corpSecret;
-  }
-
-
   /**
    * 企微服务商企业ID & 企业secret, 来自于企微配置
    */
@@ -239,10 +209,6 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
   @Override
   public String getCorpSecret() {
     return corpSecret;
-  }
-
-  public void setProviderSecret(String providerSecret) {
-    this.providerSecret = providerSecret;
   }
 
   @Override

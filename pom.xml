@@ -110,6 +110,7 @@
     <module>weixin-java-open</module>
     <module>weixin-java-qidian</module>
     <module>spring-boot-starters</module>
+    <module>weixin-java-demo</module>
     <!--module>weixin-java-osgi</module-->
   </modules>
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>wx-java</artifactId>
+    <groupId>com.github.binarywang</groupId>
+    <version>4.1.5.B</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>pom</packaging>
+  <name>WxJava - Java Spring Demo</name>
+  <modules>
+    <module>wx-java-cp-demo</module>
+  </modules>
+  <artifactId>wx-java-demo</artifactId>
+
+  <properties>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+    <org.springframework.boot.version>2.3.12.RELEASE</org.springframework.boot.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${org.springframework.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>

@@ -42,7 +42,7 @@ public class WxCpConfiguration {
 
   }
 
-  public WxCpService getService(Integer agentId){
+  public WxCpService getService(Integer agentId) {
     return wxCpServiceMap.get(agentId);
   }
 
