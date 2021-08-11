@@ -326,6 +326,21 @@ public class WxMaApiUrlConstants {
       String REGISTER_FINISH_ACCESS_INFO = "https://api.weixin.qq.com/shop/register/finish_access_info";
       String REGISTER_APPLY_SCENE = "https://api.weixin.qq.com/shop/register/apply_scene";
     }
+
+    interface Account {
+      String GET_CATEGORY_LIST = "https://api.weixin.qq.com/shop/account/get_category_list";
+      String GET_BRAND_LIST = "https://api.weixin.qq.com/shop/account/get_brand_list";
+      String UPDATE_INFO = "https://api.weixin.qq.com/shop/account/update_info";
+      String GET_INFO = "https://api.weixin.qq.com/shop/account/get_info";
+    }
+
+    interface Cat {
+      String GET_CAT = "https://api.weixin.qq.com/shop/cat/get";
+    }
+
+    interface Img {
+      String IMG_UPLOAD = "https://api.weixin.qq.com/shop/img/upload";
+    }
   }
 
   /**
