@@ -1,8 +1,8 @@
 package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.bean.WxCpChat;
+import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
 
 import java.util.List;
 

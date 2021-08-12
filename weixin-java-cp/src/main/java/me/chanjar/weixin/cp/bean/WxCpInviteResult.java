@@ -1,10 +1,10 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
 
 /**
  * 邀请成员的结果对象类.

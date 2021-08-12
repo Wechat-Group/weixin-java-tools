@@ -1,8 +1,6 @@
 package me.chanjar.weixin.cp.constant;
 
 
-import lombok.experimental.UtilityClass;
-
 /**
  * <pre>
  *  企业微信api地址常量类

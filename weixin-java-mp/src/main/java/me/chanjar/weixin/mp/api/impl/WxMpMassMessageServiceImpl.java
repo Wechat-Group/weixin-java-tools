@@ -12,7 +12,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
 import me.chanjar.weixin.mp.bean.result.WxMpMassSpeedGetResult;
 import me.chanjar.weixin.mp.bean.result.WxMpMassUploadResult;
 
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.*;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.MassMessage;
 
 /**
  * <pre>

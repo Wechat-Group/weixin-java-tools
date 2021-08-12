@@ -1,6 +1,5 @@
 package me.chanjar.weixin.cp.bean.message;
 
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutTaskCardMessage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

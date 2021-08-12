@@ -1,9 +1,9 @@
 package me.chanjar.weixin.mp.api;
 
-import java.io.File;
-
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.enums.AiLangType;
+
+import java.io.File;
 
 /**
  * <pre>

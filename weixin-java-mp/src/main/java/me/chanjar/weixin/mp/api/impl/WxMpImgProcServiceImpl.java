@@ -1,13 +1,13 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.service.WxImgProcService;
-import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcAiCropResult;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcQrCodeResult;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcSuperResolutionResult;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.requestexecuter.ocr.OcrDiscernRequestExecutor;
+import me.chanjar.weixin.common.service.WxImgProcService;
+import me.chanjar.weixin.mp.api.WxMpService;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -15,12 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.ImgProc.AI_CROP;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.ImgProc.FILE_AI_CROP;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.ImgProc.FILE_QRCODE;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.ImgProc.FILE_SUPER_RESOLUTION;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.ImgProc.QRCODE;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.ImgProc.SUPER_RESOLUTION;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.ImgProc.*;
 
 /**
  * 图像处理接口实现.

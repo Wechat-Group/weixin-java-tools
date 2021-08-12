@@ -1,9 +1,9 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-
 import lombok.Data;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
 
 /**
  * 企业微信的部门.

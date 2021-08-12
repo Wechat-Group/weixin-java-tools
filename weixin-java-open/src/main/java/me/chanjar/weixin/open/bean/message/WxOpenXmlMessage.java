@@ -11,7 +11,6 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.util.WxOpenCryptUtil;
-import me.chanjar.weixin.open.util.xml.XStreamTransformer;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;

@@ -6,8 +6,8 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.cp.api.WxCpChatService;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.bean.WxCpChat;
+import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 

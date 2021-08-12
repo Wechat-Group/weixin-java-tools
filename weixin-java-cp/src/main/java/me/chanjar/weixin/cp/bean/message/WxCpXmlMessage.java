@@ -15,13 +15,11 @@ import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
-import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;

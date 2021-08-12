@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static me.chanjar.weixin.cp.constant.WxCpConsts.LinkedCorpMsgType.*;
-
 /**
  * 互联企业消息.
  *

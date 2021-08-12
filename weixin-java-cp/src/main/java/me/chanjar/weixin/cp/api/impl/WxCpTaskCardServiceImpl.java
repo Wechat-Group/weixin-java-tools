@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.TaskCard.*;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.TaskCard.UPDATE_TASK_CARD;
 
 /**
  * <pre>

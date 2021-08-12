@@ -2,13 +2,12 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
 import org.testng.annotations.Test;
 
-import static me.chanjar.weixin.common.api.WxConsts.*;
+import static me.chanjar.weixin.common.api.WxConsts.KefuMsgType;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

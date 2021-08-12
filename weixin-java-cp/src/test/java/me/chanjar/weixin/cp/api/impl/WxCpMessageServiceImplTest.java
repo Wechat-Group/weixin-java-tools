@@ -7,7 +7,6 @@ import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
-import me.chanjar.weixin.cp.api.ApiTestModuleWithMockServer;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.message.WxCpLinkedCorpMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;

@@ -1,20 +1,22 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import java.util.Arrays;
-
-import org.testng.*;
-import org.testng.annotations.*;
-
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.cp.constant.WxCpConsts.AppChatMsgType;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.bean.WxCpChat;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
+import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
+import me.chanjar.weixin.cp.constant.WxCpConsts.AppChatMsgType;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

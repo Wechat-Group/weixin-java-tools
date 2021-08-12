@@ -1,19 +1,11 @@
 package me.chanjar.weixin.mp.api;
 
-import java.io.File;
-import java.io.InputStream;
-
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.bean.material.WxMediaImgUploadResult;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialArticleUpdate;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialCountResult;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialVideoInfoResult;
+import me.chanjar.weixin.mp.bean.material.*;
+
+import java.io.File;
+import java.io.InputStream;
 
 /**
  * <pre>

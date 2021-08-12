@@ -1,11 +1,11 @@
 package me.chanjar.weixin.mp.bean.card.membercard;
 
-import java.io.Serializable;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.mp.bean.card.*;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
+import java.io.Serializable;
 
 /**
  * .

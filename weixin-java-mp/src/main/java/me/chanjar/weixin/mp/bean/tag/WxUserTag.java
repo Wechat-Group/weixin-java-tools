@@ -1,12 +1,12 @@
 package me.chanjar.weixin.mp.bean.tag;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>

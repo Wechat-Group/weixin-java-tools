@@ -1,12 +1,12 @@
 package me.chanjar.weixin.mp.bean.card.membercard;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.mp.bean.card.enums.CardRichFieldType;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 富文本字段.

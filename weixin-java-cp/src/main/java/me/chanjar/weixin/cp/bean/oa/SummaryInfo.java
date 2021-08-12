@@ -3,7 +3,6 @@ package me.chanjar.weixin.cp.bean.oa;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import me.chanjar.weixin.cp.bean.oa.WxCpOaApplyEventRequest;
 
 import java.io.Serializable;
 import java.util.List;

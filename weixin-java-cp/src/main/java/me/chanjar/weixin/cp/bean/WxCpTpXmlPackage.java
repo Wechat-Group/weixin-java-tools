@@ -1,15 +1,13 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-import java.util.Map;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
-import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.common.util.xml.XmlUtil;
-import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
+
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 回调消息包.

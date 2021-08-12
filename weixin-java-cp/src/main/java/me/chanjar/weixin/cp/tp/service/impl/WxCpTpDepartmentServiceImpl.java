@@ -7,7 +7,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.impl.WxCpDepartmentServiceImpl;
-import me.chanjar.weixin.cp.bean.WxCpDepart;
 import me.chanjar.weixin.cp.bean.WxCpTpDepart;
 import me.chanjar.weixin.cp.tp.service.WxCpTpDepartmentService;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;

@@ -8,21 +8,13 @@
  */
 package me.chanjar.weixin.cp.util.json;
 
+import com.google.gson.*;
+import me.chanjar.weixin.common.util.json.GsonHelper;
+import me.chanjar.weixin.cp.bean.WxCpChat;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-
-import me.chanjar.weixin.common.util.json.GsonHelper;
-import me.chanjar.weixin.cp.bean.WxCpChat;
 
 /**
  * 群聊适配器
@@ -34,12 +26,12 @@ public class WxCpChatGsonAdapter implements JsonSerializer<WxCpChat>, JsonDeseri
   @Override
   public JsonElement serialize(WxCpChat chat, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject json = new JsonObject();
-    if (chat.getId() != null) { 
+    if (chat.getId() != null) {
       json.addProperty("chatid", chat.getId());
     }
     if (chat.getName() != null) {
       json.addProperty("name", chat.getName());
-    } 
+    }
     if (chat.getOwner() != null) {
       json.addProperty("owner", chat.getOwner());
     }
@@ -61,7 +53,7 @@ public class WxCpChatGsonAdapter implements JsonSerializer<WxCpChat>, JsonDeseri
     chat.setId(GsonHelper.getAsString(chatJson.get("chatid")));
     chat.setName(GsonHelper.getAsString(chatJson.get("name")));
     chat.setOwner(GsonHelper.getAsString(chatJson.get("owner")));
-    
+
     JsonArray usersJson = chatJson.getAsJsonArray("userlist");
     if (usersJson != null) {
       List<String> users = new ArrayList<>(usersJson.size());
@@ -70,7 +62,7 @@ public class WxCpChatGsonAdapter implements JsonSerializer<WxCpChat>, JsonDeseri
         users.add(userJson.getAsString());
       }
     }
-    
+
     return chat;
   }
 
