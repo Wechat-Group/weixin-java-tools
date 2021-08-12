@@ -10,6 +10,7 @@ import me.chanjar.weixin.cp.tp.message.WxCpTpMessageRouter;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 import me.chanjar.weixin.cp.tp.service.impl.WxCpTpServiceImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -32,7 +33,8 @@ public class WxCpTpConfiguration {
 
   private final StringRedisTemplate stringRedisTemplate;
 
-  private Map<String, WxCpTpService> wxCpTpServiceMap = new HashMap<>();
+  private final WxCpTpServiceContainer wxCpTpServiceContainer;
+
   private final Map<String, WxCpTpMessageRouter> routers = new HashMap<>();
 
 
@@ -40,16 +42,21 @@ public class WxCpTpConfiguration {
     this.wxCpTpMessageMatchHandlerList = wxCpTpMessageMatchHandlerList;
     this.wxCpTpProperties = wxCpTpProperties;
     this.stringRedisTemplate = stringRedisTemplate;
+    this.wxCpTpServiceContainer = new WxCpTpServiceContainer();
   }
 
-  public WxCpTpService getService(String suiteId) {
-    return wxCpTpServiceMap.get(suiteId);
+  @Bean
+  public WxCpTpServiceContainer getContainer() {
+    return wxCpTpServiceContainer;
   }
 
   @PostConstruct
   public void initService() {
-    wxCpTpServiceMap = this.wxCpTpProperties.getSuites().stream().map(prop -> {
-      val configStorage =   WxCpTpRedisConfigImpl
+    if (this.wxCpTpProperties.getSuites() == null) {
+      return;
+    }
+    Map<String, WxCpTpService> map = this.wxCpTpProperties.getSuites().stream().map(prop -> {
+      val configStorage = WxCpTpRedisConfigImpl
         .builder()
         .suiteId(prop.getSuiteId())
         .suiteSecret(prop.getSuiteSecret())
@@ -65,6 +72,7 @@ public class WxCpTpConfiguration {
       routers.put(prop.getSuiteId(), this.newRouter(service));
       return service;
     }).collect(Collectors.toMap(service -> service.getWxCpTpConfigStorage().getSuiteId(), a -> a));
+    this.wxCpTpServiceContainer.setWxCpTpServiceMap(map);
   }
 
   private WxCpTpMessageRouter newRouter(WxCpTpService wxCpTpService) {

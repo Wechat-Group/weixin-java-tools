@@ -9,6 +9,7 @@ import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.config.impl.WxCpRedisConfigImpl;
 import me.chanjar.weixin.cp.message.WxCpMessageRouter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -31,7 +32,8 @@ public class WxCpConfiguration {
 
   private final StringRedisTemplate stringRedisTemplate;
 
-  private Map<Integer, WxCpService> wxCpServiceMap = new HashMap<>();
+  private final WxCpServiceContainer wxCpServiceContainer = new WxCpServiceContainer();
+
   private final Map<Integer, WxCpMessageRouter> routers = new HashMap<>();
 
 
@@ -42,13 +44,17 @@ public class WxCpConfiguration {
 
   }
 
-  public WxCpService getService(Integer agentId) {
-    return wxCpServiceMap.get(agentId);
+  @Bean
+  public WxCpServiceContainer getWxCpServiceContainer() {
+    return wxCpServiceContainer;
   }
 
   @PostConstruct
   public void initService() {
-    wxCpServiceMap = this.wxCpProperties.getAppConfigs().stream().map(a -> {
+    if (this.wxCpProperties.getAppConfigs() == null) {
+      return;
+    }
+    Map<Integer, WxCpService> map = this.wxCpProperties.getAppConfigs().stream().map(a -> {
       val configStorage = new WxCpRedisConfigImpl(new RedisTemplateWxRedisOps(stringRedisTemplate), "wx::cp");
       configStorage.setCorpId(this.wxCpProperties.getCorpId());
       configStorage.setAgentId(a.getAgentId());
@@ -60,6 +66,7 @@ public class WxCpConfiguration {
       routers.put(a.getAgentId(), this.newRouter(service));
       return service;
     }).collect(Collectors.toMap(service -> service.getWxCpConfigStorage().getAgentId(), a -> a));
+    this.wxCpServiceContainer.setWxCpServiceMap(map);
   }
 
   private WxCpMessageRouter newRouter(WxCpService wxCpService) {

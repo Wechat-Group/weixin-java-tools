@@ -20,9 +20,9 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-redis</artifactId>
-      <version>${spring.boot.version}</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>joda-time</groupId>
@@ -31,14 +31,7 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-redis</artifactId>
-      <version>${spring.boot.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <version>${spring.boot.version}</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>

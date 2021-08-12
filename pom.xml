@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
@@ -121,10 +123,18 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <httpclient.version>4.5.13</httpclient.version>
     <jetty.version>9.4.41.v20210516</jetty.version>
+    <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>com.github.binarywang</groupId>
         <artifactId>qrcode-utils</artifactId>
@@ -169,11 +179,6 @@
         <version>3.10</version>
       </dependency>
       <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>1.7.30</version>
-      </dependency>
-      <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
         <version>1.4.17</version>
@@ -194,12 +199,6 @@
         <groupId>joda-time</groupId>
         <artifactId>joda-time</artifactId>
         <version>2.10.6</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-        <version>1.2.3</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -262,19 +261,6 @@
         <artifactId>redisson</artifactId>
         <version>3.12.0</version>
         <optional>true</optional>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.data</groupId>
-        <artifactId>spring-data-redis</artifactId>
-        <version>2.3.3.RELEASE</version>
-        <optional>true</optional>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>1.18.8</version>
         <scope>provided</scope>
       </dependency>
       <dependency>

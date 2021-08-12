@@ -1,6 +1,17 @@
+logging:
+  level:
+    com.binarywang: debug
 wx:
   cp:
     tp:
       corp-id: ww530a1c681ffac763
-      provider-secret: KUc6rUB2
-      token: KUc6rUB2
+      provider-secret: y9MPFhNEapLse94P-L1v-Fbhd_YEyTcar3qur0gAxJOsZANKrNg4Fr0L9vOVanhC
+      suites:
+        - suiteId: ww530a1c681ffac763
+          suiteSecret: PCbg8KbwuhjbPRHoNr_z_qD3GtZAkPJywcca56kNMhk
+          token: KUc6rUB2
+          aesKey: 1gulL65SS783rvGPfjAt9EP4x5piqn2XEBiOnyJpxxI
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379

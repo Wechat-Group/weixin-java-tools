@@ -12,7 +12,7 @@
   <description>WxJava 各个模块的 Spring Boot Starter</description>
 
   <properties>
-    <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
+    <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
   </properties>
 
   <modules>
@@ -28,13 +28,10 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-autoconfigure</artifactId>
-      <version>${spring.boot.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
-      <version>${spring.boot.version}</version>
-      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>

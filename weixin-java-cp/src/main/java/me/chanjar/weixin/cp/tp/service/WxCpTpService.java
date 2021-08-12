@@ -326,11 +326,11 @@ public interface WxCpTpService {
 
   /**
    * 获取WxCpTpConfigStorage 对象.
+   * 原注释: storage应该在service内部使用 ，提供这个接口，容易破坏这个封装
+   * wxjava 的封装体系在4.1.0 版本已经被破坏, 所以在自己封装的版本将这个方法取消过期
    *
    * @return WxCpTpConfigStorage wx cp tp config storage
-   * @deprecated storage应该在service内部使用 ，提供这个接口，容易破坏这个封装
    */
-  @Deprecated
   WxCpTpConfigStorage getWxCpTpConfigStorage();
 
   /**
