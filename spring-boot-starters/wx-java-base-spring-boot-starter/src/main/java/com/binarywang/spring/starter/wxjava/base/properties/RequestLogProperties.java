@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-package me.chanjar.weixin.common.util;
+package com.binarywang.spring.starter.wxjava.base.properties;
 
-import org.springframework.lang.Nullable;
-
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * 受检的 Consumer
+ * 日志配置
  *
  * @author L.cm
  */
-@FunctionalInterface
-public interface CheckedConsumer<T> extends Serializable {
+@Getter
+@Setter
+@ConfigurationProperties(RequestLogLevel.REQ_LOG_PROPS_PREFIX)
+public class RequestLogProperties {
 
   /**
-   * Run the Consumer
-   *
-   * @param t T
-   * @throws Throwable UncheckedException
+   * 日志级别配置，默认：BASIC
    */
-  @Nullable
-  void accept(@Nullable T t) throws Throwable;
-
+  private RequestLogLevel level = RequestLogLevel.BASIC;
 }

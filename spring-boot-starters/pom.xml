@@ -22,6 +22,7 @@
     <module>wx-java-open-spring-boot-starter</module>
     <module>wx-java-qidian-spring-boot-starter</module>
     <module>wx-java-cp-spring-boot-starter</module>
+    <module>wx-java-base-spring-boot-starter</module>
   </modules>
 
   <dependencies>

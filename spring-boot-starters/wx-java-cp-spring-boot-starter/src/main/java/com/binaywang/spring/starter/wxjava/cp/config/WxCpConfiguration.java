@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * @author caiqy
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(WxCpProperties.class)
 public class WxCpConfiguration {
 

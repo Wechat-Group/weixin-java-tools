@@ -10,6 +10,13 @@ import me.chanjar.weixin.cp.tp.message.WxCpTpMessageHandler;
 public interface WxCpTpMessageMatchHandler extends WxCpTpMessageHandler {
 
   /**
+   * 通知类型
+   *
+   * @return
+   */
+  String getInfoType();
+
+  /**
    * 获取指定事件类型
    *
    * @return event type

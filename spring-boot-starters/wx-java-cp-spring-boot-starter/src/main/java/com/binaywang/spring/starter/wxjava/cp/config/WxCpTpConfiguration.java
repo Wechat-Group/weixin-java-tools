@@ -4,7 +4,6 @@ import com.binaywang.spring.starter.wxjava.cp.handler.WxCpTpMessageMatchHandler;
 import com.binaywang.spring.starter.wxjava.cp.properties.WxCpTpProperties;
 import lombok.val;
 import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
-import me.chanjar.weixin.common.redis.RedissonWxRedisOps;
 import me.chanjar.weixin.cp.config.impl.WxCpTpRedisConfigImpl;
 import me.chanjar.weixin.cp.tp.message.WxCpTpMessageRouter;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * @author caiqy
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(WxCpTpProperties.class)
 public class WxCpTpConfiguration {
 
@@ -83,6 +82,7 @@ public class WxCpTpConfiguration {
           newRouter.rule().handler(wxCpTpMessageMatchHandler).next();
         } else {
           newRouter.rule().async(false).msgType(wxCpTpMessageMatchHandler.getMsgType())
+            .infoType(wxCpTpMessageMatchHandler.getInfoType())
             .event(wxCpTpMessageMatchHandler.getEventType())
             .handler(wxCpTpMessageMatchHandler)
             .end();

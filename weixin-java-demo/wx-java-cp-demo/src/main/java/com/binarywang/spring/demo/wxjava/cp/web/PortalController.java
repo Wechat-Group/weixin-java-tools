@@ -1,5 +1,6 @@
 package com.binarywang.spring.demo.wxjava.cp.web;
 
+import cn.hutool.json.JSONUtil;
 import com.binaywang.spring.starter.wxjava.cp.config.WxCpTpServiceContainer;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.util.xml.XmlUtil;
@@ -29,9 +30,6 @@ public class PortalController {
                              @RequestParam(name = "timestamp", required = false) String timestamp,
                              @RequestParam(name = "nonce", required = false) String nonce,
                              @RequestParam(name = "echostr", required = false) String echostr) {
-    log.info("\n接收到来自微信服务器的认证消息：signature = [{}], timestamp = [{}], nonce = [{}], echostr = [{}]",
-      signature, timestamp, nonce, echostr);
-
     if (StringUtils.isAnyBlank(signature, timestamp, nonce, echostr)) {
       throw new IllegalArgumentException("请求参数非法，请核实!");
     }
@@ -54,8 +52,6 @@ public class PortalController {
                               @RequestParam("msg_signature") String signature,
                               @RequestParam("timestamp") String timestamp,
                               @RequestParam("nonce") String nonce) {
-    log.info("\n接收微信请求：[signature=[{}], timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
-      signature, timestamp, nonce, requestBody);
 
     final WxCpTpService wxCpTpService = wxCpTpServiceContainer.getTpService(suiteId);
 
@@ -73,8 +69,6 @@ public class PortalController {
                        @RequestParam(name = "timestamp", required = false) String timestamp,
                        @RequestParam(name = "nonce", required = false) String nonce,
                        @RequestParam(name = "echostr", required = false) String echostr) {
-    log.info("\n接收到来自微信服务器的认证消息：signature = [{}], timestamp = [{}], nonce = [{}], echostr = [{}]",
-      signature, timestamp, nonce, echostr);
 
     if (StringUtils.isAnyBlank(signature, timestamp, nonce, echostr)) {
       throw new IllegalArgumentException("请求参数非法，请核实!");
@@ -98,8 +92,6 @@ public class PortalController {
                         @RequestParam("msg_signature") String signature,
                         @RequestParam("timestamp") String timestamp,
                         @RequestParam("nonce") String nonce) {
-    log.info("\n接收微信请求：[signature=[{}], timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
-      signature, timestamp, nonce, requestBody);
     final WxCpTpService wxCpTpService = wxCpTpServiceContainer.getTpService(suiteId);
     WxCpTpXmlPackage wxCpTpXmlPackage = WxCpTpXmlPackage.fromXml(requestBody);
     String xml = new WxCpTpCryptUtil(wxCpTpService.getWxCpTpConfigStorage()).decrypt(wxCpTpXmlPackage.getMsgEncrypt());
@@ -109,6 +101,7 @@ public class PortalController {
     if (wxCpTpXmlMessage != null && WxCpTpConsts.InfoType.SUITE_TICKET.equals(wxCpTpXmlMessage.getInfoType())) {
       // suite ticket
       wxCpTpService.setSuiteTicket(wxCpTpXmlMessage.getSuiteTicket());
+      System.out.println(JSONUtil.toJsonPrettyStr(wxCpTpService.getPermanentCodeInfo("kSvHPdVAfFsa8fRChwLhbSBeiPpn1dAVF6_9WRfgiR_VEzktUeVccwshqSLxIMIafNZiq1HFry8TmHnrLaBLGHLMJFFuy7j6KcF9kfmgVSM")));
     }
     return "success";
   }

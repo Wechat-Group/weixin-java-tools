@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package me.chanjar.weixin.common.util;
+package com.binarywang.spring.starter.wxjava.base.util;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,7 +30,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.type.CollectionLikeType;
 import com.fasterxml.jackson.databind.type.MapType;
-import jodd.util.StringUtil;
 import lombok.experimental.UtilityClass;
 import org.springframework.lang.Nullable;
 
@@ -173,7 +173,7 @@ public class JsonUtil {
    */
   @Nullable
   public static <T> T readValue(@Nullable String jsonString, Class<T> valueType) {
-    if (StringUtil.isBlank(jsonString)) {
+    if (StrUtil.isBlank(jsonString)) {
       return null;
     }
     try {
@@ -233,7 +233,7 @@ public class JsonUtil {
    */
   @Nullable
   public static <T> T readValue(@Nullable String jsonString, TypeReference<T> typeReference) {
-    if (StringUtil.isBlank(jsonString)) {
+    if (StrUtil.isBlank(jsonString)) {
       return null;
     }
     try {
@@ -293,7 +293,7 @@ public class JsonUtil {
    */
   @Nullable
   public static <T> T readValue(@Nullable String jsonString, JavaType javaType) {
-    if (StringUtil.isBlank(jsonString)) {
+    if (StrUtil.isBlank(jsonString)) {
       return null;
     }
     try {
