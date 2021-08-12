@@ -23,6 +23,11 @@ public class SuiteTicketHandler extends AbstractWxCpTpMessageMatchHandler {
   }
 
   @Override
+  public String getChangeType() {
+    return null;
+  }
+
+  @Override
   public String getEventType() {
     return null;
   }

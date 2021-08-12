@@ -17,6 +17,13 @@ public interface WxCpTpMessageMatchHandler extends WxCpTpMessageHandler {
   String getInfoType();
 
   /**
+   * 获取info type子类
+   *
+   * @return
+   */
+  String getChangeType();
+
+  /**
    * 获取指定事件类型
    *
    * @return event type
