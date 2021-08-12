@@ -1,9 +1,8 @@
 package com.binaywang.spring.starter.wxjava.cp.config;
 
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.tp.service.WxCpTpService;
+import me.chanjar.weixin.cp.message.WxCpMessageRouter;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
-import me.chanjar.weixin.cp.util.crypto.WxCpTpCryptUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +15,8 @@ public class WxCpServiceContainer {
 
   private Map<Integer, WxCpCryptUtil> wxCpCryptUtilMap = new HashMap<>();
 
+  private Map<Integer, WxCpMessageRouter> routers = new HashMap<>();
+
   public WxCpService getCpService(Integer agentId) {
     return wxCpServiceMap.get(agentId);
   }
@@ -24,7 +25,16 @@ public class WxCpServiceContainer {
     this.wxCpServiceMap = wxCpServiceMap;
   }
 
+  public void setRouters(Map<Integer, WxCpMessageRouter> routers) {
+    this.routers = routers;
+  }
+
   public WxCpCryptUtil getCryptUtil(Integer agentId) {
     return wxCpCryptUtilMap.computeIfAbsent(agentId, si -> new WxCpCryptUtil(getCpService(si).getWxCpConfigStorage()));
   }
+
+  public WxCpMessageRouter getRouter(Integer agentId) {
+    return routers.get(agentId);
+  }
+
 }

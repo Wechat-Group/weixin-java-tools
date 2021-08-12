@@ -18,6 +18,11 @@ public class WxCpProperties implements Serializable {
   private static final long serialVersionUID = -6901799076021694608L;
 
   /**
+   * redis key 前缀
+   */
+  private String redisKeyPrefix = "wx:cp";
+
+  /**
    * 设置企业微信的corpId
    */
   private String corpId;

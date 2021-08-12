@@ -16,6 +16,11 @@ public class WxCpTpProperties implements Serializable {
   private static final long serialVersionUID = 3217520552931601386L;
 
   /**
+   * redis key 前缀
+   */
+  private String redisKeyPrefix = "wx:cp:tp";
+
+  /**
    * 每个服务商同时也是一个企业微信的企业，都有唯一的corpid。获取此信息可在服务商管理后台“应用开发”－“通用开发参数”可查看
    */
   private String corpId;

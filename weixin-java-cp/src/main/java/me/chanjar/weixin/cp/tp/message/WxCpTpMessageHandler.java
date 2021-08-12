@@ -20,14 +20,14 @@ public interface WxCpTpMessageHandler {
    *
    * @param wxMessage      the wx message
    * @param context        上下文，如果handler或interceptor之间有信息要传递，可以用这个
-   * @param wxCpService    the wx cp service
+   * @param wxCpTpService  the wx cp tp service
    * @param sessionManager the session manager
    * @return xml格式的消息 ，如果在异步规则里处理的话，可以返回null
    * @throws WxErrorException the wx error exception
    */
   WxCpXmlOutMessage handle(WxCpTpXmlMessage wxMessage,
                            Map<String, Object> context,
-                           WxCpTpService wxCpService,
+                           WxCpTpService wxCpTpService,
                            WxSessionManager sessionManager) throws WxErrorException;
 
 }

@@ -34,8 +34,6 @@ public class WxCpTpConfiguration {
 
   private final WxCpTpServiceContainer wxCpTpServiceContainer;
 
-  private final Map<String, WxCpTpMessageRouter> routers = new HashMap<>();
-
 
   public WxCpTpConfiguration(List<WxCpTpMessageMatchHandler> wxCpTpMessageMatchHandlerList, WxCpTpProperties wxCpTpProperties, StringRedisTemplate stringRedisTemplate) {
     this.wxCpTpMessageMatchHandlerList = wxCpTpMessageMatchHandlerList;
@@ -54,6 +52,7 @@ public class WxCpTpConfiguration {
     if (this.wxCpTpProperties.getSuites() == null) {
       return;
     }
+    Map<String, WxCpTpMessageRouter> wxCpTpMessageRouterMap = new HashMap<>();
     Map<String, WxCpTpService> map = this.wxCpTpProperties.getSuites().stream().map(prop -> {
       val configStorage = WxCpTpRedisConfigImpl
         .builder()
@@ -64,14 +63,15 @@ public class WxCpTpConfiguration {
         .corpId(wxCpTpProperties.getCorpId())
         .providerSecret(wxCpTpProperties.getProviderSecret())
         .wxRedisOps(new RedisTemplateWxRedisOps(stringRedisTemplate))
-        .keyPrefix("wx::cp::tp")
+        .keyPrefix(wxCpTpProperties.getRedisKeyPrefix())
         .build();
       val service = new WxCpTpServiceImpl();
       service.setWxCpTpConfigStorage(configStorage);
-      routers.put(prop.getSuiteId(), this.newRouter(service));
+      wxCpTpMessageRouterMap.put(prop.getSuiteId(), this.newRouter(service));
       return service;
     }).collect(Collectors.toMap(service -> service.getWxCpTpConfigStorage().getSuiteId(), a -> a));
     this.wxCpTpServiceContainer.setWxCpTpServiceMap(map);
+    this.wxCpTpServiceContainer.setRouters(wxCpTpMessageRouterMap);
   }
 
   private WxCpTpMessageRouter newRouter(WxCpTpService wxCpTpService) {

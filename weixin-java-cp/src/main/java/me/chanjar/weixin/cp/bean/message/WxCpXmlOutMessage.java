@@ -73,7 +73,8 @@ public abstract class WxCpXmlOutMessage implements Serializable {
   public static TaskCardBuilder TASK_CARD() {
     return new TaskCardBuilder();
   }
-  protected String toXml() {
+
+  public String toXml() {
     return XmlUtil.toXml(this);
   }
 

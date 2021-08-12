@@ -1,12 +1,11 @@
 package com.binarywang.spring.demo.wxjava.cp.web;
 
-import cn.hutool.json.JSONUtil;
 import com.binaywang.spring.starter.wxjava.cp.config.WxCpTpServiceContainer;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.cp.bean.WxCpTpXmlPackage;
 import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
-import me.chanjar.weixin.cp.constant.WxCpTpConsts;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 import me.chanjar.weixin.cp.util.crypto.WxCpTpCryptUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -97,14 +96,10 @@ public class PortalController {
     String xml = new WxCpTpCryptUtil(wxCpTpService.getWxCpTpConfigStorage()).decrypt(wxCpTpXmlPackage.getMsgEncrypt());
     log.info("\n 解密后xml:" + xml);
     WxCpTpXmlMessage wxCpTpXmlMessage = XmlUtil.toObject(xml, WxCpTpXmlMessage.class);
-
-    if (wxCpTpXmlMessage != null && WxCpTpConsts.InfoType.SUITE_TICKET.equals(wxCpTpXmlMessage.getInfoType())) {
-      // suite ticket
-      wxCpTpService.setSuiteTicket(wxCpTpXmlMessage.getSuiteTicket());
-      System.out.println(JSONUtil.toJsonPrettyStr(wxCpTpService.getPermanentCodeInfo("kSvHPdVAfFsa8fRChwLhbSBeiPpn1dAVF6_9WRfgiR_VEzktUeVccwshqSLxIMIafNZiq1HFry8TmHnrLaBLGHLMJFFuy7j6KcF9kfmgVSM")));
+    WxCpXmlOutMessage wxCpXmlOutMessage = wxCpTpServiceContainer.getRouter(suiteId).route(wxCpTpXmlMessage);
+    if (wxCpXmlOutMessage != null) {
+      wxCpTpServiceContainer.getCryptUtil(suiteId).encrypt(wxCpXmlOutMessage.toXml());
     }
     return "success";
   }
-
-
 }
