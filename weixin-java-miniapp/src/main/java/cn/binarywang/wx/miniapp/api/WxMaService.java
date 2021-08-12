@@ -434,6 +434,13 @@ public interface WxMaService extends WxService {
   WxMaShopImgService getShopImgService();
 
   /**
+   * 小程序交易组件-接入商品前必需接口-审核相关接口
+   *
+   * @return
+   */
+  WxMaShopAuditService getShopAuditService();
+
+  /**
    * 获取小程序 URL Link服务接口
    *
    * @return

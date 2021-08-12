@@ -341,6 +341,13 @@ public class WxMaApiUrlConstants {
     interface Img {
       String IMG_UPLOAD = "https://api.weixin.qq.com/shop/img/upload";
     }
+
+    interface Audit {
+      String AUDIT_BRAND = "https://api.weixin.qq.com/shop/audit/audit_brand";
+      String AUDIT_CATEGORY = "https://api.weixin.qq.com/shop/audit/audit_category";
+      String AUDIT_RESULT = "https://api.weixin.qq.com/shop/audit/result";
+      String GET_MINIAPP_CERTIFICATE = "https://api.weixin.qq.com/shop/audit/get_miniapp_certificate";
+    }
   }
 
   /**
