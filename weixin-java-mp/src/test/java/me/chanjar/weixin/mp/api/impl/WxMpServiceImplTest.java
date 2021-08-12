@@ -1,20 +1,20 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import org.apache.commons.lang3.StringUtils;
-import org.testng.*;
-import org.testng.annotations.*;
-
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConfigStorage;
 import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
-import me.chanjar.weixin.common.enums.TicketType;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
+import org.apache.commons.lang3.StringUtils;
+import org.testng.Assert;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertNotNull;
 
 @Test
 @Guice(modules = ApiTestModule.class)

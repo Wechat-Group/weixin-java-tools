@@ -7,12 +7,13 @@ import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreBaseInfo;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreInfo;
 import me.chanjar.weixin.mp.bean.store.WxMpStoreListResult;
-import org.testng.annotations.*;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.testng.AssertJUnit.*;
+import static org.testng.AssertJUnit.assertNotNull;
 
 /**
  * Created by Binary Wang on 2016-09-23.

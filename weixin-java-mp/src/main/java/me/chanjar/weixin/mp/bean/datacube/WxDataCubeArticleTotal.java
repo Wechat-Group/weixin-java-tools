@@ -1,13 +1,13 @@
 package me.chanjar.weixin.mp.bean.datacube;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
+import java.util.List;
 
 /**
  * 图文分析数据接口返回结果对象.

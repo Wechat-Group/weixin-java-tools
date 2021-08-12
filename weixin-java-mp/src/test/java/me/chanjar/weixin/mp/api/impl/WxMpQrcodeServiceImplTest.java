@@ -7,8 +7,10 @@ import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.testng.*;
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;

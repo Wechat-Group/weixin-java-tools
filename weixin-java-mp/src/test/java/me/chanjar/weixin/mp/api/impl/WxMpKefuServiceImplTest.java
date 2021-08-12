@@ -1,12 +1,5 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import java.io.File;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-
-import org.testng.annotations.*;
-
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -15,13 +8,15 @@ import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConfigStorage;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.kefu.request.WxMpKfAccountRequest;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfInfo;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfList;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfMsgList;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfOnlineList;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfSessionGetResult;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfSessionList;
-import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfSessionWaitCaseList;
+import me.chanjar.weixin.mp.bean.kefu.result.*;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
+
+import java.io.File;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

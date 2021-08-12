@@ -2,13 +2,11 @@ package me.chanjar.weixin.open.api.impl;
 
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMinishopService;
-import me.chanjar.weixin.open.api.WxOpenService;
 import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.result.WxOpenResult;
 

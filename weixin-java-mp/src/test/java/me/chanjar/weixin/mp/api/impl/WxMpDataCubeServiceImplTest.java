@@ -6,8 +6,10 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.datacube.*;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.testng.*;
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
 import java.text.ParseException;
 import java.util.Date;

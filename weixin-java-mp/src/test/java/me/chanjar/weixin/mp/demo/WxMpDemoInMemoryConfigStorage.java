@@ -1,12 +1,12 @@
 package me.chanjar.weixin.mp.demo;
 
-import java.io.InputStream;
-import java.util.concurrent.locks.ReentrantLock;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
+
+import java.io.InputStream;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Daniel Qian

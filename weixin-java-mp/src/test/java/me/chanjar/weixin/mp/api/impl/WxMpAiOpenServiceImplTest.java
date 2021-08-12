@@ -1,14 +1,14 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import java.io.File;
-
-import org.testng.annotations.*;
-
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.enums.AiLangType;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
+
+import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

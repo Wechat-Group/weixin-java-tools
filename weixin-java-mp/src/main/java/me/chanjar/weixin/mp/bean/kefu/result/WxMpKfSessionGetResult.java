@@ -1,10 +1,10 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
-import java.io.Serializable;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
+import java.io.Serializable;
 
 /**
  * @author Binary Wang

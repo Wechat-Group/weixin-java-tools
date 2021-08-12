@@ -1,10 +1,10 @@
 package me.chanjar.weixin.mp.demo;
 
-import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServlet;

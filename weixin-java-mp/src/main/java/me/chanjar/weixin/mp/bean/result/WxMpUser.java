@@ -1,14 +1,14 @@
 package me.chanjar.weixin.mp.bean.result;
 
-import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * 微信用户信息.

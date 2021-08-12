@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.User.*;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.User.USER_CHANGE_OPENID_URL;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

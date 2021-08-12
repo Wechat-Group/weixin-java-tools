@@ -1,8 +1,8 @@
 package me.chanjar.weixin.mp.bean.kefu.result;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.testng.*;
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 @Test
 public class WxMpKfListTest {

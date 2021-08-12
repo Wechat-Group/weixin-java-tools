@@ -1,8 +1,9 @@
 package me.chanjar.weixin.mp.bean.result;
 
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * <pre>

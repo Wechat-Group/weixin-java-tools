@@ -1,14 +1,13 @@
 package me.chanjar.weixin.mp.bean.card;
 
-import java.io.Serializable;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
 
 @Data
 public class WxMpCardLandingPageCreateRequest implements Serializable {

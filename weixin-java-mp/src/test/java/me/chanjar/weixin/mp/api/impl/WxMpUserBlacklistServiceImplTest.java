@@ -4,8 +4,9 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConfigStorage;
 import me.chanjar.weixin.mp.bean.result.WxMpUserBlacklistGetResult;
-import org.testng.*;
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

@@ -1,14 +1,13 @@
 package me.chanjar.weixin.mp.bean.kefu.request;
 
-import java.io.Serializable;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import java.io.Serializable;
 
 @Data
 @Builder

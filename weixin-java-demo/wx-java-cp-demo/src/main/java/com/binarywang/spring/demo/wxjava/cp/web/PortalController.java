@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.cp.bean.WxCpTpXmlPackage;
 import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
+import me.chanjar.weixin.cp.constant.WxCpTpConsts;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 import me.chanjar.weixin.cp.util.crypto.WxCpTpCryptUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -99,14 +100,16 @@ public class PortalController {
                         @RequestParam("nonce") String nonce) {
     log.info("\n接收微信请求：[signature=[{}], timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
       signature, timestamp, nonce, requestBody);
-
     final WxCpTpService wxCpTpService = wxCpTpServiceContainer.getTpService(suiteId);
-
     WxCpTpXmlPackage wxCpTpXmlPackage = WxCpTpXmlPackage.fromXml(requestBody);
-
     String xml = new WxCpTpCryptUtil(wxCpTpService.getWxCpTpConfigStorage()).decrypt(wxCpTpXmlPackage.getMsgEncrypt());
+    log.info("\n 解密后xml:" + xml);
     WxCpTpXmlMessage wxCpTpXmlMessage = XmlUtil.toObject(xml, WxCpTpXmlMessage.class);
 
+    if (wxCpTpXmlMessage != null && WxCpTpConsts.InfoType.SUITE_TICKET.equals(wxCpTpXmlMessage.getInfoType())) {
+      // suite ticket
+      wxCpTpService.setSuiteTicket(wxCpTpXmlMessage.getSuiteTicket());
+    }
     return "success";
   }
 

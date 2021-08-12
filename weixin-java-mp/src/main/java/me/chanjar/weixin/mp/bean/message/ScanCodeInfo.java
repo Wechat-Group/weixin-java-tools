@@ -1,12 +1,12 @@
 package me.chanjar.weixin.mp.bean.message;
 
-import java.io.Serializable;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
+import java.io.Serializable;
 
 /**
  * <pre>

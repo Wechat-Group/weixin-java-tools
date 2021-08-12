@@ -1,10 +1,9 @@
 package me.chanjar.weixin.mp.demo;
 
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
+import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
-import me.chanjar.weixin.mp.bean.result.WxMpUser;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

@@ -1,9 +1,11 @@
 package me.chanjar.weixin.open.api.impl;
 
-import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.http.*;
+import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.MinishopUploadRequestExecutor;
+import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
+import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;

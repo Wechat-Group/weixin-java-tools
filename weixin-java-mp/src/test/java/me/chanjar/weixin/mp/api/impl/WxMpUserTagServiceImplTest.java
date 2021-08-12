@@ -6,8 +6,9 @@ import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.api.test.TestConfigStorage;
 import me.chanjar.weixin.mp.bean.tag.WxTagListUser;
 import me.chanjar.weixin.mp.bean.tag.WxUserTag;
-import org.testng.*;
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
 import java.util.List;
 

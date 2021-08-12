@@ -1,13 +1,13 @@
 package me.chanjar.weixin.mp.util.requestexecuter.material;
 
-import java.io.IOException;
-
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
+
+import java.io.IOException;
 
 public abstract class MaterialNewsInfoRequestExecutor<H, P> implements RequestExecutor<WxMpMaterialNews, String> {
   protected RequestHttp<H, P> requestHttp;

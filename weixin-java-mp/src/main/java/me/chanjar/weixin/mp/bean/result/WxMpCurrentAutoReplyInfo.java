@@ -1,15 +1,15 @@
 package me.chanjar.weixin.mp.bean.result;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.common.util.json.WxBooleanTypeAdapter;
 import me.chanjar.weixin.common.util.json.WxDateTypeAdapter;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <pre>
