@@ -6,6 +6,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * 小程序代码模板
+ *
  * @author <a href="https://github.com/charmingoh">Charming</a>
  * @since 2018-04-26 17:10
  */
@@ -37,7 +39,7 @@ public class WxOpenMaCodeTemplate implements Serializable {
    * 模板类型 0对应普通模板，1对应标准模板
    */
   @SerializedName(value = "templateType", alternate = "template_type")
-  private Integer template_type;
+  private Integer templateType;
 
   /**
    * 开发者上传草稿时间 / 被添加为模版的时间
