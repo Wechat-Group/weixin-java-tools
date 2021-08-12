@@ -1,9 +1,7 @@
 package me.chanjar.weixin.mp.bean.message;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
-import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.mp.builder.outxml.*;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
@@ -17,18 +15,15 @@ public abstract class WxMpXmlOutMessage implements Serializable {
   private static final long serialVersionUID = -381382011286216263L;
 
   @XStreamAlias("ToUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String toUserName;
 
   @XStreamAlias("FromUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String fromUserName;
 
   @XStreamAlias("CreateTime")
   protected Long createTime;
 
   @XStreamAlias("MsgType")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String msgType;
 
   /**

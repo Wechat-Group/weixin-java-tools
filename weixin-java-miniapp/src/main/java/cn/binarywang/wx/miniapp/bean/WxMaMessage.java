@@ -1,15 +1,12 @@
 package cn.binarywang.wx.miniapp.bean;
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
-import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
-import cn.binarywang.wx.miniapp.util.xml.XStreamTransformer;
+import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import com.google.gson.annotations.SerializedName;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.error.WxRuntimeException;
-import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.common.util.xml.XmlUtil;
 import org.apache.commons.io.IOUtils;
 
@@ -28,17 +25,14 @@ public class WxMaMessage implements Serializable {
 
   @SerializedName("Encrypt")
   @XStreamAlias("Encrypt")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String encrypt;
 
   @SerializedName("ToUserName")
   @XStreamAlias("ToUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String toUser;
 
   @SerializedName("FromUserName")
   @XStreamAlias("FromUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String fromUser;
 
   @SerializedName("CreateTime")
@@ -47,17 +41,14 @@ public class WxMaMessage implements Serializable {
 
   @SerializedName("MsgType")
   @XStreamAlias("MsgType")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String msgType;
 
   @SerializedName("MsgDataFormat")
   @XStreamAlias("MsgDataFormat")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String msgDataFormat;
 
   @SerializedName("Content")
   @XStreamAlias("Content")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String content;
 
   @SerializedName("MsgId")
@@ -66,47 +57,38 @@ public class WxMaMessage implements Serializable {
 
   @SerializedName("PicUrl")
   @XStreamAlias("PicUrl")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String picUrl;
 
   @SerializedName("MediaId")
   @XStreamAlias("MediaId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String mediaId;
 
   @SerializedName("Event")
   @XStreamAlias("Event")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String event;
 
   @SerializedName("Title")
   @XStreamAlias("Title")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String title;
 
   @SerializedName("AppId")
   @XStreamAlias("AppId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String appId;
 
   @SerializedName("PagePath")
   @XStreamAlias("PagePath")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String pagePath;
 
   @SerializedName("ThumbUrl")
   @XStreamAlias("ThumbUrl")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String thumbUrl;
 
   @SerializedName("ThumbMediaId")
   @XStreamAlias("ThumbMediaId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String thumbMediaId;
 
   @SerializedName("SessionFrom")
   @XStreamAlias("SessionFrom")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String sessionFrom;
 
   /**
@@ -114,27 +96,22 @@ public class WxMaMessage implements Serializable {
    */
   @SerializedName("isrisky")
   @XStreamAlias("isrisky")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String isRisky;
 
   @SerializedName("extra_info_json")
   @XStreamAlias("extra_info_json")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String extraInfoJson;
 
   @SerializedName("appid")
   @XStreamAlias("appid")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String appid;
 
   @SerializedName("trace_id")
   @XStreamAlias("trace_id")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String traceId;
 
   @SerializedName("status_code")
   @XStreamAlias("status_code")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String statusCode;
 
   @SerializedName("Scene")
@@ -143,7 +120,6 @@ public class WxMaMessage implements Serializable {
 
   @SerializedName("Query")
   @XStreamAlias("Query")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String query;
 
   public static WxMaMessage fromXml(String xml) {

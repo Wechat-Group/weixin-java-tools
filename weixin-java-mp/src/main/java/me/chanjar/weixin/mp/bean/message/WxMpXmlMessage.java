@@ -1,13 +1,11 @@
 package me.chanjar.weixin.mp.bean.message;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.XmlUtils;
-import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.util.crypto.WxMpCryptUtil;
@@ -46,22 +44,18 @@ public class WxMpXmlMessage implements Serializable {
   ///////////////////////
 
   @XStreamAlias("ToUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String toUser;
 
   @XStreamAlias("FromUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String fromUser;
 
   @XStreamAlias("CreateTime")
   private Long createTime;
 
   @XStreamAlias("MsgType")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String msgType;
 
   @XStreamAlias("Content")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String content;
 
   @XStreamAlias("MenuId")
@@ -71,19 +65,15 @@ public class WxMpXmlMessage implements Serializable {
   private Long msgId;
 
   @XStreamAlias("PicUrl")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String picUrl;
 
   @XStreamAlias("MediaId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String mediaId;
 
   @XStreamAlias("Format")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String format;
 
   @XStreamAlias("ThumbMediaId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String thumbMediaId;
 
   @XStreamAlias("Location_X")
@@ -96,31 +86,24 @@ public class WxMpXmlMessage implements Serializable {
   private Double scale;
 
   @XStreamAlias("Label")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String label;
 
   @XStreamAlias("Title")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String title;
 
   @XStreamAlias("Description")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String description;
 
   @XStreamAlias("Url")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String url;
 
   @XStreamAlias("Event")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String event;
 
   @XStreamAlias("EventKey")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String eventKey;
 
   @XStreamAlias("Ticket")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String ticket;
 
   @XStreamAlias("Latitude")
@@ -133,11 +116,9 @@ public class WxMpXmlMessage implements Serializable {
   private Double precision;
 
   @XStreamAlias("Recognition")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String recognition;
 
   @XStreamAlias("UnionId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String unionId;
 
   ///////////////////////////////////////
@@ -147,7 +128,6 @@ public class WxMpXmlMessage implements Serializable {
    * 群发的结果.
    */
   @XStreamAlias("Status")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String status;
   /**
    * group_id下粉丝数；或者openid_list中的粉丝数.
@@ -195,11 +175,9 @@ public class WxMpXmlMessage implements Serializable {
   ///////////////////////////////////////
 
   @XStreamAlias("CardId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String cardId;
 
   @XStreamAlias("FriendUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String friendUserName;
 
   /**
@@ -209,11 +187,9 @@ public class WxMpXmlMessage implements Serializable {
   private Integer isGiveByFriend;
 
   @XStreamAlias("UserCardCode")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String userCardCode;
 
   @XStreamAlias("OldUserCardCode")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String oldUserCardCode;
 
   @XStreamAlias("OuterId")
@@ -486,7 +462,6 @@ public class WxMpXmlMessage implements Serializable {
    * 订单ID.
    */
   @XStreamAlias("OrderId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String orderId;
 
   /**
@@ -499,14 +474,12 @@ public class WxMpXmlMessage implements Serializable {
    * 商品ID.
    */
   @XStreamAlias("ProductId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String productId;
 
   /**
    * 商品SKU信息.
    */
   @XStreamAlias("SkuInfo")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String skuInfo;
 
   ///////////////////////////////////////
@@ -517,7 +490,6 @@ public class WxMpXmlMessage implements Serializable {
    * 目前为"公众账号原始ID"
    */
   @XStreamAlias("DeviceType")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String deviceType;
 
   /**
@@ -525,7 +497,6 @@ public class WxMpXmlMessage implements Serializable {
    * 第三方提供
    */
   @XStreamAlias("DeviceID")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String deviceId;
 
   /**
@@ -533,14 +504,12 @@ public class WxMpXmlMessage implements Serializable {
    * 因此响应中该字段第三方需要原封不变的带回
    */
   @XStreamAlias("SessionID")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String sessionId;
 
   /**
    * 微信用户账号的OpenID.
    */
   @XStreamAlias("OpenID")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String openId;
 
   @XStreamAlias("HardWare")

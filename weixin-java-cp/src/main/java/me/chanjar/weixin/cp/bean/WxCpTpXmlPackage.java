@@ -1,9 +1,7 @@
 package me.chanjar.weixin.cp.bean;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
-import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.common.util.xml.XmlUtil;
 
 import java.io.Serializable;
@@ -26,15 +24,12 @@ public class WxCpTpXmlPackage implements Serializable {
   private Map<String, Object> allFieldsMap;
 
   @XStreamAlias("ToUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String toUserName;
 
   @XStreamAlias("AgentID")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String agentId;
 
   @XStreamAlias("Encrypt")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String msgEncrypt;
 
   public static WxCpTpXmlPackage fromXml(String xml) {

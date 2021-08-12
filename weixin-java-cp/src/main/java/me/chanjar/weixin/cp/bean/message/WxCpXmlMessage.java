@@ -54,11 +54,9 @@ public class WxCpXmlMessage implements Serializable {
   private Integer agentId;
 
   @XStreamAlias("ToUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String toUserName;
 
   @XStreamAlias("FromUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String fromUserName;
 
   @XStreamAlias("CreateTime")
@@ -83,30 +81,24 @@ public class WxCpXmlMessage implements Serializable {
    * </pre>
    */
   @XStreamAlias("MsgType")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String msgType;
 
   @XStreamAlias("Content")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String content;
 
   @XStreamAlias("MsgId")
   private Long msgId;
 
   @XStreamAlias("PicUrl")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String picUrl;
 
   @XStreamAlias("MediaId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String mediaId;
 
   @XStreamAlias("Format")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String format;
 
   @XStreamAlias("ThumbMediaId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String thumbMediaId;
 
   @XStreamAlias("Location_X")
@@ -119,31 +111,24 @@ public class WxCpXmlMessage implements Serializable {
   private Double scale;
 
   @XStreamAlias("Label")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String label;
 
   @XStreamAlias("Title")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String title;
 
   @XStreamAlias("Description")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String description;
 
   @XStreamAlias("Url")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String url;
 
   @XStreamAlias("Event")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String event;
 
   @XStreamAlias("EventKey")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String eventKey;
 
   @XStreamAlias("Ticket")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String ticket;
 
   @XStreamAlias("Latitude")
@@ -156,11 +141,9 @@ public class WxCpXmlMessage implements Serializable {
   private Double precision;
 
   @XStreamAlias("Recognition")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String recognition;
 
   @XStreamAlias("TaskId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String taskId;
 
   /**
@@ -168,41 +151,35 @@ public class WxCpXmlMessage implements Serializable {
    * 请参考常量 me.chanjar.weixin.cp.constant.WxCpConsts.ContactChangeType
    */
   @XStreamAlias("ChangeType")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String changeType;
 
   /**
    * 变更信息的成员UserID.
    */
   @XStreamAlias("UserID")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String userId;
 
   /**
    * 变更信息的外部联系人的userid，注意不是企业成员的帐号.
    */
   @XStreamAlias("ExternalUserID")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String externalUserId;
 
   /**
    * 添加此用户的「联系我」方式配置的state参数，可用于识别添加此用户的渠道.
    */
   @XStreamAlias("State")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String state;
 
   /**
    * 欢迎语code，可用于发送欢迎语.
    */
   @XStreamAlias("WelcomeCode")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String welcomeCode;
   /**
    * 新的UserID，变更时推送（userid由系统生成时可更改一次）.
    */
   @XStreamAlias("NewUserID")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String newUserId;
 
   /**
@@ -210,7 +187,6 @@ public class WxCpXmlMessage implements Serializable {
    * 或者部门名称
    */
   @XStreamAlias("Name")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String name;
 
   /**
@@ -224,21 +200,18 @@ public class WxCpXmlMessage implements Serializable {
    * 手机号码.
    */
   @XStreamAlias("Mobile")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String mobile;
 
   /**
    * 职位信息。长度为0~64个字节.
    */
   @XStreamAlias("Position")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String position;
 
   /**
    * 群ID.
    */
   @XStreamAlias("ChatId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String chatId;
 
   /**
@@ -251,21 +224,18 @@ public class WxCpXmlMessage implements Serializable {
    * 邮箱.
    */
   @XStreamAlias("Email")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String email;
 
   /**
    * 头像url。注：如果要获取小图将url最后的”/0”改成”/100”即可.
    */
   @XStreamAlias("Avatar")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String avatar;
 
   /**
    * 英文名.
    */
   @XStreamAlias("EnglishName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String englishName;
 
   /**
@@ -285,28 +255,24 @@ public class WxCpXmlMessage implements Serializable {
    * 座机.
    */
   @XStreamAlias("Telephone")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String telephone;
 
   /**
    * 地址.
    */
   @XStreamAlias("Address")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String address;
 
   /**
    * 日程ID.
    */
   @XStreamAlias("ScheduleId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String scheduleId;
 
   /**
    * 日历ID.
    */
   @XStreamAlias("CalId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String calId;
 
   /**
@@ -327,49 +293,42 @@ public class WxCpXmlMessage implements Serializable {
    * 父部门id.
    */
   @XStreamAlias("ParentId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String parentId;
 
   /**
    * 部门排序.
    */
   @XStreamAlias("Order")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String order;
 
   /**
    * 标签Id.
    */
   @XStreamAlias("TagId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String tagId;
 
   /**
    * 标签中新增的成员userid列表，用逗号分隔.
    */
   @XStreamAlias("AddUserItems")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String addUserItems;
 
   /**
    * 标签中删除的成员userid列表，用逗号分隔.
    */
   @XStreamAlias("DelUserItems")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String delUserItems;
 
   /**
    * 标签中新增的部门id列表，用逗号分隔.
    */
   @XStreamAlias("AddPartyItems")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String addPartyItems;
 
   /**
    * 标签中删除的部门id列表，用逗号分隔.
    */
   @XStreamAlias("DelPartyItems")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String delPartyItems;
 
   /**
@@ -397,7 +356,6 @@ public class WxCpXmlMessage implements Serializable {
    * 激活状态：1=已激活 2=已禁用 4=未激活 已激活代表已激活企业微信或已关注微工作台（原企业号）.
    */
   @XStreamAlias("Status")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String status;
 
   /**

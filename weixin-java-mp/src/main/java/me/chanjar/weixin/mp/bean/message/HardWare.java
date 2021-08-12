@@ -1,9 +1,7 @@
 package me.chanjar.weixin.mp.bean.message;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
-import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
@@ -24,13 +22,11 @@ public class HardWare implements Serializable {
    * 消息展示，目前支持myrank(排行榜)
    */
   @XStreamAlias("MessageView")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String messageView;
   /**
    * 消息点击动作，目前支持ranklist(点击跳转排行榜)
    */
   @XStreamAlias("MessageAction")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String messageAction;
 
   @Override

@@ -28,33 +28,27 @@ public class WxOpenXmlMessage implements Serializable {
   private static final long serialVersionUID = -5641769554709507771L;
 
   @XStreamAlias("AppId")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String appId;
 
   @XStreamAlias("CreateTime")
   private Long createTime;
 
   @XStreamAlias("InfoType")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String infoType;
 
   @XStreamAlias("ComponentVerifyTicket")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String componentVerifyTicket;
 
   @XStreamAlias("AuthorizerAppid")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String authorizerAppid;
 
   @XStreamAlias("AuthorizationCode")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String authorizationCode;
 
   @XStreamAlias("AuthorizationCodeExpiredTime")
   private Long authorizationCodeExpiredTime;
 
   @XStreamAlias("PreAuthCode")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String preAuthCode;
 
   // 以下为快速创建小程序接口推送的的信息
@@ -69,7 +63,6 @@ public class WxOpenXmlMessage implements Serializable {
   private String authCode;
 
   @XStreamAlias("msg")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   private String msg;
 
   @XStreamAlias("info")

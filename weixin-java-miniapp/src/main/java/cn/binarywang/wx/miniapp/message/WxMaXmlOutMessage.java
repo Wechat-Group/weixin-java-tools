@@ -2,15 +2,12 @@ package cn.binarywang.wx.miniapp.message;
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
-import cn.binarywang.wx.miniapp.util.xml.XStreamTransformer;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.common.util.xml.XmlUtil;
 
 import java.io.Serializable;
@@ -31,18 +28,15 @@ public class WxMaXmlOutMessage implements Serializable {
   private static final long serialVersionUID = 4241135225946919153L;
 
   @XStreamAlias("ToUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String toUserName;
 
   @XStreamAlias("FromUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String fromUserName;
 
   @XStreamAlias("CreateTime")
   protected Long createTime;
 
   @XStreamAlias("MsgType")
-  @XStreamConverter(value = XStreamCDataConverter.class)
   protected String msgType;
 
   @SuppressWarnings("unchecked")
