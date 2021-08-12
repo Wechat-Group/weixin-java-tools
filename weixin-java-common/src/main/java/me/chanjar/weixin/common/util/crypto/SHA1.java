@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;
 
 /**
- *
  * @author Daniel Qian
  * @date 14/10/19
  */

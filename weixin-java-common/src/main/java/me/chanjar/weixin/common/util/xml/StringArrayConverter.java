@@ -8,9 +8,10 @@ import com.thoughtworks.xstream.converters.basic.StringConverter;
 
 /**
  * String 数组转换
+ *
  * @author chily.lin
  */
-public class StringArrayConverter  extends StringConverter {
+public class StringArrayConverter extends StringConverter {
   @Override
   public boolean canConvert(Class type) {
     return type == String[].class;

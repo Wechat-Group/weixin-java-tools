@@ -272,6 +272,6 @@ public class WxCpXmlMessageTest {
     assertThat(wxCpXmlMessage).isNotNull();
     assertThat(wxCpXmlMessage.getDepartments()).isNotEmpty();
 
-    System.out.println(XStreamTransformer.toXml(WxCpXmlMessage.class, wxCpXmlMessage));
+    System.out.println(XmlUtil.toXml(wxCpXmlMessage));
   }
 }

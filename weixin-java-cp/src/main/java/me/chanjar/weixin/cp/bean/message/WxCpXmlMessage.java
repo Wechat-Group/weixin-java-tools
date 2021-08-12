@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.IntegerArrayConverter;
 import me.chanjar.weixin.common.util.xml.LongArrayConverter;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
@@ -441,15 +442,13 @@ public class WxCpXmlMessage implements Serializable {
 
 
   protected static WxCpXmlMessage fromXml(String xml) {
-    //修改微信变态的消息内容格式，方便解析
-    xml = xml.replace("</PicList><PicList>", "");
-    final WxCpXmlMessage xmlMessage = XStreamTransformer.fromXml(WxCpXmlMessage.class, xml);
+    final WxCpXmlMessage xmlMessage = XmlUtil.toObject(xml, WxCpXmlMessage.class);
     xmlMessage.setAllFieldsMap(XmlUtils.xml2Map(xml));
     return xmlMessage;
   }
 
   protected static WxCpXmlMessage fromXml(InputStream is) {
-    return XStreamTransformer.fromXml(WxCpXmlMessage.class, is);
+    return XmlUtil.toObject(is, WxCpXmlMessage.class);
   }
 
   /**

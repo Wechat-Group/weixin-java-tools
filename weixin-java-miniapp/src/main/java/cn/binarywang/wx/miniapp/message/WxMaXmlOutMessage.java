@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 
 import java.io.Serializable;
 
@@ -46,7 +47,7 @@ public class WxMaXmlOutMessage implements Serializable {
 
   @SuppressWarnings("unchecked")
   public String toXml() {
-    return XStreamTransformer.toXml((Class<WxMaXmlOutMessage>) this.getClass(), this);
+    return XmlUtil.toXml(this);
   }
 
   /**

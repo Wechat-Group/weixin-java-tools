@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.builder.outxml.*;
 import me.chanjar.weixin.mp.util.crypto.WxMpCryptUtil;
@@ -87,9 +88,8 @@ public abstract class WxMpXmlOutMessage implements Serializable {
       return new DeviceBuilder();
   }
 
-  @SuppressWarnings("unchecked")
   public String toXml() {
-    return XStreamTransformer.toXml((Class<WxMpXmlOutMessage>) this.getClass(), this);
+    return XmlUtil.toXml(this);
   }
 
   /**

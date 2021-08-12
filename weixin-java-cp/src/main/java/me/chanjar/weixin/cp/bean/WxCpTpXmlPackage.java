@@ -8,6 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 
 /**
@@ -39,10 +40,6 @@ public class WxCpTpXmlPackage implements Serializable {
   protected String msgEncrypt;
 
   public static WxCpTpXmlPackage fromXml(String xml) {
-    //修改微信变态的消息内容格式，方便解析
-    //xml = xml.replace("</PicList><PicList>", "");
-    final WxCpTpXmlPackage xmlPackage = XStreamTransformer.fromXml(WxCpTpXmlPackage.class, xml);
-    xmlPackage.setAllFieldsMap(XmlUtils.xml2Map(xml));
-    return xmlPackage;
+    return XmlUtil.toObject(xml, WxCpTpXmlPackage.class);
   }
 }

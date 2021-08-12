@@ -8,6 +8,7 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.util.crypto.WxMpCryptUtil;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
@@ -446,7 +447,7 @@ public class WxMpXmlMessage implements Serializable {
 
   /**
    * 审核结果，成功succ 或失败fail.
-   *
+   * <p>
    * 在商品审核结果推送时，verify_ok表示审核通过，verify_not_pass表示审核未通过。
    */
   @XStreamAlias("Result")
@@ -684,15 +685,13 @@ public class WxMpXmlMessage implements Serializable {
 
 
   public static WxMpXmlMessage fromXml(String xml) {
-    //修改微信变态的消息内容格式，方便解析
-    xml = xml.replace("</PicList><PicList>", "");
-    final WxMpXmlMessage xmlMessage = XStreamTransformer.fromXml(WxMpXmlMessage.class, xml);
+    final WxMpXmlMessage xmlMessage = XmlUtil.toObject(xml, WxMpXmlMessage.class);
     xmlMessage.setAllFieldsMap(XmlUtils.xml2Map(xml));
     return xmlMessage;
   }
 
   public static WxMpXmlMessage fromXml(InputStream is) {
-    return XStreamTransformer.fromXml(WxMpXmlMessage.class, is);
+    return XmlUtil.toObject(is, WxMpXmlMessage.class);
   }
 
   /**

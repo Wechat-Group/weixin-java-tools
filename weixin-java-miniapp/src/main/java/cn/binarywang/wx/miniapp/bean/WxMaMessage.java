@@ -10,6 +10,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -146,11 +147,11 @@ public class WxMaMessage implements Serializable {
   private String query;
 
   public static WxMaMessage fromXml(String xml) {
-    return XStreamTransformer.fromXml(WxMaMessage.class, xml);
+    return XmlUtil.toObject(xml,WxMaMessage.class);
   }
 
   public static WxMaMessage fromXml(InputStream is) {
-    return XStreamTransformer.fromXml(WxMaMessage.class, is);
+    return XmlUtil.toObject(is,WxMaMessage.class);
   }
 
   /**

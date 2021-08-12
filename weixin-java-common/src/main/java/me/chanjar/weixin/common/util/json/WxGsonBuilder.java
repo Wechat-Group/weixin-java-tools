@@ -10,6 +10,7 @@ import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 
 /**
  * .
+ *
  * @author chanjarster
  */
 public class WxGsonBuilder {

@@ -7,18 +7,18 @@ import java.io.InputStream;
  */
 public class XmlUtil {
 
-    public static String toXml(Object obj) {
-        return XStreamInitializer.getInstance(obj.getClass()).toXML(obj);
-    }
+  public static String toXml(Object obj) {
+    return XStreamInitializer.getInstance(obj.getClass()).toXML(obj);
+  }
 
-    @SuppressWarnings("unchecked")
-    public static <T> T toObject(String xml, Class<T> clz) {
-        return (T) XStreamInitializer.getInstance(clz).fromXML(xml);
-    }
+  @SuppressWarnings("unchecked")
+  public static <T> T toObject(String xml, Class<T> clz) {
+    return (T) XStreamInitializer.getInstance(clz).fromXML(xml);
+  }
 
-    @SuppressWarnings("unchecked")
-    public static <T> T toObject(InputStream is, Class<T> clz) {
-        return (T) XStreamInitializer.getInstance(clz).fromXML(is);
-    }
+  @SuppressWarnings("unchecked")
+  public static <T> T toObject(InputStream is, Class<T> clz) {
+    return (T) XStreamInitializer.getInstance(clz).fromXML(is);
+  }
 
 }

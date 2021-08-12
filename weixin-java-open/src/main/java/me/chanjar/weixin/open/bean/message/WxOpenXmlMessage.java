@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
@@ -111,13 +112,11 @@ public class WxOpenXmlMessage implements Serializable {
   }
 
   public static WxOpenXmlMessage fromXml(String xml) {
-    //修改微信变态的消息内容格式，方便解析
-    xml = xml.replace("</PicList><PicList>", "");
-    return XStreamTransformer.fromXml(WxOpenXmlMessage.class, xml);
+    return XmlUtil.toObject(xml, WxOpenXmlMessage.class);
   }
 
   public static WxOpenXmlMessage fromXml(InputStream is) {
-    return XStreamTransformer.fromXml(WxOpenXmlMessage.class, is);
+    return XmlUtil.toObject(is, WxOpenXmlMessage.class);
   }
 
   /**

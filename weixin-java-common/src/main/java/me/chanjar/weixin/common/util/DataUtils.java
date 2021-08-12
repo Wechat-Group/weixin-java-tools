@@ -16,8 +16,8 @@ public class DataUtils {
    */
   public static <E> E handleDataWithSecret(E data) {
     E dataForLog = data;
-    if(data instanceof String && StringUtils.contains((String)data, "&secret=")){
-      dataForLog = (E) StringUtils.replaceAll((String)data,"&secret=\\w+&","&secret=******&");
+    if (data instanceof String && StringUtils.contains((String) data, "&secret=")) {
+      dataForLog = (E) StringUtils.replaceAll((String) data, "&secret=\\w+&", "&secret=******&");
     }
     return dataForLog;
   }

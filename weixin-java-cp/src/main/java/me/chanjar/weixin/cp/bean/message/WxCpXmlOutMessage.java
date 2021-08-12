@@ -6,6 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import me.chanjar.weixin.cp.bean.outxmlbuilder.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
@@ -79,7 +80,7 @@ public abstract class WxCpXmlOutMessage implements Serializable {
     return new TaskCardBuilder();
   }
   protected String toXml() {
-    return XStreamTransformer.toXml((Class) this.getClass(), this);
+    return XmlUtil.toXml(this);
   }
 
   /**
