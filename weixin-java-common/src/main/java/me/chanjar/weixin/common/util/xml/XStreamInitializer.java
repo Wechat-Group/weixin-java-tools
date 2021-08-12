@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 /**
  * The type X stream initializer.
@@ -65,11 +66,15 @@ public class XStreamInitializer {
   };
 
 
-  public static XStream getInstance(Class<?> clzz) {
-    return X_STREAM_MAP.computeIfAbsent(clzz.getName(), key -> {
-      XStream xStream = getInstance();
+  public static XStream getInstance(Class<?> clz) {
+    return getInstance(clz, null);
+  }
+
+  public static XStream getInstance(Class<?> clz, Consumer<XStream> consumer) {
+    return X_STREAM_MAP.computeIfAbsent(clz.getName(), key -> {
+      XStream xStream = getInstance(consumer);
       Set<Class<?>> classSet = new HashSet<>();
-      getRelatedClasses(clzz, classSet);
+      getRelatedClasses(clz, classSet);
       for (Class<?> aClass : classSet) {
         xStream.processAnnotations(aClass);
       }
@@ -128,7 +133,7 @@ public class XStreamInitializer {
    *
    * @return the instance
    */
-  public static XStream getInstance() {
+  public static XStream getInstance(Consumer<XStream> consumer) {
     XStream xstream = new XStream(new PureJavaReflectionProvider(), XPP_DRIVER) {
       // only register the converters we need; other converters generate a private access warning in the console on Java9+...
       @Override
@@ -159,7 +164,9 @@ public class XStreamInitializer {
       "me.chanjar.weixin.**", "cn.binarywang.wx.**", "com.github.binarywang.**"
     }));
     xstream.setClassLoader(Thread.currentThread().getContextClassLoader());
+    if (consumer != null) {
+      consumer.accept(xstream);
+    }
     return xstream;
   }
-
 }
