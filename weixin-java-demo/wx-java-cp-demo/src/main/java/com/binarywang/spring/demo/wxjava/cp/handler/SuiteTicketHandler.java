@@ -23,26 +23,6 @@ public class SuiteTicketHandler extends AbstractWxCpTpMessageMatchHandler {
   }
 
   @Override
-  public String getChangeType() {
-    return null;
-  }
-
-  @Override
-  public String getEventType() {
-    return null;
-  }
-
-  @Override
-  public String getMsgType() {
-    return null;
-  }
-
-  @Override
-  public boolean ignoreMatch() {
-    return false;
-  }
-
-  @Override
   public WxCpXmlOutMessage handle(WxCpTpXmlMessage wxMessage, Map<String, Object> context, WxCpTpService wxCpTpService, WxSessionManager sessionManager) throws WxErrorException {
     wxCpTpService.setSuiteTicket(wxMessage.getSuiteTicket());
     return null;
