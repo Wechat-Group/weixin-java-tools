@@ -74,6 +74,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final MarketingMediaService marketingMediaService = new MarketingMediaServiceImpl(this);
   private final MarketingFavorService marketingFavorService = new MarketingFavorServiceImpl(this);
   private final MarketingBusiFavorService marketingBusiFavorService = new MarketingBusiFavorServiceImpl(this);
+  private final WxEntrustPapService wxEntrustPapService = new WxEntrustPapServiceImpl(this);
+
 
   protected Map<String, WxPayConfig> configMap;
 
@@ -135,6 +137,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public void setEntPayService(EntPayService entPayService) {
     this.entPayService = entPayService;
+  }
+
+  @Override
+  public WxEntrustPapService getWxEntrustPapService() {
+    return wxEntrustPapService;
   }
 
   @Override
