@@ -83,7 +83,7 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
     private String paySign;
 
     private String getSignStr() {
-      return String.format("%s%n%s%n%s%n%s%n", appId, timeStamp, nonceStr, packageValue);
+      return String.format("%s\n%s\n%s\n%s\n", appId, timeStamp, nonceStr, packageValue);
     }
   }
 
@@ -98,7 +98,11 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
     private String packageValue;
     private String noncestr;
     private String timestamp;
+    private String sign;
 
+    private String getSignStr() {
+      return String.format("%s\n%s\n%s\n%s\n", appid, timestamp, noncestr, prepayid);
+    }
   }
 
   public <T> T getPayInfo(TradeTypeEnum tradeType, String appId, String mchId, PrivateKey privateKey) {
@@ -119,7 +123,8 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
         appResult.setAppid(appId).setPrepayId(this.prepayId).setPartnerId(mchId)
           .setNoncestr(nonceStr).setTimestamp(timestamp)
           //暂填写固定值Sign=WXPay
-          .setPackageValue("Sign=WXPay");
+          .setPackageValue("Sign=WXPay")
+          .setSign(SignUtils.sign(appResult.getSignStr(), privateKey));
         return (T) appResult;
       case NATIVE:
         return (T) this.codeUrl;
