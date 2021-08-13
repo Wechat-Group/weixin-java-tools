@@ -276,14 +276,14 @@
   </dependencyManagement>
 
   <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
     <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>rdc-releases</id>
+      <url>https://packages.aliyun.com/maven/repository/2030262-release-JfD1gH/</url>
     </repository>
+    <snapshotRepository>
+      <id>rdc-snapshots</id>
+      <url>https://packages.aliyun.com/maven/repository/2030262-snapshot-7AG3FV/</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <profiles>
