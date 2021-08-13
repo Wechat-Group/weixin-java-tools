@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.Setter;
 import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
@@ -54,6 +55,7 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
   private final String suiteAccessTokenKey = ":suiteAccessTokenKey:";
   private final String suiteTicketKey = ":suiteTicketKey:";
   private final String accessTokenKey = ":accessTokenKey:";
+  private final String permanentCodeKey = ":permanentCodeKey:";
   private final String authCorpJsApiTicketKey = ":authCorpJsApiTicketKey:";
   private final String authSuiteJsApiTicketKey = ":authSuiteJsApiTicketKey:";
   private final String providerTokenKey = ":providerTokenKey:";
@@ -222,6 +224,20 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
   @Override
   public String getAccessToken(String authCorpId) {
     return wxRedisOps.getValue(keyWithPrefix(authCorpId) + accessTokenKey);
+  }
+
+  @Override
+  public String getPermanentCode(String authCorpId) {
+    String code = wxRedisOps.getValue(keyWithPrefix(authCorpId) + permanentCodeKey);
+    if (code == null || code.length() == 0) {
+      throw new WxErrorException("获取企业:[" + authCorpId + "]永久授权码失败");
+    }
+    return code;
+  }
+
+  @Override
+  public void updatePermanentCode(String authCorpId, String permanentCode) {
+    wxRedisOps.setValue(keyWithPrefix(authCorpId) + permanentCodeKey, permanentCode, -1, TimeUnit.DAYS);
   }
 
   @Override
@@ -428,7 +444,6 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
 
   /**
    * 一个provider 会有多个suite,需要唯一标识作为前缀
-   *
    */
   private String keyWithPrefix(String key) {
     return keyPrefix + ":" + suiteId + ":" + key;
@@ -437,7 +452,6 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
   /**
    * provider 应该独享一个key,且不和任何suite关联
    * 一个provider  会有多个suite,不同的suite 都应该指向同一个provider 的数据
-   *
    */
   private String providerKeyWithPrefix(String key) {
     return keyPrefix + ":" + corpId + ":" + key;

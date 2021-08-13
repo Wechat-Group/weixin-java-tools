@@ -26,25 +26,24 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Media.MEDIA_UPLOAD
  */
 @RequiredArgsConstructor
 public class WxCpTpMediaServiceImpl implements WxCpTpMediaService {
-    private final WxCpTpService mainService;
+  private final WxCpTpService mainService;
 
-    @Override
-    public WxMediaUploadResult upload(String mediaType, String fileType, InputStream inputStream, String corpId)
-            throws WxErrorException, IOException {
-        return this.upload(mediaType, FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), fileType), corpId);
-    }
+  @Override
+  public WxMediaUploadResult upload(String corpId, String mediaType, String fileType, InputStream inputStream)
+    throws WxErrorException, IOException {
+    return this.upload(corpId, mediaType, FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), fileType));
+  }
 
-    @Override
-    public WxMediaUploadResult upload(String mediaType, File file, String corpId) throws WxErrorException {
-        return this.mainService.execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()),
-          mainService.getWxCpTpConfigStorage().getApiUrl(MEDIA_UPLOAD + mediaType) + "&access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId), file);
-    }
+  @Override
+  public WxMediaUploadResult upload(String corpId, String mediaType, File file) throws WxErrorException {
+    return this.mainService.execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()),
+      mainService.getCorpApiUrl(MEDIA_UPLOAD + mediaType, corpId), file);
+  }
 
-    @Override
-    public String uploadImg(File file, String corpId) throws WxErrorException {
-        String url = mainService.getWxCpTpConfigStorage().getApiUrl(IMG_UPLOAD);
-        url += "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
-        return this.mainService.execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()), url, file)
-                .getUrl();
-    }
+  @Override
+  public String uploadImg(String corpId, File file) throws WxErrorException {
+    String url = mainService.getCorpApiUrl(IMG_UPLOAD, corpId);
+    return this.mainService.execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()), url, file)
+      .getUrl();
+  }
 }

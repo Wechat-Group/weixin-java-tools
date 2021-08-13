@@ -1,6 +1,8 @@
 package me.chanjar.weixin.cp.config.impl;
 
 import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
@@ -20,6 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author someone
  */
+@Deprecated
 public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializable {
   private static final long serialVersionUID = 6678780920621872824L;
 
@@ -46,6 +49,7 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   private volatile long suiteTicketExpiresTime;
   private volatile String oauth2redirectUri;
   private volatile Map<String, String> authCorpAccessTokenMap = new HashMap<>();
+  private volatile Map<String, String> authCorpPermanentCodeMap = new HashMap<>();
   private volatile Map<String, Long> authCorpAccessTokenExpireTimeMap = new HashMap<>();
   private volatile Map<String, String> authCorpJsApiTicketMap = new HashMap<>();
   private volatile Map<String, Long> authCorpJsApiTicketExpireTimeMap = new HashMap<>();
@@ -277,6 +281,23 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   @Override
   public String getAccessToken(String authCorpId) {
     return authCorpAccessTokenMap.get(authCorpId);
+  }
+
+  @Override
+  public String getPermanentCode(String authCorpId) {
+    String code = authCorpPermanentCodeMap.get(authCorpId);
+    if (code == null || code.length() == 0) {
+      throw new WxErrorException("获取企业:[" + authCorpId + "]永久授权码失败");
+    }
+    return code;
+  }
+
+  @Override
+  public void updatePermanentCode(String authCorpId, String permanentCode) {
+    if (authCorpId == null || permanentCode == null) {
+      throw new WxRuntimeException("保存企业永久授权码失败");
+    }
+    authCorpPermanentCodeMap.put(authCorpId, permanentCode);
   }
 
   @Override

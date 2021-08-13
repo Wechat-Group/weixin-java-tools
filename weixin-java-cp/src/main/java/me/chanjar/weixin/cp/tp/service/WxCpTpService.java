@@ -16,6 +16,19 @@ import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
  * @author zhenjun cai
  */
 public interface WxCpTpService {
+
+  /**
+   * 有些接口是用access token 来进行鉴权的
+   *
+   * @param url    the url
+   * @param corpId the corp id
+   * @return corp api url
+   */
+  default String getCorpApiUrl(String url, String corpId) {
+    return getWxCpTpConfigStorage().getApiUrl(url) +
+      "?access_token=" + getWxCpTpConfigStorage().getAccessToken(corpId);
+  }
+
   /**
    * <pre>
    * 验证推送过来的消息的正确性
@@ -35,7 +48,7 @@ public interface WxCpTpService {
    *
    * @return the suite access token
    * @throws WxErrorException the wx error exception
-   * @see #getSuiteAccessToken(boolean) #getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)
+   * @see #getSuiteAccessToken(boolean) #getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)
    */
   String getSuiteAccessToken() throws WxErrorException;
 
@@ -58,6 +71,7 @@ public interface WxCpTpService {
    * 获取suite_access_token和剩余过期时间, 不强制刷新suite_access_token
    *
    * @return suite access token and the remaining expiration time
+   * @throws WxErrorException the wx error exception
    */
   WxAccessToken getSuiteAccessTokenEntity() throws WxErrorException;
 
@@ -66,7 +80,7 @@ public interface WxCpTpService {
    *
    * @param forceRefresh 是否调用微信服务器强制刷新token
    * @return suite access token and the remaining expiration time
-   * @throws WxErrorException
+   * @throws WxErrorException the wx error exception
    */
   WxAccessToken getSuiteAccessTokenEntity(boolean forceRefresh) throws WxErrorException;
 
@@ -75,7 +89,7 @@ public interface WxCpTpService {
    *
    * @return the suite ticket
    * @throws WxErrorException the wx error exception
-   * @see #getSuiteTicket(boolean) #getSuiteTicket(boolean)#getSuiteTicket(boolean)
+   * @see #getSuiteTicket(boolean) #getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)
    */
   String getSuiteTicket() throws WxErrorException;
 
@@ -103,7 +117,7 @@ public interface WxCpTpService {
    * @param forceRefresh 强制刷新
    * @return the suite ticket
    * @throws WxErrorException the wx error exception
-   * @see #setSuiteTicket(String) #setSuiteTicket(String)
+   * @see #setSuiteTicket(String) #setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)
    * @deprecated 由于无法主动刷新 ，所以这个接口实际已经没有意义，需要在接收企业微信的主动推送后，保存这个ticket
    */
   @Deprecated
@@ -135,10 +149,10 @@ public interface WxCpTpService {
   /**
    * 获取应用的 jsapi ticket， 支持强制刷新
    *
-   * @param authCorpId
-   * @param forceRefresh
-   * @return
-   * @throws WxErrorException
+   * @param authCorpId   the auth corp id
+   * @param forceRefresh the force refresh
+   * @return suite js api ticket
+   * @throws WxErrorException the wx error exception
    */
   String getSuiteJsApiTicket(String authCorpId, boolean forceRefresh) throws WxErrorException;
 
@@ -154,6 +168,15 @@ public interface WxCpTpService {
   /**
    * 获取企业凭证
    *
+   * @param authCorpId the auth corp id
+   * @return the corp token
+   * @throws WxErrorException the wx error exception
+   */
+  WxAccessToken getCorpToken(String authCorpId) throws WxErrorException;
+
+  /**
+   * 获取企业凭证
+   *
    * @param authCorpId    授权方corpid
    * @param permanentCode 永久授权码，通过get_permanent_code获取
    * @return the corp token
@@ -164,11 +187,11 @@ public interface WxCpTpService {
   /**
    * 获取企业凭证, 支持强制刷新
    *
-   * @param authCorpId
-   * @param permanentCode
-   * @param forceRefresh
-   * @return
-   * @throws WxErrorException
+   * @param authCorpId    the auth corp id
+   * @param permanentCode the permanent code
+   * @param forceRefresh  the force refresh
+   * @return corp token
+   * @throws WxErrorException the wx error exception
    */
   WxAccessToken getCorpToken(String authCorpId, String permanentCode, boolean forceRefresh) throws WxErrorException;
 
@@ -244,10 +267,10 @@ public interface WxCpTpService {
   /**
    * 获取授权企业的 jsapi ticket, 支持强制刷新
    *
-   * @param authCorpId
-   * @param forceRefresh
-   * @return
-   * @throws WxErrorException
+   * @param authCorpId   the auth corp id
+   * @param forceRefresh the force refresh
+   * @return auth corp js api ticket
+   * @throws WxErrorException the wx error exception
    */
   String getAuthCorpJsApiTicket(String authCorpId, boolean forceRefresh) throws WxErrorException;
 
@@ -398,17 +421,17 @@ public interface WxCpTpService {
   /**
    * 获取服务商providerToken和剩余过期时间
    *
-   * @return
-   * @throws WxErrorException
+   * @return wx cp provider token entity
+   * @throws WxErrorException the wx error exception
    */
   WxCpProviderToken getWxCpProviderTokenEntity() throws WxErrorException;
 
   /**
    * 获取服务商providerToken和剩余过期时间，支持强制刷新
    *
-   * @param forceRefresh
-   * @return
-   * @throws WxErrorException
+   * @param forceRefresh the force refresh
+   * @return wx cp provider token entity
+   * @throws WxErrorException the wx error exception
    */
   WxCpProviderToken getWxCpProviderTokenEntity(boolean forceRefresh) throws WxErrorException;
 
@@ -497,8 +520,9 @@ public interface WxCpTpService {
    * 详情参见企业微信第三方应用开发文档：https://work.weixin.qq.com/api/doc/90001/90144/90539
    *
    * @param url        调用JS接口页面的完整URL
-   * @param authCorpId
-   * @return
+   * @param authCorpId the auth corp id
+   * @return wx jsapi signature
+   * @throws WxErrorException the wx error exception
    */
   WxJsapiSignature createAuthCorpJsApiTicketSignature(String url, String authCorpId) throws WxErrorException;
 
@@ -507,8 +531,9 @@ public interface WxCpTpService {
    * 详情参见企业微信第三方应用开发文档：https://work.weixin.qq.com/api/doc/90001/90144/90539
    *
    * @param url        调用JS接口页面的完整URL
-   * @param authCorpId
-   * @return
+   * @param authCorpId the auth corp id
+   * @return wx jsapi signature
+   * @throws WxErrorException the wx error exception
    */
   WxJsapiSignature createSuiteJsApiTicketSignature(String url, String authCorpId) throws WxErrorException;
 

@@ -28,16 +28,16 @@ public interface WxCpTpOAService {
      * @return 表单提交成功后，返回的表单编号
      * @throws WxErrorException .
      */
-    String apply(WxCpOaApplyEventRequest request, String corpId) throws WxErrorException;
+    String apply(String corpId, WxCpOaApplyEventRequest request) throws WxErrorException;
 
-    /**
-     * 获取审批模板详情
-     *
-     * @param templateId 模板ID
-     * @return .
-     * @throws WxErrorException .
-     */
-    WxCpTemplateResult getTemplateDetail(@NonNull String templateId, String corpId) throws WxErrorException;
+  /**
+   * 获取审批模板详情
+   *
+   * @param templateId 模板ID
+   * @return .
+   * @throws WxErrorException .
+   */
+  WxCpTemplateResult getTemplateDetail(String corpId, @NonNull String templateId) throws WxErrorException;
 
     /**
      * 复制/更新模板到企业
@@ -46,15 +46,15 @@ public interface WxCpTpOAService {
      * @return .
      * @throws WxErrorException .
      */
-    String copyTemplate(@NonNull String openTemplateId, String corpId) throws WxErrorException;
+    String copyTemplate(String corpId, @NonNull String openTemplateId) throws WxErrorException;
 
-    /**
-     * <pre>
-     *   获取审批申请详情
-     *
-     * @param spNo 审批单编号。
-     * @return WxCpApprovaldetail
-     * @throws WxErrorException .
-     */
-    WxCpApprovalDetailResult getApprovalDetail(@NonNull String spNo, String corpId) throws WxErrorException;
+  /**
+   * <pre>
+   *   获取审批申请详情
+   *
+   * @param spNo 审批单编号。
+   * @return WxCpApprovaldetail
+   * @throws WxErrorException .
+   */
+  WxCpApprovalDetailResult getApprovalDetail(String corpId, @NonNull String spNo) throws WxErrorException;
 }

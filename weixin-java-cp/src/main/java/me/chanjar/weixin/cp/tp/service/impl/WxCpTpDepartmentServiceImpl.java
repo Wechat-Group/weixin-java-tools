@@ -27,7 +27,7 @@ public class WxCpTpDepartmentServiceImpl implements WxCpTpDepartmentService {
   private final WxCpTpService mainService;
 
   @Override
-  public Long create(WxCpTpDepart depart) throws WxErrorException {
+  public Long create(String corpId, WxCpTpDepart depart) throws WxErrorException {
     String url = this.mainService.getWxCpTpConfigStorage().getApiUrl(DEPARTMENT_CREATE);
     String responseContent = this.mainService.post(url, depart.toJson());
     JsonObject tmpJsonObject = GsonParser.parse(responseContent);
@@ -35,19 +35,19 @@ public class WxCpTpDepartmentServiceImpl implements WxCpTpDepartmentService {
   }
 
   @Override
-  public void update(WxCpTpDepart group) throws WxErrorException {
+  public void update(String corpId, WxCpTpDepart group) throws WxErrorException {
     String url = this.mainService.getWxCpTpConfigStorage().getApiUrl(DEPARTMENT_UPDATE);
     this.mainService.post(url, group.toJson());
   }
 
   @Override
-  public void delete(Long departId) throws WxErrorException {
+  public void delete(String corpId, Long departId) throws WxErrorException {
     String url = String.format(this.mainService.getWxCpTpConfigStorage().getApiUrl(DEPARTMENT_DELETE), departId);
     this.mainService.get(url, null);
   }
 
   @Override
-  public List<WxCpTpDepart> list(Long id, String corpId) throws WxErrorException {
+  public List<WxCpTpDepart> list(String corpId, Long id) throws WxErrorException {
     String url = this.mainService.getWxCpTpConfigStorage().getApiUrl(DEPARTMENT_LIST);
     url += "?access_token=" + this.mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
     if (id != null) {
@@ -64,6 +64,6 @@ public class WxCpTpDepartmentServiceImpl implements WxCpTpDepartmentService {
 
   @Override
   public List<WxCpTpDepart> list(String corpId) throws WxErrorException {
-    return list(null, corpId);
+    return list(corpId, null);
   }
 }

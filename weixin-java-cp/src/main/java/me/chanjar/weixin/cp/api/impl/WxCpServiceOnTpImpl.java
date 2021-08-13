@@ -12,7 +12,9 @@ import me.chanjar.weixin.cp.tp.service.WxCpTpService;
  * </pre>
  *
  * @author zhenjun cai
+ * @deprecated 错误的类, 测试通过后会被删除
  */
+@Deprecated
 @RequiredArgsConstructor
 public class WxCpServiceOnTpImpl extends WxCpServiceApacheHttpClientImpl {
   private final WxCpTpService wxCpTpService;
@@ -24,6 +26,7 @@ public class WxCpServiceOnTpImpl extends WxCpServiceApacheHttpClientImpl {
     }
     //access token通过第三方应用service获取
     //corpSecret对应企业永久授权码
+    // 写了个啥?
     WxAccessToken accessToken = wxCpTpService.getCorpToken(this.configStorage.getCorpId(), this.configStorage.getCorpSecret());
 
     this.configStorage.updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());

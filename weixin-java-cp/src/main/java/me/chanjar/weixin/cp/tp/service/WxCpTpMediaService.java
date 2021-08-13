@@ -32,19 +32,19 @@ public interface WxCpTpMediaService {
      * @param fileType    文件类型，请看{@link me.chanjar.weixin.common.api.WxConsts}
      * @param inputStream 输入流，需要调用方控制关闭该输入流
      */
-    WxMediaUploadResult upload(String mediaType, String fileType, InputStream inputStream, String corpId)
-            throws WxErrorException, IOException;
+    WxMediaUploadResult upload(String corpId, String mediaType, String fileType, InputStream inputStream)
+      throws WxErrorException, IOException;
 
-    /**
-     * 上传多媒体文件.
-     *
-     * @param mediaType 媒体类型
-     * @param file      文件对象
-     * @param corpId 授权企业的corpid
-     * @see #upload(String, String, InputStream, String)
-     * @throws WxErrorException 异常信息
-     */
-    WxMediaUploadResult upload(String mediaType, File file, String corpId) throws WxErrorException;
+  /**
+   * 上传多媒体文件.
+   *
+   * @param mediaType 媒体类型
+   * @param file      文件对象
+   * @param corpId    授权企业的corpid
+   * @throws WxErrorException 异常信息
+   * @see #upload(String, String, InputStream, String)
+   */
+  WxMediaUploadResult upload(String corpId, String mediaType, File file) throws WxErrorException;
 
 
     /**
@@ -60,5 +60,5 @@ public interface WxCpTpMediaService {
      * @return 返回图片url
      * @throws WxErrorException 异常信息
      */
-    String uploadImg(File file, String corpId) throws WxErrorException;
+    String uploadImg(String corpId, File file) throws WxErrorException;
 }

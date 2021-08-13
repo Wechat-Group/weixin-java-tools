@@ -28,7 +28,7 @@ public interface WxCpTpTagService {
    * @return 标签id
    * @throws WxErrorException
    */
-  String create(String name, Integer id) throws WxErrorException;
+  String create(String corpId, String name, Integer id) throws WxErrorException;
 
   /**
    * 更新标签.
@@ -37,7 +37,7 @@ public interface WxCpTpTagService {
    * @param tagName 标签名
    * @throws WxErrorException .
    */
-  void update(String tagId, String tagName) throws WxErrorException;
+  void update(String corpId, String tagId, String tagName) throws WxErrorException;
 
   /**
    * 删除标签.
@@ -45,15 +45,16 @@ public interface WxCpTpTagService {
    * @param tagId 标签id
    * @throws WxErrorException .
    */
-  void delete(String tagId) throws WxErrorException;
+  void delete(String corpId, String tagId) throws WxErrorException;
 
   /**
    * 获取标签成员
+   *
    * @param tagId
    * @return
    * @throws WxErrorException
    */
-  WxCpTpTagGetResult get(String tagId) throws WxErrorException;
+  WxCpTpTagGetResult get(String corpId, String tagId) throws WxErrorException;
 
   /**
    * 增加标签成员.
@@ -64,7 +65,7 @@ public interface WxCpTpTagService {
    * @return .
    * @throws WxErrorException .
    */
-  WxCpTpTagAddOrRemoveUsersResult addUsers2Tag(String tagId, List<String> userIds, List<String> partyIds)
+  WxCpTpTagAddOrRemoveUsersResult addUsers2Tag(String corpId, String tagId, List<String> userIds, List<String> partyIds)
     throws WxErrorException;
 
   /**
@@ -76,7 +77,7 @@ public interface WxCpTpTagService {
    * @return .
    * @throws WxErrorException .
    */
-  WxCpTpTagAddOrRemoveUsersResult removeUsersFromTag(String tagId, List<String> userIds, List<String> partyIds)
+  WxCpTpTagAddOrRemoveUsersResult removeUsersFromTag(String corpId, String tagId, List<String> userIds, List<String> partyIds)
     throws WxErrorException;
 
   /**
@@ -85,6 +86,6 @@ public interface WxCpTpTagService {
    * @return 标签列表
    * @throws WxErrorException .
    */
-  List<WxCpTpTag> listAll() throws WxErrorException;
+  List<WxCpTpTag> listAll(String corpId) throws WxErrorException;
 
 }

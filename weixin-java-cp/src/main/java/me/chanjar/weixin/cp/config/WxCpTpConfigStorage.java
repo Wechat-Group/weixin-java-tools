@@ -162,6 +162,22 @@ public interface WxCpTpConfigStorage {
   String getAccessToken(String authCorpId);
 
   /**
+   * 获取企业永久授权码
+   *
+   * @param authCorpId the auth corp id
+   * @return string permanent code
+   */
+  String getPermanentCode(String authCorpId);
+
+  /**
+   * 更新企业永久授权码
+   *
+   * @param authCorpId    the auth corp id
+   * @param permanentCode the permanent code
+   */
+  void updatePermanentCode(String authCorpId, String permanentCode);
+
+  /**
    * Gets access token entity.
    *
    * @param authCorpId the auth corp id
