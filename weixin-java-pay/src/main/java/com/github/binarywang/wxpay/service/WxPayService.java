@@ -174,6 +174,12 @@ public interface WxPayService {
   InputStream downloadV3(String url) throws WxPayException;
 
   /**
+   * 获取微信签约代扣服务类
+   * @return entrust service
+   */
+  WxEntrustPapService getWxEntrustPapService();
+
+  /**
    * 获取企业付款服务类.
    *
    * @return the ent pay service
