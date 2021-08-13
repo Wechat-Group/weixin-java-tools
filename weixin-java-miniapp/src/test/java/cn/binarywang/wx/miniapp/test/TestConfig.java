@@ -1,9 +1,8 @@
 package cn.binarywang.wx.miniapp.test;
 
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.InputStream;
@@ -20,9 +19,7 @@ public class TestConfig extends WxMaDefaultConfigImpl {
   private String templateId;
 
   public static TestConfig fromXml(InputStream is) {
-    XStream xstream = XStreamInitializer.getInstance();
-    xstream.processAnnotations(TestConfig.class);
-    return (TestConfig) xstream.fromXML(is);
+    return XmlUtil.toObject(is, TestConfig.class);
   }
 
   public String getOpenid() {
