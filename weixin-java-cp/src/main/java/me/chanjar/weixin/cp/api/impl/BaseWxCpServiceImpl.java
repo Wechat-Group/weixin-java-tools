@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.*;
 
@@ -39,6 +40,8 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.*;
  */
 @Slf4j
 public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestHttp<H, P> {
+  private Function<String, String> urlGenerator = (url) -> getWxCpConfigStorage().getApiUrl(url);
+
   private WxCpUserService userService = new WxCpUserServiceImpl(this);
   private WxCpChatService chatService = new WxCpChatServiceImpl(this);
   private WxCpDepartmentService departmentService = new WxCpDepartmentServiceImpl(this);
@@ -49,7 +52,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxCpAgentService agentService = new WxCpAgentServiceImpl(this);
   private WxCpOaService oaService = new WxCpOaServiceImpl(this);
   private WxCpTaskCardService taskCardService = new WxCpTaskCardServiceImpl(this);
-  private WxCpExternalContactService externalContactService = new WxCpExternalContactServiceImpl(this);
+  private WxCpExternalContactService externalContactService = new WxCpExternalContactServiceImpl(this, urlGenerator);
   private WxCpGroupRobotService groupRobotService = new WxCpGroupRobotServiceImpl(this);
   private WxCpMessageService messageService = new WxCpMessageServiceImpl(this);
   private WxCpOaCalendarService oaCalendarService = new WxCpOaCalendarServiceImpl(this);
