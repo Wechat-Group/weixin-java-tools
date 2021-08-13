@@ -59,8 +59,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 @EnableConfigurationProperties(RequestLogProperties.class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@ConditionalOnProperty(value = RequestLogLevel.REQ_LOG_PROPS_PREFIX + ".enabled", havingValue = "true",
-  matchIfMissing = true)
+@ConditionalOnProperty(value = RequestLogLevel.REQ_LOG_PROPS_PREFIX + ".enabled", havingValue = "true")
 public class RequestLogAspect {
   private final RequestLogProperties properties;
 
