@@ -70,7 +70,7 @@ public interface WxMpService extends WxService {
    *
    * @return token access token
    * @throws WxErrorException .
-   * @see #getAccessToken(boolean) #getAccessToken(boolean)
+   * @see #getAccessToken(boolean) #getAccessToken(boolean)#getAccessToken(boolean)
    */
   String getAccessToken() throws WxErrorException;
 
@@ -98,7 +98,7 @@ public interface WxMpService extends WxService {
    * @param type ticket 类型
    * @return ticket ticket
    * @throws WxErrorException .
-   * @see #getTicket(TicketType, boolean) #getTicket(TicketType, boolean)
+   * @see #getTicket(TicketType, boolean) #getTicket(TicketType, boolean)#getTicket(TicketType, boolean)
    */
   String getTicket(TicketType type) throws WxErrorException;
 
@@ -120,7 +120,7 @@ public interface WxMpService extends WxService {
    *
    * @return jsapi ticket
    * @throws WxErrorException .
-   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)
+   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)
    */
   String getJsapiTicket() throws WxErrorException;
 
@@ -563,7 +563,7 @@ public interface WxMpService extends WxService {
   /**
    * 返回电子发票报销方相关接口
    *
-   * @return WxMpReimburseInvoiceService
+   * @return WxMpReimburseInvoiceService reimburse invoice service
    */
   WxMpReimburseInvoiceService getReimburseInvoiceService();
 
@@ -804,4 +804,18 @@ public interface WxMpService extends WxService {
    * @param guideMassedJobService the guide service
    */
   void setGuideMassedJobService(WxMpGuideMassedJobService guideMassedJobService);
+
+  /**
+   * Gets merchant invoice service.
+   *
+   * @return the merchant invoice service
+   */
+  WxMpMerchantInvoiceService getMerchantInvoiceService();
+
+  /**
+   * Sets merchant invoice service.
+   *
+   * @param merchantInvoiceService the merchant invoice service
+   */
+  void setMerchantInvoiceService(WxMpMerchantInvoiceService merchantInvoiceService);
 }
