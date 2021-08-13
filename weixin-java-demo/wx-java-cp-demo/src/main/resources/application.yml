@@ -11,6 +11,10 @@ wx:
           suiteSecret: PCbg8KbwuhjbPRHoNr_z_qD3GtZAkPJywcca56kNMhk
           token: KUc6rUB2
           aesKey: 1gulL65SS783rvGPfjAt9EP4x5piqn2XEBiOnyJpxxI
+  web:
+    log:
+      request:
+        enabled: true
 spring:
   redis:
     host: 127.0.0.1

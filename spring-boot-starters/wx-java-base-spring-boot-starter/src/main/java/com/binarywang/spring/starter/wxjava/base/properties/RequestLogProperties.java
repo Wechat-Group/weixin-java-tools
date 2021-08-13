@@ -31,6 +31,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class RequestLogProperties {
 
   /**
+   * 是否开启日志
+   */
+  private boolean enabled = false;
+
+  /**
    * 日志级别配置，默认：BASIC
    */
   private RequestLogLevel level = RequestLogLevel.BASIC;
