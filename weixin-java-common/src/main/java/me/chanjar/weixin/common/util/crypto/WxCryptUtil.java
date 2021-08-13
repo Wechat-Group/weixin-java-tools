@@ -1,24 +1,23 @@
 package me.chanjar.weixin.common.util.crypto;
 
-import java.io.StringReader;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Random;
+import com.google.common.base.CharMatcher;
+import me.chanjar.weixin.common.error.WxRuntimeException;
+import org.apache.commons.codec.binary.Base64;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import com.google.common.base.CharMatcher;
-import com.google.common.io.BaseEncoding;
-import me.chanjar.weixin.common.error.WxRuntimeException;
-import org.apache.commons.codec.binary.Base64;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
+import java.io.StringReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Random;
 
 /**
  * <pre>
@@ -254,7 +253,6 @@ public class WxCryptUtil {
     }
 
     String xmlContent;
-    String fromAppid;
     try {
       // 去除补位字符
       byte[] bytes = PKCS7Encoder.decode(original);
@@ -265,18 +263,10 @@ public class WxCryptUtil {
       int xmlLength = bytesNetworkOrder2Number(networkOrder);
 
       xmlContent = new String(Arrays.copyOfRange(bytes, 20, 20 + xmlLength), CHARSET);
-      fromAppid = new String(Arrays.copyOfRange(bytes, 20 + xmlLength, bytes.length), CHARSET);
     } catch (Exception e) {
       throw new WxRuntimeException(e);
     }
 
-    // appid不相同的情况 暂时忽略这段判断
-//    if (!fromAppid.equals(this.appidOrCorpid)) {
-//      throw new WxRuntimeException("AppID不正确，请核实！");
-//    }
-
     return xmlContent;
-
   }
-
 }
