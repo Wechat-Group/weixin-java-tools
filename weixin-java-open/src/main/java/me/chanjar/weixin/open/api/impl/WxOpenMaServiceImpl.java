@@ -16,7 +16,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMaBasicService;
 import me.chanjar.weixin.open.api.WxOpenMaService;
-import me.chanjar.weixin.open.bean.ma.WxMaOpenCommitExtInfo;
 import me.chanjar.weixin.open.bean.ma.WxMaQrcodeParam;
 import me.chanjar.weixin.open.bean.ma.WxMaScheme;
 import me.chanjar.weixin.open.bean.message.WxOpenMaSubmitAuditMessage;
@@ -185,13 +184,13 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   @Override
-  public WxOpenResult codeCommit(Long templateId, String userVersion, String userDesc, WxMaOpenCommitExtInfo extInfo) throws WxErrorException {
+  public WxOpenResult codeCommit(Long templateId, String userVersion, String userDesc, Object extJsonObject) throws WxErrorException {
     JsonObject params = new JsonObject();
     params.addProperty("template_id", templateId);
     params.addProperty("user_version", userVersion);
     params.addProperty("user_desc", userDesc);
     //注意：ext_json必须是字符串类型
-    params.addProperty("ext_json", GSON.toJson(extInfo));
+    params.addProperty("ext_json", GSON.toJson(extJsonObject));
     String response = post(API_CODE_COMMIT, GSON.toJson(params));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }

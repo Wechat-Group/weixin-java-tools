@@ -46,7 +46,7 @@ public class BusinessCircleServiceImpl implements BusinessCircleService {
    * @return true:校验通过 false:校验不通过
    */
   private boolean verifyNotifySign(SignatureHeader header, String data) {
-    String beforeSign = String.format("%s%n%s%n%s%n", header.getTimeStamp(), header.getNonce(), data);
+    String beforeSign = String.format("%s\n%s\n%s\n", header.getTimeStamp(), header.getNonce(), data);
     return payService.getConfig().getVerifier().verify(header.getSerialNo(),
       beforeSign.getBytes(StandardCharsets.UTF_8), header.getSigned());
   }

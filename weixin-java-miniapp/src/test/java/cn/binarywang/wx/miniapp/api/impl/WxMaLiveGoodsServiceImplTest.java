@@ -35,13 +35,13 @@ public class WxMaLiveGoodsServiceImplTest {
     WxMaLiveGoodInfo goods = new WxMaLiveGoodInfo();
     goods.setCoverImgUrl(mediaUpload.getMediaId());
     goods.setName("宫廷奢华真丝四件套");
-    goods.setPrice(new BigDecimal("1599"));
-    goods.setPrice2(new BigDecimal("0"));
+    goods.setPrice(BigDecimal.valueOf(1599));
+    goods.setPrice2(BigDecimal.ZERO);
     goods.setPriceType(1);
     goods.setUrl("pages/goods/goods?id=b7c4fbf95493bd294054fe4296d0d9ad");
     WxMaLiveResult liveResult = this.wxService.getLiveGoodsService().addGoods(goods);
     assertNotNull(liveResult);
-    System.out.println(liveResult.toString());
+    System.out.println(liveResult);
   }
 
   @Test
@@ -69,8 +69,8 @@ public class WxMaLiveGoodsServiceImplTest {
     goods.setGoodsId(8);
     goods.setName("宫廷奢华真丝四件套");
     goods.setCoverImgUrl("http://mmbiz.qpic.cn/mmbiz_png/omYktZNGamuUQE0WPVfqdnLV61JDhluXOac7PiaoZeticFpcR7wvicC0aXUC2VXkl7r1gN0QSKosv2satn6oCFeiaQ/0");
-    goods.setPrice(new BigDecimal("2299"));
-    goods.setPrice2(new BigDecimal("0"));
+    goods.setPrice(BigDecimal.valueOf(2299));
+    goods.setPrice2(BigDecimal.ZERO);
     goods.setPriceType(1);
     goods.setUrl("pages/goods/goods?id=b7c4fbf95493bd294054fe4296d0d9ad");
     boolean maLiveInfo = this.wxService.getLiveGoodsService().updateGoods(goods);
@@ -81,13 +81,13 @@ public class WxMaLiveGoodsServiceImplTest {
   public void getGoodsWareHouse() throws Exception {
     WxMaLiveResult liveResult = this.wxService.getLiveGoodsService().getGoodsWareHouse(Arrays.asList(1, 2));
     assertNotNull(liveResult);
-    System.out.println(liveResult.toString());
+    System.out.println(liveResult);
   }
 
   @Test
   public void getApprovedGoods() throws Exception {
     WxMaLiveResult liveResult = this.wxService.getLiveGoodsService().getApprovedGoods(0, 4, 2);
     assertNotNull(liveResult);
-    System.out.println(liveResult.toString());
+    System.out.println(liveResult);
   }
 }
