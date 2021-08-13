@@ -348,6 +348,18 @@ public class WxMaApiUrlConstants {
       String AUDIT_RESULT = "https://api.weixin.qq.com/shop/audit/result";
       String GET_MINIAPP_CERTIFICATE = "https://api.weixin.qq.com/shop/audit/get_miniapp_certificate";
     }
+
+    interface Delivery {
+      String GET_COMPANY_LIST = "https://api.weixin.qq.com/shop/delivery/get_company_list";
+      String DELIVERY_SEND = "https://api.weixin.qq.com/shop/delivery/send";
+      String DELIVERY_RECEIVE  = "https://api.weixin.qq.com/shop/delivery/recieve";
+    }
+
+    interface Aftersale {
+      String AFTERSALE_ADD = "https://api.weixin.qq.com/shop/aftersale/add";
+      String AFTERSALE_GET = "https://api.weixin.qq.com/shop/aftersale/get";
+      String AFTERSALE_UPDATE  = "https://api.weixin.qq.com/shop/aftersale/update";
+    }
   }
 
   /**
