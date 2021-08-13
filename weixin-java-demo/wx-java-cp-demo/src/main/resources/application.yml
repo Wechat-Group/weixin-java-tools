@@ -4,7 +4,7 @@ logging:
 wx:
   cp:
     tp:
-      corp-id: ww530a1c681ffac763
+      corp-id: wwa1b76c4cd67ceb6a
       provider-secret: y9MPFhNEapLse94P-L1v-Fbhd_YEyTcar3qur0gAxJOsZANKrNg4Fr0L9vOVanhC
       suites:
         - suiteId: ww530a1c681ffac763
