@@ -50,7 +50,7 @@ public interface WxCpTpService {
    *
    * @return the suite access token
    * @throws WxErrorException the wx error exception
-   * @see #getSuiteAccessToken(boolean) #getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)
+   * @see #getSuiteAccessToken(boolean) #getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)
    */
   String getSuiteAccessToken() throws WxErrorException;
 
@@ -91,7 +91,7 @@ public interface WxCpTpService {
    *
    * @return the suite ticket
    * @throws WxErrorException the wx error exception
-   * @see #getSuiteTicket(boolean) #getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)
+   * @see #getSuiteTicket(boolean) #getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)
    */
   String getSuiteTicket() throws WxErrorException;
 
@@ -119,7 +119,7 @@ public interface WxCpTpService {
    * @param forceRefresh 强制刷新
    * @return the suite ticket
    * @throws WxErrorException the wx error exception
-   * @see #setSuiteTicket(String) #setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)
+   * @see #setSuiteTicket(String) #setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)
    * @deprecated 由于无法主动刷新 ，所以这个接口实际已经没有意义，需要在接收企业微信的主动推送后，保存这个ticket
    */
   @Deprecated
@@ -523,10 +523,36 @@ public interface WxCpTpService {
    *
    * @param url        调用JS接口页面的完整URL
    * @param authCorpId the auth corp id
+   * @param timestamp  the timestamp
+   * @param nonceStr   the nonce str
+   * @return wx jsapi signature
+   * @throws WxErrorException the wx error exception
+   */
+  WxJsapiSignature createAuthCorpJsApiTicketSignature(String url, String authCorpId, long timestamp, String nonceStr) throws WxErrorException;
+
+  /**
+   * 创建机构级jsApiTicket签名
+   * 详情参见企业微信第三方应用开发文档：https://work.weixin.qq.com/api/doc/90001/90144/90539
+   *
+   * @param url        调用JS接口页面的完整URL
+   * @param authCorpId the auth corp id
    * @return wx jsapi signature
    * @throws WxErrorException the wx error exception
    */
   WxJsapiSignature createAuthCorpJsApiTicketSignature(String url, String authCorpId) throws WxErrorException;
+
+  /**
+   * 创建应用级jsapiTicket签名
+   * 详情参见企业微信第三方应用开发文档：https://work.weixin.qq.com/api/doc/90001/90144/90539
+   *
+   * @param url        调用JS接口页面的完整URL
+   * @param authCorpId the auth corp id
+   * @param timestamp  the timestamp
+   * @param nonceStr   the nonce str
+   * @return wx jsapi signature
+   * @throws WxErrorException the wx error exception
+   */
+  WxJsapiSignature createSuiteJsApiTicketSignature(String url, String authCorpId, long timestamp, String nonceStr) throws WxErrorException;
 
   /**
    * 创建应用级jsapiTicket签名

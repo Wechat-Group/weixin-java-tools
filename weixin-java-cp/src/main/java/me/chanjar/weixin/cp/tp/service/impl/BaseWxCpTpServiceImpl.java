@@ -578,12 +578,22 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
 
   @Override
   public WxJsapiSignature createAuthCorpJsApiTicketSignature(String url, String authCorpId) throws WxErrorException {
-    return doCreateWxJsapiSignature(url, authCorpId, this.getAuthCorpJsApiTicket(authCorpId));
+    return doCreateWxJsapiSignature(url, authCorpId, this.getAuthCorpJsApiTicket(authCorpId), System.currentTimeMillis() / 1000, RandomUtils.getRandomStr());
   }
 
   @Override
   public WxJsapiSignature createSuiteJsApiTicketSignature(String url, String authCorpId) throws WxErrorException {
-    return doCreateWxJsapiSignature(url, authCorpId, this.getSuiteJsApiTicket(authCorpId));
+    return doCreateWxJsapiSignature(url, authCorpId, this.getSuiteJsApiTicket(authCorpId), System.currentTimeMillis() / 1000, RandomUtils.getRandomStr());
+  }
+
+  @Override
+  public WxJsapiSignature createAuthCorpJsApiTicketSignature(String url, String authCorpId, long timestamp, String nonceStr) throws WxErrorException {
+    return doCreateWxJsapiSignature(url, authCorpId, this.getAuthCorpJsApiTicket(authCorpId), timestamp, nonceStr);
+  }
+
+  @Override
+  public WxJsapiSignature createSuiteJsApiTicketSignature(String url, String authCorpId, long timestamp, String nonceStr) throws WxErrorException {
+    return doCreateWxJsapiSignature(url, authCorpId, this.getSuiteJsApiTicket(authCorpId), timestamp, nonceStr);
   }
 
   @Override
@@ -611,15 +621,14 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     this.configStorage.expireProviderToken();
   }
 
-  private WxJsapiSignature doCreateWxJsapiSignature(String url, String authCorpId, String jsapiTicket) {
-    long timestamp = System.currentTimeMillis() / 1000;
-    String noncestr = RandomUtils.getRandomStr();
+  private WxJsapiSignature doCreateWxJsapiSignature(String url, String authCorpId, String jsapiTicket, long timestamp, String nonceStr) {
+    nonceStr = nonceStr == null ? RandomUtils.getRandomStr() : nonceStr;
     String signature = SHA1
-      .genWithAmple("jsapi_ticket=" + jsapiTicket, "noncestr=" + noncestr, "timestamp=" + timestamp,
+      .genWithAmple("jsapi_ticket=" + jsapiTicket, "noncestr=" + nonceStr, "timestamp=" + timestamp,
         "url=" + url);
     WxJsapiSignature jsapiSignature = new WxJsapiSignature();
     jsapiSignature.setTimestamp(timestamp);
-    jsapiSignature.setNonceStr(noncestr);
+    jsapiSignature.setNonceStr(nonceStr);
     jsapiSignature.setUrl(url);
     jsapiSignature.setSignature(signature);
     jsapiSignature.setAppId(authCorpId);
