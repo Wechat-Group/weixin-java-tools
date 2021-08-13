@@ -4,7 +4,6 @@ import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.github.binarywang.wxpay.util.XmlConfig;
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -12,7 +11,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.BeanUtils;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -222,9 +221,7 @@ public abstract class BaseWxPayRequest implements Serializable {
     if (XmlConfig.fastMode) {
       return toFastXml();
     }
-    XStream xstream = XStreamInitializer.getInstance();
-    xstream.processAnnotations(this.getClass());
-    return xstream.toXML(this);
+    return XmlUtil.toXml(this);
   }
 
   /**

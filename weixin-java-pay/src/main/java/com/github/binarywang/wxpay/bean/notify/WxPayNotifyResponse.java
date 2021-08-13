@@ -1,13 +1,12 @@
 package com.github.binarywang.wxpay.bean.notify;
 
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 
 /**
  * 微信支付订单和退款的异步通知共用的响应类.
@@ -38,9 +37,7 @@ public class WxPayNotifyResponse {
    */
   public static String fail(String msg) {
     WxPayNotifyResponse response = new WxPayNotifyResponse(FAIL, msg);
-    XStream xstream = XStreamInitializer.getInstance();
-    xstream.autodetectAnnotations(true);
-    return xstream.toXML(response).replace("\n", "").replace("  ", "");
+    return XmlUtil.toXml(response);
   }
 
   /**
@@ -51,9 +48,7 @@ public class WxPayNotifyResponse {
    */
   public static String success(String msg) {
     WxPayNotifyResponse response = new WxPayNotifyResponse(SUCCESS, msg);
-    XStream xstream = XStreamInitializer.getInstance();
-    xstream.autodetectAnnotations(true);
-    return xstream.toXML(response).replace("\n", "").replace("  ", "");
+    return XmlUtil.toXml(response);
   }
 
   /**

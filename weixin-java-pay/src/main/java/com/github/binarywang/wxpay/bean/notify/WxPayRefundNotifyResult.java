@@ -1,25 +1,23 @@
 package com.github.binarywang.wxpay.bean.notify;
 
-import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.digest.DigestUtils;
-
 import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.w3c.dom.Document;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <pre>
@@ -308,9 +306,7 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
      * @return ReqInfo对象
      */
     public static ReqInfo fromXML(String xmlString) {
-      XStream xstream = XStreamInitializer.getInstance();
-      xstream.processAnnotations(ReqInfo.class);
-      return (ReqInfo) xstream.fromXML(xmlString);
+      return XmlUtil.toObject(xmlString, ReqInfo.class);
     }
 
     public void loadXML(Document d) {

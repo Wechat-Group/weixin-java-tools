@@ -8,12 +8,11 @@ import com.github.binarywang.wxpay.util.XmlConfig;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -148,9 +147,7 @@ public abstract class BaseWxPayResult {
         throw new WxRuntimeException("parse xml error", e);
       }
     }
-    XStream xstream = XStreamInitializer.getInstance();
-    xstream.processAnnotations(clz);
-    T result = (T) xstream.fromXML(xmlString);
+    T result = XmlUtil.toObject(xmlString, clz);
     result.setXmlString(xmlString);
     return result;
   }

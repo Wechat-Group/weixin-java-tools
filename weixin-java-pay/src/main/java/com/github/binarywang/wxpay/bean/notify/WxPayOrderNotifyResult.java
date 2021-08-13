@@ -332,8 +332,7 @@ public class WxPayOrderNotifyResult extends BaseWxPayResult implements Serializa
    * @return the wx pay order notify result
    */
   public static WxPayOrderNotifyResult fromXML(String xmlString) {
-    XStream xstream = XStreamInitializer.getInstance();
-    xstream.processAnnotations(WxPayOrderNotifyResult.class);
+    XStream xstream = XStreamInitializer.getInstance(WxPayOrderNotifyResult.class);
     xstream.registerConverter(new WxPayOrderNotifyResultConverter(xstream.getMapper(), xstream.getReflectionProvider()));
     WxPayOrderNotifyResult result = (WxPayOrderNotifyResult) xstream.fromXML(xmlString);
     result.setXmlString(xmlString);
