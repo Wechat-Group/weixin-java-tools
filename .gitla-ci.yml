@@ -1,0 +1,20 @@
+stages:
+  - build
+  - notice
+
+job maven-deploy:
+  stage: build
+  script:
+    - echo "------------------<Package>------------------"
+    - mvn deploy
+  tags:
+    - component
+
+job dingding-notice:
+  stage: notice
+  script:
+    - echo "------------------<Notice>------------------"
+    - "curl --location --request POST 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=8d6b8a12-d892-4f82-96ab-a64c611e5da1' --header 'Content-Type: application/json' --data '{\"msgtype\": \"markdown\",\"markdown\": {\"content\": \"项目：'${CI_PROJECT_NAME}' \n> 地址：'${CI_PROJECT_URL}' \n>分支：'${CI_COMMIT_REF_NAME}' \n>事件：编译成功\"}}'"
+  tags:
+    - component
+
