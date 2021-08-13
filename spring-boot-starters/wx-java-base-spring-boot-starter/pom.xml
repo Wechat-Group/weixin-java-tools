@@ -9,6 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
+  <name>WxJava - Spring Boot Starter for basic</name>
   <artifactId>wx-java-base-spring-boot-starter</artifactId>
 
   <properties>
