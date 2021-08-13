@@ -20,13 +20,15 @@ public interface WxCpTpService {
   /**
    * 有些接口是用access token 来进行鉴权的
    *
-   * @param url    the url
+   * @param uri    the url
    * @param corpId the corp id
    * @return corp api url
    */
-  default String getCorpApiUrl(String url, String corpId) {
-    return getWxCpTpConfigStorage().getApiUrl(url) +
-      "?access_token=" + getWxCpTpConfigStorage().getAccessToken(corpId);
+  default String getCorpApiUrl(String uri, String corpId) {
+    WxAccessToken accessToken = getCorpAccessToken(corpId);
+    uri = getWxCpTpConfigStorage().getApiUrl(uri);
+    return uri + ((uri.contains("?") ? "&" : "?")) +
+      "access_token=" + accessToken.getAccessToken();
   }
 
   /**
@@ -172,7 +174,7 @@ public interface WxCpTpService {
    * @return the corp token
    * @throws WxErrorException the wx error exception
    */
-  WxAccessToken getCorpToken(String authCorpId) throws WxErrorException;
+  WxAccessToken getCorpAccessToken(String authCorpId) throws WxErrorException;
 
   /**
    * 获取企业凭证
@@ -182,7 +184,7 @@ public interface WxCpTpService {
    * @return the corp token
    * @throws WxErrorException the wx error exception
    */
-  WxAccessToken getCorpToken(String authCorpId, String permanentCode) throws WxErrorException;
+  WxAccessToken getCorpAccessToken(String authCorpId, String permanentCode) throws WxErrorException;
 
   /**
    * 获取企业凭证, 支持强制刷新
@@ -193,7 +195,7 @@ public interface WxCpTpService {
    * @return corp token
    * @throws WxErrorException the wx error exception
    */
-  WxAccessToken getCorpToken(String authCorpId, String permanentCode, boolean forceRefresh) throws WxErrorException;
+  WxAccessToken getCorpAccessToken(String authCorpId, String permanentCode, boolean forceRefresh) throws WxErrorException;
 
   /**
    * 获取企业永久授权码 .

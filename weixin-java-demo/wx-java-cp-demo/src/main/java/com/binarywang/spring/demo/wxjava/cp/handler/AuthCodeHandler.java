@@ -46,7 +46,7 @@ public class AuthCodeHandler extends AbstractWxCpTpMessageMatchHandler {
   @Override
   public WxCpXmlOutMessage handle(WxCpTpXmlMessage wxMessage, Map<String, Object> context, WxCpTpService wxCpTpService, WxSessionManager sessionManager) throws WxErrorException {
     WxCpTpPermanentCodeInfo wxCpTpPermanentCodeInfo = wxCpTpService.getPermanentCodeInfo(wxMessage.getAuthCode());
-    // 永久授权码,持久化
+    // 永久授权码,持久化,内部已经持久化了,但是真实业务中可以保存到数据库中
     return null;
   }
 }

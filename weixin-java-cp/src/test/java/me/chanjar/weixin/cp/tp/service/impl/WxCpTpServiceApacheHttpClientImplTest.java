@@ -87,9 +87,9 @@ public class WxCpTpServiceApacheHttpClientImplTest {
   @Test
   public void testGetCorpToken() throws WxErrorException {
     wxCpTpService.getWxCpTpConfigStorage().expireAccessToken(AUTH_CORP_ID);
-    WxAccessToken accessToken = wxCpTpService.getCorpToken(AUTH_CORP_ID, PERMANENT_CODE, true);
+    WxAccessToken accessToken = wxCpTpService.getCorpAccessToken(AUTH_CORP_ID, PERMANENT_CODE, true);
     System.out.println("accessToken:" + accessToken);
-    accessToken = wxCpTpService.getCorpToken(AUTH_CORP_ID, PERMANENT_CODE);
+    accessToken = wxCpTpService.getCorpAccessToken(AUTH_CORP_ID, PERMANENT_CODE);
     System.out.println("accessToken:" + accessToken);
   }
 

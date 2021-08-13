@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.tp.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -212,17 +213,20 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   }
 
   @Override
-  public WxAccessToken getCorpToken(String authCorpId) throws WxErrorException {
-    return getCorpToken(authCorpId, configStorage.getPermanentCode(authCorpId));
+  public WxAccessToken getCorpAccessToken(String authCorpId) throws WxErrorException {
+    return getCorpAccessToken(authCorpId, configStorage.getPermanentCode(authCorpId), false);
   }
 
   @Override
-  public WxAccessToken getCorpToken(String authCorpId, String permanentCode) throws WxErrorException {
-    return getCorpToken(authCorpId, permanentCode, false);
+  public WxAccessToken getCorpAccessToken(String authCorpId, String permanentCode) throws WxErrorException {
+    if (StrUtil.isBlank(permanentCode)) {
+      return getCorpAccessToken(authCorpId);
+    }
+    return getCorpAccessToken(authCorpId, permanentCode, false);
   }
 
   @Override
-  public WxAccessToken getCorpToken(String authCorpId, String permanentCode, boolean forceRefresh)
+  public WxAccessToken getCorpAccessToken(String authCorpId, String permanentCode, boolean forceRefresh)
     throws WxErrorException {
     if (this.configStorage.isAccessTokenExpired(authCorpId) || forceRefresh) {
       WxAccessToken corpToken = this.getCorpTokenFromApi(authCorpId, permanentCode);
