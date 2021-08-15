@@ -13,7 +13,7 @@ import java.util.Map;
 public class WxCpTpServiceContainer {
   private Map<String, WxCpTpService> wxCpTpServiceMap = new HashMap<>();
 
-  private Map<String, WxCpTpCryptUtil> wxCpTpCryptUtilMap = new HashMap<>();
+  private final Map<String, WxCpTpCryptUtil> wxCpTpCryptUtilMap = new HashMap<>();
 
   private Map<String, WxCpTpMessageRouter> routers = new HashMap<>();
 
