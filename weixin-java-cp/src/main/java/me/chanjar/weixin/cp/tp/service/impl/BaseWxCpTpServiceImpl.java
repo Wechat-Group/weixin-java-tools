@@ -50,6 +50,8 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   private WxCpTpOAService wxCpTpOAService = new WxCpTpOAServiceImpl(this);
   private WxCpTpUserService wxCpTpUserService = new WxCpTpUserServiceImpl(this);
   private WxCpTpExternalContactService wxCpTpExternalContactService = new WxCpTpExternalContactServiceImpl(this);
+  private WxCpTpMessageService wxCpTpMessageService = new WxCpTpMessageServiceImpl(this);
+  private WxCpTpTaskCardService wxCpTpTaskCardService = new WxCpTpTaskCardServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -568,12 +570,34 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     this.wxCpTpUserService = wxCpTpUserService;
   }
 
+  @Override
   public WxCpTpExternalContactService getWxCpTpExternalContactService() {
     return wxCpTpExternalContactService;
   }
 
+  @Override
   public void setWxCpTpExternalContactService(WxCpTpExternalContactService wxCpTpExternalContactService) {
     this.wxCpTpExternalContactService = wxCpTpExternalContactService;
+  }
+
+  @Override
+  public WxCpTpMessageService getWxCpTpMessageService() {
+    return wxCpTpMessageService;
+  }
+
+  @Override
+  public void setWxCpTpMessageService(WxCpTpMessageService wxCpTpMessageService) {
+    this.wxCpTpMessageService = wxCpTpMessageService;
+  }
+
+  @Override
+  public WxCpTpTaskCardService getWxCpTpTaskCardService() {
+    return wxCpTpTaskCardService;
+  }
+
+  @Override
+  public void setWxCpTpTaskCardService(WxCpTpTaskCardService wxCpTpTaskCardService) {
+    this.wxCpTpTaskCardService = wxCpTpTaskCardService;
   }
 
   @Override

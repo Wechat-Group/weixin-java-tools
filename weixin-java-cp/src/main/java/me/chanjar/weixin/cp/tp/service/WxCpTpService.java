@@ -50,7 +50,7 @@ public interface WxCpTpService {
    *
    * @return the suite access token
    * @throws WxErrorException the wx error exception
-   * @see #getSuiteAccessToken(boolean) #getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)
+   * @see #getSuiteAccessToken(boolean) #getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)
    */
   String getSuiteAccessToken() throws WxErrorException;
 
@@ -91,7 +91,7 @@ public interface WxCpTpService {
    *
    * @return the suite ticket
    * @throws WxErrorException the wx error exception
-   * @see #getSuiteTicket(boolean) #getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)
+   * @see #getSuiteTicket(boolean) #getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)
    */
   String getSuiteTicket() throws WxErrorException;
 
@@ -119,7 +119,7 @@ public interface WxCpTpService {
    * @param forceRefresh 强制刷新
    * @return the suite ticket
    * @throws WxErrorException the wx error exception
-   * @see #setSuiteTicket(String) #setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)
+   * @see #setSuiteTicket(String) #setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)
    * @deprecated 由于无法主动刷新 ，所以这个接口实际已经没有意义，需要在接收企业微信的主动推送后，保存这个ticket
    */
   @Deprecated
@@ -520,6 +520,34 @@ public interface WxCpTpService {
    * @param wxCpTpExternalContactService the wx cp tp external contact service
    */
   void setWxCpTpExternalContactService(WxCpTpExternalContactService wxCpTpExternalContactService);
+
+  /**
+   * Gets wx cp tp message service.
+   *
+   * @return the wx cp tp message service
+   */
+  WxCpTpMessageService getWxCpTpMessageService();
+
+  /**
+   * Sets wx cp tp message service.
+   *
+   * @param wxCpTpMessageService the wx cp tp message service
+   */
+  void setWxCpTpMessageService(WxCpTpMessageService wxCpTpMessageService);
+
+  /**
+   * Gets wx cp tp task card service.
+   *
+   * @return the wx cp tp task card service
+   */
+  WxCpTpTaskCardService getWxCpTpTaskCardService();
+
+  /**
+   * Sets wx cp tp task card service.
+   *
+   * @param wxCpTpTaskCardService the wx cp tp task card service
+   */
+  void setWxCpTpTaskCardService(WxCpTpTaskCardService wxCpTpTaskCardService);
 
   /**
    * 获取应用的管理员列表

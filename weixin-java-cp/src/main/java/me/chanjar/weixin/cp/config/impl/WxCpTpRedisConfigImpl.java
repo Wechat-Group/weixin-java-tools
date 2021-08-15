@@ -57,6 +57,7 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
   private final String suiteTicketKey = ":suiteTicketKey:";
   private final String accessTokenKey = ":accessTokenKey:";
   private final String permanentCodeKey = ":permanentCodeKey:";
+  private final String agentIdKey = ":agentIdKey:";
   private final String authCorpJsApiTicketKey = ":authCorpJsApiTicketKey:";
   private final String authSuiteJsApiTicketKey = ":authSuiteJsApiTicketKey:";
   private final String providerTokenKey = ":providerTokenKey:";
@@ -239,6 +240,21 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
   @Override
   public void updatePermanentCode(String authCorpId, String permanentCode) {
     wxRedisOps.setValue(keyWithPrefix(authCorpId) + permanentCodeKey, permanentCode, -1, TimeUnit.DAYS);
+  }
+
+  @Override
+  public Integer getAgentId(String authCorpId) {
+    String agentIdStr = wxRedisOps.getValue(keyWithPrefix(authCorpId) + agentIdKey);
+    try {
+      return Integer.parseInt(agentIdStr);
+    } catch (NumberFormatException e) {
+      throw new WxErrorException("获取企业:[" + authCorpId + "] 应用id失败");
+    }
+  }
+
+  @Override
+  public void updateAgentId(String authCorpId, Integer agentId) {
+    wxRedisOps.setValue(keyWithPrefix(authCorpId) + agentIdKey, agentId.toString(), -1, TimeUnit.DAYS);
   }
 
   @Override

@@ -51,6 +51,7 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   private volatile String oauth2redirectUri;
   private volatile Map<String, String> authCorpAccessTokenMap = new HashMap<>();
   private volatile Map<String, String> authCorpPermanentCodeMap = new HashMap<>();
+  private volatile Map<String, Integer> authCorpAgentIdMap = new HashMap<>();
   private volatile Map<String, Long> authCorpAccessTokenExpireTimeMap = new HashMap<>();
   private volatile Map<String, String> authCorpJsApiTicketMap = new HashMap<>();
   private volatile Map<String, Long> authCorpJsApiTicketExpireTimeMap = new HashMap<>();
@@ -299,6 +300,23 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
       throw new WxRuntimeException("保存企业永久授权码失败");
     }
     authCorpPermanentCodeMap.put(authCorpId, permanentCode);
+  }
+
+  @Override
+  public Integer getAgentId(String authCorpId) {
+    Integer agentId = authCorpAgentIdMap.get(authCorpId);
+    if (agentId == null) {
+      throw new WxErrorException("获取企业:[" + authCorpId + "] 应用id失败");
+    }
+    return agentId;
+  }
+
+  @Override
+  public void updateAgentId(String authCorpId, Integer agentId) {
+    if (authCorpId == null || agentId == null) {
+      throw new WxRuntimeException("保存企业应用id失败");
+    }
+    authCorpAgentIdMap.put(authCorpId, agentId);
   }
 
   @Override

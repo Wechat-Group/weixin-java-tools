@@ -178,6 +178,22 @@ public interface WxCpTpConfigStorage {
   void updatePermanentCode(String authCorpId, String permanentCode);
 
   /**
+   * Gets agent id.
+   *
+   * @param authCorpId the auth corp id
+   * @return the agent id
+   */
+  Integer getAgentId(String authCorpId);
+
+  /**
+   * Update agent id.
+   *
+   * @param authCorpId the auth corp id
+   * @param agentId    the agent id
+   */
+  void updateAgentId(String authCorpId, Integer agentId);
+
+  /**
    * Gets access token entity.
    *
    * @param authCorpId the auth corp id
