@@ -49,6 +49,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   private WxCpTpMediaService wxCpTpMediaService = new WxCpTpMediaServiceImpl(this);
   private WxCpTpOAService wxCpTpOAService = new WxCpTpOAServiceImpl(this);
   private WxCpTpUserService wxCpTpUserService = new WxCpTpUserServiceImpl(this);
+  private WxCpTpExternalContactService wxCpTpExternalContactService = new WxCpTpExternalContactServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -565,6 +566,14 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   @Override
   public void setWxCpTpUserService(WxCpTpUserService wxCpTpUserService) {
     this.wxCpTpUserService = wxCpTpUserService;
+  }
+
+  public WxCpTpExternalContactService getWxCpTpExternalContactService() {
+    return wxCpTpExternalContactService;
+  }
+
+  public void setWxCpTpExternalContactService(WxCpTpExternalContactService wxCpTpExternalContactService) {
+    this.wxCpTpExternalContactService = wxCpTpExternalContactService;
   }
 
   @Override

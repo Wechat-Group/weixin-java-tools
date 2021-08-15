@@ -10,6 +10,7 @@ import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
+import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
@@ -103,7 +104,7 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
   @Override
   public String getApiUrl(String path) {
     if (baseApiUrl == null) {
-      baseApiUrl = "https://qyapi.weixin.qq.com";
+      baseApiUrl = WxCpApiPathConsts.DEFAULT_CP_BASE_URL;
     }
     return baseApiUrl + path;
   }

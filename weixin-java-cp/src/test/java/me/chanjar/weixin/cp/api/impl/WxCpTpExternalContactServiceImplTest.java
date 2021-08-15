@@ -23,7 +23,7 @@ import java.util.List;
 import static org.testng.Assert.assertNotNull;
 
 @Guice(modules = ApiTestModule.class)
-public class WxCpExternalContactServiceImplTest {
+public class WxCpTpExternalContactServiceImplTest {
   @Inject
   private WxCpService wxCpService;
   @Inject

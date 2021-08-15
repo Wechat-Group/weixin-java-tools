@@ -23,7 +23,7 @@ public class TestController {
   public String get() {
     WxCpTpService wxCpTpService = wxCpTpServiceContainer.getTpService("ww530a1c681ffac763");
     String corpId = "wwa1b76c4cd67ceb6a";
-    wxCpTpService.getWxCpTpUserService().getById(corpId, "CaiQiYuan");
+    wxCpTpService.getWxCpTpExternalContactService().listExternalContacts(corpId, "CaiQiYuan");
     return "hello";
   }
 }

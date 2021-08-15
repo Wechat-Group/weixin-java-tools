@@ -50,7 +50,7 @@ public interface WxCpTpService {
    *
    * @return the suite access token
    * @throws WxErrorException the wx error exception
-   * @see #getSuiteAccessToken(boolean) #getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)
+   * @see #getSuiteAccessToken(boolean) #getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)#getSuiteAccessToken(boolean)
    */
   String getSuiteAccessToken() throws WxErrorException;
 
@@ -91,7 +91,7 @@ public interface WxCpTpService {
    *
    * @return the suite ticket
    * @throws WxErrorException the wx error exception
-   * @see #getSuiteTicket(boolean) #getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)
+   * @see #getSuiteTicket(boolean) #getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)#getSuiteTicket(boolean)
    */
   String getSuiteTicket() throws WxErrorException;
 
@@ -119,7 +119,7 @@ public interface WxCpTpService {
    * @param forceRefresh 强制刷新
    * @return the suite ticket
    * @throws WxErrorException the wx error exception
-   * @see #setSuiteTicket(String) #setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)
+   * @see #setSuiteTicket(String) #setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)#setSuiteTicket(String)
    * @deprecated 由于无法主动刷新 ，所以这个接口实际已经没有意义，需要在接收企业微信的主动推送后，保存这个ticket
    */
   @Deprecated
@@ -506,6 +506,20 @@ public interface WxCpTpService {
    * @param wxCpTpUserService the set user service
    */
   void setWxCpTpUserService(WxCpTpUserService wxCpTpUserService);
+
+  /**
+   * Gets wx cp tp external contact service.
+   *
+   * @return the wx cp tp external contact service
+   */
+  WxCpTpExternalContactService getWxCpTpExternalContactService();
+
+  /**
+   * Sets wx cp tp external contact service.
+   *
+   * @param wxCpTpExternalContactService the wx cp tp external contact service
+   */
+  void setWxCpTpExternalContactService(WxCpTpExternalContactService wxCpTpExternalContactService);
 
   /**
    * 获取应用的管理员列表

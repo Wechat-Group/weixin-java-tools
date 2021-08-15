@@ -9,6 +9,11 @@ import me.chanjar.weixin.cp.tp.message.WxCpTpMessageHandler;
  */
 public interface WxCpTpMessageMatchHandler extends WxCpTpMessageHandler {
 
+  //---------------------------------------------------------------------
+  // 每个函数之间是 与 关系
+  // #ignoreMatch() 方法返回true时,所有函数都无效,这个handler都会被执行
+  //---------------------------------------------------------------------
+
   /**
    * 通知类型
    *
