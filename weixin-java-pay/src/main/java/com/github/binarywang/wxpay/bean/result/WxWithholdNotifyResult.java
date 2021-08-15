@@ -6,13 +6,12 @@ import com.github.binarywang.wxpay.converter.WxPayOrderNotifyResultConverter;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.util.SignUtils;
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
@@ -148,7 +147,6 @@ public class WxWithholdNotifyResult extends BaseWxPayResult {
   private String contractId;
 
 
-
   @Override
   public void checkResult(WxPayService wxPayService, String signType, boolean checkSuccess) throws WxPayException {
     //防止伪造成功通知
@@ -166,10 +164,9 @@ public class WxWithholdNotifyResult extends BaseWxPayResult {
    * @return the wx withhold result
    */
   public static WxWithholdNotifyResult fromXML(String xmlString) {
-    XStream xstream = XStreamInitializer.getInstance();
-    xstream.processAnnotations(WxWithholdNotifyResult.class);
-    xstream.registerConverter(new WxPayOrderNotifyResultConverter(xstream.getMapper(), xstream.getReflectionProvider()));
-    WxWithholdNotifyResult result = (WxWithholdNotifyResult) xstream.fromXML(xmlString);
+    WxWithholdNotifyResult result = XmlUtil.toObject(xmlString, WxWithholdNotifyResult.class, xs -> {
+      xs.registerConverter(new WxPayOrderNotifyResultConverter(xs.getMapper(), xs.getReflectionProvider()));
+    });
     result.setXmlString(xmlString);
     return result;
   }

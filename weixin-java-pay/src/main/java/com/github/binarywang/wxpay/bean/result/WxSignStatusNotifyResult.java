@@ -3,13 +3,12 @@ package com.github.binarywang.wxpay.bean.result;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.common.util.xml.XmlUtil;
 import org.w3c.dom.Document;
 
 /**
@@ -100,9 +99,7 @@ public class WxSignStatusNotifyResult extends BaseWxPayResult {
    * @return the wx sign result
    */
   public static WxSignStatusNotifyResult fromXML(String xmlString) {
-    XStream xstream = XStreamInitializer.getInstance();
-    xstream.processAnnotations(WxSignStatusNotifyResult.class);
-    WxSignStatusNotifyResult result = (WxSignStatusNotifyResult) xstream.fromXML(xmlString);
+    WxSignStatusNotifyResult result = XmlUtil.toObject(xmlString, WxSignStatusNotifyResult.class);
     result.setXmlString(xmlString);
     return result;
   }
