@@ -18,8 +18,8 @@ import java.io.IOException;
  */
 @Slf4j
 public class OkHttpMinishopMediaUploadRequestCustomizeExecutor extends MinishopUploadRequestCustomizeExecutor<OkHttpClient, OkHttpProxyInfo> {
-  public OkHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp) {
-    super(requestHttp);
+  public OkHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType) {
+    super(requestHttp, respType);
   }
 
   @Override
