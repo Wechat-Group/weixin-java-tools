@@ -11,13 +11,18 @@ import me.chanjar.weixin.cp.bean.external.WxCpUpdateRemarkRequest;
 import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatInfo;
 import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatList;
 import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatStatistic;
+import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatTransferResp;
 import me.chanjar.weixin.cp.bean.external.WxCpUserExternalTagGroupInfo;
 import me.chanjar.weixin.cp.bean.external.WxCpUserExternalTagGroupList;
 import me.chanjar.weixin.cp.bean.external.WxCpUserExternalUnassignList;
 import me.chanjar.weixin.cp.bean.external.WxCpUserExternalUserBehaviorStatistic;
+import me.chanjar.weixin.cp.bean.external.WxCpUserTransferCustomerReq;
+import me.chanjar.weixin.cp.bean.external.WxCpUserTransferCustomerResp;
+import me.chanjar.weixin.cp.bean.external.WxCpUserTransferResultResp;
 import me.chanjar.weixin.cp.bean.external.WxCpWelcomeMsg;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -374,32 +379,6 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   WxCpUserExternalGroupChatInfo getGroupChat(String chatId, Integer needName) throws WxErrorException;
-
-  /**
-   *
-   * 企业可通过此接口，将已离职成员为群主的群，分配给另一个客服成员。
-   *
-   * <per>
-   * 注意：：
-   *
-   * 群主离职了的客户群，才可继承
-   * 继承给的新群主，必须是配置了客户联系功能的成员
-   * 继承给的新群主，必须有设置实名
-   * 继承给的新群主，必须有激活企业微信
-   * 同一个人的群，限制每天最多分配300个给新群主
-   *
-   * 权限说明:
-   *
-   * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
-   * 第三方应用需拥有“企业客户权限->客户联系->分配离职成员的客户群”权限
-   * 对于第三方/自建应用，群主必须在应用的可见范围。
-   * </per>
-   * @param chatIds 需要转群主的客户群ID列表。取值范围： 1 ~ 100
-   * @param newOwner  新群主ID
-   * @return 分配结果，主要是分配失败的群列表
-   * @throws WxErrorException  the wx error exception
-   */
-  WxCpUserExternalGroupChatTransferResp transferGroupChat(String[] chatIds, String newOwner)  throws WxErrorException;
 
   /**
    *
