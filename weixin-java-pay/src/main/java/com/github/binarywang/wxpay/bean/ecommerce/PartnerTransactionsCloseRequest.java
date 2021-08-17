@@ -8,8 +8,9 @@ import java.io.Serializable;
 
 /**
  * 关闭普通订单请求
- * @author: f00lish
- * @date: 2020/12/09
+ *
+ * @author f00lish
+ * @date 2020/12/09
  */
 @Data
 @NoArgsConstructor

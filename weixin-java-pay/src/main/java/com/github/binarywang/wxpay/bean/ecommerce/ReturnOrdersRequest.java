@@ -7,11 +7,12 @@ import java.io.Serializable;
 
 /**
  * 请求分账回退
- *  * <pre>
+ * * <pre>
  *  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_3.shtml
  *  * </pre>
- * @author: f00lish
- * @date: 2020/09/14
+ *
+ * @author f00lish
+ * @date 2020/09/14
  */
 @Data
 @Builder
