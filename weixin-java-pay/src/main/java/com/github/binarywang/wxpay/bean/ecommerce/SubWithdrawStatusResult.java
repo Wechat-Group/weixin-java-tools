@@ -11,8 +11,9 @@ import java.io.Serializable;
  * <pre>
  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/fund/chapter3_3.shtml
  * </pre>
- * @author: f00lish
- * @date: 2020/10/27
+ *
+ * @author f00lish
+ * @date 2020/10/27
  */
 @Data
 @NoArgsConstructor

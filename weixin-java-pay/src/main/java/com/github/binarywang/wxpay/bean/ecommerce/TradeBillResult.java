@@ -8,8 +8,8 @@ import java.io.Serializable;
 /**
  * 交易账单结果
  *
- * @author: f00lish
- * @date: 2020/09/28
+ * @author f00lish
+ * @date 2020/09/28
  */
 @Data
 @Builder
