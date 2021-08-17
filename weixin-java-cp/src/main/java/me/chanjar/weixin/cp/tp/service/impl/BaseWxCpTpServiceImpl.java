@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.*;
@@ -267,6 +268,13 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     String result = post(configStorage.getApiUrl(GET_PERMANENT_CODE), jsonObject.toString());
     WxCpTpPermanentCodeInfo wxCpTpPermanentCodeInfo = WxCpTpPermanentCodeInfo.fromJson(result);
     configStorage.updatePermanentCode(wxCpTpPermanentCodeInfo.getAuthCorpInfo().getCorpId(), wxCpTpPermanentCodeInfo.getPermanentCode());
+    if (wxCpTpPermanentCodeInfo.getAuthInfo() != null) {
+      List<WxCpTpPermanentCodeInfo.Agent> agentList = wxCpTpPermanentCodeInfo.getAuthInfo().getAgents();
+      if (agentList != null && agentList.size() > 0) {
+        // 这里做了一下特殊定制
+        configStorage.updateAgentId(wxCpTpPermanentCodeInfo.getAuthCorpInfo().getCorpId(), agentList.get(0).getAgentId());
+      }
+    }
     return wxCpTpPermanentCodeInfo;
   }
 
