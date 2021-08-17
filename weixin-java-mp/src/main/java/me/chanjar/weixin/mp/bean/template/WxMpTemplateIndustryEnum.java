@@ -2,6 +2,9 @@ package me.chanjar.weixin.mp.bean.template;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 /**
  * 模版消息行业枚举.
@@ -195,15 +198,19 @@ public enum WxMpTemplateIndustryEnum {
    *
    * @param firstClass  主行业名称
    * @param secondClass 副行业名称
-   * @return .
+   * @return 如果找不到, 返回null
    */
+  @Nullable
   public static WxMpTemplateIndustryEnum findByClass(String firstClass, String secondClass) {
     for (WxMpTemplateIndustryEnum industryEnum : WxMpTemplateIndustryEnum.values()) {
       if (industryEnum.firstClass.equals(firstClass) && industryEnum.secondClass.contains(secondClass)) {
         return industryEnum;
       }
     }
-
+    if (Objects.equals(firstClass, "其他") && Objects.equals(secondClass, "其他")) {
+      //微信返回的其他行业实际上为"其他",而非"其它",此处兼容处理
+      return OTHER;
+    }
     return null;
   }
 

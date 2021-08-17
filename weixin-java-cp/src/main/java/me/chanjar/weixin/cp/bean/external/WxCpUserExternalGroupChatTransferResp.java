@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * 分配离职成员的客户群结果
+ *
  * @author pg
  * @date 2021年6月21日
  */
@@ -33,7 +34,7 @@ public class WxCpUserExternalGroupChatTransferResp extends WxCpBaseResp {
 
   @Getter
   @Setter
-  public static class GroupChatFailedTransfer extends WxCpBaseResp  {
+  public static class GroupChatFailedTransfer extends WxCpBaseResp {
     private static final long serialVersionUID = -5836775099634587239L;
     /**
      * 没能成功继承的群ID

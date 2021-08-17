@@ -69,7 +69,7 @@ public class TransactionsResult implements Serializable {
     private String signType;
     private String paySign;
 
-    private String getSignStr(){
+    private String getSignStr() {
       return String.format("%s\n%s\n%s\n%s\n", appId, timeStamp, nonceStr, packageValue);
     }
   }
@@ -86,10 +86,10 @@ public class TransactionsResult implements Serializable {
 
   }
 
-  public <T> T getPayInfo(TradeTypeEnum tradeType, String appId, String mchId, PrivateKey privateKey){
+  public <T> T getPayInfo(TradeTypeEnum tradeType, String appId, String mchId, PrivateKey privateKey) {
     String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
     String nonceStr = SignUtils.genRandomStr();
-    switch (tradeType){
+    switch (tradeType) {
       case JSAPI:
         JsapiResult jsapiResult = new JsapiResult();
         jsapiResult.setAppId(appId).setTimeStamp(timestamp)

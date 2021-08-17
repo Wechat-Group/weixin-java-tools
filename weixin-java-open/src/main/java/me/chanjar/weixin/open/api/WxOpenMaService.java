@@ -1,8 +1,8 @@
 package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaAuditMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.open.bean.ma.WxMaOpenCommitExtInfo;
 import me.chanjar.weixin.open.bean.ma.WxMaScheme;
 import me.chanjar.weixin.open.bean.message.WxOpenMaSubmitAuditMessage;
 import me.chanjar.weixin.open.bean.result.*;
@@ -232,6 +232,12 @@ public interface WxOpenMaService extends WxMaService {
    * 通过此接口开通自定义版交易组件，将同步返回接入结果，不再有异步事件回调。
    */
   String API_REGISTER_SHOP_COMPONENT = "https://api.weixin.qq.com/shop/register/apply";
+
+  /**
+   * 小程序审核 提审素材上传接口
+   */
+  String API_AUDIT_UPLOAD_MEDIA = "https://api.weixin.qq.com/wxa/uploadmedia";
+
   /**
    * 获得小程序的域名配置信息
    *
@@ -372,14 +378,18 @@ public interface WxOpenMaService extends WxMaService {
   /**
    * 1、为授权的小程序帐号上传小程序代码
    *
-   * @param templateId  代码模板ID
-   * @param userVersion 用户定义版本
-   * @param userDesc    用户定义版本描述
-   * @param extInfo     第三方自定义的配置
+   * @param templateId    代码模板ID
+   * @param userVersion   用户定义版本
+   * @param userDesc      用户定义版本描述
+   * @param extJsonObject 为了方便第三方平台的开发者引入 extAppid 的开发调试工作，引入ext.json配置文件概念，该参数则是用于控制ext.json配置文件的内容。
+   *                      如果是普通模板可以使用 WxMaOpenCommitExtInfo 类构造参数，
+   *                      如果是标准模板可支持的参数为：{"extAppid":'', "ext": {}, "window": {}} 所以可以使用 WxMaOpenCommitStandardExt 构造参数
    * @return the wx open result
    * @throws WxErrorException the wx error exception
+   * @see me.chanjar.weixin.open.bean.ma.WxMaOpenCommitStandardExt
+   * @see me.chanjar.weixin.open.bean.ma.WxMaOpenCommitExtInfo
    */
-  WxOpenResult codeCommit(Long templateId, String userVersion, String userDesc, WxMaOpenCommitExtInfo extInfo) throws WxErrorException;
+  WxOpenResult codeCommit(Long templateId, String userVersion, String userDesc, Object extJsonObject) throws WxErrorException;
 
   /**
    * 获取体验小程序的体验二维码
@@ -610,14 +620,22 @@ public interface WxOpenMaService extends WxMaService {
 
   /**
    * 为小程序开通小商店组件
+   *
    * @return
    */
   WxOpenResult registerShopComponent() throws WxErrorException;
-  
+
   /**
    * 小程序基础信息服务  (小程序名称、头像、描述、类目等信息设置)
    *
    * @return 小程序基础信息服务
    */
   WxOpenMaBasicService getBasicService();
+
+  /**
+   * 小程序审核 提审素材上传接口
+   *
+   * @return
+   */
+  WxMaAuditMediaUploadResult uploadMedia(File file) throws WxErrorException;
 }

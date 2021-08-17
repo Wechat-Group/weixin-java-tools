@@ -319,6 +319,47 @@ public class WxMaApiUrlConstants {
       String ORDER_PAY = "https://api.weixin.qq.com/shop/order/pay";
       String ORDER_GET = "https://api.weixin.qq.com/shop/order/get";
     }
+
+    interface Register {
+      String REGISTER_APPLY = "https://api.weixin.qq.com/shop/register/apply";
+      String REGISTER_CHECK = "https://api.weixin.qq.com/shop/register/check";
+      String REGISTER_FINISH_ACCESS_INFO = "https://api.weixin.qq.com/shop/register/finish_access_info";
+      String REGISTER_APPLY_SCENE = "https://api.weixin.qq.com/shop/register/apply_scene";
+    }
+
+    interface Account {
+      String GET_CATEGORY_LIST = "https://api.weixin.qq.com/shop/account/get_category_list";
+      String GET_BRAND_LIST = "https://api.weixin.qq.com/shop/account/get_brand_list";
+      String UPDATE_INFO = "https://api.weixin.qq.com/shop/account/update_info";
+      String GET_INFO = "https://api.weixin.qq.com/shop/account/get_info";
+    }
+
+    interface Cat {
+      String GET_CAT = "https://api.weixin.qq.com/shop/cat/get";
+    }
+
+    interface Img {
+      String IMG_UPLOAD = "https://api.weixin.qq.com/shop/img/upload";
+    }
+
+    interface Audit {
+      String AUDIT_BRAND = "https://api.weixin.qq.com/shop/audit/audit_brand";
+      String AUDIT_CATEGORY = "https://api.weixin.qq.com/shop/audit/audit_category";
+      String AUDIT_RESULT = "https://api.weixin.qq.com/shop/audit/result";
+      String GET_MINIAPP_CERTIFICATE = "https://api.weixin.qq.com/shop/audit/get_miniapp_certificate";
+    }
+
+    interface Delivery {
+      String GET_COMPANY_LIST = "https://api.weixin.qq.com/shop/delivery/get_company_list";
+      String DELIVERY_SEND = "https://api.weixin.qq.com/shop/delivery/send";
+      String DELIVERY_RECEIVE  = "https://api.weixin.qq.com/shop/delivery/recieve";
+    }
+
+    interface Aftersale {
+      String AFTERSALE_ADD = "https://api.weixin.qq.com/shop/aftersale/add";
+      String AFTERSALE_GET = "https://api.weixin.qq.com/shop/aftersale/get";
+      String AFTERSALE_UPDATE  = "https://api.weixin.qq.com/shop/aftersale/update";
+    }
   }
 
   /**

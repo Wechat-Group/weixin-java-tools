@@ -18,6 +18,7 @@ import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCouponStock;
 import me.chanjar.weixin.open.bean.minishop.goods.*;
 import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountGoods;
 import me.chanjar.weixin.open.bean.result.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.List;
@@ -170,7 +171,6 @@ public interface WxOpenComponentService {
   String MINISHOP_UPDATE_COUPON_STATUS_URL = "https://api.weixin.qq.com/product/coupon/update_status";
 
   String MINISHOP_GET_DELIVERY_COMPANY_URL = "https://api.weixin.qq.com/product/delivery/get_company_list";
-
 
 
   /**
@@ -459,11 +459,23 @@ public interface WxOpenComponentService {
    *
    * @return 小程序代码模版列表 （templateId）
    * @throws WxErrorException 获取失败时返回，具体错误码请看此接口的注释文档
+   * @see #getTemplateList(Integer)
    */
+  @Deprecated
   List<WxOpenMaCodeTemplate> getTemplateList() throws WxErrorException;
 
   /**
-   * 请参考并使用 {@link #addToTemplate(long,int)}.
+   * 获取代码模版库中的所有小程序代码模版.
+   * 文档:https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/code_template/gettemplatelist.html
+   *
+   * @param templateType 模板类型,可空,默认全部,填0普通模,1标准模板
+   * @return 小程序代码模版列表 （templateId）
+   * @throws WxErrorException 获取失败时返回，具体错误码请看此接口的注释文档
+   */
+  List<WxOpenMaCodeTemplate> getTemplateList(@Nullable Integer templateType) throws WxErrorException;
+
+  /**
+   * 请参考并使用 {@link #addToTemplate(long, int)}.
    * 将草稿箱的草稿选为小程序代码模版.
    *
    * @param draftId 草稿ID，本字段可通过“获取草稿箱内的所有临时代码草稿”接口获得
@@ -477,7 +489,7 @@ public interface WxOpenComponentService {
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/code_template/addtotemplate.html
    * 将草稿添加到代码模板库.
    *
-   * @param draftId 草稿ID，本字段可通过“获取草稿箱内的所有临时代码草稿”接口获得
+   * @param draftId      草稿ID，本字段可通过“获取草稿箱内的所有临时代码草稿”接口获得
    * @param templateType 代码模版类型，【普通模板:0, 标准模板：1】
    * @throws WxErrorException 操作失败时抛出，具体错误码请看此接口的注释文档
    * @see #getTemplateDraftList #getTemplateDraftList
@@ -576,12 +588,12 @@ public interface WxOpenComponentService {
    * https://api.weixin.qq.com/product/register/register_shop?component_access_token=xxxxxxxxx
    * 注册小商店账号
    *
-   * @param wxName                微信号（必填）
-   * @param idCardName            身份证姓名（必填）
-   * @param idCardNumber          身份证号（必填）
-   * @param channelId             渠道号，服务商后台生成渠道信息。（选填）
-   * @param apiOpenstoreType      1-整店打包（开通小商店），2-组件开放（开通小程序，并且已经完整的嵌入电商功能）（必填）
-   * @param authPageUrl           授权url（选填）
+   * @param wxName           微信号（必填）
+   * @param idCardName       身份证姓名（必填）
+   * @param idCardNumber     身份证号（必填）
+   * @param channelId        渠道号，服务商后台生成渠道信息。（选填）
+   * @param apiOpenstoreType 1-整店打包（开通小商店），2-组件开放（开通小程序，并且已经完整的嵌入电商功能）（必填）
+   * @param authPageUrl      授权url（选填）
    * @return the wx open result
    * @throws WxErrorException
    */
@@ -591,7 +603,8 @@ public interface WxOpenComponentService {
   /**
    * https://api.weixin.qq.com/product/register/check_audit_status
    * 异步状态查询
-   * @param wxName                微信号
+   *
+   * @param wxName 微信号
    * @return
    */
   String checkAuditStatus(String wxName) throws WxErrorException;
@@ -599,15 +612,15 @@ public interface WxOpenComponentService {
 
   /**
    * 已经获取到小商店的appId，那么需要通过accesstoken来获取该小商店的状态
+   *
    * @param appId
    * @param wxName
    * @return
    * @throws WxErrorException
    */
-  String checkAuditStatus(String appId, String wxName) throws  WxErrorException;
+  String checkAuditStatus(String appId, String wxName) throws WxErrorException;
 
   /**
-   *
    * @param appId
    * @param subjectType
    * @param busiLicense
@@ -620,7 +633,6 @@ public interface WxOpenComponentService {
   WxOpenResult submitMerchantInfo(String appId, String subjectType, MinishopBusiLicense busiLicense, MinishopOrganizationCodeInfo organizationCodeInfo, MinishopIdcardInfo idcardInfo, MinishopSuperAdministratorInfo superAdministratorInfo, String merchantShoprtName) throws WxErrorException;
 
   /**
-   *
    * @param appId
    * @param nameInfo
    * @param returnInfo
@@ -631,7 +643,6 @@ public interface WxOpenComponentService {
 
 
   /**
-   *
    * @param height
    * @param width
    * @param file
@@ -643,6 +654,7 @@ public interface WxOpenComponentService {
 
   /**
    * 获取小商店的类目详情
+   *
    * @param appId：小商店APPID
    * @param fCatId：父类目ID，可先填0获取根部类目
    * @return 小商店类目信息列表
@@ -652,6 +664,7 @@ public interface WxOpenComponentService {
 
   /**
    * 获取小商店品牌信息
+   *
    * @param appId：小商店appID
    * @return
    */
@@ -660,6 +673,7 @@ public interface WxOpenComponentService {
 
   /**
    * 获取小商店运费模版信息
+   *
    * @param appId：小商店appID
    * @return
    */
@@ -668,6 +682,7 @@ public interface WxOpenComponentService {
 
   /**
    * 获取小商店商品分类信息
+   *
    * @param appId
    * @return
    */
@@ -676,6 +691,7 @@ public interface WxOpenComponentService {
 
   /**
    * 获取小商店的快递公司列表
+   *
    * @param appId
    * @return
    * @throws WxErrorException
@@ -684,18 +700,21 @@ public interface WxOpenComponentService {
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //小商店优惠券接口
+
   /**
    * 创建小商店优惠券
+   *
    * @param appId：小商店的appId
-   * @param couponInfo： 优惠券信息
+   * @param couponInfo：     优惠券信息
    * @return couponId: 优惠券ID
    * @throws WxErrorException
    */
-  Integer minishopCreateCoupon(String appId, WxMinishopCoupon couponInfo) throws  WxErrorException;
+  Integer minishopCreateCoupon(String appId, WxMinishopCoupon couponInfo) throws WxErrorException;
 
 
   /**
    * 与小商店对接，获取小商店的优惠券信息
+   *
    * @param appId：小商店的appId
    * @param startCreateTime：优惠券创建时间的搜索开始时间
    * @param endCreateTime：优惠券创建时间的搜索结束时间
@@ -710,16 +729,18 @@ public interface WxOpenComponentService {
 
   /**
    * 与小商店对接，将优惠券发送给某人
+   *
    * @param appid：小商店appId
    * @param openId：优惠券接收人的openId
-   * @param couponId: 优惠券ID
+   * @param couponId:            优惠券ID
    * @return
    */
-  WxOpenResult minishopPushCouponToUser(String appid, String openId, Integer couponId)  throws WxErrorException;
+  WxOpenResult minishopPushCouponToUser(String appid, String openId, Integer couponId) throws WxErrorException;
 
 
   /**
    * 与小商店对接，更新商城优惠券
+   *
    * @param appId
    * @param couponInfo
    * @return
@@ -730,13 +751,14 @@ public interface WxOpenComponentService {
 
   /**
    * 从优惠券创建后status=1，可流转到2,4,5, COUPON_STATUS_VALID = 2 ;//生效 COUPON_STATUS_INVALID = 4 ;//已作废 COUPON_STATUS_DEL = 5;//删除
+   *
    * @param appId
    * @param couponId
    * @param status
    * @return
    * @throws WxErrorException
    */
-  WxOpenResult minishopUpdateCouponStatus(String appId, Integer couponId, Integer status) throws  WxErrorException;
+  WxOpenResult minishopUpdateCouponStatus(String appId, Integer couponId, Integer status) throws WxErrorException;
 
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -750,8 +772,10 @@ public interface WxOpenComponentService {
   String MINISHOP_LISTING_SPU_URL = "https://api.weixin.qq.com/product/spu/listing";
 
   String MINISHOP_DELISTING_SPU_URL = "https://api.weixin.qq.com/product/spu/delisting";
+
   /**
    * 小商店添加商品接口，添加商品后只是添加到草稿箱，需要通过调用上架商品，并通过审核才能在商城中显示。
+   *
    * @param appId
    * @param spu
    * @return
@@ -762,17 +786,19 @@ public interface WxOpenComponentService {
 
   /**
    * 小商店删除商品接口，直接删除，不会存在小商店回收站里面。
+   *
    * @param appId
    * @param productId
    * @param outProductId
    * @return
    * @throws WxErrorException
    */
-  WxOpenResult minishopGoodsDelSpu(String appId, Long productId, Long outProductId) throws  WxErrorException;
+  WxOpenResult minishopGoodsDelSpu(String appId, Long productId, Long outProductId) throws WxErrorException;
 
 
   /**
    * 小商店更新商品接口，不会直接影响上架商品的信息，而是存在草稿箱，需要调用上架商品接口，并通过审核才能在商城中显示。
+   *
    * @param appId
    * @param spu
    * @return
@@ -783,6 +809,7 @@ public interface WxOpenComponentService {
 
   /**
    * 上架商品。
+   *
    * @param appId
    * @param productId
    * @param outProductId
@@ -794,6 +821,7 @@ public interface WxOpenComponentService {
 
   /**
    * 下架商品
+   *
    * @param appId
    * @param productId
    * @param outProductId
@@ -819,6 +847,7 @@ public interface WxOpenComponentService {
 
   /**
    * 小商店新增sku信息
+   *
    * @param appId
    * @param sku
    * @return
@@ -829,6 +858,7 @@ public interface WxOpenComponentService {
 
   /**
    * 小商店批量新增sku信息
+   *
    * @param appId
    * @param skuList
    * @return
@@ -839,6 +869,7 @@ public interface WxOpenComponentService {
 
   /**
    * 小商店删除sku消息
+   *
    * @param appId
    * @param productId
    * @param outProductId
@@ -847,11 +878,12 @@ public interface WxOpenComponentService {
    * @return
    * @throws WxErrorException
    */
-  WxOpenResult minishopGoodsDelSku(String appId, Long productId, Long outProductId, String outSkuId, Long skuId) throws  WxErrorException;
+  WxOpenResult minishopGoodsDelSku(String appId, Long productId, Long outProductId, String outSkuId, Long skuId) throws WxErrorException;
 
 
   /**
    * 小商店更新sku
+   *
    * @param appId
    * @param sku
    * @return
@@ -862,6 +894,7 @@ public interface WxOpenComponentService {
 
   /**
    * 小商店更新sku价格
+   *
    * @param appId
    * @param productId
    * @param outProductId
@@ -877,6 +910,7 @@ public interface WxOpenComponentService {
 
   /**
    * 小商店更新sku库存
+   *
    * @param appId
    * @param productId
    * @param outProductId
@@ -887,11 +921,12 @@ public interface WxOpenComponentService {
    * @return
    * @throws WxErrorException
    */
-  WxOpenResult minishopGoodsUpdateSkuStock(String appId, Long productId, Long outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws  WxErrorException;
+  WxOpenResult minishopGoodsUpdateSkuStock(String appId, Long productId, Long outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws WxErrorException;
 
 
   /**
    * 小商店通用Post接口
+   *
    * @param appId
    * @param url
    * @param requestParam
@@ -899,7 +934,6 @@ public interface WxOpenComponentService {
    * @throws WxErrorException
    */
   String minishopCommonPost(String appId, String url, String requestParam) throws WxErrorException;
-
 
 
   //////////////////////////////////////////////////////////////
@@ -913,6 +947,7 @@ public interface WxOpenComponentService {
   /**
    * 添加抢购任务
    * 每个商品(SPU)同一时间只能有一个抢购任务。 如果当前有抢购任务没有结束，无论是否开始，都不允许创建第二个抢购任务 可以提前修改抢购任务状态为结束后，再创建新的任务。 每次创建抢购任务时，必须填充该SPU下 所有SKU的抢购信息
+   *
    * @param appId
    * @param limitDiscountGoods
    * @return
@@ -922,6 +957,7 @@ public interface WxOpenComponentService {
 
   /**
    * status为0代表 还未结束的抢购任务，无论是否开始 status为1代表已经结束的 抢购任务 如果不填status，则两种都拉取
+   *
    * @param appId
    * @param status
    * @return
@@ -932,6 +968,7 @@ public interface WxOpenComponentService {
   /**
    * 修改抢购任务状态
    * 用于提前结束抢购任务，无论抢购任务是否在执行中，都可以关闭。 也可以直接删除抢购任务 注意：结束后不允许再开启，状态不可逆
+   *
    * @param appId
    * @param taskId
    * @param status

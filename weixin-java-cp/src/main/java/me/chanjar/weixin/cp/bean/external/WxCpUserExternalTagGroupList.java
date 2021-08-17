@@ -11,11 +11,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *
+ * @author huangxm129
  */
 @Getter
 @Setter
 public class WxCpUserExternalTagGroupList extends WxCpBaseResp {
+  private static final long serialVersionUID = -3349321791821450679L;
 
   @SerializedName("tag_group")
   private List<WxCpUserExternalTagGroupList.TagGroup> tagGroupList;
@@ -35,7 +36,7 @@ public class WxCpUserExternalTagGroupList extends WxCpBaseResp {
     private Long createTime;
 
     @SerializedName("order")
-    private Integer order;
+    private Long order;
 
     @SerializedName("deleted")
     private Boolean deleted;
@@ -59,13 +60,13 @@ public class WxCpUserExternalTagGroupList extends WxCpBaseResp {
       private String name;
 
       @SerializedName("create_time")
-      private Long  createTime;
+      private Long createTime;
 
       @SerializedName("order")
-      private Integer  order;
+      private Long order;
 
       @SerializedName("deleted")
-      private Boolean  deleted;
+      private Boolean deleted;
 
     }
   }

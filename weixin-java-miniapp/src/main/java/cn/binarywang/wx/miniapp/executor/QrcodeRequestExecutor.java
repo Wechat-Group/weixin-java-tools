@@ -16,7 +16,7 @@ import java.io.IOException;
 public abstract class QrcodeRequestExecutor<H, P> implements RequestExecutor<File, AbstractWxMaQrcodeWrapper> {
   protected RequestHttp<H, P> requestHttp;
 
-  public QrcodeRequestExecutor(RequestHttp<H, P> requestHttp) {
+  protected QrcodeRequestExecutor(RequestHttp<H, P> requestHttp) {
     this.requestHttp = requestHttp;
   }
 
@@ -30,10 +30,9 @@ public abstract class QrcodeRequestExecutor<H, P> implements RequestExecutor<Fil
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
         return new ApacheQrcodeFileRequestExecutor(requestHttp, path);
-      case JODD_HTTP:
-        return null;
       case OK_HTTP:
         return new OkHttpQrcodeFileRequestExecutor(requestHttp, path);
+      case JODD_HTTP:
       default:
         return null;
     }
