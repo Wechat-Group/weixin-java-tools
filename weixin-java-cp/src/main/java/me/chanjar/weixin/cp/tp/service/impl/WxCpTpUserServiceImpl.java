@@ -194,8 +194,8 @@ public class WxCpTpUserServiceImpl implements WxCpTpUserService {
   }
 
   @Override
-  public WxCpUserExternalContactInfo getExternalContact(String corpId, String userId) throws WxErrorException {
-    String url = mainService.getCorpApiUrl(GET_EXTERNAL_CONTACT + userId, corpId);
+  public WxCpUserExternalContactInfo getExternalContact(String corpId, String externalUserId) throws WxErrorException {
+    String url = mainService.getCorpApiUrl(GET_EXTERNAL_CONTACT + externalUserId, corpId);
     String responseContent = this.mainService.get(url, null);
     return WxCpUserExternalContactInfo.fromJson(responseContent);
   }

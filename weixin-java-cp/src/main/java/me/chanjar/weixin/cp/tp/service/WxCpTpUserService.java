@@ -161,11 +161,11 @@ public interface WxCpTpUserService {
    * 第三方应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
    * </pre>
    *
-   * @param userId 外部联系人的userid
+   * @param externalUserId 外部联系人的userid
    * @return 联系人详情
    * @throws WxErrorException .
    */
-  WxCpUserExternalContactInfo getExternalContact(String corpId, String userId) throws WxErrorException;
+  WxCpUserExternalContactInfo getExternalContact(String corpId, String externalUserId) throws WxErrorException;
 
 
 }

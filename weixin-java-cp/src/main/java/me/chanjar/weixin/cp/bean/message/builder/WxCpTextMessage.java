@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import lombok.*;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 
+import java.io.Serializable;
+
 /**
  * @author caiqy
  */
@@ -15,8 +17,8 @@ public class WxCpTextMessage extends WxCpMessage {
 
   private static final long serialVersionUID = -6243743821110199350L;
 
-  @SerializedName("content")
-  private String content;
+  @SerializedName("text")
+  private TextMessage textMessage;
 
   public static WxCpTextMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
@@ -41,12 +43,26 @@ public class WxCpTextMessage extends WxCpMessage {
   @Builder(builderMethodName = "_builder_")
   public WxCpTextMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String content) {
     setTo(toUser, toParty, toTag);
-    setMsgType("content");
+    setMsgType("text");
     setAgentId(agentId);
     setSafe(safe);
     setEnableIdTrans(enableIdTrans);
     setEnableDuplicateCheck(enableDuplicateCheck);
     setDuplicateCheckInterval(duplicateCheckInterval);
-    this.content = content;
+    this.textMessage = new TextMessage(content);
   }
+
+  @Data
+  public static class TextMessage implements Serializable {
+
+    private static final long serialVersionUID = -5240136299263024809L;
+
+    @SerializedName("content")
+    private String content;
+
+    public TextMessage(String content) {
+      this.content = content;
+    }
+  }
+
 }

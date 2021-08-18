@@ -11,7 +11,6 @@ import me.chanjar.weixin.common.service.WxService;
 import me.chanjar.weixin.common.util.BeanUtils;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpExternalContactService;
-import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
@@ -100,15 +99,15 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpExternalContactInfo getExternalContact(String userId) throws WxErrorException {
-    final String url = urlGenerator.apply(GET_EXTERNAL_CONTACT + userId);
+  public WxCpExternalContactInfo getExternalContact(String externalUserId) throws WxErrorException {
+    final String url = urlGenerator.apply(GET_EXTERNAL_CONTACT + externalUserId);
     String responseContent = this.mainService.get(url, null);
     return WxCpExternalContactInfo.fromJson(responseContent);
   }
 
   @Override
-  public WxCpExternalContactInfo getContactDetail(String userId) throws WxErrorException {
-    final String url = urlGenerator.apply(GET_CONTACT_DETAIL + userId);
+  public WxCpExternalContactInfo getContactDetail(String externalUserId) throws WxErrorException {
+    final String url = urlGenerator.apply(GET_CONTACT_DETAIL + externalUserId);
     String responseContent = this.mainService.get(url, null);
     return WxCpExternalContactInfo.fromJson(responseContent);
   }

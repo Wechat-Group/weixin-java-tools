@@ -103,10 +103,10 @@ public abstract class WxCpMessage implements Serializable {
   private Integer duplicateCheckInterval;
 
   protected void setTo(String toUser, String toParty, String toTag) {
-    checkTo();
     this.toUser = toUser;
     this.toParty = toParty;
     this.toTag = toTag;
+    checkTo();
   }
 
 
