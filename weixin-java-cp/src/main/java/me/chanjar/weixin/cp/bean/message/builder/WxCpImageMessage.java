@@ -40,13 +40,8 @@ public class WxCpImageMessage extends WxCpMessage {
 
   @Builder(builderMethodName = "_builder_")
   public WxCpImageMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String mediaId) {
-    setTo(toUser, toParty, toTag);
     setMsgType("image");
-    setAgentId(agentId);
-    setSafe(safe);
-    setEnableIdTrans(enableIdTrans);
-    setEnableDuplicateCheck(enableDuplicateCheck);
-    setDuplicateCheckInterval(duplicateCheckInterval);
+    init(toUser, toParty, toTag, agentId, safe, enableIdTrans, enableDuplicateCheck, duplicateCheckInterval);
     this.image = generateMediaMessage(mediaId);
   }
 }

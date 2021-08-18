@@ -40,13 +40,8 @@ public class WxCpVideoMessage extends WxCpMessage {
 
   @Builder
   public WxCpVideoMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String mediaId, String title, String description) {
-    setTo(toUser, toParty, toTag);
     setMsgType("video");
-    setAgentId(agentId);
-    setSafe(safe);
-    setEnableIdTrans(enableIdTrans);
-    setEnableDuplicateCheck(enableDuplicateCheck);
-    setDuplicateCheckInterval(duplicateCheckInterval);
+    init(toUser, toParty, toTag, agentId, safe, enableIdTrans, enableDuplicateCheck, duplicateCheckInterval);
     this.video = generateMediaMessage(mediaId, title, description);
   }
 }

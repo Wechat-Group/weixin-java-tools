@@ -44,13 +44,8 @@ public class WxCpMpNewsMessage extends WxCpMessage {
 
   @Builder(builderMethodName = "_builder_")
   public WxCpMpNewsMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, MpNewsMessage... mpNewsMessages) {
-    setTo(toUser, toParty, toTag);
     setMsgType("mpnews");
-    setAgentId(agentId);
-    setSafe(safe);
-    setEnableIdTrans(enableIdTrans);
-    setEnableDuplicateCheck(enableDuplicateCheck);
-    setDuplicateCheckInterval(duplicateCheckInterval);
+    init(toUser, toParty, toTag, agentId, safe, enableIdTrans, enableDuplicateCheck, duplicateCheckInterval);
     this.mpNewsMessageWrap = new MpNewsMessageWrap(mpNewsMessages);
   }
 

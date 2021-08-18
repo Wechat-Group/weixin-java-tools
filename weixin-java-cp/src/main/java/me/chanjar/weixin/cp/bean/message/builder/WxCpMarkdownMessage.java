@@ -40,13 +40,8 @@ public class WxCpMarkdownMessage extends WxCpMessage {
 
   @Builder(builderMethodName = "_builder_")
   public WxCpMarkdownMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String content) {
-    setTo(toUser, toParty, toTag);
     setMsgType("markdown");
-    setAgentId(agentId);
-    setSafe(safe);
-    setEnableIdTrans(enableIdTrans);
-    setEnableDuplicateCheck(enableDuplicateCheck);
-    setDuplicateCheckInterval(duplicateCheckInterval);
+    init(toUser, toParty, toTag, agentId, safe, enableIdTrans, enableDuplicateCheck, duplicateCheckInterval);
     this.markdownMessage = new MarkdownMessage(content);
   }
 

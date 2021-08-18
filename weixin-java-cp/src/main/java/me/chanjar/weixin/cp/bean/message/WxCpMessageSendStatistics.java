@@ -24,9 +24,9 @@ public class WxCpMessageSendStatistics implements Serializable {
   private List<StatisticItem> statistics;
 
   @Data
-  public static class StatisticItem  implements Serializable {
+  public static class StatisticItem implements Serializable {
     private static final long serialVersionUID = 6031833682211475786L;
-    
+
     /**
      * 应用名
      */

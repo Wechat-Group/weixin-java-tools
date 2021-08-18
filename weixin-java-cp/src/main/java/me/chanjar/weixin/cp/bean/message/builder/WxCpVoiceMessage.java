@@ -40,13 +40,8 @@ public class WxCpVoiceMessage extends WxCpMessage {
 
   @Builder
   public WxCpVoiceMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String mediaId) {
-    setTo(toUser, toParty, toTag);
     setMsgType("voice");
-    setAgentId(agentId);
-    setSafe(safe);
-    setEnableIdTrans(enableIdTrans);
-    setEnableDuplicateCheck(enableDuplicateCheck);
-    setDuplicateCheckInterval(duplicateCheckInterval);
+    init(toUser, toParty, toTag, agentId, safe, enableIdTrans, enableDuplicateCheck, duplicateCheckInterval);
     this.voice = generateMediaMessage(mediaId);
   }
 }

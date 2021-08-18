@@ -52,13 +52,8 @@ public class WxCpTpTemplateMsgMessage extends WxCpMessage {
 
   @Builder(builderMethodName = "_builder_")
   public WxCpTpTemplateMsgMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, List<String> selectedTicketList, TemplateMsgMessage templateMsgMessage) {
-    setTo(toUser, toParty, toTag);
     setMsgType("template_msg");
-    setAgentId(agentId);
-    setSafe(safe);
-    setEnableIdTrans(enableIdTrans);
-    setEnableDuplicateCheck(enableDuplicateCheck);
-    setDuplicateCheckInterval(duplicateCheckInterval);
+    init(toUser, toParty, toTag, agentId, safe, enableIdTrans, enableDuplicateCheck, duplicateCheckInterval);
     this.selectedTicketList = selectedTicketList;
     this.templateMsgMessage = templateMsgMessage;
   }

@@ -27,6 +27,7 @@ public class TestController {
     String corpId = "wwa1b76c4cd67ceb6a";
     String userId = "CaiQiYuan";
     WxCpMessage wxCpMessage = WxCpTextMessage.builderToUser(userId)
+      .toParty("1|2")
       .content("hello world")
       .build();
     wxCpTpService.getWxCpTpMessageService().send(corpId, wxCpMessage);

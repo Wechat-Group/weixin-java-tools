@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.bean.message;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
@@ -8,6 +10,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * 文档地址
@@ -109,7 +112,6 @@ public abstract class WxCpMessage implements Serializable {
     checkTo();
   }
 
-
   protected void checkTo() {
     if (StrUtil.isAllBlank(getToParty(), getToUser(), getToTag())) {
       throw new WxErrorException("touser、toparty、totag不能同时为空");
@@ -125,6 +127,32 @@ public abstract class WxCpMessage implements Serializable {
       log.warn("重复消息检查最小为30分钟,系统自动充值为30分钟");
       setDuplicateCheckInterval(MIN_CHECK_INTERVAL);
     }
+  }
+
+  protected void init(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
+    setTo(toUser, toParty, toTag);
+    setAgentId(agentId);
+    setSafe(safe);
+    setEnableIdTrans(enableIdTrans);
+    setEnableDuplicateCheck(enableDuplicateCheck);
+    setDuplicateCheckInterval(duplicateCheckInterval);
+    // 检查参数合理性
+    checkTo();
+    resetInterval();
+  }
+
+  protected static String combine(String... str) {
+    if (str != null) {
+      return ArrayUtil.join(str, PIPE);
+    }
+    return null;
+  }
+
+  protected static String combine(Collection<String> str) {
+    if (str != null) {
+      return CollUtil.join(str, PIPE);
+    }
+    return null;
   }
 
   public void addUser(String userId) {

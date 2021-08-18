@@ -44,13 +44,8 @@ public class WxCpMiniProgramNoticeMessage extends WxCpMessage {
 
   @Builder(builderMethodName = "_builder_")
   public WxCpMiniProgramNoticeMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String appId, String description, boolean emphasisFirstItem, String page, String title, ContentItemItem... contentItems) {
-    setTo(toUser, toParty, toTag);
     setMsgType("miniprogram_notice");
-    setAgentId(agentId);
-    setSafe(safe);
-    setEnableIdTrans(enableIdTrans);
-    setEnableDuplicateCheck(enableDuplicateCheck);
-    setDuplicateCheckInterval(duplicateCheckInterval);
+    init(toUser, toParty, toTag, agentId, safe, enableIdTrans, enableDuplicateCheck, duplicateCheckInterval);
     this.miniProgramNoticeMessage = new MiniProgramNoticeMessage(appId, description, emphasisFirstItem, page, title, contentItems);
   }
 
