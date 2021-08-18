@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.IntegerArrayConverter;
 import me.chanjar.weixin.common.util.xml.StringArrayConverter;
-import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.common.util.xml.XmlUtil;
 
 import java.io.Serializable;
@@ -55,6 +54,9 @@ public class WxCpTpXmlMessage implements Serializable {
 
   @XStreamAlias("UserID")
   protected String userID;
+
+  @XStreamAlias("OpenUserID")
+  protected String openUserID;
 
   @XStreamAlias("Department")
   @XStreamConverter(value = IntegerArrayConverter.class)

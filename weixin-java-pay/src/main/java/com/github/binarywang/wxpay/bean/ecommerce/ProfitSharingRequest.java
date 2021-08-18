@@ -13,8 +13,9 @@ import java.util.List;
  * <pre>
  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_1.shtml
  * </pre>
- * @author: f00lish
- * @date: 2020/09/12
+ *
+ * @author f00lish
+ * @date 2020/09/12
  */
 @Data
 @NoArgsConstructor

@@ -8,8 +8,8 @@ import java.util.Date;
 
 
 /**
- * @author: f00lish
- * @date: 2020/09/14
+ * @author f00lish
+ * @date 2020/09/14
  */
 @Data
 @Builder

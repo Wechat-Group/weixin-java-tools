@@ -7,17 +7,20 @@ import java.io.Serializable;
 
 /**
  * 查询分账回退结果请求
- *  * <pre>
+ * * <pre>
  *  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_3.shtml
  *  * </pre>
- * @author: wangrui
- * @date: 2021/02/20
+ *
+ * @author wangrui
+ * @date 2021/02/20
  */
 @Data
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReturnOrdersQueryRequest implements Serializable {
+  private static final long serialVersionUID = 4250796057341297359L;
+
   /**
    * <pre>
    * 字段名：二级商户号
