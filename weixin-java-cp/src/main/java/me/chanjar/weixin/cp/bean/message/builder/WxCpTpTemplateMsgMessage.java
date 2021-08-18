@@ -5,6 +5,7 @@ import lombok.*;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -63,24 +64,38 @@ public class WxCpTpTemplateMsgMessage extends WxCpMessage {
   }
 
   @Data
-  @AllArgsConstructor
   @NoArgsConstructor
   public static class TemplateMsgMessage implements Serializable {
 
     private static final long serialVersionUID = -1509122710020707743L;
 
-    @SerializedName("content_item")
-    private List<ContentItemItem> contentItem;
+    @SerializedName("url")
+    private String url;
 
     @SerializedName("template_id")
     private String templateId;
 
-    @SerializedName("url")
-    private String url;
+    @SerializedName("content_item")
+    private List<ContentItemItem> contentItem;
 
+    public TemplateMsgMessage(String url, String templateId, List<ContentItemItem> contentItem) {
+      this.url = url;
+      this.templateId = templateId;
+      this.contentItem = contentItem;
+    }
+
+    public TemplateMsgMessage(String url, String templateId, ContentItemItem... contentItem) {
+      this.url = url;
+      this.templateId = templateId;
+      if (contentItem != null) {
+        this.contentItem = Arrays.asList(contentItem);
+      }
+    }
   }
 
   @Data
+  @AllArgsConstructor
+  @NoArgsConstructor
   public static class ContentItemItem implements Serializable {
     private static final long serialVersionUID = 4543832667368919817L;
 
