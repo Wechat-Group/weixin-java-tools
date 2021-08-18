@@ -26,6 +26,18 @@ public class WxCpMiniProgramNoticeMessage extends WxCpMessage {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
+  public static WxCpMiniProgramNoticeMessageBuilder builderToUser(String toUser) {
+    return _builder_().toUser(toUser);
+  }
+
+  public static WxCpMiniProgramNoticeMessageBuilder builderToParty(String toParty) {
+    return _builder_().toParty(toParty);
+  }
+
+  public static WxCpMiniProgramNoticeMessageBuilder builderToTag(String toTag) {
+    return _builder_().toTag(toTag);
+  }
+
   private static WxCpMiniProgramNoticeMessageBuilder _builder_() {
     return new WxCpMiniProgramNoticeMessageBuilder();
   }

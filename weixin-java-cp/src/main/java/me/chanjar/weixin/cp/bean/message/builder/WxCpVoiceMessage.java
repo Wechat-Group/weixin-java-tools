@@ -22,6 +22,18 @@ public class WxCpVoiceMessage extends WxCpMessage {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
+  public static WxCpVoiceMessageBuilder builderToUser(String toUser) {
+    return _builder_().toUser(toUser);
+  }
+
+  public static WxCpVoiceMessageBuilder builderToParty(String toParty) {
+    return _builder_().toParty(toParty);
+  }
+
+  public static WxCpVoiceMessageBuilder builderToTag(String toTag) {
+    return _builder_().toTag(toTag);
+  }
+
   private static WxCpVoiceMessageBuilder _builder_() {
     return new WxCpVoiceMessageBuilder();
   }

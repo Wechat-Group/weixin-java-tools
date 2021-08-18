@@ -22,6 +22,18 @@ public class WxCpVideoMessage extends WxCpMessage {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
+  public static WxCpVideoMessageBuilder builderToUser(String toUser) {
+    return _builder_().toUser(toUser);
+  }
+
+  public static WxCpVideoMessageBuilder builderToParty(String toParty) {
+    return _builder_().toParty(toParty);
+  }
+
+  public static WxCpVideoMessageBuilder builderToTag(String toTag) {
+    return _builder_().toTag(toTag);
+  }
+
   private static WxCpVideoMessageBuilder _builder_() {
     return new WxCpVideoMessageBuilder();
   }

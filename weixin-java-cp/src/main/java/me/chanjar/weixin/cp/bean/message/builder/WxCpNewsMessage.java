@@ -26,6 +26,18 @@ public class WxCpNewsMessage extends WxCpMessage {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
+  public static WxCpNewsMessageBuilder builderToUser(String toUser) {
+    return _builder_().toUser(toUser);
+  }
+
+  public static WxCpNewsMessageBuilder builderToParty(String toParty) {
+    return _builder_().toParty(toParty);
+  }
+
+  public static WxCpNewsMessageBuilder builderToTag(String toTag) {
+    return _builder_().toTag(toTag);
+  }
+
   private static WxCpNewsMessageBuilder _builder_() {
     return new WxCpNewsMessageBuilder();
   }

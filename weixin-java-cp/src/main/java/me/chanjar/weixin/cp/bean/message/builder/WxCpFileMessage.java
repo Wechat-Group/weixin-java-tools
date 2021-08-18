@@ -22,6 +22,18 @@ public class WxCpFileMessage extends WxCpMessage {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
+  public static WxCpFileMessageBuilder builderToUser(String toUser) {
+    return _builder_().toUser(toUser);
+  }
+
+  public static WxCpFileMessageBuilder builderToParty(String toParty) {
+    return _builder_().toParty(toParty);
+  }
+
+  public static WxCpFileMessageBuilder builderToTag(String toTag) {
+    return _builder_().toTag(toTag);
+  }
+
   private static WxCpFileMessageBuilder _builder() {
     return new WxCpFileMessageBuilder();
   }
