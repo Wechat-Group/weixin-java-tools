@@ -26,6 +26,10 @@ public class WxCpVideoMessage extends WxCpMessage {
     return _builder_().toUser(toUser);
   }
 
+  public static WxCpVideoMessageBuilder builderToAll() {
+    return _builder_().toUser(ALL);
+  }
+
   public static WxCpVideoMessageBuilder builderToParty(String toParty) {
     return _builder_().toParty(toParty);
   }

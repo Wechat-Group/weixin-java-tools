@@ -30,6 +30,10 @@ public class WxCpMpNewsMessage extends WxCpMessage {
     return _builder_().toUser(toUser);
   }
 
+  public static WxCpMpNewsMessageBuilder builderToAll() {
+    return _builder_().toUser(ALL);
+  }
+
   public static WxCpMpNewsMessageBuilder builderToParty(String toParty) {
     return _builder_().toParty(toParty);
   }

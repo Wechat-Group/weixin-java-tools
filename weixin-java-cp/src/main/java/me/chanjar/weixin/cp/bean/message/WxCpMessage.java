@@ -37,6 +37,11 @@ public abstract class WxCpMessage implements Serializable {
   public static final Integer NO = 0;
 
   /**
+   * all
+   */
+  public static final String ALL = "@all";
+
+  /**
    * 30分钟
    */
   public static final Integer MIN_CHECK_INTERVAL = 30 * 60;

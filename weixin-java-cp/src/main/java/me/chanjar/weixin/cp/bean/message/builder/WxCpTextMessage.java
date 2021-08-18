@@ -28,6 +28,10 @@ public class WxCpTextMessage extends WxCpMessage {
     return _builder_().toUser(toUser);
   }
 
+  public static WxCpTextMessageBuilder builderToAll() {
+    return _builder_().toUser(ALL);
+  }
+
   public static WxCpTextMessageBuilder builderToParty(String toParty) {
     return _builder_().toParty(toParty);
   }

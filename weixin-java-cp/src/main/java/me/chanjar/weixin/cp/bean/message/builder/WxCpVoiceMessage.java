@@ -26,6 +26,10 @@ public class WxCpVoiceMessage extends WxCpMessage {
     return _builder_().toUser(toUser);
   }
 
+  public static WxCpVoiceMessageBuilder builderToAll() {
+    return _builder_().toUser(ALL);
+  }
+
   public static WxCpVoiceMessageBuilder builderToParty(String toParty) {
     return _builder_().toParty(toParty);
   }

@@ -26,6 +26,10 @@ public class WxCpFileMessage extends WxCpMessage {
     return _builder_().toUser(toUser);
   }
 
+  public static WxCpFileMessageBuilder builderToAll() {
+    return _builder_().toUser(ALL);
+  }
+
   public static WxCpFileMessageBuilder builderToParty(String toParty) {
     return _builder_().toParty(toParty);
   }

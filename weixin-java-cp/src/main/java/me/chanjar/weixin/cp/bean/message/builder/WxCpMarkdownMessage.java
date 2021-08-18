@@ -26,6 +26,10 @@ public class WxCpMarkdownMessage extends WxCpMessage {
     return _builder_().toUser(toUser);
   }
 
+  public static WxCpMarkdownMessageBuilder builderToAll() {
+    return _builder_().toUser(ALL);
+  }
+
   public static WxCpMarkdownMessageBuilder builderToParty(String toParty) {
     return _builder_().toParty(toParty);
   }

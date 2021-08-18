@@ -26,8 +26,7 @@ public class TestController {
     WxCpTpService wxCpTpService = wxCpTpServiceContainer.getTpService("ww530a1c681ffac763");
     String corpId = "wwa1b76c4cd67ceb6a";
     String userId = "CaiQiYuan";
-    WxCpMessage wxCpMessage = WxCpTextMessage.builderToUser(userId)
-      .toParty("1|2")
+    WxCpMessage wxCpMessage = WxCpTextMessage.builderToParty("1")
       .content("hello world")
       .build();
     wxCpTpService.getWxCpTpMessageService().send(corpId, wxCpMessage);

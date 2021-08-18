@@ -30,6 +30,10 @@ public class WxCpMiniProgramNoticeMessage extends WxCpMessage {
     return _builder_().toUser(toUser);
   }
 
+  public static WxCpMiniProgramNoticeMessageBuilder builderToAll() {
+    return _builder_().toUser(ALL);
+  }
+
   public static WxCpMiniProgramNoticeMessageBuilder builderToParty(String toParty) {
     return _builder_().toParty(toParty);
   }

@@ -38,6 +38,10 @@ public class WxCpTpTemplateMsgMessage extends WxCpMessage {
     return _builder_().toUser(toUser);
   }
 
+  public static WxCpTpTemplateMsgMessageBuilder builderToAll() {
+    return _builder_().toUser(ALL);
+  }
+
   public static WxCpTpTemplateMsgMessageBuilder builderToParty(String toParty) {
     return _builder_().toParty(toParty);
   }
