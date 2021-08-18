@@ -18,7 +18,7 @@ public class WxCpTextMessage extends WxCpMessage {
   @SerializedName("content")
   private String content;
 
-  public static WxCpTextMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId) {
+  public static WxCpTextMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
@@ -39,10 +39,14 @@ public class WxCpTextMessage extends WxCpMessage {
   }
 
   @Builder(builderMethodName = "_builder_")
-  public WxCpTextMessage(String toUser, String toParty, String toTag, Integer agentId, String content) {
+  public WxCpTextMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String content) {
     setTo(toUser, toParty, toTag);
     setMsgType("content");
     setAgentId(agentId);
+    setSafe(safe);
+    setEnableIdTrans(enableIdTrans);
+    setEnableDuplicateCheck(enableDuplicateCheck);
+    setDuplicateCheckInterval(duplicateCheckInterval);
     this.content = content;
   }
 }

@@ -30,7 +30,7 @@ public class WxCpTpTemplateMsgMessage extends WxCpMessage {
   @SerializedName("template_msg")
   private TemplateMsgMessage templateMsgMessage;
 
-  public static WxCpTpTemplateMsgMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId) {
+  public static WxCpTpTemplateMsgMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
@@ -51,10 +51,14 @@ public class WxCpTpTemplateMsgMessage extends WxCpMessage {
   }
 
   @Builder(builderMethodName = "_builder_")
-  public WxCpTpTemplateMsgMessage(String toUser, String toParty, String toTag, Integer agentId, List<String> selectedTicketList, TemplateMsgMessage templateMsgMessage) {
+  public WxCpTpTemplateMsgMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, List<String> selectedTicketList, TemplateMsgMessage templateMsgMessage) {
     setTo(toUser, toParty, toTag);
     setMsgType("template_msg");
     setAgentId(agentId);
+    setSafe(safe);
+    setEnableIdTrans(enableIdTrans);
+    setEnableDuplicateCheck(enableDuplicateCheck);
+    setDuplicateCheckInterval(duplicateCheckInterval);
     this.selectedTicketList = selectedTicketList;
     this.templateMsgMessage = templateMsgMessage;
   }

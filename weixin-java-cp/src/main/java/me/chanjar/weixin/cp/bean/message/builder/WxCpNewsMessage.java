@@ -22,7 +22,7 @@ public class WxCpNewsMessage extends WxCpMessage {
   @SerializedName("news")
   private NewsMessageWrap newsMessageWrap;
 
-  public static WxCpNewsMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId) {
+  public static WxCpNewsMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
@@ -43,10 +43,14 @@ public class WxCpNewsMessage extends WxCpMessage {
   }
 
   @Builder(builderMethodName = "_builder_")
-  public WxCpNewsMessage(String toUser, String toParty, String toTag, String msgType, Integer agentId, NewsMessage... newsMessages) {
+  public WxCpNewsMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, NewsMessage... newsMessages) {
     setTo(toUser, toParty, toTag);
     setMsgType("news");
     setAgentId(agentId);
+    setSafe(safe);
+    setEnableIdTrans(enableIdTrans);
+    setEnableDuplicateCheck(enableDuplicateCheck);
+    setDuplicateCheckInterval(duplicateCheckInterval);
     this.newsMessageWrap = new NewsMessageWrap(newsMessages);
   }
 

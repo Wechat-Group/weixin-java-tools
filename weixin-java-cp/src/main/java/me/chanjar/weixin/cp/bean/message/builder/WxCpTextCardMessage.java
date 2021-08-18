@@ -18,7 +18,7 @@ public class WxCpTextCardMessage extends WxCpMessage {
   @SerializedName("textcard")
   private TextCardMessage textCardMessage;
 
-  public static WxCpTextCardMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId) {
+  public static WxCpTextCardMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
@@ -39,10 +39,14 @@ public class WxCpTextCardMessage extends WxCpMessage {
   }
 
   @Builder(builderMethodName = "_builder_")
-  public WxCpTextCardMessage(String toUser, String toParty, String toTag, String msgType, Integer agentId, String title, String description, String url, String btnTxt) {
+  public WxCpTextCardMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String title, String description, String url, String btnTxt) {
     setTo(toUser, toParty, toTag);
     setMsgType("textcard");
     setAgentId(agentId);
+    setSafe(safe);
+    setEnableIdTrans(enableIdTrans);
+    setEnableDuplicateCheck(enableDuplicateCheck);
+    setDuplicateCheckInterval(duplicateCheckInterval);
     this.textCardMessage = new TextCardMessage(title, description, url, btnTxt);
   }
 

@@ -18,7 +18,7 @@ public class WxCpFileMessage extends WxCpMessage {
   @SerializedName("file")
   private MediaMessage file;
 
-  public static WxCpFileMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId) {
+  public static WxCpFileMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
@@ -34,15 +34,19 @@ public class WxCpFileMessage extends WxCpMessage {
     return _builder_().toTag(toTag);
   }
 
-  private static WxCpFileMessageBuilder _builder() {
+  private static WxCpFileMessageBuilder _builder_() {
     return new WxCpFileMessageBuilder();
   }
 
   @Builder(builderMethodName = "_builder_")
-  public WxCpFileMessage(String toUser, String toParty, String toTag, Integer agentId, String mediaId) {
+  public WxCpFileMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String mediaId) {
     setTo(toUser, toParty, toTag);
     setMsgType("file");
     setAgentId(agentId);
+    setSafe(safe);
+    setEnableIdTrans(enableIdTrans);
+    setEnableDuplicateCheck(enableDuplicateCheck);
+    setDuplicateCheckInterval(duplicateCheckInterval);
     this.file = generateMediaMessage(mediaId);
   }
 }

@@ -18,7 +18,7 @@ public class WxCpTemplateCardMessage extends WxCpMessage {
   @SerializedName("template_card")
   private AbstractTemplateCardMessage templateCardMessage;
 
-  public static WxCpTemplateCardMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId) {
+  public static WxCpTemplateCardMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
@@ -39,10 +39,14 @@ public class WxCpTemplateCardMessage extends WxCpMessage {
   }
 
   @Builder(builderMethodName = "_builder_")
-  public WxCpTemplateCardMessage(String toUser, String toParty, String toTag, String msgType, Integer agentId, AbstractTemplateCardMessage templateCardMessage) {
+  public WxCpTemplateCardMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, AbstractTemplateCardMessage templateCardMessage) {
     setTo(toUser, toParty, toTag);
     setMsgType("template_card");
     setAgentId(agentId);
+    setSafe(safe);
+    setEnableIdTrans(enableIdTrans);
+    setEnableDuplicateCheck(enableDuplicateCheck);
+    setDuplicateCheckInterval(duplicateCheckInterval);
     this.templateCardMessage = templateCardMessage;
   }
 }

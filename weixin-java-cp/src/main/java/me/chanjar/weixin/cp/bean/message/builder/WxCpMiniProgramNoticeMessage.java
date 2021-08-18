@@ -22,7 +22,7 @@ public class WxCpMiniProgramNoticeMessage extends WxCpMessage {
   @SerializedName("miniprogram_notice")
   private MiniProgramNoticeMessage miniProgramNoticeMessage;
 
-  public static WxCpMiniProgramNoticeMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId) {
+  public static WxCpMiniProgramNoticeMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
@@ -43,11 +43,15 @@ public class WxCpMiniProgramNoticeMessage extends WxCpMessage {
   }
 
   @Builder(builderMethodName = "_builder_")
-  public WxCpMiniProgramNoticeMessage(String toUser, String toParty, String toTag, String msgType, Integer agentId, String appid, String description, boolean emphasisFirstItem, String page, String title, ContentItemItem... contentItems) {
+  public WxCpMiniProgramNoticeMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String appId, String description, boolean emphasisFirstItem, String page, String title, ContentItemItem... contentItems) {
     setTo(toUser, toParty, toTag);
     setMsgType("miniprogram_notice");
     setAgentId(agentId);
-    this.miniProgramNoticeMessage = new MiniProgramNoticeMessage(appid, description, emphasisFirstItem, page, title, contentItems);
+    setSafe(safe);
+    setEnableIdTrans(enableIdTrans);
+    setEnableDuplicateCheck(enableDuplicateCheck);
+    setDuplicateCheckInterval(duplicateCheckInterval);
+    this.miniProgramNoticeMessage = new MiniProgramNoticeMessage(appId, description, emphasisFirstItem, page, title, contentItems);
   }
 
   @Data
@@ -59,7 +63,7 @@ public class WxCpMiniProgramNoticeMessage extends WxCpMessage {
     private List<ContentItemItem> contentItem;
 
     @SerializedName("appid")
-    private String appid;
+    private String appId;
 
     @SerializedName("description")
     private String description;
@@ -73,9 +77,9 @@ public class WxCpMiniProgramNoticeMessage extends WxCpMessage {
     @SerializedName("title")
     private String title;
 
-    public MiniProgramNoticeMessage(String appid, String description, boolean emphasisFirstItem, String page, String title, ContentItemItem... contentItems) {
+    public MiniProgramNoticeMessage(String appId, String description, boolean emphasisFirstItem, String page, String title, ContentItemItem... contentItems) {
 
-      this.appid = appid;
+      this.appId = appId;
       this.description = description;
       this.emphasisFirstItem = emphasisFirstItem;
       this.page = page;

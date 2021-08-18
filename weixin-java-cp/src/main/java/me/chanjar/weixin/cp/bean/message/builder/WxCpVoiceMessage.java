@@ -18,7 +18,7 @@ public class WxCpVoiceMessage extends WxCpMessage {
   @SerializedName("voice")
   private MediaMessage voice;
 
-  public static WxCpVoiceMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId) {
+  public static WxCpVoiceMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
@@ -39,10 +39,14 @@ public class WxCpVoiceMessage extends WxCpMessage {
   }
 
   @Builder
-  public WxCpVoiceMessage(String toUser, String toParty, String toTag, String msgType, Integer agentId, String mediaId) {
+  public WxCpVoiceMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String mediaId) {
     setTo(toUser, toParty, toTag);
     setMsgType("voice");
     setAgentId(agentId);
+    setSafe(safe);
+    setEnableIdTrans(enableIdTrans);
+    setEnableDuplicateCheck(enableDuplicateCheck);
+    setDuplicateCheckInterval(duplicateCheckInterval);
     this.voice = generateMediaMessage(mediaId);
   }
 }

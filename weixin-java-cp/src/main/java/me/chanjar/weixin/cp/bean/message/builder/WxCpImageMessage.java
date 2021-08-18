@@ -18,7 +18,7 @@ public class WxCpImageMessage extends WxCpMessage {
   @SerializedName("image")
   private MediaMessage image;
 
-  public static WxCpImageMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId) {
+  public static WxCpImageMessageBuilder builder(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval) {
     return _builder_().toUser(toUser).toParty(toParty).toTag(toTag).agentId(agentId);
   }
 
@@ -39,10 +39,14 @@ public class WxCpImageMessage extends WxCpMessage {
   }
 
   @Builder(builderMethodName = "_builder_")
-  public WxCpImageMessage(String toUser, String toParty, String toTag, String msgType, Integer agentId, String mediaId) {
+  public WxCpImageMessage(String toUser, String toParty, String toTag, Integer agentId, Integer safe, Integer enableIdTrans, Integer enableDuplicateCheck, Integer duplicateCheckInterval, String mediaId) {
     setTo(toUser, toParty, toTag);
     setMsgType("image");
     setAgentId(agentId);
+    setSafe(safe);
+    setEnableIdTrans(enableIdTrans);
+    setEnableDuplicateCheck(enableDuplicateCheck);
+    setDuplicateCheckInterval(duplicateCheckInterval);
     this.image = generateMediaMessage(mediaId);
   }
 }
