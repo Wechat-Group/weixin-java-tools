@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
-public class WxCpXmlOutNewsMessageTest {
+public class WxCpXmlOutMpNewsMessageTest {
 
   public void test() {
     WxCpXmlOutNewsMessage m = new WxCpXmlOutNewsMessage();

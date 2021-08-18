@@ -17,7 +17,7 @@
       <class name="me.chanjar.weixin.cp.bean.message.WxCpMessageTest"/>
       <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlMessageTest"/>
       <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutImageMessageTest"/>
-      <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutNewsMessageTest"/>
+      <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutMpNewsMessageTest"/>
       <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutVideoMessageTest"/>
       <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutVoiceMessageTest"/>
       <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutTextMessageTest"/>
