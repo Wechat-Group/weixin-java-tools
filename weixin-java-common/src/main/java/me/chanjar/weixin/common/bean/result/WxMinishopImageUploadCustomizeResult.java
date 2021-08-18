@@ -21,12 +21,13 @@ public class WxMinishopImageUploadCustomizeResult implements Serializable {
     if (result.getErrcode().equals("0")) {
       WxMinishopPicFileCustomizeResult picFileResult = new WxMinishopPicFileCustomizeResult();
       JsonObject picObject = jsonObject.get("img_info").getAsJsonObject();
-      picFileResult.setMediaId(picObject.get("media_id").getAsString());
+      if (picObject.has("media_id")) {
+        picFileResult.setMediaId(picObject.get("media_id").getAsString());
+      }
       if (picObject.has("temp_img_url")) {
         picFileResult.setTempImgUrl(picObject.get("temp_img_url").getAsString());
       }
       result.setImgInfo(picFileResult);
-
     }
     return result;
   }

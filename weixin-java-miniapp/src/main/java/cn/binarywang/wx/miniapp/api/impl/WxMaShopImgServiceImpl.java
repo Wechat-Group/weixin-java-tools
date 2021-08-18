@@ -23,7 +23,14 @@ public class WxMaShopImgServiceImpl implements WxMaShopImgService {
   @Override
   public WxMinishopImageUploadCustomizeResult uploadImg(File file) throws WxErrorException {
     WxMinishopImageUploadCustomizeResult result = this.service.execute(
-      MinishopUploadRequestCustomizeExecutor.create(this.service.getRequestHttp()), IMG_UPLOAD, file);
+      MinishopUploadRequestCustomizeExecutor.create(this.service.getRequestHttp(), "0"), IMG_UPLOAD, file);
+    return result;
+  }
+
+  @Override
+  public WxMinishopImageUploadCustomizeResult uploadImg(File file, String respType) throws WxErrorException {
+    WxMinishopImageUploadCustomizeResult result = this.service.execute(
+      MinishopUploadRequestCustomizeExecutor.create(this.service.getRequestHttp(), respType), IMG_UPLOAD, file);
     return result;
   }
 }
