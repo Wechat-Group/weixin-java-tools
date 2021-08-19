@@ -228,27 +228,6 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpUserExternalGroupChatList listGroupChat(Integer pageIndex, Integer pageSize, int status, String[] userIds, String[] partyIds) throws WxErrorException {
-    JsonObject json = new JsonObject();
-    json.addProperty("offset", pageIndex == null ? 0 : pageIndex);
-    json.addProperty("limit", pageSize == null ? 100 : pageSize);
-    json.addProperty("status_filter", status);
-    if (ArrayUtils.isNotEmpty(userIds) || ArrayUtils.isNotEmpty(partyIds)) {
-      JsonObject ownerFilter = new JsonObject();
-      if (ArrayUtils.isNotEmpty(userIds)) {
-        ownerFilter.add("userid_list", new Gson().toJsonTree(userIds).getAsJsonArray());
-      }
-      if (ArrayUtils.isNotEmpty(partyIds)) {
-        ownerFilter.add("partyid_list", new Gson().toJsonTree(partyIds).getAsJsonArray());
-      }
-      json.add("owner_filter", ownerFilter);
-    }
-    final String url = urlGenerator.apply(GROUP_CHAT_LIST);
-    final String result = this.mainService.post(url, json.toString());
-    return WxCpUserExternalGroupChatList.fromJson(result);
-  }
-
-  @Override
   public WxCpUserExternalGroupChatList listGroupChat(Integer limit, String cursor, int status, String[] userIds) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("cursor", cursor == null ? "" : cursor);

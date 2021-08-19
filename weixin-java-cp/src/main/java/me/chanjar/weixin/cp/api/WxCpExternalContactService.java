@@ -322,27 +322,6 @@ public interface WxCpExternalContactService {
    * <pre>
    * 该接口用于获取配置过客户群管理的客户群列表。
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
-   * 暂不支持第三方调用。
-   * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92119
-   * </pre>
-   *
-   * @param pageIndex the page index
-   * @param pageSize  the page size
-   * @param status    the status
-   * @param userIds   the user ids
-   * @param partyIds  the party ids
-   * @return the wx cp user external group chat list
-   * @throws WxErrorException the wx error exception
-   * @deprecated 请使用 {@link WxCpExternalContactService#listGroupChat(Integer, String, int, String[])}
-   */
-  @Deprecated
-  WxCpUserExternalGroupChatList listGroupChat(Integer pageIndex, Integer pageSize, int status, String[] userIds, String[] partyIds) throws WxErrorException;
-
-  /**
-   * <pre>
-   * 该接口用于获取配置过客户群管理的客户群列表。
-   * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
-   * 暂不支持第三方调用。
    * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92119
    * </pre>
    *
