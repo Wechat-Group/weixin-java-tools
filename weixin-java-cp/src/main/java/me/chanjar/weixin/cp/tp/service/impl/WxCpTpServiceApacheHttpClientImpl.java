@@ -78,9 +78,9 @@ public class WxCpTpServiceApacheHttpClientImpl extends BaseWxCpTpServiceImpl<Clo
           throw new WxErrorException(error);
         }
         jsonObject = GsonParser.parse(resultContent);
-        String suiteAccussToken = jsonObject.get("suite_access_token").getAsString();
-        Integer expiresIn = jsonObject.get("expires_in").getAsInt();
-        this.configStorage.updateSuiteAccessToken(suiteAccussToken, expiresIn);
+        String suiteAccessToken = jsonObject.get("suite_access_token").getAsString();
+        int expiresIn = jsonObject.get("expires_in").getAsInt();
+        this.configStorage.updateSuiteAccessToken(suiteAccessToken, expiresIn);
       } catch (IOException e) {
         throw new WxRuntimeException(e);
       }
