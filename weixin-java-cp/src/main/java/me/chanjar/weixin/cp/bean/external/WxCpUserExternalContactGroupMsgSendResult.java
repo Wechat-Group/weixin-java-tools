@@ -65,6 +65,21 @@ public class WxCpUserExternalContactGroupMsgSendResult implements Serializable {
      */
     @SerializedName("status")
     private int status;
+
+    public String getSendDetail() {
+      switch (status) {
+        case 0:
+          return "未发送";
+        case 1:
+          return "已发送";
+        case 2:
+          return "客户不是好友导致发送失败";
+        case 3:
+          return "因客户已经收到其他群发消息导致发送失败";
+        default:
+          return "未知";
+      }
+    }
   }
 
 }
