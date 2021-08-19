@@ -296,9 +296,9 @@ public class WxCpConsts {
       return this.name;
     }
 
-    public static LinkedCorpMsgType getType(String name){
+    public static LinkedCorpMsgType getType(String name) {
       for (LinkedCorpMsgType value : values()) {
-        if(value.getName().equals(name)){
+        if (value.getName().equals(name)) {
           return value;
         }
       }
@@ -345,9 +345,9 @@ public class WxCpConsts {
       return this.name;
     }
 
-    public static GroupRobotMsgType getType(String name){
+    public static GroupRobotMsgType getType(String name) {
       for (GroupRobotMsgType value : values()) {
-        if(value.getName().equals(name)){
+        if (value.getName().equals(name)) {
           return value;
         }
       }
@@ -454,9 +454,9 @@ public class WxCpConsts {
       return this.name;
     }
 
-    public static WorkBenchType getType(String name){
+    public static WorkBenchType getType(String name) {
       for (WorkBenchType value : values()) {
-        if(value.getName().equals(name)){
+        if (value.getName().equals(name)) {
           return value;
         }
       }
@@ -478,6 +478,10 @@ public class WxCpConsts {
      */
     VIDEO("video"),
     /**
+     * 文件
+     */
+    FILE("file"),
+    /**
      * 小程序消息.
      */
     MINIPROGRAM("miniprogram");
@@ -490,6 +494,26 @@ public class WxCpConsts {
 
     public String getName() {
       return name;
+    }
+
+    public static AttachmentMsgType getByName(String name) {
+      if (name == null) {
+        return null;
+      }
+      switch (name) {
+        case "image":
+          return IMAGE;
+        case "link":
+          return LINK;
+        case "video":
+          return VIDEO;
+        case "miniprogram":
+          return MINIPROGRAM;
+        case "file":
+          return FILE;
+        default:
+          return null;
+      }
     }
 
     @Override
