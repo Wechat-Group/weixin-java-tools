@@ -1,7 +1,9 @@
 package me.chanjar.weixin.cp.bean.external;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.annotation.Required;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
@@ -12,6 +14,8 @@ import java.util.Date;
  * @author caiqy
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class WxCpUserExternalContactGroupMsgListV2Request implements Serializable {
 
   private static final long serialVersionUID = -3212279121189093522L;

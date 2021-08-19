@@ -1,7 +1,10 @@
 package me.chanjar.weixin.cp.bean.external;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import me.chanjar.weixin.common.annotation.Required;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
@@ -10,6 +13,8 @@ import java.io.Serializable;
  * @author caiqy
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class WxCpUserExternalContactGroupMsgTaskRequest implements Serializable {
 
   private static final long serialVersionUID = -3212279121189093522L;
@@ -17,6 +22,7 @@ public class WxCpUserExternalContactGroupMsgTaskRequest implements Serializable 
   /**
    * 群发消息的id，通过获取群发记录列表接口返回
    */
+  @Required
   @SerializedName("msgid")
   private String msgId;
 
