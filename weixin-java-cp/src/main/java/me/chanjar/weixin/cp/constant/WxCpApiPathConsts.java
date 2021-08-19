@@ -195,6 +195,9 @@ public interface WxCpApiPathConsts {
     String LIST_USER_BEHAVIOR_DATA = "/cgi-bin/externalcontact/get_user_behavior_data";
     String LIST_GROUP_CHAT_DATA = "/cgi-bin/externalcontact/groupchat/statistic";
     String ADD_MSG_TEMPLATE = "/cgi-bin/externalcontact/add_msg_template";
+    String GROUP_MSG_LIST_V2 = "/cgi-bin/externalcontact/get_groupmsg_list_v2";
+    String GROUP_MSG_TASK = "/cgi-bin/externalcontact/get_groupmsg_task";
+    String GROUP_MSG_SEND_RESULT = "/cgi-bin/externalcontact/get_groupmsg_send_result";
     String SEND_WELCOME_MSG = "/cgi-bin/externalcontact/send_welcome_msg";
 
     String GET_CORP_TAG_LIST = "/cgi-bin/externalcontact/get_corp_tag_list";

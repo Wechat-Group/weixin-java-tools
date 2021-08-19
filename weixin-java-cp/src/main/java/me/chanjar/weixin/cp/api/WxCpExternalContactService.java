@@ -137,8 +137,9 @@ public interface WxCpExternalContactService {
 
   /**
    * 企业和服务商可通过此接口，将微信外部联系人的userid转为微信openid，用于调用支付相关接口。暂不支持企业微信外部联系人（ExternalUserid为wo开头）的userid转openid。
+   *
    * @param externalUserid 微信外部联系人的userid
-   * @return 该企业的外部联系人openid
+   * @return 该企业的外部联系人openid string
    * @throws WxErrorException .
    */
   String convertToOpenid(String externalUserid) throws WxErrorException;
@@ -160,7 +161,7 @@ public interface WxCpExternalContactService {
    *
    * @param userId 企业成员的userid，注意不是外部联系人的帐号
    * @param cursor the cursor
-   * @param limit the  limit
+   * @param limit  the  limit
    * @return wx cp user external contact batch info
    * @throws WxErrorException .
    */
@@ -234,24 +235,25 @@ public interface WxCpExternalContactService {
    * @param takeOverUserid the take over userid
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
-   * @deprecated 此后续将不再更新维护,建议使用 {@link #transferCustomer(WxCpUserTransferCustomerReq)}
+   * @deprecated 此后续将不再更新维护, 建议使用 {@link #transferCustomer(WxCpUserTransferCustomerReq)}
    */
   @Deprecated
   WxCpBaseResp transferExternalContact(String externalUserid, String handOverUserid, String takeOverUserid) throws WxErrorException;
 
   /**
    * 企业可通过此接口，转接在职成员的客户给其他成员。
-   *  <per>
+   * <per>
    * external_userid必须是handover_userid的客户（即配置了客户联系功能的成员所添加的联系人）。
    * 在职成员的每位客户最多被分配2次。客户被转接成功后，将有90个自然日的服务关系保护期，保护期内的客户无法再次被分配。
-   *
+   * <p>
    * 权限说明：
-   *   * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
+   * * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
    * 第三方应用需拥有“企业客户权限->客户联系->在职继承”权限
    * 接替成员必须在此第三方应用或自建应用的可见范围内。
    * 接替成员需要配置了客户联系功能。
    * 接替成员需要在企业微信激活且已经过实名认证。
-   *  </per>
+   * </per>
+   *
    * @param req 转接在职成员的客户给其他成员请求实体
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
@@ -261,35 +263,37 @@ public interface WxCpExternalContactService {
   /**
    * 企业和第三方可通过此接口查询在职成员的客户转接情况。
    * <per>
-   *   权限说明：
-   *
+   * 权限说明：
+   * <p>
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
    * 第三方应用需拥有“企业客户权限->客户联系->在职继承”权限
    * 接替成员必须在此第三方应用或自建应用的可见范围内。
    * </per>
+   *
    * @param handOverUserid 原添加成员的userid
    * @param takeOverUserid 接替成员的userid
-   * @param cursor 分页查询的cursor，每个分页返回的数据不会超过1000条；不填或为空表示获取第一个分页；
-   * @return 客户转接接口实体
+   * @param cursor         分页查询的cursor，每个分页返回的数据不会超过1000条；不填或为空表示获取第一个分页；
+   * @return 客户转接接口实体 wx cp user transfer result resp
    * @throws WxErrorException the wx error exception
    */
   WxCpUserTransferResultResp transferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor)  throws WxErrorException;
 
   /**
    * 企业可通过此接口，分配离职成员的客户给其他成员。
-   *  <per>
+   * <per>
    * handover_userid必须是已离职用户。
    * external_userid必须是handover_userid的客户（即配置了客户联系功能的成员所添加的联系人）。
    * 在职成员的每位客户最多被分配2次。客户被转接成功后，将有90个自然日的服务关系保护期，保护期内的客户无法再次被分配。
-   *
+   * <p>
    * 权限说明：
-   *
+   * <p>
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
    * 第三方应用需拥有“企业客户权限->客户联系->离职分配”权限
    * 接替成员必须在此第三方应用或自建应用的可见范围内。
    * 接替成员需要配置了客户联系功能。
    * 接替成员需要在企业微信激活且已经过实名认证。
-   *  </per>
+   * </per>
+   *
    * @param req 转接在职成员的客户给其他成员请求实体
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
@@ -300,15 +304,16 @@ public interface WxCpExternalContactService {
    * 企业和第三方可通过此接口查询离职成员的客户分配情况。
    * <per>
    * 权限说明：
-   *
+   * <p>
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
    * 第三方应用需拥有“企业客户权限->客户联系->在职继承”权限
    * 接替成员必须在此第三方应用或自建应用的可见范围内。
    * </per>
+   *
    * @param handOverUserid 原添加成员的userid
    * @param takeOverUserid 接替成员的userid
-   * @param cursor 分页查询的cursor，每个分页返回的数据不会超过1000条；不填或为空表示获取第一个分页；
-   * @return 客户转接接口实体
+   * @param cursor         分页查询的cursor，每个分页返回的数据不会超过1000条；不填或为空表示获取第一个分页；
+   * @return 客户转接接口实体 wx cp user transfer result resp
    * @throws WxErrorException the wx error exception
    */
   WxCpUserTransferResultResp resignedTransferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor)  throws WxErrorException;
@@ -321,7 +326,6 @@ public interface WxCpExternalContactService {
    * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92119
    * </pre>
    *
-   * @deprecated 请使用 {@link WxCpExternalContactService#listGroupChat(Integer, String, int, String[])}
    * @param pageIndex the page index
    * @param pageSize  the page size
    * @param status    the status
@@ -329,6 +333,7 @@ public interface WxCpExternalContactService {
    * @param partyIds  the party ids
    * @return the wx cp user external group chat list
    * @throws WxErrorException the wx error exception
+   * @deprecated 请使用 {@link WxCpExternalContactService#listGroupChat(Integer, String, int, String[])}
    */
   @Deprecated
   WxCpUserExternalGroupChatList listGroupChat(Integer pageIndex, Integer pageSize, int status, String[] userIds, String[] partyIds) throws WxErrorException;
@@ -341,10 +346,10 @@ public interface WxCpExternalContactService {
    * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92119
    * </pre>
    *
-   * @param limit     分页，预期请求的数据量，取值范围 1 ~ 1000
-   * @param cursor    用于分页查询的游标，字符串类型，由上一次调用返回，首次调用不填
-   * @param status    客户群跟进状态过滤。0 - 所有列表(即不过滤)  1 - 离职待继承  2 - 离职继承中  3 - 离职继承完成 默认为0
-   * @param userIds   群主过滤。如果不填，表示获取应用可见范围内全部群主的数据（但是不建议这么用，如果可见范围人数超过1000人，为了防止数据包过大，会报错 81017）;用户ID列表。最多100个
+   * @param limit   分页，预期请求的数据量，取值范围 1 ~ 1000
+   * @param cursor  用于分页查询的游标，字符串类型，由上一次调用返回，首次调用不填
+   * @param status  客户群跟进状态过滤。0 - 所有列表(即不过滤)  1 - 离职待继承  2 - 离职继承中  3 - 离职继承完成 默认为0
+   * @param userIds 群主过滤。如果不填，表示获取应用可见范围内全部群主的数据（但是不建议这么用，如果可见范围人数超过1000人，为了防止数据包过大，会报错 81017）;用户ID列表。最多100个
    * @return the wx cp user external group chat list
    * @throws WxErrorException the wx error exception
    */
@@ -358,35 +363,36 @@ public interface WxCpExternalContactService {
    * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92122
    * </pre>
    *
-   * @param chatId the chat id
+   * @param chatId   the chat id
+   * @param needName the need name
    * @return group chat
    * @throws WxErrorException the wx error exception
    */
   WxCpUserExternalGroupChatInfo getGroupChat(String chatId, Integer needName) throws WxErrorException;
 
   /**
-   *
    * 企业可通过此接口，将已离职成员为群主的群，分配给另一个客服成员。
    *
    * <per>
    * 注意：：
-   *
+   * <p>
    * 群主离职了的客户群，才可继承
    * 继承给的新群主，必须是配置了客户联系功能的成员
    * 继承给的新群主，必须有设置实名
    * 继承给的新群主，必须有激活企业微信
    * 同一个人的群，限制每天最多分配300个给新群主
-   *
+   * <p>
    * 权限说明:
-   *
+   * <p>
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
    * 第三方应用需拥有“企业客户权限->客户联系->分配离职成员的客户群”权限
    * 对于第三方/自建应用，群主必须在应用的可见范围。
    * </per>
-   * @param chatIds 需要转群主的客户群ID列表。取值范围： 1 ~ 100
-   * @param newOwner  新群主ID
-   * @return 分配结果，主要是分配失败的群列表
-   * @throws WxErrorException  the wx error exception
+   *
+   * @param chatIds  需要转群主的客户群ID列表。取值范围： 1 ~ 100
+   * @param newOwner 新群主ID
+   * @return 分配结果 ，主要是分配失败的群列表
+   * @throws WxErrorException the wx error exception
    */
   WxCpUserExternalGroupChatTransferResp transferGroupChat(String[] chatIds, String newOwner)  throws WxErrorException;
 
@@ -445,6 +451,33 @@ public interface WxCpExternalContactService {
   WxCpMsgTemplateAddResult addMsgTemplate(WxCpUserExternalMsgTemplate wxCpUserExternalMsgTemplate) throws WxErrorException;
 
   /**
+   * 获取群发记录列表
+   *
+   * @param wxCpUserExternalContactGroupMsgListV2Request the wx cp user external contact group msg list v 2 request
+   * @return wx cp user external contact group msg list v 2 result
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpUserExternalContactGroupMsgListV2Result groupMsgListV2(WxCpUserExternalContactGroupMsgListV2Request wxCpUserExternalContactGroupMsgListV2Request) throws WxErrorException;
+
+  /**
+   * 获取群发成员发送任务列表
+   *
+   * @param wxCpUserExternalContactGroupMsgTaskRequest the wx cp user external contact group msg task request
+   * @return wx cp user external contact group msg task result
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpUserExternalContactGroupMsgTaskResult groupMsgTask(WxCpUserExternalContactGroupMsgTaskRequest wxCpUserExternalContactGroupMsgTaskRequest) throws WxErrorException;
+
+  /**
+   * 获取企业群发成员执行结果
+   *
+   * @param wxCpUserExternalContactGroupMsgSendRequest the wx cp user external contact group msg send request
+   * @return wx cp user external contact group msg send result
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpUserExternalContactGroupMsgSendResult groupMsgSendResult(WxCpUserExternalContactGroupMsgSendRequest wxCpUserExternalContactGroupMsgSendRequest) throws WxErrorException;
+
+  /**
    * 发送新客户欢迎语
    * <pre>
    * 企业微信在向企业推送添加外部联系人事件时，会额外返回一个welcome_code，企业以此为凭据调用接口，即可通过成员向新添加的客户发送个性化的欢迎语。
@@ -481,7 +514,7 @@ public interface WxCpExternalContactService {
    * 同时传递tag_id和group_id时，忽略tag_id，仅以group_id作为过滤条件。
    * </pre>
    *
-   * @param tagId the tag id
+   * @param tagId   the tag id
    * @param groupId the tagGroup id
    * @return corp tag list
    * @throws WxErrorException the wx error exception

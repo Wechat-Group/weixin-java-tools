@@ -35,7 +35,8 @@ public interface WxCpTpExternalContactService {
    * 临时会话模式的二维码，添加好友完成后该二维码即刻失效。
    * </pre>
    *
-   * @param info 客户联系「联系我」方式
+   * @param corpId the corp id
+   * @param info   客户联系「联系我」方式
    * @return wx cp contact way result
    * @throws WxErrorException the wx error exception
    */
@@ -48,6 +49,7 @@ public interface WxCpTpExternalContactService {
    * <b>批量</b>获取企业配置的「联系我」二维码和「联系我」小程序按钮。
    * </pre>
    *
+   * @param corpId   the corp id
    * @param configId 联系方式的配置id,必填
    * @return contact way
    * @throws WxErrorException the wx error exception
@@ -61,7 +63,8 @@ public interface WxCpTpExternalContactService {
    * 更新企业配置的「联系我」二维码和「联系我」小程序按钮中的信息，如使用人员和备注等。
    * </pre>
    *
-   * @param info 客户联系「联系我」方式
+   * @param corpId the corp id
+   * @param info   客户联系「联系我」方式
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
@@ -74,6 +77,7 @@ public interface WxCpTpExternalContactService {
    * 删除一个已配置的「联系我」二维码或者「联系我」小程序按钮。
    * </pre>
    *
+   * @param corpId   the corp id
    * @param configId 企业联系方式的配置id,必填
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
@@ -89,6 +93,7 @@ public interface WxCpTpExternalContactService {
    * 注意：请保证传入的企业成员和客户之间有仍然有效的临时会话, 通过<b>其他方式的添加外部联系人无法通过此接口关闭会话</b>。
    * </pre>
    *
+   * @param corpId         the corp id
    * @param userId         the user id
    * @param externalUserId the external user id
    * @return wx cp base resp
@@ -106,6 +111,7 @@ public interface WxCpTpExternalContactService {
    * 第三方应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
    * </pre>
    *
+   * @param corpId         the corp id
    * @param externalUserId 外部联系人的userid
    * @return . external contact
    * @throws WxErrorException the wx error exception
@@ -129,6 +135,7 @@ public interface WxCpTpExternalContactService {
    * 第三方/自建应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
    * </pre>
    *
+   * @param corpId         the corp id
    * @param externalUserId 外部联系人的userid，注意不是企业成员的帐号
    * @return . contact detail
    * @throws WxErrorException .
@@ -138,8 +145,9 @@ public interface WxCpTpExternalContactService {
   /**
    * 企业和服务商可通过此接口，将微信外部联系人的userid转为微信openid，用于调用支付相关接口。暂不支持企业微信外部联系人（ExternalUserid为wo开头）的userid转openid。
    *
+   * @param corpId         the corp id
    * @param externalUserid 微信外部联系人的userid
-   * @return 该企业的外部联系人openid
+   * @return 该企业的外部联系人openid string
    * @throws WxErrorException .
    */
   String convertToOpenid(String corpId, String externalUserid) throws WxErrorException;
@@ -159,6 +167,7 @@ public interface WxCpTpExternalContactService {
    * 第三方/自建应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
    * </pre>
    *
+   * @param corpId the corp id
    * @param userId 企业成员的userid，注意不是外部联系人的帐号
    * @param cursor the cursor
    * @param limit  the  limit
@@ -178,6 +187,7 @@ public interface WxCpTpExternalContactService {
    * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/92115
    * </pre>
    *
+   * @param corpId  the corp id
    * @param request 备注信息请求
    * @throws WxErrorException .
    */
@@ -198,6 +208,7 @@ public interface WxCpTpExternalContactService {
    * 第三方/自建应用只能获取到可见范围内的配置了客户联系功能的成员。
    * </pre>
    *
+   * @param corpId the corp id
    * @param userId 企业成员的userid
    * @return List of External wx id
    * @throws WxErrorException .
@@ -212,6 +223,7 @@ public interface WxCpTpExternalContactService {
    *   第三方应用只能获取到可见范围内的配置了客户联系功能的成员
    * </pre>
    *
+   * @param corpId the corp id
    * @return List of CpUser id
    * @throws WxErrorException .
    */
@@ -220,6 +232,7 @@ public interface WxCpTpExternalContactService {
   /**
    * 企业和第三方可通过此接口，获取所有离职成员的客户列表，并可进一步调用离职成员的外部联系人再分配接口将这些客户重新分配给其他企业成员。
    *
+   * @param corpId   the corp id
    * @param page     the page
    * @param pageSize the page size
    * @return wx cp user external unassign list
@@ -230,6 +243,7 @@ public interface WxCpTpExternalContactService {
   /**
    * 企业可通过此接口，将已离职成员的外部联系人分配给另一个成员接替联系。
    *
+   * @param corpId         the corp id
    * @param externalUserid the external userid
    * @param handOverUserid the hand over userid
    * @param takeOverUserid the take over userid
@@ -254,7 +268,8 @@ public interface WxCpTpExternalContactService {
    * 接替成员需要在企业微信激活且已经过实名认证。
    * </per>
    *
-   * @param req 转接在职成员的客户给其他成员请求实体
+   * @param corpId the corp id
+   * @param req    转接在职成员的客户给其他成员请求实体
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
@@ -270,10 +285,11 @@ public interface WxCpTpExternalContactService {
    * 接替成员必须在此第三方应用或自建应用的可见范围内。
    * </per>
    *
+   * @param corpId         the corp id
    * @param handOverUserid 原添加成员的userid
    * @param takeOverUserid 接替成员的userid
    * @param cursor         分页查询的cursor，每个分页返回的数据不会超过1000条；不填或为空表示获取第一个分页；
-   * @return 客户转接接口实体
+   * @return 客户转接接口实体 wx cp user transfer result resp
    * @throws WxErrorException the wx error exception
    */
   WxCpUserTransferResultResp transferResult(String corpId, @NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor) throws WxErrorException;
@@ -294,7 +310,8 @@ public interface WxCpTpExternalContactService {
    * 接替成员需要在企业微信激活且已经过实名认证。
    * </per>
    *
-   * @param req 转接在职成员的客户给其他成员请求实体
+   * @param corpId the corp id
+   * @param req    转接在职成员的客户给其他成员请求实体
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
@@ -310,10 +327,11 @@ public interface WxCpTpExternalContactService {
    * 接替成员必须在此第三方应用或自建应用的可见范围内。
    * </per>
    *
+   * @param corpId         the corp id
    * @param handOverUserid 原添加成员的userid
    * @param takeOverUserid 接替成员的userid
    * @param cursor         分页查询的cursor，每个分页返回的数据不会超过1000条；不填或为空表示获取第一个分页；
-   * @return 客户转接接口实体
+   * @return 客户转接接口实体 wx cp user transfer result resp
    * @throws WxErrorException the wx error exception
    */
   WxCpUserTransferResultResp resignedTransferResult(String corpId, @NotNull String handOverUserid, @NotNull String takeOverUserid, String cursor) throws WxErrorException;
@@ -326,6 +344,7 @@ public interface WxCpTpExternalContactService {
    * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92119
    * </pre>
    *
+   * @param corpId    the corp id
    * @param pageIndex the page index
    * @param pageSize  the page size
    * @param status    the status
@@ -346,6 +365,7 @@ public interface WxCpTpExternalContactService {
    * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92119
    * </pre>
    *
+   * @param corpId  the corp id
    * @param limit   分页，预期请求的数据量，取值范围 1 ~ 1000
    * @param cursor  用于分页查询的游标，字符串类型，由上一次调用返回，首次调用不填
    * @param status  客户群跟进状态过滤。0 - 所有列表(即不过滤)  1 - 离职待继承  2 - 离职继承中  3 - 离职继承完成 默认为0
@@ -363,7 +383,9 @@ public interface WxCpTpExternalContactService {
    * 微信文档：https://work.weixin.qq.com/api/doc/90000/90135/92122
    * </pre>
    *
-   * @param chatId the chat id
+   * @param corpId   the corp id
+   * @param chatId   the chat id
+   * @param needName the need name
    * @return group chat
    * @throws WxErrorException the wx error exception
    */
@@ -388,9 +410,10 @@ public interface WxCpTpExternalContactService {
    * 对于第三方/自建应用，群主必须在应用的可见范围。
    * </per>
    *
+   * @param corpId   the corp id
    * @param chatIds  需要转群主的客户群ID列表。取值范围： 1 ~ 100
    * @param newOwner 新群主ID
-   * @return 分配结果，主要是分配失败的群列表
+   * @return 分配结果 ，主要是分配失败的群列表
    * @throws WxErrorException the wx error exception
    */
   WxCpUserExternalGroupChatTransferResp transferGroupChat(String corpId, String[] chatIds, String newOwner) throws WxErrorException;
@@ -403,6 +426,7 @@ public interface WxCpTpExternalContactService {
    * 第三方/自建应用调用时传入的userid和partyid要在应用的可见范围内;
    * </pre>
    *
+   * @param corpId    the corp id
    * @param startTime the start time
    * @param endTime   the end time
    * @param userIds   the user ids
@@ -419,6 +443,7 @@ public interface WxCpTpExternalContactService {
    * 暂不支持第三方调用。
    * </pre>
    *
+   * @param corpId    the corp id
    * @param startTime the start time
    * @param orderBy   the order by
    * @param orderAsc  the order asc
@@ -443,11 +468,43 @@ public interface WxCpTpExternalContactService {
    * <p>
    * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/92135
    *
+   * @param corpId                      the corp id
    * @param wxCpUserExternalMsgTemplate the wx cp msg template
    * @return the wx cp msg template add result
    * @throws WxErrorException the wx error exception
    */
   WxCpMsgTemplateAddResult addMsgTemplate(String corpId, WxCpUserExternalMsgTemplate wxCpUserExternalMsgTemplate) throws WxErrorException;
+
+  /**
+   * 获取群发记录列表
+   *
+   * @param corpId                                       the corp id
+   * @param wxCpUserExternalContactGroupMsgListV2Request the wx cp user external contact group msg list v 2 request
+   * @return wx cp user external contact group msg list v 2 result
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpUserExternalContactGroupMsgListV2Result groupMsgListV2(String corpId, WxCpUserExternalContactGroupMsgListV2Request wxCpUserExternalContactGroupMsgListV2Request) throws WxErrorException;
+
+  /**
+   * 获取群发成员发送任务列表
+   *
+   * @param corpId                                     the corp id
+   * @param wxCpUserExternalContactGroupMsgTaskRequest the wx cp user external contact group msg task request
+   * @return wx cp user external contact group msg task result
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpUserExternalContactGroupMsgTaskResult groupMsgTask(String corpId, WxCpUserExternalContactGroupMsgTaskRequest wxCpUserExternalContactGroupMsgTaskRequest) throws WxErrorException;
+
+  /**
+   * 获取企业群发成员执行结果
+   *
+   * @param corpId                                     the corp id
+   * @param wxCpUserExternalContactGroupMsgSendRequest the wx cp user external contact group msg send request
+   * @return wx cp user external contact group msg send result
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpUserExternalContactGroupMsgSendResult groupMsgSendResult(String corpId, WxCpUserExternalContactGroupMsgSendRequest wxCpUserExternalContactGroupMsgSendRequest) throws WxErrorException;
+
 
   /**
    * 发送新客户欢迎语
@@ -463,7 +520,8 @@ public interface WxCpTpExternalContactService {
    * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/92137
    * </pre>
    *
-   * @param msg .
+   * @param corpId the corp id
+   * @param msg    .
    * @throws WxErrorException .
    */
   void sendWelcomeMsg(String corpId, WxCpWelcomeMsg msg) throws WxErrorException;
@@ -473,7 +531,8 @@ public interface WxCpTpExternalContactService {
    * 企业可通过此接口获取企业客户标签详情。
    * </pre>
    *
-   * @param tagId the tag id
+   * @param corpId the corp id
+   * @param tagId  the tag id
    * @return corp tag list
    * @throws WxErrorException the wx error exception
    */
@@ -486,6 +545,7 @@ public interface WxCpTpExternalContactService {
    * 同时传递tag_id和group_id时，忽略tag_id，仅以group_id作为过滤条件。
    * </pre>
    *
+   * @param corpId  the corp id
    * @param tagId   the tag id
    * @param groupId the tagGroup id
    * @return corp tag list
@@ -499,6 +559,7 @@ public interface WxCpTpExternalContactService {
    * 暂不支持第三方调用。
    * </pre>
    *
+   * @param corpId   the corp id
    * @param tagGroup the tag group
    * @return wx cp user external tag group info
    * @throws WxErrorException the wx error exception
@@ -511,9 +572,10 @@ public interface WxCpTpExternalContactService {
    * 暂不支持第三方调用。
    * </pre>
    *
-   * @param id    the id
-   * @param name  the name
-   * @param order the order
+   * @param corpId the corp id
+   * @param id     the id
+   * @param name   the name
+   * @param order  the order
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
@@ -525,6 +587,7 @@ public interface WxCpTpExternalContactService {
    * 暂不支持第三方调用。
    * </pre>
    *
+   * @param corpId  the corp id
    * @param tagId   the tag id
    * @param groupId the group id
    * @return wx cp base resp
@@ -538,6 +601,7 @@ public interface WxCpTpExternalContactService {
    * https://work.weixin.qq.com/api/doc/90000/90135/92117
    * </pre>
    *
+   * @param corpId         the corp id
    * @param userid         the userid
    * @param externalUserid the external userid
    * @param addTag         the add tag

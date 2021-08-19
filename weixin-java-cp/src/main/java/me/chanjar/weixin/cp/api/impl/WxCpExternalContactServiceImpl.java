@@ -337,6 +337,27 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpUserExternalContactGroupMsgListV2Result groupMsgListV2(WxCpUserExternalContactGroupMsgListV2Request wxCpUserExternalContactGroupMsgListV2Request) throws WxErrorException {
+    final String url = urlGenerator.apply(GROUP_MSG_LIST_V2);
+    final String result = this.mainService.post(url, wxCpUserExternalContactGroupMsgListV2Request.toJson());
+    return WxCpUserExternalContactGroupMsgListV2Result.fromJson(result);
+  }
+
+  @Override
+  public WxCpUserExternalContactGroupMsgTaskResult groupMsgTask(WxCpUserExternalContactGroupMsgTaskRequest wxCpUserExternalContactGroupMsgTaskRequest) throws WxErrorException {
+    final String url = urlGenerator.apply(GROUP_MSG_TASK);
+    final String result = this.mainService.post(url, wxCpUserExternalContactGroupMsgTaskRequest.toJson());
+    return WxCpUserExternalContactGroupMsgTaskResult.fromJson(result);
+  }
+
+  @Override
+  public WxCpUserExternalContactGroupMsgSendResult groupMsgSendResult(WxCpUserExternalContactGroupMsgSendRequest wxCpUserExternalContactGroupMsgSendRequest) throws WxErrorException {
+    final String url = urlGenerator.apply(GROUP_MSG_SEND_RESULT);
+    final String result = this.mainService.post(url, wxCpUserExternalContactGroupMsgSendRequest.toJson());
+    return WxCpUserExternalContactGroupMsgSendResult.fromJson(result);
+  }
+
+  @Override
   public void sendWelcomeMsg(WxCpWelcomeMsg msg) throws WxErrorException {
     final String url = urlGenerator.apply(SEND_WELCOME_MSG);
     this.mainService.post(url, msg.toJson());
