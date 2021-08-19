@@ -79,6 +79,10 @@ public class WxCpUserExternalContactGroupMsgSendResult implements Serializable {
       return null;
     }
 
+    public boolean isSendSuccess() {
+      return Integer.valueOf(0).equals(status);
+    }
+
     public String getSendDetail() {
       switch (status) {
         case 0:
