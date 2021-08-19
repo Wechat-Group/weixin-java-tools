@@ -3,7 +3,6 @@ package me.chanjar.weixin.cp.config;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 
-import java.io.File;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -215,13 +214,6 @@ public interface WxCpConfigStorage {
    * @return the http proxy password
    */
   String getHttpProxyPassword();
-
-  /**
-   * Gets tmp dir file.
-   *
-   * @return the tmp dir file
-   */
-  File getTmpDirFile();
 
   /**
    * http client builder.

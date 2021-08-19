@@ -47,7 +47,6 @@ public interface WxCpTpMediaService {
    * @param file      文件对象
    * @return the wx media upload result
    * @throws WxErrorException 异常信息
-   * @see #upload(String, String, InputStream, String) #upload(String, String, InputStream, String)
    */
   WxMediaUploadResult upload(String corpId, String mediaType, File file) throws WxErrorException;
 
@@ -59,7 +58,6 @@ public interface WxCpTpMediaService {
    * @param bytes     the bytes
    * @return the wx media upload result
    * @throws WxErrorException the wx error exception
-   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)#upload(String, String, InputStream)
    */
   WxMediaUploadResult upload(String corpId, String mediaType, byte[] bytes) throws WxErrorException;
 
@@ -78,4 +76,51 @@ public interface WxCpTpMediaService {
    * @throws WxErrorException 异常信息
    */
   String uploadImg(String corpId, File file) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 上传图片.
+   * 上传图片得到图片URL，该URL永久有效
+   * 返回的图片URL，仅能用于图文消息（mpnews）正文中的图片展示；若用于非企业微信域名下的页面，图片将被屏蔽。
+   * 每个企业每天最多可上传100张图片
+   * 接口url格式：https://qyapi.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN
+   * </pre>
+   *
+   * @param corpId 授权企业的corpid
+   * @param bytes  the bytes
+   * @return 返回图片url string
+   * @throws WxErrorException 异常信息
+   */
+  String uploadImg(String corpId, byte[] bytes) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 下载多媒体文件.
+   * 根据微信文档，视频文件下载不了，会返回null
+   * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=上传下载多媒体文件
+   * </pre>
+   *
+   * @param corpId  the corp id
+   * @param mediaId 媒体id
+   * @return 保存到本地的临时文件 file
+   * @throws WxErrorException the wx error exception
+   */
+  byte[] download(String corpId, String mediaId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取高清语音素材.
+   * 可以使用本接口获取从JSSDK的uploadVoice接口上传的临时语音素材，格式为speex，16K采样率。该音频比上文的临时素材获取接口（格式为amr，8K采样率）更加清晰，适合用作语音识别等对音质要求较高的业务。
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/media/get/jssdk?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
+   * 仅企业微信2.4及以上版本支持。
+   * 文档地址：https://work.weixin.qq.com/api/doc#90000/90135/90255
+   * </pre>
+   *
+   * @param corpId  the corp id
+   * @param mediaId 媒体id
+   * @return 保存到本地的临时文件 jssdk file
+   * @throws WxErrorException the wx error exception
+   */
+  byte[] getJssdkFile(String corpId, String mediaId) throws WxErrorException;
 }

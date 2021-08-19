@@ -74,9 +74,9 @@ public class WxCpMediaServiceImplTest {
 
   @Test(dependsOnMethods = {"testUploadMedia"}, dataProvider = "downloadMedia")
   public void testDownload(String mediaId) throws WxErrorException {
-    File file = this.wxService.getMediaService().download(mediaId);
-    assertThat(file).isNotNull();
-    System.out.println(file);
+    byte[] bytes = this.wxService.getMediaService().download(mediaId);
+    assertThat(bytes).isNotNull();
+    System.out.println(new String(bytes));
   }
 
   @Test
@@ -88,8 +88,8 @@ public class WxCpMediaServiceImplTest {
 
   @Test
   public void testGetJssdkFile() throws WxErrorException {
-    File file = this.wxService.getMediaService().getJssdkFile("....");
-    assertThat(file).isNotNull();
-    System.out.println(file);
+    byte[] bytes = this.wxService.getMediaService().getJssdkFile("....");
+    assertThat(bytes).isNotNull();
+    System.out.println(new String(bytes));
   }
 }

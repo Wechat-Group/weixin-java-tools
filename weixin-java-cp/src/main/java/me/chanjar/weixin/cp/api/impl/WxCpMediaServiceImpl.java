@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
-import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
+import me.chanjar.weixin.common.util.http.BaseMediaDownloadBytesRequestExecutor;
 import me.chanjar.weixin.common.util.http.MediaUploadBytesRequestExecutor;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.cp.api.WxCpMediaService;
@@ -48,25 +48,30 @@ public class WxCpMediaServiceImpl implements WxCpMediaService {
   }
 
   @Override
-  public File download(String mediaId) throws WxErrorException {
-    return this.mainService.execute(
-      BaseMediaDownloadRequestExecutor.create(this.mainService.getRequestHttp(),
-        this.mainService.getWxCpConfigStorage().getTmpDirFile()),
-      this.mainService.getWxCpConfigStorage().getApiUrl(MEDIA_GET), "media_id=" + mediaId);
-  }
-
-  @Override
-  public File getJssdkFile(String mediaId) throws WxErrorException {
-    return this.mainService.execute(
-      BaseMediaDownloadRequestExecutor.create(this.mainService.getRequestHttp(),
-        this.mainService.getWxCpConfigStorage().getTmpDirFile()),
-      this.mainService.getWxCpConfigStorage().getApiUrl(JSSDK_MEDIA_GET), "media_id=" + mediaId);
-  }
-
-  @Override
   public String uploadImg(File file) throws WxErrorException {
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(IMG_UPLOAD);
     return this.mainService.execute(MediaUploadRequestExecutor.create(this.mainService.getRequestHttp()), url, file)
       .getUrl();
+  }
+
+  @Override
+  public String uploadImg(byte[] bytes) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(IMG_UPLOAD);
+    return this.mainService.execute(MediaUploadBytesRequestExecutor.create(this.mainService.getRequestHttp()), url, bytes)
+      .getUrl();
+  }
+
+  @Override
+  public byte[] download(String mediaId) throws WxErrorException {
+    return this.mainService.execute(
+      BaseMediaDownloadBytesRequestExecutor.create(this.mainService.getRequestHttp()),
+      this.mainService.getWxCpConfigStorage().getApiUrl(MEDIA_GET), "media_id=" + mediaId);
+  }
+
+  @Override
+  public byte[] getJssdkFile(String mediaId) throws WxErrorException {
+    return this.mainService.execute(
+      BaseMediaDownloadBytesRequestExecutor.create(this.mainService.getRequestHttp()),
+      this.mainService.getWxCpConfigStorage().getApiUrl(JSSDK_MEDIA_GET), "media_id=" + mediaId);
   }
 }

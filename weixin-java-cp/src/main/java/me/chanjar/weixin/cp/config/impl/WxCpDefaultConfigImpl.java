@@ -6,7 +6,6 @@ import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -52,8 +51,6 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   private volatile long jsapiTicketExpiresTime;
   private volatile String agentJsapiTicket;
   private volatile long agentJsapiTicketExpiresTime;
-
-  private volatile File tmpDirFile;
 
   private transient volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
 
@@ -352,20 +349,6 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   @Override
   public String toString() {
     return WxCpGsonBuilder.create().toJson(this);
-  }
-
-  @Override
-  public File getTmpDirFile() {
-    return this.tmpDirFile;
-  }
-
-  /**
-   * Sets tmp dir file.
-   *
-   * @param tmpDirFile the tmp dir file
-   */
-  public void setTmpDirFile(File tmpDirFile) {
-    this.tmpDirFile = tmpDirFile;
   }
 
   @Override

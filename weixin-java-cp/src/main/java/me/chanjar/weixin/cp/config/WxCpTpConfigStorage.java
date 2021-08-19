@@ -373,8 +373,6 @@ public interface WxCpTpConfigStorage {
    *
    * @return the tmp dir file
    */
-// 毫无相关性的代码
-  @Deprecated
   File getTmpDirFile();
 
   /**
