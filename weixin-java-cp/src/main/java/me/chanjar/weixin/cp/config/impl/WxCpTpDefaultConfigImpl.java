@@ -10,7 +10,6 @@ import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +60,6 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   private volatile int httpProxyPort;
   private volatile String httpProxyUsername;
   private volatile String httpProxyPassword;
-  private volatile File tmpDirFile;
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
   private volatile String baseApiUrl;
 
@@ -502,20 +500,6 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   @Override
   public String toString() {
     return WxCpGsonBuilder.create().toJson(this);
-  }
-
-  @Override
-  public File getTmpDirFile() {
-    return this.tmpDirFile;
-  }
-
-  /**
-   * Sets tmp dir file.
-   *
-   * @param tmpDirFile the tmp dir file
-   */
-  public void setTmpDirFile(File tmpDirFile) {
-    this.tmpDirFile = tmpDirFile;
   }
 
   @Override

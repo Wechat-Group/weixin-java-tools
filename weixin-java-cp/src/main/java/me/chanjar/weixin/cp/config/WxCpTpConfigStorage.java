@@ -4,7 +4,6 @@ import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 
-import java.io.File;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -367,13 +366,6 @@ public interface WxCpTpConfigStorage {
    * @return the boolean
    */
   boolean autoRefreshToken();
-
-  /**
-   * Gets tmp dir file.
-   *
-   * @return the tmp dir file
-   */
-  File getTmpDirFile();
 
   /**
    * Gets provider access token lock.

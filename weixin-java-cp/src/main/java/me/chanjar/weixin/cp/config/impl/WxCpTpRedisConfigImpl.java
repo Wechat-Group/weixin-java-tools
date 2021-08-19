@@ -14,7 +14,6 @@ import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -72,7 +71,6 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
   private volatile String httpProxyUsername;
   private volatile String httpProxyPassword;
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
-  private volatile File tmpDirFile;
   /**
    * 第三方应用的其他配置，来自于企微配置
    */
@@ -399,11 +397,6 @@ public class WxCpTpRedisConfigImpl implements WxCpTpConfigStorage, Serializable 
   @Override
   public String getHttpProxyPassword() {
     return this.httpProxyPassword;
-  }
-
-  @Override
-  public File getTmpDirFile() {
-    return tmpDirFile;
   }
 
   @Override
