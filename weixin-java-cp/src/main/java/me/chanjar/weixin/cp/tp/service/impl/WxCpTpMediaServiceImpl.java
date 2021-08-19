@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
-import me.chanjar.weixin.common.util.http.MediaUploadInputStreamRequestExecutor;
+import me.chanjar.weixin.common.util.http.MediaUploadBytesRequestExecutor;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.cp.tp.service.WxCpTpMediaService;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
@@ -37,7 +37,7 @@ public class WxCpTpMediaServiceImpl implements WxCpTpMediaService {
 
   @Override
   public WxMediaUploadResult upload(String corpId, String mediaType, InputStream inputStream) throws WxErrorException {
-    return this.mainService.execute(MediaUploadInputStreamRequestExecutor.create(this.mainService.getRequestHttp()),
+    return this.mainService.execute(MediaUploadBytesRequestExecutor.create(this.mainService.getRequestHttp()),
       mainService.getCorpApiUrl(MEDIA_UPLOAD + mediaType, corpId), inputStream);
   }
 
