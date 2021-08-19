@@ -464,7 +464,7 @@ public class WxCpConsts {
     }
   }
 
-  public static enum WelcomeMsgType {
+  public static enum AttachmentMsgType {
     /**
      * 图片消息.
      */
@@ -484,7 +484,7 @@ public class WxCpConsts {
 
     private final String name;
 
-    WelcomeMsgType(String name) {
+    AttachmentMsgType(String name) {
       this.name = name;
     }
 

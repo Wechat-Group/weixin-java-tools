@@ -11,66 +11,40 @@ public class Attachment implements Serializable {
   @SerializedName("msgtype")
   private String msgType;
 
+  @SerializedName("image")
   private Image image;
 
+  @SerializedName("link")
   private Link link;
 
+  @SerializedName("miniprogram")
   private MiniProgram miniprogram;
 
+  @SerializedName("video")
   private Video video;
 
-  @Override
-  public String toString() {
-    return "Attachment{" +
-      "msgType='" + msgType + '\'' +
-      ", image=" + image +
-      ", link=" + link +
-      ", miniprogram=" + miniprogram +
-      ", video=" + video +
-      '}';
-  }
-
-  private String getMsgType() {
-    return msgType;
-  }
-
-  private void setMsgType(String msgType) {
+  private Attachment(String msgType, Image image, Link link, MiniProgram miniprogram, Video video) {
     this.msgType = msgType;
-  }
-
-  public Image getImage() {
-    return image;
-  }
-
-  public void setImage(Image image) {
     this.image = image;
-    this.msgType = WxCpConsts.WelcomeMsgType.IMAGE.toString();
-  }
-
-  public Link getLink() {
-    return link;
-  }
-
-  public void setLink(Link link) {
     this.link = link;
-    this.msgType = WxCpConsts.WelcomeMsgType.LINK.toString();
-  }
-
-  public MiniProgram getMiniprogram() {
-    return miniprogram;
-  }
-
-  public void setMiniprogram(MiniProgram miniprogram) {
     this.miniprogram = miniprogram;
-    this.msgType = WxCpConsts.WelcomeMsgType.MINIPROGRAM.toString();
-  }
-
-  public Video getVideo() {
-    return video;
-  }
-
-  public void setVideo(Video video) {
     this.video = video;
-    this.msgType = WxCpConsts.WelcomeMsgType.VIDEO.toString();
   }
+
+  public static Attachment image(Image image) {
+    return new Attachment(WxCpConsts.AttachmentMsgType.IMAGE.getName(), image, null, null, null);
+  }
+
+  public static Attachment link(Link link) {
+    return new Attachment(WxCpConsts.AttachmentMsgType.LINK.getName(), null, link, null, null);
+  }
+
+  public static Attachment miniprogram(MiniProgram miniProgram) {
+    return new Attachment(WxCpConsts.AttachmentMsgType.MINIPROGRAM.getName(), null, null, miniProgram, null);
+  }
+
+  public static Attachment video(Video video) {
+    return new Attachment(WxCpConsts.AttachmentMsgType.VIDEO.getName(), null, null, null, video);
+  }
+
 }

@@ -276,13 +276,11 @@ public class WxCpTpExternalContactServiceImplTest {
   public void testSendWelcomeMsg() throws WxErrorException {
     Image image = new Image();
     image.setMediaId("123123");
-    Attachment attachment = new Attachment();
-    attachment.setImage(image);
+    Attachment attachment = Attachment.image(image);
 
     Video video = new Video();
     video.setMediaId("video_media_id");
-    Attachment attachment2 = new Attachment();
-    attachment2.setVideo(video);
+    Attachment attachment2 = Attachment.video(video);
 
     List<Attachment> attachments = new ArrayList<>();
     attachments.add(attachment);

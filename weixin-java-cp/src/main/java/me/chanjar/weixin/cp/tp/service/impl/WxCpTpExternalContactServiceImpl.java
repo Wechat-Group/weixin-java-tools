@@ -325,9 +325,9 @@ public class WxCpTpExternalContactServiceImpl implements WxCpTpExternalContactSe
   }
 
   @Override
-  public WxCpMsgTemplateAddResult addMsgTemplate(String corpId, WxCpMsgTemplate wxCpMsgTemplate) throws WxErrorException {
+  public WxCpMsgTemplateAddResult addMsgTemplate(String corpId, WxCpUserExternalMsgTemplate wxCpUserExternalMsgTemplate) throws WxErrorException {
     final String url = mainService.getCorpApiUrl(ADD_MSG_TEMPLATE, corpId);
-    final String result = this.mainService.post(url, wxCpMsgTemplate.toJson());
+    final String result = this.mainService.post(url, wxCpUserExternalMsgTemplate.toJson());
     return WxCpMsgTemplateAddResult.fromJson(result);
   }
 

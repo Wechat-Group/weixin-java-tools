@@ -443,11 +443,11 @@ public interface WxCpTpExternalContactService {
    * <p>
    * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/92135
    *
-   * @param wxCpMsgTemplate the wx cp msg template
+   * @param wxCpUserExternalMsgTemplate the wx cp msg template
    * @return the wx cp msg template add result
    * @throws WxErrorException the wx error exception
    */
-  WxCpMsgTemplateAddResult addMsgTemplate(String corpId, WxCpMsgTemplate wxCpMsgTemplate) throws WxErrorException;
+  WxCpMsgTemplateAddResult addMsgTemplate(String corpId, WxCpUserExternalMsgTemplate wxCpUserExternalMsgTemplate) throws WxErrorException;
 
   /**
    * 发送新客户欢迎语

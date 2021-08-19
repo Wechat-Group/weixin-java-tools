@@ -28,8 +28,10 @@ public class WxCpWelcomeMsg implements Serializable {
   @SerializedName("welcome_code")
   private String welcomeCode;
 
+  @SerializedName("text")
   private Text text;
 
+  @SerializedName("attachments")
   private List<Attachment> attachments;
 
   public String toJson() {

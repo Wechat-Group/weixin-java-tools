@@ -8,20 +8,18 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 图片消息.
+ * 视频消息
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-08-16
+ * @author pg
+ * @date 2021-6-21
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Image implements Serializable {
-  private static final long serialVersionUID = -606286372867787121L;
+public class File implements Serializable {
+
+  private static final long serialVersionUID = -7751578591573716022L;
 
   @SerializedName("media_id")
   private String mediaId;
-
-  @SerializedName("pic_url")
-  private String picUrl;
 }

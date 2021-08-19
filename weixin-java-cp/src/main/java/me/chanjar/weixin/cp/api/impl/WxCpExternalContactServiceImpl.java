@@ -330,9 +330,9 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpMsgTemplateAddResult addMsgTemplate(WxCpMsgTemplate wxCpMsgTemplate) throws WxErrorException {
+  public WxCpMsgTemplateAddResult addMsgTemplate(WxCpUserExternalMsgTemplate wxCpUserExternalMsgTemplate) throws WxErrorException {
     final String url = urlGenerator.apply(ADD_MSG_TEMPLATE);
-    final String result = this.mainService.post(url, wxCpMsgTemplate.toJson());
+    final String result = this.mainService.post(url, wxCpUserExternalMsgTemplate.toJson());
     return WxCpMsgTemplateAddResult.fromJson(result);
   }
 
