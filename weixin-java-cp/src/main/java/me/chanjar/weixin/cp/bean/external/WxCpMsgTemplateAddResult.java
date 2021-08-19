@@ -28,6 +28,10 @@ public class WxCpMsgTemplateAddResult implements Serializable {
   @SerializedName("msgid")
   private String msgId;
 
+  public boolean isSuccess() {
+    return Integer.valueOf(0).equals(errCode);
+  }
+
   public static WxCpMsgTemplateAddResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpMsgTemplateAddResult.class);
   }
