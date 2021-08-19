@@ -28,9 +28,13 @@ public interface WxCpTpMediaService {
    * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=上传下载多媒体文件
    * </pre>
    *
+   * @param corpId      the corp id
    * @param mediaType   媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
    * @param fileType    文件类型，请看{@link me.chanjar.weixin.common.api.WxConsts}
    * @param inputStream 输入流，需要调用方控制关闭该输入流
+   * @return the wx media upload result
+   * @throws WxErrorException the wx error exception
+   * @throws IOException      the io exception
    */
   WxMediaUploadResult upload(String corpId, String mediaType, String fileType, InputStream inputStream)
     throws WxErrorException, IOException;
@@ -38,24 +42,26 @@ public interface WxCpTpMediaService {
   /**
    * 上传多媒体文件.
    *
+   * @param corpId    授权企业的corpid
    * @param mediaType 媒体类型
    * @param file      文件对象
-   * @param corpId    授权企业的corpid
+   * @return the wx media upload result
    * @throws WxErrorException 异常信息
-   * @see #upload(String, String, InputStream, String)
+   * @see #upload(String, String, InputStream, String) #upload(String, String, InputStream, String)
    */
   WxMediaUploadResult upload(String corpId, String mediaType, File file) throws WxErrorException;
 
   /**
    * 上传多媒体文件.
    *
-   * @param mediaType   媒体类型
-   * @param inputStream the input stream
+   * @param corpId    the corp id
+   * @param mediaType 媒体类型
+   * @param bytes     the bytes
    * @return the wx media upload result
    * @throws WxErrorException the wx error exception
-   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)
+   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)#upload(String, String, InputStream)
    */
-  WxMediaUploadResult upload(String corpId, String mediaType, InputStream inputStream) throws WxErrorException;
+  WxMediaUploadResult upload(String corpId, String mediaType, byte[] bytes) throws WxErrorException;
 
   /**
    * <pre>
@@ -66,9 +72,9 @@ public interface WxCpTpMediaService {
    * 接口url格式：https://qyapi.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN
    * </pre>
    *
-   * @param file   上传的文件对象
    * @param corpId 授权企业的corpid
-   * @return 返回图片url
+   * @param file   上传的文件对象
+   * @return 返回图片url string
    * @throws WxErrorException 异常信息
    */
   String uploadImg(String corpId, File file) throws WxErrorException;

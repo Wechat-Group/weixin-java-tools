@@ -45,20 +45,20 @@ public interface WxCpMediaService {
    * @param file      文件对象
    * @return the wx media upload result
    * @throws WxErrorException the wx error exception
-   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)
+   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)#upload(String, String, InputStream)
    */
   WxMediaUploadResult upload(String mediaType, File file) throws WxErrorException;
 
   /**
    * 上传多媒体文件.
    *
-   * @param mediaType   媒体类型
-   * @param inputStream the input stream
+   * @param mediaType 媒体类型
+   * @param bytes     the bytes
    * @return the wx media upload result
    * @throws WxErrorException the wx error exception
-   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)
+   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)#upload(String, String, InputStream)
    */
-  WxMediaUploadResult upload(String mediaType, InputStream inputStream) throws WxErrorException;
+  WxMediaUploadResult upload(String mediaType, byte[] bytes) throws WxErrorException;
 
   /**
    * <pre>

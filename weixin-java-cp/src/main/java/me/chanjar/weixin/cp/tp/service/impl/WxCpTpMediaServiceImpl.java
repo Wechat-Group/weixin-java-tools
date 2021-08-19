@@ -36,9 +36,9 @@ public class WxCpTpMediaServiceImpl implements WxCpTpMediaService {
   }
 
   @Override
-  public WxMediaUploadResult upload(String corpId, String mediaType, InputStream inputStream) throws WxErrorException {
+  public WxMediaUploadResult upload(String corpId, String mediaType, byte[] bytes) throws WxErrorException {
     return this.mainService.execute(MediaUploadBytesRequestExecutor.create(this.mainService.getRequestHttp()),
-      mainService.getCorpApiUrl(MEDIA_UPLOAD + mediaType, corpId), inputStream);
+      mainService.getCorpApiUrl(MEDIA_UPLOAD + mediaType, corpId), bytes);
   }
 
   @Override
