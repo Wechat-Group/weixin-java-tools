@@ -35,4 +35,7 @@ public interface WxMaShopSpuService {
 
   WxMaShopBaseResponse delistingSpu(Integer productId, String outProductId)
     throws WxErrorException;
+
+  WxMaShopBaseResponse deleteAudit(Integer productId, String outProductId)
+    throws WxErrorException;
 }
