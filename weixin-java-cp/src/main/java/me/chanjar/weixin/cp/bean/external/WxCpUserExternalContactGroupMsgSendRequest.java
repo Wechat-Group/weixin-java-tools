@@ -40,10 +40,10 @@ public class WxCpUserExternalContactGroupMsgSendRequest implements Serializable 
   private String cursor;
 
   /**
-   * 返回的最大记录数，整型，最大值100，默认值50，超过最大值时取默认值
+   * 返回的最大记录数，整型，最大值1000，默认值500，超过最大值时取默认值
    */
   @SerializedName("limit")
-  private int limit;
+  private int limit = 500;
 
   public WxCpUserExternalContactGroupMsgSendRequest(String msgId, String userId) {
     this.msgId = msgId;

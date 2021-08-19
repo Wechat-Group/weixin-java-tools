@@ -64,7 +64,7 @@ public class WxCpUserExternalContactGroupMsgListV2Request implements Serializabl
    * 返回的最大记录数，整型，最大值100，默认值50，超过最大值时取默认值
    */
   @SerializedName("limit")
-  private int limit;
+  private int limit = 50;
 
   public void setStartTime(Date startTime) {
     this.startTime = startTime.getTime() / 1000;
