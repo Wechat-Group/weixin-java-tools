@@ -5,6 +5,7 @@ import lombok.Data;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +47,7 @@ public class WxCpUserExternalContactGroupMsgSendResult implements Serializable {
      * 外部客户群id，群发消息到客户不返回该字段
      */
     @SerializedName("send_time")
-    private int sendTime;
+    private long sendTime;
 
     /**
      * 企业服务人员的userid
@@ -66,6 +67,18 @@ public class WxCpUserExternalContactGroupMsgSendResult implements Serializable {
     @SerializedName("status")
     private int status;
 
+    public Date getSendDate() {
+      if (sendTime > 0) {
+        if (String.valueOf(sendTime).length() == 10) {
+          return new Date(sendTime * 1000);
+        }
+        if (String.valueOf(sendTime).length() == 13) {
+          return new Date(sendTime);
+        }
+      }
+      return null;
+    }
+
     public String getSendDetail() {
       switch (status) {
         case 0:
@@ -81,5 +94,4 @@ public class WxCpUserExternalContactGroupMsgSendResult implements Serializable {
       }
     }
   }
-
 }
