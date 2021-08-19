@@ -31,6 +31,9 @@ public interface WxCpMediaService {
    * @param mediaType   媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
    * @param fileType    文件类型，请看{@link me.chanjar.weixin.common.api.WxConsts}
    * @param inputStream 输入流，需要调用方控制关闭该输入流
+   * @return the wx media upload result
+   * @throws WxErrorException the wx error exception
+   * @throws IOException      the io exception
    */
   WxMediaUploadResult upload(String mediaType, String fileType, InputStream inputStream)
     throws WxErrorException, IOException;
@@ -40,9 +43,22 @@ public interface WxCpMediaService {
    *
    * @param mediaType 媒体类型
    * @param file      文件对象
-   * @see #upload(String, String, InputStream)
+   * @return the wx media upload result
+   * @throws WxErrorException the wx error exception
+   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)
    */
   WxMediaUploadResult upload(String mediaType, File file) throws WxErrorException;
+
+  /**
+   * 上传多媒体文件.
+   *
+   * @param mediaType   媒体类型
+   * @param inputStream the input stream
+   * @return the wx media upload result
+   * @throws WxErrorException the wx error exception
+   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)
+   */
+  WxMediaUploadResult upload(String mediaType, InputStream inputStream) throws WxErrorException;
 
   /**
    * <pre>
@@ -52,7 +68,8 @@ public interface WxCpMediaService {
    * </pre>
    *
    * @param mediaId 媒体id
-   * @return 保存到本地的临时文件
+   * @return 保存到本地的临时文件 file
+   * @throws WxErrorException the wx error exception
    */
   File download(String mediaId) throws WxErrorException;
 
@@ -67,7 +84,8 @@ public interface WxCpMediaService {
    * </pre>
    *
    * @param mediaId 媒体id
-   * @return 保存到本地的临时文件
+   * @return 保存到本地的临时文件 jssdk file
+   * @throws WxErrorException the wx error exception
    */
   File getJssdkFile(String mediaId) throws WxErrorException;
 
@@ -81,7 +99,8 @@ public interface WxCpMediaService {
    * </pre>
    *
    * @param file 上传的文件对象
-   * @return 返回图片url
+   * @return 返回图片url string
+   * @throws WxErrorException the wx error exception
    */
   String uploadImg(File file) throws WxErrorException;
 }
