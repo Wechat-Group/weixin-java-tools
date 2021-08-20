@@ -34,14 +34,13 @@ public class WxMaShopDeliveryServiceImplTest {
   @Test
   public void testSend() throws WxErrorException {
     WxMaShopDeliverySendRequest.DeliveryListBean deliveryListBean = WxMaShopDeliverySendRequest.DeliveryListBean.builder()
-      .deliveryId("SF")
-      .waybillId("23424324253")
+      .deliveryId("ZTO")
+      .waybillId("73164691843558")
       .build();
     WxMaShopDeliverySendRequest request = WxMaShopDeliverySendRequest.builder()
-      .orderId(123456L)
-      .outOrderId("xxxxx")
-      .openid("oTVP50O53a7jgmawAmxKukNlq3XI")
-      .finishAllDelivery(0)
+      .outOrderId("318070290792415232")
+      .openid("odIi15CuQ0IQviqsnUMy6CKNetrM")
+      .finishAllDelivery(1)
       .deliveryList(new ArrayList<>(Arrays.asList(deliveryListBean)))
       .build();
     WxMaShopBaseResponse response = wxService.getShopDeliveryService().send(request);
