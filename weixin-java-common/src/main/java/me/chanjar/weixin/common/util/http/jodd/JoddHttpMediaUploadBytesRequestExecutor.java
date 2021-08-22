@@ -1,9 +1,11 @@
 package me.chanjar.weixin.common.util.http.jodd;
 
+import cn.hutool.core.util.RandomUtil;
 import jodd.http.HttpConnectionProvider;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
 import jodd.http.ProxyInfo;
+import jodd.http.up.ByteArrayUploadable;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
@@ -32,7 +34,7 @@ public class JoddHttpMediaUploadBytesRequestExecutor extends MediaUploadBytesReq
       requestHttp.getRequestHttpClient().useProxy(requestHttp.getRequestHttpProxy());
     }
     request.withConnectionProvider(requestHttp.getRequestHttpClient());
-    request.form("media", bytes);
+    request.form("media", new ByteArrayUploadable(bytes, RandomUtil.randomString(16)));
     HttpResponse response = request.send();
     response.charset(StandardCharsets.UTF_8.name());
 

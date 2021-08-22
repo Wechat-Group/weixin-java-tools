@@ -28,7 +28,7 @@ public class OkHttpMediaUploadBytesRequestExecutor extends MediaUploadBytesReque
 
     RequestBody body = new MultipartBody.Builder()
       .setType(MediaType.parse("multipart/form-data"))
-      .addFormDataPart("media", RandomUtil.randomString(32), fileBody)
+      .addFormDataPart("media", RandomUtil.randomString(16), fileBody)
       .build();
     Request request = new Request.Builder().url(uri).post(body).build();
 
