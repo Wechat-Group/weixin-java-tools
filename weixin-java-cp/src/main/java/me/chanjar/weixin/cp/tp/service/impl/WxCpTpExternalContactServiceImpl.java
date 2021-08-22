@@ -97,14 +97,14 @@ public class WxCpTpExternalContactServiceImpl implements WxCpTpExternalContactSe
 
   @Override
   public WxCpExternalContactInfo getExternalContact(String corpId, String externalUserId) throws WxErrorException {
-    final String url = mainService.getCorpApiUrl(GET_EXTERNAL_CONTACT, corpId + externalUserId);
+    final String url = mainService.getCorpApiUrl(GET_EXTERNAL_CONTACT + externalUserId, corpId);
     String responseContent = this.mainService.get(url, null);
     return WxCpExternalContactInfo.fromJson(responseContent);
   }
 
   @Override
   public WxCpExternalContactInfo getContactDetail(String corpId, String externalUserId) throws WxErrorException {
-    final String url = mainService.getCorpApiUrl(GET_CONTACT_DETAIL, corpId + externalUserId);
+    final String url = mainService.getCorpApiUrl(GET_CONTACT_DETAIL + externalUserId, corpId);
     String responseContent = this.mainService.get(url, null);
     return WxCpExternalContactInfo.fromJson(responseContent);
   }
