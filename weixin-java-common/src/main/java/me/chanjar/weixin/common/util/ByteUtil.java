@@ -22,27 +22,32 @@ public class ByteUtil {
    * @return byte [ ]
    */
   public static byte[] combine(byte[] bytes, String ext) {
-    if (Validator.hasChinese(ext)) {
-      throw new WxRuntimeException("文件后缀不允许存在中文");
-    }
-    if (ext.length() > MAX_EXT_LENGTH) {
-      throw new WxRuntimeException("文件后缀不能超过{}位", MAX_EXT_LENGTH);
-    }
     byte[] nb = new byte[bytes.length + MAX_EXT_LENGTH];
-    byte[] exts = ext.getBytes(StandardCharsets.UTF_8);
-    System.arraycopy(exts, 0, nb, 0, exts.length);
+    if (ext != null && ext.length() > 0) {
+      if (Validator.hasChinese(ext)) {
+        throw new WxRuntimeException("文件后缀不允许存在中文");
+      }
+      if (ext.length() > MAX_EXT_LENGTH) {
+        throw new WxRuntimeException("文件后缀不能超过{}位", MAX_EXT_LENGTH);
+      }
+      byte[] exts = ext.getBytes(StandardCharsets.UTF_8);
+      System.arraycopy(exts, 0, nb, 0, exts.length);
+    }
     System.arraycopy(bytes, 0, nb, MAX_EXT_LENGTH, bytes.length);
     return nb;
   }
 
   public static String getExt(byte[] bytes) {
-    byte[] n = new byte[MAX_EXT_LENGTH];
     int i = 0;
     for (; i < MAX_EXT_LENGTH; i++) {
       if (bytes[i] == 0) {
         break;
       }
     }
+    if (i == 0) {
+      return "";
+    }
+    byte[] n = new byte[i];
     System.arraycopy(bytes, 0, n, 0, i);
     return new String(n);
   }
