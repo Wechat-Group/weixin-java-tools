@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.api.impl;
 
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.bean.result.WxMediaDownloadBytesResult;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
@@ -74,9 +75,9 @@ public class WxCpMediaServiceImplTest {
 
   @Test(dependsOnMethods = {"testUploadMedia"}, dataProvider = "downloadMedia")
   public void testDownload(String mediaId) throws WxErrorException {
-    byte[] bytes = this.wxService.getMediaService().download(mediaId);
-    assertThat(bytes).isNotNull();
-    System.out.println(new String(bytes));
+    WxMediaDownloadBytesResult wxMediaDownloadBytesResult = this.wxService.getMediaService().download(mediaId);
+    assertThat(wxMediaDownloadBytesResult.getBytes()).isNotNull();
+    System.out.println(new String(wxMediaDownloadBytesResult.getBytes()));
   }
 
   @Test
@@ -88,8 +89,8 @@ public class WxCpMediaServiceImplTest {
 
   @Test
   public void testGetJssdkFile() throws WxErrorException {
-    byte[] bytes = this.wxService.getMediaService().getJssdkFile("....");
-    assertThat(bytes).isNotNull();
-    System.out.println(new String(bytes));
+    WxMediaDownloadBytesResult wxMediaDownloadBytesResult = this.wxService.getMediaService().getJssdkFile("....");
+    assertThat(wxMediaDownloadBytesResult.getBytes()).isNotNull();
+    System.out.println(new String(wxMediaDownloadBytesResult.getBytes()));
   }
 }
