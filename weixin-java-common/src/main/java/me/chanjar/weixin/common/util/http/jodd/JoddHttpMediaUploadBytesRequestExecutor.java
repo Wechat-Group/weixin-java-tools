@@ -10,6 +10,7 @@ import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.ByteUtil;
 import me.chanjar.weixin.common.util.http.MediaUploadBytesRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 
@@ -17,10 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * .
- *
- * @author ecoolper
- * @date 2017/5/5
+ * @author caiqiyuan
  */
 public class JoddHttpMediaUploadBytesRequestExecutor extends MediaUploadBytesRequestExecutor<HttpConnectionProvider, ProxyInfo> {
   public JoddHttpMediaUploadBytesRequestExecutor(RequestHttp requestHttp) {
@@ -34,7 +32,8 @@ public class JoddHttpMediaUploadBytesRequestExecutor extends MediaUploadBytesReq
       requestHttp.getRequestHttpClient().useProxy(requestHttp.getRequestHttpProxy());
     }
     request.withConnectionProvider(requestHttp.getRequestHttpClient());
-    request.form("media", new ByteArrayUploadable(bytes, RandomUtil.randomString(16)));
+    String ext = ByteUtil.getExt(bytes);
+    request.form("media", new ByteArrayUploadable(ByteUtil.getBody(bytes), RandomUtil.randomString(16) + "." + ext));
     HttpResponse response = request.send();
     response.charset(StandardCharsets.UTF_8.name());
 

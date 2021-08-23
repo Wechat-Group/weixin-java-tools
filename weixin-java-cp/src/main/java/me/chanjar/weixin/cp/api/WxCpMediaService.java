@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.api;
 
+import me.chanjar.weixin.common.bean.result.WxMediaDownloadBytesResult;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -45,7 +46,7 @@ public interface WxCpMediaService {
    * @param file      文件对象
    * @return the wx media upload result
    * @throws WxErrorException the wx error exception
-   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)#upload(String, String, InputStream)#upload(String, String, InputStream)
+   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)#upload(String, String, InputStream)#upload(String, String, InputStream)#upload(String, String, InputStream)#upload(String, String, InputStream)
    */
   WxMediaUploadResult upload(String mediaType, File file) throws WxErrorException;
 
@@ -53,12 +54,13 @@ public interface WxCpMediaService {
    * 上传多媒体文件.
    *
    * @param mediaType 媒体类型
-   * @param bytes     the bytes
+   * @param bytes     文件流
+   * @param ext       文件名后缀(传一下吧,下载的时候你看到一个没有后缀的文件,你知道是啥东西吗?)
    * @return the wx media upload result
    * @throws WxErrorException the wx error exception
-   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)#upload(String, String, InputStream)#upload(String, String, InputStream)
+   * @see #upload(String, String, InputStream) #upload(String, String, InputStream)#upload(String, String, InputStream)#upload(String, String, InputStream)#upload(String, String, InputStream)#upload(String, String, InputStream)
    */
-  WxMediaUploadResult upload(String mediaType, byte[] bytes) throws WxErrorException;
+  WxMediaUploadResult upload(String mediaType, byte[] bytes, String ext) throws WxErrorException;
 
   /**
    * <pre>
@@ -84,11 +86,12 @@ public interface WxCpMediaService {
    * 接口url格式：https://qyapi.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN
    * </pre>
    *
-   * @param bytes the bytes
+   * @param bytes 文件流
+   * @param ext   文件名后缀(传一下吧,下载的时候你看到一个没有后缀的文件,你知道是啥东西吗?)
    * @return 返回图片url string
    * @throws WxErrorException the wx error exception
    */
-  String uploadImg(byte[] bytes) throws WxErrorException;
+  String uploadImg(byte[] bytes, String ext) throws WxErrorException;
 
   /**
    * <pre>
@@ -101,7 +104,7 @@ public interface WxCpMediaService {
    * @return 保存到本地的临时文件 file
    * @throws WxErrorException the wx error exception
    */
-  byte[] download(String mediaId) throws WxErrorException;
+  WxMediaDownloadBytesResult download(String mediaId) throws WxErrorException;
 
   /**
    * <pre>
@@ -117,5 +120,5 @@ public interface WxCpMediaService {
    * @return 保存到本地的临时文件 jssdk file
    * @throws WxErrorException the wx error exception
    */
-  byte[] getJssdkFile(String mediaId) throws WxErrorException;
+  WxMediaDownloadBytesResult getJssdkFile(String mediaId) throws WxErrorException;
 }

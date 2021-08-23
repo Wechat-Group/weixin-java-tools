@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.ByteUtil;
 import me.chanjar.weixin.common.util.http.MediaUploadBytesRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import org.apache.http.HttpEntity;
@@ -20,7 +21,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import java.io.IOException;
 
 /**
- * Created by ecoolper on 2017/5/5.
+ * @author caiqiyuan
  */
 public class ApacheMediaUploadBytesRequestExecutor extends MediaUploadBytesRequestExecutor<CloseableHttpClient, HttpHost> {
   public ApacheMediaUploadBytesRequestExecutor(RequestHttp requestHttp) {
@@ -35,9 +36,10 @@ public class ApacheMediaUploadBytesRequestExecutor extends MediaUploadBytesReque
       httpPost.setConfig(config);
     }
     if (bytes != null) {
+      String ext = ByteUtil.getExt(bytes);
       HttpEntity entity = MultipartEntityBuilder
         .create()
-        .addBinaryBody("media", bytes, ContentType.DEFAULT_BINARY, RandomUtil.randomString(16))
+        .addBinaryBody("media", ByteUtil.getBody(bytes), ContentType.DEFAULT_BINARY, RandomUtil.randomString(16) + "." + ext)
         .setMode(HttpMultipartMode.RFC6532)
         .build();
       httpPost.setEntity(entity);

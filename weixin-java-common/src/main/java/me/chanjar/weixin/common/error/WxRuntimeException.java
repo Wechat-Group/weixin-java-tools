@@ -1,5 +1,7 @@
 package me.chanjar.weixin.common.error;
 
+import cn.hutool.core.util.StrUtil;
+
 /**
  * WxJava专用的runtime exception.
  *
@@ -19,5 +21,13 @@ public class WxRuntimeException extends RuntimeException {
 
   public WxRuntimeException(String msg, Throwable e) {
     super(msg, e);
+  }
+
+  public WxRuntimeException(String msg, Object... args) {
+    super(StrUtil.format(msg, args));
+  }
+
+  public WxRuntimeException(String msg, Throwable e, Object... args) {
+    super(StrUtil.format(msg, args), e);
   }
 }

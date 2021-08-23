@@ -3,6 +3,7 @@ package me.chanjar.weixin.common.util.http;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.ByteUtil;
 import me.chanjar.weixin.common.util.http.apache.ApacheMediaUploadBytesRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpMediaUploadBytesRequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpMediaUploadBytesRequestExecutor;
@@ -11,9 +12,11 @@ import java.io.IOException;
 
 /**
  * 上传媒体文件请求执行器.
- * 请求的参数是File, 返回的结果是String
+ * <p>
+ * 请求的参数是byte[], 返回的结果是String
  *
- * @author Daniel Qian
+ * @author caiqiyuan
+ * @apiNote 由于需要文件名, 所以在上传时请用 {@link ByteUtil#combine(byte[], java.lang.String)} 方法预处理一下byte数组
  */
 public abstract class MediaUploadBytesRequestExecutor<H, P> implements RequestExecutor<WxMediaUploadResult, byte[]> {
   protected RequestHttp<H, P> requestHttp;

@@ -1,22 +1,23 @@
 package me.chanjar.weixin.common.util.http.okhttp;
 
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.bean.result.WxMediaDownloadBytesResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadBytesRequestExecutor;
+import me.chanjar.weixin.common.util.http.HttpResponseProxy;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
 /**
- * .
- *
- * @author ecoolper
- * @date 2017/5/5
+ * @author caiqiyuan
  */
 @Slf4j
 public class OkHttpMediaDownloadBytesRequestExecutor extends BaseMediaDownloadBytesRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
@@ -26,7 +27,7 @@ public class OkHttpMediaDownloadBytesRequestExecutor extends BaseMediaDownloadBy
   }
 
   @Override
-  public byte[] execute(String uri, String queryParam, WxType wxType) throws WxErrorException, IOException {
+  public WxMediaDownloadBytesResult execute(String uri, String queryParam, WxType wxType) throws WxErrorException, IOException {
     if (queryParam != null) {
       if (uri.indexOf('?') == -1) {
         uri += '?';
@@ -47,7 +48,21 @@ public class OkHttpMediaDownloadBytesRequestExecutor extends BaseMediaDownloadBy
       throw new WxErrorException(WxError.fromJson(response.body().string(), wxType));
     }
 
-    return response.body().source().readByteArray();
-  }
+    String fileName = new HttpResponseProxy(response).getFileName();
+    if (StringUtils.isBlank(fileName)) {
+      return null;
+    }
 
+    String baseName = FilenameUtils.getBaseName(fileName);
+    if (StringUtils.isBlank(fileName) || baseName.length() < 3) {
+      baseName = String.valueOf(System.currentTimeMillis());
+    }
+
+    return WxMediaDownloadBytesResult.builder()
+      .bytes(response.body().source().readByteArray())
+      .extension(FilenameUtils.getExtension(fileName))
+      .baseName(baseName)
+      .fileName(fileName)
+      .build();
+  }
 }
