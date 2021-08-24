@@ -484,6 +484,7 @@ public class WxCpConsts {
     /**
      * 小程序消息.
      */
+<<<<<<< HEAD
     MINIPROGRAM("miniprogram");
 
     private final String name;
@@ -520,5 +521,13 @@ public class WxCpConsts {
     public String toString() {
       return this.name;
     }
+=======
+    public static final String MINIPROGRAM = "miniprogram";
+
+    /**
+     * 文件消息.
+     */
+    public static final String FILE = "file";
+>>>>>>> af212bd68fefdb8f41d86d60be33e5ee68056cc1
   }
 }

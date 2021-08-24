@@ -43,7 +43,9 @@ public class WxCpMessageSendResult implements Serializable {
 
   @SerializedName("invalidtag")
   private String invalidTag;
-
+  
+  @SerializedName("msgid")
+  private String msgId;
 
   public List<String> getInvalidUserList() {
     return this.content2List(this.invalidUser);
