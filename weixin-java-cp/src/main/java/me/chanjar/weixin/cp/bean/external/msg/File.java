@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 视频消息
+ * 文件
  *
  * @author pg
  * @date 2021-6-21
