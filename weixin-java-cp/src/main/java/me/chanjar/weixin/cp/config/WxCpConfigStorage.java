@@ -155,7 +155,7 @@ public interface WxCpConfigStorage {
   /**
    * Gets agent id.
    *
-   * @return the agent id
+   * @return 企业应用的id，整型。企业内部开发，可在应用的设置页面查看；第三方服务商，可通过接口 获取企业授权信息 获取该参数值
    */
   Integer getAgentId();
 

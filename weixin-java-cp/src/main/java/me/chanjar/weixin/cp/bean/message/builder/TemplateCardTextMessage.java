@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * The type Template card text message.
+ */
 @Getter
 @Setter
 public class TemplateCardTextMessage extends AbstractTemplateCardMessage {
@@ -25,6 +28,18 @@ public class TemplateCardTextMessage extends AbstractTemplateCardMessage {
   @SerializedName("jump_list")
   private List<JumpListItem> jumpList;
 
+  /**
+   * Instantiates a new Template card text message.
+   *
+   * @param cardType              the card type
+   * @param mainTitle             the main title
+   * @param source                the source
+   * @param horizontalContentList the horizontal content list
+   * @param cardAction            the card action
+   * @param subTitleText          the sub title text
+   * @param emphasisContent       the emphasis content
+   * @param jumpList              the jump list
+   */
   public TemplateCardTextMessage(String cardType, MainTitle mainTitle, Source source, List<HorizontalContentListItem> horizontalContentList, CardAction cardAction, String subTitleText, EmphasisContent emphasisContent, List<JumpListItem> jumpList) {
     super(cardType, mainTitle, source);
     this.horizontalContentList = horizontalContentList;

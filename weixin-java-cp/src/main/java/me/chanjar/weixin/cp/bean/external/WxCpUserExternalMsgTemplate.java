@@ -3,11 +3,13 @@ package me.chanjar.weixin.cp.bean.external;
 import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import me.chanjar.weixin.cp.bean.external.msg.Attachment;
 import me.chanjar.weixin.cp.bean.external.msg.Text;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,8 +19,7 @@ import java.util.List;
  *
  * @author songfan
  */
-@Data
-@Builder
+@Getter
 public class WxCpUserExternalMsgTemplate implements Serializable {
   private static final long serialVersionUID = 3172331565173474358L;
 
@@ -56,6 +57,23 @@ public class WxCpUserExternalMsgTemplate implements Serializable {
    */
   @SerializedName("attachments")
   private List<Attachment> attachments;
+
+  @Builder(builderMethodName = "single")
+  public WxCpUserExternalMsgTemplate(String sender, List<String> externalUserid, Text text, Attachment... attachments) {
+    this.chatType = CHAT_TYPE_SINGLE;
+    this.sender = sender;
+    this.externalUserid = externalUserid;
+    this.text = text;
+    this.attachments = Arrays.asList(attachments);
+  }
+
+  @Builder(builderMethodName = "group")
+  public WxCpUserExternalMsgTemplate(String chatType, String sender, Text text, Attachment... attachments) {
+    this.chatType = CHAT_TYPE_GROUP;
+    this.sender = sender;
+    this.text = text;
+    this.attachments = Arrays.asList(attachments);
+  }
 
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);

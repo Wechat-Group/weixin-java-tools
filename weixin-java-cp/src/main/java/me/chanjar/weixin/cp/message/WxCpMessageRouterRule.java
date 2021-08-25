@@ -70,7 +70,7 @@ public class WxCpMessageRouterRule {
   /**
    * 如果agentId匹配
    *
-   * @param agentId the agent id
+   * @param agentId 企业应用的id，整型。企业内部开发，可在应用的设置页面查看；第三方服务商，可通过接口 获取企业授权信息 获取该参数值
    * @return the wx cp message router rule
    */
   public WxCpMessageRouterRule agentId(Integer agentId) {
