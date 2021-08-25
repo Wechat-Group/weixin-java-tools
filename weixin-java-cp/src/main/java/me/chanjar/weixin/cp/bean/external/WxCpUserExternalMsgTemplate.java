@@ -24,7 +24,6 @@ public class WxCpUserExternalMsgTemplate implements Serializable {
   private static final long serialVersionUID = 3172331565173474358L;
 
   public static final String CHAT_TYPE_SINGLE = "single";
-  ;
 
   public static final String CHAT_TYPE_GROUP = "group";
 
@@ -59,19 +58,19 @@ public class WxCpUserExternalMsgTemplate implements Serializable {
   private List<Attachment> attachments;
 
   @Builder(builderMethodName = "single")
-  public WxCpUserExternalMsgTemplate(String sender, List<String> externalUserid, Text text, Attachment... attachments) {
+  public WxCpUserExternalMsgTemplate(String sender, List<String> externalUserid, String text, Attachment... attachments) {
     this.chatType = CHAT_TYPE_SINGLE;
     this.sender = sender;
     this.externalUserid = externalUserid;
-    this.text = text;
+    this.text = new Text(text);
     this.attachments = Arrays.asList(attachments);
   }
 
   @Builder(builderMethodName = "group")
-  public WxCpUserExternalMsgTemplate(String chatType, String sender, Text text, Attachment... attachments) {
+  public WxCpUserExternalMsgTemplate(String sender, String text, Attachment... attachments) {
     this.chatType = CHAT_TYPE_GROUP;
     this.sender = sender;
-    this.text = text;
+    this.text = new Text(text);
     this.attachments = Arrays.asList(attachments);
   }
 
