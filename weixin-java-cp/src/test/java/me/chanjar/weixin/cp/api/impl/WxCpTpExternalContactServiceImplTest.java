@@ -236,7 +236,7 @@ public class WxCpTpExternalContactServiceImplTest {
 
   @Test
   public void testListGroupChatV3() throws WxErrorException {
-    WxCpUserExternalGroupChatList result = this.wxCpService.getExternalContactService().listGroupChat(100, "" ,0,new String[1]);
+    WxCpUserExternalGroupChatList result = this.wxCpService.getExternalContactService().listGroupChat(100, "", 0, new String[1]);
     System.out.println(result);
     assertNotNull(result);
   }
@@ -275,12 +275,11 @@ public class WxCpTpExternalContactServiceImplTest {
     video.setMediaId("video_media_id");
     Attachment attachment2 = Attachment.video(video);
 
-    List<Attachment> attachments = new ArrayList<>();
-    attachments.add(attachment);
-    attachments.add(attachment2);
     this.wxCpService.getExternalContactService().sendWelcomeMsg(WxCpWelcomeMsg.builder()
       .welcomeCode("abc")
-      .attachments(attachments)
+      .attachments(new Attachment[]{
+        attachment, attachment2
+      })
       .build());
   }
 
@@ -292,7 +291,7 @@ public class WxCpTpExternalContactServiceImplTest {
       .externalUserId("aaa")
       .remark("aa")
       .remarkCompany("aaa")
-      .remarkMobiles(new String[]{"111","222"})
+      .remarkMobiles(new String[]{"111", "222"})
       .remarkPicMediaId("aaa")
       .build());
   }
