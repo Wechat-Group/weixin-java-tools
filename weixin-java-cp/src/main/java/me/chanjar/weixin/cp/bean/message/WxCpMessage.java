@@ -124,12 +124,16 @@ public abstract class WxCpMessage implements Serializable {
   }
 
   protected void resetInterval() {
+    if (getDuplicateCheckInterval() == null) {
+      log.warn("重复消息检查最小为30分钟,系统自动重置为30分钟");
+      setDuplicateCheckInterval(MAX_CHECK_INTERVAL);
+    }
     if (getDuplicateCheckInterval() > MAX_CHECK_INTERVAL) {
-      log.warn("重复消息检查最大为4小时,系统自动充值为4小时");
+      log.warn("重复消息检查最大为4小时,系统自动重置为4小时");
       setDuplicateCheckInterval(MAX_CHECK_INTERVAL);
     }
     if (getDuplicateCheckInterval() < MIN_CHECK_INTERVAL) {
-      log.warn("重复消息检查最小为30分钟,系统自动充值为30分钟");
+      log.warn("重复消息检查最小为30分钟,系统自动重置为30分钟");
       setDuplicateCheckInterval(MIN_CHECK_INTERVAL);
     }
   }
