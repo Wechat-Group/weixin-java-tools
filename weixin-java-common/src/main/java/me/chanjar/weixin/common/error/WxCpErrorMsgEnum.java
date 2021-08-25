@@ -126,7 +126,7 @@ public enum WxCpErrorMsgEnum {
    */
   CODE_40032(40032, "不合法的UserID列表长度"),
   /**
-   * 不能包含\uxxxx格式的字符
+   * 不能包含Unicode格式的字符,不懂就百度，这里放不了腾讯的原文
    */
   CODE_40033(40033, "不合法的请求字符"),
   /**
@@ -926,7 +926,7 @@ public enum WxCpErrorMsgEnum {
    */
   CODE_60207(60207, "第三方独立应用只允许发送模板消息"),
   /**
-   * @all，不支持参数toparty和totag  -
+   * @all，不支持参数toparty和totag -
    */
   CODE_60208(60208, "第三方独立应用不支持指定"),
   /**
