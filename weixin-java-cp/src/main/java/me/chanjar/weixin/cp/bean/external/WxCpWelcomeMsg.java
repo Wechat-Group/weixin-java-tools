@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.bean.external;
 
+import cn.hutool.core.collection.CollUtil;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +38,7 @@ public class WxCpWelcomeMsg implements Serializable {
   public WxCpWelcomeMsg(String welcomeCode, String text, Attachment... attachments) {
     this.welcomeCode = welcomeCode;
     this.text = new Text(text);
-    this.attachments = Arrays.asList(attachments);
+    this.attachments = CollUtil.list(false, attachments);
   }
 
   public String toJson() {

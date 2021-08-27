@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.bean.external;
 
+import cn.hutool.core.collection.CollUtil;
 import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Data;
@@ -63,7 +64,7 @@ public class WxCpUserExternalMsgTemplate implements Serializable {
     this.sender = sender;
     this.externalUserid = externalUserid;
     this.text = new Text(text);
-    this.attachments = Arrays.asList(attachments);
+    this.attachments = CollUtil.list(false, attachments);
   }
 
   @Builder(builderMethodName = "group")
@@ -71,7 +72,7 @@ public class WxCpUserExternalMsgTemplate implements Serializable {
     this.chatType = CHAT_TYPE_GROUP;
     this.sender = sender;
     this.text = new Text(text);
-    this.attachments = Arrays.asList(attachments);
+    this.attachments = CollUtil.list(false,attachments);
   }
 
   public String toJson() {
