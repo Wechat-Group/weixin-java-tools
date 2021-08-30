@@ -1,7 +1,5 @@
 package me.chanjar.weixin.cp.constant;
 
-import jdk.jfr.Experimental;
-
 /**
  * <pre>
  * 企业微信常量
