@@ -1,5 +1,7 @@
 package me.chanjar.weixin.cp.constant;
 
+import jdk.jfr.Experimental;
+
 /**
  * <pre>
  * 企业微信常量
@@ -149,15 +151,21 @@ public class WxCpConsts {
    * 企业外部联系人变更事件的CHANGE_TYPE
    */
   public static enum ExternalContactChangeType {
+    //---------------------------------------------------------------------
+    // change_external_contact
+    //---------------------------------------------------------------------
     /**
      * 新增外部联系人
      */
     ADD_EXTERNAL_CONTACT("add_external_contact"),
     /**
+     * 编辑外部联系人
+     */
+    EDIT_EXTERNAL_CONTACT("edit_external_contact"),
+    /**
      * 删除外部联系人
      */
     DEL_EXTERNAL_CONTACT("del_external_contact"),
-
     /**
      * 外部联系人免验证添加成员事件
      */
@@ -165,7 +173,44 @@ public class WxCpConsts {
     /**
      * 删除跟进成员事件
      */
-    DEL_FOLLOW_USER("del_follow_user");
+    DEL_FOLLOW_USER("del_follow_user"),
+    /**
+     * 客户接替失败事件
+     */
+    TRANSFER_FAIL("transfer_fail"),
+
+    //---------------------------------------------------------------------
+    // change_external_chat
+    //---------------------------------------------------------------------
+    /**
+     * 客户群创建事件
+     */
+    change_external_chat_create("create"),
+    /**
+     * 客户群变更事件
+     */
+    change_external_chat_update("update"),
+    /**
+     * 客户群解散事件
+     */
+    change_external_chat_dismiss("dismiss"),
+    //---------------------------------------------------------------------
+    // change_external_tag
+    //---------------------------------------------------------------------
+    /**
+     * 企业客户标签创建事件
+     */
+    change_external_tag_create("create"),
+
+    /**
+     * 企业客户标签变更事件
+     */
+    change_external_tag_update("update"),
+
+    /**
+     * 企业客户标签删除事件
+     */
+    change_external_tag_delete("delete");
 
     private final String name;
 
