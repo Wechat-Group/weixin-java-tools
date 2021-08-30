@@ -228,6 +228,12 @@ public class WxCpTpXmlMessage implements Serializable {
   @XStreamAlias("AppType")
   private String appType;
 
+  /**
+   * 接替失败的原因, customer_refused-客户拒绝， customer_limit_exceed-接替成员的客户数达到上限
+   */
+  @XStreamAlias("FailReason")
+  private String failReason;
+
   @XStreamAlias("ScanCodeInfo")
   private WxCpXmlMessage.ScanCodeInfo scanCodeInfo;
 
