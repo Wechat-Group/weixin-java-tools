@@ -63,7 +63,9 @@ public class WxMaMessageRouter {
    */
   private WxMaXmlOutMessage route(final WxMaMessage wxMessage, final Map<String, Object> context) {
     if (isMsgDuplicated(wxMessage)) {
-      // 如果是重复消息，那么就不做处理
+      if (log.isDebugEnabled()) {
+        log.info("\n\n检测到重复消息:\n\n{}", wxMessage.toJson());
+      }
       return null;
     }
 

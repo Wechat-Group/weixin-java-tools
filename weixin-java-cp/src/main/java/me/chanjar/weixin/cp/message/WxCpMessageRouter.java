@@ -9,6 +9,9 @@ import me.chanjar.weixin.common.session.InternalSession;
 import me.chanjar.weixin.common.session.InternalSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.LogExceptionHandler;
+import me.chanjar.weixin.common.util.json.GsonHelper;
+import me.chanjar.weixin.common.util.json.GsonParser;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
@@ -132,7 +135,9 @@ public class WxCpMessageRouter {
    */
   public WxCpXmlOutMessage route(final WxCpXmlMessage wxMessage, final Map<String, Object> context) {
     if (isMsgDuplicated(wxMessage)) {
-      // 如果是重复消息，那么就不做处理
+      if (log.isDebugEnabled()) {
+        log.info("\n\n检测到重复消息:\n\n{}", WxGsonBuilder.create().toJson(wxMessage));
+      }
       return null;
     }
 
