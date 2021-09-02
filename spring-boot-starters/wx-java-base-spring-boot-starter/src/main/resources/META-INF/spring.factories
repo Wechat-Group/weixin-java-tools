@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.binarywang.spring.starter.wxjava.base.aspect.RequestLogAspect
+  com.binarywang.spring.starter.wxjava.base.aspect.RequestLogAspect,\
+  com.binarywang.spring.starter.wxjava.base.exception.WxExceptionTranslator
