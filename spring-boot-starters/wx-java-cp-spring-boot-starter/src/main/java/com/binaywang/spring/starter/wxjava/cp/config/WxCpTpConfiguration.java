@@ -83,7 +83,7 @@ public class WxCpTpConfiguration {
         } else {
           newRouter.rule().async(false).msgType(wxCpTpMessageMatchHandler.getMsgType())
             .infoType(wxCpTpMessageMatchHandler.getInfoType())
-            .changeType(wxCpTpMessageMatchHandler.getEventType())
+            .changeType(wxCpTpMessageMatchHandler.getChangeType())
             .event(wxCpTpMessageMatchHandler.getEventType())
             .handler(wxCpTpMessageMatchHandler)
             .end();
