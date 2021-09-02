@@ -73,7 +73,7 @@ public class WxCpTpMessageRouter {
     ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxCpTpMessageRouter-pool-%d").build();
     this.executorService = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE,
       0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
-    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker(30);
     this.sessionManager = wxCpTpService.getSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
   }
@@ -199,33 +199,8 @@ public class WxCpTpMessageRouter {
   }
 
   private boolean isMsgDuplicated(WxCpTpXmlMessage wxMessage) {
-    StringBuilder messageId = new StringBuilder();
-      if (wxMessage.getInfoType() != null) {
-        messageId.append(wxMessage.getInfoType())
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getSuiteId()))
-          .append("-").append(wxMessage.getTimeStamp())
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getAuthCorpId()))
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getUserID()))
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getChangeType()))
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getServiceCorpId()));
-      }
-
-      if (wxMessage.getMsgType() != null) {
-        if (wxMessage.getMsgId() != null) {
-          messageId.append(wxMessage.getMsgId())
-            .append("-").append(wxMessage.getCreateTime())
-            .append("-").append(wxMessage.getFromUserName());
-        }
-        else {
-          messageId.append(wxMessage.getMsgType())
-            .append("-").append(wxMessage.getCreateTime())
-            .append("-").append(wxMessage.getFromUserName())
-            .append("-").append(StringUtils.trimToEmpty(wxMessage.getEvent()))
-            .append("-").append(StringUtils.trimToEmpty(wxMessage.getEventKey()));
-        }
-      }
-
-    return this.messageDuplicateChecker.isDuplicate(messageId.toString());
+    // 这里简化之前的看不懂的不知道为什么要写出来的id生成
+    return this.messageDuplicateChecker.isDuplicate(wxMessage.hashCode() + "");
   }
 
   /**

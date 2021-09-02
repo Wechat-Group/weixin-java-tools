@@ -48,7 +48,7 @@ public class WxMaMessageRouter {
       0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
-    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker(30);
   }
 
   /**

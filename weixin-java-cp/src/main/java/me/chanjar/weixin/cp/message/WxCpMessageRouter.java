@@ -71,7 +71,7 @@ public class WxCpMessageRouter {
     ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxCpMessageRouter-pool-%d").build();
     this.executorService = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE,
       0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
-    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker(30);
     this.sessionManager = wxCpService.getSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
   }
@@ -197,28 +197,7 @@ public class WxCpMessageRouter {
   }
 
   private boolean isMsgDuplicated(WxCpXmlMessage wxMessage) {
-    StringBuilder messageId = new StringBuilder();
-    if (wxMessage.getMsgId() == null) {
-      messageId.append(wxMessage.getCreateTime())
-        .append("-").append(StringUtils.trimToEmpty(String.valueOf(wxMessage.getAgentId())))
-        .append("-").append(wxMessage.getFromUserName())
-        .append("-").append(StringUtils.trimToEmpty(wxMessage.getEventKey()))
-        .append("-").append(StringUtils.trimToEmpty(wxMessage.getEvent()));
-    } else {
-      messageId.append(wxMessage.getMsgId())
-        .append("-").append(wxMessage.getCreateTime())
-        .append("-").append(wxMessage.getFromUserName());
-    }
-
-    if (StringUtils.isNotEmpty(wxMessage.getUserId())) {
-      messageId.append("-").append(wxMessage.getUserId());
-    }
-
-    if (StringUtils.isNotEmpty(wxMessage.getChangeType())) {
-      messageId.append("-").append(wxMessage.getChangeType());
-    }
-
-    return this.messageDuplicateChecker.isDuplicate(messageId.toString());
+    return this.messageDuplicateChecker.isDuplicate(wxMessage.hashCode() + "");
   }
 
   /**

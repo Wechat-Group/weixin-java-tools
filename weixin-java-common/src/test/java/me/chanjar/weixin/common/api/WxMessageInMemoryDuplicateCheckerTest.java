@@ -9,7 +9,7 @@ import static org.testng.Assert.assertTrue;
 
 @Test
 public class WxMessageInMemoryDuplicateCheckerTest {
-  private WxMessageInMemoryDuplicateChecker checker = new WxMessageInMemoryDuplicateChecker(2000L, 1000L);
+  private WxMessageInMemoryDuplicateChecker checker = new WxMessageInMemoryDuplicateChecker(2);
 
   public void test() throws InterruptedException {
     Long[] msgIds = new Long[]{1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L};
