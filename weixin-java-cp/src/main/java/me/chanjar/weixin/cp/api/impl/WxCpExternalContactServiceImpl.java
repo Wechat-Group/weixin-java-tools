@@ -138,7 +138,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpExternalContactBatchInfo getContactDetailBatch(String userId,
+  public WxCpExternalContactBatchInfo getContactDetailBatch(String[] userIdList,
                                                             String cursor,
                                                             Integer limit)
     throws WxErrorException {
@@ -147,7 +147,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
         .getWxCpConfigStorage()
         .getApiUrl(GET_CONTACT_DETAIL_BATCH);
     JsonObject json = new JsonObject();
-    json.addProperty("userid", userId);
+    json.add("userid_list", new Gson().toJsonTree(userIdList).getAsJsonArray());
     if (StringUtils.isNotBlank(cursor)) {
       json.addProperty("cursor", cursor);
     }
