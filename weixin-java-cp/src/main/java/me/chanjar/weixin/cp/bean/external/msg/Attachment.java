@@ -1,10 +1,15 @@
 package me.chanjar.weixin.cp.bean.external.msg;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import me.chanjar.weixin.cp.constant.WxCpConsts;
 
 import java.io.Serializable;
 
+/**
+ * @author chutian0124
+ */
+@Data
 public class Attachment implements Serializable {
   private static final long serialVersionUID = -8078748379570640198L;
 
@@ -15,40 +20,16 @@ public class Attachment implements Serializable {
 
   private Link link;
 
-  private MiniProgram miniprogram;
+  @SerializedName("miniprogram")
+  private MiniProgram miniProgram;
 
   private Video video;
 
-  @Override
-  public String toString() {
-    return "Attachment{" +
-      "msgType='" + msgType + '\'' +
-      ", image=" + image +
-      ", link=" + link +
-      ", miniprogram=" + miniprogram +
-      ", video=" + video +
-      '}';
-  }
-
-  private String getMsgType() {
-    return msgType;
-  }
-
-  private void setMsgType(String msgType) {
-    this.msgType = msgType;
-  }
-
-  public Image getImage() {
-    return image;
-  }
+  private File file;
 
   public void setImage(Image image) {
     this.image = image;
     this.msgType = WxCpConsts.WelcomeMsgType.IMAGE;
-  }
-
-  public Link getLink() {
-    return link;
   }
 
   public void setLink(Link link) {
@@ -56,21 +37,18 @@ public class Attachment implements Serializable {
     this.msgType = WxCpConsts.WelcomeMsgType.LINK;
   }
 
-  public MiniProgram getMiniprogram() {
-    return miniprogram;
-  }
-
-  public void setMiniprogram(MiniProgram miniprogram) {
-    this.miniprogram = miniprogram;
+  public void setMiniProgram(MiniProgram miniProgram) {
+    this.miniProgram = miniProgram;
     this.msgType = WxCpConsts.WelcomeMsgType.MINIPROGRAM;
-  }
-
-  public Video getVideo() {
-    return video;
   }
 
   public void setVideo(Video video) {
     this.video = video;
     this.msgType = WxCpConsts.WelcomeMsgType.VIDEO;
+  }
+
+  public void setFile(File file ) {
+    this.file = file;
+    this.msgType = WxCpConsts.WelcomeMsgType.FILE;
   }
 }

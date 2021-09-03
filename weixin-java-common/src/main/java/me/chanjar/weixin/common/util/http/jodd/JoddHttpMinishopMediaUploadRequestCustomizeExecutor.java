@@ -22,8 +22,8 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 public class JoddHttpMinishopMediaUploadRequestCustomizeExecutor extends MinishopUploadRequestCustomizeExecutor<HttpConnectionProvider, ProxyInfo> {
-  public JoddHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp) {
-    super(requestHttp);
+  public JoddHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType) {
+    super(requestHttp, respType);
   }
 
   @Override

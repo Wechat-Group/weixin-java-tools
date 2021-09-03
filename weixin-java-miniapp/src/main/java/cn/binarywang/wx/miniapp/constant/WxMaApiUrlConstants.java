@@ -311,6 +311,7 @@ public class WxMaApiUrlConstants {
       String SPU_UPDATE_WITHOUT_URL = "https://api.weixin.qq.com/shop/spu/update_without_audit";
       String SPU_LISTING_URL = "https://api.weixin.qq.com/shop/spu/listing";
       String SPU_DELISTING_URL = "https://api.weixin.qq.com/shop/spu/delisting";
+      String DEL_AUDIT_URL = "https://api.weixin.qq.com/shop/spu/del_audit";
     }
 
     interface Order {

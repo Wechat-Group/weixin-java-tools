@@ -1,8 +1,10 @@
 package cn.binarywang.wx.miniapp.bean.shop.request;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WxMaShopAuditCategoryRequest implements Serializable {
   private static final long serialVersionUID = -6730876344556487071L;
 
@@ -25,6 +29,8 @@ public class WxMaShopAuditCategoryRequest implements Serializable {
 
   @Data
   @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class AuditReqBean implements Serializable {
     /**
      * license : ["www.xxxxx.com"]

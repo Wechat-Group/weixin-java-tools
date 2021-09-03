@@ -24,8 +24,8 @@ import java.io.IOException;
  */
 @Slf4j
 public class ApacheMinishopMediaUploadRequestCustomizeExecutor extends MinishopUploadRequestCustomizeExecutor<CloseableHttpClient, HttpHost> {
-  public ApacheMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp) {
-    super(requestHttp);
+  public ApacheMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType) {
+    super(requestHttp, respType);
   }
 
   @Override
@@ -39,6 +39,7 @@ public class ApacheMinishopMediaUploadRequestCustomizeExecutor extends MinishopU
       HttpEntity entity = MultipartEntityBuilder
         .create()
         .addBinaryBody("media", file)
+        .addTextBody("resp_type", this.respType)
         .setMode(HttpMultipartMode.RFC6532)
         .build();
       httpPost.setEntity(entity);

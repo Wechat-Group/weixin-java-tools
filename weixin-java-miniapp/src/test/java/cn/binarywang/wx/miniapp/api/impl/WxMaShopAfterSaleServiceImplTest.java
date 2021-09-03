@@ -29,19 +29,19 @@ public class WxMaShopAfterSaleServiceImplTest {
   @Test
   public void testAdd() throws WxErrorException {
     WxMaShopAfterSaleAddRequest.ProductInfosBean productInfosBean = WxMaShopAfterSaleAddRequest.ProductInfosBean.builder()
-      .outProductId("234245")
-      .outSkuId("23424")
-      .productCnt(5)
+      .outProductId("19030")
+      .outSkuId("123266")
+      .productCnt(1)
       .build();
     WxMaShopAfterSaleAddRequest request = WxMaShopAfterSaleAddRequest.builder()
-      .outOrderId("xxxxx")
-      .outAftersaleId("xxxxxx")
-      .openid("oTVP50O53a7jgmawAmxKukNlq3XI")
+      .outOrderId("318070290792415232X")
+      .outAftersaleId("318092069606883328X")
+      .openid("odIi15CuQ0IQviqsnUMy6CKNetrMX")
       .type(1)
-      .createTime("2020-12-01 00:00:00")
+      .createTime("2021-08-20 00:00:00")
       .status(1)
       .finishAllAftersale(0)
-      .path("/pages/aftersale.html?out_aftersale_id=xxxxx")
+      .path("/pages/aftersale.html?out_aftersale_id=318092069606883328X")
       .refund(100L)
       .productInfos(new ArrayList<>(Arrays.asList(productInfosBean)))
       .build();

@@ -1,6 +1,8 @@
 package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaMediaAsyncCheckResult;
+import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckRequest;
+import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.io.File;
@@ -54,6 +56,17 @@ public interface WxMaSecCheckService {
    */
   boolean checkMessage(String msgString) throws WxErrorException;
 
+
+  /**
+   * <pre>
+   * 检查一段文本是否含有违法违规内容（新版本接口，主要是request和response做了参数优化）
+   * 详情请见: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html
+   * </pre>
+   * @param msgRequest
+   * @return WxMaMsgSecCheckCheckResponse
+   * @throws WxErrorException
+   */
+  WxMaMsgSecCheckCheckResponse checkMessage(WxMaMsgSecCheckCheckRequest msgRequest) throws WxErrorException;
 
   /**
    * <pre>

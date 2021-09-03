@@ -3,12 +3,17 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaSecCheckService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaMediaAsyncCheckResult;
+import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckRequest;
+import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckResponse;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -16,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.SecCheck.*;
+import static cn.binarywang.wx.miniapp.constant.WxMaConstants.ERRCODE;
 
 /**
  * <pre>
@@ -57,6 +63,16 @@ public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
     this.service.post(MSG_SEC_CHECK_URL, jsonObject.toString());
 
     return true;
+  }
+
+  @Override
+  public WxMaMsgSecCheckCheckResponse checkMessage(WxMaMsgSecCheckCheckRequest msgRequest) throws WxErrorException {
+    String response = this.service.post(MSG_SEC_CHECK_URL, msgRequest);
+    JsonObject jsonObject = GsonParser.parse(response);
+    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
+    }
+    return WxMaGsonBuilder.create().fromJson(response, WxMaMsgSecCheckCheckResponse.class);
   }
 
   @Override

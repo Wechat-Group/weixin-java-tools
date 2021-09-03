@@ -1,8 +1,10 @@
 package cn.binarywang.wx.miniapp.bean.shop.request;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WxMaShopDeliverySendRequest implements Serializable {
   private static final long serialVersionUID = -4034672301224469057L;
 
@@ -37,6 +41,8 @@ public class WxMaShopDeliverySendRequest implements Serializable {
 
   @Data
   @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class DeliveryListBean implements Serializable {
     /**
      * delivery_id : SF
