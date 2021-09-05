@@ -161,6 +161,29 @@ public interface WxCpExternalContactService {
   String convertToOpenid(String externalUserid) throws WxErrorException;
 
   /**
+   * 服务商为企业代开发微信小程序的场景，服务商可通过此接口，将微信客户的unionid转为external_userid。
+   * <pre>
+   *
+   * 文档地址：https://work.weixin.qq.com/api/doc/90001/90143/93274
+   *
+   * 服务商代开发小程序指企业使用的小程序为企业主体的，非服务商主体的小程序。
+   * 场景：企业客户在微信端从企业主体的小程序（非服务商应用）登录，同时企业在企业微信安装了服务商的第三方应用，服务商可以调用该接口将登录用户的unionid转换为服务商全局唯一的外部联系人id
+   *
+   * 权限说明：
+   *
+   * 仅认证企业可调用
+   * unionid必须是企业主体下的unionid。即unionid的主体（为绑定了该小程序的微信开放平台账号主体）需与当前企业的主体一致。
+   * unionid的主体（即微信开放平台账号主体）需认证
+   * 该客户的跟进人必须在应用的可见范围之内
+   * </pre>
+   *
+   * @param unionid 微信客户的unionid
+   * @return 该企业的外部联系人ID
+   * @throws WxErrorException .
+   */
+  String unionidToExternalUserid(String unionid) throws WxErrorException;
+
+  /**
    * 批量获取客户详情.
    * <pre>
    *
