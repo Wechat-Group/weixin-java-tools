@@ -101,6 +101,7 @@ public class WxMaLiveResult implements Serializable {
     private String anchorWechat;
     @SerializedName("anchor_img")
     private String anchorImg;
+    @SerializedName("live_type")
     private Integer type;
     @SerializedName("screen_type")
     private Integer screenType;
