@@ -388,4 +388,8 @@ public class WxMaApiUrlConstants {
      */
     String UPDATE_STATUS_BATCH = "https://api.weixin.qq.com/card/invoice/reimburse/updatestatusbatch";
   }
+
+  public interface Internet{
+    String GET_USER_ENCRYPT_KEY = "https://api.weixin.qq.com/wxa/business/getuserencryptkey";
+  }
 }

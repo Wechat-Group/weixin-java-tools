@@ -49,6 +49,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaSchemeService schemeService = new WxMaSchemeServiceImpl(this);
   private final WxMaAnalysisService analysisService = new WxMaAnalysisServiceImpl(this);
   private final WxMaCodeService codeService = new WxMaCodeServiceImpl(this);
+  private final WxMaInternetService internetService = new WxMaInternetServiceImpl(this);
   private final WxMaSettingService settingService = new WxMaSettingServiceImpl(this);
   private final WxMaJsapiService jsapiService = new WxMaJsapiServiceImpl(this);
   private final WxMaShareService shareService = new WxMaShareServiceImpl(this);
@@ -486,6 +487,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaCloudService getCloudService() {
     return this.cloudService;
+  }
+
+  @Override
+  public WxMaInternetService getInternetService() {
+    return this.internetService;
   }
 
   @Override
