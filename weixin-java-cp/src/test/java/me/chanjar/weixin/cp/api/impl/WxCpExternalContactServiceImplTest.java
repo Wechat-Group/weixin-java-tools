@@ -7,6 +7,7 @@ import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
+import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
 import me.chanjar.weixin.cp.bean.external.msg.Attachment;
 import me.chanjar.weixin.cp.bean.external.msg.Image;
@@ -111,6 +112,14 @@ public class WxCpExternalContactServiceImplTest {
   public void testGetContactDetail() throws WxErrorException {
     String externalUserId = this.configStorage.getExternalUserId();
     WxCpExternalContactInfo result = this.wxCpService.getExternalContactService().getContactDetail(externalUserId);
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  @Test
+  public void testGetContactDetailBatch() throws WxErrorException {
+    String userId = this.configStorage.getUserId();
+    WxCpExternalContactBatchInfo result = this.wxCpService.getExternalContactService().getContactDetailBatch(new String[]{userId}, "", 100);
     System.out.println(result);
     assertNotNull(result);
   }
@@ -236,14 +245,14 @@ public class WxCpExternalContactServiceImplTest {
 
   @Test
   public void testListGroupChat() throws WxErrorException {
-    WxCpUserExternalGroupChatList result = this.wxCpService.getExternalContactService().listGroupChat(0, 100 ,0,new String[1],new String[1]);
+    WxCpUserExternalGroupChatList result = this.wxCpService.getExternalContactService().listGroupChat(0, 100, 0, new String[1], new String[1]);
     System.out.println(result);
     assertNotNull(result);
   }
 
   @Test
   public void testListGroupChatV3() throws WxErrorException {
-    WxCpUserExternalGroupChatList result = this.wxCpService.getExternalContactService().listGroupChat(100, "" ,0,new String[1]);
+    WxCpUserExternalGroupChatList result = this.wxCpService.getExternalContactService().listGroupChat(100, "", 0, new String[1]);
     System.out.println(result);
     assertNotNull(result);
   }
@@ -301,7 +310,7 @@ public class WxCpExternalContactServiceImplTest {
       .externalUserId("aaa")
       .remark("aa")
       .remarkCompany("aaa")
-      .remarkMobiles(new String[]{"111","222"})
+      .remarkMobiles(new String[]{"111", "222"})
       .remarkPicMediaId("aaa")
       .build());
   }

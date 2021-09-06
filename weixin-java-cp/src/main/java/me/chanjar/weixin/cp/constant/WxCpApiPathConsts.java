@@ -181,6 +181,7 @@ public interface WxCpApiPathConsts {
     String GET_FOLLOW_USER_LIST = "/cgi-bin/externalcontact/get_follow_user_list";
     String GET_CONTACT_DETAIL = "/cgi-bin/externalcontact/get?external_userid=";
     String CONVERT_TO_OPENID = "/cgi-bin/externalcontact/convert_to_openid";
+    String UNIONID_TO_EXTERNAL_USERID = "/cgi-bin/externalcontact/unionid_to_external_userid";
     String GET_CONTACT_DETAIL_BATCH = "/cgi-bin/externalcontact/batch/get_by_user?";
     String UPDATE_REMARK = "/cgi-bin/externalcontact/remark";
     String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";
