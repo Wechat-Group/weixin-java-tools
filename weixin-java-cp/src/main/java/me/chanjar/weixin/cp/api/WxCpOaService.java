@@ -60,6 +60,18 @@ public interface WxCpOaService {
    */
   List<WxCpCheckinOption> getCheckinOption(Date datetime, List<String> userIdList) throws WxErrorException;
 
+
+  /**
+   * <pre>
+   *   获取企业所有打卡规则
+   *   API doc : https://work.weixin.qq.com/api/doc/90000/90135/93384
+   * </pre>
+   *
+   * @return 打卡规则列表
+   * @throws WxErrorException the wx error exception
+   */
+  List<WxCpCropCheckinOption> getCropCheckinOption() throws WxErrorException;
+
   /**
    * <pre>
    *
@@ -165,7 +177,14 @@ public interface WxCpOaService {
    * @return 排班表信息
    * @throws WxErrorException the wx error exception
    */
-  WxCpCheckinSchedule getCheckinScheduleList(Date startTime, Date endTime, List<String> userIdList) throws WxErrorException;
+  List<WxCpCheckinSchedule> getCheckinScheduleList(Date startTime, Date endTime, List<String> userIdList) throws WxErrorException;
 
 
+  /**
+   * 为打卡人员排班
+   *
+   * @param wxCpSetCheckinSchedule the wx cp set checkin schedule
+   * @throws WxErrorException the wx error exception
+   */
+  void setCheckinScheduleList(WxCpSetCheckinSchedule wxCpSetCheckinSchedule) throws WxErrorException;
 }

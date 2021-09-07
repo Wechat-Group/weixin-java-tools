@@ -30,6 +30,7 @@ import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountSku;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -147,6 +148,17 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       log.error("Checking signature failed, and the reason is :" + e.getMessage());
       return false;
     }
+  }
+
+  @Override
+  public void startPushTicket() throws WxErrorException {
+    WxOpenConfigStorage config = getWxOpenConfigStorage();
+
+    JsonObject json = new JsonObject();
+    json.addProperty("component_appid", config.getComponentAppId());
+    json.addProperty("component_secret", config.getComponentAppSecret());
+
+    getWxOpenService().post(API_START_PUSH_TICKET, json.toString());
   }
 
   @Override
@@ -482,7 +494,13 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public List<WxOpenMaCodeTemplate> getTemplateList() throws WxErrorException {
-    String responseContent = get(GET_TEMPLATE_LIST_URL, "access_token");
+    return getTemplateList(null);
+  }
+
+  @Override
+  public List<WxOpenMaCodeTemplate> getTemplateList(@Nullable Integer templateType) throws WxErrorException {
+    String url = GET_TEMPLATE_LIST_URL + (templateType == null ? "" : "?template_type=" + templateType);
+    String responseContent = get(url, "access_token");
     JsonObject response = GsonParser.parse(StringUtils.defaultString(responseContent, "{}"));
     boolean hasTemplateList = response.has("template_list");
     if (hasTemplateList) {

@@ -9,8 +9,9 @@ import java.util.List;
 
 /**
  * 请求分账 结果响应
- * @author: f00lish
- * @date: 2020/09/12
+ *
+ * @author f00lish
+ * @date 2020/09/12
  */
 @Data
 @NoArgsConstructor

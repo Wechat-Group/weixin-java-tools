@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 
 import java.io.Serializable;
 import java.security.PrivateKey;
@@ -72,6 +73,8 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
   @Data
   @Accessors(chain = true)
   public static class JsapiResult implements Serializable {
+    private static final long serialVersionUID = 4465376277943307271L;
+
     private String appId;
     private String timeStamp;
     private String nonceStr;
@@ -87,13 +90,19 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
   @Data
   @Accessors(chain = true)
   public static class AppResult implements Serializable {
+    private static final long serialVersionUID = 5465773025172875110L;
+
     private String appid;
-    private String partnerid;
-    private String prepayid;
+    private String partnerId;
+    private String prepayId;
     private String packageValue;
     private String noncestr;
     private String timestamp;
+    private String sign;
 
+    private String getSignStr() {
+      return String.format("%s\n%s\n%s\n%s\n", appid, timestamp, noncestr, prepayId);
+    }
   }
 
   public <T> T getPayInfo(TradeTypeEnum tradeType, String appId, String mchId, PrivateKey privateKey) {
@@ -111,14 +120,16 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
         return (T) this.h5Url;
       case APP:
         AppResult appResult = new AppResult();
-        appResult.setAppid(appId).setPrepayid(this.prepayId).setPartnerid(mchId)
+        appResult.setAppid(appId).setPrepayId(this.prepayId).setPartnerId(mchId)
           .setNoncestr(nonceStr).setTimestamp(timestamp)
           //暂填写固定值Sign=WXPay
-          .setPackageValue("Sign=WXPay");
+          .setPackageValue("Sign=WXPay")
+          .setSign(SignUtils.sign(appResult.getSignStr(), privateKey));
         return (T) appResult;
       case NATIVE:
         return (T) this.codeUrl;
+      default:
+        throw new WxRuntimeException("不支持的支付类型");
     }
-    return null;
   }
 }

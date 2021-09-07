@@ -91,11 +91,13 @@ public interface WxCpApiPathConsts {
   }
 
   interface Oa {
+    String GET_CORP_CHECKIN_OPTION = "/cgi-bin/checkin/getcorpcheckinoption";
     String GET_CHECKIN_DATA = "/cgi-bin/checkin/getcheckindata";
     String GET_CHECKIN_OPTION = "/cgi-bin/checkin/getcheckinoption";
     String GET_CHECKIN_DAY_DATA = "/cgi-bin/checkin/getcheckin_daydata";
     String GET_CHECKIN_MONTH_DATA = "/cgi-bin/checkin/getcheckin_monthdata";
     String GET_CHECKIN_SCHEDULE_DATA = "/cgi-bin/checkin/getcheckinschedulist";
+    String SET_CHECKIN_SCHEDULE_DATA = "/cgi-bin/checkin/setcheckinschedulist";
     String GET_APPROVAL_INFO = "/cgi-bin/oa/getapprovalinfo";
     String GET_APPROVAL_DETAIL = "/cgi-bin/oa/getapprovaldetail";
     String GET_DIAL_RECORD = "/cgi-bin/dial/get_dial_record";
@@ -179,6 +181,7 @@ public interface WxCpApiPathConsts {
     String GET_FOLLOW_USER_LIST = "/cgi-bin/externalcontact/get_follow_user_list";
     String GET_CONTACT_DETAIL = "/cgi-bin/externalcontact/get?external_userid=";
     String CONVERT_TO_OPENID = "/cgi-bin/externalcontact/convert_to_openid";
+    String UNIONID_TO_EXTERNAL_USERID = "/cgi-bin/externalcontact/unionid_to_external_userid";
     String GET_CONTACT_DETAIL_BATCH = "/cgi-bin/externalcontact/batch/get_by_user?";
     String UPDATE_REMARK = "/cgi-bin/externalcontact/remark";
     String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";

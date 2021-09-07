@@ -9,9 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * <pre>
  * sku对象
- * </pre>
  *
  * @author <a href="https://github.com/borisbao">boris</a>
  * @since 2021-03-22
@@ -21,8 +19,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WxMaShopSkuInfo implements Serializable {
-
-
   private static final long serialVersionUID = -3617077838017818865L;
 
   /**

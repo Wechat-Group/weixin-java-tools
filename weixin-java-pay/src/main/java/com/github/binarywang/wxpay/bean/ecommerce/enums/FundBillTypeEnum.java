@@ -5,8 +5,9 @@ import lombok.Getter;
 
 /**
  * 账单类型
- * @author: f00lish
- * @date: 2020/09/28
+ *
+ * @author f00lish
+ * @date 2020/09/28
  */
 @Getter
 @AllArgsConstructor

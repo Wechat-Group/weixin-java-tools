@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -66,8 +67,8 @@ public class WxMaLiveResult implements Serializable {
      */
     @SerializedName("audit_status")
     private Integer auditStatus;
-    private String price;
-    private String price2;
+    private BigDecimal price;
+    private BigDecimal price2;
     /**
      * 1, 2：表示是为api添加商品，否则是在MP添加商品
      */
@@ -100,6 +101,7 @@ public class WxMaLiveResult implements Serializable {
     private String anchorWechat;
     @SerializedName("anchor_img")
     private String anchorImg;
+    @SerializedName("live_type")
     private Integer type;
     @SerializedName("screen_type")
     private Integer screenType;

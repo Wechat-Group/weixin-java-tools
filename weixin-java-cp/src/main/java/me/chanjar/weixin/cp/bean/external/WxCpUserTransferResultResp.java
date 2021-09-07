@@ -7,9 +7,11 @@ import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 在职成员的客户转接情况
+ *
  * @author pg
  * @date 2021年6月21日
  */
@@ -19,6 +21,8 @@ public class WxCpUserTransferResultResp extends WxCpBaseResp {
   private static final long serialVersionUID = 6897979567174991786L;
   @SerializedName("next_cursor")
   private String nextCursor;
+
+  private List<TransferResult> customer;
 
   public static WxCpUserTransferResultResp fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserTransferResultResp.class);

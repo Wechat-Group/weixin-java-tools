@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class WxCpUserWithExternalPermission implements Serializable {
   private static final long serialVersionUID = -4301684507150486556L;
-  
+
   @SerializedName("errcode")
   @Expose
   private Long errCode;

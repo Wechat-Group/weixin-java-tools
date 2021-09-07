@@ -5,9 +5,12 @@ import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
 
+/**
+ * @author Boris
+ * @date 2021/3/23
+ */
 @Data
 public class WxMaShopSpuInfo implements Serializable {
-
   private static final long serialVersionUID = 7237829277693177420L;
 
   /**

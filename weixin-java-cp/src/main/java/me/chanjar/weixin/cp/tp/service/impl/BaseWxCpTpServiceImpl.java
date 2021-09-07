@@ -461,7 +461,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("auth_code", authCode);
     String access_token = getWxCpProviderToken();
-    String responseText = post(configStorage.getApiUrl(GET_LOGIN_INFO) + "?access_token=" + access_token, jsonObject.toString());
+    String responseText = post(configStorage.getApiUrl(GET_LOGIN_INFO) + "?access_token=" + access_token, jsonObject.toString(), true);
     return WxTpLoginInfo.fromJson(responseText);
   }
 

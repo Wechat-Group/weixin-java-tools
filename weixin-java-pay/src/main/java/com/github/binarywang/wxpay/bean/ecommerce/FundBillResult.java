@@ -3,17 +3,21 @@ package com.github.binarywang.wxpay.bean.ecommerce;
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * 资金账单结果
- * @author: f00lish
- * @date: 2020/09/28
+ *
+ * @author f00lish
+ * @date 2020/09/28
  */
 @Data
 @Builder
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class FundBillResult {
+public class FundBillResult implements Serializable {
+  private static final long serialVersionUID = 4008480977464421822L;
 
   /**
    * <pre>
@@ -28,7 +32,6 @@ public class FundBillResult {
    */
   @SerializedName(value = "download_bill_count")
   private int downloadBillCount;
-
 
 
   /**

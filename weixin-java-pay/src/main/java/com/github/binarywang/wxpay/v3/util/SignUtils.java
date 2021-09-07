@@ -6,8 +6,10 @@ import java.security.*;
 import java.util.Base64;
 import java.util.Random;
 
+/**
+* @author cloudx
+ */
 public class SignUtils {
-
   public static String sign(String string, PrivateKey privateKey) {
     try {
       Signature sign = Signature.getInstance("SHA256withRSA");
@@ -35,7 +37,7 @@ public class SignUtils {
    * 生成随机字符串
    *
    * @param length 字符串长度
-   * @return
+   * @return 随机字符串
    */
   public static String genRandomStr(int length) {
     String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

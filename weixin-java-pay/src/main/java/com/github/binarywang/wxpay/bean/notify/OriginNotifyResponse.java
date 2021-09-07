@@ -65,6 +65,7 @@ public class OriginNotifyResponse implements Serializable {
    */
   @SerializedName(value = "summary")
   private String summary;
+
   /**
    * <pre>
    * 字段名：通知数据类型

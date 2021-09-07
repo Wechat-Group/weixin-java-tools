@@ -353,5 +353,10 @@ public class WxCpConsts {
      * 小程序消息.
      */
     public static final String MINIPROGRAM = "miniprogram";
+
+    /**
+     * 文件消息.
+     */
+    public static final String FILE = "file";
   }
 }

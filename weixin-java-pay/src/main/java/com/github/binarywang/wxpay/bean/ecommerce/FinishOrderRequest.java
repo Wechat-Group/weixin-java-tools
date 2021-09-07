@@ -10,8 +10,9 @@ import java.io.Serializable;
  * <pre>
  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_5.shtml
  * </pre>
- * @author: f00lish
- * @date: 2020/09/12
+ *
+ * @author f00lish
+ * @date 2020/09/12
  */
 @Data
 @Builder
