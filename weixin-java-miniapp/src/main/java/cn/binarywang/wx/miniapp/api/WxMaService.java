@@ -450,6 +450,13 @@ public interface WxMaService extends WxService {
   WxMaLinkService getLinkService();
 
   /**
+   * 获取小程序 Short Link服务接口
+   *
+   * @return
+   */
+  WxMaShortLinkService getShortLinkService();
+
+  /**
    * 获取电子发票报销方服务接口
    *
    * @return
