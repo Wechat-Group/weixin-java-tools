@@ -353,6 +353,9 @@ public class WxMpXmlMessage implements Serializable {
   @XStreamAlias("SendLocationInfo")
   private SendLocationInfo sendLocationInfo = new SendLocationInfo();
 
+  @XStreamAlias("ArticleUrlResult")
+  private ArticleUrlResult articleUrlResult = new ArticleUrlResult();
+
   /**
    * 审核不通过原因
    */
@@ -446,7 +449,7 @@ public class WxMpXmlMessage implements Serializable {
 
   /**
    * 审核结果，成功succ 或失败fail.
-   *
+   * <p>
    * 在商品审核结果推送时，verify_ok表示审核通过，verify_not_pass表示审核未通过。
    */
   @XStreamAlias("Result")
