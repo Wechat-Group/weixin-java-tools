@@ -57,12 +57,15 @@ public class JoddHttpQrcodeFileRequestExecutor extends QrcodeRequestExecutor<Htt
     HttpResponse response = request.send();
     response.charset(StandardCharsets.UTF_8.name());
     String contentTypeHeader = response.header("Content-Type");
-    if (MimeTypes.MIME_TEXT_PLAIN.equals(contentTypeHeader)) {
+    if (MimeTypes.MIME_APPLICATION_JSON.equals(contentTypeHeader)) {
       String responseContent = response.bodyText();
-      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+      throw new WxErrorException(WxError.fromJson(responseContent, wxType));
     }
     try (InputStream inputStream = new ByteArrayInputStream(response.bodyBytes())) {
-      return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
+      if (StringUtils.isBlank(filePath)) {
+        return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
+      }
+      return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg", Paths.get(filePath).toFile());
     }
   }
 }

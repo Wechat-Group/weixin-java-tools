@@ -226,6 +226,10 @@ public class WxMaApiUrlConstants {
     String GENERATE_URLLINK_URL = "https://api.weixin.qq.com/wxa/generate_urllink";
   }
 
+  public interface ShortLink {
+    String GENERATE_SHORT_LINK_URL = "https://api.weixin.qq.com/wxa/genwxashortlink";
+  }
+
   public interface SecCheck {
     String IMG_SEC_CHECK_URL = "https://api.weixin.qq.com/wxa/img_sec_check";
     String MSG_SEC_CHECK_URL = "https://api.weixin.qq.com/wxa/msg_sec_check";
@@ -387,5 +391,9 @@ public class WxMaApiUrlConstants {
      * 报销方批量更新发票状态
      */
     String UPDATE_STATUS_BATCH = "https://api.weixin.qq.com/card/invoice/reimburse/updatestatusbatch";
+  }
+
+  public interface Internet{
+    String GET_USER_ENCRYPT_KEY = "https://api.weixin.qq.com/wxa/business/getuserencryptkey";
   }
 }

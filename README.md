@@ -28,9 +28,9 @@
       <td align="center" valign="middle" width="450">
         <a href="http://ccflow.org/?from=WxJava" title="驰骋BPM" target="_blank">
           <img height="60px" src="http://ccflow.org/ccflowAD_Title.png" title="驰骋BPM官网">
-          <p>1. 驰骋快速开发平台、工作流引擎、表单引擎采用GPL协议.</p>
-<p>2. 驰骋.net版称为ccflow, java版称为jflow,代码100%开源.</p>
-<p>3. 支持10多个国内外数据库. 单机版\集团版\SAAS版本.</p>
+          <br/>1. 驰骋快速开发平台、工作流/表单引擎采用GPL协议。
+          <br/>2. 驰骋.NET版称为ccflow,Java版称为jflow，代码100%开源。
+          <br/>3. 支持10多个国内外数据库，有单机版\集团版\SAAS版本。
         </a>
       </td>
 		</tr>

@@ -343,6 +343,13 @@ public interface WxMaService extends WxService {
   WxMaCloudService getCloudService();
 
   /**
+   * 获取服务端网络接口服务对象
+   *
+   * @return 。internet service
+   */
+  WxMaInternetService getInternetService();
+
+  /**
    * 获取直播接口服务对象
    *
    * @return . live service
@@ -443,7 +450,7 @@ public interface WxMaService extends WxService {
   WxMaShopAuditService getShopAuditService();
 
   /**
-   * 获取小程序 URL Link服务接口
+   * 获取小程序Link服务接口
    *
    * @return
    */

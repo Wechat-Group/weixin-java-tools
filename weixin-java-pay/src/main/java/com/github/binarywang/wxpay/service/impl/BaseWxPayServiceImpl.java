@@ -305,15 +305,15 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
-  public WxPayRefundQueryV3Result refundQueryV3(String outTradeNo) throws WxPayException {
-    String url = String.format("%s/v3/refund/domestic/refunds/%s", this.getPayBaseUrl(), outTradeNo);
+  public WxPayRefundQueryV3Result refundQueryV3(String outRefundNo) throws WxPayException {
+    String url = String.format("%s/v3/refund/domestic/refunds/%s", this.getPayBaseUrl(), outRefundNo);
     String response = this.getV3(url);
     return GSON.fromJson(response, WxPayRefundQueryV3Result.class);
   }
 
   @Override
   public WxPayRefundQueryV3Result refundQueryV3(WxPayRefundQueryV3Request request) throws WxPayException {
-    String url = String.format("%s/v3/refund/domestic/refunds/%s", this.getPayBaseUrl(), request.getOutTradeNo());
+    String url = String.format("%s/v3/refund/domestic/refunds/%s", this.getPayBaseUrl(), request.getOutRefundNo());
     String response = this.getV3(url);
     return GSON.fromJson(response, WxPayRefundQueryV3Result.class);
   }

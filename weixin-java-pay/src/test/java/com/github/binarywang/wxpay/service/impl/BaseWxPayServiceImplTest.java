@@ -769,8 +769,8 @@ public class BaseWxPayServiceImplTest {
   @Test
   public void testRefundQueryV3() throws WxPayException {
     WxPayRefundQueryV3Request request = new WxPayRefundQueryV3Request();
-//    request.setOutTradeNo("n1ZvYqjAg3D7LUBa");
-    request.setOutTradeNo("123456789011");
+//    request.setOutRefundNo("n1ZvYqjAg3D7LUBa");
+    request.setOutRefundNo("123456789011");
     WxPayRefundQueryV3Result result = this.payService.refundQueryV3(request);
     System.out.println(GSON.toJson(result));
   }

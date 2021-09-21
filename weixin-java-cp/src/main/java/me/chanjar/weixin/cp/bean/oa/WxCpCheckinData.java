@@ -96,4 +96,28 @@ public class WxCpCheckinData implements Serializable {
    */
   @SerializedName("deviceid")
   private String deviceId;
+  
+  /**
+   * 标准打卡时间，指此次打卡时间对应的标准上班时间或标准下班时间
+   */
+  @SerializedName("sch_checkin_time")
+  private Long schCheckinTime;
+  
+   /**
+   * 规则id，表示打卡记录所属规则的id
+   */
+  @SerializedName("groupid")
+  private Integer groupId;
+  
+   /**
+   * 班次id，表示打卡记录所属规则中，所属班次的id
+   */
+  @SerializedName("schedule_id")
+  private Integer scheduleId;
+  
+   /**
+   * 时段id，表示打卡记录所属规则中，某一班次中的某一时段的id，如上下班时间为9:00-12:00、13:00-18:00的班次中，9:00-12:00为其中一组时段
+   */
+  @SerializedName("timeline_id")
+  private Integer timelineId;
 }
