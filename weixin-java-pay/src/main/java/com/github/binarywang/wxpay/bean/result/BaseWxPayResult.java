@@ -150,6 +150,7 @@ public abstract class BaseWxPayResult {
     }
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(clz);
+    xstream.setClassLoader(BaseWxPayResult.class.getClassLoader());
     T result = (T) xstream.fromXML(xmlString);
     result.setXmlString(xmlString);
     return result;
