@@ -209,16 +209,20 @@ public class WxCpMessageRouter {
         .append("-").append(wxMessage.getCreateTime())
         .append("-").append(wxMessage.getFromUserName());
     }
-
-    if (StringUtils.isNotEmpty(wxMessage.getUserId())) {
-      messageId.append("-").append(wxMessage.getUserId());
-    }
-
-    if (StringUtils.isNotEmpty(wxMessage.getChangeType())) {
-      messageId.append("-").append(wxMessage.getChangeType());
-    }
+    append(messageId, wxMessage.getUserId());
+    append(messageId, wxMessage.getChangeType());
+    append(messageId, wxMessage.getTagId());
+    append(messageId, wxMessage.getId());
+    append(messageId, wxMessage.getChatId());
+    append(messageId, wxMessage.getExternalUserId());
 
     return this.messageDuplicateChecker.isDuplicate(messageId.toString());
+  }
+
+  private void append(StringBuilder sb, String value){
+    if(StringUtils.isNotEmpty(value)){
+      sb.append("-").append(value);
+    }
   }
 
   /**

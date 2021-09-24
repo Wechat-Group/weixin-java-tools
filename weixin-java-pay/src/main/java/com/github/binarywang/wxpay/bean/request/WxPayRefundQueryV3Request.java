@@ -19,16 +19,14 @@ public class WxPayRefundQueryV3Request implements Serializable {
   private static final long serialVersionUID = 1L;
   /**
    * <pre>
-   * 字段名：商户订单号
-   * 变量名：out_trade_no
+   * 字段名：商户退款单号
+   * 变量名：out_refund_no
    * 是否必填：是
-   * 类型：string[1,32]
-   * 描述：
-   *  商户系统内部订单号，只能是数字、大小写字母_-*且在同一个商户号下唯一。
-   *  特殊规则：最小字符长度为6
-   *  示例值：1217752501201407033233368018
+   * 类型：string[1, 64]
+   * 描述：商户系统内部的退款单号，商户系统内部唯一，只能是数字、大小写字母_-|*@ ，同一退款单号多次请求只退一笔。
+   * 示例值：1217752501201407033233368018
    * </pre>
    */
-  @SerializedName(value = "out_trade_no")
-  private String outTradeNo;
+  @SerializedName(value = "out_refund_no")
+  private String outRefundNo;
 }
