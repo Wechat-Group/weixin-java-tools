@@ -144,7 +144,7 @@ public class WxCpExternalContactServiceImplTest {
     WxCpUserExternalTagGroupInfo tagGroupInfo = new WxCpUserExternalTagGroupInfo();
     WxCpUserExternalTagGroupInfo.TagGroup tagGroup = new WxCpUserExternalTagGroupInfo.TagGroup();
     tagGroup.setGroupName("其他");
-    tagGroup.setOrder(1);
+    tagGroup.setOrder(1L);
     tagGroup.setTag(list);
     tagGroupInfo.setTagGroup(tagGroup);
 
