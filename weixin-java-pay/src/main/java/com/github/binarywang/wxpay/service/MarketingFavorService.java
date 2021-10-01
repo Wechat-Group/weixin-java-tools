@@ -187,10 +187,10 @@ public interface MarketingFavorService {
    * </pre>
    *
    * @param request 请求对象
-   * @return FavorCallbacksSaveResult 微信返回的结果信息。
+   * @return FavorStocksPauseResult 微信返回的结果信息。
    * @throws WxPayException the wx pay exception
    */
-  FavorStocksStartResult pauseFavorStocksV3(String stockId, FavorStocksSetRequest request) throws WxPayException;
+  FavorStocksPauseResult pauseFavorStocksV3(String stockId, FavorStocksSetRequest request) throws WxPayException;
 
   /**
    * <pre>
@@ -200,10 +200,10 @@ public interface MarketingFavorService {
    * </pre>
    *
    * @param request 请求对象
-   * @return FavorCallbacksSaveResult 微信返回的结果信息。
+   * @return FavorStocksRestartResult 微信返回的结果信息。
    * @throws WxPayException the wx pay exception
    */
-  FavorStocksStartResult restartFavorStocksV3(String stockId, FavorStocksSetRequest request) throws WxPayException;
+  FavorStocksRestartResult restartFavorStocksV3(String stockId, FavorStocksSetRequest request) throws WxPayException;
 
   UseNotifyData parseNotifyData(String data, SignatureHeader header) throws WxPayException;
 

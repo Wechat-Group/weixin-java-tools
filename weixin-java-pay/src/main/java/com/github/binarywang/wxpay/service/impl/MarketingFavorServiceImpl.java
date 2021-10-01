@@ -154,19 +154,19 @@ public class MarketingFavorServiceImpl implements MarketingFavorService {
   }
 
   @Override
-  public FavorStocksStartResult pauseFavorStocksV3(String stockId, FavorStocksSetRequest request) throws WxPayException {
-    String url = String.format("%s/v3/marketing/favor/stocks/%s/start", this.payService.getPayBaseUrl(), stockId);
+  public FavorStocksPauseResult pauseFavorStocksV3(String stockId, FavorStocksSetRequest request) throws WxPayException {
+    String url = String.format("%s/v3/marketing/favor/stocks/%s/pause", this.payService.getPayBaseUrl(), stockId);
     RsaCryptoUtil.encryptFields(request, this.payService.getConfig().getVerifier().getValidCertificate());
     String result = this.payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
-    return GSON.fromJson(result, FavorStocksStartResult.class);
+    return GSON.fromJson(result, FavorStocksPauseResult.class);
   }
 
   @Override
-  public FavorStocksStartResult restartFavorStocksV3(String stockId, FavorStocksSetRequest request) throws WxPayException {
-    String url = String.format("%s/v3/marketing/favor/stocks/%s/start", this.payService.getPayBaseUrl(), stockId);
+  public FavorStocksRestartResult restartFavorStocksV3(String stockId, FavorStocksSetRequest request) throws WxPayException {
+    String url = String.format("%s/v3/marketing/favor/stocks/%s/restart", this.payService.getPayBaseUrl(), stockId);
     RsaCryptoUtil.encryptFields(request, this.payService.getConfig().getVerifier().getValidCertificate());
     String result = this.payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
-    return GSON.fromJson(result, FavorStocksStartResult.class);
+    return GSON.fromJson(result, FavorStocksRestartResult.class);
   }
 
   /**
