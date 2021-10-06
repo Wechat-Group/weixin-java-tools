@@ -138,7 +138,7 @@ public class WxCpExternalContactServiceImplTest {
     List<WxCpUserExternalTagGroupInfo.Tag> list = new ArrayList<>();
     WxCpUserExternalTagGroupInfo.Tag tag = new WxCpUserExternalTagGroupInfo.Tag();
     tag.setName("测试标签20");
-    tag.setOrder(1);
+    tag.setOrder(1L);
     list.add(tag);
 
     WxCpUserExternalTagGroupInfo tagGroupInfo = new WxCpUserExternalTagGroupInfo();

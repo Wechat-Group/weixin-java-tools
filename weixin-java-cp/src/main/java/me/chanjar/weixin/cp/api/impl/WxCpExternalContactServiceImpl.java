@@ -138,9 +138,12 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public String unionidToExternalUserid(@NotNull String unionid) throws WxErrorException {
+  public String unionidToExternalUserid(@NotNull String unionid,String openid) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("unionid", unionid);
+    if(StringUtils.isNotEmpty(openid)){
+      json.addProperty("openid",openid);
+    }
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(UNIONID_TO_EXTERNAL_USERID);
     String responseContent = this.mainService.post(url, json.toString());
     JsonObject tmpJson = GsonParser.parse(responseContent);

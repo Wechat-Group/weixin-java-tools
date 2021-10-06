@@ -181,7 +181,7 @@ public interface WxCpExternalContactService {
    * @return 该企业的外部联系人ID
    * @throws WxErrorException .
    */
-  String unionidToExternalUserid(String unionid) throws WxErrorException;
+  String unionidToExternalUserid(@NotNull String unionid,String openid) throws WxErrorException;
 
   /**
    * 批量获取客户详情.
