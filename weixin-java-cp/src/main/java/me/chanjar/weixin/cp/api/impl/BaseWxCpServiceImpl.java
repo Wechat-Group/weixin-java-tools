@@ -20,6 +20,7 @@ import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.*;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.*;
+import me.chanjar.weixin.cp.bean.WxCpAgentJsapiSignature;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -167,6 +168,30 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
 
     // Fixed bug
     jsapiSignature.setAppId(this.configStorage.getCorpId());
+
+    return jsapiSignature;
+  }
+
+  @Override
+  public WxCpAgentJsapiSignature createAgentJsapiSignature(String url) throws WxErrorException {
+    long timestamp = System.currentTimeMillis() / 1000;
+    String noncestr = RandomUtils.getRandomStr();
+    String jsapiTicket = getAgentJsapiTicket(false);
+    String signature = SHA1.genWithAmple(
+      "jsapi_ticket=" + jsapiTicket,
+      "noncestr=" + noncestr,
+      "timestamp=" + timestamp,
+      "url=" + url
+    );
+
+    WxCpAgentJsapiSignature jsapiSignature = new WxCpAgentJsapiSignature();
+    jsapiSignature.setTimestamp(timestamp);
+    jsapiSignature.setNonceStr(noncestr);
+    jsapiSignature.setUrl(url);
+    jsapiSignature.setSignature(signature);
+
+    jsapiSignature.setCorpid(this.configStorage.getCorpId());
+    jsapiSignature.setAgentid(this.configStorage.getAgentId());
 
     return jsapiSignature;
   }

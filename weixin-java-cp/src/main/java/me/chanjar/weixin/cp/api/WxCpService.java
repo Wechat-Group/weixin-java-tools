@@ -8,6 +8,7 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.cp.bean.WxCpAgentJsapiSignature;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -124,6 +125,18 @@ public interface WxCpService extends WxService {
    */
   WxJsapiSignature createJsapiSignature(String url) throws WxErrorException;
 
+  /**
+   * <pre>
+   *   创建调用wx.agentConfig时所需要的签名
+   *
+   * 详情请见：https://open.work.weixin.qq.com/api/doc/90000/90136/94313
+   * </pre>
+   *
+   * @param url url
+   * @return the agent jsapi signature
+   * @throws WxErrorException
+   */
+  WxCpAgentJsapiSignature createAgentJsapiSignature(String url) throws WxErrorException;
 
   /**
    * 小程序登录凭证校验
