@@ -152,6 +152,18 @@ public class WxCpTpPermanentCodeInfo extends WxCpBaseResp {
     private String appid;
 
     /**
+     * 授权模式，0为管理员授权；1为成员授权
+     */
+    @SerializedName("auth_mode")
+    private Integer authMode;
+
+    /**
+     * 是否为代开发自建应用
+     */
+    @SerializedName("is_customized_app")
+    private Boolean isCustomizedApp;
+
+    /**
      * 应用权限
      */
     @SerializedName("privilege")
