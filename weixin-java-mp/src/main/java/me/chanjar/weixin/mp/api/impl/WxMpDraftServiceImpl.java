@@ -73,8 +73,7 @@ public class WxMpDraftServiceImpl implements WxMpDraftService {
 
   @Override
   public WxMpDraftList listDraft(int offset, int count) throws WxErrorException {
-    return WxMpDraftList.fromJson(this.mpService.post(WxMpApiUrl.Draft.LIST_DRAFT,
-      GsonHelper.buildJsonObject("offset", offset, "count", count)));
+    return listDraft(offset, count, 0);
   }
 
   @Override
