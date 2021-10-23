@@ -64,7 +64,7 @@ public class WxMpFreePublishArticles implements Serializable {
   @SerializedName("only_fans_can_comment")
   private Integer onlyFansCanComment;
 
-    /*
+  /*
    * ===== 上面的参数，就是草稿箱的内容的字段，为了后续扩展，单独写一份====
    */
 

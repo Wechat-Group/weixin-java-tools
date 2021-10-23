@@ -34,6 +34,7 @@ public class WxMpFreePublishServiceImplTest {
   /**
    * 图文的 article_id，后续查询图文详情、删除发布内容 需要使用
    * 要根据 publishId 来获取 article_id
+   *
    * @see this.testGetPushStatus
    */
   final String articleId = "zjMKVd1g66BkEkpetwml4ElbDdniE8JeI2Ec324Sjqg";
@@ -73,7 +74,7 @@ public class WxMpFreePublishServiceImplTest {
 
   @Test
   public void testDelPush() throws WxErrorException {
-    Boolean deletePush = this.wxService.getFreePublishService().deletePush(articleId,0);
+    Boolean deletePush = this.wxService.getFreePublishService().deletePush(articleId, 0);
     // 【响应数据】：{"errcode":0,"errmsg":"ok"}
     assertThat(deletePush).isTrue();
   }
@@ -86,20 +87,20 @@ public class WxMpFreePublishServiceImplTest {
   }
 
   @Test
-  public void testListDraft() throws WxErrorException {
-    WxMpFreePublishList publicationRecords = this.wxService.getFreePublishService().getPublicationRecords(0, 10);
+  public void testGetPublicationRecords() throws WxErrorException {
+    WxMpFreePublishList publicationRecords = this.wxService.getFreePublishService().getPublicationRecords(0, 10, 0);
     /*
-    【响应数据】：{"item":[{"media_id":"HKVdzjkDfooMqBqJtvSs2EEeRAJaM33gJgkii_JDxxxx",
-    "content":{"news_item":[
-    {"title":"test","author":"dragon","digest":"test01234567","content":"<p>test01234567<\/p><p style=\"text-align: center;\">
-    <img class=\"rich_pages wxw-img\" data-src=\"https:\/\/mmbiz.qpic.cn\/mmbiz_jpg\/0Q",
-    "content_source_url":"","thumb_media_id":"HKVdzjkDfooMqBqJtvSs2PBtCY3WYpWAiBbqwTHQ","show_cover_pic":0,
-    "url":"http:\/\/mp.weixin.qq.com\/s?__biz=Mxxx",
-    "thumb_url":"http:\/\/mmbiz.qpic.cn\/mmbiz_jpg\/0QSAUfxxxxx",
-    "need_open_comment":1,"only_fans_can_comment":1}
-    ],"create_time":1634866791,"update_time":1634866825}
-    ,"update_time":1634866825}],
-    "total_count":1,"item_count":1}
+    【响应数据】：
+    {"item":[{"article_id":"zjMKVd1g66BkEkpetwml4BOSzatuEYNY3TFhCc0kSIE","content":{"news_item":[
+    {"title":"新建草稿-对象形式","author":"dragon","digest":"图文消息的摘要，仅有单图文消息才有摘要，多图文此处为空",
+    "content":"图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS",
+    "content_source_url":"https:\/\/github.com\/Wechat-Group\/WxJava","thumb_media_id":"HKVdzjkDfooMqBqJtvSs2Ajz2v6L_vtGhyyr_mqKcPU",
+    "show_cover_pic":1,"url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzAwMTE2MzA1Mg==&mid=26501776710e5adb91#rd",
+    "thumb_url":"http:\/\/mmbiz.qpic.cn\/mmbiz_jpg\/0QSAUfroWrUmxHthQ\/0?wx_fmt=jpeg",
+    "need_open_comment":1,"only_fans_can_comment":0,"is_deleted":false}],
+    "create_time":1634976306,"update_time":1634976318}}
+    ]
+    ,"total_count":1,"item_count":1}
     */
     assertThat(publicationRecords).isNotNull();
   }

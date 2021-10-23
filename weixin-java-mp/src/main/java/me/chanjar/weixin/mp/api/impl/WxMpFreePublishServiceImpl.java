@@ -50,7 +50,7 @@ public class WxMpFreePublishServiceImpl implements WxMpFreePublishService {
   @Override
   public Boolean deletePushAllArticle(String articleId) throws WxErrorException {
     // index字段不填或填0会删除全部文章
-    return deletePush(articleId,0);
+    return deletePush(articleId, 0);
   }
 
   @Override
@@ -61,12 +61,12 @@ public class WxMpFreePublishServiceImpl implements WxMpFreePublishService {
 
   @Override
   public WxMpFreePublishList getPublicationRecords(int offset, int count, int noContent) throws WxErrorException {
-    return WxMpFreePublishList.fromJson(this.mpService.post(WxMpApiUrl.Draft.LIST_DRAFT,
+    return WxMpFreePublishList.fromJson(this.mpService.post(WxMpApiUrl.FreePublish.BATCH_GET,
       GsonHelper.buildJsonObject("offset", offset, "count", count, "no_content", noContent)));
   }
 
   @Override
   public WxMpFreePublishList getPublicationRecords(int offset, int count) throws WxErrorException {
-    return getPublicationRecords(offset,count,0);
+    return getPublicationRecords(offset, count, 0);
   }
 }

@@ -31,6 +31,15 @@ public class WxMpFreePublishStatus implements ToJson, Serializable {
   private ArticleDetail article_detail;
   private List<Integer> fail_idx;
 
+  public static WxMpFreePublishStatus fromJson(String json) {
+    return WxGsonBuilder.create().fromJson(json, WxMpFreePublishStatus.class);
+  }
+
+  @Override
+  public String toJson() {
+    return WxGsonBuilder.create().toJson(this);
+  }
+
   @NoArgsConstructor
   @Data
   public static class ArticleDetail {
@@ -43,14 +52,5 @@ public class WxMpFreePublishStatus implements ToJson, Serializable {
       private Integer idx;
       private String article_url;
     }
-  }
-
-  public static WxMpFreePublishStatus fromJson(String json) {
-    return WxGsonBuilder.create().fromJson(json, WxMpFreePublishStatus.class);
-  }
-
-  @Override
-  public String toJson() {
-    return WxGsonBuilder.create().toJson(this);
   }
 }
