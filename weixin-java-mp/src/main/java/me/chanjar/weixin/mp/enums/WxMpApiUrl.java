@@ -1390,6 +1390,7 @@ public interface WxMpApiUrl {
    * 修改草稿
    * 获取草稿总数
    * 获取草稿列表
+   * MP端开关（仅内测期间使用）- 上线后废弃，没实现，可以自己去公众号后台开启草稿箱
    */
   @AllArgsConstructor
   @Getter
@@ -1408,7 +1409,7 @@ public interface WxMpApiUrl {
      */
     GET_DRAFT(API_DEFAULT_HOST_URL, "/cgi-bin/draft/get"),
     /**
-     * 删除顾问
+     * 删除草稿
      */
     DEL_DRAFT(API_DEFAULT_HOST_URL, "/cgi-bin/draft/delete"),
     /**
@@ -1419,6 +1420,46 @@ public interface WxMpApiUrl {
      * 获取草稿总数
      */
     COUNT_DRAFT(API_DEFAULT_HOST_URL, "/cgi-bin/draft/count");
+
+    private final String prefix;
+    private final String path;
+
+  }
+
+  /**
+   * 发布能力:
+   * 发布接口
+   * 发布状态轮询接口
+   * 事件推送发布结果 -- 是回调，没实现
+   * 删除发布
+   * 通过 article_id 获取已发布文章
+   * 获取成功发布列表
+   */
+  @AllArgsConstructor
+  @Getter
+  enum FreePublish implements WxMpApiUrl {
+
+    /**
+     * 发布接口
+     */
+    SUBMIT(API_DEFAULT_HOST_URL, "/cgi-bin/freepublish/submit"),
+    /**
+     * 通过 article_id 获取已发布文章
+     */
+    GET_ARTICLE(API_DEFAULT_HOST_URL, "/cgi-bin/freepublish/getarticle"),
+    /**
+     * 发布状态轮询接口
+     */
+    GET_PUSH_STATUS(API_DEFAULT_HOST_URL, "/cgi-bin/freepublish/get"),
+    /**
+     * 删除发布
+     */
+    DEL_PUSH(API_DEFAULT_HOST_URL, "/cgi-bin/freepublish/delete"),
+    /**
+     * 获取成功发布列表
+     */
+    BATCH_GET(API_DEFAULT_HOST_URL, "/cgi-bin/freepublish/batchget")
+    ;
 
     private final String prefix;
     private final String path;

@@ -163,6 +163,10 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Setter
   private WxMpDraftService draftService = new WxMpDraftServiceImpl(this);
 
+  @Getter
+  @Setter
+  private WxMpFreePublishService freePublishService = new WxMpFreePublishServiceImpl(this);
+
   private Map<String, WxMpConfigStorage> configStorageMap;
 
   private int retrySleepMillis = 1000;
