@@ -48,7 +48,7 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
 
   private DnsResolver dnsResover;
 
-  private HttpRequestRetryHandler httpRequestRetryHandler = (exception, executionCount, context) -> false;
+  private HttpRequestRetryHandler httpRequestRetryHandler = (IOException exception, int executionCount, HttpContext context) -> false;
   private SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactory.getSocketFactory();
   private PlainConnectionSocketFactory plainConnectionSocketFactory = PlainConnectionSocketFactory.getSocketFactory();
   private String httpProxyHost;

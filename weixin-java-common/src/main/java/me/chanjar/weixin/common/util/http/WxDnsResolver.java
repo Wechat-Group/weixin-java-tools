@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class WxDnsResolver implements DnsResolver {
 
-  private final static String WECHAT_API_URL = "api.weixin.qq.com";
+  private static final String WECHAT_API_URL = "api.weixin.qq.com";
   private static Map<String, InetAddress[]> MAPPINGS = new HashMap<>();
   protected final Logger log = LoggerFactory.getLogger(WxDnsResolver.class);
   private String wxApiIp;

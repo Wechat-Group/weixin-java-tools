@@ -5,7 +5,7 @@ package me.chanjar.weixin.qidian.util;
  * @date 2020年12月26日
  */
 public class WxQidianConfigStorageHolder {
-  private final static ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<String>() {
+  private static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<String>() {
     @Override
     protected String initialValue() {
       return "default";
