@@ -12,8 +12,16 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpExternalContactService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
+import me.chanjar.weixin.cp.bean.external.WxCpAddMomentResult;
+import me.chanjar.weixin.cp.bean.external.WxCpAddMomentTask;
 import me.chanjar.weixin.cp.bean.external.WxCpContactWayInfo;
 import me.chanjar.weixin.cp.bean.external.WxCpContactWayResult;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentComments;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentCustomerList;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentList;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentSendResult;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentTask;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentTaskResult;
 import me.chanjar.weixin.cp.bean.external.WxCpMsgTemplate;
 import me.chanjar.weixin.cp.bean.external.WxCpMsgTemplateAddResult;
 import me.chanjar.weixin.cp.bean.external.WxCpUpdateRemarkRequest;
@@ -452,4 +460,104 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     final String result = this.mainService.post(url, json.toString());
     return WxCpBaseResp.fromJson(result);
   }
+
+  @Override
+  public WxCpAddMomentResult addMomentTask(WxCpAddMomentTask task) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(ADD_MOMENT_TASK);
+    final String result = this.mainService.post(url, task.toJson());
+    return WxCpAddMomentResult.fromJson(result);
+  }
+
+  @Override
+  public WxCpGetMomentTaskResult getMomentTaskResult(String jobId) throws WxErrorException {
+    String params = "&jobid=" + jobId;
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_MOMENT_TASK_RESULT);
+    final String result = this.mainService.get(url, params);
+    return WxCpGetMomentTaskResult.fromJson(result);
+  }
+
+  @Override
+  public WxCpGetMomentList getMomentList(Long startTime, Long endTime, String creator, Integer filterType,
+    String cursor, Integer limit) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("start_time", startTime);
+    json.addProperty("end_time", endTime);
+    if (!StringUtils.isEmpty(creator)) {
+      json.addProperty("creator", creator);
+    }
+    if (filterType!=null) {
+      json.addProperty("filter_type", filterType);
+    }
+    if (!StringUtils.isEmpty(cursor)) {
+      json.addProperty("cursor", cursor);
+    }
+    if (limit!=null) {
+      json.addProperty("limit", limit);
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_MOMENT_LIST);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpGetMomentList.fromJson(result);
+  }
+
+  @Override
+  public WxCpGetMomentTask getMomentTask(String momentId, String cursor, Integer limit)
+    throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("moment_id", momentId);
+    if (!StringUtils.isEmpty(cursor)) {
+      json.addProperty("cursor", cursor);
+    }
+    if (limit!=null) {
+      json.addProperty("limit", limit);
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_MOMENT_TASK);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpGetMomentTask.fromJson(result);
+  }
+
+  @Override
+  public WxCpGetMomentCustomerList getMomentCustomerList(String momentId, String userId,
+    String cursor, Integer limit) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("moment_id", momentId);
+    json.addProperty("userid", userId);
+    if (!StringUtils.isEmpty(cursor)) {
+      json.addProperty("cursor", cursor);
+    }
+    if (limit!=null) {
+      json.addProperty("limit", limit);
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_MOMENT_CUSTOMER_LIST);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpGetMomentCustomerList.fromJson(result);
+  }
+
+  @Override
+  public WxCpGetMomentSendResult getMomentSendResult(String momentId, String userId,
+    String cursor, Integer limit) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("moment_id", momentId);
+    json.addProperty("userid", userId);
+    if (!StringUtils.isEmpty(cursor)) {
+      json.addProperty("cursor", cursor);
+    }
+    if (limit!=null) {
+      json.addProperty("limit", limit);
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_MOMENT_SEND_RESULT);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpGetMomentSendResult.fromJson(result);
+  }
+
+  @Override
+  public WxCpGetMomentComments getMomentComments(String momentId, String userId)
+    throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("moment_id", momentId);
+    json.addProperty("userid", userId);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_MOMENT_COMMENTS);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpGetMomentComments.fromJson(result);
+  }
+
 }

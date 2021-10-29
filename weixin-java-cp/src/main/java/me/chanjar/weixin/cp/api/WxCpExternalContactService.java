@@ -3,8 +3,16 @@ package me.chanjar.weixin.cp.api;
 import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
+import me.chanjar.weixin.cp.bean.external.WxCpAddMomentResult;
+import me.chanjar.weixin.cp.bean.external.WxCpAddMomentTask;
 import me.chanjar.weixin.cp.bean.external.WxCpContactWayInfo;
 import me.chanjar.weixin.cp.bean.external.WxCpContactWayResult;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentComments;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentCustomerList;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentList;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentSendResult;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentTask;
+import me.chanjar.weixin.cp.bean.external.WxCpGetMomentTaskResult;
 import me.chanjar.weixin.cp.bean.external.WxCpMsgTemplate;
 import me.chanjar.weixin.cp.bean.external.WxCpMsgTemplateAddResult;
 import me.chanjar.weixin.cp.bean.external.WxCpUpdateRemarkRequest;
@@ -586,5 +594,103 @@ public interface WxCpExternalContactService {
    */
   WxCpBaseResp markTag(String userid, String externalUserid, String[] addTag, String[] removeTag) throws WxErrorException;
 
+  /**
+   * <pre>
+ *   企业和第三方应用可通过该接口创建客户朋友圈的发表任务。
+ *   https://open.work.weixin.qq.com/api/doc/90000/90135/95094
+   * </pre>
+   * @param task
+   * @return wx cp add moment result
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpAddMomentResult addMomentTask(WxCpAddMomentTask task) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 由于发表任务的创建是异步执行的，应用需要再调用该接口以获取创建的结果。
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/95094
+   * </pre>
+   * @param jobId 异步任务id，最大长度为64字节，由创建发表内容到客户朋友圈任务接口获取
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentTaskResult getMomentTaskResult(String jobId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取客户朋友圈全部的发表记录 获取企业全部的发表列表
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/93333
+   * </pre>
+   * @param startTime 朋友圈记录开始时间。Unix时间戳
+   * @param endTime 朋友圈记录结束时间。Unix时间戳
+   * @param creator 朋友圈创建人的userid
+   * @param filterType 朋友圈类型。0：企业发表 1：个人发表 2：所有，包括个人创建以及企业创建，默认情况下为所有类型
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @param limit 返回的最大记录数，整型，最大值100，默认值100，超过最大值时取默认值
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentList getMomentList(Long startTime, Long endTime, String creator, Integer filterType,
+    String cursor, Integer limit) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取客户朋友圈全部的发表记录 获取客户朋友圈企业发表的列表
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/93333
+   * </pre>
+   * @param momentId 朋友圈id,仅支持企业发表的朋友圈id
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @param limit 返回的最大记录数，整型，最大值1000，默认值500，超过最大值时取默认值
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentTask getMomentTask(String momentId, String cursor, Integer limit)
+    throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取客户朋友圈全部的发表记录 获取客户朋友圈发表时选择的可见范围
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/93333
+   * </pre>
+   * @param momentId 朋友圈id
+   * @param userId 企业发表成员userid，如果是企业创建的朋友圈，可以通过获取客户朋友圈企业发表的
+   *               列表获取已发表成员userid，如果是个人创建的朋友圈，创建人userid就是企业发表成员userid
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @param limit 返回的最大记录数，整型，最大值1000，默认值500，超过最大值时取默认值
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentCustomerList getMomentCustomerList(String momentId, String userId,
+    String cursor, Integer limit) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取客户朋友圈全部的发表记录 获取客户朋友圈发表后的可见客户列表
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/93333
+   * </pre>
+   * @param momentId 朋友圈id
+   * @param userId 企业发表成员userid，如果是企业创建的朋友圈，可以通过获取客户朋友圈企业发表的列表获取已发表成员userid，
+   *               如果是个人创建的朋友圈，创建人userid就是企业发表成员userid
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @param limit 返回的最大记录数，整型，最大值5000，默认值3000，超过最大值时取默认值
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentSendResult getMomentSendResult(String momentId, String userId,
+    String cursor, Integer limit) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取客户朋友圈全部的发表记录 获取客户朋友圈的互动数据
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/93333
+   * </pre>
+   * @param momentId 朋友圈id
+   * @param userId 企业发表成员userid，如果是企业创建的朋友圈，可以通过获取客户朋友圈企业发表的列表获取已发表成员userid，
+   *               如果是个人创建的朋友圈，创建人userid就是企业发表成员userid
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentComments getMomentComments(String momentId, String userId)
+    throws WxErrorException;
 
 }

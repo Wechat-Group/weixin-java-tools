@@ -19,4 +19,6 @@ public class Link implements Serializable {
   private String picUrl;
   private String desc;
   private String url;
+  @SerializedName("media_id")
+  private String mediaId;
 }
