@@ -20,8 +20,8 @@ import me.chanjar.weixin.cp.bean.external.WxCpUserTransferCustomerReq;
 import me.chanjar.weixin.cp.bean.external.WxCpUserTransferCustomerResp;
 import me.chanjar.weixin.cp.bean.external.WxCpUserTransferResultResp;
 import me.chanjar.weixin.cp.bean.external.WxCpWelcomeMsg;
-import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
-import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
+import me.chanjar.weixin.cp.bean.external.contact.*;
+import me.chanjar.weixin.cp.bean.oa.WxCpApprovalInfoQueryFilter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
@@ -586,5 +586,52 @@ public interface WxCpExternalContactService {
    */
   WxCpBaseResp markTag(String userid, String externalUserid, String[] addTag, String[] removeTag) throws WxErrorException;
 
+
+  /**
+   * <pre>
+   * 企业和第三方应用可通过此接口获取企业与成员的群发记录。
+   * https://work.weixin.qq.com/api/doc/90000/90135/93338
+   * </pre>
+   *
+   * @param chatType         群发任务的类型，默认为single，表示发送给客户，group表示发送给客户群
+   * @param startTime        群发任务记录开始时间
+   * @param endTime          群发任务记录结束时间
+   * @param creator           群发任务创建人企业账号id
+   * @param filterType       创建人类型。0：企业发表 1：个人发表 2：所有，包括个人创建以及企业创建，默认情况下为所有类型
+   * @param limit             返回的最大记录数，整型，最大值100，默认值50，超过最大值时取默认值
+   * @param cursor            用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpGroupMsgListResult getGroupMsgListV2(String chatType, @NonNull Date startTime, @NonNull Date endTime, String creator, Integer filterType, Integer limit, String cursor) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 企业和第三方应用可通过此接口获取企业与成员的群发记录。
+   * https://work.weixin.qq.com/api/doc/90000/90135/93338#获取企业群发成员执行结果
+   * </pre>
+   *
+   * @param msgid             群发消息的id，通过获取群发记录列表接口返回
+   * @param userid            发送成员userid，通过获取群发成员发送任务列表接口返回
+   * @param limit             返回的最大记录数，整型，最大值1000，默认值500，超过最大值时取默认值
+   * @param cursor            用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpGroupMsgSendResult getGroupMsgSendResult(String msgid, String userid, Integer limit, String cursor) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取群发成员发送任务列表。
+   * https://work.weixin.qq.com/api/doc/90000/90135/93338#获取群发成员发送任务列表
+   * </pre>
+   *
+   * @param msgid             群发消息的id，通过获取群发记录列表接口返回
+   * @param limit             返回的最大记录数，整型，最大值1000，默认值500，超过最大值时取默认值
+   * @param cursor            用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+   WxCpGroupMsgTaskResult getGroupMsgTask(String msgid, Integer limit, String cursor) throws WxErrorException;
 
 }
