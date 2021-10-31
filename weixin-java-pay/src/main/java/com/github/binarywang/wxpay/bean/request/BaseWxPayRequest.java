@@ -322,7 +322,7 @@ public abstract class BaseWxPayRequest implements Serializable {
    *
    * @param map 传入的属性Map
    */
-  abstract protected void storeMap(Map<String, String> map);
+  protected abstract void storeMap(Map<String, String> map);
 
   /**
    * <pre>

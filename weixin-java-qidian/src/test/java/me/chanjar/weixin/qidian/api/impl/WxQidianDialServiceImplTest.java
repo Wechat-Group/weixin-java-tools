@@ -32,7 +32,7 @@ public class WxQidianDialServiceImplTest {
     IVRListResponse iVRListResponse = this.wxService.getDialService().getIVRList();
     Assert.assertEquals(iVRListResponse.getErrcode(), new Integer(0));
     log.info("ivr size:" + iVRListResponse.getNode().size());
-    Optional<Ivr> optional = iVRListResponse.getNode().stream().filter((o) -> o.getIvr_name().equals("自动接听需求测试"))
+    Optional<Ivr> optional = iVRListResponse.getNode().stream().filter(o -> o.getIvr_name().equals("自动接听需求测试"))
         .findFirst();
     Assert.assertTrue(optional.isPresent());
     Ivr ivr = optional.get();

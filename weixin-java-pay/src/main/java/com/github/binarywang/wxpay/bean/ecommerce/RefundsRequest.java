@@ -16,8 +16,8 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 public class RefundsRequest implements Serializable {
   private static final long serialVersionUID = -3186851559004865784L;
 

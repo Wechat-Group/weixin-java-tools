@@ -33,23 +33,23 @@ public class WxMaShopAuditServiceImplTest {
     WxMaShopAuditBrandRequest request = WxMaShopAuditBrandRequest.builder().build();
     WxMaShopAuditBrandRequest.AuditReqBean auditReqBean = WxMaShopAuditBrandRequest.AuditReqBean.builder().build();
 
-    auditReqBean.setLicense(new ArrayList<String>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")));
+    auditReqBean.setLicense(new ArrayList<>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")));
     auditReqBean.setBrandInfo(WxMaShopAuditBrandRequest.AuditReqBean.BrandInfoBean.builder()
       .brandAuditType(1)
       .trademarkType("29")
       .brandManagementType(2)
       .commodityOriginType(2)
       .brandWording("346225226351203275")
-      .saleAuthorization(new ArrayList<String>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")))
-      .trademarkRegistrationCertificate(new ArrayList<String>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")))
-      .trademarkChangeCertificate(new ArrayList<String>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")))
+      .saleAuthorization(new ArrayList<>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")))
+      .trademarkRegistrationCertificate(new ArrayList<>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")))
+      .trademarkChangeCertificate(new ArrayList<>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")))
       .trademarkRegistrant("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")
       .trademarkRegistrantNu("1249305")
       .trademarkAuthorizationPeriod("2020-03-25 12:05:25")
-      .trademarkRegistrationApplication(new ArrayList<String>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")))
+      .trademarkRegistrationApplication(new ArrayList<>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")))
       .trademarkApplicant("张三")
       .trademarkApplicationTime("2020-03-25 12:05:25")
-      .importedGoodsForm(new ArrayList<String>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")))
+      .importedGoodsForm(new ArrayList<>(Arrays.asList("https://img.zhls.qq.com/3/609b98f7e0ff43d59ce6d9cca636c3e0.jpg")))
       .build());
     request.setAuditReq(auditReqBean);
 
@@ -61,12 +61,12 @@ public class WxMaShopAuditServiceImplTest {
   public void testAuditCategory() throws WxErrorException {
     WxMaShopAuditCategoryRequest request = WxMaShopAuditCategoryRequest.builder().build();
     WxMaShopAuditCategoryRequest.AuditReqBean auditReqBean = WxMaShopAuditCategoryRequest.AuditReqBean.builder().build();
-    auditReqBean.setLicense(new ArrayList<String>(Arrays.asList("www.xxxxx.com")));
+    auditReqBean.setLicense(new ArrayList<>(Arrays.asList("www.xxxxx.com")));
     auditReqBean.setCategoryInfo(WxMaShopAuditCategoryRequest.AuditReqBean.CategoryInfoBean.builder()
       .level1(7419)
       .level2(7439)
       .level3(7448)
-      .certificate(new ArrayList<String>(Arrays.asList("www.xxxxx.com")))
+      .certificate(new ArrayList<>(Arrays.asList("www.xxxxx.com")))
       .build());
     request.setAuditReq(auditReqBean);
     WxMaShopAuditCategoryResponse response = wxService.getShopAuditService().auditCategory(request);

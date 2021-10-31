@@ -5,7 +5,10 @@ import lombok.Getter;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.WxMpHostConfig;
 
-import static me.chanjar.weixin.mp.config.WxMpHostConfig.*;
+import static me.chanjar.weixin.mp.config.WxMpHostConfig.API_DEFAULT_HOST_URL;
+import static me.chanjar.weixin.mp.config.WxMpHostConfig.MP_DEFAULT_HOST_URL;
+import static me.chanjar.weixin.mp.config.WxMpHostConfig.OPEN_DEFAULT_HOST_URL;
+import static me.chanjar.weixin.mp.config.WxMpHostConfig.buildUrl;
 
 /**
  * <pre>
@@ -1373,6 +1376,90 @@ public interface WxMpApiUrl {
     CANCEL_GUIDE_MASSED_JOB(API_DEFAULT_HOST_URL, "/cgi-bin/guide/cancelguidemassendjob"),
     ;
 
+
+    private final String prefix;
+    private final String path;
+
+  }
+
+  /**
+   * 草稿箱 能力:
+   * 新建草稿
+   * 获取草稿
+   * 删除草稿
+   * 修改草稿
+   * 获取草稿总数
+   * 获取草稿列表
+   * MP端开关（仅内测期间使用）- 上线后废弃，没实现，可以自己去公众号后台开启草稿箱
+   */
+  @AllArgsConstructor
+  @Getter
+  enum Draft implements WxMpApiUrl {
+
+    /**
+     * 新建草稿
+     */
+    ADD_DRAFT(API_DEFAULT_HOST_URL, "/cgi-bin/draft/add"),
+    /**
+     * 修改草稿
+     */
+    UPDATE_DRAFT(API_DEFAULT_HOST_URL, "/cgi-bin/draft/update"),
+    /**
+     * 获取草稿
+     */
+    GET_DRAFT(API_DEFAULT_HOST_URL, "/cgi-bin/draft/get"),
+    /**
+     * 删除草稿
+     */
+    DEL_DRAFT(API_DEFAULT_HOST_URL, "/cgi-bin/draft/delete"),
+    /**
+     * 获取草稿列表
+     */
+    LIST_DRAFT(API_DEFAULT_HOST_URL, "/cgi-bin/draft/batchget"),
+    /**
+     * 获取草稿总数
+     */
+    COUNT_DRAFT(API_DEFAULT_HOST_URL, "/cgi-bin/draft/count");
+
+    private final String prefix;
+    private final String path;
+
+  }
+
+  /**
+   * 发布能力:
+   * 发布接口
+   * 发布状态轮询接口
+   * 事件推送发布结果 -- 是回调，没实现
+   * 删除发布
+   * 通过 article_id 获取已发布文章
+   * 获取成功发布列表
+   */
+  @AllArgsConstructor
+  @Getter
+  enum FreePublish implements WxMpApiUrl {
+
+    /**
+     * 发布接口
+     */
+    SUBMIT(API_DEFAULT_HOST_URL, "/cgi-bin/freepublish/submit"),
+    /**
+     * 通过 article_id 获取已发布文章
+     */
+    GET_ARTICLE(API_DEFAULT_HOST_URL, "/cgi-bin/freepublish/getarticle"),
+    /**
+     * 发布状态轮询接口
+     */
+    GET_PUSH_STATUS(API_DEFAULT_HOST_URL, "/cgi-bin/freepublish/get"),
+    /**
+     * 删除发布
+     */
+    DEL_PUSH(API_DEFAULT_HOST_URL, "/cgi-bin/freepublish/delete"),
+    /**
+     * 获取成功发布列表
+     */
+    BATCH_GET(API_DEFAULT_HOST_URL, "/cgi-bin/freepublish/batchget")
+    ;
 
     private final String prefix;
     private final String path;

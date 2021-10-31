@@ -17,7 +17,7 @@ public class WxOpenMessageRouter extends WxMpMessageRouter {
   }
 
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, String appId) {
-    return route(wxMessage, new HashMap<String, Object>(), appId);
+    return route(wxMessage, new HashMap<>(), appId);
   }
 
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context, String appId) {

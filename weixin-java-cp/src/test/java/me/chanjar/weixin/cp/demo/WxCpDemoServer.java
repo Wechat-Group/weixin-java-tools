@@ -49,14 +49,14 @@ public class WxCpDemoServer {
       wxCpService = new WxCpServiceImpl();
       wxCpService.setWxCpConfigStorage(config);
 
-      WxCpMessageHandler handler = (wxMessage, context, wxService, sessionManager) -> {
+      WxCpMessageHandler handler = (WxCpXmlMessage wxMessage, Map context, WxCpService wxService, WxSessionManager sessionManager) -> {
         WxCpXmlOutTextMessage m = WxCpXmlOutMessage.TEXT().content("测试加密消息")
           .fromUser(wxMessage.getToUserName())
           .toUser(wxMessage.getFromUserName()).build();
         return m;
       };
 
-      WxCpMessageHandler oauth2handler = (wxMessage, context, wxService, sessionManager) -> {
+      WxCpMessageHandler oauth2handler = (WxCpXmlMessage wxMessage, Map context, WxCpService wxService, WxSessionManager sessionManager) -> {
         String href = "<a href=\""
           + wxService.getOauth2Service().buildAuthorizationUrl(wxCpConfigStorage.getOauth2redirectUri(), null)
           + "\">测试oauth2</a>";
@@ -78,7 +78,7 @@ public class WxCpDemoServer {
         .end()
         .rule()
         .event(WxCpConsts.EventType.CHANGE_CONTACT)
-        .handler((wxMessage, context, wxCpService, sessionManager) -> {
+        .handler((WxCpXmlMessage wxMessage, Map context, WxCpService wxCpService, WxSessionManager sessionManager) -> {
           System.out.println("通讯录发生变更");
           return null;
         })
