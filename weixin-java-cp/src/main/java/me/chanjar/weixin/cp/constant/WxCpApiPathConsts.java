@@ -205,5 +205,9 @@ public interface WxCpApiPathConsts {
     String EDIT_CORP_TAG = "/cgi-bin/externalcontact/edit_corp_tag";
     String DEL_CORP_TAG = "/cgi-bin/externalcontact/del_corp_tag";
     String MARK_TAG = "/cgi-bin/externalcontact/mark_tag";
+
+    String GET_GROUP_MSG_SEND_RESULT = "/cgi-bin/externalcontact/get_groupmsg_send_result";
+    String GET_GROUP_MSG_TASK = "/cgi-bin/externalcontact/get_groupmsg_task";
+    String GET_GROUP_MSG_LIST_V2 = "/cgi-bin/externalcontact/get_groupmsg_list_v2";
   }
 }
