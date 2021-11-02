@@ -586,7 +586,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     json.addProperty("limit", limit);
     json.addProperty("cursor", cursor);
 
-    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_GROUP_MSG_SEND_RESULT);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_GROUP_MSG_LIST_V2);
     final String result = this.mainService.post(url, json.toString());
     return WxCpGroupMsgListResult.fromJson(result);
   }
@@ -636,7 +636,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     json.addProperty("limit", limit);
     json.addProperty("cursor", cursor);
 
-    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_GROUP_MSG_SEND_RESULT);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_GROUP_MSG_TASK);
     final String result = this.mainService.post(url, json.toString());
     return WxCpGroupMsgTaskResult.fromJson(result);
   }
