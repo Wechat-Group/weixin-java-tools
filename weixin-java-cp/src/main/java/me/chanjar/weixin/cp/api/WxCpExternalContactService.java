@@ -185,11 +185,12 @@ public interface WxCpExternalContactService {
    * 仅可转换出自己企业下的客户群chat_id
    * </pre>
    *
-   * @param openid 小程序在微信获取到的群ID，参见wx.getGroupEnterInfo(https://developers.weixin.qq.com/miniprogram/dev/api/open-api/group/wx.getGroupEnterInfo.html)
-   * @return 该企业的外部联系人ID
+   * @param opengid 小程序在微信获取到的群ID，参见wx.getGroupEnterInfo(https://developers.weixin.qq.com/miniprogram/dev/api/open-api/group/wx.getGroupEnterInfo.html)
+   * @return 客户群ID，可以用来调用获取客户群详情
    * @throws WxErrorException .
    */
-  String openidToChatid(@NotNull String openid) throws WxErrorException;
+  String opengidToChatid(@NotNull String opengid) throws WxErrorException;
+  
   /**
    * 批量获取客户详情.
    * <pre>
