@@ -3,31 +3,7 @@ package me.chanjar.weixin.cp.api;
 import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.external.WxCpAddMomentResult;
-import me.chanjar.weixin.cp.bean.external.WxCpAddMomentTask;
-import me.chanjar.weixin.cp.bean.external.WxCpContactWayInfo;
-import me.chanjar.weixin.cp.bean.external.WxCpContactWayResult;
-import me.chanjar.weixin.cp.bean.external.WxCpGetMomentComments;
-import me.chanjar.weixin.cp.bean.external.WxCpGetMomentCustomerList;
-import me.chanjar.weixin.cp.bean.external.WxCpGetMomentList;
-import me.chanjar.weixin.cp.bean.external.WxCpGetMomentSendResult;
-import me.chanjar.weixin.cp.bean.external.WxCpGetMomentTask;
-import me.chanjar.weixin.cp.bean.external.WxCpGetMomentTaskResult;
-import me.chanjar.weixin.cp.bean.external.WxCpMsgTemplate;
-import me.chanjar.weixin.cp.bean.external.WxCpMsgTemplateAddResult;
-import me.chanjar.weixin.cp.bean.external.WxCpUpdateRemarkRequest;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatInfo;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatList;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatStatistic;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatTransferResp;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalTagGroupInfo;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalTagGroupList;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalUnassignList;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalUserBehaviorStatistic;
-import me.chanjar.weixin.cp.bean.external.WxCpUserTransferCustomerReq;
-import me.chanjar.weixin.cp.bean.external.WxCpUserTransferCustomerResp;
-import me.chanjar.weixin.cp.bean.external.WxCpUserTransferResultResp;
-import me.chanjar.weixin.cp.bean.external.WxCpWelcomeMsg;
+import me.chanjar.weixin.cp.bean.external.*;
 import me.chanjar.weixin.cp.bean.external.contact.*;
 import me.chanjar.weixin.cp.bean.oa.WxCpApprovalInfoQueryFilter;
 import org.jetbrains.annotations.NotNull;
@@ -191,6 +167,29 @@ public interface WxCpExternalContactService {
    */
   String unionidToExternalUserid(@NotNull String unionid,String openid) throws WxErrorException;
 
+  /**
+   * 客户群opengid转换
+   * <pre>
+   *
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/90000/90135/94822
+   *
+   * 用户在微信里的客户群里打开小程序时，某些场景下可以获取到群的opengid，如果该群是企业微信的客户群，
+   * 则企业或第三方可以调用此接口将一个opengid转换为客户群chat_id
+   *
+   * 权限说明：
+   *
+   * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）
+   * 第三方应用需具有“企业客户权限->客户基础信息”权限
+   * 对于第三方/自建应用，群主必须在应用的可见范围
+   * 仅支持企业服务人员创建的客户群
+   * 仅可转换出自己企业下的客户群chat_id
+   * </pre>
+   *
+   * @param openid 小程序在微信获取到的群ID，参见wx.getGroupEnterInfo(https://developers.weixin.qq.com/miniprogram/dev/api/open-api/group/wx.getGroupEnterInfo.html)
+   * @return 该企业的外部联系人ID
+   * @throws WxErrorException .
+   */
+  String openidToChatid(@NotNull String openid) throws WxErrorException;
   /**
    * 批量获取客户详情.
    * <pre>
@@ -740,4 +739,53 @@ public interface WxCpExternalContactService {
    */
    WxCpGroupMsgTaskResult getGroupMsgTask(String msgid, Integer limit, String cursor) throws WxErrorException;
 
+  /**
+   * <pre>
+   * 添加入群欢迎语素材。
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/92366#添加入群欢迎语素材
+   * </pre>
+   *
+   * @param template          素材内容
+   * @return template_id      欢迎语素材id
+   * @throws WxErrorException the wx error exception
+   */
+  String addGroupWelcomeTemplate(WxCpGroupWelcomeTemplateResult template) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 编辑入群欢迎语素材。
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/92366#编辑入群欢迎语素材
+   * </pre>
+   *
+   * @param template
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp editGroupWelcomeTemplate(WxCpGroupWelcomeTemplateResult template) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取入群欢迎语素材。
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/92366#获取入群欢迎语素材
+   * </pre>
+   *
+   * @param templateId        群欢迎语的素材id
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpGroupWelcomeTemplateResult getGroupWelcomeTemplate(@NotNull String templateId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 删除入群欢迎语素材。
+   * 企业可通过此API删除入群欢迎语素材，且仅能删除调用方自己创建的入群欢迎语素材。
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/92366#删除入群欢迎语素材
+   * </pre>
+   *
+   * @param templateId        群欢迎语的素材id
+   * @param templateId        授权方安装的应用agentid。仅旧的第三方多应用套件需要填此参数
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp delGroupWelcomeTemplate(@NotNull String templateId, String agentId) throws WxErrorException;
 }

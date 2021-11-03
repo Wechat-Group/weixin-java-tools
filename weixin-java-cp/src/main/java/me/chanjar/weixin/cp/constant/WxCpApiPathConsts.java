@@ -194,6 +194,7 @@ public interface WxCpApiPathConsts {
     String RESIGNED_TRANSFER_RESULT = "/cgi-bin/externalcontact/resigned/transfer_result";
     String GROUP_CHAT_LIST = "/cgi-bin/externalcontact/groupchat/list";
     String GROUP_CHAT_INFO = "/cgi-bin/externalcontact/groupchat/get";
+    String OPENID_TO_CHATID= "/cgi-bin/externalcontact/opengid_to_chatid";
     String GROUP_CHAT_TRANSFER = "/cgi-bin/externalcontact/groupchat/transfer";
     String LIST_USER_BEHAVIOR_DATA = "/cgi-bin/externalcontact/get_user_behavior_data";
     String LIST_GROUP_CHAT_DATA = "/cgi-bin/externalcontact/groupchat/statistic";
@@ -217,6 +218,11 @@ public interface WxCpApiPathConsts {
     String GET_GROUP_MSG_SEND_RESULT = "/cgi-bin/externalcontact/get_groupmsg_send_result";
     String GET_GROUP_MSG_TASK = "/cgi-bin/externalcontact/get_groupmsg_task";
     String GET_GROUP_MSG_LIST_V2 = "/cgi-bin/externalcontact/get_groupmsg_list_v2";
+
+    String GROUP_WELCOME_TEMPLATE_ADD = "/cgi-bin/externalcontact/group_welcome_template/add";
+    String GROUP_WELCOME_TEMPLATE_EDIT = "/cgi-bin/externalcontact/group_welcome_template/edit";
+    String GROUP_WELCOME_TEMPLATE_GET = "/cgi-bin/externalcontact/group_welcome_template/get";
+    String GROUP_WELCOME_TEMPLATE_DEL = "/cgi-bin/externalcontact/group_welcome_template/del";
 
   }
 }
