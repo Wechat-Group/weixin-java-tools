@@ -132,13 +132,13 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public String openidToChatid(@NotNull String openid) throws WxErrorException {
+  public String opengidToChatid(@NotNull String opengid) throws WxErrorException {
     JsonObject json = new JsonObject();
-    json.addProperty("openid",openid);
+    json.addProperty("opengid",opengid);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(OPENID_TO_CHATID);
     String responseContent = this.mainService.post(url, json.toString());
     JsonObject tmpJson = GsonParser.parse(responseContent);
-    return tmpJson.get("external_userid").getAsString();
+    return tmpJson.get("chat_id").getAsString();
   }
 
   @Override
