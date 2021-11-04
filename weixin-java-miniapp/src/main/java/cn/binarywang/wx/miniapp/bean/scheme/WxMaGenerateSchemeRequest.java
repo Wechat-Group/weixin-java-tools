@@ -39,12 +39,6 @@ public class WxMaGenerateSchemeRequest {
   @SerializedName("expire_time")
   private Long expireTime;
 
-  /**
-   * 要打开的小程序版本。正式版为"release"，体验版为"trial"，开发版为"develop"默认值：release
-   */
-  @SerializedName("env_version")
-  private String envVersion = "release";
-
   @Data
   @Builder(builderMethodName = "newBuilder")
   public static class JumpWxa {
@@ -66,6 +60,12 @@ public class WxMaGenerateSchemeRequest {
      */
     @SerializedName("query")
     private String query;
+
+    /**
+     * 要打开的小程序版本。正式版为"release"，体验版为"trial"，开发版为"develop"默认值：release
+     */
+    @SerializedName("env_version")
+    private String envVersion = "release";
   }
 
   public String toJson() {
