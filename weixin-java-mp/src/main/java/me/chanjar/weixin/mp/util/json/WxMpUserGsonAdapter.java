@@ -20,13 +20,10 @@ public class WxMpUserGsonAdapter implements JsonDeserializer<WxMpUser> {
     if (subscribe != null) {
       user.setSubscribe(!new Integer(0).equals(subscribe));
     }
-    user.setCity(GsonHelper.getString(o, "city"));
-    user.setCountry(GsonHelper.getString(o, "country"));
     user.setHeadImgUrl(GsonHelper.getString(o, "headimgurl"));
     user.setLanguage(GsonHelper.getString(o, "language"));
     user.setNickname(GsonHelper.getString(o, "nickname"));
     user.setOpenId(GsonHelper.getString(o, "openid"));
-    user.setProvince(GsonHelper.getString(o, "province"));
     user.setSubscribeTime(GsonHelper.getLong(o, "subscribe_time"));
     user.setUnionId(GsonHelper.getString(o, "unionid"));
     user.setRemark(GsonHelper.getString(o, "remark"));
@@ -37,21 +34,6 @@ public class WxMpUserGsonAdapter implements JsonDeserializer<WxMpUser> {
     user.setQrScene(GsonHelper.getString(o, "qr_scene"));
     user.setQrSceneStr(GsonHelper.getString(o, "qr_scene_str"));
 
-    Integer sex = GsonHelper.getInteger(o, "sex");
-    if (sex != null) {
-      user.setSex(sex);
-      switch (sex) {
-        case 1:
-          user.setSexDesc("男");
-          break;
-        case 2:
-          user.setSexDesc("女");
-          break;
-        default:
-          user.setSexDesc("未知");
-      }
-
-    }
     return user;
   }
 

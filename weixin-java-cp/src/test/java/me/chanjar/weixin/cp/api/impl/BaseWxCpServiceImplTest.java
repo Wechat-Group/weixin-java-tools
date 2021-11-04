@@ -92,7 +92,7 @@ public class BaseWxCpServiceImplTest {
     RequestExecutor<Object, Object> re = mock(RequestExecutor.class);
 
     AtomicInteger counter = new AtomicInteger();
-    Mockito.when(re.execute(Mockito.anyString(), Mockito.any(), Mockito.any())).thenAnswer((InvocationOnMock invocation) -> {
+    Mockito.when(re.execute(Mockito.anyString(), Mockito.any(), Mockito.any())).thenAnswer(invocation -> {
       counter.incrementAndGet();
       WxError error = WxError.builder().errorCode(WxMpErrorMsgEnum.CODE_40001.getCode()).errorMsg(WxMpErrorMsgEnum.CODE_40001.getMsg()).build();
       throw new WxErrorException(error);
