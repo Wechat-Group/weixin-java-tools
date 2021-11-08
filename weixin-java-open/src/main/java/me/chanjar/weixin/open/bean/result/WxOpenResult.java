@@ -1,6 +1,5 @@
 package me.chanjar.weixin.open.bean.result;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
