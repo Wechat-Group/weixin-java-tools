@@ -706,4 +706,45 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     final String result = this.mainService.post(url, json.toString());
     return WxCpBaseResp.fromJson(result);
   }
+
+  /**
+   * <pre>
+   * 获取商品图册
+   * https://work.weixin.qq.com/api/doc/90000/90135/95096#获取商品图册列表
+   * </pre>
+   *
+   * @param limit   返回的最大记录数，整型，最大值100，默认值50，超过最大值时取默认值
+   * @param cursor  用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  @Override
+  public WxCpProductAlbumListResult getProductAlbumList(Integer limit, String cursor) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("limit", limit);
+    json.addProperty("cursor", cursor);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_PRODUCT_ALBUM_LIST);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpProductAlbumListResult.fromJson(result);
+  }
+
+  /**
+   * <pre>
+   * 获取商品图册
+   * https://work.weixin.qq.com/api/doc/90000/90135/95096#获取商品图册
+   * </pre>
+   *
+   * @param productId  商品id
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  @Override
+  public WxCpProductAlbumResult getProductAlbum(String productId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("product_id", productId);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_PRODUCT_ALBUM);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpProductAlbumResult.fromJson(result);
+  }
+
 }

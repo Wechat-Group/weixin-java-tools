@@ -790,4 +790,31 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   WxCpBaseResp delGroupWelcomeTemplate(@NotNull String templateId, String agentId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取商品图册
+   * https://work.weixin.qq.com/api/doc/90000/90135/95096#获取商品图册列表
+   * </pre>
+   *
+   * @param limit   返回的最大记录数，整型，最大值100，默认值50，超过最大值时取默认值
+   * @param cursor  用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpProductAlbumListResult getProductAlbumList(Integer limit, String cursor) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取商品图册
+   * https://work.weixin.qq.com/api/doc/90000/90135/95096#获取商品图册
+   * </pre>
+   *
+   * @param productId  商品id
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpProductAlbumResult getProductAlbum(String productId) throws WxErrorException;
+
+
 }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import org.testng.collections.CollectionUtils;
 
 import static org.testng.Assert.assertNotNull;
 
@@ -314,4 +315,19 @@ public class WxCpExternalContactServiceImplTest {
       .remarkPicMediaId("aaa")
       .build());
   }
+
+  @Test
+  public void testGetProductListAlbum() throws WxErrorException {
+    WxCpProductAlbumListResult result = this.wxCpService.getExternalContactService()
+      .getProductAlbumList(100, null);
+    System.out.println(result);
+    assertNotNull(result);
+
+    if(CollectionUtils.hasElements(result.getProductList())){
+      WxCpProductAlbumResult result1 = this.wxCpService.getExternalContactService().getProductAlbum(result.getProductList().get(0).getProductId());
+      System.out.println(result);
+      assertNotNull(result);
+    }
+  }
+
 }

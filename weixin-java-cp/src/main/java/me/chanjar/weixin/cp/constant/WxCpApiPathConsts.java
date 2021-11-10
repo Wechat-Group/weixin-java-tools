@@ -219,6 +219,9 @@ public interface WxCpApiPathConsts {
     String GET_GROUP_MSG_TASK = "/cgi-bin/externalcontact/get_groupmsg_task";
     String GET_GROUP_MSG_LIST_V2 = "/cgi-bin/externalcontact/get_groupmsg_list_v2";
 
+    String GET_PRODUCT_ALBUM = "/cgi-bin/externalcontact/get_product_album";
+    String GET_PRODUCT_ALBUM_LIST = "/cgi-bin/externalcontact/get_product_album_list";
+
     String GROUP_WELCOME_TEMPLATE_ADD = "/cgi-bin/externalcontact/group_welcome_template/add";
     String GROUP_WELCOME_TEMPLATE_EDIT = "/cgi-bin/externalcontact/group_welcome_template/edit";
     String GROUP_WELCOME_TEMPLATE_GET = "/cgi-bin/externalcontact/group_welcome_template/get";
