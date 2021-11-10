@@ -135,6 +135,8 @@ public interface WxCpExternalContactService {
    */
   WxCpExternalContactInfo getContactDetail(String userId) throws WxErrorException;
 
+  WxCpExternalContactInfo getContactDetail(String userId, String cursor) throws WxErrorException;
+
   /**
    * 企业和服务商可通过此接口，将微信外部联系人的userid转为微信openid，用于调用支付相关接口。暂不支持企业微信外部联系人（ExternalUserid为wo开头）的userid转openid。
    *
@@ -190,7 +192,7 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException .
    */
   String opengidToChatid(@NotNull String opengid) throws WxErrorException;
-  
+
   /**
    * 批量获取客户详情.
    * <pre>
