@@ -15,10 +15,17 @@ public class Attachment implements Serializable {
   private static final long serialVersionUID = -4545283630169056262L;
 
   /**
+   * NOTE: 20211110 字段接口未返回
+   */
+  private String type;
+
+  /**
    * 附件类型，目前仅支持image
    */
-  private String type = WxCpConsts.ProductAttachmentType.IMAGE ;
-
   private Image image;
 
+  public void setImage(Image image) {
+    this.image = image;
+    this.type = WxCpConsts.ProductAttachmentType.IMAGE;
+  }
 }

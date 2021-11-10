@@ -31,9 +31,15 @@ public class WxCpProductAlbumInfo implements Serializable {
   @SerializedName("description")
   private String description;
 
+  /**
+   * NOTE: 20211110 价钱返回全部为0
+   */
   @SerializedName("price")
   private Integer price;
 
+  /**
+   * NOTE: 20211110 商品列表接口不返回此字段, 商品详情接口返回
+   */
   @SerializedName("create_time")
   private Long createTime;
 
