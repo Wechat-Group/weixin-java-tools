@@ -109,7 +109,7 @@ public interface WxCpExternalContactService {
    * @param userId 外部联系人的userid
    * @return . external contact
    * @throws WxErrorException the wx error exception
-   * @deprecated 建议使用 {@link #getContactDetail(String)}
+   * @deprecated 建议使用 {@link #getContactDetail(String, String)}
    */
   @Deprecated
   WxCpExternalContactInfo getExternalContact(String userId) throws WxErrorException;
