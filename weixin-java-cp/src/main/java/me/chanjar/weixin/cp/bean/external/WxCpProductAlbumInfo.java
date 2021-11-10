@@ -34,6 +34,9 @@ public class WxCpProductAlbumInfo implements Serializable {
   @SerializedName("price")
   private Integer price;
 
+  @SerializedName("create_time")
+  private Long createTime;
+
   @SerializedName("attachments")
   private List<Attachment> attachments;
 
