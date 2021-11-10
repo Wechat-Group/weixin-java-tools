@@ -130,11 +130,10 @@ public interface WxCpExternalContactService {
    * </pre>
    *
    * @param userId 外部联系人的userid，注意不是企业成员的帐号
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
    * @return . contact detail
    * @throws WxErrorException .
    */
-  WxCpExternalContactInfo getContactDetail(String userId) throws WxErrorException;
-
   WxCpExternalContactInfo getContactDetail(String userId, String cursor) throws WxErrorException;
 
   /**

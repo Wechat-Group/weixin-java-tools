@@ -102,13 +102,6 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpExternalContactInfo getContactDetail(String userId) throws WxErrorException {
-    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CONTACT_DETAIL + userId);
-    String responseContent = this.mainService.get(url, null);
-    return WxCpExternalContactInfo.fromJson(responseContent);
-  }
-
-  @Override
   public WxCpExternalContactInfo getContactDetail(String userId, String cursor) throws WxErrorException {
     String params = userId;
     if(StringUtils.isNotEmpty(cursor)){
