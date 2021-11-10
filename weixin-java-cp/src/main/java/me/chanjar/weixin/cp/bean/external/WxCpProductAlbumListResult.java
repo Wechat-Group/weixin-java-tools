@@ -20,7 +20,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 @Setter
 public class WxCpProductAlbumListResult extends WxCpBaseResp implements Serializable {
 
-  private static final long serialVersionUID = 3464981991558716620L;
+  private static final long serialVersionUID = 121265727802015428L;
 
   @SerializedName("product_list")
   private List<WxCpProductAlbumInfo> productList;

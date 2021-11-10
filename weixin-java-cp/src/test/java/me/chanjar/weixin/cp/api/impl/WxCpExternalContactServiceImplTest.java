@@ -322,11 +322,10 @@ public class WxCpExternalContactServiceImplTest {
       .getProductAlbumList(100, null);
     System.out.println(result);
     assertNotNull(result);
-
     if(CollectionUtils.hasElements(result.getProductList())){
       WxCpProductAlbumResult result1 = this.wxCpService.getExternalContactService().getProductAlbum(result.getProductList().get(0).getProductId());
-      System.out.println(result);
-      assertNotNull(result);
+      System.out.println(result1);
+      assertNotNull(result1);
     }
   }
 

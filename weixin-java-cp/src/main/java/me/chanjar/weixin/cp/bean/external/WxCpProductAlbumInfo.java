@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import me.chanjar.weixin.cp.bean.external.msg.Attachment;
+import me.chanjar.weixin.cp.bean.external.product.Attachment;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
@@ -20,7 +20,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 @Setter
 public class WxCpProductAlbumInfo implements Serializable {
 
-  private static final long serialVersionUID = 3464981991558716620L;
+  private static final long serialVersionUID = -8338202601802366899L;
 
   @SerializedName("product_id")
   private String productId;
