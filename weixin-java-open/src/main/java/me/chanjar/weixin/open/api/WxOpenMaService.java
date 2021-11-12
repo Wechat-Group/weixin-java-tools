@@ -633,6 +633,13 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenMaBasicService getBasicService();
 
   /**
+   * 小程序用户隐私保护指引服务
+   *
+   * @return 小程序用户隐私保护指引服务
+   */
+  WxOpenMaPrivacyService getPrivacyService();
+
+  /**
    * 小程序审核 提审素材上传接口
    *
    * @return
