@@ -15,6 +15,7 @@ import lombok.Getter;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMaBasicService;
+import me.chanjar.weixin.open.api.WxOpenMaPrivacyService;
 import me.chanjar.weixin.open.api.WxOpenMaService;
 import me.chanjar.weixin.open.bean.ma.WxMaQrcodeParam;
 import me.chanjar.weixin.open.bean.ma.WxMaScheme;
@@ -42,12 +43,15 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   private final String appId;
   @Getter
   private final WxOpenMaBasicService basicService;
+  @Getter
+  private final WxOpenMaPrivacyService privacyService;
 
   public WxOpenMaServiceImpl(WxOpenComponentService wxOpenComponentService, String appId, WxMaConfig wxMaConfig) {
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMaConfig = wxMaConfig;
     this.basicService = new WxOpenMaBasicServiceImpl(this);
+    this.privacyService = new WxOpenMaPrivacyServiceImpl(this);
     initHttp();
   }
 

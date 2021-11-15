@@ -1,4 +1,4 @@
-## WxJava - 微信开发 Java SDK（开发工具包） [![LICENSE](https://img.shields.io/badge/License-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE) [![Badge](https://img.shields.io/badge/Link-996.icu-red.svg)](https://996.icu/#/zh_CN) 
+## WxJava - 微信开发 Java SDK [![LICENSE](https://img.shields.io/badge/License-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE) [![Badge](https://img.shields.io/badge/Link-996.icu-red.svg)](https://996.icu/#/zh_CN) 
 
 [![码云Gitee](https://gitee.com/binary/weixin-java-tools/badge/star.svg?theme=blue)](https://gitee.com/binary/weixin-java-tools)
 [![Github](https://img.shields.io/github/stars/Wechat-Group/WxJava?logo=github&style=flat)](https://github.com/Wechat-Group/WxJava)
@@ -8,7 +8,7 @@
 [![使用IntelliJ IDEA开发维护](https://img.shields.io/badge/IntelliJ%20IDEA-提供支持-blue.svg)](https://www.jetbrains.com/?from=WxJava-weixin-java-tools)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-#### 支持包括微信支付、开放平台、公众号、企业微信/企业号、小程序等微信功能的后端开发。
+#### 微信`Java`开发工具包，支持包括微信支付、开放平台、公众号、企业微信/企业号、小程序等微信功能模块的后端开发。
 
 <p align="center">
   <b>特别赞助</b>
@@ -16,6 +16,13 @@
 <br/>
 <table align="center" cellspacing="0" cellpadding="0">
   <tbody>
+    <tr>
+      <td align="center" valign="middle" width="500" colspan="3">
+	      <a href="http://www.ccflow.org/?from=wxjava" target="_blank">
+					<img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/banners/ccflow.png">
+				</a>
+      </td>
+    </tr>
     <tr>
 			<td align="left" valign="middle">
         <a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect" target="_blank">
