@@ -329,4 +329,12 @@ public class WxCpExternalContactServiceImplTest {
     }
   }
 
+  @Test
+  public void testGetMomentList() throws WxErrorException {
+    WxCpGetMomentList result = this.wxCpService.getExternalContactService()
+      .getMomentList(1636732800L, 1636991999L, null, null, null, null);
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
 }

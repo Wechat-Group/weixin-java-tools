@@ -29,6 +29,8 @@ public class WxCpGetMomentComments extends WxCpBaseResp {
   public static class CommentLikeItem {
     @SerializedName("external_userid")
     private String externalUserId;
+    @SerializedName("userid")
+    private String userid;
     @SerializedName("create_time")
     private Long createTime;
   }
