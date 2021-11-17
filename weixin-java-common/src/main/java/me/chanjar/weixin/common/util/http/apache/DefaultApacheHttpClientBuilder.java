@@ -12,6 +12,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.config.SocketConfig;
+import org.apache.http.conn.ConnectionKeepAliveStrategy;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
@@ -92,7 +93,17 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
    */
   private String userAgent;
 
-  private final HttpRequestRetryHandler httpRequestRetryHandler = new HttpRequestRetryHandler() {
+  /**
+   * 自定义重试策略
+   */
+  private HttpRequestRetryHandler httpRequestRetryHandler;
+
+  /**
+   * 自定义KeepAlive策略
+   */
+  private ConnectionKeepAliveStrategy connectionKeepAliveStrategy;
+
+  private final HttpRequestRetryHandler defaultHttpRequestRetryHandler = new HttpRequestRetryHandler() {
     @Override
     public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
       return false;
@@ -187,7 +198,16 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
         .setConnectTimeout(this.connectionTimeout)
         .setConnectionRequestTimeout(this.connectionRequestTimeout)
         .build()
-      ).setRetryHandler(this.httpRequestRetryHandler);
+      );
+
+    // 设置重试策略，没有则使用默认
+    httpRequestRetryHandler = httpRequestRetryHandler == null ? defaultHttpRequestRetryHandler : httpRequestRetryHandler;
+    httpClientBuilder.setRetryHandler(httpRequestRetryHandler);
+
+    // 设置KeepAliveStrategy，没有使用默认
+    if (connectionKeepAliveStrategy != null) {
+      httpClientBuilder.setKeepAliveStrategy(connectionKeepAliveStrategy);
+    }
 
     if (StringUtils.isNotBlank(this.httpProxyHost) && StringUtils.isNotBlank(this.httpProxyUsername)) {
       // 使用代理服务器 需要用户认证的代理服务器
