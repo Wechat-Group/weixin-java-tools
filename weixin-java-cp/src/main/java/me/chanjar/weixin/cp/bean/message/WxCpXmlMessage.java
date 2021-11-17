@@ -221,6 +221,12 @@ public class WxCpXmlMessage implements Serializable {
   private Long[] departments;
 
   /**
+   * 主部门
+   */
+  @XStreamAlias("MainDepartment")
+  private Long mainDepartment;
+
+  /**
    * 手机号码.
    */
   @XStreamAlias("Mobile")
@@ -533,7 +539,7 @@ public class WxCpXmlMessage implements Serializable {
     @Data
     public static class Item implements Serializable {
       private static final long serialVersionUID = -6549728838848064881L;
-      
+
       @XStreamAlias("PicMd5Sum")
       @XStreamConverter(value = XStreamCDataConverter.class)
       private String picMd5Sum;
