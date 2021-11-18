@@ -1,5 +1,6 @@
 package me.chanjar.weixin.common.error;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class WxError implements Serializable {
   private static final long serialVersionUID = 7869786563361406291L;
