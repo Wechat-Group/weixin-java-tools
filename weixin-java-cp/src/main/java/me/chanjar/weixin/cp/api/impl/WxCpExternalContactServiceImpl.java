@@ -25,7 +25,7 @@ import java.util.List;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.ExternalContact.*;
 
 /**
- * @author 曹祖鹏 & yuanqixun
+ * @author 曹祖鹏 & yuanqixun & Mr.Pan
  */
 @RequiredArgsConstructor
 public class WxCpExternalContactServiceImpl implements WxCpExternalContactService {
@@ -130,6 +130,16 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
       json.addProperty("openid",openid);
     }
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(UNIONID_TO_EXTERNAL_USERID);
+    String responseContent = this.mainService.post(url, json.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("external_userid").getAsString();
+  }
+
+  @Override
+  public String toServiceExternalUserid(@NotNull String externalUserid) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("external_userid", externalUserid);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(TO_SERVICE_EXTERNAL_USERID);
     String responseContent = this.mainService.post(url, json.toString());
     JsonObject tmpJson = GsonParser.parse(responseContent);
     return tmpJson.get("external_userid").getAsString();

@@ -169,6 +169,28 @@ public interface WxCpExternalContactService {
   String unionidToExternalUserid(@NotNull String unionid,String openid) throws WxErrorException;
 
   /**
+   * 代开发应用external_userid转换
+   * <pre>
+   *
+   * 文档地址：https://work.weixin.qq.com/api/doc/90001/90143/95195
+   *
+   * 企业同时安装服务商第三方应用以及授权代开发自建应用的时，服务商可使用该接口将代开发应用获取到的外部联系人id跟第三方应用的id进行关联，
+   * 该接口可将代开发自建应用获取到的external_userid转换为服务商第三方应用的external_userid。
+   *
+   * 权限说明：
+   *
+   * 该企业授权了该服务商第三方应用,且授权的第三方应用具备“企业客户权限->客户基础信息”权限
+   * 该客户的跟进人必须在应用的可见范围之内
+   * 应用需具备“企业客户权限->客户基础信息”权限
+   * </pre>
+   *
+   * @param externalUserid 代开发自建应用获取到的外部联系人ID
+   * @return 该服务商第三方应用下的企业的外部联系人ID
+   * @throws WxErrorException .
+   */
+  String toServiceExternalUserid(@NotNull String externalUserid) throws WxErrorException;
+
+  /**
    * 客户群opengid转换
    * <pre>
    *
