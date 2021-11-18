@@ -182,7 +182,10 @@ public interface WxCpApiPathConsts {
     String GET_CONTACT_DETAIL = "/cgi-bin/externalcontact/get?external_userid=";
     String CONVERT_TO_OPENID = "/cgi-bin/externalcontact/convert_to_openid";
     String UNIONID_TO_EXTERNAL_USERID = "/cgi-bin/externalcontact/unionid_to_external_userid";
+    String UNIONID_TO_EXTERNAL_USERID_3RD = "/cgi-bin/service/externalcontact/unionid_to_external_userid_3rd";
+    String GET_NEW_EXTERNAL_USERID = "/cgi-bin/service/externalcontact/get_new_external_userid";
     String TO_SERVICE_EXTERNAL_USERID = "/cgi-bin/externalcontact/to_service_external_userid";
+    String FINISH_EXTERNAL_USERID_MIGRATION = "/cgi-bin/externalcontact/finish_external_userid_migration";
     String GET_CONTACT_DETAIL_BATCH = "/cgi-bin/externalcontact/batch/get_by_user?";
     String UPDATE_REMARK = "/cgi-bin/externalcontact/remark";
     String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";

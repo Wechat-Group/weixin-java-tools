@@ -191,6 +191,75 @@ public interface WxCpExternalContactService {
   String toServiceExternalUserid(@NotNull String externalUserid) throws WxErrorException;
 
   /**
+   * 企业客户微信unionid的升级 - unionid查询external_userid
+   * <pre>
+   *
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/35863#4.2%20unionid%E6%9F%A5%E8%AF%A2external_userid
+   *
+   * 当微信用户在微信中使用第三方应用的小程序或公众号时，第三方可将获取到的unionid与openid，调用此接口转换为企业客户external_userid。
+   * 该接口调用频次有限，每个服务商每小时仅可调用1万次，仅用于微信用户主动使用第三方应用的场景来调用，服务商切不可滥用。
+   * 同时建议服务商的小程序路径或公众号页面链接带上corpid参数，如此可明确地转换出该企业对应的external_userid，以获得更好的性能。
+   *
+   * 权限说明：
+   *
+   * 该企业授权了该服务商第三方应用
+   * 调用频率最大为10000次/小时
+   * unionid和openid的主体需与服务商的主体一致
+   * openid与unionid必须是在同一个小程序或同一个公众号获取到的
+   * </pre>
+   *
+   * @param unionid 微信客户的unionid
+   * @param openid 微信客户的openid
+   * @param corpid 需要换取的企业corpid，不填则拉取所有企业
+   * @return 该服务商第三方应用下的企业的外部联系人ID
+   * @throws WxErrorException .
+   */
+  WxCpExternalUserIdList unionidToExternalUserid3rd(@NotNull String unionid, @NotNull String openid, String corpid) throws WxErrorException;
+
+  /**
+   * 转换external_userid
+   * <pre>
+   *
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/35863#转换external_userid
+   *
+   * 对于历史已授权的企业，在2022年3月1号之前，所有接口与回调返回的external_userid仍然为旧的external_userid，
+   * 从2022年3月1号0点开始，所有输入与返回的external_userid字段，将启用升级后的external_userid。
+   * 所以服务商需要在此之前完成历史数据的迁移整改
+   *
+   * 权限说明：
+   *
+   * 该企业授权了该服务商第三方应用
+   * external_userid对应的跟进人需要在应用可见范围内
+   * </pre>
+   *
+   * @param externalUserIdList 微信客户的unionid
+   * @return List<String> 新外部联系人id
+   * @throws WxErrorException .
+   */
+  WxCpNewExternalUserIdList getNewExternalUserId(String[] externalUserIdList) throws WxErrorException;
+
+  /**
+   * 设置迁移完成
+   * <pre>
+   *
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/35863#转换external_userid
+   *
+   * 企业授权确认之后，且服务商完成了新旧external_userid的迁移，即可主动将该企业设置为“迁移完成”，
+   * 设置之后，从该企业获取到的将是新的external_userid。注意，该接口需要使用provider_access_token来调用，
+   * 对于有多个应用的服务商，可逐个应用进行external_userid的转换，最后再使用provider_access_token调用该接口完成设置。
+   *
+   * 权限说明：
+   *
+   * 该企业授权了该服务商第三方应用
+   * </pre>
+   *
+   * @param corpid 企业corpid
+   * @return wx cp base resp
+   * @throws WxErrorException .
+   */
+  WxCpBaseResp finishExternalUserIdMigration(@NotNull String corpid) throws WxErrorException;
+
+  /**
    * 客户群opengid转换
    * <pre>
    *
