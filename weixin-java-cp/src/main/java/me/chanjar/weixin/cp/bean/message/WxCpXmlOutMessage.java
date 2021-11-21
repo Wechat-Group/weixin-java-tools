@@ -78,6 +78,14 @@ public abstract class WxCpXmlOutMessage implements Serializable {
   public static TaskCardBuilder TASK_CARD() {
     return new TaskCardBuilder();
   }
+
+  /**
+   * 获得任务卡片消息builder.
+   */
+  public static UpdateButtonBuilder UPDATE_BUTTON() {
+    return new UpdateButtonBuilder();
+  }
+
   protected String toXml() {
     return XStreamTransformer.toXml((Class) this.getClass(), this);
   }

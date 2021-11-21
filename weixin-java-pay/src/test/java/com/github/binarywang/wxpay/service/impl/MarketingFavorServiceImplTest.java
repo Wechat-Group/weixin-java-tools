@@ -175,7 +175,7 @@ public class MarketingFavorServiceImplTest {
   public void testPauseFavorStocksV3() throws WxPayException {
     FavorStocksSetRequest request = new FavorStocksSetRequest();
     request.setStockCreatorMchid(wxPayService.getConfig().getMchId());
-    FavorStocksStartResult result = wxPayService.getMarketingFavorService().pauseFavorStocksV3(stockId, request);
+    FavorStocksPauseResult result = wxPayService.getMarketingFavorService().pauseFavorStocksV3(stockId, request);
 
     log.info("result: {}", GSON.toJson(result));
   }
@@ -184,7 +184,7 @@ public class MarketingFavorServiceImplTest {
   public void testRestartFavorStocksV3() throws WxPayException {
     FavorStocksSetRequest request = new FavorStocksSetRequest();
     request.setStockCreatorMchid(wxPayService.getConfig().getMchId());
-    FavorStocksStartResult result = wxPayService.getMarketingFavorService().restartFavorStocksV3(stockId, request);
+    FavorStocksRestartResult result = wxPayService.getMarketingFavorService().restartFavorStocksV3(stockId, request);
 
     log.info("result: {}", GSON.toJson(result));
   }

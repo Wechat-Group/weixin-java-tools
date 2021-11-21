@@ -10,6 +10,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.config.SocketConfig;
+import org.apache.http.conn.ConnectionKeepAliveStrategy;
 import org.apache.http.conn.DnsResolver;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -20,10 +21,12 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.protocol.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.concurrent.NotThreadSafe;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -46,15 +49,18 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
   private int maxTotalConn = 50;
   private String userAgent;
 
-  private DnsResolver dnsResover;
+  private DnsResolver dnsResolver;
 
-  private HttpRequestRetryHandler httpRequestRetryHandler = (exception, executionCount, context) -> false;
+  private HttpRequestRetryHandler httpRequestRetryHandler = (IOException exception, int executionCount, HttpContext context) -> false;
   private SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactory.getSocketFactory();
   private PlainConnectionSocketFactory plainConnectionSocketFactory = PlainConnectionSocketFactory.getSocketFactory();
   private String httpProxyHost;
+  private ConnectionKeepAliveStrategy keepAliveStrategy;
+
   private int httpProxyPort;
   private String httpProxyUsername;
   private String httpProxyPassword;
+
 
   /**
    * 闲置连接监控线程.
@@ -90,6 +96,18 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
   @Override
   public ApacheHttpClientBuilder httpProxyPassword(String httpProxyPassword) {
     this.httpProxyPassword = httpProxyPassword;
+    return this;
+  }
+
+  @Override
+  public ApacheHttpClientBuilder httpRequestRetryHandler(HttpRequestRetryHandler httpRequestRetryHandler) {
+    this.httpRequestRetryHandler = httpRequestRetryHandler;
+    return this;
+  }
+
+  @Override
+  public ApacheHttpClientBuilder keepAliveStrategy(ConnectionKeepAliveStrategy keepAliveStrategy) {
+    this.keepAliveStrategy = keepAliveStrategy;
     return this;
   }
 
@@ -198,11 +216,11 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
 
     @SuppressWarnings("resource")
     PoolingHttpClientConnectionManager connectionManager;
-    if (dnsResover != null) {
+    if (dnsResolver != null) {
       if (log.isDebugEnabled()) {
         log.debug("specified dns resolver.");
       }
-      connectionManager = new PoolingHttpClientConnectionManager(registry, dnsResover);
+      connectionManager = new PoolingHttpClientConnectionManager(registry, dnsResolver);
     } else {
       if (log.isDebugEnabled()) {
         log.debug("Not specified dns resolver.");
@@ -250,12 +268,12 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
     return this.httpClientBuilder.build();
   }
 
-  public DnsResolver getDnsResover() {
-    return dnsResover;
+  public DnsResolver getDnsResolver() {
+    return dnsResolver;
   }
 
-  public void setDnsResover(DnsResolver dnsResover) {
-    this.dnsResover = dnsResover;
+  public void setDnsResolver(DnsResolver dnsResolver) {
+    this.dnsResolver = dnsResolver;
   }
 
   public static class IdleConnectionMonitorThread extends Thread {

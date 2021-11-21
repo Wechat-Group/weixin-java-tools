@@ -80,7 +80,6 @@ public class XStreamInitializer {
     };
     xstream.ignoreUnknownElements();
     xstream.setMode(XStream.NO_REFERENCES);
-    XStream.setupDefaultSecurity(xstream);
     xstream.autodetectAnnotations(true);
 
     // setup proper security by limiting which classes can be loaded by XStream

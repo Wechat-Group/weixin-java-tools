@@ -210,6 +210,10 @@ public enum WxMpErrorMsgEnum {
    */
   CODE_40155(40155, "请勿添加其他公众号的主页链接"),
   /**
+   * oauth_code已使用
+   */
+  CODE_40163(40163, "oauth_code已使用"),
+  /**
    * 缺少 access_token 参数.
    */
   CODE_41001(41001, "缺少 access_token 参数"),

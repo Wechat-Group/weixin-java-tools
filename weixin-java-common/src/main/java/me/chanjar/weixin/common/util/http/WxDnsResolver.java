@@ -18,8 +18,8 @@ import java.util.Map;
  */
 public class WxDnsResolver implements DnsResolver {
 
-  private final static String WECHAT_API_URL = "api.weixin.qq.com";
-  private static Map<String, InetAddress[]> MAPPINGS = new HashMap<String, InetAddress[]>();
+  private static final String WECHAT_API_URL = "api.weixin.qq.com";
+  private static Map<String, InetAddress[]> MAPPINGS = new HashMap<>();
   protected final Logger log = LoggerFactory.getLogger(WxDnsResolver.class);
   private String wxApiIp;
 
@@ -38,7 +38,7 @@ public class WxDnsResolver implements DnsResolver {
     } catch (UnknownHostException e) {
       //如果初始化DNS配置失败则使用默认配置,不影响服务的启动
       log.error("init WxDnsResolver error", e);
-      MAPPINGS = new HashMap<String, InetAddress[]>();
+      MAPPINGS = new HashMap<>();
     }
 
   }

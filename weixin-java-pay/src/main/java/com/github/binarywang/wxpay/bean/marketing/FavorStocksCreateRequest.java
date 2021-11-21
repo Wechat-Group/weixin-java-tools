@@ -314,8 +314,8 @@ public class FavorStocksCreateRequest implements Serializable {
   @Data
   @NoArgsConstructor
   public static class PatternInfo implements Serializable {
-
     private static final long serialVersionUID = 1L;
+
     /**
      * <pre>
      * 字段名：使用说明
@@ -391,14 +391,14 @@ public class FavorStocksCreateRequest implements Serializable {
      * </pre>
      */
     @SerializedName(value = "coupon_image")
-    private Boolean couponImage;
+    private String couponImage;
   }
 
   @Data
   @NoArgsConstructor
   public static class CouponUseRule implements Serializable {
-
     private static final long serialVersionUID = 1L;
+
     /**
      * <pre>
      * 字段名：券生效时间

@@ -7,7 +7,7 @@ package cn.binarywang.wx.miniapp.util;
  * @date 2020-08-16
  */
 public class WxMaConfigHolder {
-  private final static ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<String>() {
+  private static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<String>() {
     @Override
     protected String initialValue() {
       return "default";

@@ -3,6 +3,7 @@ package com.github.binarywang.wxpay.bean.result;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.w3c.dom.Document;
@@ -18,6 +19,7 @@ import java.io.Serializable;
  * </pre>
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class WxSignQueryResult extends BaseWxPayResult implements Serializable {

@@ -79,7 +79,7 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
 
   private void setValueToRedis(String key, long expiresTime, String value) {
     try (Jedis jedis = getConfiguredJedis()) {
-      Map<String, String> hash = new HashMap<String, String>();
+      Map<String, String> hash = new HashMap<>();
       hash.put(HASH_VALUE_FIELD, value);
       hash.put(HASH_EXPIRE_FIELD, String.valueOf(expiresTime));
       jedis.hmset(getRedisKey(key), hash);

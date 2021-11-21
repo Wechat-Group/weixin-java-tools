@@ -98,7 +98,7 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
 
     // Create a new session if requested and the response is not committed
     if (!create) {
-      return (null);
+      return null;
     }
 
     session = createSession(sessionId);
@@ -127,7 +127,7 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
   @Override
   public InternalSession findSession(String id) {
     if (id == null) {
-      return (null);
+      return null;
     }
     return this.sessions.get(id);
   }
@@ -251,7 +251,7 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
     if (this.log.isDebugEnabled()) {
       this.log.debug("End expire sessions {} processingTime {} expired sessions: {}", getName(), timeEnd - timeNow, expireHere);
     }
-    this.processingTime += (timeEnd - timeNow);
+    this.processingTime += timeEnd - timeNow;
 
   }
 
@@ -289,7 +289,7 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
    */
   public String getName() {
 
-    return (name);
+    return name;
 
   }
 

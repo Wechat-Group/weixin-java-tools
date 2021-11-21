@@ -102,6 +102,21 @@ public class WxOpenXmlMessage implements Serializable {
     @XStreamAlias("component_phone")
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String componentPhone;
+
+    // 创建个人小程序审核通知数据
+    @XStreamAlias("wxuser")
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    private String wxuser;
+
+    @XStreamAlias("idname")
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    private String idname;
+
+    // 创建试用小程序成功/失败的通知数据
+    @XStreamAlias("unique_id")
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    private String uniqueId;
+
   }
 
   public static String wxMpOutXmlMessageToEncryptedXml(WxMpXmlOutMessage message, WxOpenConfigStorage wxOpenConfigStorage) {

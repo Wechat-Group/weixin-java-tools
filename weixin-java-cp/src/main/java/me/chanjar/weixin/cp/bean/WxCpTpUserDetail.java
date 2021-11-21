@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.bean;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
@@ -9,8 +10,8 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
  * @author huangxiaoming
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class WxCpTpUserDetail extends WxCpBaseResp {
-
   private static final long serialVersionUID = -5028321625140879571L;
   /**
    * 用户所属企业的corpid

@@ -359,4 +359,15 @@ public class WxCpConsts {
      */
     public static final String FILE = "file";
   }
+
+  @UtilityClass
+  public static class ProductAttachmentType {
+
+    /**
+     * 图片消息.
+     */
+    public static final String IMAGE = "image";
+
+  }
+
 }
