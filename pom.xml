@@ -212,6 +212,16 @@
         <artifactId>testng</artifactId>
         <version>7.1.0</version>
         <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>guice</artifactId>
+            <groupId>com.google.inject</groupId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
@@ -262,6 +272,20 @@
         <version>3.12.0</version>
         <optional>true</optional>
         <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-core</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.reactivestreams</groupId>
+            <artifactId>reactive-streams</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.springframework.data</groupId>
