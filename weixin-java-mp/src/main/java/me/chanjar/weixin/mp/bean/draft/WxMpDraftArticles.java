@@ -68,6 +68,16 @@ public class WxMpDraftArticles implements ToJson, Serializable {
    */
   @SerializedName("only_fans_can_comment")
   private Integer onlyFansCanComment;
+  /**
+   * 草稿的临时链接,点击图文消息跳转链接
+   */
+  @SerializedName("url")
+  private String url;
+  /**
+   * 图文消息的封面url
+   */
+  @SerializedName("thumb_url")
+  private String thumbUrl;
 
   public static WxMpDraftArticles fromJson(String json) {
     return WxGsonBuilder.create().fromJson(json, WxMpDraftArticles.class);
