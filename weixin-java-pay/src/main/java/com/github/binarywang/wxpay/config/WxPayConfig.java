@@ -109,6 +109,16 @@ public class WxPayConfig {
   private String privateCertPath;
 
   /**
+   * apiclient_key.pem证书文件内容的字节数组.
+   */
+  private byte[] privateKeyContent;
+
+  /**
+   * apiclient_cert.pem证书文件内容的字节数组.
+   */
+  private byte[] privateCertContent;
+
+  /**
    * apiV3 秘钥值.
    */
   private String apiV3Key;
@@ -205,15 +215,7 @@ public class WxPayConfig {
       throw new WxPayException("请确保商户号mchId已设置");
     }
 
-    InputStream inputStream;
-    if (this.keyContent != null) {
-      inputStream = new ByteArrayInputStream(this.keyContent);
-    } else {
-      if (StringUtils.isBlank(this.getKeyPath())) {
-        throw new WxPayException("请确保证书文件地址keyPath已配置");
-      }
-      inputStream = this.loadConfigInputStream(this.getKeyPath());
-    }
+    InputStream inputStream = this.loadConfigInputStream(this.getKeyPath(), this.keyContent, "p12证书");
 
     try {
       KeyStore keystore = KeyStore.getInstance("PKCS12");
@@ -240,21 +242,12 @@ public class WxPayConfig {
     val privateCertPath = this.getPrivateCertPath();
     val serialNo = this.getCertSerialNo();
     val apiV3Key = this.getApiV3Key();
-    if (StringUtils.isBlank(privateKeyPath)) {
-      throw new WxPayException("请确保privateKeyPath已设置");
-    }
-    if (StringUtils.isBlank(privateCertPath)) {
-      throw new WxPayException("请确保privateCertPath已设置");
-    }
-//    if (StringUtils.isBlank(certSerialNo)) {
-//      throw new WxPayException("请确保certSerialNo证书序列号已设置");
-//    }
     if (StringUtils.isBlank(apiV3Key)) {
       throw new WxPayException("请确保apiV3Key值已设置");
     }
 
-    InputStream keyInputStream = this.loadConfigInputStream(privateKeyPath);
-    InputStream certInputStream = this.loadConfigInputStream(privateCertPath);
+    InputStream keyInputStream = this.loadConfigInputStream(privateKeyPath, this.privateKeyContent, "privateKeyPath");
+    InputStream certInputStream = this.loadConfigInputStream(privateCertPath, this.privateCertContent, "privateCertPath");
     try {
       PrivateKey merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
       X509Certificate certificate = PemUtils.loadCertificate(certInputStream);
@@ -280,6 +273,22 @@ public class WxPayConfig {
       throw new WxPayException("v3请求构造异常！", e);
     }
   }
+
+
+
+  private InputStream loadConfigInputStream(String configPath, byte[] configContent, String fileName) throws WxPayException {
+    InputStream inputStream;
+    if (configContent != null) {
+      inputStream = new ByteArrayInputStream(configContent);
+    } else {
+      if (StringUtils.isBlank(configPath)) {
+        throw new WxPayException("请确保证书文件地址【" + fileName + "】或者内容已配置");
+      }
+      inputStream = this.loadConfigInputStream(configPath);
+    }
+    return inputStream;
+  }
+
 
   /**
    * 从配置路径 加载配置 信息（支持 classpath、本地路径、网络url）
