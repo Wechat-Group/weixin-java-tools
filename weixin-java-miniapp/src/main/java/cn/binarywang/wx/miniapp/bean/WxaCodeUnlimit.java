@@ -20,6 +20,9 @@ public class WxaCodeUnlimit extends AbstractWxMaQrcodeWrapper implements Seriali
   private String scene;
   private String page;
 
+  @SerializedName("env_version")
+  private String envVersion = "release";
+
   private int width = 430;
 
   @SerializedName("auto_color")
