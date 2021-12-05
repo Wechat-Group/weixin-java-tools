@@ -227,4 +227,9 @@ public class EntWxEmpPayRequest extends BaseWxPayRequest {
     map.put("approval_type", approvalType.toString());
     map.put("agentid", agentId.toString());
   }
+
+  @Override
+  protected String[] getIgnoredParamsForSign() {
+    return new String[]{"sign_type"};
+  }
 }
