@@ -72,6 +72,24 @@ public class WxCpProperties {
      * http代理密码
      */
     private String httpProxyPassword;
+
+    /**
+     * http 请求最大重试次数
+     * <pre>
+     *   {@link me.chanjar.weixin.cp.api.WxCpService#setMaxRetryTimes(int)}
+     *   {@link me.chanjar.weixin.cp.api.impl.BaseWxCpServiceImpl#setMaxRetryTimes(int)}
+     * </pre>
+     */
+    private int maxRetryTimes = 5;
+
+    /**
+     * http 请求重试间隔
+     * <pre>
+     *   {@link me.chanjar.weixin.cp.api.WxCpService#setRetrySleepMillis(int)}
+     *   {@link me.chanjar.weixin.cp.api.impl.BaseWxCpServiceImpl#setRetrySleepMillis(int)}
+     * </pre>
+     */
+    private int retrySleepMillis = 1000;
   }
 
   public enum StorageType {
