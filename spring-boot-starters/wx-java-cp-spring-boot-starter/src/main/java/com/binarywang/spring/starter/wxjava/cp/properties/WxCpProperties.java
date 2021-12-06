@@ -1,0 +1,83 @@
+package com.binarywang.spring.starter.wxjava.cp.properties;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.io.Serializable;
+
+/**
+ * 企业微信接入相关配置属性
+ *
+ * @author yl
+ * @date 2021/12/6
+ */
+@Data
+@NoArgsConstructor
+@ConfigurationProperties(prefix = WxCpProperties.PREFIX)
+public class WxCpProperties {
+  public static final String PREFIX = "wx.cp";
+
+  /**
+   * 微信企业号 corpId
+   */
+  private String corpId;
+  /**
+   * 微信企业号 corpSecret
+   */
+  private String corpSecret;
+  /**
+   * 微信企业号应用 token
+   */
+  private String token;
+  /**
+   * 微信企业号应用 ID
+   */
+  private Integer agentId;
+  /**
+   * 微信企业号应用 EncodingAESKey
+   */
+  private String aesKey;
+
+  /**
+   * 配置存储策略，默认内存
+   */
+  private ConfigStorage configStorage = new ConfigStorage();
+
+  @Data
+  @NoArgsConstructor
+  public static class ConfigStorage implements Serializable {
+    private static final long serialVersionUID = 4815731027000065434L;
+    /**
+     * 存储类型
+     */
+    private StorageType type = StorageType.memory;
+
+    /**
+     * http代理主机
+     */
+    private String httpProxyHost;
+
+    /**
+     * http代理端口
+     */
+    private Integer httpProxyPort;
+
+    /**
+     * http代理用户名
+     */
+    private String httpProxyUsername;
+
+    /**
+     * http代理密码
+     */
+    private String httpProxyPassword;
+  }
+
+  public enum StorageType {
+    /**
+     * 内存
+     */
+    memory
+  }
+}
