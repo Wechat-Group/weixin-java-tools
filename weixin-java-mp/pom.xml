@@ -84,6 +84,11 @@
       <groupId>org.redisson</groupId>
       <artifactId>redisson</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-xml</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
   <build>

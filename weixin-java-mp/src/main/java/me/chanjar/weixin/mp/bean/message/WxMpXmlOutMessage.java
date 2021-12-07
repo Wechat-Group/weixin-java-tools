@@ -1,5 +1,7 @@
 package me.chanjar.weixin.mp.bean.message;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
@@ -11,23 +13,28 @@ import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
 
 import java.io.Serializable;
 
-@XStreamAlias("xml")
 @Data
+@XStreamAlias("xml")
+@JacksonXmlRootElement(localName = "xml")
 public abstract class WxMpXmlOutMessage implements Serializable {
   private static final long serialVersionUID = -381382011286216263L;
 
   @XStreamAlias("ToUserName")
+  @JacksonXmlProperty(localName = "ToUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String toUserName;
 
   @XStreamAlias("FromUserName")
+  @JacksonXmlProperty(localName = "FromUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String fromUserName;
 
   @XStreamAlias("CreateTime")
+  @JacksonXmlProperty(localName = "CreateTime")
   protected Long createTime;
 
   @XStreamAlias("MsgType")
+  @JacksonXmlProperty(localName = "MsgType")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String msgType;
 
