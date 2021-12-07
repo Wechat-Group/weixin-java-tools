@@ -1,10 +1,12 @@
 package me.chanjar.weixin.mp.bean.message;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
+import me.chanjar.weixin.common.util.crypto.WxCryptUtil;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.builder.outxml.*;
@@ -20,13 +22,15 @@ public abstract class WxMpXmlOutMessage implements Serializable {
   private static final long serialVersionUID = -381382011286216263L;
 
   @XStreamAlias("ToUserName")
-  @JacksonXmlProperty(localName = "ToUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "ToUserName")
+  @JacksonXmlCData
   protected String toUserName;
 
   @XStreamAlias("FromUserName")
-  @JacksonXmlProperty(localName = "FromUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "ToUserName")
+  @JacksonXmlCData
   protected String fromUserName;
 
   @XStreamAlias("CreateTime")
@@ -34,9 +38,35 @@ public abstract class WxMpXmlOutMessage implements Serializable {
   protected Long createTime;
 
   @XStreamAlias("MsgType")
-  @JacksonXmlProperty(localName = "MsgType")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "MsgType")
+  @JacksonXmlCData
   protected String msgType;
+
+
+  @XStreamAlias("Encrypt")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Encrypt")
+  @JacksonXmlCData
+  private String encrypt;
+
+  @XStreamAlias("MsgSignature")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "MsgSignature")
+  @JacksonXmlCData
+  private String msgSignature;
+
+  @XStreamAlias("TimeStamp")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "TimeStamp")
+  @JacksonXmlCData
+  private String timeStamp;
+
+  @XStreamAlias("Nonce")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Nonce")
+  @JacksonXmlCData
+  private String nonce;
 
   /**
    * 获得文本消息builder
@@ -97,6 +127,21 @@ public abstract class WxMpXmlOutMessage implements Serializable {
   @SuppressWarnings("unchecked")
   public String toXml() {
     return XStreamTransformer.toXml((Class<WxMpXmlOutMessage>) this.getClass(), this);
+  }
+
+  /**
+   * 转换成加密的结果
+   */
+  public WxMpXmlOutMessage toEncrypted(WxMpConfigStorage wxMpConfigStorage) {
+    String plainXml = toXml();
+    WxMpCryptUtil pc = new WxMpCryptUtil(wxMpConfigStorage);
+    WxCryptUtil.EncryptContext context = pc.encryptContext(plainXml);
+    WxMpXmlOutMessage res = new WxMpXmlOutMessage() {};
+    res.setNonce(context.getNonce());
+    res.setEncrypt(context.getEncrypt());
+    res.setTimeStamp(context.getTimeStamp());
+    res.setMsgSignature(context.getSignature());
+    return res;
   }
 
   /**

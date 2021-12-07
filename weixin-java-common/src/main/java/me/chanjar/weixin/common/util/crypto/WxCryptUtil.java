@@ -14,6 +14,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.io.BaseEncoding;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.codec.binary.Base64;
 import org.w3c.dom.Document;
@@ -158,6 +160,29 @@ public class WxCryptUtil {
   }
 
   /**
+   * 将公众平台回复用户的消息加密打包.
+   * <ol>
+   * <li>对要发送的消息进行AES-CBC加密</li>
+   * <li>生成安全签名</li>
+   * <li>将消息密文和安全签名打包成xml格式</li>
+   * </ol>
+   *
+   * @param plainText 公众平台待回复用户的消息，xml格式的字符串
+   * @return 加密消息所需的值对象
+   */
+  public EncryptContext encryptContext(String plainText) {
+    // 加密
+    String encryptedXml = encrypt(genRandomStr(), plainText);
+
+    // 生成安全签名
+    String timeStamp = Long.toString(System.currentTimeMillis() / 1000L);
+    String nonce = genRandomStr();
+
+    String signature = SHA1.gen(this.token, timeStamp, nonce, encryptedXml);
+    return new EncryptContext(encryptedXml, signature, timeStamp, nonce);
+  }
+
+  /**
    * 对明文进行加密.
    *
    * @param plainText 需要加密的明文
@@ -271,12 +296,20 @@ public class WxCryptUtil {
     }
 
     // appid不相同的情况 暂时忽略这段判断
-//    if (!fromAppid.equals(this.appidOrCorpid)) {
-//      throw new WxRuntimeException("AppID不正确，请核实！");
-//    }
+    //    if (!fromAppid.equals(this.appidOrCorpid)) {
+    //      throw new WxRuntimeException("AppID不正确，请核实！");
+    //    }
 
     return xmlContent;
 
   }
 
+  @Data
+  @AllArgsConstructor
+  public static class EncryptContext {
+    private String encrypt;
+    private String signature;
+    private String timeStamp;
+    private String nonce;
+  }
 }
