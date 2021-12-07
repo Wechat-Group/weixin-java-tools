@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
@@ -17,15 +20,18 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
  *
  * @author Binary Wang
  */
-@XStreamAlias("SendPicsInfo")
 @Data
+@XStreamAlias("SendPicsInfo")
+@JacksonXmlRootElement(localName = "SendPicsInfo")
 public class SendPicsInfo implements Serializable {
   private static final long serialVersionUID = -4572837013294199227L;
 
   @XStreamAlias("PicList")
+  @JacksonXmlProperty(localName = "PicList")
   protected final List<Item> picList = new ArrayList<>();
 
   @XStreamAlias("Count")
+  @JacksonXmlProperty(localName = "Count")
   private Long count;
 
   @Override
@@ -33,13 +39,16 @@ public class SendPicsInfo implements Serializable {
     return WxMpGsonBuilder.create().toJson(this);
   }
 
-  @XStreamAlias("item")
   @Data
+  @XStreamAlias("item")
+  @JacksonXmlRootElement(localName = "item")
   public static class Item implements Serializable {
     private static final long serialVersionUID = 7706235740094081194L;
 
     @XStreamAlias("PicMd5Sum")
     @XStreamConverter(value = XStreamCDataConverter.class)
+    @JacksonXmlProperty(localName = "PicMd5Sum")
+    @JacksonXmlCData
     private String picMd5Sum;
 
     @Override

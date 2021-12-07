@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
@@ -15,8 +18,9 @@ import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
  * 被动回复的图文消息xml.
  * @author chanjarster
  */
-@XStreamAlias("xml")
 @Data
+@XStreamAlias("xml")
+@JacksonXmlRootElement(localName = "xml")
 @EqualsAndHashCode(callSuper = true)
 public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
   private static final long serialVersionUID = -4604402850905714772L;
@@ -26,12 +30,14 @@ public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
    * 注意，如果图文数超过限制，则将只发限制内的条数
    */
   @XStreamAlias("Articles")
+  @JacksonXmlProperty(localName = "Articles")
   protected final List<Item> articles = new ArrayList<>();
   /**
    * 图文消息个数.
    * 当用户发送文本、图片、视频、图文、地理位置这五种消息时，开发者只能回复1条图文消息；其余场景最多可回复8条图文消息
    */
   @XStreamAlias("ArticleCount")
+  @JacksonXmlProperty(localName = "ArticleCount")
   protected int articleCount;
 
   public WxMpXmlOutNewsMessage() {
@@ -43,8 +49,9 @@ public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
     this.articleCount = this.articles.size();
   }
 
-  @XStreamAlias("item")
   @Data
+  @XStreamAlias("item")
+  @JacksonXmlRootElement(localName = "item")
   public static class Item implements Serializable {
     private static final long serialVersionUID = -4971456355028904754L;
 
@@ -53,6 +60,8 @@ public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
      */
     @XStreamAlias("Title")
     @XStreamConverter(value = XStreamCDataConverter.class)
+    @JacksonXmlProperty(localName = "Title")
+    @JacksonXmlCData
     private String title;
 
     /**
@@ -60,6 +69,8 @@ public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
      */
     @XStreamAlias("Description")
     @XStreamConverter(value = XStreamCDataConverter.class)
+    @JacksonXmlProperty(localName = "Description")
+    @JacksonXmlCData
     private String description;
 
     /**
@@ -68,6 +79,8 @@ public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
      */
     @XStreamAlias("PicUrl")
     @XStreamConverter(value = XStreamCDataConverter.class)
+    @JacksonXmlProperty(localName = "PicUrl")
+    @JacksonXmlCData
     private String picUrl;
 
     /**
@@ -75,6 +88,8 @@ public class WxMpXmlOutNewsMessage extends WxMpXmlOutMessage {
      */
     @XStreamAlias("Url")
     @XStreamConverter(value = XStreamCDataConverter.class)
+    @JacksonXmlProperty(localName = "Url")
+    @JacksonXmlCData
     private String url;
 
   }

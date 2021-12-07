@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.bean.message;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -49,13 +50,15 @@ public class WxMpXmlMessage implements Serializable {
   ///////////////////////
 
   @XStreamAlias("ToUserName")
-  @JacksonXmlProperty(localName = "ToUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "ToUserName")
+  @JacksonXmlCData
   private String toUser;
 
   @XStreamAlias("FromUserName")
-  @JacksonXmlProperty(localName = "FromUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "FromUserName")
+  @JacksonXmlCData
   private String fromUser;
 
   @XStreamAlias("CreateTime")
@@ -63,13 +66,15 @@ public class WxMpXmlMessage implements Serializable {
   private Long createTime;
 
   @XStreamAlias("MsgType")
-  @JacksonXmlProperty(localName = "MsgType")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "MsgType")
+  @JacksonXmlCData
   private String msgType;
 
   @XStreamAlias("Content")
-  @JacksonXmlProperty(localName = "Content")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Content")
+  @JacksonXmlCData
   private String content;
 
   @XStreamAlias("MenuId")
@@ -81,23 +86,27 @@ public class WxMpXmlMessage implements Serializable {
   private Long msgId;
 
   @XStreamAlias("PicUrl")
-  @JacksonXmlProperty(localName = "PicUrl")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "PicUrl")
+  @JacksonXmlCData
   private String picUrl;
 
   @XStreamAlias("MediaId")
-  @JacksonXmlProperty(localName = "MediaId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "MediaId")
+  @JacksonXmlCData
   private String mediaId;
 
   @XStreamAlias("Format")
-  @JacksonXmlProperty(localName = "Format")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Format")
+  @JacksonXmlCData
   private String format;
 
   @XStreamAlias("ThumbMediaId")
-  @JacksonXmlProperty(localName = "ThumbMediaId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "ThumbMediaId")
+  @JacksonXmlCData
   private String thumbMediaId;
 
   @XStreamAlias("Location_X")
@@ -113,38 +122,45 @@ public class WxMpXmlMessage implements Serializable {
   private Double scale;
 
   @XStreamAlias("Label")
-  @JacksonXmlProperty(localName = "Label")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Label")
+  @JacksonXmlCData
   private String label;
 
   @XStreamAlias("Title")
-  @JacksonXmlProperty(localName = "Title")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Title")
+  @JacksonXmlCData
   private String title;
 
   @XStreamAlias("Description")
-  @JacksonXmlProperty(localName = "Description")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Description")
+  @JacksonXmlCData
   private String description;
 
   @XStreamAlias("Url")
-  @JacksonXmlProperty(localName = "Url")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Url")
+  @JacksonXmlCData
   private String url;
 
   @XStreamAlias("Event")
-  @JacksonXmlProperty(localName = "Event")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Event")
+  @JacksonXmlCData
   private String event;
 
   @XStreamAlias("EventKey")
-  @JacksonXmlProperty(localName = "EventKey")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "EventKey")
+  @JacksonXmlCData
   private String eventKey;
 
   @XStreamAlias("Ticket")
-  @JacksonXmlProperty(localName = "Ticket")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Ticket")
+  @JacksonXmlCData
   private String ticket;
 
   @XStreamAlias("Latitude")
@@ -165,8 +181,9 @@ public class WxMpXmlMessage implements Serializable {
   private String recognition;
 
   @XStreamAlias("UnionId")
-  @JacksonXmlProperty(localName = "UnionId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "UnionId")
+  @JacksonXmlCData
   private String unionId;
 
   ///////////////////////////////////////
@@ -176,8 +193,9 @@ public class WxMpXmlMessage implements Serializable {
    * 群发的结果.
    */
   @XStreamAlias("Status")
-  @JacksonXmlProperty(localName = "Status")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Status")
+  @JacksonXmlCData
   private String status;
   /**
    * group_id下粉丝数；或者openid_list中的粉丝数.
@@ -232,13 +250,15 @@ public class WxMpXmlMessage implements Serializable {
   ///////////////////////////////////////
 
   @XStreamAlias("CardId")
-  @JacksonXmlProperty(localName = "CardId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "CardId")
+  @JacksonXmlCData
   private String cardId;
 
   @XStreamAlias("FriendUserName")
-  @JacksonXmlProperty(localName = "FriendUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "FriendUserName")
+  @JacksonXmlCData
   private String friendUserName;
 
   /**
@@ -249,13 +269,15 @@ public class WxMpXmlMessage implements Serializable {
   private Integer isGiveByFriend;
 
   @XStreamAlias("UserCardCode")
-  @JacksonXmlProperty(localName = "UserCardCode")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "UserCardCode")
+  @JacksonXmlCData
   private String userCardCode;
 
   @XStreamAlias("OldUserCardCode")
-  @JacksonXmlProperty(localName = "OldUserCardCode")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "OldUserCardCode")
+  @JacksonXmlCData
   private String oldUserCardCode;
 
   @XStreamAlias("OuterId")
@@ -571,8 +593,9 @@ public class WxMpXmlMessage implements Serializable {
    * 订单ID.
    */
   @XStreamAlias("OrderId")
-  @JacksonXmlProperty(localName = "OrderId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "OrderId")
+  @JacksonXmlCData
   private String orderId;
 
   /**
@@ -586,16 +609,18 @@ public class WxMpXmlMessage implements Serializable {
    * 商品ID.
    */
   @XStreamAlias("ProductId")
-  @JacksonXmlProperty(localName = "ProductId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "ProductId")
+  @JacksonXmlCData
   private String productId;
 
   /**
    * 商品SKU信息.
    */
   @XStreamAlias("SkuInfo")
-  @JacksonXmlProperty(localName = "SkuInfo")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "SkuInfo")
+  @JacksonXmlCData
   private String skuInfo;
 
   ///////////////////////////////////////
@@ -606,8 +631,9 @@ public class WxMpXmlMessage implements Serializable {
    * 目前为"公众账号原始ID"
    */
   @XStreamAlias("DeviceType")
-  @JacksonXmlProperty(localName = "DeviceType")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "DeviceType")
+  @JacksonXmlCData
   private String deviceType;
 
   /**
@@ -615,8 +641,9 @@ public class WxMpXmlMessage implements Serializable {
    * 第三方提供
    */
   @XStreamAlias("DeviceID")
-  @JacksonXmlProperty(localName = "DeviceID")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "DeviceID")
+  @JacksonXmlCData
   private String deviceId;
 
   /**
@@ -624,16 +651,18 @@ public class WxMpXmlMessage implements Serializable {
    * 因此响应中该字段第三方需要原封不变的带回
    */
   @XStreamAlias("SessionID")
-  @JacksonXmlProperty(localName = "SessionID")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "SessionID")
+  @JacksonXmlCData
   private String sessionId;
 
   /**
    * 微信用户账号的OpenID.
    */
   @XStreamAlias("OpenID")
-  @JacksonXmlProperty(localName = "OpenID")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "OpenID")
+  @JacksonXmlCData
   private String openId;
 
   @XStreamAlias("HardWare")

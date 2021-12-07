@@ -2,6 +2,9 @@ package me.chanjar.weixin.mp.bean.message;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
@@ -15,8 +18,9 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
  *
  * @author Binary Wang
  */
-@XStreamAlias("ScanCodeInfo")
 @Data
+@XStreamAlias("ScanCodeInfo")
+@JacksonXmlRootElement(localName = "ScanCodeInfo")
 public class ScanCodeInfo implements Serializable {
   private static final long serialVersionUID = 4745181270645050122L;
 
@@ -25,6 +29,8 @@ public class ScanCodeInfo implements Serializable {
    */
   @XStreamAlias("ScanType")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "ScanType")
+  @JacksonXmlCData
   private String scanType;
 
   /**
@@ -32,6 +38,8 @@ public class ScanCodeInfo implements Serializable {
    */
   @XStreamAlias("ScanResult")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "ScanResult")
+  @JacksonXmlCData
   private String scanResult;
 
   @Override
