@@ -506,7 +506,6 @@ public class WxMpXmlMessage implements Serializable {
   @JacksonXmlProperty(localName = "ReceiptInfo")
   private String receiptInfo;
 
-
   ///////////////////////////////////////
   // 门店审核事件推送
   ///////////////////////////////////////
@@ -797,6 +796,12 @@ public class WxMpXmlMessage implements Serializable {
   @JacksonXmlProperty(localName = "nsrsbh")
   private String nsrsbh;
 
+  /**
+   * 加密消息
+   */
+  @XStreamAlias("Encrypt")
+  @JacksonXmlProperty(localName = "Encrypt")
+  private String encrypt;
 
   public static WxMpXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
@@ -834,6 +839,14 @@ public class WxMpXmlMessage implements Serializable {
     } catch (IOException e) {
       throw new WxRuntimeException(e);
     }
+  }
+
+  public WxMpXmlMessage decryptField(WxMpConfigStorage wxMpConfigStorage,
+                                     String timestamp, String nonce, String msgSignature) {
+    WxMpCryptUtil cryptUtil = new WxMpCryptUtil(wxMpConfigStorage);
+    String plainText = cryptUtil.decryptContent(msgSignature, timestamp, nonce, this.encrypt);
+    log.debug("解密后的原始xml消息内容：{}", plainText);
+    return fromXml(plainText);
   }
 
   /**
