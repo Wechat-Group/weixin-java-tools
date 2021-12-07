@@ -89,6 +89,7 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     user.setToInvite(GsonHelper.getBoolean(o, "to_invite"));
     user.setOpenUserId(GsonHelper.getString(o, "open_userid"));
     user.setMainDepartment(GsonHelper.getString(o, "main_department"));
+    user.setDirectLeader(GsonHelper.getStringArray(o, "direct_leader"));
 
     if (GsonHelper.isNotNull(o.get(EXTRA_ATTR))) {
       this.buildExtraAttrs(o, user);

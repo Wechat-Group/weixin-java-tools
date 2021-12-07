@@ -70,6 +70,7 @@ public class WxCpUser implements Serializable {
   private String externalCorpName;
   private WechatChannels wechatChannels;
 
+  private String[] directLeader;
 
 
 
