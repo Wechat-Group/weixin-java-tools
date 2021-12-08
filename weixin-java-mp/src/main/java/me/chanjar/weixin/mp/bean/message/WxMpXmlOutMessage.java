@@ -29,7 +29,7 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   @XStreamAlias("FromUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
-  @JacksonXmlProperty(localName = "ToUserName")
+  @JacksonXmlProperty(localName = "FromUserName")
   @JacksonXmlCData
   protected String fromUserName;
 
