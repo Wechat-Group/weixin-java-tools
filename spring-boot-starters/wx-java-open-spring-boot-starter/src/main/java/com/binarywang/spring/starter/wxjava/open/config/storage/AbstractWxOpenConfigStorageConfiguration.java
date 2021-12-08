@@ -9,19 +9,20 @@ import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
 public abstract class AbstractWxOpenConfigStorageConfiguration {
 
   protected WxOpenInMemoryConfigStorage config(WxOpenInMemoryConfigStorage config, WxOpenProperties properties) {
-    WxOpenProperties.ConfigStorage configStorageProperties = properties.getConfigStorage();
+    WxOpenProperties.ConfigStorage storage = properties.getConfigStorage();
     config.setWxOpenInfo(properties.getAppId(), properties.getSecret(), properties.getToken(), properties.getAesKey());
-    config.setHttpProxyHost(configStorageProperties.getHttpProxyHost());
-    config.setHttpProxyUsername(configStorageProperties.getHttpProxyUsername());
-    config.setHttpProxyPassword(configStorageProperties.getHttpProxyPassword());
-    if (configStorageProperties.getHttpProxyPort() != null) {
-      config.setHttpProxyPort(configStorageProperties.getHttpProxyPort());
+    config.setHttpProxyHost(storage.getHttpProxyHost());
+    config.setHttpProxyUsername(storage.getHttpProxyUsername());
+    config.setHttpProxyPassword(storage.getHttpProxyPassword());
+    Integer httpProxyPort = storage.getHttpProxyPort();
+    if (httpProxyPort != null) {
+      config.setHttpProxyPort(httpProxyPort);
     }
-    int maxRetryTimes = configStorageProperties.getMaxRetryTimes();
-    if (configStorageProperties.getMaxRetryTimes() < 0) {
+    int maxRetryTimes = storage.getMaxRetryTimes();
+    if (maxRetryTimes < 0) {
       maxRetryTimes = 0;
     }
-    int retrySleepMillis = configStorageProperties.getRetrySleepMillis();
+    int retrySleepMillis = storage.getRetrySleepMillis();
     if (retrySleepMillis < 0) {
       retrySleepMillis = 1000;
     }
