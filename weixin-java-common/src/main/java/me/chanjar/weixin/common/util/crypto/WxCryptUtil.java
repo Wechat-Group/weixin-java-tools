@@ -259,7 +259,9 @@ public class WxCryptUtil {
    * @param nonce        随机串，对应URL参数的nonce
    * @param encryptedXml 包含 Encrypt 密文的 xml，对应POST请求的数据
    * @return 解密后的原文
+   * @deprecated 由于语义不清晰，置为过时方法，请查看替代方法 {@link #decryptXml}
    */
+  @Deprecated
   public String decrypt(String msgSignature, String timeStamp, String nonce, String encryptedXml) {
     return decryptXml(msgSignature, timeStamp, nonce, encryptedXml);
   }

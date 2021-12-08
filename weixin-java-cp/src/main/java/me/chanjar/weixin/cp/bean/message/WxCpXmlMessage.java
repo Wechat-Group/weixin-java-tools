@@ -463,7 +463,7 @@ public class WxCpXmlMessage implements Serializable {
   public static WxCpXmlMessage fromEncryptedXml(String encryptedXml, WxCpConfigStorage wxCpConfigStorage,
                                                 String timestamp, String nonce, String msgSignature) {
     WxCpCryptUtil cryptUtil = new WxCpCryptUtil(wxCpConfigStorage);
-    String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    String plainText = cryptUtil.decryptXml(msgSignature, timestamp, nonce, encryptedXml);
     log.debug("解密后的原始xml消息内容：{}", plainText);
     return fromXml(plainText);
   }

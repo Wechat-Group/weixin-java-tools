@@ -827,7 +827,7 @@ public class WxMpXmlMessage implements Serializable {
   public static WxMpXmlMessage fromEncryptedXml(String encryptedXml, WxMpConfigStorage wxMpConfigStorage,
                                                 String timestamp, String nonce, String msgSignature) {
     WxMpCryptUtil cryptUtil = new WxMpCryptUtil(wxMpConfigStorage);
-    String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    String plainText = cryptUtil.decryptXml(msgSignature, timestamp, nonce, encryptedXml);
     log.debug("解密后的原始xml消息内容：{}", plainText);
     return fromXml(plainText);
   }
