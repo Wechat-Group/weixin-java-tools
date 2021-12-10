@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcAiCropResult;
 import me.chanjar.weixin.common.bean.imgproc.WxImgProcQrCodeResult;
@@ -35,7 +36,7 @@ public class WxMaImgProcServiceImpl implements WxImgProcService {
       //ignore
     }
 
-    final String result = this.service.get(String.format(QRCODE, imgUrl), null);
+    final String result = this.service.post(String.format(QRCODE, imgUrl), new JsonObject());
     return WxImgProcQrCodeResult.fromJson(result);
   }
 
