@@ -68,6 +68,8 @@ public class WxMpDraftArticles implements ToJson, Serializable {
    */
   @SerializedName("only_fans_can_comment")
   private Integer onlyFansCanComment;
+  
+  private String url;
 
   public static WxMpDraftArticles fromJson(String json) {
     return WxGsonBuilder.create().fromJson(json, WxMpDraftArticles.class);
