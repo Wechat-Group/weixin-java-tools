@@ -75,7 +75,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final MarketingFavorService marketingFavorService = new MarketingFavorServiceImpl(this);
   private final MarketingBusiFavorService marketingBusiFavorService = new MarketingBusiFavorServiceImpl(this);
   private final WxEntrustPapService wxEntrustPapService = new WxEntrustPapServiceImpl(this);
-
+  private final PartnerTransferService partnerTransferService = new PartnerTransferServiceImpl(this);
+  private final PayrollService payrollService = new PayrollServiceImpl(this);
 
   protected Map<String, WxPayConfig> configMap;
 
@@ -143,6 +144,12 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   public WxEntrustPapService getWxEntrustPapService() {
     return wxEntrustPapService;
   }
+
+  @Override
+  public PartnerTransferService getPartnerTransferService(){return partnerTransferService;}
+
+  @Override
+  public PayrollService getPayrollService(){return payrollService;}
 
   @Override
   public WxPayConfig getConfig() {

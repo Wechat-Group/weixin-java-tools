@@ -180,6 +180,20 @@ public interface WxPayService {
   WxEntrustPapService getWxEntrustPapService();
 
   /**
+   * 获取批量转账到零钱服务类.
+   *
+   * @return the Batch transfer to change service
+   */
+  PartnerTransferService getPartnerTransferService();
+
+  /**
+   * 微工卡
+   *
+   * @return the micro card
+   */
+  PayrollService getPayrollService();
+
+  /**
    * 获取企业付款服务类.
    *
    * @return the ent pay service
