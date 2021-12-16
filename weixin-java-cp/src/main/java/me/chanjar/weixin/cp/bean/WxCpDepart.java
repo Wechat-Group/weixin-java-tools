@@ -17,6 +17,7 @@ public class WxCpDepart implements Serializable {
   private Long id;
   private String name;
   private String enName;
+  private List<String> departmentLeader;
   private Long parentId;
   private Long order;
 
