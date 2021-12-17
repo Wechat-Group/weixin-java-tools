@@ -78,6 +78,44 @@ public class WxCpUserExternalContactInfoTest {
       "    }\n" +
       "  ]\n" +
       "}";
+    
+        final String testJson = "{\n" +
+      "   \"errcode\": 0,\n" +
+      "   \"errmsg\": \"ok\",\n" +
+      "   \"department\": [\n" +
+      "       {\n" +
+      "           \"id\": 2,\n" +
+      "           \"name\": \"广州研发中心\",\n" +
+      "           \"name_en\": \"RDGZ\",\n" +
+      "           \"department_leader\":[\"zhangsan\",\"lisi\"],\n" +
+      "           \"parentid\": 1,\n" +
+      "           \"order\": 10\n" +
+      "       },\n" +
+      "       {\n" +
+      "           \"id\": 3,\n" +
+      "           \"name\": \"邮箱产品部\",\n" +
+      "           \"name_en\": \"mail\",\n" +
+      "           \"department_leader\":[\"lisi\",\"wangwu\"],\n" +
+      "           \"parentid\": 2,\n" +
+      "           \"order\": 40\n" +
+      "       }\n" +
+      "   ]\n" +
+      "}\n";
+
+    // 测试序列化
+    val depart = new WxCpDepart();
+    depart.setId(8L);
+    depart.setName("name");
+    depart.setEnName("enName");
+    depart.setDepartmentLeader(new String[]{"zhangsan", "lisi"});
+    depart.setParentId(88L);
+    depart.setOrder(99L);
+
+    String toJson = depart.toJson();
+
+    // 测试企业微信字段返回
+    List<WxCpDepart> department = WxCpGsonBuilder.create().fromJson(GsonParser.parse(two).get("department"), new TypeToken<List<WxCpDepart>>() {
+    }.getType());
 
     final WxCpExternalContactInfo contactInfo = WxCpExternalContactInfo.fromJson(json);
     assertThat(contactInfo).isNotNull();
