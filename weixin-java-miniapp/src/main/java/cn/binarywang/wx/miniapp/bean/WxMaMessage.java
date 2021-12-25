@@ -145,6 +145,27 @@ public class WxMaMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String query;
 
+  @SerializedName("RevokeInfo")
+  @XStreamAlias("RevokeInfo")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String revokeInfo;
+
+  @SerializedName("OpenID")
+  @XStreamAlias("OpenID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String openId;
+
+  @SerializedName("PluginID")
+  @XStreamAlias("PluginID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String pluginId;
+
+  @SerializedName("OpenPID")
+  @XStreamAlias("OpenPID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String openPid;
+
+
   public static WxMaMessage fromXml(String xml) {
     return XStreamTransformer.fromXml(WxMaMessage.class, xml);
   }
