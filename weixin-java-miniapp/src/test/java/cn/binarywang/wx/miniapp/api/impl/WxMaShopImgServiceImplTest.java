@@ -35,4 +35,11 @@ public class WxMaShopImgServiceImplTest {
     WxMinishopImageUploadCustomizeResult result = wxService.getShopImgService().uploadImg(file, "1");
     assertThat(result).isNotNull();
   }
+
+  @Test
+  public void testUploadImg3() throws WxErrorException {
+    String imgUrl = "https://tongmeng2020.oss-cn-hangzhou.aliyuncs.com/fariocc5yzqlkyk1hwe1.jpg";
+    WxMinishopImageUploadCustomizeResult result = wxService.getShopImgService().uploadImg(imgUrl, "1");
+    assertThat(result).isNotNull();
+  }
 }

@@ -18,19 +18,30 @@ import java.io.IOException;
  */
 @Slf4j
 public class OkHttpMinishopMediaUploadRequestCustomizeExecutor extends MinishopUploadRequestCustomizeExecutor<OkHttpClient, OkHttpProxyInfo> {
-  public OkHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType) {
-    super(requestHttp, respType);
+  public OkHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType, String imgUrl) {
+    super(requestHttp, respType, imgUrl);
   }
 
   @Override
   public WxMinishopImageUploadCustomizeResult execute(String uri, File file, WxType wxType) throws WxErrorException, IOException {
 
-    RequestBody body = new MultipartBody.Builder()
-      .setType(MediaType.parse("multipart/form-data"))
-      .addFormDataPart("media",
-        file.getName(),
-        RequestBody.create(MediaType.parse("application/octet-stream"), file))
-      .build();
+    RequestBody body = null;
+    if (this.uploadType.equals("0")) {
+      body = new MultipartBody.Builder()
+              .setType(MediaType.parse("multipart/form-data"))
+              .addFormDataPart("resp_type", this.respType)
+              .addFormDataPart("upload_type", this.uploadType)
+              .addFormDataPart("media", file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), file))
+              .build();
+    }
+    else {
+      body = new MultipartBody.Builder()
+              .setType(MediaType.parse("multipart/form-data"))
+              .addFormDataPart("resp_type", this.respType)
+              .addFormDataPart("upload_type", this.uploadType)
+              .addFormDataPart("img_url", this.imgUrl)
+              .build();
+    }
     Request request = new Request.Builder().url(uri).post(body).build();
 
     Response response = requestHttp.getRequestHttpClient().newCall(request).execute();

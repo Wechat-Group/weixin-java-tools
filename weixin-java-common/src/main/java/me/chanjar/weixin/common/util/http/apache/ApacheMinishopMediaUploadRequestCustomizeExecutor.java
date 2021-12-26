@@ -24,8 +24,8 @@ import java.io.IOException;
  */
 @Slf4j
 public class ApacheMinishopMediaUploadRequestCustomizeExecutor extends MinishopUploadRequestCustomizeExecutor<CloseableHttpClient, HttpHost> {
-  public ApacheMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType) {
-    super(requestHttp, respType);
+  public ApacheMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType, String imgUrl) {
+    super(requestHttp, respType, imgUrl);
   }
 
   @Override
@@ -35,13 +35,27 @@ public class ApacheMinishopMediaUploadRequestCustomizeExecutor extends MinishopU
       RequestConfig config = RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build();
       httpPost.setConfig(config);
     }
-    if (file != null) {
+    if (this.uploadType.equals("0")) {
+      if (file == null) {
+        throw new WxErrorException("上传文件为空");
+      }
       HttpEntity entity = MultipartEntityBuilder
         .create()
         .addBinaryBody("media", file)
         .addTextBody("resp_type", this.respType)
+        .addTextBody("upload_type", this.uploadType)
         .setMode(HttpMultipartMode.RFC6532)
         .build();
+      httpPost.setEntity(entity);
+    }
+    else {
+      HttpEntity entity = MultipartEntityBuilder
+              .create()
+              .addTextBody("resp_type", this.respType)
+              .addTextBody("upload_type", this.uploadType)
+              .addTextBody("img_url", this.imgUrl)
+              .setMode(HttpMultipartMode.RFC6532)
+              .build();
       httpPost.setEntity(entity);
     }
     try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
