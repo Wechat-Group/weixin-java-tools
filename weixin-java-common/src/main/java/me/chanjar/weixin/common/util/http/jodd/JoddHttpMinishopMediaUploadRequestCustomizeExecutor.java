@@ -22,8 +22,8 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 public class JoddHttpMinishopMediaUploadRequestCustomizeExecutor extends MinishopUploadRequestCustomizeExecutor<HttpConnectionProvider, ProxyInfo> {
-  public JoddHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType) {
-    super(requestHttp, respType);
+  public JoddHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType, String imgUrl) {
+    super(requestHttp, respType, imgUrl);
   }
 
   @Override
@@ -33,7 +33,16 @@ public class JoddHttpMinishopMediaUploadRequestCustomizeExecutor extends Minisho
       requestHttp.getRequestHttpClient().useProxy(requestHttp.getRequestHttpProxy());
     }
     request.withConnectionProvider(requestHttp.getRequestHttpClient());
-    request.form("media", file);
+    if (this.uploadType.equals("0")) {
+      request.form("resp_type", this.respType,
+              "upload_type", this.uploadType,
+              "media", file);
+    }
+    else {
+      request.form("resp_type", this.respType,
+              "upload_type", this.uploadType,
+              "img_url", this.imgUrl);
+    }
     HttpResponse response = request.send();
     response.charset(StandardCharsets.UTF_8.name());
 
