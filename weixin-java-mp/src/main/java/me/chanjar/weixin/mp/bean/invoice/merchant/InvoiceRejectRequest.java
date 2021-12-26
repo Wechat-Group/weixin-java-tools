@@ -1,10 +1,13 @@
 package me.chanjar.weixin.mp.bean.invoice.merchant;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * 拒绝开票请求参数
  */
+@Data
 public class InvoiceRejectRequest implements Serializable {
 
   /**

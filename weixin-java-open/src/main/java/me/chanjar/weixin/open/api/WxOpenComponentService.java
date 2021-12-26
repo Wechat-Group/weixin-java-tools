@@ -121,6 +121,21 @@ public interface WxOpenComponentService {
   String FAST_REGISTER_WEAPP_SEARCH_URL = "https://api.weixin.qq.com/cgi-bin/component/fastregisterweapp?action=search";
 
   /**
+   * 快速创建个人小程序接口.
+   */
+  String FAST_REGISTER_PERSONAL_WEAPP_URL = "https://api.weixin.qq.com/wxa/component/fastregisterpersonalweapp?action=create";
+
+  /**
+   * 查询快速创建个人小程序任务状态接口.
+   */
+  String FAST_REGISTER_PERSONAL_WEAPP_SEARCH_URL = "https://api.weixin.qq.com/wxa/component/fastregisterpersonalweapp?action=query";
+
+    /**
+     * 快速创建试用小程序接口.
+     */
+  String FAST_REGISTER_BETA_WEAPP_URL = "https://api.weixin.qq.com/wxa/component/fastregisterbetaweapp";
+
+  /**
    * 代小程序实现业务.
    * 小程序代码模版库管理：https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6&token=&lang=zh_CN
    * access_token 为 component_access_token
@@ -580,6 +595,39 @@ public interface WxOpenComponentService {
    */
   WxOpenResult fastRegisterWeappSearch(String name, String legalPersonaWechat, String legalPersonaName) throws WxErrorException;
 
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Register_Mini_Programs/fastregisterpersonalweapp.html
+   * 快速创建个人小程序
+   *
+   * @param idname              个人用户名字
+   * @param wxuser              个人用户微信号
+   * @param componentPhone      第三方联系电话
+   * @return the wx open result
+   * @throws WxErrorException
+   */
+  WxOpenRegisterPersonalWeappResult fastRegisterPersonalWeapp(String idname, String wxuser, String componentPhone) throws WxErrorException;
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Register_Mini_Programs/fastregisterpersonalweapp.html
+   * 查询个人小程序注册任务状态
+   *
+   * @param taskid 任务ID
+   * @return the wx open result
+   * @throws WxErrorException
+   */
+  WxOpenRegisterPersonalWeappResult fastRegisterPersonalWeappSearch(String taskid) throws WxErrorException;
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/beta_Mini_Programs/fastregister.html
+   * 注册试用小程序
+   *
+   * @param name 小程序名称
+   * @param openid 微信用户的openid（不是微信号）
+   * @return the wx open result
+   * @throws WxErrorException
+   */
+  WxOpenRegisterBetaWeappResult fastRegisterBetaWeapp(String name, String openid) throws WxErrorException;
 
   /**
    * https://api.weixin.qq.com/product/register/register_shop?component_access_token=xxxxxxxxx

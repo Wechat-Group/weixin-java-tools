@@ -16,4 +16,6 @@ public class Video implements Serializable {
   private static final long serialVersionUID = -6048642921382867138L;
   @SerializedName("media_id")
   private String mediaId;
+  @SerializedName("thumb_media_id")
+  private String thumbMediaId;
 }

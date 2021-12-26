@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import org.testng.collections.CollectionUtils;
 
 import static org.testng.Assert.assertNotNull;
 
@@ -111,7 +112,7 @@ public class WxCpExternalContactServiceImplTest {
   @Test
   public void testGetContactDetail() throws WxErrorException {
     String externalUserId = this.configStorage.getExternalUserId();
-    WxCpExternalContactInfo result = this.wxCpService.getExternalContactService().getContactDetail(externalUserId);
+    WxCpExternalContactInfo result = this.wxCpService.getExternalContactService().getContactDetail(externalUserId, null);
     System.out.println(result);
     assertNotNull(result);
   }
@@ -138,13 +139,13 @@ public class WxCpExternalContactServiceImplTest {
     List<WxCpUserExternalTagGroupInfo.Tag> list = new ArrayList<>();
     WxCpUserExternalTagGroupInfo.Tag tag = new WxCpUserExternalTagGroupInfo.Tag();
     tag.setName("测试标签20");
-    tag.setOrder(1);
+    tag.setOrder(1L);
     list.add(tag);
 
     WxCpUserExternalTagGroupInfo tagGroupInfo = new WxCpUserExternalTagGroupInfo();
     WxCpUserExternalTagGroupInfo.TagGroup tagGroup = new WxCpUserExternalTagGroupInfo.TagGroup();
     tagGroup.setGroupName("其他");
-    tagGroup.setOrder(1);
+    tagGroup.setOrder(1L);
     tagGroup.setTag(list);
     tagGroupInfo.setTagGroup(tagGroup);
 
@@ -314,4 +315,26 @@ public class WxCpExternalContactServiceImplTest {
       .remarkPicMediaId("aaa")
       .build());
   }
+
+  @Test
+  public void testGetProductListAlbum() throws WxErrorException {
+    WxCpProductAlbumListResult result = this.wxCpService.getExternalContactService()
+      .getProductAlbumList(100, null);
+    System.out.println(result);
+    assertNotNull(result);
+    if(CollectionUtils.hasElements(result.getProductList())){
+      WxCpProductAlbumResult result1 = this.wxCpService.getExternalContactService().getProductAlbum(result.getProductList().get(0).getProductId());
+      System.out.println(result1);
+      assertNotNull(result1);
+    }
+  }
+
+  @Test
+  public void testGetMomentList() throws WxErrorException {
+    WxCpGetMomentList result = this.wxCpService.getExternalContactService()
+      .getMomentList(1636732800L, 1636991999L, null, null, null, null);
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
 }

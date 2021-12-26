@@ -41,8 +41,8 @@ public class WxPayApplyBillV3Result implements Serializable {
    *  示例值：79bb0f45fc4c42234a918000b2668d689e2bde04
    * </pre>
    */
-  @SerializedName(value = "out_refund_no")
-  private String outRefundNo;
+  @SerializedName(value = "hash_value")
+  private String hashValue;
   /**
    * <pre>
    * 字段名：账单下载地址

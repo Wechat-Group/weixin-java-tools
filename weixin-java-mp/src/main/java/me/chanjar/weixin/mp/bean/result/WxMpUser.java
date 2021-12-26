@@ -22,18 +22,7 @@ public class WxMpUser implements Serializable {
   private Boolean subscribe;
   private String openId;
   private String nickname;
-  /**
-   * 性别描述信息：男、女、未知等.
-   */
-  private String sexDesc;
-  /**
-   * 性别表示：1，2等数字.
-   */
-  private Integer sex;
   private String language;
-  private String city;
-  private String province;
-  private String country;
   private String headImgUrl;
   private Long subscribeTime;
   /**

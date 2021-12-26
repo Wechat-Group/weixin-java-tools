@@ -138,6 +138,29 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String event;
 
+  @XStreamAlias("UpdateDetail")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String updateDetail;
+
+  @XStreamAlias("JoinScene")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String joinScene;
+
+  @XStreamAlias("QuitScene")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String quitScene;
+
+  @XStreamAlias("MemChangeCnt")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String memChangeCnt;
+
+  @XStreamAlias("Source")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String source;
+
+  @XStreamAlias("StrategyId")
+  private String strategyId;
+
   @XStreamAlias("EventKey")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String eventKey;
@@ -219,6 +242,12 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamAlias("Department")
   @XStreamConverter(value = LongArrayConverter.class)
   private Long[] departments;
+
+  /**
+   * 主部门
+   */
+  @XStreamAlias("MainDepartment")
+  private Long mainDepartment;
 
   /**
    * 手机号码.
@@ -447,6 +476,14 @@ public class WxCpXmlMessage implements Serializable {
     return xmlMessage;
   }
 
+  public static WxCpXmlMessage fromXml(String xml, Integer agentId) {
+    //修改微信变态的消息内容格式，方便解析
+    xml = xml.replace("</PicList><PicList>", "");
+    final WxCpXmlMessage xmlMessage = fromXml(xml);
+    xmlMessage.setAgentId(agentId);
+    return xmlMessage;
+  }
+
   protected static WxCpXmlMessage fromXml(InputStream is) {
     return XStreamTransformer.fromXml(WxCpXmlMessage.class, is);
   }
@@ -457,9 +494,15 @@ public class WxCpXmlMessage implements Serializable {
   public static WxCpXmlMessage fromEncryptedXml(String encryptedXml, WxCpConfigStorage wxCpConfigStorage,
                                                 String timestamp, String nonce, String msgSignature) {
     WxCpCryptUtil cryptUtil = new WxCpCryptUtil(wxCpConfigStorage);
+    WxCpXmlMessage wxCpXmlMessage = fromXml(encryptedXml);
     String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedXml);
     log.debug("解密后的原始xml消息内容：{}", plainText);
-    return fromXml(plainText);
+    if (null != wxCpXmlMessage.getAgentId()) {
+      return fromXml(plainText, wxCpXmlMessage.getAgentId());
+    } else {
+      return fromXml(plainText);
+    }
+
   }
 
   public static WxCpXmlMessage fromEncryptedXml(InputStream is, WxCpConfigStorage wxCpConfigStorage,
@@ -533,7 +576,7 @@ public class WxCpXmlMessage implements Serializable {
     @Data
     public static class Item implements Serializable {
       private static final long serialVersionUID = -6549728838848064881L;
-      
+
       @XStreamAlias("PicMd5Sum")
       @XStreamConverter(value = XStreamCDataConverter.class)
       private String picMd5Sum;

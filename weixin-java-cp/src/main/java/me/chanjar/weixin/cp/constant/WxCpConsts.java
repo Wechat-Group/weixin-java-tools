@@ -99,6 +99,16 @@ public class WxCpConsts {
     public static final String CHANGE_EXTERNAL_CONTACT = "change_external_contact";
 
     /**
+     * 客户群事件推送
+     */
+    public static final String CHANGE_EXTERNAL_CHAT = "change_external_chat";
+
+    /**
+     * 企业客户标签事件推送
+     */
+    public static final String CHANGE_EXTERNAL_TAG = "change_external_tag";
+
+    /**
      * 企业微信审批事件推送（自建应用审批）
      */
     public static final String OPEN_APPROVAL_CHANGE = "open_approval_change";
@@ -145,6 +155,10 @@ public class WxCpConsts {
      */
     public static final String ADD_EXTERNAL_CONTACT = "add_external_contact";
     /**
+     * 编辑外部联系人
+     */
+    public static final String EDIT_EXTERNAL_CONTACT = "edit_external_contact";
+    /**
      * 删除外部联系人
      */
     public static final String DEL_EXTERNAL_CONTACT = "del_external_contact";
@@ -157,7 +171,96 @@ public class WxCpConsts {
      * 删除跟进成员事件
      */
     public static final String DEL_FOLLOW_USER = "del_follow_user";
+    /**
+     * 客户接替失败事件
+     */
+    public static final String TRANSFER_FAIL = "transfer_fail";
+
+    @UtilityClass
+    public static class ExternalContactTransferFailReason {
+      /**
+       * 客户拒绝
+       */
+      public static final String CUSTOMER_REFUSED = "customer_refused";
+      /**
+       * 接替成员的客户数达到上限
+       */
+      public static final String CUSTOMER_LIMIT_EXCEED = "customer_limit_exceed";
+    }
   }
+
+  @UtilityClass
+  public static class ExternalChatChangeType {
+    /**
+     * 客户群变更事件
+     */
+    public static final String CREATE = "create";
+    /**
+     * 客户群变更事件
+     */
+    public static final String UPDATE = "update";
+    /**
+     * 客户群解散事件
+     */
+    public static final String DISMISS = "dismiss";
+
+    @UtilityClass
+    public static class ExternalChatUpdateDetail {
+      /**
+       * 成员入群
+       */
+      public static final String ADD_MEMBER = "add_member";
+      /**
+       * 成员退群
+       */
+      public static final String DEL_MEMBER = "del_member";
+      /**
+       * 成员退群
+       */
+      public static final String CHANGE_OWNER = "change_owner";
+      /**
+       * 群名变更
+       */
+      public static final String CHANGE_NAME = "change_name";
+      /**
+       * 群公告变更
+       */
+      public static final String CHANGE_NOTICE = "change_notice";
+    }
+  }
+  @UtilityClass
+  public static class ExternalTagChangeType{
+
+    /**
+     * 创建企业客户标签
+     */
+    public static final String CREATE = "create";
+    /**
+     * 变更企业客户标签
+     */
+    public static final String UPDATE = "update";
+    /**
+     * 删除企业客户标签
+     */
+    public static final String DELETE = "delete";
+    /**
+     * 重排企业客户标签
+     */
+    public static final String SHUFFLE = "shuffle";
+  }
+
+  @UtilityClass
+  public static class TageType{
+    /**
+     * 标签
+     */
+    public static final String TAG = "tag";
+    /**
+     * 标签组
+     */
+    public static final String TAG_GROUP = "tag_group";
+  }
+
 
   /**
    * 企业微信通讯录变更事件.
@@ -318,20 +421,20 @@ public class WxCpConsts {
   @UtilityClass
   public static class WorkBenchType {
     /*
-    * 关键数据型
-    * */
+     * 关键数据型
+     * */
     public static final String KEYDATA = "keydata";
     /*
-    * 图片型
-    * */
+     * 图片型
+     * */
     public static final String IMAGE = "image";
     /*
-    * 列表型
-    * */
+     * 列表型
+     * */
     public static final String LIST = "list";
     /*
-    * webview型
-    * */
+     * webview型
+     * */
     public static final String WEBVIEW = "webview";
   }
 
@@ -359,4 +462,15 @@ public class WxCpConsts {
      */
     public static final String FILE = "file";
   }
+
+  @UtilityClass
+  public static class ProductAttachmentType {
+
+    /**
+     * 图片消息.
+     */
+    public static final String IMAGE = "image";
+
+  }
+
 }

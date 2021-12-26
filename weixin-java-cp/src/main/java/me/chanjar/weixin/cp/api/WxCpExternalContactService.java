@@ -3,25 +3,9 @@ package me.chanjar.weixin.cp.api;
 import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.external.WxCpContactWayInfo;
-import me.chanjar.weixin.cp.bean.external.WxCpContactWayResult;
-import me.chanjar.weixin.cp.bean.external.WxCpMsgTemplate;
-import me.chanjar.weixin.cp.bean.external.WxCpMsgTemplateAddResult;
-import me.chanjar.weixin.cp.bean.external.WxCpUpdateRemarkRequest;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatInfo;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatList;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatStatistic;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalGroupChatTransferResp;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalTagGroupInfo;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalTagGroupList;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalUnassignList;
-import me.chanjar.weixin.cp.bean.external.WxCpUserExternalUserBehaviorStatistic;
-import me.chanjar.weixin.cp.bean.external.WxCpUserTransferCustomerReq;
-import me.chanjar.weixin.cp.bean.external.WxCpUserTransferCustomerResp;
-import me.chanjar.weixin.cp.bean.external.WxCpUserTransferResultResp;
-import me.chanjar.weixin.cp.bean.external.WxCpWelcomeMsg;
-import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
-import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
+import me.chanjar.weixin.cp.bean.external.*;
+import me.chanjar.weixin.cp.bean.external.contact.*;
+import me.chanjar.weixin.cp.bean.oa.WxCpApprovalInfoQueryFilter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
@@ -125,7 +109,7 @@ public interface WxCpExternalContactService {
    * @param userId 外部联系人的userid
    * @return . external contact
    * @throws WxErrorException the wx error exception
-   * @deprecated 建议使用 {@link #getContactDetail(String)}
+   * @deprecated 建议使用 {@link #getContactDetail(String, String)}
    */
   @Deprecated
   WxCpExternalContactInfo getExternalContact(String userId) throws WxErrorException;
@@ -146,10 +130,11 @@ public interface WxCpExternalContactService {
    * </pre>
    *
    * @param userId 外部联系人的userid，注意不是企业成员的帐号
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
    * @return . contact detail
    * @throws WxErrorException .
    */
-  WxCpExternalContactInfo getContactDetail(String userId) throws WxErrorException;
+  WxCpExternalContactInfo getContactDetail(String userId, String cursor) throws WxErrorException;
 
   /**
    * 企业和服务商可通过此接口，将微信外部联系人的userid转为微信openid，用于调用支付相关接口。暂不支持企业微信外部联系人（ExternalUserid为wo开头）的userid转openid。
@@ -181,7 +166,122 @@ public interface WxCpExternalContactService {
    * @return 该企业的外部联系人ID
    * @throws WxErrorException .
    */
-  String unionidToExternalUserid(String unionid) throws WxErrorException;
+  String unionidToExternalUserid(@NotNull String unionid,String openid) throws WxErrorException;
+
+  /**
+   * 代开发应用external_userid转换
+   * <pre>
+   *
+   * 文档地址：https://work.weixin.qq.com/api/doc/90001/90143/95195
+   *
+   * 企业同时安装服务商第三方应用以及授权代开发自建应用的时，服务商可使用该接口将代开发应用获取到的外部联系人id跟第三方应用的id进行关联，
+   * 该接口可将代开发自建应用获取到的external_userid转换为服务商第三方应用的external_userid。
+   *
+   * 权限说明：
+   *
+   * 该企业授权了该服务商第三方应用,且授权的第三方应用具备“企业客户权限->客户基础信息”权限
+   * 该客户的跟进人必须在应用的可见范围之内
+   * 应用需具备“企业客户权限->客户基础信息”权限
+   * </pre>
+   *
+   * @param externalUserid 代开发自建应用获取到的外部联系人ID
+   * @return 该服务商第三方应用下的企业的外部联系人ID
+   * @throws WxErrorException .
+   */
+  String toServiceExternalUserid(@NotNull String externalUserid) throws WxErrorException;
+
+  /**
+   * 企业客户微信unionid的升级 - unionid查询external_userid
+   * <pre>
+   *
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/35863#4.2%20unionid%E6%9F%A5%E8%AF%A2external_userid
+   *
+   * 当微信用户在微信中使用第三方应用的小程序或公众号时，第三方可将获取到的unionid与openid，调用此接口转换为企业客户external_userid。
+   * 该接口调用频次有限，每个服务商每小时仅可调用1万次，仅用于微信用户主动使用第三方应用的场景来调用，服务商切不可滥用。
+   * 同时建议服务商的小程序路径或公众号页面链接带上corpid参数，如此可明确地转换出该企业对应的external_userid，以获得更好的性能。
+   *
+   * 权限说明：
+   *
+   * 该企业授权了该服务商第三方应用
+   * 调用频率最大为10000次/小时
+   * unionid和openid的主体需与服务商的主体一致
+   * openid与unionid必须是在同一个小程序或同一个公众号获取到的
+   * </pre>
+   *
+   * @param unionid 微信客户的unionid
+   * @param openid 微信客户的openid
+   * @param corpid 需要换取的企业corpid，不填则拉取所有企业
+   * @return 该服务商第三方应用下的企业的外部联系人ID
+   * @throws WxErrorException .
+   */
+  WxCpExternalUserIdList unionidToExternalUserid3rd(@NotNull String unionid, @NotNull String openid, String corpid) throws WxErrorException;
+
+  /**
+   * 转换external_userid
+   * <pre>
+   *
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/35863#转换external_userid
+   *
+   * 对于历史已授权的企业，在2022年3月1号之前，所有接口与回调返回的external_userid仍然为旧的external_userid，
+   * 从2022年3月1号0点开始，所有输入与返回的external_userid字段，将启用升级后的external_userid。
+   * 所以服务商需要在此之前完成历史数据的迁移整改
+   *
+   * 权限说明：
+   *
+   * 该企业授权了该服务商第三方应用
+   * external_userid对应的跟进人需要在应用可见范围内
+   * </pre>
+   *
+   * @param externalUserIdList 微信客户的unionid
+   * @return List<String> 新外部联系人id
+   * @throws WxErrorException .
+   */
+  WxCpNewExternalUserIdList getNewExternalUserId(String[] externalUserIdList) throws WxErrorException;
+
+  /**
+   * 设置迁移完成
+   * <pre>
+   *
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/35863#转换external_userid
+   *
+   * 企业授权确认之后，且服务商完成了新旧external_userid的迁移，即可主动将该企业设置为“迁移完成”，
+   * 设置之后，从该企业获取到的将是新的external_userid。注意，该接口需要使用provider_access_token来调用，
+   * 对于有多个应用的服务商，可逐个应用进行external_userid的转换，最后再使用provider_access_token调用该接口完成设置。
+   *
+   * 权限说明：
+   *
+   * 该企业授权了该服务商第三方应用
+   * </pre>
+   *
+   * @param corpid 企业corpid
+   * @return wx cp base resp
+   * @throws WxErrorException .
+   */
+  WxCpBaseResp finishExternalUserIdMigration(@NotNull String corpid) throws WxErrorException;
+
+  /**
+   * 客户群opengid转换
+   * <pre>
+   *
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/90000/90135/94822
+   *
+   * 用户在微信里的客户群里打开小程序时，某些场景下可以获取到群的opengid，如果该群是企业微信的客户群，
+   * 则企业或第三方可以调用此接口将一个opengid转换为客户群chat_id
+   *
+   * 权限说明：
+   *
+   * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）
+   * 第三方应用需具有“企业客户权限->客户基础信息”权限
+   * 对于第三方/自建应用，群主必须在应用的可见范围
+   * 仅支持企业服务人员创建的客户群
+   * 仅可转换出自己企业下的客户群chat_id
+   * </pre>
+   *
+   * @param opengid 小程序在微信获取到的群ID，参见wx.getGroupEnterInfo(https://developers.weixin.qq.com/miniprogram/dev/api/open-api/group/wx.getGroupEnterInfo.html)
+   * @return 客户群ID，可以用来调用获取客户群详情
+   * @throws WxErrorException .
+   */
+  String opengidToChatid(@NotNull String opengid) throws WxErrorException;
 
   /**
    * 批量获取客户详情.
@@ -585,6 +685,227 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   WxCpBaseResp markTag(String userid, String externalUserid, String[] addTag, String[] removeTag) throws WxErrorException;
+
+  /**
+   * <pre>
+ *   企业和第三方应用可通过该接口创建客户朋友圈的发表任务。
+ *   https://open.work.weixin.qq.com/api/doc/90000/90135/95094
+   * </pre>
+   * @param task
+   * @return wx cp add moment result
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpAddMomentResult addMomentTask(WxCpAddMomentTask task) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 由于发表任务的创建是异步执行的，应用需要再调用该接口以获取创建的结果。
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/95094
+   * </pre>
+   * @param jobId 异步任务id，最大长度为64字节，由创建发表内容到客户朋友圈任务接口获取
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentTaskResult getMomentTaskResult(String jobId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取客户朋友圈全部的发表记录 获取企业全部的发表列表
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/93333
+   * </pre>
+   * @param startTime 朋友圈记录开始时间。Unix时间戳
+   * @param endTime 朋友圈记录结束时间。Unix时间戳
+   * @param creator 朋友圈创建人的userid
+   * @param filterType 朋友圈类型。0：企业发表 1：个人发表 2：所有，包括个人创建以及企业创建，默认情况下为所有类型
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @param limit 返回的最大记录数，整型，最大值100，默认值100，超过最大值时取默认值
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentList getMomentList(Long startTime, Long endTime, String creator, Integer filterType,
+    String cursor, Integer limit) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取客户朋友圈全部的发表记录 获取客户朋友圈企业发表的列表
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/93333
+   * </pre>
+   * @param momentId 朋友圈id,仅支持企业发表的朋友圈id
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @param limit 返回的最大记录数，整型，最大值1000，默认值500，超过最大值时取默认值
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentTask getMomentTask(String momentId, String cursor, Integer limit)
+    throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取客户朋友圈全部的发表记录 获取客户朋友圈发表时选择的可见范围
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/93333
+   * </pre>
+   * @param momentId 朋友圈id
+   * @param userId 企业发表成员userid，如果是企业创建的朋友圈，可以通过获取客户朋友圈企业发表的
+   *               列表获取已发表成员userid，如果是个人创建的朋友圈，创建人userid就是企业发表成员userid
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @param limit 返回的最大记录数，整型，最大值1000，默认值500，超过最大值时取默认值
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentCustomerList getMomentCustomerList(String momentId, String userId,
+    String cursor, Integer limit) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取客户朋友圈全部的发表记录 获取客户朋友圈发表后的可见客户列表
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/93333
+   * </pre>
+   * @param momentId 朋友圈id
+   * @param userId 企业发表成员userid，如果是企业创建的朋友圈，可以通过获取客户朋友圈企业发表的列表获取已发表成员userid，
+   *               如果是个人创建的朋友圈，创建人userid就是企业发表成员userid
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @param limit 返回的最大记录数，整型，最大值5000，默认值3000，超过最大值时取默认值
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentSendResult getMomentSendResult(String momentId, String userId,
+    String cursor, Integer limit) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取客户朋友圈全部的发表记录 获取客户朋友圈的互动数据
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/93333
+   * </pre>
+   * @param momentId 朋友圈id
+   * @param userId 企业发表成员userid，如果是企业创建的朋友圈，可以通过获取客户朋友圈企业发表的列表获取已发表成员userid，
+   *               如果是个人创建的朋友圈，创建人userid就是企业发表成员userid
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetMomentComments getMomentComments(String momentId, String userId)
+    throws WxErrorException;
+
+  /**
+   * <pre>
+   * 企业和第三方应用可通过此接口获取企业与成员的群发记录。
+   * https://work.weixin.qq.com/api/doc/90000/90135/93338
+   * </pre>
+   *
+   * @param chatType         群发任务的类型，默认为single，表示发送给客户，group表示发送给客户群
+   * @param startTime        群发任务记录开始时间
+   * @param endTime          群发任务记录结束时间
+   * @param creator           群发任务创建人企业账号id
+   * @param filterType       创建人类型。0：企业发表 1：个人发表 2：所有，包括个人创建以及企业创建，默认情况下为所有类型
+   * @param limit             返回的最大记录数，整型，最大值100，默认值50，超过最大值时取默认值
+   * @param cursor            用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpGroupMsgListResult getGroupMsgListV2(String chatType, @NonNull Date startTime, @NonNull Date endTime, String creator, Integer filterType, Integer limit, String cursor) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 企业和第三方应用可通过此接口获取企业与成员的群发记录。
+   * https://work.weixin.qq.com/api/doc/90000/90135/93338#获取企业群发成员执行结果
+   * </pre>
+   *
+   * @param msgid             群发消息的id，通过获取群发记录列表接口返回
+   * @param userid            发送成员userid，通过获取群发成员发送任务列表接口返回
+   * @param limit             返回的最大记录数，整型，最大值1000，默认值500，超过最大值时取默认值
+   * @param cursor            用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpGroupMsgSendResult getGroupMsgSendResult(String msgid, String userid, Integer limit, String cursor) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取群发成员发送任务列表。
+   * https://work.weixin.qq.com/api/doc/90000/90135/93338#获取群发成员发送任务列表
+   * </pre>
+   *
+   * @param msgid             群发消息的id，通过获取群发记录列表接口返回
+   * @param limit             返回的最大记录数，整型，最大值1000，默认值500，超过最大值时取默认值
+   * @param cursor            用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+   WxCpGroupMsgTaskResult getGroupMsgTask(String msgid, Integer limit, String cursor) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 添加入群欢迎语素材。
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/92366#添加入群欢迎语素材
+   * </pre>
+   *
+   * @param template          素材内容
+   * @return template_id      欢迎语素材id
+   * @throws WxErrorException the wx error exception
+   */
+  String addGroupWelcomeTemplate(WxCpGroupWelcomeTemplateResult template) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 编辑入群欢迎语素材。
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/92366#编辑入群欢迎语素材
+   * </pre>
+   *
+   * @param template
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp editGroupWelcomeTemplate(WxCpGroupWelcomeTemplateResult template) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取入群欢迎语素材。
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/92366#获取入群欢迎语素材
+   * </pre>
+   *
+   * @param templateId        群欢迎语的素材id
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpGroupWelcomeTemplateResult getGroupWelcomeTemplate(@NotNull String templateId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 删除入群欢迎语素材。
+   * 企业可通过此API删除入群欢迎语素材，且仅能删除调用方自己创建的入群欢迎语素材。
+   * https://open.work.weixin.qq.com/api/doc/90000/90135/92366#删除入群欢迎语素材
+   * </pre>
+   *
+   * @param templateId        群欢迎语的素材id
+   * @param templateId        授权方安装的应用agentid。仅旧的第三方多应用套件需要填此参数
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp delGroupWelcomeTemplate(@NotNull String templateId, String agentId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取商品图册
+   * https://work.weixin.qq.com/api/doc/90000/90135/95096#获取商品图册列表
+   * </pre>
+   *
+   * @param limit   返回的最大记录数，整型，最大值100，默认值50，超过最大值时取默认值
+   * @param cursor  用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpProductAlbumListResult getProductAlbumList(Integer limit, String cursor) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取商品图册
+   * https://work.weixin.qq.com/api/doc/90000/90135/95096#获取商品图册
+   * </pre>
+   *
+   * @param productId  商品id
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpProductAlbumResult getProductAlbum(String productId) throws WxErrorException;
 
 
 }

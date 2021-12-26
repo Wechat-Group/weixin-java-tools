@@ -8,16 +8,16 @@ import org.apache.commons.lang3.StringUtils;
  * @date 2020/01/09
  **/
 public abstract class AbstractWxOpenInRedisConfigStorage extends WxOpenInMemoryConfigStorage {
-  protected final static String COMPONENT_VERIFY_TICKET_KEY = "wechat_component_verify_ticket:";
-  protected final static String COMPONENT_ACCESS_TOKEN_KEY = "wechat_component_access_token:";
+  protected static final String COMPONENT_VERIFY_TICKET_KEY = "wechat_component_verify_ticket:";
+  protected static final String COMPONENT_ACCESS_TOKEN_KEY = "wechat_component_access_token:";
 
-  protected final static String AUTHORIZER_REFRESH_TOKEN_KEY = "wechat_authorizer_refresh_token:";
-  protected final static String AUTHORIZER_ACCESS_TOKEN_KEY = "wechat_authorizer_access_token:";
+  protected static final String AUTHORIZER_REFRESH_TOKEN_KEY = "wechat_authorizer_refresh_token:";
+  protected static final String AUTHORIZER_ACCESS_TOKEN_KEY = "wechat_authorizer_access_token:";
 
-  protected final static String LOCK_KEY = "wechat_lock:";
+  protected static final String LOCK_KEY = "wechat_lock:";
 
-  protected final static String JSAPI_TICKET_KEY = "wechat_jsapi_ticket:";
-  protected final static String CARD_API_TICKET_KEY = "wechat_card_api_ticket:";
+  protected static final String JSAPI_TICKET_KEY = "wechat_jsapi_ticket:";
+  protected static final String CARD_API_TICKET_KEY = "wechat_card_api_ticket:";
 
   /**
    * redis 存储的 key 的前缀，可为空

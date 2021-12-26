@@ -1,10 +1,13 @@
 package me.chanjar.weixin.mp.bean.invoice.merchant;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * 商户的开票平台信息
  */
+@Data
 public class MerchantInvoicePlatformInfo implements Serializable {
 
   /**

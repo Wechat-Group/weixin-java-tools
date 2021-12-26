@@ -20,19 +20,19 @@ public class WxCpRedissonConfigImpl extends WxCpDefaultConfigImpl {
   /**
    * The constant LOCK_KEY.
    */
-  protected final static String LOCK_KEY = "wechat_cp_lock:";
+  protected static final String LOCK_KEY = "wechat_cp_lock:";
   /**
    * The constant CP_ACCESS_TOKEN_KEY.
    */
-  protected final static String CP_ACCESS_TOKEN_KEY = "wechat_cp_access_token_key:";
+  protected static final String CP_ACCESS_TOKEN_KEY = "wechat_cp_access_token_key:";
   /**
    * The constant CP_JSAPI_TICKET_KEY.
    */
-  protected final static String CP_JSAPI_TICKET_KEY = "wechat_cp_jsapi_ticket_key:";
+  protected static final String CP_JSAPI_TICKET_KEY = "wechat_cp_jsapi_ticket_key:";
   /**
    * The constant CP_AGENT_JSAPI_TICKET_KEY.
    */
-  protected final static String CP_AGENT_JSAPI_TICKET_KEY = "wechat_cp_agent_jsapi_ticket_key:";
+  protected static final String CP_AGENT_JSAPI_TICKET_KEY = "wechat_cp_agent_jsapi_ticket_key:";
   private final WxRedisOps redisOps;
   /**
    * redis 存储的 key 的前缀，可为空

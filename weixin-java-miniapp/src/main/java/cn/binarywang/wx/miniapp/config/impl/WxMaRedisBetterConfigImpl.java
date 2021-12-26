@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 基于redis存储的微信小程序配置类
+ *
+ * @author Mario Luo, 2020-04-18 23:08
  */
 public class WxMaRedisBetterConfigImpl extends WxMaDefaultConfigImpl {
   private static final String ACCESS_TOKEN_KEY_TPL = "%s:access_token:%s";
@@ -121,4 +123,20 @@ public class WxMaRedisBetterConfigImpl extends WxMaDefaultConfigImpl {
     redisOps.expire(this.getTicketRedisKey(type), 0, TimeUnit.SECONDS);
   }
 
+  @Override
+  public String toString() {
+    return "WxMaRedisBetterConfigImpl{" +
+      "appid='" + appid + '\'' +
+      ", token='" + token + '\'' +
+      ", originalId='" + originalId + '\'' +
+      ", accessTokenLock=" + accessTokenLock +
+      ", tmpDirFile=" + tmpDirFile +
+      ", jsapiTicketLock=" + jsapiTicketLock +
+      ", cardApiTicketLock=" + cardApiTicketLock +
+      ", redisOps=" + redisOps +
+      ", keyPrefix='" + keyPrefix + '\'' +
+      ", accessTokenKey='" + accessTokenKey + '\'' +
+      ", lockKey='" + lockKey + '\'' +
+      '}';
+  }
 }

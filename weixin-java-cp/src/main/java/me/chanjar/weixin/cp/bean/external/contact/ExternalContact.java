@@ -51,8 +51,28 @@ public class ExternalContact implements Serializable {
   public static class ExternalProfile implements Serializable {
     private static final long serialVersionUID = -2899906589789022765L;
 
+    @SerializedName("external_corp_name")
+    private String externalCorpName;
+
+    @SerializedName("wechat_channels")
+    private WechatChannel wechatChannels;
+
     @SerializedName("external_attr")
     private List<ExternalAttribute> externalAttrs;
+  }
+
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class WechatChannel implements Serializable {
+
+    @SerializedName("nickname")
+    private String nickname;
+
+    @SerializedName("status")
+    private Integer status;
+
   }
 
   @Data

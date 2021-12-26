@@ -568,6 +568,20 @@ public interface WxMpService extends WxService {
   WxMpReimburseInvoiceService getReimburseInvoiceService();
 
   /**
+   * 返回草稿箱相关接口
+   *
+   * @return WxMpDraftService
+   */
+  WxMpDraftService getDraftService();
+
+  /**
+   * 返回发布能力接口
+   *
+   * @return WxMpFreePublishService
+   */
+  WxMpFreePublishService getFreePublishService();
+
+  /**
    * .
    *
    * @param reimburseInvoiceService .
@@ -818,4 +832,18 @@ public interface WxMpService extends WxService {
    * @param merchantInvoiceService the merchant invoice service
    */
   void setMerchantInvoiceService(WxMpMerchantInvoiceService merchantInvoiceService);
+
+  /**
+   * Sets draft service.
+   *
+   * @param draftService the draft service
+   */
+  void setDraftService(WxMpDraftService draftService);
+
+  /**
+   * Sets free publish service.
+   *
+   * @param freePublishService the free publish service
+   */
+  void setFreePublishService(WxMpFreePublishService freePublishService);
 }

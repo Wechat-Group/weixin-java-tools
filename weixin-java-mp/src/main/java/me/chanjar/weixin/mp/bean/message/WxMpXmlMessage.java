@@ -1,5 +1,8 @@
 package me.chanjar.weixin.mp.bean.message;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
@@ -33,6 +36,7 @@ import java.util.Map;
 @Data
 @Slf4j
 @XStreamAlias("xml")
+@JacksonXmlRootElement(localName = "xml")
 public class WxMpXmlMessage implements Serializable {
   private static final long serialVersionUID = -3586245291677274914L;
 
@@ -47,97 +51,139 @@ public class WxMpXmlMessage implements Serializable {
 
   @XStreamAlias("ToUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "ToUserName")
+  @JacksonXmlCData
   private String toUser;
 
   @XStreamAlias("FromUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "FromUserName")
+  @JacksonXmlCData
   private String fromUser;
 
   @XStreamAlias("CreateTime")
+  @JacksonXmlProperty(localName = "CreateTime")
   private Long createTime;
 
   @XStreamAlias("MsgType")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "MsgType")
+  @JacksonXmlCData
   private String msgType;
 
   @XStreamAlias("Content")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Content")
+  @JacksonXmlCData
   private String content;
 
   @XStreamAlias("MenuId")
+  @JacksonXmlProperty(localName = "MenuId")
   private Long menuId;
 
   @XStreamAlias("MsgId")
+  @JacksonXmlProperty(localName = "MsgId")
   private Long msgId;
 
   @XStreamAlias("PicUrl")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "PicUrl")
+  @JacksonXmlCData
   private String picUrl;
 
   @XStreamAlias("MediaId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "MediaId")
+  @JacksonXmlCData
   private String mediaId;
 
   @XStreamAlias("Format")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Format")
+  @JacksonXmlCData
   private String format;
 
   @XStreamAlias("ThumbMediaId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "ThumbMediaId")
+  @JacksonXmlCData
   private String thumbMediaId;
 
   @XStreamAlias("Location_X")
+  @JacksonXmlProperty(localName = "Location_X")
   private Double locationX;
 
   @XStreamAlias("Location_Y")
+  @JacksonXmlProperty(localName = "Location_Y")
   private Double locationY;
 
   @XStreamAlias("Scale")
+  @JacksonXmlProperty(localName = "Scale")
   private Double scale;
 
   @XStreamAlias("Label")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Label")
+  @JacksonXmlCData
   private String label;
 
   @XStreamAlias("Title")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Title")
+  @JacksonXmlCData
   private String title;
 
   @XStreamAlias("Description")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Description")
+  @JacksonXmlCData
   private String description;
 
   @XStreamAlias("Url")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Url")
+  @JacksonXmlCData
   private String url;
 
   @XStreamAlias("Event")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Event")
+  @JacksonXmlCData
   private String event;
 
   @XStreamAlias("EventKey")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "EventKey")
+  @JacksonXmlCData
   private String eventKey;
 
   @XStreamAlias("Ticket")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Ticket")
+  @JacksonXmlCData
   private String ticket;
 
   @XStreamAlias("Latitude")
+  @JacksonXmlProperty(localName = "Latitude")
   private Double latitude;
 
   @XStreamAlias("Longitude")
+  @JacksonXmlProperty(localName = "Longitude")
   private Double longitude;
 
   @XStreamAlias("Precision")
+  @JacksonXmlProperty(localName = "Precision")
   private Double precision;
 
   @XStreamAlias("Recognition")
+  @JacksonXmlProperty(localName = "Recognition")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String recognition;
 
   @XStreamAlias("UnionId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "UnionId")
+  @JacksonXmlCData
   private String unionId;
 
   ///////////////////////////////////////
@@ -148,27 +194,33 @@ public class WxMpXmlMessage implements Serializable {
    */
   @XStreamAlias("Status")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "Status")
+  @JacksonXmlCData
   private String status;
   /**
    * group_id下粉丝数；或者openid_list中的粉丝数.
    */
   @XStreamAlias("TotalCount")
+  @JacksonXmlProperty(localName = "TotalCount")
   private Integer totalCount;
   /**
    * 过滤（过滤是指特定地区、性别的过滤、用户设置拒收的过滤，用户接收已超4条的过滤）后，准备发送的粉丝数.
    * 原则上，filterCount = sentCount + errorCount
    */
   @XStreamAlias("FilterCount")
+  @JacksonXmlProperty(localName = "FilterCount")
   private Integer filterCount;
   /**
    * 发送成功的粉丝数.
    */
   @XStreamAlias("SentCount")
+  @JacksonXmlProperty(localName = "SentCount")
   private Integer sentCount;
   /**
    * 发送失败的粉丝数.
    */
   @XStreamAlias("ErrorCount")
+  @JacksonXmlProperty(localName = "ErrorCount")
   private Integer errorCount;
 
   ///////////////////////////////////////
@@ -178,16 +230,19 @@ public class WxMpXmlMessage implements Serializable {
    * 创建或关闭客服会话时的客服帐号.
    */
   @XStreamAlias("KfAccount")
+  @JacksonXmlProperty(localName = "KfAccount")
   private String kfAccount;
   /**
    * 转接客服会话时的转入客服帐号.
    */
   @XStreamAlias("ToKfAccount")
+  @JacksonXmlProperty(localName = "ToKfAccount")
   private String toKfAccount;
   /**
    * 转接客服会话时的转出客服帐号.
    */
   @XStreamAlias("FromKfAccount")
+  @JacksonXmlProperty(localName = "FromKfAccount")
   private String fromKfAccount;
 
   ///////////////////////////////////////
@@ -196,33 +251,44 @@ public class WxMpXmlMessage implements Serializable {
 
   @XStreamAlias("CardId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "CardId")
+  @JacksonXmlCData
   private String cardId;
 
   @XStreamAlias("FriendUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "FriendUserName")
+  @JacksonXmlCData
   private String friendUserName;
 
   /**
    * 是否为转赠，1代表是，0代表否.
    */
   @XStreamAlias("IsGiveByFriend")
+  @JacksonXmlProperty(localName = "IsGiveByFriend")
   private Integer isGiveByFriend;
 
   @XStreamAlias("UserCardCode")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "UserCardCode")
+  @JacksonXmlCData
   private String userCardCode;
 
   @XStreamAlias("OldUserCardCode")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "OldUserCardCode")
+  @JacksonXmlCData
   private String oldUserCardCode;
 
   @XStreamAlias("OuterId")
+  @JacksonXmlProperty(localName = "OuterId")
   private Integer outerId;
 
   /**
    * 用户删除会员卡后可重新找回，当用户本次操作为找回时，该值为1，否则为0.
    */
   @XStreamAlias("IsRestoreMemberCard")
+  @JacksonXmlProperty(localName = "IsRestoreMemberCard")
   private String isRestoreMemberCard;
 
   /**
@@ -235,18 +301,21 @@ public class WxMpXmlMessage implements Serializable {
    * </pre>
    */
   @XStreamAlias("OuterStr")
+  @JacksonXmlProperty(localName = "OuterStr")
   private String outerStr;
 
   /**
    * 是否转赠退回，0代表不是，1代表是.
    */
   @XStreamAlias("IsReturnBack")
+  @JacksonXmlProperty(localName = "IsReturnBack")
   private String isReturnBack;
 
   /**
    * 是否是群转赠，0代表不是，1代表是.
    */
   @XStreamAlias("IsChatRoom")
+  @JacksonXmlProperty(localName = "IsChatRoom")
   private String isChatRoom;
 
   /**
@@ -254,6 +323,7 @@ public class WxMpXmlMessage implements Serializable {
    * 支持开发者统计API核销（FROM_API）、公众平台核销（FROM_MP）、卡券商户助手核销（FROM_MOBILE_HELPER）（核销员微信号）
    */
   @XStreamAlias("ConsumeSource")
+  @JacksonXmlProperty(localName = "ConsumeSource")
   private String consumeSource;
 
   /**
@@ -261,24 +331,28 @@ public class WxMpXmlMessage implements Serializable {
    * 当前卡券核销的门店名称（只有通过自助核销和买单核销时才会出现该字段）
    */
   @XStreamAlias("LocationName")
+  @JacksonXmlProperty(localName = "LocationName")
   private String locationName;
 
   /**
    * 核销该卡券核销员的openid（只有通过卡券商户助手核销时才会出现）.
    */
   @XStreamAlias("StaffOpenId")
+  @JacksonXmlProperty(localName = "StaffOpenId")
   private String staffOpenId;
 
   /**
    * 自助核销时，用户输入的验证码.
    */
   @XStreamAlias("VerifyCode")
+  @JacksonXmlProperty(localName = "VerifyCode")
   private String verifyCode;
 
   /**
    * 自助核销时，用户输入的备注金额.
    */
   @XStreamAlias("RemarkAmount")
+  @JacksonXmlProperty(localName = "RemarkAmount")
   private String remarkAmount;
 
   /**
@@ -288,6 +362,7 @@ public class WxMpXmlMessage implements Serializable {
    * </pre>
    */
   @XStreamAlias("Detail")
+  @JacksonXmlProperty(localName = "Detail")
   private String detail;
 
   /**
@@ -297,6 +372,7 @@ public class WxMpXmlMessage implements Serializable {
    * </pre>
    */
   @XStreamAlias("ModifyBonus")
+  @JacksonXmlProperty(localName = "ModifyBonus")
   private String modifyBonus;
 
   /**
@@ -306,6 +382,7 @@ public class WxMpXmlMessage implements Serializable {
    * </pre>
    */
   @XStreamAlias("ModifyBalance")
+  @JacksonXmlProperty(localName = "ModifyBalance")
   private String modifyBalance;
 
   /**
@@ -315,6 +392,7 @@ public class WxMpXmlMessage implements Serializable {
    * </pre>
    */
   @XStreamAlias("TransId")
+  @JacksonXmlProperty(localName = "TransId")
   private String transId;
 
   /**
@@ -324,6 +402,7 @@ public class WxMpXmlMessage implements Serializable {
    * </pre>
    */
   @XStreamAlias("LocationId")
+  @JacksonXmlProperty(localName = "LocationId")
   private String locationId;
 
   /**
@@ -333,6 +412,7 @@ public class WxMpXmlMessage implements Serializable {
    * </pre>
    */
   @XStreamAlias("Fee")
+  @JacksonXmlProperty(localName = "Fee")
   private String fee;
 
   /**
@@ -342,72 +422,86 @@ public class WxMpXmlMessage implements Serializable {
    * </pre>
    */
   @XStreamAlias("OriginalFee")
+  @JacksonXmlProperty(localName = "OriginalFee")
   private String originalFee;
 
   @XStreamAlias("ScanCodeInfo")
+  @JacksonXmlProperty(localName = "ScanCodeInfo")
   private ScanCodeInfo scanCodeInfo = new ScanCodeInfo();
 
   @XStreamAlias("SendPicsInfo")
+  @JacksonXmlProperty(localName = "SendPicsInfo")
   private SendPicsInfo sendPicsInfo = new SendPicsInfo();
 
   @XStreamAlias("SendLocationInfo")
+  @JacksonXmlProperty(localName = "SendLocationInfo")
   private SendLocationInfo sendLocationInfo = new SendLocationInfo();
 
   @XStreamAlias("ArticleUrlResult")
+  @JacksonXmlProperty(localName = "ArticleUrlResult")
   private ArticleUrlResult articleUrlResult = new ArticleUrlResult();
 
   /**
    * 审核不通过原因
    */
   @XStreamAlias("RefuseReason")
+  @JacksonXmlProperty(localName = "RefuseReason")
   private String refuseReason;
 
   /**
    * 是否为朋友推荐，0代表否，1代表是
    */
   @XStreamAlias("IsRecommendByFriend")
+  @JacksonXmlProperty(localName = "IsRecommendByFriend")
   private String isRecommendByFriend;
 
   /**
    * 购买券点时，实际支付成功的时间
    */
   @XStreamAlias("PayFinishTime")
+  @JacksonXmlProperty(localName = "PayFinishTime")
   private String payFinishTime;
 
   /**
    * 购买券点时，支付二维码的生成时间
    */
   @XStreamAlias("CreateOrderTime")
+  @JacksonXmlProperty(localName = "CreateOrderTime")
   private String createOrderTime;
 
   /**
    * 购买券点时，支付二维码的生成时间
    */
   @XStreamAlias("Desc")
+  @JacksonXmlProperty(localName = "Desc")
   private String desc;
 
   /**
    * 剩余免费券点数量
    */
   @XStreamAlias("FreeCoinCount")
+  @JacksonXmlProperty(localName = "FreeCoinCount")
   private String freeCoinCount;
 
   /**
    * 剩余付费券点数量
    */
   @XStreamAlias("PayCoinCount")
+  @JacksonXmlProperty(localName = "PayCoinCount")
   private String payCoinCount;
 
   /**
    * 本次变动的免费券点数量
    */
   @XStreamAlias("RefundFreeCoinCount")
+  @JacksonXmlProperty(localName = "RefundFreeCoinCount")
   private String refundFreeCoinCount;
 
   /**
    * 本次变动的付费券点数量
    */
   @XStreamAlias("RefundPayCoinCount")
+  @JacksonXmlProperty(localName = "RefundPayCoinCount")
   private String refundPayCoinCount;
 
   /**
@@ -417,20 +511,22 @@ public class WxMpXmlMessage implements Serializable {
    * </pre>
    */
   @XStreamAlias("OrderType")
+  @JacksonXmlProperty(localName = "OrderType")
   private String orderType;
 
   /**
    * 系统备注，说明此次变动的缘由，如开通账户奖励、门店奖励、核销奖励以及充值、扣减。
    */
   @XStreamAlias("Memo")
+  @JacksonXmlProperty(localName = "Memo")
   private String memo;
 
   /**
    * 所开发票的详情
    */
   @XStreamAlias("ReceiptInfo")
+  @JacksonXmlProperty(localName = "ReceiptInfo")
   private String receiptInfo;
-
 
   ///////////////////////////////////////
   // 门店审核事件推送
@@ -439,12 +535,14 @@ public class WxMpXmlMessage implements Serializable {
    * 商户自己内部ID，即字段中的sid.
    */
   @XStreamAlias("UniqId")
+  @JacksonXmlProperty(localName = "UniqId")
   private String storeUniqId;
 
   /**
    * 微信的门店ID，微信内门店唯一标示ID.
    */
   @XStreamAlias("PoiId")
+  @JacksonXmlProperty(localName = "PoiId")
   private String poiId;
 
   /**
@@ -453,12 +551,14 @@ public class WxMpXmlMessage implements Serializable {
    * 在商品审核结果推送时，verify_ok表示审核通过，verify_not_pass表示审核未通过。
    */
   @XStreamAlias("Result")
+  @JacksonXmlProperty(localName = "Result")
   private String result;
 
   /**
    * 成功的通知信息，或审核失败的驳回理由.
    */
   @XStreamAlias("msg")
+  @JacksonXmlProperty(localName = "msg")
   private String msg;
 
   ///////////////////////////////////////
@@ -470,16 +570,19 @@ public class WxMpXmlMessage implements Serializable {
    * 认证过期失效通知: 有效期 (整形)，指的是时间戳，表示已于该时间戳认证过期，需要重新发起微信认证
    */
   @XStreamAlias("ExpiredTime")
+  @JacksonXmlProperty(localName = "ExpiredTime")
   private Long expiredTime;
   /**
    * 失败发生时间 (整形)，时间戳.
    */
   @XStreamAlias("FailTime")
+  @JacksonXmlProperty(localName = "FailTime")
   private Long failTime;
   /**
    * 认证失败的原因.
    */
   @XStreamAlias("FailReason")
+  @JacksonXmlProperty(localName = "FailReason")
   private String failReason;
 
   ///////////////////////////////////////
@@ -490,12 +593,15 @@ public class WxMpXmlMessage implements Serializable {
    */
   @XStreamAlias("OrderId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "OrderId")
+  @JacksonXmlCData
   private String orderId;
 
   /**
    * 订单状态.
    */
   @XStreamAlias("OrderStatus")
+  @JacksonXmlProperty(localName = "OrderStatus")
   private String orderStatus;
 
   /**
@@ -503,6 +609,8 @@ public class WxMpXmlMessage implements Serializable {
    */
   @XStreamAlias("ProductId")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "ProductId")
+  @JacksonXmlCData
   private String productId;
 
   /**
@@ -510,6 +618,8 @@ public class WxMpXmlMessage implements Serializable {
    */
   @XStreamAlias("SkuInfo")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "SkuInfo")
+  @JacksonXmlCData
   private String skuInfo;
 
   ///////////////////////////////////////
@@ -521,6 +631,8 @@ public class WxMpXmlMessage implements Serializable {
    */
   @XStreamAlias("DeviceType")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "DeviceType")
+  @JacksonXmlCData
   private String deviceType;
 
   /**
@@ -529,6 +641,8 @@ public class WxMpXmlMessage implements Serializable {
    */
   @XStreamAlias("DeviceID")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "DeviceID")
+  @JacksonXmlCData
   private String deviceId;
 
   /**
@@ -537,6 +651,8 @@ public class WxMpXmlMessage implements Serializable {
    */
   @XStreamAlias("SessionID")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "SessionID")
+  @JacksonXmlCData
   private String sessionId;
 
   /**
@@ -544,9 +660,12 @@ public class WxMpXmlMessage implements Serializable {
    */
   @XStreamAlias("OpenID")
   @XStreamConverter(value = XStreamCDataConverter.class)
+  @JacksonXmlProperty(localName = "OpenID")
+  @JacksonXmlCData
   private String openId;
 
   @XStreamAlias("HardWare")
+  @JacksonXmlProperty(localName = "HardWare")
   private HardWare hardWare = new HardWare();
 
   /**
@@ -556,6 +675,7 @@ public class WxMpXmlMessage implements Serializable {
    * 2：订阅设备状态
    */
   @XStreamAlias("OpType")
+  @JacksonXmlProperty(localName = "OpType")
   private Integer opType;
 
   /**
@@ -563,6 +683,7 @@ public class WxMpXmlMessage implements Serializable {
    * 0：未连接；1：已连接
    */
   @XStreamAlias("DeviceStatus")
+  @JacksonXmlProperty(localName = "DeviceStatus")
   private Integer deviceStatus;
 
   ///////////////////////////////////////
@@ -572,12 +693,14 @@ public class WxMpXmlMessage implements Serializable {
    * 审核成功时的时间（整形），时间戳
    */
   @XStreamAlias("SuccTime")
+  @JacksonXmlProperty(localName = "SuccTime")
   private Long successTime;
 
   /**
    * 审核失败的原因
    */
   @XStreamAlias("Reason")
+  @JacksonXmlProperty(localName = "Reason")
   private String reason;
 
   ///////////////////////////////////////
@@ -587,65 +710,76 @@ public class WxMpXmlMessage implements Serializable {
    * 商品编码标准
    */
   @XStreamAlias("KeyStandard")
+  @JacksonXmlProperty(localName = "KeyStandard")
   private String keyStandard;
   /**
    * 商品编码内容
    */
   @XStreamAlias("KeyStr")
+  @JacksonXmlProperty(localName = "KeyStr")
   private String keyStr;
 
   /**
    * 用户在微信内设置的国家
    */
   @XStreamAlias("Country")
+  @JacksonXmlProperty(localName = "Country")
   private String country;
 
   /**
    * 用户在微信内设置的省份
    */
   @XStreamAlias("Province")
+  @JacksonXmlProperty(localName = "Province")
   private String province;
 
   /**
    * 用户在微信内设置的城市
    */
   @XStreamAlias("City")
+  @JacksonXmlProperty(localName = "City")
   private String city;
 
   /**
    * 用户的性别，1为男性，2为女性，0代表未知
    */
   @XStreamAlias("Sex")
+  @JacksonXmlProperty(localName = "Sex")
   private String sex;
 
   /**
    * 打开商品主页的场景，1为扫码，2为其他打开场景（如会话、收藏或朋友圈）
    */
   @XStreamAlias("Scene")
+  @JacksonXmlProperty(localName = "Scene")
   private String scene;
 
   /**
    * 调用“获取商品二维码接口”时传入的extinfo，为标识参数
    */
   @XStreamAlias("ExtInfo")
+  @JacksonXmlProperty(localName = "ExtInfo")
   private String extInfo;
 
   /**
    * 用户的实时地理位置信息（目前只精确到省一级），可在国家统计局网站查到对应明细： http://www.stats.gov.cn/tjsj/tjbz/xzqhdm/201504/t20150415_712722.html
    */
   @XStreamAlias("RegionCode")
+  @JacksonXmlProperty(localName = "RegionCode")
   private String regionCode;
 
   /**
    * 审核未通过的原因.
    */
   @XStreamAlias("ReasonMsg")
+  @JacksonXmlProperty(localName = "ReasonMsg")
   private String reasonMsg;
 
   /**
    * 给用户发菜单消息类型的客服消息后，用户所点击的菜单ID.
    */
   @XStreamAlias("bizmsgmenuid")
+  @JacksonXmlProperty(localName = "bizmsgmenuid")
   private String bizMsgMenuId;
 
   /*------------------ 电子发票 ------------------*/
@@ -653,38 +787,50 @@ public class WxMpXmlMessage implements Serializable {
    * 授权成功的订单号，与失败订单号两者必显示其一
    */
   @XStreamAlias("SuccOrderId")
+  @JacksonXmlProperty(localName = "SuccOrderId")
   private String succOrderId;
 
   /**
    * 授权失败的订单号，与成功订单号两者必显示其一
    */
   @XStreamAlias("FailOrderId")
+  @JacksonXmlProperty(localName = "FailOrderId")
   private String failOrderId;
 
   /**
    * 获取授权页链接的AppId
    */
   @XStreamAlias("AuthorizeAppId")
+  @JacksonXmlProperty(localName = "AuthorizeAppId")
   private String authorizeAppId;
 
   /**
    * 授权来源，web：公众号开票，app：app开票，wxa：小程序开票，wap：h5开票
    */
   @XStreamAlias("source")
+  @JacksonXmlProperty(localName = "source")
   private String source;
 
   /**
    * 发票请求流水号，唯一识别发票请求的流水号
    */
   @XStreamAlias("fpqqlsh")
+  @JacksonXmlProperty(localName = "fpqqlsh")
   private String fpqqlsh;
 
   /**
    * 纳税人识别码
    */
   @XStreamAlias("nsrsbh")
+  @JacksonXmlProperty(localName = "nsrsbh")
   private String nsrsbh;
 
+  /**
+   * 加密消息
+   */
+  @XStreamAlias("Encrypt")
+  @JacksonXmlProperty(localName = "Encrypt")
+  private String encrypt;
 
   public static WxMpXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
@@ -710,7 +856,7 @@ public class WxMpXmlMessage implements Serializable {
   public static WxMpXmlMessage fromEncryptedXml(String encryptedXml, WxMpConfigStorage wxMpConfigStorage,
                                                 String timestamp, String nonce, String msgSignature) {
     WxMpCryptUtil cryptUtil = new WxMpCryptUtil(wxMpConfigStorage);
-    String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    String plainText = cryptUtil.decryptXml(msgSignature, timestamp, nonce, encryptedXml);
     log.debug("解密后的原始xml消息内容：{}", plainText);
     return fromXml(plainText);
   }
@@ -722,6 +868,14 @@ public class WxMpXmlMessage implements Serializable {
     } catch (IOException e) {
       throw new WxRuntimeException(e);
     }
+  }
+
+  public WxMpXmlMessage decryptField(WxMpConfigStorage wxMpConfigStorage,
+                                     String timestamp, String nonce, String msgSignature) {
+    WxMpCryptUtil cryptUtil = new WxMpCryptUtil(wxMpConfigStorage);
+    String plainText = cryptUtil.decryptContent(msgSignature, timestamp, nonce, this.encrypt);
+    log.debug("解密后的原始xml消息内容：{}", plainText);
+    return fromXml(plainText);
   }
 
   /**

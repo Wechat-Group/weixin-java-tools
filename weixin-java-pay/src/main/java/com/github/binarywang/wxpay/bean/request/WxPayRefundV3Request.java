@@ -143,7 +143,7 @@ public class WxPayRefundV3Request implements Serializable {
      * <pre>
      * 字段名：币类型
      * 变量名：currency
-     * 是否必填：否
+     * 是否必填：是
      * 类型：string[1, 16]
      * 描述：
      *  符合ISO 4217标准的三位字母代码，目前只支持人民币：CNY。
@@ -236,5 +236,8 @@ public class WxPayRefundV3Request implements Serializable {
      */
     @SerializedName(value = "refund_quantity")
     private Integer refundQuantity;
+
+    @SerializedName(value = "sub_mchid")
+    private String subMchid;
   }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 public class WxMaLiveResult implements Serializable {
   private static final long serialVersionUID = 1L;
   private Integer total;
-  private Integer auditId;
+  private Long auditId;
   private Integer goodsId;
   private List<Goods> goods;
 

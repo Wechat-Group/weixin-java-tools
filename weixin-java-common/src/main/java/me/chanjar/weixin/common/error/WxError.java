@@ -1,7 +1,9 @@
 package me.chanjar.weixin.common.error;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +19,8 @@ import java.io.Serializable;
  * @author Daniel Qian & Binary Wang
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class WxError implements Serializable {
   private static final long serialVersionUID = 7869786563361406291L;
@@ -38,6 +42,11 @@ public class WxError implements Serializable {
   private String errorMsgEn;
 
   private String json;
+
+  public WxError(int errorCode, String errorMsg) {
+    this.errorCode = errorCode;
+    this.errorMsg = errorMsg;
+  }
 
   public static WxError fromJson(String json) {
     return fromJson(json, null);

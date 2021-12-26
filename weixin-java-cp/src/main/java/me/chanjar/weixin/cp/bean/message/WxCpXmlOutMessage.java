@@ -86,6 +86,13 @@ public abstract class WxCpXmlOutMessage implements Serializable {
     return new UpdateButtonBuilder();
   }
 
+  /**
+   * 获得事件消息builder.
+   */
+  public static EventBuilder EVENT() {
+    return new EventBuilder();
+  }
+
   protected String toXml() {
     return XStreamTransformer.toXml((Class) this.getClass(), this);
   }

@@ -36,10 +36,24 @@ public class ProfitSharingResult extends BaseWxPayResult implements Serializable
   @XStreamAlias("order_id")
   private String orderId;
 
+  /**
+   * 分账单状态.
+   */
+  @XStreamAlias("status")
+  private String status;
+
+  /**
+   * 分账接收方列表.
+   */
+  @XStreamAlias("receivers")
+  private String receivers;
+
   @Override
   protected void loadXml(Document d) {
     transactionId = readXmlString(d, "transaction_id");
     outOrderNo = readXmlString(d, "out_order_no");
     orderId = readXmlString(d, "order_id");
+    status = readXmlString(d, "status");
+    receivers = readXmlString(d, "receivers");
   }
 }

@@ -1,9 +1,9 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-
 import lombok.Data;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
 
 /**
  * 企业微信的部门.
@@ -17,6 +17,7 @@ public class WxCpDepart implements Serializable {
   private Long id;
   private String name;
   private String enName;
+  private String[] departmentLeader;
   private Long parentId;
   private Long order;
 

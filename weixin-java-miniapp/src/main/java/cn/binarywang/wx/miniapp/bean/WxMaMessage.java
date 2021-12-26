@@ -165,7 +165,7 @@ public class WxMaMessage implements Serializable {
   public static WxMaMessage fromEncryptedXml(String encryptedXml,
                                              WxMaConfig wxMaConfig, String timestamp, String nonce,
                                              String msgSignature) {
-    String plainText = new WxMaCryptUtils(wxMaConfig).decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    String plainText = new WxMaCryptUtils(wxMaConfig).decryptXml(msgSignature, timestamp, nonce, encryptedXml);
     return fromXml(plainText);
   }
 

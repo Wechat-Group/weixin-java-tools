@@ -396,4 +396,18 @@ public class WxMaApiUrlConstants {
   public interface Internet{
     String GET_USER_ENCRYPT_KEY = "https://api.weixin.qq.com/wxa/business/getuserencryptkey";
   }
+
+  /**
+   * 设备订阅消息
+   */
+  public interface DeviceSubscribe {
+    /**
+     * 获取设备票据
+     */
+    String GET_SN_TICKET_URL = "https://api.weixin.qq.com/wxa/getsnticket";
+    /**
+     * 发送设备订阅消息
+     */
+    String SEND_DEVICE_SUBSCRIBE_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/device/subscribe/send";
+  }
 }

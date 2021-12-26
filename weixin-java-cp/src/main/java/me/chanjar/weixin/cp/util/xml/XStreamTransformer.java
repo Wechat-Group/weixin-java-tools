@@ -57,6 +57,7 @@ public class XStreamTransformer {
     map.put(WxCpXmlOutUpdateBtnMessage.class, configWxCpXmlOutUpdateBtnMessage());
     map.put(WxCpTpXmlPackage.class, configWxCpTpXmlPackage());
     map.put(WxCpTpXmlMessage.class, configWxCpTpXmlMessage());
+    map.put(WxCpXmlOutEventMessage.class, configWxCpXmlOutEventMessage());
     return map;
   }
 
@@ -138,6 +139,13 @@ public class XStreamTransformer {
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(WxCpTpXmlMessage.class);
 
+    return xstream;
+  }
+
+  private static XStream configWxCpXmlOutEventMessage() {
+    XStream xstream = XStreamInitializer.getInstance();
+    xstream.processAnnotations(WxCpXmlOutMessage.class);
+    xstream.processAnnotations(WxCpXmlOutEventMessage.class);
     return xstream;
   }
 

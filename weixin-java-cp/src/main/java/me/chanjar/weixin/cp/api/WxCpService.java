@@ -393,6 +393,13 @@ public interface WxCpService extends WxService {
   WxCpOaService getOaService();
 
   /**
+   * 获取直播相关接口的服务类对象
+   *
+   * @return the Living service
+   */
+  WxCpLivingService getLivingService();
+
+  /**
    * 获取日历相关接口的服务类对象
    *
    * @return the oa calendar service

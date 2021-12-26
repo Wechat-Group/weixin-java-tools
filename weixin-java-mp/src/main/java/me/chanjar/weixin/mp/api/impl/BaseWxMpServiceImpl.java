@@ -25,7 +25,11 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.DataUtils;
 import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
-import me.chanjar.weixin.common.util.http.*;
+import me.chanjar.weixin.common.util.http.RequestExecutor;
+import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
+import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
+import me.chanjar.weixin.common.util.http.URIUtil;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.*;
@@ -42,7 +46,16 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.*;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.CLEAR_QUOTA_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.FETCH_SHORTEN_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GEN_SHORTEN_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_CALLBACK_IP_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_CURRENT_AUTOREPLY_INFO_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_TICKET_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.NETCHECK_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.QRCONNECT_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.SEMANTIC_SEMPROXY_SEARCH_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.SHORTURL_API_URL;
 
 /**
  * 基础实现类.
@@ -145,6 +158,14 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Getter
   @Setter
   private WxMpReimburseInvoiceService reimburseInvoiceService = new WxMpReimburseInvoiceServiceImpl(this);
+
+  @Getter
+  @Setter
+  private WxMpDraftService draftService = new WxMpDraftServiceImpl(this);
+
+  @Getter
+  @Setter
+  private WxMpFreePublishService freePublishService = new WxMpFreePublishServiceImpl(this);
 
   private Map<String, WxMpConfigStorage> configStorageMap;
 

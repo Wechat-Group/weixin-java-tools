@@ -1,5 +1,8 @@
 package me.chanjar.weixin.mp.bean.message;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
@@ -9,34 +12,43 @@ import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 
 import java.io.Serializable;
 
-@XStreamAlias("xml")
 @Data
+@XStreamAlias("xml")
+@JacksonXmlRootElement(localName = "xml")
 @EqualsAndHashCode(callSuper = true)
 public class WxMpXmlOutVideoMessage extends WxMpXmlOutMessage {
   private static final long serialVersionUID = 1745902309380113978L;
 
   @XStreamAlias("Video")
+  @JacksonXmlProperty(localName = "Video")
   protected final Video video = new Video();
 
   public WxMpXmlOutVideoMessage() {
     this.msgType = WxConsts.XmlMsgType.VIDEO;
   }
 
-  @XStreamAlias("Video")
   @Data
+  @XStreamAlias("Video")
+  @JacksonXmlRootElement(localName = "Video")
   public static class Video implements Serializable {
     private static final long serialVersionUID = -6445448977569651183L;
 
     @XStreamAlias("MediaId")
     @XStreamConverter(value = XStreamCDataConverter.class)
+    @JacksonXmlProperty(localName = "MediaId")
+    @JacksonXmlCData
     private String mediaId;
 
     @XStreamAlias("Title")
     @XStreamConverter(value = XStreamCDataConverter.class)
+    @JacksonXmlProperty(localName = "Title")
+    @JacksonXmlCData
     private String title;
 
     @XStreamAlias("Description")
     @XStreamConverter(value = XStreamCDataConverter.class)
+    @JacksonXmlProperty(localName = "Description")
+    @JacksonXmlCData
     private String description;
 
   }
