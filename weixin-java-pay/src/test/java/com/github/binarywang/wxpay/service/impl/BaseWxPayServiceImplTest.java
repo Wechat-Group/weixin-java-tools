@@ -794,6 +794,7 @@ public class BaseWxPayServiceImplTest {
       System.out.println(GSON.toJson(result));
     } catch (WxPayException e) {
     }
+
   }
 
 }
