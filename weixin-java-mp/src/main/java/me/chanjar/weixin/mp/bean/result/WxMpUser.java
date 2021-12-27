@@ -21,8 +21,16 @@ public class WxMpUser implements Serializable {
 
   private Boolean subscribe;
   private String openId;
+  /**
+   * @deprecated 2021年12月27日之后不再输出
+   */
+  @Deprecated
   private String nickname;
   private String language;
+  /**
+   * @deprecated 2021年12月27日之后不再输出
+   */
+  @Deprecated
   private String headImgUrl;
   private Long subscribeTime;
   /**
@@ -59,7 +67,6 @@ public class WxMpUser implements Serializable {
    * qr_scene_str 二维码扫码场景描述（开发者自定义）.
    */
   private String qrSceneStr;
-
 
   public static WxMpUser fromJson(String json) {
     return WxMpGsonBuilder.create().fromJson(json, WxMpUser.class);
