@@ -35,6 +35,9 @@ public class ContentValue implements Serializable {
 
   private List<ContentValue.Child> children;
 
+  @SerializedName("related_approval")
+  private List<RelatedApproval> relatedApproval;
+
   private Attendance attendance;
 
   private Vacation vacation;
@@ -122,6 +125,45 @@ public class ContentValue implements Serializable {
     private static final long serialVersionUID = 2120523160034749170L;
     private Selector selector;
     private Attendance attendance;
+  }
+
+  /**
+   * 关联审批单控件
+   */
+  @Data
+  public static class RelatedApproval implements Serializable{
+    private static final long serialVersionUID = 8629601623267510738L;
+    /**
+     *关联审批单的模板名
+     */
+    @SerializedName("template_names")
+    private List<TemplateName> templateNames;
+    /**
+     * 关联审批单的状态
+     */
+    @SerializedName("sp_status")
+    private Integer spStatus;
+    /**
+     * 关联审批单的提单者
+     */
+    private String name;
+    /**
+     * 关联审批单的提单时间
+     */
+    @SerializedName("create_time")
+    private Long createTime;
+    /**
+     * 关联审批单的审批单号
+     */
+    @SerializedName("sp_no")
+    private String spNo;
+  }
+
+  @Data
+  public static class TemplateName implements Serializable{
+    private static final long serialVersionUID = 3152481506054355937L;
+    private String text;
+    private String lang;
   }
 
 }
