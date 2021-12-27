@@ -9,7 +9,13 @@ import lombok.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.ssl.SSLContexts;
 
 import javax.net.ssl.SSLContext;
@@ -259,11 +265,15 @@ public class WxPayConfig {
         new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
         apiV3Key.getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime());
 
-      CloseableHttpClient httpClient = WxPayV3HttpClientBuilder.create()
+      WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
         .withWechatpay(Collections.singletonList(certificate))
-        .withValidator(new WxPayValidator(verifier))
-        .build();
+        .withValidator(new WxPayValidator(verifier));
+      //初始化V3接口正向代理设置
+      initHttpProxy(wxPayV3HttpClientBuilder);
+
+      CloseableHttpClient httpClient = wxPayV3HttpClientBuilder.build();
+
       this.apiV3HttpClient = httpClient;
       this.verifier=verifier;
       this.privateKey = merchantPrivateKey;
@@ -274,7 +284,25 @@ public class WxPayConfig {
     }
   }
 
+  /**
+   * 配置 http 正向代理
+   * 参考代码: WxPayServiceApacheHttpImpl 中的方法 createHttpClientBuilder
+   * @param httpClientBuilder http构造参数
+   */
+  private void initHttpProxy(HttpClientBuilder httpClientBuilder) {
+    if (StringUtils.isNotBlank(this.getHttpProxyHost()) && this.getHttpProxyPort() > 0) {
+      if (StringUtils.isEmpty(this.getHttpProxyUsername())) {
+        this.setHttpProxyUsername("whatever");
+      }
 
+      // 使用代理服务器 需要用户认证的代理服务器
+      CredentialsProvider provider = new BasicCredentialsProvider();
+      provider.setCredentials(new AuthScope(this.getHttpProxyHost(), this.getHttpProxyPort()),
+        new UsernamePasswordCredentials(this.getHttpProxyUsername(), this.getHttpProxyPassword()));
+      httpClientBuilder.setDefaultCredentialsProvider(provider);
+      httpClientBuilder.setProxy(new HttpHost(this.getHttpProxyHost(), this.getHttpProxyPort()));
+    }
+  }
 
   private InputStream loadConfigInputStream(String configPath, byte[] configContent, String fileName) throws WxPayException {
     InputStream inputStream;
