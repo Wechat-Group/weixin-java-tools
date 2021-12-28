@@ -1,5 +1,7 @@
 package com.github.binarywang.wxpay.v3.auth;
 
+import com.github.binarywang.wxpay.config.WxPayHttpProxy;
+import com.github.binarywang.wxpay.util.HttpProxyUtils;
 import com.github.binarywang.wxpay.v3.Credentials;
 import com.github.binarywang.wxpay.v3.Validator;
 import com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder;
@@ -35,6 +37,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 在原有CertificatesVerifier基础上，增加自动更新证书功能
  *
  * @author doger.wang
+ * @author Long Yu
  */
 @Slf4j
 public class AutoUpdateCertificatesVerifier implements Verifier {
@@ -60,6 +63,11 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
   private final byte[] apiV3Key;
 
   private final ReentrantLock lock = new ReentrantLock();
+
+  /**
+   * 微信支付代理对象
+   */
+  private WxPayHttpProxy wxPayHttpProxy;
 
   /**
    * 时间间隔枚举，支持一小时、六小时以及十二小时
@@ -88,9 +96,14 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
   }
 
   public AutoUpdateCertificatesVerifier(Credentials credentials, byte[] apiV3Key, int minutesInterval) {
+    this(credentials,apiV3Key,minutesInterval,null);
+  }
+
+  public AutoUpdateCertificatesVerifier(Credentials credentials, byte[] apiV3Key, int minutesInterval,WxPayHttpProxy wxPayHttpProxy) {
     this.credentials = credentials;
     this.apiV3Key = apiV3Key;
     this.minutesInterval = minutesInterval;
+    this.wxPayHttpProxy = wxPayHttpProxy;
     //构造时更新证书
     try {
       autoUpdateCert();
@@ -126,15 +139,22 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
   }
 
   private void autoUpdateCert() throws IOException, GeneralSecurityException {
-    CloseableHttpClient httpClient = WxPayV3HttpClientBuilder.create()
+    WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
       .withCredentials(credentials)
       .withValidator(verifier == null ? new Validator() {
         @Override
         public boolean validate(CloseableHttpResponse response) throws IOException {
           return true;
         }
-      } : new WxPayValidator(verifier))
-      .build();
+      } : new WxPayValidator(verifier));
+
+    //调用自定义扩展设置设置HTTP PROXY对象
+    HttpProxyUtils.initHttpProxy(wxPayV3HttpClientBuilder,this.wxPayHttpProxy);
+
+    //增加自定义扩展点,子类可以设置其他构造参数
+    this.customHttpClientBuilder(wxPayV3HttpClientBuilder);
+
+    CloseableHttpClient httpClient = wxPayV3HttpClientBuilder.build();
 
     HttpGet httpGet = new HttpGet(CERT_DOWNLOAD_PATH);
     httpGet.addHeader("Accept", "application/json");
@@ -152,6 +172,14 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
     } else {
       log.warn("Auto update cert failed, statusCode = " + statusCode + ",body = " + body);
     }
+  }
+
+
+  /**
+   * 子类可以自定义添加Http client builder的信息
+   * @param builder httpclient构造器
+   */
+  public void customHttpClientBuilder(WxPayV3HttpClientBuilder builder) {
   }
 
   /**

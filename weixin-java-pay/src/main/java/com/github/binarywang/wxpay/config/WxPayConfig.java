@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.config;
 
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.util.HttpProxyUtils;
 import com.github.binarywang.wxpay.util.ResourcesUtils;
 import com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder;
 import com.github.binarywang.wxpay.v3.auth.*;
@@ -260,17 +261,19 @@ public class WxPayConfig {
       if(StringUtils.isBlank(serialNo)){
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
+      //构造Http Proxy正向代理
+      WxPayHttpProxy wxPayHttpProxy = getWxPayHttpProxy();
 
       AutoUpdateCertificatesVerifier verifier = new AutoUpdateCertificatesVerifier(
         new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
-        apiV3Key.getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime());
+        apiV3Key.getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(),wxPayHttpProxy);
 
       WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
         .withWechatpay(Collections.singletonList(certificate))
         .withValidator(new WxPayValidator(verifier));
       //初始化V3接口正向代理设置
-      initHttpProxy(wxPayV3HttpClientBuilder);
+      HttpProxyUtils.initHttpProxy(wxPayV3HttpClientBuilder,wxPayHttpProxy);
 
       CloseableHttpClient httpClient = wxPayV3HttpClientBuilder.build();
 
@@ -285,23 +288,14 @@ public class WxPayConfig {
   }
 
   /**
-   * 配置 http 正向代理
-   * 参考代码: WxPayServiceApacheHttpImpl 中的方法 createHttpClientBuilder
-   * @param httpClientBuilder http构造参数
+   * 初始化一个WxPayHttpProxy对象
+   * @return 返回封装的WxPayHttpProxy对象。如未指定代理主机和端口，则默认返回null
    */
-  private void initHttpProxy(HttpClientBuilder httpClientBuilder) {
+  private WxPayHttpProxy getWxPayHttpProxy() {
     if (StringUtils.isNotBlank(this.getHttpProxyHost()) && this.getHttpProxyPort() > 0) {
-      if (StringUtils.isEmpty(this.getHttpProxyUsername())) {
-        this.setHttpProxyUsername("whatever");
-      }
-
-      // 使用代理服务器 需要用户认证的代理服务器
-      CredentialsProvider provider = new BasicCredentialsProvider();
-      provider.setCredentials(new AuthScope(this.getHttpProxyHost(), this.getHttpProxyPort()),
-        new UsernamePasswordCredentials(this.getHttpProxyUsername(), this.getHttpProxyPassword()));
-      httpClientBuilder.setDefaultCredentialsProvider(provider);
-      httpClientBuilder.setProxy(new HttpHost(this.getHttpProxyHost(), this.getHttpProxyPort()));
+      return new WxPayHttpProxy(getHttpProxyHost(), getHttpProxyPort(), getHttpProxyUsername(), getHttpProxyPassword());
     }
+    return null;
   }
 
   private InputStream loadConfigInputStream(String configPath, byte[] configContent, String fileName) throws WxPayException {
