@@ -288,6 +288,7 @@ public class WxMaApiUrlConstants {
 
   public interface User {
     String SET_USER_STORAGE = "https://api.weixin.qq.com/wxa/set_user_storage?appid=%s&signature=%s&openid=%s&sig_method=%s";
+    String GET_PHONE_NUMBER_URL = "https://api.weixin.qq.com/wxa/business/getuserphonenumber";
   }
 
   public interface Ocr {
@@ -357,20 +358,20 @@ public class WxMaApiUrlConstants {
     interface Delivery {
       String GET_COMPANY_LIST = "https://api.weixin.qq.com/shop/delivery/get_company_list";
       String DELIVERY_SEND = "https://api.weixin.qq.com/shop/delivery/send";
-      String DELIVERY_RECEIVE  = "https://api.weixin.qq.com/shop/delivery/recieve";
+      String DELIVERY_RECEIVE = "https://api.weixin.qq.com/shop/delivery/recieve";
     }
 
     interface Aftersale {
       String AFTERSALE_ADD = "https://api.weixin.qq.com/shop/aftersale/add";
       String AFTERSALE_GET = "https://api.weixin.qq.com/shop/aftersale/get";
-      String AFTERSALE_UPDATE  = "https://api.weixin.qq.com/shop/aftersale/update";
+      String AFTERSALE_UPDATE = "https://api.weixin.qq.com/shop/aftersale/update";
     }
   }
 
   /**
    * 电子发票报销方
    */
-  public interface Invoice{
+  public interface Invoice {
 
     /**
      * 报销方查询报销发票信息
@@ -393,7 +394,7 @@ public class WxMaApiUrlConstants {
     String UPDATE_STATUS_BATCH = "https://api.weixin.qq.com/card/invoice/reimburse/updatestatusbatch";
   }
 
-  public interface Internet{
+  public interface Internet {
     String GET_USER_ENCRYPT_KEY = "https://api.weixin.qq.com/wxa/business/getuserencryptkey";
   }
 
