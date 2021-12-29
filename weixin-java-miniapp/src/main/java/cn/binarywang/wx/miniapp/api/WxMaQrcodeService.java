@@ -193,6 +193,8 @@ public interface WxMaQrcodeService {
    * @param scene      最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，
    *                   其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
    * @param page       必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面
+   * @param checkPath  默认true 检查 page 是否存在，为 true 时 page 必须是已经发布的小程序存在的页面（否则报错）；
+   *                   为 false 时允许小程序未发布或者 page 不存在，但 page 有数量上限（60000个）请勿滥用
    * @param envVersion 默认"release" 要打开的小程序版本。正式版为 "release"，体验版为 "trial"，开发版为 "develop"
    * @param width      默认430 二维码的宽度
    * @param autoColor  默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
@@ -201,7 +203,7 @@ public interface WxMaQrcodeService {
    * @return 文件内容字节数组
    * @throws WxErrorException 异常
    */
-  byte[] createWxaCodeUnlimitBytes(String scene, String page, String envVersion, int width, boolean autoColor,
+  byte[] createWxaCodeUnlimitBytes(String scene, String page, boolean checkPath, String envVersion, int width, boolean autoColor,
                                    WxMaCodeLineColor lineColor, boolean isHyaline) throws WxErrorException;
 
   /**
@@ -217,6 +219,8 @@ public interface WxMaQrcodeService {
    *                   其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
    * @param page       必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面
    * @param filePath   二维码生成的文件路径，例如: /var/temp
+   * @param checkPath  默认true 检查 page 是否存在，为 true 时 page 必须是已经发布的小程序存在的页面（否则报错）；
+   *                   为 false 时允许小程序未发布或者 page 不存在，但 page 有数量上限（60000个）请勿滥用
    * @param envVersion 默认"release" 要打开的小程序版本。正式版为 "release"，体验版为 "trial"，开发版为 "develop"
    * @param width      默认430 二维码的宽度
    * @param autoColor  默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
@@ -225,7 +229,7 @@ public interface WxMaQrcodeService {
    * @return 文件对象
    * @throws WxErrorException 异常
    */
-  File createWxaCodeUnlimit(String scene, String page, String filePath, String envVersion, int width, boolean autoColor,
+  File createWxaCodeUnlimit(String scene, String page, String filePath, boolean checkPath, String envVersion, int width, boolean autoColor,
                             WxMaCodeLineColor lineColor, boolean isHyaline) throws WxErrorException;
 
   /**
@@ -240,6 +244,8 @@ public interface WxMaQrcodeService {
    * @param scene      最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，
    *                   其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
    * @param page       必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面
+   * @param checkPath  默认true 检查 page 是否存在，为 true 时 page 必须是已经发布的小程序存在的页面（否则报错）；
+   *                   为 false 时允许小程序未发布或者 page 不存在，但 page 有数量上限（60000个）请勿滥用
    * @param envVersion 默认"release" 要打开的小程序版本。正式版为 "release"，体验版为 "trial"，开发版为 "develop"
    * @param width      默认430 二维码的宽度
    * @param autoColor  默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
@@ -248,7 +254,7 @@ public interface WxMaQrcodeService {
    * @return 文件对象
    * @throws WxErrorException 异常
    */
-  File createWxaCodeUnlimit(String scene, String page, String envVersion, int width, boolean autoColor,
+  File createWxaCodeUnlimit(String scene, String page, boolean checkPath, String envVersion, int width, boolean autoColor,
                             WxMaCodeLineColor lineColor, boolean isHyaline) throws WxErrorException;
 
   /**

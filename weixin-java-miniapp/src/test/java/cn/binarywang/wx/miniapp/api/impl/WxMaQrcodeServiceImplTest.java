@@ -52,7 +52,7 @@ public class WxMaQrcodeServiceImplTest {
 
   @Test
   public void testCreateWxaCodeUnlimitBytes() throws WxErrorException {
-    final byte[] wxCode = this.wxService.getQrcodeService().createWxaCodeUnlimitBytes("111", null, "trial", 122, true, null, false);
+    final byte[] wxCode = this.wxService.getQrcodeService().createWxaCodeUnlimitBytes("111", "pages/unknown", false, "trial", 122, true, null, false);
     assertThat(wxCode).isNotNull();
   }
 
