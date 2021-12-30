@@ -20,6 +20,9 @@ public class WxaCodeUnlimit extends AbstractWxMaQrcodeWrapper implements Seriali
   private String scene;
   private String page;
 
+  @SerializedName("check_path")
+  private boolean checkPath = true;
+
   @SerializedName("env_version")
   private String envVersion = "release";
 

@@ -469,4 +469,11 @@ public interface WxMaService extends WxService {
    * @return WxMaDeviceSubscribeService plugin service
    */
   WxMaDeviceSubscribeService getDeviceSubscribeService();
+
+  /**
+   * 返回小程序广告接入相关接口服务对象
+   *
+   * @return WxMaDeviceSubscribeService plugin service
+   */
+  WxMaMarketingService getMarketingService();
 }

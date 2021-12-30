@@ -76,24 +76,25 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
   }
 
   @Override
-  public byte[] createWxaCodeUnlimitBytes(String scene, String page, String envVersion, int width, boolean autoColor,
+  public byte[] createWxaCodeUnlimitBytes(String scene, String page, boolean checkPath, String envVersion, int width, boolean autoColor,
                                           WxMaCodeLineColor lineColor, boolean isHyaline) throws WxErrorException {
     return this.service.execute(QrcodeBytesRequestExecutor.create(this.service.getRequestHttp()),
-      GET_WXACODE_UNLIMIT_URL, this.buildWxaCodeUnlimit(scene, page, envVersion, width, autoColor, lineColor, isHyaline));
+      GET_WXACODE_UNLIMIT_URL, this.buildWxaCodeUnlimit(scene, page, checkPath, envVersion, width, autoColor, lineColor, isHyaline));
   }
 
   @Override
-  public File createWxaCodeUnlimit(String scene, String page, String envVersion, int width, boolean autoColor,
+  public File createWxaCodeUnlimit(String scene, String page, boolean checkPath, String envVersion, int width, boolean autoColor,
                                    WxMaCodeLineColor lineColor, boolean isHyaline) throws WxErrorException {
     return this.service.execute(QrcodeRequestExecutor.create(this.service.getRequestHttp()),
-      GET_WXACODE_UNLIMIT_URL, this.buildWxaCodeUnlimit(scene, page, envVersion, width, autoColor, lineColor, isHyaline));
+      GET_WXACODE_UNLIMIT_URL, this.buildWxaCodeUnlimit(scene, page, checkPath, envVersion, width, autoColor, lineColor, isHyaline));
   }
 
-  private WxaCodeUnlimit buildWxaCodeUnlimit(String scene, String page, String envVersion, int width, boolean autoColor,
+  private WxaCodeUnlimit buildWxaCodeUnlimit(String scene, String page, boolean checkPath, String envVersion, int width, boolean autoColor,
                                              WxMaCodeLineColor lineColor, boolean isHyaline) {
     WxaCodeUnlimit wxaCodeUnlimit = new WxaCodeUnlimit();
     wxaCodeUnlimit.setScene(scene);
     wxaCodeUnlimit.setPage(page);
+    wxaCodeUnlimit.setCheckPath(checkPath);
     wxaCodeUnlimit.setEnvVersion(envVersion);
     wxaCodeUnlimit.setWidth(width);
     wxaCodeUnlimit.setAutoColor(autoColor);
@@ -105,7 +106,7 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
 
   @Override
   public File createWxaCodeUnlimit(String scene, String page) throws WxErrorException {
-    return this.createWxaCodeUnlimit(scene, page, "release", 430, true, null, false);
+    return this.createWxaCodeUnlimit(scene, page, true, "release", 430, true, null, false);
   }
 
   @Override
@@ -144,15 +145,15 @@ public class WxMaQrcodeServiceImpl implements WxMaQrcodeService {
   }
 
   @Override
-  public File createWxaCodeUnlimit(String scene, String page, String filePath, String envVersion, int width, boolean autoColor,
+  public File createWxaCodeUnlimit(String scene, String page, String filePath, boolean checkPath, String envVersion, int width, boolean autoColor,
                                    WxMaCodeLineColor lineColor, boolean isHyaline) throws WxErrorException {
     return this.service.execute(QrcodeRequestExecutor.create(this.service.getRequestHttp(), filePath),
-      GET_WXACODE_UNLIMIT_URL, this.buildWxaCodeUnlimit(scene, page, envVersion, width, autoColor, lineColor, isHyaline));
+      GET_WXACODE_UNLIMIT_URL, this.buildWxaCodeUnlimit(scene, page, checkPath, envVersion, width, autoColor, lineColor, isHyaline));
   }
 
   @Override
   public File createWxaCodeUnlimit(String scene, String page, String filePath) throws WxErrorException {
-    return this.createWxaCodeUnlimit(scene, page, filePath, "release", 430, true, null, false);
+    return this.createWxaCodeUnlimit(scene, page, filePath, true, "release", 430, true, null, false);
   }
 
 }

@@ -76,6 +76,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaLinkService linkService = new WxMaLinkServiceImpl(this);
   private final WxMaReimburseInvoiceService reimburseInvoiceService = new WxMaReimburseInvoiceServiceImpl(this);
   private final WxMaDeviceSubscribeService deviceSubscribeService = new WxMaDeviceSubscribeServiceImpl(this);
+  private final WxMaMarketingService marketingService = new WxMaMarketingServiceImpl(this);
   private Map<String, WxMaConfig> configMap;
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -577,4 +578,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
 
   @Override
   public WxMaDeviceSubscribeService getDeviceSubscribeService(){ return this.deviceSubscribeService; }
+
+  @Override
+  public WxMaMarketingService getMarketingService() {return  this.marketingService;  }
 }
