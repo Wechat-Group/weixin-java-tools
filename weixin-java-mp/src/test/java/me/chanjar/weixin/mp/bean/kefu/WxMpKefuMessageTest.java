@@ -166,4 +166,13 @@ public class WxMpKefuMessageTest {
       "{\"touser\":\"OPENID\",\"msgtype\":\"msgmenu\",\"msgmenu\":{\"head_content\":\"head_content\",\"list\":[{\"id\":\"101\",\"content\":\"msgmenu1\"},{\"id\":\"102\",\"content\":\"msgmenu2\"}],\"tail_content\":\"tail_content\"}}");
   }
 
+  public void testMpNewsArticleBuilder() {
+    WxMpKefuMessage reply = WxMpKefuMessage.MPNEWSARTICLE()
+      .toUser("OPENID")
+      .articleId("ARTICLE_ID")
+      .build();
+    Assert.assertEquals(reply.toJson(),
+      "{\"touser\":\"OPENID\",\"msgtype\":\"mpnewsarticle\",\"mpnewsarticle\":{\"article_id\":\"ARTICLE_ID\"}}");
+  }
+
 }
