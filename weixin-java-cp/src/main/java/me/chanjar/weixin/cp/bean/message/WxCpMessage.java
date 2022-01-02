@@ -200,6 +200,11 @@ public class WxCpMessage implements Serializable {
   private List<MultipleSelect> selects;
 
   /**
+   * 引用文献样式
+   */
+  private QuoteArea quoteArea;
+
+  /**
    * 获得文本消息builder.
    */
   public static TextBuilder TEXT() {
@@ -604,6 +609,12 @@ public class WxCpMessage implements Serializable {
             selectJsonArray.add(tempObject);
           }
           template.add("select_list", selectJsonArray);
+        }
+
+        QuoteArea quoteArea = this.getQuoteArea();
+        if (null != quoteArea){
+          JsonObject quoteAreaJson = quoteArea.toJson();
+          template.add("quote_area",quoteAreaJson);
         }
 
         messageJson.add("template_card", template);

@@ -178,7 +178,14 @@ public class WxCpMessageTest {
       .appid("小程序的appid")
       .pagepath("/index.html")
       .build();
-
+    QuoteArea quoteArea=QuoteArea.builder()
+      .type(1)
+      .title("引用文献标题")
+      .appid("小程序的appid")
+      .pagepath("/index.html")
+      .url("https://work.weixin.qq.com")
+      .quoteText("引用文献样式的引用文案")
+      .build();
     WxCpMessage reply = WxCpMessage.TEMPLATECARD().toUser("OPENID")
       .agentId(1000002)
       .card_type(WxConsts.TemplateCardType.TEXT_NOTICE)
@@ -195,13 +202,14 @@ public class WxCpMessageTest {
       .card_action_appid("小程序的appid")
       .card_action_url("https://work.weixin.qq.com")
       .card_action_pagepath("/index.html")
+      .quoteArea(quoteArea)
       .build();
     reply.setEnableIdTrans(false);
     reply.setEnableDuplicateCheck(false);
     reply.setDuplicateCheckInterval(1800);
 //    System.out.println(reply.toJson());
     assertThat(reply.toJson())
-      .isEqualTo("{\"agentid\":1000002,\"touser\":\"OPENID\",\"msgtype\":\"template_card\",\"duplicate_check_interval\":1800,\"template_card\":{\"card_type\":\"text_notice\",\"source\":{\"icon_url\":\"图片的url\",\"desc\":\"企业微信\"},\"main_title\":{\"title\":\"欢迎使用企业微信\",\"desc\":\"您的好友正在邀请您加入企业微信\"},\"emphasis_content\":{\"title\":\"100\",\"desc\":\"核心数据\"},\"sub_title_text\":\"下载企业微信还能抢红包！\",\"horizontal_content_list\":[{\"keyname\":\"邀请人\",\"value\":\"张三\"},{\"type\":1,\"keyname\":\"企业微信官网\",\"value\":\"点击访问\",\"url\":\"https://work.weixin.qq.com\"},{\"type\":2,\"keyname\":\"企业微信下载\",\"value\":\"企业微信.apk\",\"media_id\":\"文件的media_id\"}],\"jump_list\":[{\"type\":1,\"title\":\"企业微信官网\",\"url\":\"https://work.weixin.qq.com\"},{\"type\":2,\"title\":\"跳转小程序\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\"}],\"card_action\":{\"type\":2,\"url\":\"https://work.weixin.qq.com\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\"}}}");
+      .isEqualTo("{\"agentid\":1000002,\"touser\":\"OPENID\",\"msgtype\":\"template_card\",\"duplicate_check_interval\":1800,\"template_card\":{\"card_type\":\"text_notice\",\"source\":{\"icon_url\":\"图片的url\",\"desc\":\"企业微信\"},\"main_title\":{\"title\":\"欢迎使用企业微信\",\"desc\":\"您的好友正在邀请您加入企业微信\"},\"emphasis_content\":{\"title\":\"100\",\"desc\":\"核心数据\"},\"sub_title_text\":\"下载企业微信还能抢红包！\",\"horizontal_content_list\":[{\"keyname\":\"邀请人\",\"value\":\"张三\"},{\"type\":1,\"keyname\":\"企业微信官网\",\"value\":\"点击访问\",\"url\":\"https://work.weixin.qq.com\"},{\"type\":2,\"keyname\":\"企业微信下载\",\"value\":\"企业微信.apk\",\"media_id\":\"文件的media_id\"}],\"jump_list\":[{\"type\":1,\"title\":\"企业微信官网\",\"url\":\"https://work.weixin.qq.com\"},{\"type\":2,\"title\":\"跳转小程序\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\"}],\"card_action\":{\"type\":2,\"url\":\"https://work.weixin.qq.com\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\"},\"quote_area\":{\"type\":1,\"url\":\"https://work.weixin.qq.com\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\",\"title\":\"引用文献标题\",\"quote_text\":\"引用文献样式的引用文案\"}}}");
 
   }
 

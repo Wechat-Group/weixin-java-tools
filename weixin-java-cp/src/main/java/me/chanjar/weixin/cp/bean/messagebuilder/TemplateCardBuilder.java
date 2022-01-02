@@ -146,6 +146,11 @@ public class TemplateCardBuilder  extends BaseBuilder<TemplateCardBuilder>{
    */
   private List<MultipleSelect> selects;
 
+  /**
+   * 引用文献样式
+   */
+  private QuoteArea quoteArea;
+
 
   public TemplateCardBuilder() {
     this.msgType = WxConsts.KefuMsgType.TEMPLATE_CARD;
@@ -266,6 +271,11 @@ public class TemplateCardBuilder  extends BaseBuilder<TemplateCardBuilder>{
     return this;
   }
 
+  public TemplateCardBuilder quoteArea(QuoteArea quoteArea) {
+    this.quoteArea = quoteArea;
+    return this;
+  }
+
   @Override
   public WxCpMessage build() {
     WxCpMessage m = super.build();
@@ -295,6 +305,7 @@ public class TemplateCardBuilder  extends BaseBuilder<TemplateCardBuilder>{
     m.setSubmit_button_text(this.submit_button_text);
     m.setSubmit_button_key(this.submit_button_key);
     m.setSelects(this.selects);
+    m.setQuoteArea(this.quoteArea);
     return m;
   }
 }
