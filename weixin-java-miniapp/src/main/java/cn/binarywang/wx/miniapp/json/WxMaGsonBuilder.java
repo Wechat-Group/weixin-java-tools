@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.json;
 
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
+import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMsgEvent;
 import cn.binarywang.wx.miniapp.bean.WxMaUniformMessage;
 import cn.binarywang.wx.miniapp.bean.analysis.WxMaRetainInfo;
 import cn.binarywang.wx.miniapp.bean.analysis.WxMaUserPortrait;
@@ -26,6 +27,7 @@ public class WxMaGsonBuilder {
     INSTANCE.registerTypeAdapter(WxMaVisitDistribution.class, new WxMaVisitDistributionGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMaRetainInfo.class, new WxMaRetainInfoGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMaUserPortrait.class, new WxMaUserPortraitGsonAdapter());
+    INSTANCE.registerTypeAdapter(WxMaSubscribeMsgEvent.WxMaSubscribeMsgEventJson.class, new WxMaSubscribeMsgEventJsonAdapter());
   }
 
   public static Gson create() {

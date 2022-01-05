@@ -233,6 +233,7 @@ public interface WxCpApiPathConsts {
     String GET_GROUP_MSG_SEND_RESULT = "/cgi-bin/externalcontact/get_groupmsg_send_result";
     String GET_GROUP_MSG_TASK = "/cgi-bin/externalcontact/get_groupmsg_task";
     String GET_GROUP_MSG_LIST_V2 = "/cgi-bin/externalcontact/get_groupmsg_list_v2";
+    String GET_GROUP_MSG_RESULT = "/cgi-bin/externalcontact/get_group_msg_result";
 
     String GET_PRODUCT_ALBUM = "/cgi-bin/externalcontact/get_product_album";
     String GET_PRODUCT_ALBUM_LIST = "/cgi-bin/externalcontact/get_product_album_list";

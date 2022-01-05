@@ -11,6 +11,7 @@ import lombok.Data;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -165,6 +166,39 @@ public class WxMaMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String openPid;
 
+  @XStreamAlias("SubscribeMsgPopupEvent")
+  private WxMaSubscribeMsgEvent.SubscribeMsgPopupEvent subscribeMsgPopupEvent;
+
+  @XStreamAlias("SubscribeMsgChangeEvent")
+  private WxMaSubscribeMsgEvent.SubscribeMsgChangeEvent subscribeMsgChangeEvent;
+
+  @XStreamAlias("SubscribeMsgSentEvent")
+  private WxMaSubscribeMsgEvent.SubscribeMsgSentEvent subscribeMsgSentEvent;
+
+  /**
+   * 不要直接使用这个字段，
+   * 这个字段只是为了适配 SubscribeMsgPopupEvent SubscribeMsgChangeEvent SubscribeMsgSentEvent
+   * 在json里面名称都是List并且有时候是对象有时候是数组的问题
+   * 当List只有一个对象的时候，微信服务器推送过来的的List是对象而非数组，当有多个对象的时候推送过来的才是数组
+   * 当只有一个对象的时候
+   * "List": {
+   *         "TemplateId": "hD-ixGOhYmUfjOnI8MCzQMPshzGVeux_2vzyvQu7O68",
+   *         "SubscribeStatusString": "accept",
+   *         "PopupScene": "0"
+   *     }
+   * 当有多条数据的时候
+   * "List": [   {
+   *         "TemplateId": "hD-ixGOhYmUfjOnI8MCzQMPshzGVeux_2vzyvQu7O68",
+   *         "SubscribeStatusString": "accept",
+   *         "PopupScene": "0"
+   *     }, {
+   *         "TemplateId": "hD-ixGOhYmUfjOnI8MCzQMPshzGVeux_2vzyvQu7O68",
+   *         "SubscribeStatusString": "accept",
+   *         "PopupScene": "0"
+   *     }]
+   */
+  @SerializedName("List")
+  private WxMaSubscribeMsgEvent.WxMaSubscribeMsgEventJson uselessMsg;
 
   public static WxMaMessage fromXml(String xml) {
     return XStreamTransformer.fromXml(WxMaMessage.class, xml);
@@ -201,7 +235,19 @@ public class WxMaMessage implements Serializable {
   }
 
   public static WxMaMessage fromJson(String json) {
-    return WxMaGsonBuilder.create().fromJson(json, WxMaMessage.class);
+    WxMaMessage message =  WxMaGsonBuilder.create().fromJson(json, WxMaMessage.class);
+    // 在这里处理 event的json格式时候的 list 问题，让json和xml的程序接口可以保持一致， 详见 uselessMsg 字段的注释
+    if (message.getUselessMsg() != null) {
+      if (StringUtils.equals(message.getEvent(), "subscribe_msg_popup_event")) {
+        message.setSubscribeMsgPopupEvent(message.getUselessMsg().getPopupEvents());
+      } else if (StringUtils.equals(message.getEvent(), "subscribe_msg_change_event")) {
+        message.setSubscribeMsgChangeEvent(message.getUselessMsg().getChangeEvents());
+      } else if (StringUtils.equals(message.getEvent(), "subscribe_msg_sent_event")) {
+        message.setSubscribeMsgSentEvent(message.getUselessMsg().getSentEvent());
+      }
+      message.setUselessMsg(null);
+    }
+    return message;
   }
 
   public static WxMaMessage fromEncryptedJson(String encryptedJson, WxMaConfig config) {
