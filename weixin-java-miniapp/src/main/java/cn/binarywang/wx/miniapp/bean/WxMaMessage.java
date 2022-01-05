@@ -150,6 +150,13 @@ public class WxMaMessage implements Serializable {
   @XStreamAlias("AppID")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String appID;
+  public String getAppID() {
+    return appID;
+  }
+
+  public void setAppID(String appID) {
+    this.appID = appID;
+  }
   
   @SerializedName("RevokeInfo")
   @XStreamAlias("RevokeInfo")
