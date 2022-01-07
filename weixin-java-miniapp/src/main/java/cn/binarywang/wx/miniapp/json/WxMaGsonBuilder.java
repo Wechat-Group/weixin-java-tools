@@ -11,12 +11,14 @@ import cn.binarywang.wx.miniapp.bean.code.WxMaCodeVersionDistribution;
 import cn.binarywang.wx.miniapp.json.adaptor.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.Objects;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMaGsonBuilder {
   private static final GsonBuilder INSTANCE = new GsonBuilder();
+  private static volatile Gson GSON_INSTANCE;
 
   static {
     INSTANCE.disableHtmlEscaping();
@@ -31,7 +33,14 @@ public class WxMaGsonBuilder {
   }
 
   public static Gson create() {
-    return INSTANCE.create();
+    if (Objects.isNull(GSON_INSTANCE)) {
+      synchronized (GSON_INSTANCE) {
+        if (Objects.isNull(GSON_INSTANCE)) {
+          GSON_INSTANCE = INSTANCE.create();
+        }
+      }
+    }
+    return GSON_INSTANCE;
   }
 
 }
