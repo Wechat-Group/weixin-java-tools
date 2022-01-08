@@ -10,6 +10,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.PayScoreService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.v3.util.AesUtils;
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
@@ -38,17 +39,23 @@ public class PayScoreServiceImpl implements PayScoreService {
   public WxPayScoreResult permissions(WxPayScoreRequest request) throws WxPayException {
     WxPayConfig config = this.payService.getConfig();
     String url = this.payService.getPayBaseUrl() + "/v3/payscore/permissions";
-    request.setAppid(config.getAppId());
-    request.setServiceId(config.getServiceId());
-    String permissionNotifyUrl = config.getPayScorePermissionNotifyUrl();
-    if (StringUtils.isBlank(permissionNotifyUrl)) {
-      throw new WxPayException("授权回调地址未配置");
+    if(Strings.isNullOrEmpty(request.getAppid())){
+      request.setAppid(config.getAppId());
+    }
+    if(Strings.isNullOrEmpty(request.getServiceId())){
+      request.setServiceId(config.getServiceId());
+    }
+    if(Strings.isNullOrEmpty(request.getNotifyUrl())){
+      String permissionNotifyUrl = config.getPayScorePermissionNotifyUrl();
+      if (StringUtils.isBlank(permissionNotifyUrl)) {
+        throw new WxPayException("授权回调地址未配置");
+      }
+      request.setNotifyUrl(permissionNotifyUrl);
     }
     String authorizationCode = request.getAuthorizationCode();
     if (StringUtils.isBlank(authorizationCode)) {
       throw new WxPayException("authorizationCode不允许为空");
     }
-    request.setNotifyUrl(permissionNotifyUrl);
     String result = this.payService.postV3(url, request.toJson());
     return WxPayScoreResult.fromJson(result);
 
@@ -139,9 +146,15 @@ public class PayScoreServiceImpl implements PayScoreService {
     boolean needUserConfirm = request.getNeedUserConfirm();
     WxPayConfig config = this.payService.getConfig();
     String url = this.payService.getPayBaseUrl() + "/v3/payscore/serviceorder";
-    request.setAppid(config.getAppId());
-    request.setServiceId(config.getServiceId());
-    request.setNotifyUrl(config.getPayScoreNotifyUrl());
+    if(Strings.isNullOrEmpty(request.getAppid())){
+      request.setAppid(config.getAppId());
+    }
+    if(Strings.isNullOrEmpty(request.getServiceId())){
+      request.setServiceId(config.getServiceId());
+    }
+    if(Strings.isNullOrEmpty(request.getNotifyUrl())){
+      request.setNotifyUrl(config.getPayScoreNotifyUrl());
+    }
     String result = this.payService.postV3(url, request.toJson());
     WxPayScoreResult wxPayScoreCreateResult = WxPayScoreResult.fromJson(result);
 
@@ -213,8 +226,12 @@ public class PayScoreServiceImpl implements PayScoreService {
     WxPayConfig config = this.payService.getConfig();
     String outOrderNo = request.getOutOrderNo();
     String url = String.format("%s/v3/payscore/serviceorder/%s/modify", this.payService.getPayBaseUrl(), outOrderNo);
-    request.setAppid(config.getAppId());
-    request.setServiceId(config.getServiceId());
+    if(Strings.isNullOrEmpty(request.getAppid())){
+      request.setAppid(config.getAppId());
+    }
+    if(Strings.isNullOrEmpty(config.getServiceId())){
+      request.setServiceId(config.getServiceId());
+    }
     request.setOutOrderNo(null);
     String result = payService.postV3(url, request.toJson());
     return WxPayScoreResult.fromJson(result);
@@ -225,8 +242,12 @@ public class PayScoreServiceImpl implements PayScoreService {
     WxPayConfig config = this.payService.getConfig();
     String outOrderNo = request.getOutOrderNo();
     String url = String.format("%s/v3/payscore/serviceorder/%s/complete", this.payService.getPayBaseUrl(), outOrderNo);
-    request.setAppid(config.getAppId());
-    request.setServiceId(config.getServiceId());
+    if(Strings.isNullOrEmpty(request.getAppid())){
+      request.setAppid(config.getAppId());
+    }
+    if(Strings.isNullOrEmpty(request.getServiceId())){
+      request.setServiceId(config.getServiceId());
+    }
     request.setOutOrderNo(null);
     String result = payService.postV3(url, request.toJson());
     return WxPayScoreResult.fromJson(result);
@@ -248,8 +269,12 @@ public class PayScoreServiceImpl implements PayScoreService {
     WxPayConfig config = this.payService.getConfig();
     String outOrderNo = request.getOutOrderNo();
     String url = String.format("%s/v3/payscore/serviceorder/%s/sync", this.payService.getPayBaseUrl(), outOrderNo);
-    request.setAppid(config.getAppId());
-    request.setServiceId(config.getServiceId());
+    if(Strings.isNullOrEmpty(request.getAppid())){
+      request.setAppid(config.getAppId());
+    }
+    if(Strings.isNullOrEmpty(request.getServiceId())){
+      request.setServiceId(config.getServiceId());
+    }
     request.setOutOrderNo(null);
     String result = payService.postV3(url, request.toJson());
     return WxPayScoreResult.fromJson(result);
