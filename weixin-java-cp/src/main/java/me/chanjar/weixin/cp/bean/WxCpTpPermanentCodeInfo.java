@@ -187,6 +187,10 @@ public class WxCpTpPermanentCodeInfo extends WxCpBaseResp {
 
     @SerializedName("avatar")
     private String avatar;
+
+    @SerializedName("open_userid")
+    private String openUserid;
+
   }
 
   /**
