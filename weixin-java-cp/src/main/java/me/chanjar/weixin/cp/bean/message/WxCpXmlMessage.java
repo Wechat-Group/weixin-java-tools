@@ -182,6 +182,7 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String recognition;
 
+
   @XStreamAlias("TaskId")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String taskId;
