@@ -143,6 +143,10 @@ public class WxCpConsts {
      */
     public static final String DELETE_SCHEDULE = "delete_schedule";
 
+    /**
+     * 模板卡片事件
+     */
+    public static final String template_card_event = "template_card_event";
   }
 
   /**

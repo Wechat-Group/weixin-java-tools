@@ -416,6 +416,14 @@ public class WxCpXmlMessage implements Serializable {
   private String tagType;
 
 
+  @XStreamAlias("CardType")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String cardType;
+
+  @XStreamAlias("ResponseCode")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String responseCode;
+
   ///////////////////////////////////////
   // 群发消息返回的结果
   ///////////////////////////////////////
