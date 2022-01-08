@@ -188,6 +188,14 @@ public class WxCpXmlMessage implements Serializable {
   private String taskId;
 
   /**
+   * 用于调用更新卡片接口的ResponseCode，24小时内有效，且只能使用一次
+   */
+  @XStreamAlias("ResponseCode")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String responseCode;
+
+
+  /**
    * 通讯录变更事件.
    * 请参考常量 me.chanjar.weixin.cp.constant.WxCpConsts.ContactChangeType
    */
