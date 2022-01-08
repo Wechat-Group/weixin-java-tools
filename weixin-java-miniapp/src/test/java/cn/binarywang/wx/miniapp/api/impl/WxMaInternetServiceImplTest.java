@@ -23,7 +23,7 @@ public class WxMaInternetServiceImplTest {
 
   @Test
   public void testGetUserEncryptKey() throws WxErrorException {
-    WxMaInternetResponse response = this.wxService.getInternetService().getUserEncryptKey();
+    WxMaInternetResponse response = this.wxService.getInternetService().getUserEncryptKey("","","hmac_sha256");
     System.out.println(response);
   }
 }
