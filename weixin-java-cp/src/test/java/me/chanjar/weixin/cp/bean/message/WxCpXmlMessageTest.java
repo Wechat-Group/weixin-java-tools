@@ -273,4 +273,42 @@ public class WxCpXmlMessageTest {
 
     System.out.println(XStreamTransformer.toXml(WxCpXmlMessage.class, wxCpXmlMessage));
   }
+
+  public void testTemplateCard() {
+    String xml = "<xml>\n" +
+      "<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "<FromUserName><![CDATA[FromUser]]></FromUserName>\n" +
+      "<CreateTime>123456789</CreateTime>\n" +
+      "<MsgType><![CDATA[event]]></MsgType>\n" +
+      "<Event><![CDATA[template_card_event]]></Event>\n" +
+      "<EventKey><![CDATA[key111]]></EventKey>\n" +
+      "<TaskId><![CDATA[taskid111]]></TaskId>\n" +
+      "<CardType><![CDATA[text_notice]]></CardType>\n" +
+      "<ResponseCode><![CDATA[ResponseCode]]></ResponseCode>\n" +
+      "<AgentID>1</AgentID>\n" +
+      "<SelectedItems>\n" +
+      "    <SelectedItem>\n" +
+      "        <QuestionKey><![CDATA[QuestionKey1]]></QuestionKey>\n" +
+      "        <OptionIds>\n" +
+      "            <OptionId><![CDATA[OptionId1]]></OptionId>\n" +
+      "            <OptionId><![CDATA[OptionId2]]></OptionId>\n" +
+      "        </OptionIds>\n" +
+      "    </SelectedItem>\n" +
+      "    <SelectedItem>\n" +
+      "        <QuestionKey><![CDATA[QuestionKey2]]></QuestionKey>\n" +
+      "        <OptionIds>\n" +
+      "            <OptionId><![CDATA[OptionId3]]></OptionId>\n" +
+      "            <OptionId><![CDATA[OptionId4]]></OptionId>\n" +
+      "        </OptionIds>\n" +
+      "    </SelectedItem>\n" +
+      "</SelectedItems>\n" +
+      "</xml>\n";
+
+    WxCpXmlMessage wxCpXmlMessage = WxCpXmlMessage.fromXml(xml);
+    assertEquals(wxCpXmlMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
+    assertEquals(wxCpXmlMessage.getEvent(), WxCpConsts.EventType.TEMPLATE_CARD_EVENT);
+    assertEquals(wxCpXmlMessage.getResponseCode(), "ResponseCode");
+
+    System.out.println(XStreamTransformer.toXml(WxCpXmlMessage.class, wxCpXmlMessage));
+  }
 }
