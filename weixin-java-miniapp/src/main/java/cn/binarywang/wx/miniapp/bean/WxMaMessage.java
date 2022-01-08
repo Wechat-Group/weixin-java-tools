@@ -145,12 +145,19 @@ public class WxMaMessage implements Serializable {
   @XStreamAlias("Query")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String query;
-
+  
   @SerializedName("AppID")
   @XStreamAlias("AppID")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String appID;
+  public String getAppID() {
+    return appID;
+  }
 
+  public void setAppID(String appID) {
+    this.appID = appID;
+  }
+  
   @SerializedName("RevokeInfo")
   @XStreamAlias("RevokeInfo")
   @XStreamConverter(value = XStreamCDataConverter.class)
