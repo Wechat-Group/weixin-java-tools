@@ -67,7 +67,7 @@ public class WxMpGsonBuilder {
 
   public static Gson create() {
     if (Objects.isNull(GSON_INSTANCE)) {
-      synchronized (GSON_INSTANCE) {
+      synchronized (INSTANCE) {
         if (Objects.isNull(GSON_INSTANCE)) {
           GSON_INSTANCE = INSTANCE.create();
         }
