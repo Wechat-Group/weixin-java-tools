@@ -76,4 +76,9 @@ public class WxMaUserServiceImplTest {
   public void testGetNewPhoneNoInfo() throws Exception{
     assertNotNull(wxService.getUserService().getNewPhoneNoInfo("test"));
   }
+
+  @Test
+  public void testGetAccessToken() throws Exception{
+    assertNotNull(wxService.getAccessToken(true));
+  }
 }
