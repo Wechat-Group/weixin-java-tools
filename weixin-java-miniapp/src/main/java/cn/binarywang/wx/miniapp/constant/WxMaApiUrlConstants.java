@@ -411,4 +411,118 @@ public class WxMaApiUrlConstants {
      */
     String SEND_DEVICE_SUBSCRIBE_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/device/subscribe/send";
   }
+
+  /**
+   * 即时配送相关接口.
+   * <pre>
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/immediate-delivery/overview.html
+   * </pre>
+   */
+  public interface InstantDelivery {
+
+    /**
+     * 拉取已绑定账号.
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getBindAccount.html
+     * </pre>
+     */
+    String GET_BIND_ACCOUNT = "https://api.weixin.qq.com/cgi-bin/express/local/business/shop/get";
+
+    /**
+     * 拉取配送单信息.
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getOrder.html
+     * </pre>
+     */
+    String GET_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/get";
+
+    /**
+     * 模拟配送公司更新配送单状态.
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.mockUpdateOrder.html
+     * </pre>
+     */
+    String MOCK_UPDATE_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/test_update_order";
+
+    /**
+     * 下单接口.
+     */
+    interface PlaceAnOrder {
+
+      /**
+       * 获取已支持的配送公司列表接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getAllImmeDelivery.html
+       * </pre>
+       */
+      String GET_ALL_IMME_DELIVERY = "https://api.weixin.qq.com/cgi-bin/express/local/business/delivery/getall";
+
+      /**
+       * 预下配送单接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preAddOrder.html
+       * </pre>
+       */
+      String PRE_ADD_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/pre_add";
+
+      /**
+       * 下配送单接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addOrder.html
+       * </pre>
+       */
+      String ADD_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/add";
+
+      /**
+       * 重新下单.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.reOrder.html
+       * </pre>
+       */
+      String RE_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/readd";
+
+      /**
+       * 增加小费.
+       * <pre>
+       * 可以对待接单状态的订单增加小费。需要注意：订单的小费，以最新一次加小费动作的金额为准，故下一次增加小费额必须大于上一次小费额.
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addTip.html
+       * </pre>
+       */
+      String ADD_TIP = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/addtips";
+
+    }
+
+    /**
+     * 取消接口.
+     */
+    interface Cancel {
+
+      /**
+       * 预取消配送单接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preCancelOrder.html
+       * </pre>
+       */
+      String PRE_CANCEL_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/precancel";
+
+      /**
+       * 取消配送单接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.cancelOrder.html
+       * </pre>
+       */
+      String CANCEL_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/cancel";
+
+      /**
+       * 异常件退回商家商家确认收货接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.abnormalConfirm.html
+       * </pre>
+       */
+      String ABNORMAL_CONFIRM = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/confirm_return";
+
+    }
+
+  }
+
 }

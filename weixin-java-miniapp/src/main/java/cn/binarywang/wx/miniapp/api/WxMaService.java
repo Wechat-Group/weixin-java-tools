@@ -476,4 +476,12 @@ public interface WxMaService extends WxService {
    * @return WxMaDeviceSubscribeService plugin service
    */
   WxMaMarketingService getMarketingService();
+
+  /**
+   * 返回微信小程序即时配送服务接口.
+   *
+   * @return WxMaImmediateDeliveryService
+   */
+  WxMaImmediateDeliveryService getWxMaImmediateDeliveryService();
+
 }
