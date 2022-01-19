@@ -27,6 +27,12 @@ public class WxMpDraftItem implements Serializable {
   @SerializedName("content")
   private WxMpDraftInfo content;
 
+  /**
+   * 本草稿的图文消息素材的最后更新时间
+   */
+  @SerializedName("update_time")
+  private Long updateTime;
+
   public static WxMpDraftItem fromJson(String json) {
     return WxGsonBuilder.create().fromJson(json, WxMpDraftItem.class);
   }
