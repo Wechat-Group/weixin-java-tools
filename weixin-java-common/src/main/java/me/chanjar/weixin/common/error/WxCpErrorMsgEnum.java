@@ -1,6 +1,9 @@
 package me.chanjar.weixin.common.error;
 
+import com.google.common.collect.Maps;
 import lombok.Getter;
+
+import java.util.Map;
 
 /**
  * <pre>
@@ -1072,7 +1075,7 @@ public enum WxCpErrorMsgEnum {
   /**
    * 提交审批单请求参数错误
    */
-  CODE_301025(301025,"提交审批单请求参数错误"),
+  CODE_301025(301025, "提交审批单请求参数错误"),
   /**
    * 不允许更新该用户的userid.
    */
@@ -1080,15 +1083,15 @@ public enum WxCpErrorMsgEnum {
   /**
    * 无审批应用权限,或者提单者不在审批应用/自建应用的可见范围
    */
-  CODE_301055(301055,"无审批应用权限,或者提单者不在审批应用/自建应用的可见范围"),
+  CODE_301055(301055, "无审批应用权限,或者提单者不在审批应用/自建应用的可见范围"),
   /**
    * 审批应用已停用
    */
-  CODE_301056(301056,"审批应用已停用"),
+  CODE_301056(301056, "审批应用已停用"),
   /**
    * 通用错误码，提交审批单内部接口失败
    */
-  CODE_301057(301057,"通用错误码，提交审批单内部接口失败"),
+  CODE_301057(301057, "通用错误码，提交审批单内部接口失败"),
   /**
    * 批量导入任务的文件中userid有重复.
    */
@@ -1114,24 +1117,26 @@ public enum WxCpErrorMsgEnum {
    */
   CODE_2000002(2000002, "CorpId参数无效；指定的CorpId不存在");
 
-  private int code;
-  private String msg;
+  private final int code;
+  private final String msg;
 
   WxCpErrorMsgEnum(int code, String msg) {
     this.code = code;
     this.msg = msg;
   }
 
+  static final Map<Integer, String> valueMap = Maps.newHashMap();
+
+  static {
+    for (WxCpErrorMsgEnum value : WxCpErrorMsgEnum.values()) {
+      valueMap.put(value.code, value.msg);
+    }
+  }
+
   /**
    * 通过错误代码查找其中文含义..
    */
   public static String findMsgByCode(int code) {
-    for (WxCpErrorMsgEnum value : WxCpErrorMsgEnum.values()) {
-      if (value.code == code) {
-        return value.msg;
-      }
-    }
-
-    return null;
+    return valueMap.getOrDefault(code, null);
   }
 }

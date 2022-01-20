@@ -1,6 +1,9 @@
 package me.chanjar.weixin.common.error;
 
+import com.google.common.collect.Maps;
 import lombok.Getter;
+
+import java.util.Map;
 
 /**
  * 微信小程序错误码
@@ -664,16 +667,18 @@ public enum WxMaErrorMsgEnum {
     this.msg = msg;
   }
 
+  static final Map<Integer, String> valueMap = Maps.newHashMap();
+
+  static {
+    for (WxMaErrorMsgEnum value : WxMaErrorMsgEnum.values()) {
+      valueMap.put(value.code, value.msg);
+    }
+  }
+
   /**
    * 通过错误代码查找其中文含义.
    */
   public static String findMsgByCode(int code) {
-    for (WxMaErrorMsgEnum value : WxMaErrorMsgEnum.values()) {
-      if (value.code == code) {
-        return value.msg;
-      }
-    }
-
-    return null;
+    return valueMap.getOrDefault(code, null);
   }
 }

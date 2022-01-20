@@ -1,6 +1,9 @@
 package me.chanjar.weixin.common.error;
 
+import com.google.common.collect.Maps;
 import lombok.Getter;
+
+import java.util.Map;
 
 /**
  * <pre>
@@ -648,24 +651,26 @@ public enum WxMpErrorMsgEnum {
    */
   CODE_45084(45084, "没有设置 speed 参数");
 
-  private int code;
-  private String msg;
+  private final int code;
+  private final String msg;
 
   WxMpErrorMsgEnum(int code, String msg) {
     this.code = code;
     this.msg = msg;
   }
 
+  static final Map<Integer, String> valueMap = Maps.newHashMap();
+
+  static {
+    for (WxMpErrorMsgEnum value : WxMpErrorMsgEnum.values()) {
+      valueMap.put(value.code, value.msg);
+    }
+  }
+
   /**
    * 通过错误代码查找其中文含义..
    */
   public static String findMsgByCode(int code) {
-    for (WxMpErrorMsgEnum value : WxMpErrorMsgEnum.values()) {
-      if (value.code == code) {
-        return value.msg;
-      }
-    }
-
-    return null;
+    return valueMap.getOrDefault(code, null);
   }
 }
