@@ -60,6 +60,15 @@ public class WxMenuButton implements Serializable {
 
   /**
    * <pre>
+   * 调用发布图文接口获得的article_id.
+   * article_id类型和article_view_limited类型必须
+   * </pre>
+   */
+  @SerializedName("article_id")
+  private String articleId;
+
+  /**
+   * <pre>
    * 小程序的appid.
    * miniprogram类型必须
    * </pre>
