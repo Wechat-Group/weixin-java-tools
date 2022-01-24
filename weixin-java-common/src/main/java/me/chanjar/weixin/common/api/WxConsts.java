@@ -345,6 +345,11 @@ public class WxConsts {
      */
     public static final String WEAPP_AUDIT_FAIL = "weapp_audit_fail";
 
+    /**
+     * 点击菜单跳转小程序的事件推送
+     */
+    public static final String VIEW_MINIPROGRAM = "view_miniprogram";
+
   }
 
   /**
