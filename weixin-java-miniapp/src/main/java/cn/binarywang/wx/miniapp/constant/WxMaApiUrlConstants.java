@@ -523,6 +523,17 @@ public class WxMaApiUrlConstants {
 
     }
 
+
+    /**
+     * 安全风控
+     */
+    interface SafetyRiskControl {
+      /**
+       * 获取用户的安全等级，无需用户授权
+       */
+      String GET_USER_RISK_RANK = "https://api.weixin.qq.com/wxa/getuserriskrank";
+    }
+
   }
 
 }
