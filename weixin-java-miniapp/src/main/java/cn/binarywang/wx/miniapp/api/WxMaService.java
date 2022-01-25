@@ -484,4 +484,12 @@ public interface WxMaService extends WxService {
    */
   WxMaImmediateDeliveryService getWxMaImmediateDeliveryService();
 
+
+  /**
+   * 小程序安全风控相关接口服务
+   *
+   * @return safetyRiskControl service
+   */
+  WxMaSafetyRiskControlService getSafetyRiskControlService();
+
 }

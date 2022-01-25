@@ -16,5 +16,5 @@ public class WxMaShopAddOrderResponse extends WxMaShopBaseResponse implements Se
   private static final long serialVersionUID = -8923439859095040010L;
 
   @SerializedName("data")
-  private WxMaShopAddOrderResult date;
+  private WxMaShopAddOrderResult data;
 }
