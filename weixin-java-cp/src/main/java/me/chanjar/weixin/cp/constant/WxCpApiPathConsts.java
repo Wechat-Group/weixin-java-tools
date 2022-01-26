@@ -243,6 +243,8 @@ public interface WxCpApiPathConsts {
     String GROUP_WELCOME_TEMPLATE_GET = "/cgi-bin/externalcontact/group_welcome_template/get";
     String GROUP_WELCOME_TEMPLATE_DEL = "/cgi-bin/externalcontact/group_welcome_template/del";
 
+    String UPLOAD_ATTACHMENT = "/cgi-bin/media/upload_attachment";
+
   }
 
   interface Kf {

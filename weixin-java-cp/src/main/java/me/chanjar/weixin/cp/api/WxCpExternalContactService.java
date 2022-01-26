@@ -1,6 +1,10 @@
 package me.chanjar.weixin.cp.api;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import lombok.NonNull;
+import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
@@ -920,6 +924,36 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   WxCpProductAlbumResult getProductAlbum(String productId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 上传附件资源
+   * https://open.work.weixin.qq.com/api/doc/90001/90143/95178
+   * </pre>
+   * @param mediaType
+   * @param fileType
+   * @param attachmentType
+   * @param inputStream
+   * @return
+   * @throws WxErrorException
+   * @throws IOException
+   */
+  WxMediaUploadResult uploadAttachment(String mediaType, String fileType, Integer attachmentType,
+    InputStream inputStream) throws WxErrorException, IOException;
+
+  /**
+   * <pre>
+   * 上传附件资源
+   * https://open.work.weixin.qq.com/api/doc/90001/90143/95178
+   * </pre>
+   * @param mediaType
+   * @param attachmentType
+   * @param file
+   * @return
+   * @throws WxErrorException
+   */
+  WxMediaUploadResult uploadAttachment(String mediaType, Integer attachmentType, File file)
+    throws WxErrorException;
 
 
 }
