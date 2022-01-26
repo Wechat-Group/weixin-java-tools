@@ -26,6 +26,9 @@ public class ExternalContact implements Serializable {
   @SerializedName("name")
   private String name;
 
+  @SerializedName("nickname")
+  private String nickname;
+
   @SerializedName("avatar")
   private String avatar;
 

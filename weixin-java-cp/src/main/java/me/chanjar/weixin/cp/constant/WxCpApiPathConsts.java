@@ -252,5 +252,18 @@ public interface WxCpApiPathConsts {
     String ACCOUNT_LIST = "/cgi-bin/kf/account/list";
     String ADD_CONTACT_WAY = "/cgi-bin/kf/add_contact_way";
 
+    String SERVICER_ADD = "/cgi-bin/kf/servicer/add";
+    String SERVICER_DEL = "/cgi-bin/kf/servicer/del";
+    String SERVICER_LIST = "/cgi-bin/kf/servicer/list?open_kfid=";
+
+    String SERVICE_STATE_GET = "/cgi-bin/kf/service_state/get";
+    String SERVICE_STATE_TRANS = "/cgi-bin/kf/service_state/trans";
+
+    String SYNC_MSG = "/cgi-bin/kf/sync_msg";
+    String SEND_MSG = "/cgi-bin/kf/send_msg";
+
+    String SEND_MSG_ON_EVENT = "/cgi-bin/kf/send_msg_on_event";
+    String CUSTOMER_BATCH_GET = "/cgi-bin/kf/customer/batchget";
+
   }
 }
