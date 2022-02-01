@@ -175,7 +175,7 @@
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
-        <version>1.4.18</version>
+        <version>1.4.19</version>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
