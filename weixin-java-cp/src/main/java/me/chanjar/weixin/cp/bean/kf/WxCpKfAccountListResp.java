@@ -26,7 +26,7 @@ public class WxCpKfAccountListResp extends WxCpBaseResp {
   /**
    * 	帐号信息列表
    */
-  @JsonProperty("account_list")
+  @SerializedName("account_list")
   private List<AccountListDTO> accountList;
 
   @NoArgsConstructor
