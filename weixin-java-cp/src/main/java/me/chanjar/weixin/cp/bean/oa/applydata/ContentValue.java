@@ -87,11 +87,30 @@ public class ContentValue implements Serializable {
   }
 
   @Data
+  @Accessors(chain = true)
   public static class File implements Serializable {
     private static final long serialVersionUID = 3890971381800855142L;
 
     @SerializedName("file_id")
     private String fileId;
+    @SerializedName("file_name")
+    private String fileName;
+    /**
+     * 文件大小，类型为number，如果没有可以填空字符串.
+     */
+    @SerializedName("file_size")
+    private String fileSize;
+    /**
+     * 文件类型，类型为string，如果没有可以填空字符串。
+     */
+    @SerializedName("file_type")
+    private String fileType;
+
+    /**
+     * 文件地址，类型为string，如果没有可以填空字符串.
+     */
+    @SerializedName("file_url")
+    private String fileUrl;
   }
 
   @Data
