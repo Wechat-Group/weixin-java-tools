@@ -235,5 +235,5 @@ public class BatchDetailsResult implements Serializable {
    * </pre>
    */
   @SerializedName(value = "update_time")
-  private Date updateTime;
+  private String updateTime;
 }

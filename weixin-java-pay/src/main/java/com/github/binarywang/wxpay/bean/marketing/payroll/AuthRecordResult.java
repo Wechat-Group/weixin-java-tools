@@ -44,7 +44,7 @@ public class AuthRecordResult implements Serializable {
      * </pre>
      */
     @SerializedName(value = "mchid")
-    private Integer mchid;
+    private String mchid;
     /**
      * <pre>
      * 字段名：子商户号
@@ -57,7 +57,7 @@ public class AuthRecordResult implements Serializable {
      * </pre>
      */
     @SerializedName(value = "sub_mchid")
-    private Integer subMchid;
+    private String subMchid;
     /**
      * <pre>
      * 字段名：用户标识
@@ -70,7 +70,7 @@ public class AuthRecordResult implements Serializable {
      * </pre>
      */
     @SerializedName(value = "openid")
-    private Integer openid;
+    private String openid;
     /**
      * <pre>
      * 字段名：核身渠道
@@ -85,7 +85,7 @@ public class AuthRecordResult implements Serializable {
      * </pre>
      */
     @SerializedName(value = "authenticate_scene")
-    private Integer authenticateScene;
+    private String authenticateScene;
     /**
      * <pre>
      * 字段名：核身渠道标识
@@ -98,7 +98,7 @@ public class AuthRecordResult implements Serializable {
      * </pre>
      */
     @SerializedName(value = "authenticate_source")
-    private Integer authenticateSource;
+    private String authenticateSource;
     /**
      * <pre>
      * 字段名：项目名称
@@ -111,7 +111,7 @@ public class AuthRecordResult implements Serializable {
      * </pre>
      */
     @SerializedName(value = "project_name")
-    private Integer projectName;
+    private String projectName;
     /**
      * <pre>
      * 字段名：单位名称
