@@ -133,6 +133,19 @@ public class ApplymentsRequest implements Serializable {
 
   /**
    * <pre>
+   * 字段名：经营者/法人是否为受益人
+   * 变量名：owner
+   * 是否必填：条件选填
+   * 类型：bool
+   * 描述：主体类型为企业时，需要填写：1、若经营者/法人是最终受益人，则填写：true。2、若经营者/法人不是最终受益人，则填写：false。
+   * 示例值：true
+   * </pre>
+   */
+  @SerializedName(value = "owner")
+  private Boolean owner;
+
+  /**
+   * <pre>
    * 字段名：是否填写结算账户信息
    * 变量名：need_account_info
    * 是否必填：是
