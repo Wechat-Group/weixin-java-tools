@@ -158,22 +158,107 @@ public class WxMaApiUrlConstants {
   }
 
   public interface Broadcast {
-    String GET_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/getliveinfo";
-
     /**
      * 直播间管理相关接口
      */
     interface Room {
+      /**
+       * 创建直播间
+       */
       String CREATE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/create";
+      /**
+       * 获取直播间列表
+       * 获取直播间回放
+       */
+      String GET_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/getliveinfo";
+      /**
+       * 直播间导入商品
+       */
       String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/addgoods";
+      /**
+       * 删除直播间
+       */
       String DELETE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/deleteroom";
+      /**
+       * 编辑直播间
+       */
       String EDIT_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/editroom";
+      /**
+       * 获取直播间推流地址
+       */
       String GET_PUSH_URL = "https://api.weixin.qq.com/wxaapi/broadcast/room/getpushurl";
+      /**
+       * 获取直播间分享二维码
+       */
       String GET_SHARED_CODE = "https://api.weixin.qq.com/wxaapi/broadcast/room/getsharedcode";
+      /**
+       * 添加管理直播间小助手
+       */
       String ADD_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/addassistant";
+      /**
+       * 修改管理直播间小助手
+       */
       String MODIFY_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/modifyassistant";
+      /**
+       * 删除管理直播间小助手
+       */
       String REMOVE_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/removeassistant";
+      /**
+       * 查询管理直播间小助手
+       */
       String GET_ASSISTANT_LIST = "https://api.weixin.qq.com/wxaapi/broadcast/room/getassistantlist";
+      /**
+       * 添加主播副号
+       */
+      String ADD_SUBANCHOR = "https://api.weixin.qq.com/wxaapi/broadcast/room/addsubanchor";
+      /**
+       * 修改主播副号
+       */
+      String MODIFY_SUBANCHOR = "https://api.weixin.qq.com/wxaapi/broadcast/room/modifysubanchor";
+      /**
+       * 删除主播副号
+       */
+      String DELETE_SUBANCHOR = "https://api.weixin.qq.com/wxaapi/broadcast/room/deletesubanchor";
+      /**
+       * 获取主播副号
+       */
+      String GET_SUBANCHOR = "https://api.weixin.qq.com/wxaapi/broadcast/room/getsubanchor";
+      /**
+       * 开启/关闭直播间官方收录
+       */
+      String UPDATE_FEED_PUBLIC = "https://api.weixin.qq.com/wxaapi/broadcast/room/updatefeedpublic";
+      /**
+       * 开启/关闭回放功能
+       */
+      String UPDATE_REPLAY = "https://api.weixin.qq.com/wxaapi/broadcast/room/updatereplay";
+      /**
+       * 开启/关闭客服功能
+       */
+      String UPDATE_KF = "https://api.weixin.qq.com/wxaapi/broadcast/room/updatekf";
+      /**
+       * 开启/关闭直播间全局禁言
+       */
+      String UPDATE_COMMENT = "https://api.weixin.qq.com/wxaapi/broadcast/room/updatecomment";
+      /**
+       * 上下架商品
+       */
+      String ONSALE = "https://api.weixin.qq.com/wxaapi/broadcast/goods/onsale";
+      /**
+       * 删除商品
+       */
+      String DELETE_IN_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/goods/deleteInRoom";
+      /**
+       * 推送商品
+       */
+      String PUSH = "https://api.weixin.qq.com/wxaapi/broadcast/goods/push";
+      /**
+       * 商品排序
+       */
+      String SORT = "https://api.weixin.qq.com/wxaapi/broadcast/goods/sort";
+      /**
+       * 下载商品讲解视频
+       */
+      String GET_VIDEO = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getVideo";
     }
 
     /**

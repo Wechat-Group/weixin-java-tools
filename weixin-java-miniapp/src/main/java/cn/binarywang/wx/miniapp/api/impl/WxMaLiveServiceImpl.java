@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.GET_LIVE_INFO;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.Room;
 
 /**
@@ -152,7 +151,7 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
     }
     map.put("start", start);
     map.put("limit", limit);
-    String responseContent = wxMaService.post(GET_LIVE_INFO, WxMaGsonBuilder.create().toJson(map));
+    String responseContent = wxMaService.post(Room.GET_LIVE_INFO, WxMaGsonBuilder.create().toJson(map));
     JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
@@ -229,6 +228,174 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaAssistantResult.fromJson(responseContent).getList();
+  }
+
+  @Override
+  public boolean addSubanchor(Integer roomId, String username) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(ROOM_ID, roomId);
+    map.put("username", username);
+    String responseContent = this.wxMaService.post(Room.ADD_SUBANCHOR, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public boolean modifySubanchor(Integer roomId, String username) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(ROOM_ID, roomId);
+    map.put("username", username);
+    String responseContent = this.wxMaService.post(Room.MODIFY_SUBANCHOR, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public boolean deleteSubanchor(Integer roomId) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(1);
+    map.put(ROOM_ID, roomId);
+    String responseContent = this.wxMaService.post(Room.DELETE_SUBANCHOR, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public String getSubanchor(Integer roomId) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(1);
+    map.put(ROOM_ID, roomId);
+    String responseContent = this.wxMaService.get(Room.GET_SUBANCHOR, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return jsonObject.get("username").getAsString();
+  }
+
+  @Override
+  public boolean updatefeedpublic(Integer roomId, Integer isFeedsPublic) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(ROOM_ID, roomId);
+    map.put("isFeedsPublic", isFeedsPublic);
+    String responseContent = this.wxMaService.post(Room.UPDATE_FEED_PUBLIC, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public boolean updatereplay(Integer roomId, Integer closeReplay) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(ROOM_ID, roomId);
+    map.put("closeReplay", closeReplay);
+    String responseContent = this.wxMaService.post(Room.UPDATE_REPLAY, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public boolean updatekf(Integer roomId, Integer closeKf) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(ROOM_ID, roomId);
+    map.put("closeKf", closeKf);
+    String responseContent = this.wxMaService.post(Room.UPDATE_KF, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public boolean updatecomment(Integer roomId, Integer banComment) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(ROOM_ID, roomId);
+    map.put("banComment", banComment);
+    String responseContent = this.wxMaService.post(Room.UPDATE_COMMENT, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public boolean onsale(Integer roomId, Integer goodsId, Integer onSale) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(3);
+    map.put(ROOM_ID, roomId);
+    map.put("goodsId", goodsId);
+    map.put("onSale", onSale);
+    String responseContent = this.wxMaService.post(Room.ONSALE, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public boolean deleteInRoom(Integer roomId, Integer goodsId) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(ROOM_ID, roomId);
+    map.put("goodsId", goodsId);
+    String responseContent = this.wxMaService.post(Room.DELETE_IN_ROOM, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public boolean push(Integer roomId, Integer goodsId) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(ROOM_ID, roomId);
+    map.put("goodsId", goodsId);
+    String responseContent = this.wxMaService.post(Room.PUSH, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public boolean sort(Integer roomId, List<Map<String,String>> goods) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(ROOM_ID, roomId);
+    map.put("goods", goods);
+    String responseContent = this.wxMaService.post(Room.SORT, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return true;
+  }
+
+  @Override
+  public String getVideo(Integer roomId, Integer goodsId) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(ROOM_ID, roomId);
+    map.put("goodsId", goodsId);
+    String responseContent = this.wxMaService.get(Room.GET_VIDEO, WxMaGsonBuilder.create().toJson(map));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return jsonObject.get("url").getAsString();
   }
 
 }

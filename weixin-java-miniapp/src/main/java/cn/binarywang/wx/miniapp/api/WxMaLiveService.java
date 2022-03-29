@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.bean.live.*;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <pre>
@@ -207,4 +208,190 @@ public interface WxMaLiveService {
    * @throws WxErrorException .
    */
   List<WxMaAssistantResult.Assistant> getAssistantList(Integer roomId) throws WxErrorException;
+
+  /**
+   * 添加主播副号
+   * <p>
+   * 调用接口添加主播副号
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/room/addsubanchor?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @param username 用户微信号
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean addSubanchor(Integer roomId, String username) throws WxErrorException;
+
+  /**
+   * 修改主播副号
+   * <p>
+   * 调用接口修改主播副号
+   * <p>
+   * 调用频率: 10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/room/modifyassistant?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @param username 小助手微信号
+   * @param username 用户微信号
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean modifySubanchor(Integer roomId, String username) throws WxErrorException;
+
+  /**
+   * 删除主播副号
+   * <p>
+   * 调用频率: 10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/room/deletesubanchor?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean deleteSubanchor(Integer roomId) throws WxErrorException;
+
+  /**
+   * 获取主播副号
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：GET https://api.weixin.qq.com/wxaapi/broadcast/room/getsubanchor?access_token=ACCESS_TOKEN
+   * </pre>
+   * @param roomId 直播间id
+   * @return .
+   * @throws WxErrorException .
+   */
+  String getSubanchor(Integer roomId) throws WxErrorException;
+
+  /**
+   * 开启/关闭直播间官方收录
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/room/updatefeedpublic?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @param isFeedsPublic 是否开启官方收录 【1: 开启，0：关闭】
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean updatefeedpublic(Integer roomId, Integer isFeedsPublic) throws WxErrorException;
+
+  /**
+   * 开启/关闭回放功能
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/room/updatereplay?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @param closeReplay 是否关闭回放 【0：开启，1：关闭】
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean updatereplay(Integer roomId, Integer closeReplay) throws WxErrorException;
+
+  /**
+   * 开启/关闭客服功能
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/room/updatekf?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @param closeKf 是否关闭客服 【0：开启，1：关闭】
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean updatekf(Integer roomId, Integer closeKf) throws WxErrorException;
+
+  /**
+   * 开启/关闭直播间全局禁言
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/room/updatecomment?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @param banComment 1-禁言，0-取消禁言
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean updatecomment(Integer roomId, Integer banComment) throws WxErrorException;
+
+  /**
+   * 上下架商品
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/goods/onsale?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @param goodsId 商品ID
+   * @param onSale 上下架 【0：下架，1：上架】
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean onsale(Integer roomId, Integer goodsId, Integer onSale) throws WxErrorException;
+
+  /**
+   * 删除直播间商品
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/goods/deleteInRoom?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @param goodsId 商品ID
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean deleteInRoom(Integer roomId, Integer goodsId) throws WxErrorException;
+
+  /**
+   * 推送商品
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/goods/push?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @param goodsId 商品ID
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean push(Integer roomId, Integer goodsId) throws WxErrorException;
+
+  /**
+   * 直播间商品排序
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/goods/sort?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param roomId 房间ID
+   * @param goods 商品ID列表, 例如: [{"goodsId":"123"}, {"goodsId":"234"}]
+   * @return 是否成功
+   * @throws WxErrorException .
+   */
+  boolean sort(Integer roomId, List<Map<String,String>> goods) throws WxErrorException;
+
+  /**
+   * 下载商品讲解视频
+   * <p>
+   * 调用额度：10000次/一天
+   * <p>
+   * http请求方式：GET https://api.weixin.qq.com/wxaapi/broadcast/goods/getVideo?access_token=ACCESS_TOKEN
+   * </pre>
+   * @param roomId 直播间id
+   * @param goodsId 商品ID
+   * @return .
+   * @throws WxErrorException .
+   */
+  String getVideo(Integer roomId, Integer goodsId) throws WxErrorException;
 }
