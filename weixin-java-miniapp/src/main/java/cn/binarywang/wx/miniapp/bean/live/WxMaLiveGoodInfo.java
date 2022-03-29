@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 直播商品信息
@@ -22,4 +23,8 @@ public class WxMaLiveGoodInfo implements Serializable {
    * 1, 2：表示是为api添加商品，否则是在MP添加商品
    */
   private String thirdPartyTag;
+  /**
+   * https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/liveplayer/pendant.html
+   */
+  private List<String> goodsKey;
 }
