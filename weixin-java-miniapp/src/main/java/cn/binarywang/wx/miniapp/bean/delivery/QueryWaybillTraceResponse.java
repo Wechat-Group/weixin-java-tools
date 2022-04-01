@@ -76,7 +76,7 @@ public class QueryWaybillTraceResponse extends WxMaBaseResponse implements Seria
      * 查询id.
      */
     @SerializedName("waybill_token")
-    private String waybillToken;
+    private Integer waybillToken;
   }
 
   /**

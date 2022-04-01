@@ -30,6 +30,10 @@ public class QueryWaybillTraceRequest implements Serializable {
   private static final long serialVersionUID = -7538739003766268386L;
 
 
+
+
+
+
   /**
    * 查询id
    * <pre>
@@ -38,7 +42,7 @@ public class QueryWaybillTraceRequest implements Serializable {
    * </pre>
    */
   @SerializedName("waybill_token")
-  private String waybillToken;
+  private Integer waybillToken;
 
   public String toJson() {
     return WxMaGsonBuilder.create().toJson(this);
