@@ -24,7 +24,7 @@ public class WxCpKfAccountListResp extends WxCpBaseResp {
   private static final long serialVersionUID = -1317201649692262217L;
 
   /**
-   * 	帐号信息列表
+   * 帐号信息列表
    */
   @SerializedName("account_list")
   private List<AccountListDTO> accountList;

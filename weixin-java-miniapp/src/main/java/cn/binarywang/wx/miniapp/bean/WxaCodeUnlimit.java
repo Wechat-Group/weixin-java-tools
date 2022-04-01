@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
+import static cn.binarywang.wx.miniapp.constant.WxMaConstants.DEFAULT_ENV_VERSION;
+
 /**
  * 小程序码接口B.
  *
@@ -24,7 +26,7 @@ public class WxaCodeUnlimit extends AbstractWxMaQrcodeWrapper implements Seriali
   private boolean checkPath = true;
 
   @SerializedName("env_version")
-  private String envVersion = "release";
+  private String envVersion = DEFAULT_ENV_VERSION;
 
   private int width = 430;
 

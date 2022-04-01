@@ -20,7 +20,7 @@ public final class NewsBuilder extends BaseBuilder<NewsBuilder, WxCpXmlOutNewsMe
     return this;
   }
 
-  public NewsBuilder articles(List<Item> articles){
+  public NewsBuilder articles(List<Item> articles) {
     this.articles = articles;
     return this;
   }

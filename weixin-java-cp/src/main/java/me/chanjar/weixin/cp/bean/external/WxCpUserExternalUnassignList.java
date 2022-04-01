@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 离职员工外部联系人列表
  *
- * @author yqx
+ * @author yqx & Wang_Wong
  * @date 2020/3/15
  */
 @Getter
@@ -24,6 +24,9 @@ public class WxCpUserExternalUnassignList extends WxCpBaseResp {
 
   @SerializedName("is_last")
   private boolean isLast;
+
+  @SerializedName("next_cursor")
+  private String nextCursor;
 
   @Getter
   @Setter
@@ -52,4 +55,9 @@ public class WxCpUserExternalUnassignList extends WxCpBaseResp {
   public static WxCpUserExternalUnassignList fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserExternalUnassignList.class);
   }
+
+  public String toJson() {
+    return WxCpGsonBuilder.create().toJson(this);
+  }
+
 }

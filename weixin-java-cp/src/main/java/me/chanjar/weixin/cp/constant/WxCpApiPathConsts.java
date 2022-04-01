@@ -71,8 +71,10 @@ public interface WxCpApiPathConsts {
   interface Department {
     String DEPARTMENT_CREATE = "/cgi-bin/department/create";
     String DEPARTMENT_UPDATE = "/cgi-bin/department/update";
+    String DEPARTMENT_GET = "/cgi-bin/department/get?id=%d";
     String DEPARTMENT_DELETE = "/cgi-bin/department/delete?id=%d";
     String DEPARTMENT_LIST = "/cgi-bin/department/list";
+    String DEPARTMENT_SIMPLE_LIST = "/cgi-bin/department/simplelist";
   }
 
   interface Media {
@@ -127,6 +129,12 @@ public interface WxCpApiPathConsts {
     String MODIFY = "/cgi-bin/living/modify";
     String CANCEL = "/cgi-bin/living/cancel";
     String DELETE_REPLAY_DATA = "/cgi-bin/living/delete_replay_data";
+  }
+
+  interface MsgAudit {
+    String GET_PERMIT_USER_LIST = "/cgi-bin/msgaudit/get_permit_user_list";
+    String GET_GROUP_CHAT = "/cgi-bin/msgaudit/groupchat/get";
+    String CHECK_SINGLE_AGREE = "/cgi-bin/msgaudit/check_single_agree";
   }
 
   interface Tag {

@@ -18,6 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 public class WxCpExternalUserIdList extends WxCpBaseResp {
+  private static final long serialVersionUID = 3922210865083522513L;
 
   @SerializedName("external_userid_info")
   private List<ExternalUserIdInfo> externalUserIdInfo;

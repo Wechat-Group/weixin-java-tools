@@ -1,12 +1,13 @@
 package me.chanjar.weixin.cp.bean.external;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.moment.MomentInfo;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.util.List;
 
 /**
  * 企业发表内容到客户的朋友圈 获取企业全部的发表列表
@@ -18,6 +19,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class WxCpGetMomentList extends WxCpBaseResp {
   private static final long serialVersionUID = 106159971765109008L;
+
   @SerializedName("next_cursor")
   private String nextCursor;
   @SerializedName("moment_list")

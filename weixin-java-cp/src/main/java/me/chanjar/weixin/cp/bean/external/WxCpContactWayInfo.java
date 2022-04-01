@@ -208,7 +208,7 @@ public class WxCpContactWayInfo implements Serializable {
      * 多人
      */
     @SerializedName("2")
-    MULTI;
+    MULTI
 
   }
 
@@ -224,7 +224,7 @@ public class WxCpContactWayInfo implements Serializable {
      * 通过二维码联系
      */
     @SerializedName("2")
-    QRCODE;
+    QRCODE
 
   }
 

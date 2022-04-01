@@ -31,8 +31,8 @@ public enum Gender {
   private final String code;
 
   public static Gender fromCode(String code) {
-    for(Gender a: Gender.values()){
-      if(a.code.equals(code)){
+    for (Gender a : Gender.values()) {
+      if (a.code.equals(code)) {
         return a;
       }
     }

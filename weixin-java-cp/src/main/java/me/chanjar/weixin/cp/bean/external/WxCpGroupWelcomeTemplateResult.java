@@ -1,9 +1,6 @@
 package me.chanjar.weixin.cp.bean.external;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.msg.*;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
@@ -20,6 +17,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class WxCpGroupWelcomeTemplateResult extends WxCpBaseResp implements Serializable {
   private static final long serialVersionUID = -6406667238670580612L;
 

@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
- *
  * @author huangxiaoming
  */
 @Data

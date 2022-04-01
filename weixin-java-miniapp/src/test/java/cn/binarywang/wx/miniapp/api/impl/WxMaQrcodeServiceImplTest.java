@@ -1,13 +1,13 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import java.io.File;
-
-import org.testng.annotations.*;
-
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
+
+import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,7 +46,7 @@ public class WxMaQrcodeServiceImplTest {
 
   @Test
   public void testCreateWxaCodeBytes() throws WxErrorException {
-    final byte[] wxCode = this.wxService.getQrcodeService().createWxaCodeBytes("111", 122, true, null, false);
+    final byte[] wxCode = this.wxService.getQrcodeService().createWxaCodeBytes("111", null, 122, true, null, false);
     assertThat(wxCode).isNotNull();
   }
 
@@ -70,7 +70,7 @@ public class WxMaQrcodeServiceImplTest {
 
   @Test
   public void testCreateQrcodeUnlimitByFile() throws WxErrorException {
-    final File wxCode = this.wxService.getQrcodeService().createWxaCodeUnlimit("111",null,"/opt/logs");
+    final File wxCode = this.wxService.getQrcodeService().createWxaCodeUnlimit("111", null, "/opt/logs");
     assertThat(wxCode).isNotNull();
   }
 }

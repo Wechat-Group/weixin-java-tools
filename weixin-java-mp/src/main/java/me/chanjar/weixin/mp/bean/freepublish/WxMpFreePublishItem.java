@@ -23,11 +23,18 @@ public class WxMpFreePublishItem implements Serializable {
    */
   @SerializedName("article_id")
   private String articleId;
+
   /**
    * 图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS。
    */
   @SerializedName("content")
   private WxMpFreePublishInfo content;
+
+  /**
+   * 这篇图文消息素材的最后更新时间
+   */
+  @SerializedName("update_time")
+  private String updateTime;
 
   public static WxMpFreePublishItem fromJson(String json) {
     return WxGsonBuilder.create().fromJson(json, WxMpFreePublishItem.class);

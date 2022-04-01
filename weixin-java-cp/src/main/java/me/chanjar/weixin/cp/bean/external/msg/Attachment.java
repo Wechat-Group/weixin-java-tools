@@ -47,7 +47,7 @@ public class Attachment implements Serializable {
     this.msgType = WxCpConsts.WelcomeMsgType.VIDEO;
   }
 
-  public void setFile(File file ) {
+  public void setFile(File file) {
     this.file = file;
     this.msgType = WxCpConsts.WelcomeMsgType.FILE;
   }

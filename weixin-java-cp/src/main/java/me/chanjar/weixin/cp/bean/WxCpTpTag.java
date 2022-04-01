@@ -7,13 +7,11 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import java.io.Serializable;
 
 /**
- *
  * @author zhangq <zhangq002@gmail.com>
  * @since 2021-02-14 16:15 16:15
  */
 @Data
 public class WxCpTpTag implements Serializable {
-
   private static final long serialVersionUID = 581740383760234134L;
 
   @SerializedName("tagid")

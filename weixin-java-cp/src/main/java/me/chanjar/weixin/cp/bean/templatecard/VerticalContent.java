@@ -1,7 +1,6 @@
 package me.chanjar.weixin.cp.bean.templatecard;
 
 import com.google.gson.JsonObject;
-import kotlin.text.UStringsKt;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +11,7 @@ import java.io.Serializable;
 
 /**
  * 卡片二级垂直内容，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过4
+ *
  * @author yzts
  * @date 2021/9/22
  */

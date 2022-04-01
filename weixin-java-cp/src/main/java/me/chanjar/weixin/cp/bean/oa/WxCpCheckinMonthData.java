@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * 企业微信打卡月报数据
+ *
+ * @author longliveh
  */
 
 @Data
@@ -21,8 +23,9 @@ public class WxCpCheckinMonthData implements Serializable {
   private BaseInfo baseInfo;
 
   @Data
-  public class BaseInfo implements Serializable {
+  public static class BaseInfo implements Serializable {
     private static final long serialVersionUID = -5368331890851903885L;
+
     /**
      * record_type 记录类型：1-固定上下班；2-外出（此报表中不会出现外出打卡数据）；3-按班次上下班；4-自由签到；5-加班；7-无规则
      */
@@ -60,8 +63,9 @@ public class WxCpCheckinMonthData implements Serializable {
     private RuleInfo ruleInfo;
 
     @Data
-    public class RuleInfo implements Serializable {
+    public static class RuleInfo implements Serializable {
       private static final long serialVersionUID = 9152263355916880710L;
+
       /**
        * groupid 所属规则Id
        */
@@ -76,10 +80,6 @@ public class WxCpCheckinMonthData implements Serializable {
     }
   }
 
-
-
-
-
   /**
    * summary_info 打卡人员所属规则信息
    */
@@ -87,7 +87,7 @@ public class WxCpCheckinMonthData implements Serializable {
   private SummaryInfo summaryInfo;
 
   @Data
-  public class SummaryInfo implements Serializable {
+  public static class SummaryInfo implements Serializable {
     private static final long serialVersionUID = -1956770107240513983L;
     /**
      * work_days 应打卡天数
@@ -128,7 +128,7 @@ public class WxCpCheckinMonthData implements Serializable {
   private List<ExceptionInfo> exceptionInfos;
 
   @Data
-  public class ExceptionInfo implements Serializable {
+  public static class ExceptionInfo implements Serializable {
     private static final long serialVersionUID = -4855850255704089359L;
     /**
      * exception 异常类型：1-迟到；2-早退；3-缺卡；4-旷工；5-地点异常；6-设备异常
@@ -156,9 +156,9 @@ public class WxCpCheckinMonthData implements Serializable {
   private List<SpItem> spItems;
 
   @Data
-  public class SpItem implements Serializable {
-
+  public static class SpItem implements Serializable {
     private static final long serialVersionUID = 224472626753597080L;
+
     /**
      * type 假勤类型：1-请假；2-补卡；3-出差；4-外出；100-外勤
      */
@@ -203,8 +203,9 @@ public class WxCpCheckinMonthData implements Serializable {
   private OverWorkInfo overworkInfo;
 
   @Data
-  public class OverWorkInfo implements Serializable {
+  public static class OverWorkInfo implements Serializable {
     private static final long serialVersionUID = -9149524232645899305L;
+
     /**
      * workday_over_sec 工作日加班时长
      */

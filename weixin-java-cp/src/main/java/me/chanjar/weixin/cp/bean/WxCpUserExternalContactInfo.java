@@ -78,6 +78,7 @@ public class WxCpUserExternalContactInfo implements Serializable {
   @AllArgsConstructor
   public static class ExternalAttribute implements Serializable {
     private static final long serialVersionUID = -5696099236344075582L;
+
     @Setter
     @Getter
     public static class Text implements Serializable {
@@ -122,7 +123,7 @@ public class WxCpUserExternalContactInfo implements Serializable {
   @Getter
   public static class FollowedUser implements Serializable {
     private static final long serialVersionUID = -5696099236344075582L;
-    
+
     @SerializedName("userid")
     private String userId;
     private String remark;

@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 
 /**
  * 按钮列表，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过6
+ *
  * @author yzts
  * @date 2021/9/22
  */
@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckboxOption  implements Serializable {
+public class CheckboxOption implements Serializable {
   private static final long serialVersionUID = 5405702239190050250L;
 
   /**
@@ -41,7 +41,7 @@ public class CheckboxOption  implements Serializable {
     JsonObject optionJson = new JsonObject();
     optionJson.addProperty("id", this.getId());
     optionJson.addProperty("text", this.getText());
-    if(null != this.getIs_checked()) {
+    if (null != this.getIs_checked()) {
       optionJson.addProperty("is_checked", this.getIs_checked());
     }
     return optionJson;

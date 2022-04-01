@@ -7,6 +7,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
  * 预授权码返回
+ *
  * @author yqx
  * @date 2020/3/19
  */

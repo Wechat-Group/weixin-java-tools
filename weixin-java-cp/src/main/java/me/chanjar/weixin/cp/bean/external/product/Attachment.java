@@ -1,8 +1,9 @@
 package me.chanjar.weixin.cp.bean.external.product;
 
-import java.io.Serializable;
 import lombok.Data;
 import me.chanjar.weixin.cp.constant.WxCpConsts;
+
+import java.io.Serializable;
 
 /**
  * 商品画册附件
@@ -11,7 +12,6 @@ import me.chanjar.weixin.cp.constant.WxCpConsts;
  */
 @Data
 public class Attachment implements Serializable {
-
   private static final long serialVersionUID = -4545283630169056262L;
 
   /**

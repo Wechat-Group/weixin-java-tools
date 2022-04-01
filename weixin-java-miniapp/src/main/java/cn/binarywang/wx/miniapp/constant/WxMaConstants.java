@@ -12,6 +12,11 @@ public abstract class WxMaConstants {
   }
 
   /**
+   * 默认的env_version值
+   */
+  public static final String DEFAULT_ENV_VERSION = "release";
+
+  /**
    * 微信接口返回的参数errcode.
    */
   public static final String ERRCODE = "errcode";

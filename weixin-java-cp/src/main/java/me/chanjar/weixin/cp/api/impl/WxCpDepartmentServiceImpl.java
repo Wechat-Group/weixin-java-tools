@@ -36,6 +36,18 @@ public class WxCpDepartmentServiceImpl implements WxCpDepartmentService {
   }
 
   @Override
+  public WxCpDepart get(Long id) throws WxErrorException {
+    String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_GET), id);
+    String responseContent = this.mainService.get(url, null);
+    JsonObject tmpJsonObject = GsonParser.parse(responseContent);
+    return WxCpGsonBuilder.create()
+      .fromJson(tmpJsonObject.get("department"),
+        new TypeToken<WxCpDepart>() {
+        }.getType()
+      );
+  }
+
+  @Override
   public void update(WxCpDepart group) throws WxErrorException {
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_UPDATE);
     this.mainService.post(url, group.toJson());
@@ -58,6 +70,22 @@ public class WxCpDepartmentServiceImpl implements WxCpDepartmentService {
     JsonObject tmpJsonObject = GsonParser.parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(tmpJsonObject.get("department"),
+        new TypeToken<List<WxCpDepart>>() {
+        }.getType()
+      );
+  }
+
+  @Override
+  public List<WxCpDepart> simpleList(Long id) throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_SIMPLE_LIST);
+    if (id != null) {
+      url += "?id=" + id;
+    }
+
+    String responseContent = this.mainService.get(url, null);
+    JsonObject tmpJsonObject = GsonParser.parse(responseContent);
+    return WxCpGsonBuilder.create()
+      .fromJson(tmpJsonObject.get("department_id"),
         new TypeToken<List<WxCpDepart>>() {
         }.getType()
       );

@@ -16,49 +16,51 @@ import java.util.List;
 /**
  * @author songshiyu
  * @date : create in 16:09 2020/9/27
- * @description: 工作台自定义展示
+ * 工作台自定义展示
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class WxCpAgentWorkBench implements Serializable {
-  private static final long serialVersionUid = 1L;
+  private static final long serialVersionUID = -4136604790232843229L;
 
-  /*
-  * 展示类型，目前支持 “keydata”、 “image”、 “list” 、”webview”
-  * */
+  /**
+   * 展示类型，目前支持 “keydata”、 “image”、 “list” 、”webview”
+   */
   private String type;
-  /*
-  * 用户的userid
-  * */
+  /**
+   * 用户的userid
+   */
   private String userId;
-  /*
-  * 应用id
-  * */
+  /**
+   * 应用id
+   */
   private Long agentId;
-  /*
-  * 点击跳转url，若不填且应用设置了主页url，则跳转到主页url，否则跳到应用会话窗口
-  * */
+  /**
+   * 点击跳转url，若不填且应用设置了主页url，则跳转到主页url，否则跳到应用会话窗口
+   */
   private String jumpUrl;
-  /*
-  * 若应用为小程序类型，该字段填小程序pagepath，若未设置，跳到小程序主页
-  * */
+  /**
+   * 若应用为小程序类型，该字段填小程序pagepath，若未设置，跳到小程序主页
+   */
   private String pagePath;
-  /*
-  * 图片url:图片的最佳比例为3.35:1;webview:渲染展示的url
-  * */
+  /**
+   * 图片url:图片的最佳比例为3.35:1;webview:渲染展示的url
+   */
   private String url;
-  /*
-  * 是否覆盖用户工作台的数据。设置为true的时候，会覆盖企业所有用户当前设置的数据。若设置为false,则不会覆盖用户当前设置的所有数据
-  * */
+  /**
+   * 是否覆盖用户工作台的数据。设置为true的时候，会覆盖企业所有用户当前设置的数据。若设置为false,则不会覆盖用户当前设置的所有数据
+   */
   private Boolean replaceUserData;
 
   private List<WorkBenchKeyData> keyDataList;
 
   private List<WorkBenchList> lists;
 
-  // 生成模板Json字符串
+  /**
+   * 生成模板Json字符串
+   */
   public String toTemplateString() {
     JsonObject templateObject = new JsonObject();
     templateObject.addProperty("agentid", this.agentId);
@@ -70,7 +72,9 @@ public class WxCpAgentWorkBench implements Serializable {
     return templateObject.toString();
   }
 
-  // 生成用户数据Json字符串
+  /**
+   * 生成用户数据Json字符串
+   */
   public String toUserDataString() {
     JsonObject userDataObject = new JsonObject();
     userDataObject.addProperty("agentid", this.agentId);
@@ -80,7 +84,9 @@ public class WxCpAgentWorkBench implements Serializable {
     return userDataObject.toString();
   }
 
-  // 处理不用类型的工作台数据
+  /**
+   * 处理不用类型的工作台数据
+   */
   private void handle(JsonObject templateObject) {
     switch (this.getType()) {
       case WxCpConsts.WorkBenchType.KEYDATA: {
@@ -116,7 +122,7 @@ public class WxCpAgentWorkBench implements Serializable {
           listObject.addProperty("pagepath", listItem.getPagePath());
           listArray.add(listObject);
         }
-        itemsObject.add("items",listArray);
+        itemsObject.add("items", listArray);
         templateObject.add("list", itemsObject);
         break;
       }

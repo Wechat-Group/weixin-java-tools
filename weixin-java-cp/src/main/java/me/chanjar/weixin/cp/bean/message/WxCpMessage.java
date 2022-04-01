@@ -147,7 +147,7 @@ public class WxCpMessage implements Serializable {
    * 整体卡片的点击跳转事件，text_notice必填本字段
    * 跳转事件类型，1 代表跳转url，2 代表打开小程序。text_notice卡片模版中该字段取值范围为[1,2]
    */
-  private Integer  card_action_type;
+  private Integer card_action_type;
   /**
    * 跳转事件的url，card_action.type是1时必填
    */
@@ -517,7 +517,7 @@ public class WxCpMessage implements Serializable {
         }
 
         List<VerticalContent> verticalContents = this.getVertical_contents();
-        if(null != verticalContents && verticalContents.size() > 0) {
+        if (null != verticalContents && verticalContents.size() > 0) {
           JsonArray vContentJsonArray = new JsonArray();
           for (VerticalContent vContent : this.getVertical_contents()) {
             JsonObject tempObject = vContent.toJson();
@@ -527,7 +527,7 @@ public class WxCpMessage implements Serializable {
         }
 
         List<HorizontalContent> horizontalContents = this.getHorizontal_contents();
-        if(null != horizontalContents && horizontalContents.size() > 0) {
+        if (null != horizontalContents && horizontalContents.size() > 0) {
           JsonArray hContentJsonArray = new JsonArray();
           for (HorizontalContent hContent : this.getHorizontal_contents()) {
             JsonObject tempObject = hContent.toJson();
@@ -537,7 +537,7 @@ public class WxCpMessage implements Serializable {
         }
 
         List<TemplateCardJump> jumps = this.getJumps();
-        if(null != jumps && jumps.size() > 0) {
+        if (null != jumps && jumps.size() > 0) {
           JsonArray jumpJsonArray = new JsonArray();
           for (TemplateCardJump jump : this.getJumps()) {
             JsonObject tempObject = jump.toJson();
@@ -562,7 +562,7 @@ public class WxCpMessage implements Serializable {
         }
 
         List<TemplateCardButton> buttons = this.getButtons();
-        if(null != buttons && buttons.size() > 0) {
+        if (null != buttons && buttons.size() > 0) {
           JsonArray btnJsonArray = new JsonArray();
           for (TemplateCardButton btn : this.getButtons()) {
             JsonObject tempObject = btn.toJson();
@@ -602,7 +602,7 @@ public class WxCpMessage implements Serializable {
 
         // select_list
         List<MultipleSelect> selects = this.getSelects();
-        if(null != selects && selects.size() > 0) {
+        if (null != selects && selects.size() > 0) {
           JsonArray selectJsonArray = new JsonArray();
           for (MultipleSelect select : this.getSelects()) {
             JsonObject tempObject = select.toJson();
@@ -612,9 +612,9 @@ public class WxCpMessage implements Serializable {
         }
 
         QuoteArea quoteArea = this.getQuoteArea();
-        if (null != quoteArea){
+        if (null != quoteArea) {
           JsonObject quoteAreaJson = quoteArea.toJson();
-          template.add("quote_area",quoteAreaJson);
+          template.add("quote_area", quoteAreaJson);
         }
 
         messageJson.add("template_card", template);

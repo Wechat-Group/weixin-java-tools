@@ -73,7 +73,6 @@ public class WxCpUser implements Serializable {
   private String[] directLeader;
 
 
-
   public void addExternalAttr(ExternalAttribute externalAttr) {
     this.externalAttrs.add(externalAttr);
   }

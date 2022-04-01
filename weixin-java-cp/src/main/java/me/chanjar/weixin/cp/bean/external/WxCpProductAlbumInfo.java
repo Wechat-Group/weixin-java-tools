@@ -1,12 +1,13 @@
 package me.chanjar.weixin.cp.bean.external;
 
 import com.google.gson.annotations.SerializedName;
-import java.io.Serializable;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import me.chanjar.weixin.cp.bean.external.product.Attachment;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -19,7 +20,6 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 @Getter
 @Setter
 public class WxCpProductAlbumInfo implements Serializable {
-
   private static final long serialVersionUID = -8338202601802366899L;
 
   @SerializedName("product_id")

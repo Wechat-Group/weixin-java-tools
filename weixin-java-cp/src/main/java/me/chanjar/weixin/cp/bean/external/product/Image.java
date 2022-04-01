@@ -1,8 +1,9 @@
 package me.chanjar.weixin.cp.bean.external.product;
 
 import com.google.gson.annotations.SerializedName;
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 商品画册图片
@@ -11,7 +12,6 @@ import lombok.Data;
  */
 @Data
 public class Image implements Serializable {
-
   private static final long serialVersionUID = -2737415903252627814L;
 
   @SerializedName("media_id")

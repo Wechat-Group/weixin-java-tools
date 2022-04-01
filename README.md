@@ -22,6 +22,13 @@
     </td>
   </tr>
   <tr>
+    <td align="center" valign="middle" colspan="3">
+      <a href="https://www.jeequan.com/product/jeepay.html" target="_blank">
+        <img height="120" src="https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/wxjava_jeepay.png" alt="计全支付Jeepay,开源支付系统">
+      </a>
+    </td>
+  </tr>
+  <tr>
     <td align="left" valign="middle">
       <a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect" target="_blank">
         <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png" alt="">

@@ -43,13 +43,13 @@ public class WxMpDraftServiceImpl implements WxMpDraftService {
   @Override
   public String addDraft(WxMpAddDraft addDraft) throws WxErrorException {
     String json = this.mpService.post(WxMpApiUrl.Draft.ADD_DRAFT, addDraft);
-    return GsonParser.parse(json).get(MEDIA_ID).toString();
+    return GsonParser.parse(json).get(MEDIA_ID).getAsString();
   }
 
   @Override
   public Boolean updateDraft(WxMpUpdateDraft updateDraftInfo) throws WxErrorException {
     String json = this.mpService.post(WxMpApiUrl.Draft.UPDATE_DRAFT, updateDraftInfo);
-    return GsonParser.parse(json).get(ERRCODE).toString().equals(ERRCODE_SUCCESS);
+    return GsonParser.parse(json).get(ERRCODE).getAsString().equals(ERRCODE_SUCCESS);
   }
 
   @Override
@@ -62,7 +62,7 @@ public class WxMpDraftServiceImpl implements WxMpDraftService {
   public Boolean delDraft(String mediaId) throws WxErrorException {
     String json = this.mpService.post(WxMpApiUrl.Draft.DEL_DRAFT,
       GsonHelper.buildJsonObject(MEDIA_ID, mediaId));
-    return GsonParser.parse(json).get(ERRCODE).toString().equals(ERRCODE_SUCCESS);
+    return GsonParser.parse(json).get(ERRCODE).getAsString().equals(ERRCODE_SUCCESS);
   }
 
   @Override

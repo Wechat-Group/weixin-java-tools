@@ -269,6 +269,24 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     }
   }
 
+  @Override
+  public String putV3(String url, String requestStr) throws WxPayException {
+    HttpPut httpPut = new HttpPut(url);
+    StringEntity entity = this.createEntry(requestStr);
+    httpPut.setEntity(entity);
+    httpPut.addHeader("Accept", "application/json");
+    httpPut.addHeader("Content-Type", "application/json");
+    return requestV3(url, httpPut);
+  }
+
+  @Override
+  public String deleteV3(String url) throws WxPayException {
+    HttpDelete httpDelete = new HttpDelete(url);
+    httpDelete.addHeader("Accept", "application/json");
+    httpDelete.addHeader("Content-Type", "application/json");
+    return requestV3(url, httpDelete);
+  }
+
   private CloseableHttpClient createApiV3HttpClient() throws WxPayException {
     CloseableHttpClient apiV3HttpClient = this.getConfig().getApiV3HttpClient();
     if (null == apiV3HttpClient) {

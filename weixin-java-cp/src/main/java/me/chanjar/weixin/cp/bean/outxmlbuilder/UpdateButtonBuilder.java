@@ -1,6 +1,5 @@
 package me.chanjar.weixin.cp.bean.outxmlbuilder;
 
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutTaskCardMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlOutUpdateBtnMessage;
 
 /**

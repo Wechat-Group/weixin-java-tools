@@ -1,8 +1,8 @@
 package me.chanjar.weixin.cp.bean.messagebuilder;
 
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
+import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 
 import java.util.ArrayList;
 import java.util.Collections;

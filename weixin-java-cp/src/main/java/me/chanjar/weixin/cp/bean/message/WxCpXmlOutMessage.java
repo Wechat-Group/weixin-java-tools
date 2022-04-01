@@ -1,7 +1,5 @@
 package me.chanjar.weixin.cp.bean.message;
 
-import java.io.Serializable;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
@@ -10,6 +8,8 @@ import me.chanjar.weixin.cp.bean.outxmlbuilder.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
+
+import java.io.Serializable;
 
 /**
  * 被动回复消息.

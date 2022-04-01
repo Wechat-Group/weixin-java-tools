@@ -26,6 +26,23 @@ public class WxOAuth2UserInfo implements Serializable {
    */
   private String nickname;
   /**
+   * sex	普通用户性别，1为男性，2为女性
+   */
+  private Integer sex;
+  /**
+   * city	普通用户个人资料填写的城市
+   */
+  private String city;
+
+  /**
+   * province	普通用户个人资料填写的省份
+   */
+  private String province;
+  /**
+   * country	国家，如中国为CN
+   */
+  private String country;
+  /**
    * headimgurl	用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），
    * 用户没有头像时该项为空
    */

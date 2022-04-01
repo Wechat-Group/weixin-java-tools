@@ -40,6 +40,7 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   private volatile String token;
   private volatile String aesKey;
   private volatile Integer agentId;
+  private volatile String msgAuditLibPath;
   private volatile String oauth2redirectUri;
   private volatile String httpProxyHost;
   private volatile int httpProxyPort;
@@ -318,6 +319,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   @Override
   public String getAesKey() {
     return this.aesKey;
+  }
+
+  @Override
+  public String getMsgAuditLibPath() {
+    return this.msgAuditLibPath;
   }
 
   /**

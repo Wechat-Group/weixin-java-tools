@@ -81,7 +81,7 @@ public class WxPayEntrustResult extends BaseWxPayResult implements Serializable 
    * 非必传
    */
   @XStreamAlias("request_serial")
-  private Integer requestSerial;
+  private Long requestSerial;
 
   /**
    * 签约协议号
@@ -120,7 +120,7 @@ public class WxPayEntrustResult extends BaseWxPayResult implements Serializable 
     tradeType = readXmlString(d, "trade_type");
     codeUrl = readXmlString(d, "code_url");
     planId = readXmlInteger(d, "plan_id");
-    requestSerial = readXmlInteger(d, "request_serial");
+    requestSerial = readXmlLong(d, "request_serial");
     contractCode = readXmlString(d, "contract_code");
     contractDisplayAccount = readXmlString(d, "contract_display_account");
     mwebUrl = readXmlString(d, "mweb_url");

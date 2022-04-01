@@ -131,10 +131,10 @@ public class ContentValue implements Serializable {
    * 关联审批单控件
    */
   @Data
-  public static class RelatedApproval implements Serializable{
+  public static class RelatedApproval implements Serializable {
     private static final long serialVersionUID = 8629601623267510738L;
     /**
-     *关联审批单的模板名
+     * 关联审批单的模板名
      */
     @SerializedName("template_names")
     private List<TemplateName> templateNames;
@@ -160,7 +160,7 @@ public class ContentValue implements Serializable {
   }
 
   @Data
-  public static class TemplateName implements Serializable{
+  public static class TemplateName implements Serializable {
     private static final long serialVersionUID = 3152481506054355937L;
     private String text;
     private String lang;

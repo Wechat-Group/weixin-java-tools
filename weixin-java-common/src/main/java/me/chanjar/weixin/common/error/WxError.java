@@ -84,6 +84,13 @@ public class WxError implements Serializable {
         }
         break;
       }
+      case Open: {
+        final String msg = WxOpenErrorMsgEnum.findMsgByCode(wxError.getErrorCode());
+        if (msg != null) {
+          wxError.setErrorMsg(msg);
+        }
+        break;
+      }
       default:
         return wxError;
     }

@@ -4,6 +4,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
  * 获取标签成员接口响应体
+ *
  * @author zhangq <zhangq002@gmail.com>
  * @since 2021/2/14 16:28
  */

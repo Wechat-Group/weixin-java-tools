@@ -3,6 +3,10 @@ package cn.binarywang.wx.miniapp.bean;
 import me.chanjar.weixin.common.api.WxConsts;
 import org.testng.annotations.Test;
 
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -33,7 +37,7 @@ public class WxMaMessageTest {
     WxMaMessage wxMessage = WxMaMessage.fromXml(xml);
     assertEquals(wxMessage.getToUser(), "toUser");
     assertEquals(wxMessage.getFromUser(), "fromUser");
-    assertEquals(wxMessage.getCreateTime(),new Integer(1482048670));
+    assertEquals(wxMessage.getCreateTime(), new Integer(1482048670));
     assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.TEXT);
     assertEquals(wxMessage.getContent(), "this is a test");
     assertEquals(wxMessage.getMsgId(), new Long(1234567890123456L));
@@ -103,13 +107,13 @@ public class WxMaMessageTest {
   private void checkSubscribeMsgPopupEvent(WxMaMessage wxMessage) {
     assertEquals(wxMessage.getToUser(), "gh_123456789abc");
     assertEquals(wxMessage.getFromUser(), "otFpruAK8D-E6EfStSYonYSBZ8_4");
-    assertEquals(wxMessage.getCreateTime(),new Integer(1610969440));
+    assertEquals(wxMessage.getCreateTime(), new Integer(1610969440));
     assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
     assertEquals(wxMessage.getEvent(), "subscribe_msg_popup_event");
     assertEquals(wxMessage.getSubscribeMsgPopupEvent().getList().size(), 1);
     WxMaSubscribeMsgEvent.PopupEvent event = wxMessage.getSubscribeMsgPopupEvent().getList().get(0);
     assertEquals(event.getTemplateId(), "VRR0UEO9VJOLs0MHlU0OilqX6MVFDwH3_3gz3Oc0NIc");
-    assertEquals(event.getSubscribeStatusString(),"accept");
+    assertEquals(event.getSubscribeStatusString(), "accept");
     assertEquals(event.getPopupScene(), "0");
   }
 
@@ -165,13 +169,13 @@ public class WxMaMessageTest {
   private void checkSubscribeMsgChangeEvent(WxMaMessage wxMessage) {
     assertEquals(wxMessage.getToUser(), "gh_123456789abc");
     assertEquals(wxMessage.getFromUser(), "o7esq5OI1Uej6Xixw1lA2H7XDVbc");
-    assertEquals(wxMessage.getCreateTime(),new Integer(1610968440));
+    assertEquals(wxMessage.getCreateTime(), new Integer(1610968440));
     assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
     assertEquals(wxMessage.getEvent(), "subscribe_msg_change_event");
     assertEquals(wxMessage.getSubscribeMsgChangeEvent().getList().size(), 1);
     WxMaSubscribeMsgEvent.ChangeEvent event = wxMessage.getSubscribeMsgChangeEvent().getList().get(0);
     assertEquals(event.getTemplateId(), "BEwX0BOT3MqK3Uc5oTU3CGBqzjpndk2jzUf7VfExd8");
-    assertEquals(event.getSubscribeStatusString(),"reject");
+    assertEquals(event.getSubscribeStatusString(), "reject");
   }
 
   public void testSubscribeMsgSentEvent() {
@@ -212,18 +216,79 @@ public class WxMaMessageTest {
     wxMessage = WxMaMessage.fromJson(json);
     checkSubscribeMsgSentEvent(wxMessage);
   }
+
   private void checkSubscribeMsgSentEvent(WxMaMessage wxMessage) {
     assertEquals(wxMessage.getToUser(), "gh_123456789abc");
     assertEquals(wxMessage.getFromUser(), "o7esq5PHRGBQYmeNyfG064wEFVpQ");
-    assertEquals(wxMessage.getCreateTime(),new Integer(1620963428));
+    assertEquals(wxMessage.getCreateTime(), new Integer(1620963428));
     assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
     assertEquals(wxMessage.getEvent(), "subscribe_msg_sent_event");
     assertNotNull(wxMessage.getSubscribeMsgSentEvent());
     WxMaSubscribeMsgEvent.SentEvent event = wxMessage.getSubscribeMsgSentEvent().getList();
     assertEquals(event.getTemplateId(), "BEwX0BO-T3MqK3Uc5oTU3CGBqzjpndk2jzUf7VfExd8");
-    assertEquals(event.getMsgId(),"1864323726461255680");
-    assertEquals(event.getErrorCode(),"0");
-    assertEquals(event.getErrorStatus(),"success");
+    assertEquals(event.getMsgId(), "1864323726461255680");
+    assertEquals(event.getErrorCode(), "0");
+    assertEquals(event.getErrorStatus(), "success");
   }
 
+  @Test
+  public void testFromXmlForAllFieldsMap() {
+    String xml = "<xml>\n" +
+      "    <ToUserName><![CDATA[gh_3953b390c11d]]></ToUserName>\n" +
+      "    <FromUserName><![CDATA[ofYMP5JFT4SD7EX1LQv3IWrciBSo]]></FromUserName>\n" +
+      "    <CreateTime>1642658087</CreateTime>\n" +
+      "    <MsgType><![CDATA[event]]></MsgType>\n" +
+      "    <Event><![CDATA[add_express_path]]></Event>\n" +
+      "    <DeliveryID><![CDATA[TEST]]></DeliveryID>\n" +
+      "    <WayBillId><![CDATA[01234567894_waybill_id]]></WayBillId>\n" +
+      "    <Version>16</Version>\n" +
+      "    <Count>2</Count>\n" +
+      "    <Actions>\n" +
+      "        <ActionTime>1642605533</ActionTime>\n" +
+      "        <ActionType>300001</ActionType>\n" +
+      "        <ActionMsg><![CDATA[揽件阶段-揽件成功]]></ActionMsg>\n" +
+      "        <Lat>0</Lat>\n" +
+      "        <Lng>0</Lng>\n" +
+      "    </Actions>\n" +
+      "    <Actions>\n" +
+      "        <ActionTime>1642605533</ActionTime>\n" +
+      "        <ActionType>100001</ActionType>\n" +
+      "        <ActionMsg><![CDATA[揽件阶段-揽件成功]]></ActionMsg>\n" +
+      "        <Lat>0</Lat>\n" +
+      "        <Lng>0</Lng>\n" +
+      "    </Actions>\n" +
+      "    <OrderId><![CDATA[01234567894]]></OrderId>\n" +
+      "</xml>";
+
+    WxMaMessage wxMessage = WxMaMessage.fromXml(xml);
+    Map<String, Object> allFieldsMap = wxMessage.getAllFieldsMap();
+    assertThat(allFieldsMap).isNotEmpty()
+      .containsEntry("ToUserName", "gh_3953b390c11d")
+      .containsEntry("FromUserName", "ofYMP5JFT4SD7EX1LQv3IWrciBSo")
+      .containsEntry("CreateTime", "1642658087")
+      .containsEntry("MsgType", "event")
+      .containsEntry("Event", "add_express_path")
+      .containsEntry("DeliveryID", "TEST")
+      .containsEntry("WayBillId", "01234567894_waybill_id")
+      .containsEntry("Version", "16")
+      .containsEntry("Count", "2")
+      .containsEntry("OrderId", "01234567894");
+
+    List<Map<String, Object>> actions = (List<Map<String, Object>>) allFieldsMap.get("Actions");
+    assertThat(actions).isNotEmpty().hasSize(2);
+
+    assertThat(actions.get(0))
+      .containsEntry("ActionTime", "1642605533")
+      .containsEntry("ActionType", "300001")
+      .containsEntry("ActionMsg", "揽件阶段-揽件成功")
+      .containsEntry("Lat", "0")
+      .containsEntry("Lng", "0");
+
+    assertThat(actions.get(1))
+      .containsEntry("ActionTime", "1642605533")
+      .containsEntry("ActionType", "100001")
+      .containsEntry("ActionMsg", "揽件阶段-揽件成功")
+      .containsEntry("Lat", "0")
+      .containsEntry("Lng", "0");
+  }
 }

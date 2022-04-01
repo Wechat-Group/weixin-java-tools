@@ -101,45 +101,48 @@ public interface WxMaQrcodeService {
   /**
    * 接口A: 获取小程序码.
    *
-   * @param path      不能为空，最大长度 128 字节
-   * @param width     默认430 二维码的宽度
-   * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
-   * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
-   * @param isHyaline 是否需要透明底色， isHyaline 为true时，生成透明底色的小程序码
+   * @param path       不能为空，最大长度 128 字节
+   * @param envVersion 默认"release" 要打开的小程序版本。正式版为 "release"，体验版为 "trial"，开发版为 "develop"
+   * @param width      默认430 二维码的宽度
+   * @param autoColor  默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
+   * @param lineColor  autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
+   * @param isHyaline  是否需要透明底色， isHyaline 为true时，生成透明底色的小程序码
    * @return 文件内容字节数组
    * @throws WxErrorException 异常
    */
-  byte[] createWxaCodeBytes(String path, int width, boolean autoColor, WxMaCodeLineColor lineColor, boolean isHyaline)
-    throws WxErrorException;
+  byte[] createWxaCodeBytes(String path, String envVersion, int width, boolean autoColor, WxMaCodeLineColor lineColor,
+                            boolean isHyaline) throws WxErrorException;
 
   /**
    * 接口A: 获取小程序码.
    *
-   * @param path      不能为空，最大长度 128 字节
-   * @param width     默认430 二维码的宽度
-   * @param filePath  二维码生成的文件路径，例如: /var/temp
-   * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
-   * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
-   * @param isHyaline 是否需要透明底色， isHyaline 为true时，生成透明底色的小程序码
+   * @param path       不能为空，最大长度 128 字节
+   * @param envVersion 默认"release" 要打开的小程序版本。正式版为 "release"，体验版为 "trial"，开发版为 "develop"
+   * @param width      默认430 二维码的宽度
+   * @param filePath   二维码生成的文件路径，例如: /var/temp
+   * @param autoColor  默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
+   * @param lineColor  autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
+   * @param isHyaline  是否需要透明底色， isHyaline 为true时，生成透明底色的小程序码
    * @return 文件对象
    * @throws WxErrorException 异常
    */
-  File createWxaCode(String path, int width, String filePath, boolean autoColor, WxMaCodeLineColor lineColor, boolean isHyaline)
-    throws WxErrorException;
+  File createWxaCode(String path, String envVersion, int width, String filePath, boolean autoColor,
+                     WxMaCodeLineColor lineColor, boolean isHyaline) throws WxErrorException;
 
   /**
    * 接口A: 获取小程序码.
    *
-   * @param path      不能为空，最大长度 128 字节
-   * @param width     默认430 二维码的宽度
-   * @param autoColor 默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
-   * @param lineColor autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
-   * @param isHyaline 是否需要透明底色， isHyaline 为true时，生成透明底色的小程序码
+   * @param path       不能为空，最大长度 128 字节
+   * @param envVersion 默认"release" 要打开的小程序版本。正式版为 "release"，体验版为 "trial"，开发版为 "develop"
+   * @param width      默认430 二维码的宽度
+   * @param autoColor  默认true 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
+   * @param lineColor  autoColor 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}
+   * @param isHyaline  是否需要透明底色， isHyaline 为true时，生成透明底色的小程序码
    * @return 文件对象
    * @throws WxErrorException 异常
    */
-  File createWxaCode(String path, int width, boolean autoColor, WxMaCodeLineColor lineColor, boolean isHyaline)
-    throws WxErrorException;
+  File createWxaCode(String path, String envVersion, int width, boolean autoColor, WxMaCodeLineColor lineColor,
+                     boolean isHyaline) throws WxErrorException;
 
   /**
    * 接口A: 获取小程序码.
@@ -229,8 +232,8 @@ public interface WxMaQrcodeService {
    * @return 文件对象
    * @throws WxErrorException 异常
    */
-  File createWxaCodeUnlimit(String scene, String page, String filePath, boolean checkPath, String envVersion, int width, boolean autoColor,
-                            WxMaCodeLineColor lineColor, boolean isHyaline) throws WxErrorException;
+  File createWxaCodeUnlimit(String scene, String page, String filePath, boolean checkPath, String envVersion, int width,
+                            boolean autoColor, WxMaCodeLineColor lineColor, boolean isHyaline) throws WxErrorException;
 
   /**
    * 接口B: 获取小程序码（永久有效、数量暂无限制）.

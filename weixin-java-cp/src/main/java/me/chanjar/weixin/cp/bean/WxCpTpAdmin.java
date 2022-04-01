@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 应用的管理员
+ *
  * @author huangxiaoming
  */
 @Data

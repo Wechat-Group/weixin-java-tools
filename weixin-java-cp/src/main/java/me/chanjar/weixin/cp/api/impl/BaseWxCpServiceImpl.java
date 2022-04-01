@@ -50,6 +50,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxCpAgentService agentService = new WxCpAgentServiceImpl(this);
   private WxCpOaService oaService = new WxCpOaServiceImpl(this);
   private WxCpLivingService livingService = new WxCpLivingServiceImpl(this);
+  private WxCpMsgAuditService msgAuditService = new WxCpMsgAuditServiceImpl(this);
   private WxCpTaskCardService taskCardService = new WxCpTaskCardServiceImpl(this);
   private WxCpExternalContactService externalContactService = new WxCpExternalContactServiceImpl(this);
   private WxCpGroupRobotService groupRobotService = new WxCpGroupRobotServiceImpl(this);
@@ -482,6 +483,11 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public WxCpLivingService getLivingService() {
     return livingService;
+  }
+
+  @Override
+  public WxCpMsgAuditService getMsgAuditService() {
+    return msgAuditService;
   }
 
   @Override

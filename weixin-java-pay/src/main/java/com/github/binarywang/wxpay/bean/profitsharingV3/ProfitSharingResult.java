@@ -168,5 +168,16 @@ public class ProfitSharingResult implements Serializable {
      */
     @SerializedName("finish_time")
     private String finishTime;
+
+    /**
+     * <pre>
+     * 字段名：微信分账明细单号
+     * 是否必填：是
+     * 每笔分账业务执行的明细单号，可与资金账单对账使用，
+     * 例如：36011111111111111111111
+     * </pre>
+     */
+    @SerializedName("detail_id")
+    private String detailId;
   }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * 下拉式的选择器列表，multiple_interaction类型的卡片该字段不可为空，一个消息最多支持 3 个选择器
+ *
  * @author yzts
  * @date 2021/9/22
  */
@@ -54,7 +55,7 @@ public class MultipleSelect implements Serializable {
     }
 // select_list
     List<CheckboxOption> options = this.getOptions();
-    if(null != options && options.size() > 0) {
+    if (null != options && options.size() > 0) {
       JsonArray optionJsonArray = new JsonArray();
       for (CheckboxOption option : this.getOptions()) {
         JsonObject tempObject = option.toJson();

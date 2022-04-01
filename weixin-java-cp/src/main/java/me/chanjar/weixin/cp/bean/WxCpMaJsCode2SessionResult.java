@@ -11,6 +11,7 @@ import java.io.Serializable;
  * 小程序登录凭证校验
  * 文档地址：https://work.weixin.qq.com/api/doc#90000/90136/90289/wx.qy.login
  * </pre>
+ *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Data

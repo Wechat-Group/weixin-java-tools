@@ -16,6 +16,10 @@ public enum StorageType {
    */
   Jedis,
   /**
+   * redis(Redisson).
+   */
+  Redisson,
+  /**
    * redis(RedisTemplate).
    */
   RedisTemplate

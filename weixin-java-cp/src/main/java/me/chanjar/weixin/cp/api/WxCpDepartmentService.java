@@ -30,6 +30,18 @@ public interface WxCpDepartmentService {
 
   /**
    * <pre>
+   * 部门管理接口 - 获取单个部门详情.
+   * 详情请见: https://developer.work.weixin.qq.com/document/path/95351
+   * </pre>
+   *
+   * @param id 部门id
+   * @return 部门信息
+   * @throws WxErrorException 异常
+   */
+  WxCpDepart get(Long id) throws WxErrorException;
+
+  /**
+   * <pre>
    * 部门管理接口 - 获取部门列表.
    * 详情请见: https://work.weixin.qq.com/api/doc#90000/90135/90208
    * </pre>
@@ -39,6 +51,18 @@ public interface WxCpDepartmentService {
    * @throws WxErrorException 异常
    */
   List<WxCpDepart> list(Long id) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 部门管理接口 - 获取子部门ID列表.
+   * 详情请见: https://developer.work.weixin.qq.com/document/path/95350
+   * </pre>
+   *
+   * @param id 部门id。获取指定部门及其下的子部门（以及子部门的子部门等等，递归）。 如果不填，默认获取全量组织架构
+   * @return 子部门ID列表
+   * @throws WxErrorException 异常
+   */
+  List<WxCpDepart> simpleList(Long id) throws WxErrorException;
 
   /**
    * <pre>

@@ -43,6 +43,7 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   private volatile String token;
   private volatile String aesKey;
   private volatile long expiresTime;
+  private volatile String msgAuditLibPath;
   private volatile String oauth2redirectUri;
   private volatile String httpProxyHost;
   private volatile int httpProxyPort;
@@ -254,6 +255,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   @Override
   public String getAesKey() {
     return this.aesKey;
+  }
+
+  @Override
+  public String getMsgAuditLibPath() {
+    return this.msgAuditLibPath;
   }
 
   /**

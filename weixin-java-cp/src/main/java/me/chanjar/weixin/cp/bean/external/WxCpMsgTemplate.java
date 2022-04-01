@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.chanjar.weixin.cp.bean.external.msg.*;
+import me.chanjar.weixin.cp.bean.external.msg.Attachment;
+import me.chanjar.weixin.cp.bean.external.msg.Text;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;

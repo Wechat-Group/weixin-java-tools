@@ -86,7 +86,7 @@ public class EventBuilder extends BaseBuilder<EventBuilder, WxCpXmlOutEventMessa
     return this;
   }
 
-  public EventBuilder source(String source){
+  public EventBuilder source(String source) {
     this.source = source;
     return this;
   }
@@ -96,12 +96,12 @@ public class EventBuilder extends BaseBuilder<EventBuilder, WxCpXmlOutEventMessa
     return this;
   }
 
-  public EventBuilder failReason(String failReason){
+  public EventBuilder failReason(String failReason) {
     this.failReason = failReason;
     return this;
   }
 
-  public EventBuilder id(String id){
+  public EventBuilder id(String id) {
     this.id = id;
     return this;
   }

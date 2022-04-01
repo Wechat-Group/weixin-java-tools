@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import static cn.binarywang.wx.miniapp.constant.WxMaConstants.DEFAULT_ENV_VERSION;
+
 /**
  * 小程序码.
  *
@@ -25,6 +27,9 @@ public class WxaCode extends AbstractWxMaQrcodeWrapper implements Serializable {
   private static final long serialVersionUID = 1287399621649210322L;
 
   private String path;
+
+  @SerializedName("env_version")
+  private String envVersion = DEFAULT_ENV_VERSION;
 
   @Builder.Default
   private int width = 430;

@@ -42,13 +42,15 @@ public class WxMpFreePublishStatus implements ToJson, Serializable {
 
   @NoArgsConstructor
   @Data
-  public static class ArticleDetail {
+  public static class ArticleDetail implements Serializable{
+    private static final long serialVersionUID = 2802949203075628412L;
     private Integer count;
     private List<Item> item;
 
     @NoArgsConstructor
     @Data
-    public static class Item {
+    public static class Item implements Serializable{
+      private static final long serialVersionUID = -6496102084844816489L;
       private Integer idx;
       private String article_url;
     }

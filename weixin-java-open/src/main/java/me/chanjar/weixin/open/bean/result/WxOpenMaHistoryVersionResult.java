@@ -18,8 +18,8 @@ import java.util.List;
 public class WxOpenMaHistoryVersionResult extends WxOpenResult {
   private static final long serialVersionUID = 4102311851687901079L;
 
-  @SerializedName("template_list")
-  List<WxOpenMaHistoryVersion> templateList;
+  @SerializedName("version_list")
+  List<WxOpenMaHistoryVersion> versions;
 
   @Override
   public String toString() {

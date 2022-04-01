@@ -25,7 +25,7 @@ import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.*;
 @Data
 public class WxCpGroupRobotMessage implements Serializable {
   private static final long serialVersionUID = -4301684507150486556L;
-  
+
   /**
    * 消息类型
    */

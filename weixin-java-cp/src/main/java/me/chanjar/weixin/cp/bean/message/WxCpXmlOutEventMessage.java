@@ -5,7 +5,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.util.xml.*;
+import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 
 /**
  * @author eYoung

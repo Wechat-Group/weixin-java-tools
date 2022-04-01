@@ -174,6 +174,25 @@ public interface WxPayService {
   InputStream downloadV3(String url) throws WxPayException;
 
   /**
+   * 发送put V3请求，得到响应字符串.
+   *
+   * @param url 请求地址
+   * @param url 请求数据
+   * @return 返回请求结果字符串 string
+   * @throws WxPayException the wx pay exception
+   */
+  String putV3(String url, String requestStr) throws WxPayException;
+
+  /**
+   * 发送delete V3请求，得到响应字符串.
+   *
+   * @param url 请求地址
+   * @return 返回请求结果字符串 string
+   * @throws WxPayException the wx pay exception
+   */
+  String deleteV3(String url) throws WxPayException;
+
+  /**
    * 获取微信签约代扣服务类
    * @return entrust service
    */
@@ -1296,4 +1315,22 @@ public interface WxPayService {
    * @throws WxPayException .
    */
   WxPayQueryExchangeRateResult queryExchangeRate(String feeType, String date) throws WxPayException;
+
+  /**
+   * 解析投诉通知
+   * 详见https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter10_2_16.shtml
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return the wx pay refund notify result
+   * @throws WxPayException the wx pay exception
+   */
+  ComplaintNotifyResult parseComplaintNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * 获取消费者投诉服务类.
+   *
+   * @return the complaints service
+   */
+  ComplaintService getComplaintsService();
 }

@@ -1,9 +1,5 @@
 package me.chanjar.weixin.cp.bean.message;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.converters.basic.IntConverter;
@@ -14,6 +10,10 @@ import me.chanjar.weixin.common.util.xml.IntegerArrayConverter;
 import me.chanjar.weixin.common.util.xml.StringArrayConverter;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 回调推送的message
@@ -449,7 +449,7 @@ public class WxCpTpXmlMessage implements Serializable {
       @XStreamAlias("ItemUserId")
       protected Integer itemUserId;
       @XStreamAlias("ItemImage")
-      protected String  itemImage;
+      protected String itemImage;
     }
   }
 

@@ -29,7 +29,7 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 public class WxCpOaServiceImpl implements WxCpOaService {
   private final WxCpService mainService;
 
-  private static final int MONTH_SECONDS = 30 * 24 * 60 * 60;
+  private static final int MONTH_SECONDS = 31 * 24 * 60 * 60;
   private static final int USER_IDS_LIMIT = 100;
 
   @Override
@@ -49,7 +49,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     long endTimestamp = endTime.getTime() / 1000L;
     long startTimestamp = startTime.getTime() / 1000L;
 
-    if (endTimestamp - startTimestamp < 0 || endTimestamp - startTimestamp >= MONTH_SECONDS) {
+    if (endTimestamp - startTimestamp < 0 || endTimestamp - startTimestamp > MONTH_SECONDS) {
       throw new WxRuntimeException("获取记录时间跨度不超过一个月");
     }
 

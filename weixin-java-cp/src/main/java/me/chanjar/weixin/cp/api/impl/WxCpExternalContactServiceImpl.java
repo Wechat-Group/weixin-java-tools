@@ -32,7 +32,7 @@ import java.util.List;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.ExternalContact.*;
 
 /**
- * @author 曹祖鹏 & yuanqixun & Mr.Pan
+ * @author 曹祖鹏 & yuanqixun & Mr.Pan & Wang_Wong
  */
 @RequiredArgsConstructor
 public class WxCpExternalContactServiceImpl implements WxCpExternalContactService {
@@ -245,10 +245,13 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpUserExternalUnassignList listUnassignedList(Integer pageIndex, Integer pageSize) throws WxErrorException {
+  public WxCpUserExternalUnassignList listUnassignedList(Integer pageIndex, String cursor, Integer pageSize) throws WxErrorException {
     JsonObject json = new JsonObject();
-    json.addProperty("page_id", pageIndex == null ? 0 : pageIndex);
-    json.addProperty("page_size", pageSize == null ? 100 : pageSize);
+    if(pageIndex != null){
+      json.addProperty("page_id", pageIndex);
+    }
+    json.addProperty("cursor", StringUtils.isEmpty(cursor) ? "" : cursor);
+    json.addProperty("page_size", pageSize == null ? 1000 : pageSize);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(LIST_UNASSIGNED_CONTACT);
     final String result = this.mainService.post(url, json.toString());
     return WxCpUserExternalUnassignList.fromJson(result);

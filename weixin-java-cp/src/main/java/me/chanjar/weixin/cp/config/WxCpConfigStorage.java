@@ -175,6 +175,13 @@ public interface WxCpConfigStorage {
   String getAesKey();
 
   /**
+   * 获取企微会话存档系统库 绝对路径
+   *
+   * @return
+   */
+  String getMsgAuditLibPath();
+
+  /**
    * Gets expires time.
    *
    * @return the expires time

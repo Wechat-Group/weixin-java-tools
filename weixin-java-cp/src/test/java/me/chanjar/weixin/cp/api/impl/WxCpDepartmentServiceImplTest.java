@@ -1,13 +1,15 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import java.util.List;
-
-import org.testng.annotations.*;
-
 import com.google.inject.Inject;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpDepart;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,11 +38,11 @@ public class WxCpDepartmentServiceImplTest {
   }
 
   @DataProvider
-  public Object[][] departIds(){
+  public Object[][] departIds() {
     return new Object[][]{
       {null},
-      {1},
-      {5}
+      {12L},
+      {5L}
     };
   }
 
@@ -70,4 +72,22 @@ public class WxCpDepartmentServiceImplTest {
     this.wxCpService.getDepartmentService().delete(this.depart.getId());
   }
 
+  @Test(dataProvider = "departIds")
+  public void testSimpleList(Long id) throws WxErrorException {
+    System.out.println("=================获取子部门ID列表");
+    List<WxCpDepart> departList = this.wxCpService.getDepartmentService().simpleList(id);
+    assertThat(departList).isNotEmpty();
+    departList.forEach(System.out::println);
+  }
+
+  @Test(dataProvider = "departIds")
+  public void testGet(Long id) throws WxErrorException {
+    if (id == null) {
+      return;
+    }
+
+    WxCpDepart depart = this.wxCpService.getDepartmentService().get(id);
+    assertThat(depart).isNotNull();
+    System.out.println(depart);
+  }
 }

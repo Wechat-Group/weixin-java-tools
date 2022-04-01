@@ -20,6 +20,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class WxCpGetMomentTaskResult extends WxCpBaseResp {
   private static final long serialVersionUID = 2515140928288915077L;
+
   private Integer status;
   private String type;
   private TaskResult result;
@@ -27,6 +28,8 @@ public class WxCpGetMomentTaskResult extends WxCpBaseResp {
   @Getter
   @Setter
   public static class TaskResult extends WxCpBaseResp {
+    private static final long serialVersionUID = 2162642873632126707L;
+
     @SerializedName("moment_id")
     private String momentId;
     @SerializedName("invalid_sender_list")

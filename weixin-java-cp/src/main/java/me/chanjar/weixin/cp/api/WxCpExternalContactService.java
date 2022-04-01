@@ -361,14 +361,19 @@ public interface WxCpExternalContactService {
   List<String> listFollowers() throws WxErrorException;
 
   /**
-   * 企业和第三方可通过此接口，获取所有离职成员的客户列表，并可进一步调用离职成员的外部联系人再分配接口将这些客户重新分配给其他企业成员。
+   * 获取待分配的离职成员列表
+   * 企业和第三方可通过此接口，获取所有离职成员的客户列表，并可进一步调用分配离职成员的客户接口将这些客户重新分配给其他企业成员。
    *
-   * @param page     the page
-   * @param pageSize the page size
-   * @return wx cp user external unassign list
-   * @throws WxErrorException the wx error exception
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_unassigned_list?access_token=ACCESS_TOKEN
+   *
+   * @param pageId 分页查询，要查询页号，从0开始
+   * @param cursor 分页查询游标，字符串类型，适用于数据量较大的情况，如果使用该参数则无需填写page_id，该参数由上一次调用返回
+   * @param pageSize 每次返回的最大记录数，默认为1000，最大值为1000
+   * @return
+   * @throws WxErrorException
    */
-  WxCpUserExternalUnassignList listUnassignedList(Integer page, Integer pageSize) throws WxErrorException;
+  WxCpUserExternalUnassignList listUnassignedList(Integer pageId, String cursor, Integer pageSize) throws WxErrorException;
 
   /**
    * 企业可通过此接口，将已离职成员的外部联系人分配给另一个成员接替联系。

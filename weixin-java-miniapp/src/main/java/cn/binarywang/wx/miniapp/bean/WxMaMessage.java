@@ -9,6 +9,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -25,6 +27,11 @@ import java.nio.charset.StandardCharsets;
 @Data
 public class WxMaMessage implements Serializable {
   private static final long serialVersionUID = -3586245291677274914L;
+
+  /**
+   * 使用dom4j解析的存放所有xml属性和值的map.
+   */
+  private Map<String, Object> allFieldsMap;
 
   @SerializedName("Encrypt")
   @XStreamAlias("Encrypt")
@@ -206,9 +213,12 @@ public class WxMaMessage implements Serializable {
   private WxMaSubscribeMsgEvent.WxMaSubscribeMsgEventJson uselessMsg;
 
   public static WxMaMessage fromXml(String xml) {
-    return XStreamTransformer.fromXml(WxMaMessage.class, xml);
+    WxMaMessage message = XStreamTransformer.fromXml(WxMaMessage.class, xml);
+    message.setAllFieldsMap(XmlUtils.xml2Map(xml));
+    return message;
   }
 
+  @Deprecated
   public static WxMaMessage fromXml(InputStream is) {
     return XStreamTransformer.fromXml(WxMaMessage.class, is);
   }

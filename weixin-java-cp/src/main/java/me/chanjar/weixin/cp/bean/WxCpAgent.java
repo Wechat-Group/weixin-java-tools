@@ -1,14 +1,14 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -81,25 +81,27 @@ public class WxCpAgent implements Serializable {
   @Data
   public static class Users implements Serializable {
     private static final long serialVersionUID = 8801100463558788565L;
+
     @SerializedName("user")
     private List<User> users;
   }
 
   @Data
-  public class User implements Serializable {
+  public static class User implements Serializable {
     private static final long serialVersionUID = 7287632514385508024L;
+
     @SerializedName("userid")
     private String userId;
   }
 
   @Data
-  public class Parties {
+  public static class Parties {
     @SerializedName("partyid")
     private List<Long> partyIds = null;
   }
 
   @Data
-  public class Tags {
+  public static class Tags {
     @SerializedName("tagid")
     private List<Integer> tagIds = null;
   }
