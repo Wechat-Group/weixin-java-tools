@@ -530,6 +530,20 @@ public class WxMaApiUrlConstants {
     String MOCK_UPDATE_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/test_update_order";
 
     /**
+     * 物流服务-查询组件-跟踪物流面单
+     * 商户使用此接口向微信提供某交易单号对应的运单号。微信后台会跟踪运单的状态变化
+     */
+    String TRACE_WAYBILL_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/trace_waybill";
+
+
+    /**
+     * 物流服务-查询组件-查询运单接口 query_trace
+     * 商户在调用完trace_waybill接口后，可以使用本接口查询到对应运单的详情信息
+     */
+    String QUERY_WAYBILL_TRACE_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/query_trace";
+
+
+    /**
      * 下单接口.
      */
     interface PlaceAnOrder {

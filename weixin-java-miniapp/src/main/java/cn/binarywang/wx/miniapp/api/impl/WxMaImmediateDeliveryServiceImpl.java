@@ -13,8 +13,14 @@ import cn.binarywang.wx.miniapp.bean.delivery.GetOrderRequest;
 import cn.binarywang.wx.miniapp.bean.delivery.GetOrderResponse;
 import cn.binarywang.wx.miniapp.bean.delivery.MockUpdateOrderRequest;
 import cn.binarywang.wx.miniapp.bean.delivery.MockUpdateOrderResponse;
+import cn.binarywang.wx.miniapp.bean.delivery.QueryWaybillTraceRequest;
+import cn.binarywang.wx.miniapp.bean.delivery.QueryWaybillTraceResponse;
+import cn.binarywang.wx.miniapp.bean.delivery.TraceWaybillRequest;
+import cn.binarywang.wx.miniapp.bean.delivery.TraceWaybillResponse;
 import cn.binarywang.wx.miniapp.bean.delivery.base.WxMaDeliveryBaseResponse;
 import cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants;
+import cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.InstantDelivery;
+import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import javassist.bytecode.ConstPool;
@@ -155,6 +161,29 @@ public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliverySe
   public MockUpdateOrderResponse mockUpdateOrder(final MockUpdateOrderRequest request) throws WxErrorException {
     return this.parse(this.wxMaService.post(WxMaApiUrlConstants.InstantDelivery.MOCK_UPDATE_ORDER, request),
       MockUpdateOrderResponse.class);
+  }
+
+  @Override
+  public TraceWaybillResponse traceWaybill(
+    TraceWaybillRequest request) throws WxErrorException {
+    String responseContent = this.wxMaService.post(InstantDelivery.TRACE_WAYBILL_URL, request);
+    TraceWaybillResponse response = TraceWaybillResponse.fromJson(responseContent);
+    if (response.getErrcode() == -1) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return response;
+
+  }
+
+  @Override
+  public QueryWaybillTraceResponse queryWaybillTrace(
+    QueryWaybillTraceRequest request) throws WxErrorException {
+    String responseContent = this.wxMaService.post(InstantDelivery.QUERY_WAYBILL_TRACE_URL, request);
+    QueryWaybillTraceResponse response = QueryWaybillTraceResponse.fromJson(responseContent);
+    if (response.getErrcode() == -1) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return response;
   }
 
   /**

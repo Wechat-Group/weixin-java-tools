@@ -136,4 +136,7 @@ public interface WxMaExpressService {
    * @throws WxErrorException 模拟更新订单状态失败时返回
    */
   void testUpdateOrder(WxMaExpressTestUpdateOrderRequest wxMaExpressTestUpdateOrderRequest) throws WxErrorException;
+
+
+
 }
