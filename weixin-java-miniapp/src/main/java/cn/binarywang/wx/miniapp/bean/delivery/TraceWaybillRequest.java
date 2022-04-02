@@ -36,7 +36,7 @@ public class TraceWaybillRequest implements Serializable {
    * </pre>
    */
   @SerializedName("openid")
-  private Integer openid;
+  private String openid;
 
   /**
    * 寄件人手机号
@@ -46,7 +46,7 @@ public class TraceWaybillRequest implements Serializable {
    * </pre>
    */
   @SerializedName("sender_phone")
-  private Integer senderPhone;
+  private String senderPhone;
 
   /**
    * 收件人手机号
@@ -56,7 +56,7 @@ public class TraceWaybillRequest implements Serializable {
    * </pre>
    */
   @SerializedName("receiver_phone")
-  private Integer receiverPhone;
+  private String receiverPhone;
 
   /**
    * 运单ID

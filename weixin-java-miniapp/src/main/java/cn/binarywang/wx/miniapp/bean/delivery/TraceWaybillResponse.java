@@ -25,7 +25,7 @@ public class TraceWaybillResponse extends WxMaBaseResponse implements Serializab
    * 查询id.
    */
   @SerializedName("waybill_token")
-  private Integer waybillToken;
+  private String waybillToken;
 
 
   public static TraceWaybillResponse fromJson(String json) {
