@@ -42,7 +42,7 @@ public class QueryWaybillTraceRequest implements Serializable {
    * </pre>
    */
   @SerializedName("waybill_token")
-  private Integer waybillToken;
+  private String waybillToken;
 
   public String toJson() {
     return WxMaGsonBuilder.create().toJson(this);
