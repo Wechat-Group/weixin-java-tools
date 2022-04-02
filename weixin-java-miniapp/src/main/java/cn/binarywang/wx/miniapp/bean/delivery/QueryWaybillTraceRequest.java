@@ -30,10 +30,6 @@ public class QueryWaybillTraceRequest implements Serializable {
   private static final long serialVersionUID = -7538739003766268386L;
 
 
-
-
-
-
   /**
    * 查询id
    * <pre>
