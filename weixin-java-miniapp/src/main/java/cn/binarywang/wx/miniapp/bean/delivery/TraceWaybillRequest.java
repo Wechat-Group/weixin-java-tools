@@ -1,7 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.delivery;
 
 
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
@@ -15,6 +14,7 @@ import lombok.experimental.Accessors;
  * <pre>
  * 传运单接口 trace_waybill
  * </pre>
+ *
  * @author boris
  * @since 2022-04-01
  */
@@ -85,6 +85,15 @@ public class TraceWaybillRequest implements Serializable {
    */
   @SerializedName("order_detail_path")
   private String orderDetailPath;
+
+  /**
+   * 商品信息
+   * <pre>
+   * 是否必填： 是
+   * </pre>
+   */
+  @SerializedName("goods_info")
+  private WaybillGoodsInfo goodsInfo;
 
   public String toJson() {
     return WxMaGsonBuilder.create().toJson(this);
