@@ -386,7 +386,7 @@ public interface WxMaLiveService {
    * <p>
    * 调用额度：10000次/一天
    * <p>
-   * http请求方式：GET https://api.weixin.qq.com/wxaapi/broadcast/goods/getVideo?access_token=ACCESS_TOKEN
+   * http请求方式：POST https://api.weixin.qq.com/wxaapi/broadcast/goods/getVideo?access_token=ACCESS_TOKEN
    * </pre>
    * @param roomId 直播间id
    * @param goodsId 商品ID

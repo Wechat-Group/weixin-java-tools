@@ -272,6 +272,14 @@ public class WxMaApiUrlConstants {
       String UPDATE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/update";
       String GET_GOODS_WARE_HOUSE = "https://api.weixin.qq.com/wxa/business/getgoodswarehouse";
       String GET_APPROVED_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getapproved";
+      /**
+       * 直播挂件设置全局 Key
+       */
+      String SET_KEY = "https://api.weixin.qq.com/wxaapi/broadcast/goods/setkey";
+      /**
+       * 直播挂件获取全局 Key
+       */
+      String GET_KEY = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getkey";
     }
 
     /**
