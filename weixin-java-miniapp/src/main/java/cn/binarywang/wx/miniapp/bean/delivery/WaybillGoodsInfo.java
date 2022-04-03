@@ -43,7 +43,7 @@ public class WaybillGoodsInfo implements Serializable {
      * </pre>
      */
     @SerializedName("goods_name")
-    private Long goodsName;
+    private String goodsName;
 
     /**
      * 商品图片URL
@@ -52,7 +52,7 @@ public class WaybillGoodsInfo implements Serializable {
      * </pre>
      */
     @SerializedName("goods_img_url")
-    private Integer goodsImgUrl;
+    private String goodsImgUrl;
 
 
   }

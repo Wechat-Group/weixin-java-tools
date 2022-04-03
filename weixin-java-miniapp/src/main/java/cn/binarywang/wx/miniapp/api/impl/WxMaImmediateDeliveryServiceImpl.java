@@ -9,10 +9,14 @@ import cn.binarywang.wx.miniapp.bean.delivery.AddOrderResponse;
 import cn.binarywang.wx.miniapp.bean.delivery.BindAccountResponse;
 import cn.binarywang.wx.miniapp.bean.delivery.CancelOrderRequest;
 import cn.binarywang.wx.miniapp.bean.delivery.CancelOrderResponse;
+import cn.binarywang.wx.miniapp.bean.delivery.FollowWaybillRequest;
+import cn.binarywang.wx.miniapp.bean.delivery.FollowWaybillResponse;
 import cn.binarywang.wx.miniapp.bean.delivery.GetOrderRequest;
 import cn.binarywang.wx.miniapp.bean.delivery.GetOrderResponse;
 import cn.binarywang.wx.miniapp.bean.delivery.MockUpdateOrderRequest;
 import cn.binarywang.wx.miniapp.bean.delivery.MockUpdateOrderResponse;
+import cn.binarywang.wx.miniapp.bean.delivery.QueryFollowTraceRequest;
+import cn.binarywang.wx.miniapp.bean.delivery.QueryFollowTraceResponse;
 import cn.binarywang.wx.miniapp.bean.delivery.QueryWaybillTraceRequest;
 import cn.binarywang.wx.miniapp.bean.delivery.QueryWaybillTraceResponse;
 import cn.binarywang.wx.miniapp.bean.delivery.TraceWaybillRequest;
@@ -180,6 +184,28 @@ public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliverySe
     QueryWaybillTraceRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(InstantDelivery.QUERY_WAYBILL_TRACE_URL, request);
     QueryWaybillTraceResponse response = QueryWaybillTraceResponse.fromJson(responseContent);
+    if (response.getErrcode() == -1) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return response;
+  }
+
+  @Override
+  public FollowWaybillResponse followWaybill(
+    FollowWaybillRequest request) throws WxErrorException {
+    String responseContent = this.wxMaService.post(InstantDelivery.FOLLOW_WAYBILL_URL, request);
+    FollowWaybillResponse response = FollowWaybillResponse.fromJson(responseContent);
+    if (response.getErrcode() == -1) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return response;
+  }
+
+  @Override
+  public QueryFollowTraceResponse queryFollowTrace(
+    QueryFollowTraceRequest request) throws WxErrorException  {
+    String responseContent = this.wxMaService.post(InstantDelivery.QUERY_FOLLOW_TRACE_URL, request);
+    QueryFollowTraceResponse response = QueryFollowTraceResponse.fromJson(responseContent);
     if (response.getErrcode() == -1) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
