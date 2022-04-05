@@ -39,6 +39,7 @@ public class WxCpUserExternalGroupChatTransferResp extends WxCpBaseResp {
     /**
      * 没能成功继承的群ID
      */
+    @SerializedName("chat_id")
     private String chatId;
 
     public static WxCpUserExternalGroupChatTransferResp.GroupChatFailedTransfer fromJson(String json) {
