@@ -88,5 +88,8 @@ public class WxMaShopProductInfo implements Serializable {
    */
   @SerializedName("real_price")
   private Integer realPrice;
+
+  @SerializedName("sku_real_price")
+  private Integer skuRealPrice;
 }
 
