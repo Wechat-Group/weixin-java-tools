@@ -77,6 +77,41 @@ public class WxCpMessageRouter {
   }
 
   /**
+   * 使用自定义的 {@link ExecutorService}.
+   */
+  public WxCpMessageRouter(WxCpService wxMpService, ExecutorService executorService) {
+    this.wxCpService = wxMpService;
+    this.executorService = executorService;
+    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+    this.sessionManager = wxCpService.getSessionManager();
+    this.exceptionHandler = new LogExceptionHandler();
+  }
+
+  /**
+   * 系统退出前，应该调用该方法
+   */
+  public void shutDownExecutorService() {
+    this.executorService.shutdown();
+  }
+
+  /**
+   * 系统退出前，应该调用该方法，增加了超时时间检测
+   */
+  public void shutDownExecutorService(Integer second) {
+    this.executorService.shutdown();
+    try {
+      if (!this.executorService.awaitTermination(second, TimeUnit.SECONDS)) {
+        this.executorService.shutdownNow();
+        if (!this.executorService.awaitTermination(second, TimeUnit.SECONDS))
+          log.error("线程池未关闭！");
+      }
+    } catch (InterruptedException ie) {
+      this.executorService.shutdownNow();
+      Thread.currentThread().interrupt();
+    }
+  }
+
+  /**
    * <pre>
    * 设置自定义的 {@link ExecutorService}
    * 如果不调用该方法，默认使用 Executors.newFixedThreadPool(100)
@@ -219,8 +254,8 @@ public class WxCpMessageRouter {
     return this.messageDuplicateChecker.isDuplicate(messageId.toString());
   }
 
-  private void append(StringBuilder sb, String value){
-    if(StringUtils.isNotEmpty(value)){
+  private void append(StringBuilder sb, String value) {
+    if (StringUtils.isNotEmpty(value)) {
       sb.append("-").append(value);
     }
   }

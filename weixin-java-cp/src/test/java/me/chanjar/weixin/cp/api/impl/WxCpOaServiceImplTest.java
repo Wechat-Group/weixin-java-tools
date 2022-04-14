@@ -170,13 +170,32 @@ public class WxCpOaServiceImplTest {
   }
 
   /**
+   * 获取企业假期管理配置
    * https://developer.work.weixin.qq.com/document/path/93375
+   *
    * @throws WxErrorException
    */
   @Test
   public void testGetCorpConf() throws WxErrorException{
     WxCpCorpConfInfo corpConf = this.wxService.getOaService().getCorpConf();
     log.info(corpConf.toJson());
+  }
+
+  /**
+   * 获取成员假期余额
+   * https://developer.work.weixin.qq.com/document/path/93376
+   *
+   * @throws WxErrorException
+   */
+  @Test
+  public void testGetUserVacationQuota() throws WxErrorException{
+    WxCpUserVacationQuota vacationQuota = this.wxService.getOaService().getUserVacationQuota("WangKai");
+    log.info(vacationQuota.toJson());
+
+    String text = "{\"errcode\":0,\"errmsg\":\"ok\",\"lists\":[{\"id\":1,\"assignduration\":0,\"usedduration\":0,\"leftduration\":604800,\"vacationname\":\"年假\"},{\"id\":2,\"assignduration\":0,\"usedduration\":0,\"leftduration\":1296000,\"vacationname\":\"事假\"},{\"id\":3,\"assignduration\":0,\"usedduration\":0,\"leftduration\":0,\"vacationname\":\"病假\"}]}";
+    WxCpUserVacationQuota json = WxCpUserVacationQuota.fromJson(text);
+    log.info("数据为：{}", json.toJson());
+
   }
 
 }

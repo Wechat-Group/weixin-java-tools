@@ -89,12 +89,28 @@ public class WxMpMessageRouter {
   }
 
   /**
-   * 如果使用默认的 {@link ExecutorService}，则系统退出前，应该调用该方法.
+   * 系统退出前，应该调用该方法
    */
   public void shutDownExecutorService() {
     this.executorService.shutdown();
   }
 
+  /**
+   * 系统退出前，应该调用该方法，增加了超时时间检测
+   */
+  public void shutDownExecutorService(Integer second) {
+    this.executorService.shutdown();
+    try {
+      if (!this.executorService.awaitTermination(second, TimeUnit.SECONDS)) {
+        this.executorService.shutdownNow();
+        if (!this.executorService.awaitTermination(second, TimeUnit.SECONDS))
+          log.error("线程池未关闭！");
+      }
+    } catch (InterruptedException ie) {
+      this.executorService.shutdownNow();
+      Thread.currentThread().interrupt();
+    }
+  }
 
   /**
    * <pre>

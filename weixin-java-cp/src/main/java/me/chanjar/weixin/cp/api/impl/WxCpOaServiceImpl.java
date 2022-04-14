@@ -173,6 +173,15 @@ public class WxCpOaServiceImpl implements WxCpOaService {
   }
 
   @Override
+  public WxCpUserVacationQuota getUserVacationQuota(@NonNull String userId) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_USER_VACATION_QUOTA);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("userid", userId);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return WxCpUserVacationQuota.fromJson(responseContent);
+  }
+
+  @Override
   public List<WxCpDialRecord> getDialRecord(Date startTime, Date endTime, Integer offset, Integer limit)
     throws WxErrorException {
     JsonObject jsonObject = new JsonObject();

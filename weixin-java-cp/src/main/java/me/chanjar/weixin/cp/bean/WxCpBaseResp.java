@@ -29,4 +29,5 @@ public class WxCpBaseResp implements Serializable {
   public static WxCpBaseResp fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpBaseResp.class);
   }
+
 }

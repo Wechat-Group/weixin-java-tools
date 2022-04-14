@@ -139,6 +139,21 @@ public interface WxCpOaService {
 
 
   /**
+   * 获取成员假期余额
+   * 企业可通过审批应用或自建应用Secret调用本接口，获取可见范围内各个员工的假期余额数据。
+   * 第三方应用可获取应用可见范围内各个员工的假期余额数据。
+   *
+   * 请求方式：POST(HTTPS)
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/oa/vacation/getuservacationquota?access_token=ACCESS_TOKEN
+   *
+   * @param userId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpUserVacationQuota getUserVacationQuota(@NonNull String userId) throws WxErrorException;
+
+
+  /**
    * 获取公费电话拨打记录
    *
    * @param startTime 查询的起始时间戳

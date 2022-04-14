@@ -79,6 +79,41 @@ public class WxCpTpMessageRouter {
   }
 
   /**
+   * 使用自定义的 {@link ExecutorService}.
+   */
+  public WxCpTpMessageRouter(WxCpTpService wxCpTpService, ExecutorService executorService) {
+    this.wxCpTpService = wxCpTpService;
+    this.executorService = executorService;
+    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+    this.sessionManager = wxCpTpService.getSessionManager();
+    this.exceptionHandler = new LogExceptionHandler();
+  }
+
+  /**
+   * 系统退出前，应该调用该方法
+   */
+  public void shutDownExecutorService() {
+    this.executorService.shutdown();
+  }
+
+  /**
+   * 系统退出前，应该调用该方法，增加了超时时间检测
+   */
+  public void shutDownExecutorService(Integer second) {
+    this.executorService.shutdown();
+    try {
+      if (!this.executorService.awaitTermination(second, TimeUnit.SECONDS)) {
+        this.executorService.shutdownNow();
+        if (!this.executorService.awaitTermination(second, TimeUnit.SECONDS))
+          log.error("线程池未关闭！");
+      }
+    } catch (InterruptedException ie) {
+      this.executorService.shutdownNow();
+      Thread.currentThread().interrupt();
+    }
+  }
+
+  /**
    * <pre>
    * 设置自定义的 {@link ExecutorService}
    * 如果不调用该方法，默认使用 Executors.newFixedThreadPool(100)
@@ -200,30 +235,29 @@ public class WxCpTpMessageRouter {
 
   private boolean isMsgDuplicated(WxCpTpXmlMessage wxMessage) {
     StringBuilder messageId = new StringBuilder();
-      if (wxMessage.getInfoType() != null) {
-        messageId.append(wxMessage.getInfoType())
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getSuiteId()))
-          .append("-").append(wxMessage.getTimeStamp())
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getAuthCorpId()))
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getUserID()))
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getChangeType()))
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getServiceCorpId()));
-      }
+    if (wxMessage.getInfoType() != null) {
+      messageId.append(wxMessage.getInfoType())
+        .append("-").append(StringUtils.trimToEmpty(wxMessage.getSuiteId()))
+        .append("-").append(wxMessage.getTimeStamp())
+        .append("-").append(StringUtils.trimToEmpty(wxMessage.getAuthCorpId()))
+        .append("-").append(StringUtils.trimToEmpty(wxMessage.getUserID()))
+        .append("-").append(StringUtils.trimToEmpty(wxMessage.getChangeType()))
+        .append("-").append(StringUtils.trimToEmpty(wxMessage.getServiceCorpId()));
+    }
 
-      if (wxMessage.getMsgType() != null) {
-        if (wxMessage.getMsgId() != null) {
-          messageId.append(wxMessage.getMsgId())
-            .append("-").append(wxMessage.getCreateTime())
-            .append("-").append(wxMessage.getFromUserName());
-        }
-        else {
-          messageId.append(wxMessage.getMsgType())
-            .append("-").append(wxMessage.getCreateTime())
-            .append("-").append(wxMessage.getFromUserName())
-            .append("-").append(StringUtils.trimToEmpty(wxMessage.getEvent()))
-            .append("-").append(StringUtils.trimToEmpty(wxMessage.getEventKey()));
-        }
+    if (wxMessage.getMsgType() != null) {
+      if (wxMessage.getMsgId() != null) {
+        messageId.append(wxMessage.getMsgId())
+          .append("-").append(wxMessage.getCreateTime())
+          .append("-").append(wxMessage.getFromUserName());
+      } else {
+        messageId.append(wxMessage.getMsgType())
+          .append("-").append(wxMessage.getCreateTime())
+          .append("-").append(wxMessage.getFromUserName())
+          .append("-").append(StringUtils.trimToEmpty(wxMessage.getEvent()))
+          .append("-").append(StringUtils.trimToEmpty(wxMessage.getEventKey()));
       }
+    }
 
     return this.messageDuplicateChecker.isDuplicate(messageId.toString());
   }
