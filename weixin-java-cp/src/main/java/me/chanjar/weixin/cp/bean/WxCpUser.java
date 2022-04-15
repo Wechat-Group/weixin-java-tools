@@ -31,6 +31,8 @@ public class WxCpUser implements Serializable {
   private String mobile;
   private Gender gender;
   private String email;
+  // ISSUE#2584 @see https://developer.work.weixin.qq.com/document/path/90970
+  private String bizMail;
   private String avatar;
   private String thumbAvatar;
   private String mainDepartment;
