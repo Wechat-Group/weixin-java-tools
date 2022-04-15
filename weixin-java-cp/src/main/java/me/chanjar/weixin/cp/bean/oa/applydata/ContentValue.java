@@ -42,6 +42,9 @@ public class ContentValue implements Serializable {
 
   private Vacation vacation;
 
+  @SerializedName("date_range")
+  private Attendance.DataRange dateRange;
+
   @Data
   public static class Date implements Serializable {
     private static final long serialVersionUID = -6181554080062231138L;
