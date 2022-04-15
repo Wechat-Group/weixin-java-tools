@@ -249,6 +249,10 @@ public enum WxCpErrorMsgEnum {
    */
   CODE_40094(40094, "不合法的URL；缺少主页URL参数，或者URL不合法（链接需要带上协议头，以 http:// 或者 https:// 开头）"),
   /**
+   * 不合法的外部联系人userid
+   */
+  CODE_40096(40096,"不合法的外部联系人userid"),
+  /**
    * 缺少access_token参数.
    */
   CODE_41001(41001, "缺少access_token参数"),
