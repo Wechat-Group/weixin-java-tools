@@ -961,27 +961,38 @@ public interface WxCpExternalContactService {
     throws WxErrorException;
 
   /**
+   * <pre>
    * 新建敏感词规则
    * 企业和第三方应用可以通过此接口新建敏感词规则
    * 请求方式：POST(HTTPS)
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_intercept_rule?access_token=ACCESS_TOKEN
+   * <pre>
    * @param ruleResp
+   * @return WxCpInterceptRuleResultResp
+   * @throws WxErrorException
    */
   WxCpInterceptRuleResultResp addInterceptRule(WxCpInterceptRuleResp ruleResp) throws  WxErrorException;
   /**
+   * <pre>
    * 修改敏感词规则
    * 企业和第三方应用可以通过此接口修改敏感词规则
    * 请求方式：POST(HTTPS)
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/update_intercept_rule?access_token=ACCESS_TOKEN
+   * <pre>
    * @param ruleResp
+   * @return WxCpInterceptRuleResultResp
+   * @throws WxErrorException
    */
   WxCpInterceptRuleResultResp updateInterceptRule(WxCpInterceptRuleResp ruleResp) throws  WxErrorException;
   /**
+   * <pre>
    * 删除敏感词规则
    * 企业和第三方应用可以通过此接口修改敏感词规则
    * 请求方式：POST(HTTPS)
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/del_intercept_rule?access_token=ACCESS_TOKEN
+   * <pre>
    * @param rule_id 规则id
+   * @return WxCpBaseResp
    * @throws WxErrorException
    */
   WxCpBaseResp delInterceptRule(String rule_id) throws  WxErrorException;
