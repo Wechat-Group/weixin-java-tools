@@ -960,5 +960,30 @@ public interface WxCpExternalContactService {
   WxMediaUploadResult uploadAttachment(String mediaType, Integer attachmentType, File file)
     throws WxErrorException;
 
+  /**
+   * 新建敏感词规则
+   * 企业和第三方应用可以通过此接口新建敏感词规则
+   * 请求方式：POST(HTTPS)
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_intercept_rule?access_token=ACCESS_TOKEN
+   * @param ruleResp
+   */
+  WxCpInterceptRuleResultResp addInterceptRule(WxCpInterceptRuleResp ruleResp) throws  WxErrorException;
+  /**
+   * 修改敏感词规则
+   * 企业和第三方应用可以通过此接口修改敏感词规则
+   * 请求方式：POST(HTTPS)
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/update_intercept_rule?access_token=ACCESS_TOKEN
+   * @param ruleResp
+   */
+  WxCpInterceptRuleResultResp updateInterceptRule(WxCpInterceptRuleResp ruleResp) throws  WxErrorException;
+  /**
+   * 删除敏感词规则
+   * 企业和第三方应用可以通过此接口修改敏感词规则
+   * 请求方式：POST(HTTPS)
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/del_intercept_rule?access_token=ACCESS_TOKEN
+   * @param rule_id 规则id
+   * @throws WxErrorException
+   */
+  WxCpBaseResp delInterceptRule(String rule_id) throws  WxErrorException;
 
 }
