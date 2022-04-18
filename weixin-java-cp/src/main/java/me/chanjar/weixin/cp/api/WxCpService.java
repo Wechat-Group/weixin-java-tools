@@ -266,7 +266,7 @@ public interface WxCpService extends WxService {
   /**
    * 上传用户列表，增量更新成员
    * @param mediaId 媒体id
-   * @return jobId
+   * @return jobId 异步任务id
    * @throws WxErrorException the wx error exception
    */
   String syncUser(String mediaId) throws WxErrorException;
