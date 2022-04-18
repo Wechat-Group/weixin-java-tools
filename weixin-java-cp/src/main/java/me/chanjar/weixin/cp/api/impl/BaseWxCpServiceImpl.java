@@ -409,6 +409,13 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   }
 
   @Override
+  public String syncUser(String mediaId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("media_id", mediaId);
+    return post(this.configStorage.getApiUrl(BATCH_SYNC_USER), jsonObject.toString());
+  }
+
+  @Override
   public String replaceUser(String mediaId) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("media_id", mediaId);
