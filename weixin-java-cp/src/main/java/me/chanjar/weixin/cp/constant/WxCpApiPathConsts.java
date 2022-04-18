@@ -284,6 +284,7 @@ public interface WxCpApiPathConsts {
 
     String ADD_INTERCEPT_RULE = "/cgi-bin/externalcontact/add_intercept_rule";
     String UPDATE_INTERCEPT_RULE = "/cgi-bin/externalcontact/update_intercept_rule";
+    String DEL_INTERCEPT_RULE = "/cgi-bin/externalcontact/del_intercept_rule";
 
   }
 

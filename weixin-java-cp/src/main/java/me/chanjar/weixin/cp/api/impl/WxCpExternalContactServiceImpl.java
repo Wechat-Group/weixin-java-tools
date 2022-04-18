@@ -845,7 +845,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   @Override
   public WxCpInterceptRuleResultResp addInterceptRule(WxCpInterceptRuleResp ruleResp) throws WxErrorException {
     return WxCpInterceptRuleResultResp
-      .fromJson(this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_INTERCEPT_RULE), ruleResp.toJson()));
+      .fromJson(this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(ADD_INTERCEPT_RULE), ruleResp.toJson()));
   }
 
   @Override
@@ -859,7 +859,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("rule_id",rule_id);
     return WxCpBaseResp
-      .fromJson(this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_INTERCEPT_RULE), jsonObject));
+      .fromJson(this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(DEL_INTERCEPT_RULE), jsonObject));
   }
 
 

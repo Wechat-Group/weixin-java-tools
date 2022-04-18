@@ -21,8 +21,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WxCpInterceptRuleResp {
+
   @SerializedName("rule_name")
   private String ruleName;
+  @SerializedName("rule_id")
+  private String ruleId;
   @SerializedName("word_list")
   private List<String> wordList;
   @SerializedName("semantics_list")
