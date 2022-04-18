@@ -285,6 +285,15 @@ public class WxCpXmlMessage implements Serializable {
   private String email;
 
   /**
+   * 企业邮箱;代开发自建应用不返回该字段。
+   * ISSUE#2584
+   * @see <a href="https://developer.work.weixin.qq.com/document/path/90970">Link</a>
+   */
+  @XStreamAlias("BizMail")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String bizMail;
+
+  /**
    * 头像url。注：如果要获取小图将url最后的”/0”改成”/100”即可.
    */
   @XStreamAlias("Avatar")
