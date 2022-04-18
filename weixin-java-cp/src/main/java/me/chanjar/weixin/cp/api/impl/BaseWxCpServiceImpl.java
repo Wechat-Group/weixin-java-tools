@@ -18,7 +18,6 @@ import me.chanjar.weixin.common.util.DataUtils;
 import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.*;
-import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.*;
 import me.chanjar.weixin.cp.bean.WxCpAgentJsapiSignature;
