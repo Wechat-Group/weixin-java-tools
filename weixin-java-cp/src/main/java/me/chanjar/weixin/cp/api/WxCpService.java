@@ -283,11 +283,11 @@ public interface WxCpService extends WxService {
   /**
    * 获取异步任务结果
    *
-   * @param joinId the join id
+   * @param jobId 异步任务id
    * @return the task result
    * @throws WxErrorException the wx error exception
    */
-  String getTaskResult(String joinId) throws WxErrorException;
+  String getTaskResult(String jobId) throws WxErrorException;
 
   /**
    * 初始化http请求对象

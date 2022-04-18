@@ -423,8 +423,8 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   }
 
   @Override
-  public String getTaskResult(String joinId) throws WxErrorException {
-    String url = this.configStorage.getApiUrl(BATCH_GET_RESULT + joinId);
+  public String getTaskResult(String jobId) throws WxErrorException {
+    String url = this.configStorage.getApiUrl(BATCH_GET_RESULT + jobId);
     return get(url, null);
   }
 
