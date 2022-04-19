@@ -7,6 +7,9 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxEntrustPapService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.util.SignUtils;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
@@ -103,6 +106,12 @@ public class WxEntrustPapServiceImpl implements WxEntrustPapService {
   public String preWithhold(WxPreWithholdRequest wxPreWithholdRequest) throws WxPayException {
     String requestParam = WxGsonBuilder.create().toJson(wxPreWithholdRequest);
     String url = payService.getPayBaseUrl() + "/v3/papay/contracts/%s/notify";  // %s为{contract_id}
+
+    //todo 还望大佬优化下此处代码，剔除contract_id字段
+    JsonObject returnData = new JsonParser().parse(requestParam).getAsJsonObject();
+    returnData.remove("contract_id");
+    requestParam = WxGsonBuilder.create().toJson(returnData);
+
     String httpResponse = payService.postV3(String.format(url, wxPreWithholdRequest.getContractId()), requestParam);
     return httpResponse;
   }
