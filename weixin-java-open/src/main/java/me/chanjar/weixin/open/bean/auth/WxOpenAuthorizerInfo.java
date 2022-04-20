@@ -29,6 +29,11 @@ public class WxOpenAuthorizerInfo implements Serializable {
   private String signature;
 
   /**
+   * 帐号状态
+   */
+  private Integer accountStatus;
+
+  /**
    * 可根据这个字段判断是否为小程序类型授权
    */
   private MiniProgramInfo miniProgramInfo;
