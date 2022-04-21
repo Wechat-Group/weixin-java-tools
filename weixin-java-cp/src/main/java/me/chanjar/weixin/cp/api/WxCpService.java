@@ -511,4 +511,18 @@ public interface WxCpService extends WxService {
    * @param kfService the kf service
    */
   void setKfService(WxCpKfService kfService);
+
+  /**
+   * 获取异步导出服务
+   *
+   * @return 异步导出服务
+   */
+  WxCpExportService getExportService();
+
+  /**
+   * 设置异步导出服务
+   *
+   * @param exportService 异步导出服务
+   */
+  void setExportService(WxCpExportService exportService);
 }

@@ -311,4 +311,12 @@ public interface WxCpApiPathConsts {
     String CUSTOMER_BATCH_GET = "/cgi-bin/kf/customer/batchget";
 
   }
+
+  interface Export {
+    String SIMPLE_USER = "/cgi-bin/export/simple_user";
+    String USER = "/cgi-bin/export/user";
+    String DEPARTMENT = "/cgi-bin/export/department";
+    String TAG_USER = "/cgi-bin/export/taguser";
+    String GET_RESULT = "/cgi-bin/export/get_result?jobid=%s";
+  }
 }

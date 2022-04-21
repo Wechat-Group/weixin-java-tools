@@ -61,6 +61,8 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxCpAgentWorkBenchService workBenchService = new WxCpAgentWorkBenchServiceImpl(this);
   private WxCpKfService kfService = new WxCpKfServiceImpl(this);
 
+  private WxCpExportService exportService = new WxCpExportServiceImpl(this);
+
   /**
    * 全局的是否正在刷新access token的锁.
    */
@@ -587,5 +589,16 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public void setKfService(WxCpKfService kfService) {
     this.kfService = kfService;
+  }
+
+
+  @Override
+  public WxCpExportService getExportService() {
+    return exportService;
+  }
+
+  @Override
+  public void setExportService(WxCpExportService exportService) {
+    this.exportService = exportService;
   }
 }
