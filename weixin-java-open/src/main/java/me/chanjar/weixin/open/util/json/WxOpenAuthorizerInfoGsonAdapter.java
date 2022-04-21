@@ -24,6 +24,7 @@ public class WxOpenAuthorizerInfoGsonAdapter implements JsonDeserializer<WxOpenA
     authorizationInfo.setAlias(GsonHelper.getString(jsonObject, "alias"));
     authorizationInfo.setQrcodeUrl(GsonHelper.getString(jsonObject, "qrcode_url"));
     authorizationInfo.setSignature(GsonHelper.getString(jsonObject, "signature"));
+    authorizationInfo.setAccountStatus(GsonHelper.getInteger(jsonObject, "account_status"));
 
     if (jsonObject.has("service_type_info")) {
       authorizationInfo.setServiceTypeInfo(GsonHelper.getInteger(jsonObject.getAsJsonObject("service_type_info"), "id"));
