@@ -5,6 +5,7 @@ import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -199,4 +200,21 @@ public interface WxCpUserService {
    * @throws WxErrorException .
    */
   String getJoinQrCode(int sizeType) throws WxErrorException;
+
+  /**
+   * <pre>
+   *
+   * 获取企业活跃成员数。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/user/get_active_stat?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/user/get_active_stat?access_token=ACCESS_TOKEN</a>
+   *
+   * 文档地址：<a href="https://developer.work.weixin.qq.com/document/path/92714">https://developer.work.weixin.qq.com/document/path/92714</a>
+   * </pre>
+   *
+   * @param date 具体某天的活跃人数，最长支持获取30天前数据
+   * @return join_qrcode 活跃成员数
+   * @throws WxErrorException .
+   */
+  Integer getActiveStat(Date date) throws WxErrorException;
 }

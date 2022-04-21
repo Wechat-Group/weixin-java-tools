@@ -14,7 +14,10 @@ import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import org.apache.commons.lang3.time.FastDateFormat;
 
+import java.text.Format;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +32,8 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.User.*;
  */
 @RequiredArgsConstructor
 public class WxCpUserServiceImpl implements WxCpUserService {
+  private final Format dateFormat = FastDateFormat.getInstance("yyyy-MM-dd");
+
   private final WxCpService mainService;
 
   @Override
@@ -207,5 +212,15 @@ public class WxCpUserServiceImpl implements WxCpUserService {
     String responseContent = this.mainService.get(url, null);
     JsonObject tmpJson = GsonParser.parse(responseContent);
     return tmpJson.get("join_qrcode").getAsString();
+  }
+
+  @Override
+  public Integer getActiveStat(Date date) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("date", this.dateFormat.format(date));
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_ACTIVE_STAT);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("active_cnt").getAsInt();
   }
 }
