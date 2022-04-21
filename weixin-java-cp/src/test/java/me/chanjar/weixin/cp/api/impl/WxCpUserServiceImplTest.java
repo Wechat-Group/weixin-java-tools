@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.api.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -120,5 +121,12 @@ public class WxCpUserServiceImplTest {
 
   @Test
   public void testGetExternalContact() {
+  }
+
+  @Test
+  public void testGetActiveStat() throws WxErrorException {
+    Integer activeStat = this.wxCpService.getUserService().getActiveStat(new Date());
+    System.out.printf("active stat: %d", activeStat);
+    assertNotNull(activeStat);
   }
 }
