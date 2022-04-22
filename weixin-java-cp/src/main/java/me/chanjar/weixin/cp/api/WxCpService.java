@@ -415,6 +415,13 @@ public interface WxCpService extends WxService {
   WxCpOaAgentService getOaAgentService();
 
   /**
+   * 获取OA效率工具 微盘的服务类对象
+   *
+   * @return
+   */
+  WxCpOaWeDriveService getOaWeDriveService();
+
+  /**
    * 获取会话存档相关接口的服务类对象
    *
    * @return

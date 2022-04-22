@@ -141,6 +141,12 @@ public interface WxCpApiPathConsts {
     String SCHEDULE_LIST = "/cgi-bin/oa/schedule/get_by_calendar";
 
     /**
+     * 微盘
+     * https://developer.work.weixin.qq.com/document/path/93654
+     */
+    String SPACE_CREATE = "/cgi-bin/wedrive/space_create";
+
+    /**
      * 审批流程引擎
      * https://developer.work.weixin.qq.com/document/path/90269
      */
