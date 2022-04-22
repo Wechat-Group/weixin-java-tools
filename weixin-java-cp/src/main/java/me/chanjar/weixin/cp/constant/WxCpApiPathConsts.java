@@ -273,8 +273,12 @@ public interface WxCpApiPathConsts {
     String GET_GROUP_MSG_LIST_V2 = "/cgi-bin/externalcontact/get_groupmsg_list_v2";
     String GET_GROUP_MSG_RESULT = "/cgi-bin/externalcontact/get_group_msg_result";
 
+
     String GET_PRODUCT_ALBUM = "/cgi-bin/externalcontact/get_product_album";
     String GET_PRODUCT_ALBUM_LIST = "/cgi-bin/externalcontact/get_product_album_list";
+    String ADD_PRODUCT_ALBUM = "/cgi-bin/externalcontact/add_product_album";
+    String UPDATE_PRODUCT_ALBUM = "/cgi-bin/externalcontact/update_product_album";
+    String DELETE_PRODUCT_ALBUM = "/cgi-bin/externalcontact/delete_product_album";
 
     String GROUP_WELCOME_TEMPLATE_ADD = "/cgi-bin/externalcontact/group_welcome_template/add";
     String GROUP_WELCOME_TEMPLATE_EDIT = "/cgi-bin/externalcontact/group_welcome_template/edit";

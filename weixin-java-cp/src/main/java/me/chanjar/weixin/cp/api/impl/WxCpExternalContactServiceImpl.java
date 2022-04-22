@@ -2,12 +2,6 @@ package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
@@ -27,9 +21,13 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.ExternalContact.*;
 
@@ -857,9 +855,31 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   @Override
   public WxCpBaseResp delInterceptRule(String rule_id) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("rule_id",rule_id);
+    jsonObject.addProperty("rule_id", rule_id);
     return WxCpBaseResp
       .fromJson(this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(DEL_INTERCEPT_RULE), jsonObject));
+  }
+
+  @Override
+  public String addProductAlbum(WxCpProductAlbumInfo wxCpProductAlbumInfo) throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(ADD_PRODUCT_ALBUM);
+    String responseContent = this.mainService.post(url, wxCpProductAlbumInfo.toJson());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("product_id").getAsString();
+  }
+
+  @Override
+  public void updateProductAlbum(WxCpProductAlbumInfo wxCpProductAlbumInfo) throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_PRODUCT_ALBUM);
+    this.mainService.post(url, wxCpProductAlbumInfo.toJson());
+  }
+
+  @Override
+  public void deleteProductAlbum(String productId) throws WxErrorException {
+    JsonObject o = new JsonObject();
+    o.addProperty("product_id", productId);
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(DELETE_PRODUCT_ALBUM);
+    this.mainService.post(url, o.toString());
   }
 
 
