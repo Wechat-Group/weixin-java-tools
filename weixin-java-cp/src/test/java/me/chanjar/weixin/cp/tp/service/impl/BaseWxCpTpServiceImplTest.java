@@ -12,6 +12,9 @@ import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+import java.util.Objects;
+
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_AUTH_INFO;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_PERMANENT_CODE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -250,6 +253,28 @@ public class BaseWxCpTpServiceImplTest {
       "                \"appid\":5\n" +
       "            }\n" +
       "        ]\n" +
+      "    },\n" +
+      "    \"edition_info\":\n" +
+      "    {\n" +
+      "        \"agent\" :\n" +
+      "        [\n" +
+      "            {\n" +
+      "                \"agentid\":1,\n" +
+      "                \"edition_id\":\"RLS65535\",\n" +
+      "                \"edition_name\":\"协同版\",\n" +
+      "                \"app_status\":3,\n" +
+      "                \"user_limit\":200,\n" +
+      "                \"expired_time\":1541990791\n" +
+      "            },\n" +
+      "            {\n" +
+      "                \"agentid\":1,\n" +
+      "                \"edition_id\":\"RLS65535\",\n" +
+      "                \"edition_name\":\"协同版\",\n" +
+      "                \"app_status\":3,\n" +
+      "                \"user_limit\":200,\n" +
+      "                \"expired_time\":1541990791\n" +
+      "            }\n" +
+      "        ]\n" +
       "    }\n" +
       "}\n";
 
@@ -263,6 +288,14 @@ public class BaseWxCpTpServiceImplTest {
     Mockito.doReturn(returnJson).when(tpService).post(configStorage.getApiUrl(GET_AUTH_INFO), jsonObject.toString());
     WxCpTpAuthInfo authInfo = tpService.getAuthInfo(authCorpId, permanentCode);
     Assert.assertNotNull(authInfo.getAuthCorpInfo().getCorpId());
+
+    final WxCpTpAuthInfo.EditionInfo editionInfo = authInfo.getEditionInfo();
+    Assert.assertNotNull(editionInfo);
+
+    final List<WxCpTpAuthInfo.Agent> editionInfoAgents = editionInfo.getAgents();
+    Assert.assertTrue(Objects.nonNull(editionInfoAgents) && !editionInfoAgents.isEmpty());
+
+    Assert.assertNotNull(editionInfoAgents.get(0).getExpiredTime());
   }
 
   @Test

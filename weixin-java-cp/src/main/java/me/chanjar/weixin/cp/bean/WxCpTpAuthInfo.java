@@ -36,6 +36,13 @@ public class WxCpTpAuthInfo extends WxCpBaseResp {
   @SerializedName("auth_info")
   private AuthInfo authInfo;
 
+
+  /**
+   * 企业当前生效的版本信息
+   */
+  @SerializedName("edition_info")
+  private EditionInfo editionInfo;
+
   @Getter
   @Setter
   public static class DealerCorpInfo extends WxCpBaseResp {
@@ -128,6 +135,22 @@ public class WxCpTpAuthInfo extends WxCpBaseResp {
 
   }
 
+  /**
+   * 企业当前生效的版本信息
+   */
+  @Getter
+  @Setter
+  public static class EditionInfo implements Serializable {
+    private static final long serialVersionUID = -5028321625140879571L;
+
+    /**
+     * 授权的应用信息，注意是一个数组，但仅旧的多应用套件授权时会返回多个agent，对新的单应用授权，永远只返回一个agent
+     */
+    @SerializedName("agent")
+    private List<Agent> agents;
+
+  }
+
   @Getter
   @Setter
   public static class Agent implements Serializable {
@@ -169,6 +192,57 @@ public class WxCpTpAuthInfo extends WxCpBaseResp {
      */
     @SerializedName("privilege")
     private Privilege privilege;
+
+    /**
+     * 版本id
+     */
+    @SerializedName("edition_id")
+    private String editionId;
+
+    /**
+     * 版本名称
+     */
+    @SerializedName("edition_name")
+    private String editionName;
+
+    /**
+     * 付费状态
+     * <br/>
+     * <ul>
+     *   <li>0-没有付费;</li>
+     *   <li>1-限时试用;</li>
+     *   <li>2-试用过期;</li>
+     *   <li>3-购买期内;</li>
+     *   <li>4-购买过期;</li>
+     *   <li>5-不限时试用;</li>
+     *   <li>6-购买期内，但是人数超标, 注意，超标后还可以用7天;</li>
+     *   <li>7-购买期内，但是人数超标, 且已经超标试用7天</li>
+     * </ul>
+     */
+    @SerializedName("app_status")
+    private Integer appStatus;
+
+    /**
+     * 用户上限。
+     * <p>特别注意, 以下情况该字段无意义，可以忽略：</p>
+     * <ul>
+     *   <li>1. 固定总价购买</li>
+     *   <li>2. app_status = 限时试用/试用过期/不限时试用</li>
+     *   <li>3. 在第2条“app_status=不限时试用”的情况下，如果该应用的配置为“小企业无使用限制”，user_limit有效，且为限制的人数</li>
+     * </ul>
+     */
+    @SerializedName("user_limit")
+    private Integer userLimit;
+
+    /**
+     * 版本到期时间, 秒级时间戳, 根据需要自行乘以1000（根据购买版本，可能是试用到期时间或付费使用到期时间）。
+     * <p>特别注意，以下情况该字段无意义，可以忽略：</p>
+     * <ul>
+     *   <li>1. app_status = 不限时试用</li>
+     * </ul>
+     */
+    @SerializedName("expired_time")
+    private Long expiredTime;
 
   }
 
