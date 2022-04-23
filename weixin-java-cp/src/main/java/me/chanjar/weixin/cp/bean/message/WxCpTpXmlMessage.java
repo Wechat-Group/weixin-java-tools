@@ -314,6 +314,26 @@ public class WxCpTpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String taskId;
 
+  @XStreamAlias("PaidCorpId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String paidCorpId;
+
+  @XStreamAlias("OrderId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String orderId;
+
+  @XStreamAlias("OperatorId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String operatorId;
+
+  @XStreamAlias("OldOrderId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String oldOrderId;
+
+  @XStreamAlias("NewOrderId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String newOrderId;
+
   @Data
   @XStreamAlias("ContactSync")
   public static class ContactSync implements Serializable {

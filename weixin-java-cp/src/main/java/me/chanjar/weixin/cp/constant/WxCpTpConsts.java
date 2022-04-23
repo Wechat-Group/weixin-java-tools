@@ -47,6 +47,31 @@ public class WxCpTpConsts {
      */
     public static final String CHANGE_EXTERNAL_CONTACT = "change_external_contact";
 
+    /**
+     * 下单成功通知
+     */
+    public static final String OPEN_ORDER = "open_order";
+
+    /**
+     * 改单通知
+     */
+    public static final String CHANGE_ORDER = "change_order";
+
+    /**
+     * 支付成功通知
+     */
+    public static final String PAY_FOR_APP_SUCCESS = "pay_for_app_success";
+
+    /**
+     * 退款通知
+     */
+    public static final String REFUND = "refund";
+
+    /**
+     * 付费版本变更通知
+     */
+    public static final String CHANGE_EDITION = "change_editon";
+
   }
 
 }
