@@ -204,6 +204,15 @@ public interface WxCpApiPathConsts {
     String CONTACT_SEARCH = "/cgi-bin/service/contact/search";
     String GET_ADMIN_LIST = "/cgi-bin/service/get_admin_list";
 
+    // 获取订单详情
+    String GET_ORDER = "/cgi-bin/service/get_order";
+
+    // 获取订单列表
+    String GET_ORDER_LIST = "/cgi-bin/service/get_order_list";
+
+    // 延长试用期
+    String PROLONG_TRY = "/cgi-bin/service/prolong_try";
+
   }
 
   interface User {
