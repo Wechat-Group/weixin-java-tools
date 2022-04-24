@@ -244,6 +244,17 @@ public class WxCpTpAuthInfo extends WxCpBaseResp {
     @SerializedName("expired_time")
     private Long expiredTime;
 
+    /**
+     * 是否虚拟版本
+     */
+    @SerializedName("is_virtual_version")
+    private Boolean isVirtualVersion;
+
+    /**
+     * 是否由互联企业分享安装。详见 <a href='https://developer.work.weixin.qq.com/document/path/93360#24909'>企业互联</a>
+     */
+    @SerializedName("is_shared_from_other_corp")
+    private Boolean isSharedFromOtherCorp;
   }
 
   /**
@@ -290,6 +301,7 @@ public class WxCpTpAuthInfo extends WxCpBaseResp {
     return WxCpGsonBuilder.create().fromJson(json, WxCpTpAuthInfo.class);
   }
 
+  @Override
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }

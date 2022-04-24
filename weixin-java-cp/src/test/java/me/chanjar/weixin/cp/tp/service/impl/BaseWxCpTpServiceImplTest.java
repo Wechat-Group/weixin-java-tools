@@ -201,7 +201,9 @@ public class BaseWxCpTpServiceImplTest {
       "              \"edition_name\":\"协同版\",\n" +
       "              \"app_status\":3,\n" +
       "              \"user_limit\":200,\n" +
-      "              \"expired_time\":1541990791\n" +
+      "              \"expired_time\":1541990791,\n" +
+      "              \"is_virtual_version\":false,\n" +
+      "              \"is_shared_from_other_corp\":true\n" +
       "          }\n" +
       "      ]\n" +
       "  }\n" +
@@ -295,7 +297,9 @@ public class BaseWxCpTpServiceImplTest {
       "                \"edition_name\":\"协同版\",\n" +
       "                \"app_status\":3,\n" +
       "                \"user_limit\":200,\n" +
-      "                \"expired_time\":1541990791\n" +
+      "                \"expired_time\":1541990791,\n" +
+      "                \"is_virtual_version\":false,\n" +
+      "                \"is_shared_from_other_corp\":true\n" +
       "            },\n" +
       "            {\n" +
       "                \"agentid\":1,\n" +
@@ -303,7 +307,9 @@ public class BaseWxCpTpServiceImplTest {
       "                \"edition_name\":\"协同版\",\n" +
       "                \"app_status\":3,\n" +
       "                \"user_limit\":200,\n" +
-      "                \"expired_time\":1541990791\n" +
+      "                \"expired_time\":1541990791,\n" +
+      "                \"is_virtual_version\":false,\n" +
+      "                \"is_shared_from_other_corp\":true\n" +
       "            }\n" +
       "        ]\n" +
       "    }\n" +
