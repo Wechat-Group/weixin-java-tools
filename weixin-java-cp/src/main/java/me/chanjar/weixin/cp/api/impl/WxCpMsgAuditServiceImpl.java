@@ -17,6 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.MsgAudit.*;
@@ -39,12 +42,19 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
       throw new WxErrorException("请配置会话存档sdk文件的路径，不要配错了！！");
     }
 
+    /**
+     * 完整的文件库路径：
+     *
+     * /www/osfile/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so
+     */
     // 替换斜杠
     String replacePath = configPath.replace("\\", "/");
-    // 所有的后缀文件
-    String suffixFiles = replacePath.substring(replacePath.lastIndexOf("/") + 1);
-    // 获取的前缀路径
-    String prefixPath = replacePath.substring(0, replacePath.lastIndexOf("/") + 1);
+    // 获取最后一个斜杠的下标，用作分割路径
+    int lastIndex = replacePath.lastIndexOf("/") + 1;
+    // 获取完整路径的前缀路径
+    String prefixPath = replacePath.substring(0, lastIndex);
+    // 获取后缀的所有文件，目的遍历所有文件
+    String suffixFiles = replacePath.substring(lastIndex);
 
     // 包含so文件
     String[] libFiles = suffixFiles.split(",");
@@ -52,7 +62,20 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
       throw new WxErrorException("请仔细配置会话存档文件路径！！");
     }
 
-    Finance.loadingLibraries(libFiles, prefixPath);
+    List<String> libList = Arrays.asList(libFiles);
+    // 判断windows系统会话存档sdk中dll的加载，因为会互相依赖所以是有顺序的，否则会导致无法加载sdk #2598
+    List<String> osLib = new LinkedList();
+    List<String> fileLib = new ArrayList();
+    libList.stream().forEach(s -> {
+      if (s.contains("lib")) {
+        osLib.add(s);
+      } else {
+        fileLib.add(s);
+      }
+    });
+    osLib.addAll(fileLib);
+
+    Finance.loadingLibraries(osLib, prefixPath);
     long sdk = Finance.SingletonSDK();
 
     long ret = Finance.Init(sdk, cpService.getWxCpConfigStorage().getCorpId(), cpService.getWxCpConfigStorage().getCorpSecret());
