@@ -328,6 +328,7 @@ public interface WxCpApiPathConsts {
 
     String SEND_MSG_ON_EVENT = "/cgi-bin/kf/send_msg_on_event";
     String CUSTOMER_BATCH_GET = "/cgi-bin/kf/customer/batchget";
+    String GET_CORP_STATISTIC = "/cgi-bin/kf/get_corp_statistic";
 
   }
 

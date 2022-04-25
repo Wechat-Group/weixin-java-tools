@@ -1,23 +1,10 @@
 package me.chanjar.weixin.cp.api;
 
-import java.util.List;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountAdd;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountAddResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountDel;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountLink;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountLinkResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountListResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountUpd;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfCustomerBatchGetResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfMsgListResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfMsgSendRequest;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfMsgSendResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfServiceStateResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfServiceStateTransResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfServicerListResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfServicerOpResp;
+import me.chanjar.weixin.cp.bean.kf.*;
+
+import java.util.List;
 
 /**
  * 微信客服接口
@@ -188,4 +175,17 @@ public interface WxCpKfService {
    */
   WxCpKfCustomerBatchGetResp customerBatchGet(List<String> externalUserIdList)
     throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取「客户数据统计」企业汇总数据
+   * 通过此接口，可以获取咨询会话数、咨询客户数等企业汇总统计数据
+   * 请求方式：POST(HTTPS)
+   * 请求地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/kf/get_corp_statistic?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/kf/get_corp_statistic?access_token=ACCESS_TOKEN</a>
+   * 文档地址：<a href="https://developer.work.weixin.qq.com/document/path/95489">https://developer.work.weixin.qq.com/document/path/95489</a>
+   * <pre>
+   * @param request 查询参数
+   * @return 客户数据统计-企业汇总数据
+   */
+  WxCpKfGetCorpStatisticResp getCorpStatistic(WxCpKfGetCorpStatisticRequest request) throws WxErrorException;
 }

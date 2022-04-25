@@ -4,28 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpKfService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountAdd;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountAddResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountDel;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountLink;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountLinkResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountListResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountUpd;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfCustomerBatchGetResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfMsgListResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfMsgSendRequest;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfMsgSendResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfServiceStateResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfServiceStateTransResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfServicerListResp;
-import me.chanjar.weixin.cp.bean.kf.WxCpKfServicerOpResp;
+import me.chanjar.weixin.cp.bean.kf.*;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.util.List;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Kf.*;
 
@@ -186,6 +173,13 @@ public class WxCpKfServiceImpl implements WxCpKfService {
     json.add("external_userid_list", array);
     String responseContent = cpService.post(url, json.toString());
     return WxCpKfCustomerBatchGetResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpKfGetCorpStatisticResp getCorpStatistic(WxCpKfGetCorpStatisticRequest request) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(GET_CORP_STATISTIC);
+    String responseContent = cpService.post(url, GSON.toJson(request));
+    return WxCpKfGetCorpStatisticResp.fromJson(responseContent);
   }
 
 }
