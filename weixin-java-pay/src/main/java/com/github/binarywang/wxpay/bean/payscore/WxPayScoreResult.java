@@ -100,6 +100,8 @@ public class WxPayScoreResult implements Serializable {
   @SerializedName("authorization_success_time")
   private  String authorizationSuccessTime;
 
+  @SerializedName("openid")
+  private String openid;
 
   /**
    * 收款信息
