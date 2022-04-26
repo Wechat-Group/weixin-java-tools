@@ -145,6 +145,8 @@ public interface WxCpApiPathConsts {
      * https://developer.work.weixin.qq.com/document/path/93654
      */
     String SPACE_CREATE = "/cgi-bin/wedrive/space_create";
+    String SPACE_RENAME = "/cgi-bin/wedrive/space_rename";
+    String SPACE_DISMISS = "/cgi-bin/wedrive/space_dismiss";
 
     /**
      * 审批流程引擎

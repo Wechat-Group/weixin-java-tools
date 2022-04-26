@@ -2,8 +2,10 @@ package me.chanjar.weixin.cp.api;
 
 import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateData;
 import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateRequest;
+import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceRenameRequest;
 
 /**
  * 企业微信微盘相关接口.
@@ -27,5 +29,32 @@ public interface WxCpOaWeDriveService {
    * @throws WxErrorException
    */
   WxCpSpaceCreateData spaceCreate(@NonNull WxCpSpaceCreateRequest request) throws WxErrorException;
+
+  /**
+   * 重命名空间
+   * 该接口用于重命名已有空间，接收userid参数，以空间管理员身份来重命名。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_rename?access_token=ACCESS_TOKEN
+   *
+   * @param request 重命名空间的请求参数
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp spaceRename(@NonNull WxCpSpaceRenameRequest request) throws WxErrorException;
+
+  /**
+   * 解散空间
+   * 该接口用于解散已有空间，需要以空间管理员身份来解散。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_dismiss?access_token=ACCESS_TOKEN
+   *
+   * @param userId
+   * @param spaceId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp spaceDismiss(@NonNull String userId, @NonNull String spaceId) throws WxErrorException;
 
 }

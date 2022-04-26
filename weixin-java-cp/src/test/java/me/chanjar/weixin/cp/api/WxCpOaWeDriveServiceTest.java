@@ -3,8 +3,10 @@ package me.chanjar.weixin.cp.api;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
+import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateData;
 import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateRequest;
+import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceRenameRequest;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import org.testng.annotations.Test;
@@ -37,16 +39,33 @@ public class WxCpOaWeDriveServiceTest {
     WxCpSpaceCreateRequest wxCpSpaceCreateRequest = WxCpSpaceCreateRequest.fromJson(createSpace);
     log.info(wxCpSpaceCreateRequest.toJson());
 
+
     /**
      * 新建空间
      */
     WxCpSpaceCreateRequest request = new WxCpSpaceCreateRequest();
     request.setUserId("WangKai");
-    request.setSpaceName("测试云盘2");
+    request.setSpaceName("测试云盘Three");
 
     WxCpSpaceCreateData spaceCreateData = cpService.getOaWeDriveService().spaceCreate(request);
-    log.info("空间id为：{}", spaceCreateData.getSpaceId());
+    log.info("空间id为：{}", spaceCreateData.getSpaceId()); //
     log.info(spaceCreateData.toJson());
+
+    /**
+     * 重命名空间
+     */
+    WxCpSpaceRenameRequest wxCpSpaceRenameRequest = new WxCpSpaceRenameRequest();
+    wxCpSpaceRenameRequest.setUserId("WangKai");
+    wxCpSpaceRenameRequest.setSpaceId(spaceCreateData.getSpaceId());
+    wxCpSpaceRenameRequest.setSpaceName("测试云盘Four");
+    WxCpBaseResp baseResp = cpService.getOaWeDriveService().spaceRename(wxCpSpaceRenameRequest);
+    log.info("重命名成功：{}", baseResp.toJson());
+
+    /**
+     * 解散空间
+     */
+    WxCpBaseResp thisResp = cpService.getOaWeDriveService().spaceDismiss("WangKai", spaceCreateData.getSpaceId());
+    log.info("解散成功：{}", thisResp.toJson());
 
   }
 
