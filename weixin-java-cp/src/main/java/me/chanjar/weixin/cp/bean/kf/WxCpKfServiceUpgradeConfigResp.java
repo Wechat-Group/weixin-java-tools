@@ -31,7 +31,7 @@ public class WxCpKfServiceUpgradeConfigResp extends WxCpBaseResp {
 
   @Data
   @NoArgsConstructor
-  public class MemberRange {
+  public static class MemberRange {
     @SerializedName("userid_list")
     private List<String> useridList;
 
@@ -41,7 +41,7 @@ public class WxCpKfServiceUpgradeConfigResp extends WxCpBaseResp {
 
   @Data
   @NoArgsConstructor
-  private class GroupchatRange {
+  public static class GroupchatRange {
     @SerializedName("chat_id_list")
     private List<String> chatIdList;
   }
