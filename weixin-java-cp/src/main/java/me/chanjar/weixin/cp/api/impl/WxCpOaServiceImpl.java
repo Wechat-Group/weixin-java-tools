@@ -354,4 +354,13 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(SET_CHECKIN_SCHEDULE_DATA);
     this.mainService.post(url, WxCpGsonBuilder.create().toJson(wxCpSetCheckinSchedule));
   }
+
+  @Override
+  public void addCheckInUserFace(String userId, String userFace) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("userid", userId);
+    jsonObject.addProperty("userface", userFace);
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(ADD_CHECK_IN_USER_FACE);
+    this.mainService.post(url, jsonObject.toString());
+  }
 }

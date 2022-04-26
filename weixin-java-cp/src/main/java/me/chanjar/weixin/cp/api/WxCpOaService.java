@@ -255,4 +255,17 @@ public interface WxCpOaService {
    * @throws WxErrorException the wx error exception
    */
   void setCheckinScheduleList(WxCpSetCheckinSchedule wxCpSetCheckinSchedule) throws WxErrorException;
+  /**
+   * <pre>
+   * 录入打卡人员人脸信息
+   * 企业可通过打卡应用Secret调用本接口，为企业打卡人员录入人脸信息，人脸信息仅用于人脸打卡。
+   * 上传图片大小限制:图片数据不超过1M
+   * 请求方式：POST(HTTPS)
+   * 请求地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/checkin/addcheckinuserface?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/checkin/addcheckinuserface?access_token=ACCESS_TOKEN</a>
+   * 文档地址：<a href="https://developer.work.weixin.qq.com/document/path/93378">https://developer.work.weixin.qq.com/document/path/93378</a>
+   * <pre>
+   * @param userId 需要录入的用户id
+   * @param userFace 需要录入的人脸图片数据，需要将图片数据base64处理后填入，对已录入的人脸会进行更新处理
+   */
+  void addCheckInUserFace(String userId, String userFace) throws WxErrorException;
 }

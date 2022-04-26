@@ -103,6 +103,7 @@ public interface WxCpApiPathConsts {
     String GET_CHECKIN_MONTH_DATA = "/cgi-bin/checkin/getcheckin_monthdata";
     String GET_CHECKIN_SCHEDULE_DATA = "/cgi-bin/checkin/getcheckinschedulist";
     String SET_CHECKIN_SCHEDULE_DATA = "/cgi-bin/checkin/setcheckinschedulist";
+    String ADD_CHECK_IN_USER_FACE = "/cgi-bin/checkin/addcheckinuserface";
 
     /**
      * 审批
