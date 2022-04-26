@@ -274,6 +274,9 @@ public interface WxCpApiPathConsts {
 
     String SEND_MSG_ON_EVENT = "/cgi-bin/kf/send_msg_on_event";
     String CUSTOMER_BATCH_GET = "/cgi-bin/kf/customer/batchget";
+    String CUSTOMER_GET_UPGRADE_SERVICE_CONFIG = "/cgi-bin/kf/customer/get_upgrade_service_config";
+    String CUSTOMER_UPGRADE_SERVICE = "/cgi-bin/kf/customer/upgrade_service";
+    String CUSTOMER_CANCEL_UPGRADE_SERVICE = "/cgi-bin/kf/customer/cancel_upgrade_service";
 
   }
 }

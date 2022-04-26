@@ -16,6 +16,7 @@ import me.chanjar.weixin.cp.bean.kf.WxCpKfMsgSendRequest;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfMsgSendResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfServiceStateResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfServiceStateTransResp;
+import me.chanjar.weixin.cp.bean.kf.WxCpKfServiceUpgradeConfigResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfServicerListResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfServicerOpResp;
 
@@ -187,5 +188,47 @@ public interface WxCpKfService {
    * @throws WxErrorException
    */
   WxCpKfCustomerBatchGetResp customerBatchGet(List<String> externalUserIdList)
+    throws WxErrorException;
+
+  // 「升级服务」配置
+  /**
+   * 获取配置的专员与客户群
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpKfServiceUpgradeConfigResp getUpgradeServiceConfig() throws WxErrorException;
+
+  /**
+   * 升级专员服务
+   * @param openKfid 客服帐号ID
+   * @param externalUserId 微信客户的external_userid
+   * @param userid 服务专员的userid
+   * @param wording 推荐语
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp upgradeMemberService(String openKfid, String externalUserId,
+    String userid, String wording) throws WxErrorException;
+
+  /**
+   * 升级客户群服务
+   * @param openKfid 客服帐号ID
+   * @param externalUserId 微信客户的external_userid
+   * @param chatId 客户群id
+   * @param wording 推荐语
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp upgradeGroupchatService(String openKfid, String externalUserId,
+    String chatId, String wording) throws WxErrorException;
+
+  /**
+   * 为客户取消推荐
+   * @param openKfid 客服帐号ID
+   * @param externalUserId 微信客户的external_userid
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp cancelUpgradeService(String openKfid, String externalUserId)
     throws WxErrorException;
 }
