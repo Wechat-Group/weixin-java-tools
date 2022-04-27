@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.service;
 
+import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
 import com.github.binarywang.wxpay.bean.profitsharingV3.*;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
@@ -160,5 +161,23 @@ public interface ProfitSharingV3Service {
    * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_9.shtml">微信文档</a>
    */
   ProfitSharingReceiver deleteProfitSharingReceiver(ProfitSharingReceiver receiver) throws WxPayException;
+
+
+  /**
+   * <pre>
+   * 分账动账通知
+   *
+   * 分账或分账回退成功后，微信会把相关变动结果发送给分账接收方（只支持商户）。
+   * 对后台通知交互时，如果微信收到应答不是成功或超时，微信认为通知失败，微信会通过一定的策略定期重新发起通知，尽可能提高通知的成功率，但微信不保证通知最终能成功。
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_10.shtml
+   * </pre>
+   *
+   * @param notifyData 分账通知实体
+   * @param header     分账通知头 {@link SignatureHeader}
+   * @return {@link ProfitSharingNotifyData} 资源对象
+   * @throws WxPayException the wx pay exception
+   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_10.shtml">微信文档</a>
+   */
+  ProfitSharingNotifyData getProfitSharingNotifyData(String notifyData, SignatureHeader header) throws WxPayException;
 
 }

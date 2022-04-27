@@ -1,14 +1,22 @@
 package com.github.binarywang.wxpay.service.impl;
 
+import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
 import com.github.binarywang.wxpay.bean.profitsharingV3.*;
+import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.ProfitSharingV3Service;
 import com.github.binarywang.wxpay.service.WxPayService;
+import com.github.binarywang.wxpay.v3.util.AesUtils;
 import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
+import java.util.Objects;
 
 /**
  * 微信支付V3-资金应用-分账Service
@@ -81,5 +89,45 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
     RsaCryptoUtil.encryptFields(request, this.payService.getConfig().getVerifier().getValidCertificate());
     String result = this.payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(result, ProfitSharingReceiver.class);
+  }
+
+  @Override
+  public ProfitSharingNotifyData getProfitSharingNotifyData(String notifyData, SignatureHeader header) throws WxPayException {
+    WxPayConfig config = this.payService.getConfig();
+    ProfitSharingNotifyData response = parseNotifyData(notifyData,header,config);
+    ProfitSharingNotifyData.Resource resource = response.getResource();
+    String cipherText = resource.getCipherText();
+    String associatedData = resource.getAssociatedData();
+    String nonce = resource.getNonce();
+    String apiV3Key= config.getApiV3Key();
+    try {
+      String result = AesUtils.decryptToString(associatedData, nonce,cipherText, apiV3Key);
+      ProfitSharingNotifyData notifyResult = GSON.fromJson(result, ProfitSharingNotifyData.class);
+      return notifyResult;
+    } catch (GeneralSecurityException | IOException e) {
+      throw new WxPayException("解析报文异常！", e);
+    }
+  }
+
+  private ProfitSharingNotifyData parseNotifyData(String data, SignatureHeader header, WxPayConfig config) throws WxPayException {
+    if(Objects.nonNull(header) && !this.verifyNotifySign(header, data,config)){
+      throw new WxPayException("非法请求，头部信息验证失败");
+    }
+    return GSON.fromJson(data, ProfitSharingNotifyData.class);
+  }
+
+  /**
+   * 校验通知签名
+   * @param header 通知头信息
+   * @param data 通知数据
+   * @return true:校验通过 false:校验不通过
+   */
+  private boolean verifyNotifySign(SignatureHeader header, String data,WxPayConfig config) {
+    String beforeSign = String.format("%s\n%s\n%s\n",
+      header.getTimeStamp(),
+      header.getNonce(),
+      data);
+    return config.getVerifier().verify(header.getSerialNo(),
+      beforeSign.getBytes(StandardCharsets.UTF_8), header.getSigned());
   }
 }
