@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.ProfitSharingV3Service;
 import com.github.binarywang.wxpay.service.WxPayService;
+import com.github.binarywang.wxpay.v3.auth.Verifier;
 import com.github.binarywang.wxpay.v3.util.AesUtils;
 import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
 import com.google.gson.Gson;
@@ -93,14 +94,14 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
 
   @Override
   public ProfitSharingNotifyData getProfitSharingNotifyData(String notifyData, SignatureHeader header) throws WxPayException {
-    ProfitSharingNotifyData response = parseNotifyData(notifyData,header);
+    ProfitSharingNotifyData response = parseNotifyData(notifyData, header);
     ProfitSharingNotifyData.Resource resource = response.getResource();
     String cipherText = resource.getCipherText();
     String associatedData = resource.getAssociatedData();
     String nonce = resource.getNonce();
-    String apiV3Key= this.payService.getConfig().getApiV3Key();
+    String apiV3Key = this.payService.getConfig().getApiV3Key();
     try {
-      String result = AesUtils.decryptToString(associatedData, nonce,cipherText, apiV3Key);
+      String result = AesUtils.decryptToString(associatedData, nonce, cipherText, apiV3Key);
       ProfitSharingNotifyData notifyResult = GSON.fromJson(result, ProfitSharingNotifyData.class);
       return notifyResult;
     } catch (GeneralSecurityException | IOException e) {
@@ -109,7 +110,7 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
   }
 
   private ProfitSharingNotifyData parseNotifyData(String data, SignatureHeader header) throws WxPayException {
-    if(Objects.nonNull(header) && !this.verifyNotifySign(header, data)){
+    if (Objects.nonNull(header) && !this.verifyNotifySign(header, data)) {
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     return GSON.fromJson(data, ProfitSharingNotifyData.class);
@@ -117,16 +118,21 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
 
   /**
    * 校验通知签名
+   *
    * @param header 通知头信息
-   * @param data 通知数据
+   * @param data   通知数据
    * @return true:校验通过 false:校验不通过
    */
-  private boolean verifyNotifySign(SignatureHeader header, String data) {
+  private boolean verifyNotifySign(SignatureHeader header, String data) throws WxPayException {
     String beforeSign = String.format("%s\n%s\n%s\n",
       header.getTimeStamp(),
       header.getNonce(),
       data);
-    return this.payService.getConfig().getVerifier().verify(header.getSerialNo(),
+    Verifier verifier = this.payService.getConfig().getVerifier();
+    if (verifier == null) {
+      throw new WxPayException("证书检验对象为空");
+    }
+    return verifier.verify(header.getSerialNo(),
       beforeSign.getBytes(StandardCharsets.UTF_8), header.getSigned());
   }
 }
