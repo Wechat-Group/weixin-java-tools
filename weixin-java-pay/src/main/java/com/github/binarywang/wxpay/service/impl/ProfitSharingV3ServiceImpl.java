@@ -93,13 +93,12 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
 
   @Override
   public ProfitSharingNotifyData getProfitSharingNotifyData(String notifyData, SignatureHeader header) throws WxPayException {
-    WxPayConfig config = this.payService.getConfig();
-    ProfitSharingNotifyData response = parseNotifyData(notifyData,header,config);
+    ProfitSharingNotifyData response = parseNotifyData(notifyData,header);
     ProfitSharingNotifyData.Resource resource = response.getResource();
     String cipherText = resource.getCipherText();
     String associatedData = resource.getAssociatedData();
     String nonce = resource.getNonce();
-    String apiV3Key= config.getApiV3Key();
+    String apiV3Key= this.payService.getConfig().getApiV3Key();
     try {
       String result = AesUtils.decryptToString(associatedData, nonce,cipherText, apiV3Key);
       ProfitSharingNotifyData notifyResult = GSON.fromJson(result, ProfitSharingNotifyData.class);
@@ -109,8 +108,8 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
     }
   }
 
-  private ProfitSharingNotifyData parseNotifyData(String data, SignatureHeader header, WxPayConfig config) throws WxPayException {
-    if(Objects.nonNull(header) && !this.verifyNotifySign(header, data,config)){
+  private ProfitSharingNotifyData parseNotifyData(String data, SignatureHeader header) throws WxPayException {
+    if(Objects.nonNull(header) && !this.verifyNotifySign(header, data)){
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     return GSON.fromJson(data, ProfitSharingNotifyData.class);
@@ -122,12 +121,12 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
    * @param data 通知数据
    * @return true:校验通过 false:校验不通过
    */
-  private boolean verifyNotifySign(SignatureHeader header, String data,WxPayConfig config) {
+  private boolean verifyNotifySign(SignatureHeader header, String data) {
     String beforeSign = String.format("%s\n%s\n%s\n",
       header.getTimeStamp(),
       header.getNonce(),
       data);
-    return config.getVerifier().verify(header.getSerialNo(),
+    return this.payService.getConfig().getVerifier().verify(header.getSerialNo(),
       beforeSign.getBytes(StandardCharsets.UTF_8), header.getSigned());
   }
 }
