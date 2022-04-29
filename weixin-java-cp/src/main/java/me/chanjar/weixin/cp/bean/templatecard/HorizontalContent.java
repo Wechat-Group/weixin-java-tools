@@ -44,6 +44,11 @@ public class HorizontalContent implements Serializable {
    */
   private String media_id;
 
+  /**
+   * 成员详情的userid，horizontal_content_list.type是3时必填
+   */
+  private String userid;
+
   public JsonObject toJson() {
     JsonObject hContentJson = new JsonObject();
 
@@ -60,6 +65,9 @@ public class HorizontalContent implements Serializable {
     }
     if (StringUtils.isNotBlank(this.getMedia_id())) {
       hContentJson.addProperty("media_id", this.getMedia_id());
+    }
+    if (StringUtils.isNotBlank(this.getUserid())) {
+      hContentJson.addProperty("userid", this.getUserid());
     }
     return hContentJson;
   }

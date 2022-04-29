@@ -93,6 +93,21 @@ public class WxCpMessage implements Serializable {
   private String sourceDesc;
 
   /**
+   * 来源文字的颜色，目前支持：0(默认) 灰色，1 黑色，2 红色，3 绿色
+   */
+  private Integer sourceDescColor;
+
+  /**
+   * 更多操作界面的描述
+   */
+  private String actionMenuDesc;
+
+  /**
+   * 操作列表，列表长度取值范围为 [1, 3]
+   */
+  private List<ActionMenuItem> actionMenuActionList;
+
+  /**
    * 一级标题，建议不超过36个字
    */
   private String mainTitleTitle;
@@ -482,7 +497,20 @@ public class WxCpMessage implements Serializable {
           if (StringUtils.isNotBlank(this.getSourceDesc())) {
             source.addProperty("desc", this.getSourceDesc());
           }
+          source.addProperty("desc_color", this.getSourceDescColor());
           template.add("source", source);
+        }
+
+        if (StringUtils.isNotBlank(this.getActionMenuDesc())) {
+          JsonObject action_menu = new JsonObject();
+          action_menu.addProperty("desc", this.getActionMenuDesc());
+          JsonArray actionList = new JsonArray();
+          List<ActionMenuItem> actionMenuItemList = this.getActionMenuActionList();
+          for (ActionMenuItem actionItemI : actionMenuItemList) {
+            actionList.add(actionItemI.toJson());
+          }
+          action_menu.add("action_list", actionList);
+          template.add("action_menu", action_menu);
         }
 
         if (StringUtils.isNotBlank(this.getMainTitleTitle()) || StringUtils.isNotBlank(this.getMainTitleDesc())) {

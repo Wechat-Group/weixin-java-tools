@@ -187,6 +187,7 @@ public interface WxCpApiPathConsts {
 
   interface TaskCard {
     String UPDATE_TASK_CARD = "/cgi-bin/message/update_taskcard";
+    String UPDATE_TEMPLATE_CARD = "/cgi-bin/message/update_template_card";
   }
 
   interface Tp {
