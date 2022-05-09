@@ -10,6 +10,7 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateData;
 import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateRequest;
+import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceInfo;
 import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceRenameRequest;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
@@ -47,6 +48,16 @@ public class WxCpOaWeDriveServiceImpl implements WxCpOaWeDriveService {
     jsonObject.addProperty("spaceid", spaceId);
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
     return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpSpaceInfo spaceInfo(@NonNull String userId, @NonNull String spaceId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(SPACE_INFO);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("userid", userId);
+    jsonObject.addProperty("spaceid", spaceId);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpSpaceInfo.fromJson(responseContent);
   }
 
 }

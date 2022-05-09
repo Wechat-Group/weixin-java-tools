@@ -6,6 +6,7 @@ import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateData;
 import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateRequest;
+import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceInfo;
 import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceRenameRequest;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
@@ -39,6 +40,12 @@ public class WxCpOaWeDriveServiceTest {
     WxCpSpaceCreateRequest wxCpSpaceCreateRequest = WxCpSpaceCreateRequest.fromJson(createSpace);
     log.info(wxCpSpaceCreateRequest.toJson());
 
+
+    /**
+     * 获取空间信息
+     */
+    WxCpSpaceInfo spaceInfo = cpService.getOaWeDriveService().spaceInfo("WangKai", "s.ww45d3e188865aca30.652091685u4h");
+    log.info("spaceInfo信息为：{}", spaceInfo.toJson());
 
     /**
      * 新建空间
