@@ -4,15 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateData;
-import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateRequest;
-import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceInfo;
-import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceRenameRequest;
+import me.chanjar.weixin.cp.bean.oa.wedrive.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 微盘测试类.
@@ -42,10 +41,33 @@ public class WxCpOaWeDriveServiceTest {
 
 
     /**
+     * 添加成员/部门
+     * https://developer.work.weixin.qq.com/document/path/93656
+     */
+    WxCpSpaceAclAddRequest spaceAclAddRequest = new WxCpSpaceAclAddRequest();
+    String uId = "WangKai";
+    String spId = "s.ww45d3e188865aca30.652091685u4h";
+    spaceAclAddRequest.setUserId(uId);
+    spaceAclAddRequest.setSpaceId(spId);
+
+    List<WxCpSpaceAclAddRequest.AuthInfo> authInfoList = new ArrayList<>();
+    // 被添加的空间成员信息
+    WxCpSpaceAclAddRequest.AuthInfo authInfo = new WxCpSpaceAclAddRequest.AuthInfo();
+    authInfo.setAuth(2);
+    authInfo.setType(1);
+    authInfo.setUserId("MiaoMiu99");
+
+    authInfoList.add(authInfo);
+    spaceAclAddRequest.setAuthInfo(authInfoList);
+
+    WxCpBaseResp wxCpBaseResp = cpService.getOaWeDriveService().spaceAclAdd(spaceAclAddRequest);
+    log.info("添加成员/部门，返回数据为：{}", wxCpBaseResp.toJson());
+
+    /**
      * 获取空间信息
      */
     WxCpSpaceInfo spaceInfo = cpService.getOaWeDriveService().spaceInfo("WangKai", "s.ww45d3e188865aca30.652091685u4h");
-    log.info("spaceInfo信息为：{}", spaceInfo.toJson());
+    log.info("获取空间信息，spaceInfo信息为：{}", spaceInfo.toJson());
 
     /**
      * 新建空间

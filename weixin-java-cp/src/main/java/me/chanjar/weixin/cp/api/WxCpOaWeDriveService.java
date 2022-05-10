@@ -3,10 +3,7 @@ package me.chanjar.weixin.cp.api;
 import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateData;
-import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceCreateRequest;
-import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceInfo;
-import me.chanjar.weixin.cp.bean.oa.wedrive.WxCpSpaceRenameRequest;
+import me.chanjar.weixin.cp.bean.oa.wedrive.*;
 
 /**
  * 企业微信微盘相关接口.
@@ -70,5 +67,18 @@ public interface WxCpOaWeDriveService {
    * @throws WxErrorException
    */
   WxCpSpaceInfo spaceInfo(@NonNull String userId, @NonNull String spaceId) throws WxErrorException;
+
+  /**
+   * 添加成员/部门
+   * 该接口用于对指定空间添加成员/部门，可一次性添加多个。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_acl_add?access_token=ACCESS_TOKEN
+   *
+   * @param request 添加成员/部门请求参数
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp spaceAclAdd(@NonNull WxCpSpaceAclAddRequest request) throws WxErrorException;
 
 }
