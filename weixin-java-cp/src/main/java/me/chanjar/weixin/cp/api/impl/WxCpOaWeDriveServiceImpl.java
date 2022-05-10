@@ -64,4 +64,11 @@ public class WxCpOaWeDriveServiceImpl implements WxCpOaWeDriveService {
     return WxCpBaseResp.fromJson(responseContent);
   }
 
+  @Override
+  public WxCpBaseResp spaceAclDel(@NonNull WxCpSpaceAclDelRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(SPACE_ACL_DEL);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
 }

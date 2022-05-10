@@ -1,5 +1,4 @@
 package me.chanjar.weixin.cp.api;
-
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
@@ -39,14 +38,40 @@ public class WxCpOaWeDriveServiceTest {
     WxCpSpaceCreateRequest wxCpSpaceCreateRequest = WxCpSpaceCreateRequest.fromJson(createSpace);
     log.info(wxCpSpaceCreateRequest.toJson());
 
+    String uId = "WangKai";
+    String spId = "s.ww45d3e188865aca30.652091685u4h";
+
+
+    /**
+     * 获取空间信息
+     */
+    WxCpSpaceInfo data = cpService.getOaWeDriveService().spaceInfo(uId, spId);
+    log.info("获取空间信息为：{}", data.toJson());
+
+    /**
+     * 移除成员/部门
+     */
+    WxCpSpaceAclDelRequest spaceAclDelRequest = new WxCpSpaceAclDelRequest();
+    spaceAclDelRequest.setUserId(uId);
+    spaceAclDelRequest.setSpaceId(spId);
+
+    // 被移除的空间成员信息
+    WxCpSpaceAclDelRequest.AuthInfo delAuthInfo = new WxCpSpaceAclDelRequest.AuthInfo();
+    delAuthInfo.setType(1);
+    delAuthInfo.setUserId("MiaoMiu99");
+
+    List<WxCpSpaceAclDelRequest.AuthInfo> delAuthInfoList = new ArrayList<>();
+    delAuthInfoList.add(delAuthInfo);
+
+    spaceAclDelRequest.setAuthInfo(delAuthInfoList);
+    WxCpBaseResp spaceAclDel = cpService.getOaWeDriveService().spaceAclDel(spaceAclDelRequest);
+    log.info("移除成员/部门，返回数据为：{}", spaceAclDel.toJson());
 
     /**
      * 添加成员/部门
      * https://developer.work.weixin.qq.com/document/path/93656
      */
     WxCpSpaceAclAddRequest spaceAclAddRequest = new WxCpSpaceAclAddRequest();
-    String uId = "WangKai";
-    String spId = "s.ww45d3e188865aca30.652091685u4h";
     spaceAclAddRequest.setUserId(uId);
     spaceAclAddRequest.setSpaceId(spId);
 

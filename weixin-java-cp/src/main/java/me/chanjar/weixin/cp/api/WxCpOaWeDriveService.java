@@ -81,4 +81,17 @@ public interface WxCpOaWeDriveService {
    */
   WxCpBaseResp spaceAclAdd(@NonNull WxCpSpaceAclAddRequest request) throws WxErrorException;
 
+  /**
+   * 移除成员/部门
+   * 该接口用于对指定空间移除成员/部门，操作者需要有移除权限。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_acl_del?access_token=ACCESS_TOKEN
+   *
+   * @param request 移除成员/部门请求参数
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp spaceAclDel(@NonNull WxCpSpaceAclDelRequest request) throws WxErrorException;
+
 }
