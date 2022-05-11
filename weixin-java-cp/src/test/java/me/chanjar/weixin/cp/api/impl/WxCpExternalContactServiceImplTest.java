@@ -12,14 +12,13 @@ import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
 import me.chanjar.weixin.cp.bean.external.msg.Attachment;
 import me.chanjar.weixin.cp.bean.external.msg.Image;
 import me.chanjar.weixin.cp.bean.external.msg.Video;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 import org.testng.collections.CollectionUtils;
 
 import static org.testng.Assert.assertNotNull;
@@ -336,5 +335,19 @@ public class WxCpExternalContactServiceImplTest {
     System.out.println(result);
     assertNotNull(result);
   }
+  @Test
+  public void testAddJoinWay() throws WxErrorException {
 
+    final String concatUserId = "HuangXiaoMing";
+
+    WxCpGroupJoinWayInfo.JoinWay joinWay = new  WxCpGroupJoinWayInfo.JoinWay();
+    joinWay.setChatIdList(Arrays.asList("wrfpBaCwAAxR-iIqIUa5vvbpZQcAexJA"));
+    joinWay.setScene(2);
+    joinWay.setAutoCreateRoom(1);
+    joinWay.setRemark("CreateDate:" + DateFormatUtils.ISO_8601_EXTENDED_DATETIME_FORMAT.format(new Date()));
+
+    WxCpGroupJoinWayInfo info = new WxCpGroupJoinWayInfo();
+    info.setJoinWay(joinWay);
+    this.wxCpService.getExternalContactService().addJoinWay(info);
+  }
 }

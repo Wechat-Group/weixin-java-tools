@@ -882,5 +882,43 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     this.mainService.post(url, o.toString());
   }
 
+  @Override
+  public WxCpGroupJoinWayResult addJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException {
+    if (wxCpGroupJoinWayInfo.getJoinWay().getChatIdList() != null && wxCpGroupJoinWayInfo.getJoinWay().getChatIdList().size() > 5) {
+      throw new WxRuntimeException("使用该配置的客户群ID列表，支持5个");
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(ADD_JOIN_WAY);
+    String responseContent = this.mainService.post(url, wxCpGroupJoinWayInfo.getJoinWay().toJson());
 
+    return WxCpGroupJoinWayResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp updateJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException {
+    if (wxCpGroupJoinWayInfo.getJoinWay().getChatIdList() != null && wxCpGroupJoinWayInfo.getJoinWay().getChatIdList().size() > 5) {
+      throw new WxRuntimeException("使用该配置的客户群ID列表，支持5个");
+    }
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_JOIN_WAY);
+    String responseContent = this.mainService.post(url, wxCpGroupJoinWayInfo.getJoinWay().toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpGroupJoinWayInfo getJoinWay(String configId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("config_id", configId);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_JOIN_WAY);
+    String responseContent = this.mainService.post(url,json);
+
+    return WxCpGroupJoinWayInfo.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp delJoinWay(@NonNull String configId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("config_id", configId);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(DEL_JOIN_WAY);
+    String responseContent = this.mainService.post(url, json);
+    return WxCpBaseResp.fromJson(responseContent);
+  }
 }

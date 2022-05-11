@@ -261,6 +261,7 @@ public interface WxCpApiPathConsts {
     String UPDATE_REMARK = "/cgi-bin/externalcontact/remark";
     String LIST_EXTERNAL_CONTACT = "/cgi-bin/externalcontact/list?userid=";
     String LIST_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/get_unassigned_list";
+
     @Deprecated
     String TRANSFER_UNASSIGNED_CONTACT = "/cgi-bin/externalcontact/transfer";
     String TRANSFER_CUSTOMER = "/cgi-bin/externalcontact/transfer_customer";
@@ -273,6 +274,10 @@ public interface WxCpApiPathConsts {
     String GROUP_CHAT_TRANSFER = "/cgi-bin/externalcontact/groupchat/transfer";
     String LIST_USER_BEHAVIOR_DATA = "/cgi-bin/externalcontact/get_user_behavior_data";
     String LIST_GROUP_CHAT_DATA = "/cgi-bin/externalcontact/groupchat/statistic";
+    String ADD_JOIN_WAY = "/cgi-bin/externalcontact/groupchat/add_join_way";
+    String GET_JOIN_WAY = "/cgi-bin/externalcontact/groupchat/get_join_way";
+    String UPDATE_JOIN_WAY = "/cgi-bin/externalcontact/groupchat/update_join_way";
+    String DEL_JOIN_WAY = "/cgi-bin/externalcontact/groupchat/del_join_way";
     String ADD_MSG_TEMPLATE = "/cgi-bin/externalcontact/add_msg_template";
     String SEND_WELCOME_MSG = "/cgi-bin/externalcontact/send_welcome_msg";
 

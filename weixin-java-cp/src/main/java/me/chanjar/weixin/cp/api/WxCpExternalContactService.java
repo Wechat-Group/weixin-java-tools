@@ -56,7 +56,6 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   WxCpContactWayInfo getContactWay(@NonNull String configId) throws WxErrorException;
-
   /**
    * 更新企业已配置的「联系我」方式
    *
@@ -170,6 +169,27 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException .
    */
   String unionidToExternalUserid(@NotNull String unionid,String openid) throws WxErrorException;
+
+  /**
+   *
+   * 配置客户群进群方式
+   * 企业可以在管理后台-客户联系中配置「加入群聊」的二维码或者小程序按钮，客户通过扫描二维码或点击小程序上的按钮，即可加入特定的客户群。
+   * 企业可通过此接口为具有客户联系功能的成员生成专属的二维码或者小程序按钮。
+   * 如果配置的是小程序按钮，需要开发者的小程序接入小程序插件。
+   * 注意:
+   * 通过API添加的配置不会在管理端进行展示，每个企业可通过API最多配置50万个「加入群聊」(与「联系我」共用50万的额度)。
+   *
+   * @param wxCpGroupJoinWayInfo
+   * @return {@link WxCpGroupJoinWayResult}
+   * @throws WxErrorException
+   */
+  WxCpGroupJoinWayResult addJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException;
+
+  WxCpBaseResp updateJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException;
+
+  WxCpGroupJoinWayInfo getJoinWay(@NonNull String configId) throws WxErrorException;
+
+  WxCpBaseResp delJoinWay( @NonNull String configId) throws WxErrorException;
 
   /**
    * 代开发应用external_userid转换
@@ -1025,4 +1045,5 @@ public interface WxCpExternalContactService {
    * @param productId 商品id
    */
   void deleteProductAlbum(String productId) throws WxErrorException;
+
 }
