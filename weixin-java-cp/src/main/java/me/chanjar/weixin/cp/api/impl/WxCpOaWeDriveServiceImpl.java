@@ -71,4 +71,21 @@ public class WxCpOaWeDriveServiceImpl implements WxCpOaWeDriveService {
     return WxCpBaseResp.fromJson(responseContent);
   }
 
+  @Override
+  public WxCpBaseResp spaceSetting(@NonNull WxCpSpaceSettingRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(SPACE_SETTING);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpSpaceShare spaceShare(@NonNull String userId, @NonNull String spaceId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(SPACE_SHARE);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("userid", userId);
+    jsonObject.addProperty("spaceid", spaceId);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpSpaceShare.fromJson(responseContent);
+  }
+
 }

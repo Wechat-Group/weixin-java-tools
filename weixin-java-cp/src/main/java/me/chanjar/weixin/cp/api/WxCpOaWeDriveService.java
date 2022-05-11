@@ -94,4 +94,31 @@ public interface WxCpOaWeDriveService {
    */
   WxCpBaseResp spaceAclDel(@NonNull WxCpSpaceAclDelRequest request) throws WxErrorException;
 
+  /**
+   * 权限管理
+   * 该接口用于修改空间权限，需要传入userid，修改权限范围继承传入用户的权限范围。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_setting?access_token=ACCESS_TOKEN
+   *
+   * @param request 权限管理请求参数
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp spaceSetting(@NonNull WxCpSpaceSettingRequest request) throws WxErrorException;
+
+  /**
+   * 获取邀请链接
+   * 该接口用于获取空间邀请分享链接。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_share?access_token=ACCESS_TOKEN
+   *
+   * @param userId
+   * @param spaceId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpSpaceShare spaceShare(@NonNull String userId, @NonNull String spaceId) throws WxErrorException;
+
 }

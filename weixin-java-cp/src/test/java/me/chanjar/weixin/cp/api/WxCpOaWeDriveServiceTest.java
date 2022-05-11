@@ -41,6 +41,26 @@ public class WxCpOaWeDriveServiceTest {
     String uId = "WangKai";
     String spId = "s.ww45d3e188865aca30.652091685u4h";
 
+    /**
+     * 权限管理
+     */
+    WxCpSpaceSettingRequest spaceSettingRequest = new WxCpSpaceSettingRequest();
+    spaceSettingRequest.setUserId(uId);
+    spaceSettingRequest.setSpaceId(spId);
+//    spaceSettingRequest.setEnableWatermark(false);
+    spaceSettingRequest.setAddMemberOnlyAdmin(true);
+    spaceSettingRequest.setEnableShareUrl(false);
+    spaceSettingRequest.setShareUrlNoApprove(true);
+    spaceSettingRequest.setShareUrlNoApproveDefaultAuth(2);
+
+    WxCpBaseResp spaceSetting = cpService.getOaWeDriveService().spaceSetting(spaceSettingRequest);
+    log.info("权限管理信息为：{}", spaceSetting.toJson());
+
+    /**
+     * 获取邀请链接
+     */
+    WxCpSpaceShare spaceShare = cpService.getOaWeDriveService().spaceShare(uId, spId);
+    log.info("获取邀请链接信息为：{}", spaceShare.toJson());
 
     /**
      * 获取空间信息
