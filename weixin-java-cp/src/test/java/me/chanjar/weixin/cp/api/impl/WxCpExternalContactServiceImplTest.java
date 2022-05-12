@@ -335,10 +335,10 @@ public class WxCpExternalContactServiceImplTest {
     System.out.println(result);
     assertNotNull(result);
   }
+
   @Test
   public void testAddJoinWay() throws WxErrorException {
 
-    final String concatUserId = "HuangXiaoMing";
 
     WxCpGroupJoinWayInfo.JoinWay joinWay = new  WxCpGroupJoinWayInfo.JoinWay();
     joinWay.setChatIdList(Arrays.asList("wrfpBaCwAAxR-iIqIUa5vvbpZQcAexJA"));
@@ -349,5 +349,38 @@ public class WxCpExternalContactServiceImplTest {
     WxCpGroupJoinWayInfo info = new WxCpGroupJoinWayInfo();
     info.setJoinWay(joinWay);
     this.wxCpService.getExternalContactService().addJoinWay(info);
+  }
+
+  @Test
+  public void testUpdateJoinWay() throws WxErrorException {
+
+    final String configId = "";
+
+    WxCpGroupJoinWayInfo.JoinWay joinWay = new  WxCpGroupJoinWayInfo.JoinWay();
+    joinWay.setConfigId(configId);
+    joinWay.setChatIdList(Arrays.asList("wrfpBaCwAAxR-iIqIUa5vvbpZQcAexJA"));
+    joinWay.setScene(2);
+    joinWay.setAutoCreateRoom(1);
+    joinWay.setRemark("CreateDate:" + DateFormatUtils.ISO_8601_EXTENDED_DATETIME_FORMAT.format(new Date()));
+
+    WxCpGroupJoinWayInfo info = new WxCpGroupJoinWayInfo();
+    info.setJoinWay(joinWay);
+    this.wxCpService.getExternalContactService().updateJoinWay(info);
+  }
+
+  @Test
+  public void testDelJoinWay() throws WxErrorException {
+
+    final String configId = "";
+
+    this.wxCpService.getExternalContactService().delJoinWay(configId);
+  }
+
+  @Test
+  public void testGetJoinWay() throws WxErrorException {
+
+    final String configId = "";
+
+    this.wxCpService.getExternalContactService().getJoinWay(configId);
   }
 }

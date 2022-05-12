@@ -178,17 +178,40 @@ public interface WxCpExternalContactService {
    * 如果配置的是小程序按钮，需要开发者的小程序接入小程序插件。
    * 注意:
    * 通过API添加的配置不会在管理端进行展示，每个企业可通过API最多配置50万个「加入群聊」(与「联系我」共用50万的额度)。
-   *
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/92229
    * @param wxCpGroupJoinWayInfo
    * @return {@link WxCpGroupJoinWayResult}
    * @throws WxErrorException
    */
   WxCpGroupJoinWayResult addJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException;
 
+  /**
+   *更新客户群进群方式配置
+   * 更新进群方式配置信息。注意：使用覆盖的方式更新。
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/92229
+   * @param wxCpGroupJoinWayInfo
+   * @return
+   * @throws WxErrorException
+   */
   WxCpBaseResp updateJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException;
 
+  /**
+   * 获取客户群进群方式配置
+   * 获取企业配置的群二维码或小程序按钮。
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/92229
+   * @param configId
+   * @return
+   * @throws WxErrorException
+   */
   WxCpGroupJoinWayInfo getJoinWay(@NonNull String configId) throws WxErrorException;
 
+  /**
+   * 删除客户群进群方式配置
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/92229
+   * @param configId
+   * @return
+   * @throws WxErrorException
+   */
   WxCpBaseResp delJoinWay( @NonNull String configId) throws WxErrorException;
 
   /**
