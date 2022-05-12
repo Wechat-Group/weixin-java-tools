@@ -153,6 +153,8 @@ public interface WxCpApiPathConsts {
     String SPACE_ACL_DEL = "/cgi-bin/wedrive/space_acl_del";
     String SPACE_SETTING = "/cgi-bin/wedrive/space_setting";
     String SPACE_SHARE = "/cgi-bin/wedrive/space_share";
+    String FILE_LIST = "/cgi-bin/wedrive/file_list";
+    String FILE_UPLOAD = "/cgi-bin/wedrive/file_upload";
 
     /**
      * 审批流程引擎

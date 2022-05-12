@@ -121,4 +121,30 @@ public interface WxCpOaWeDriveService {
    */
   WxCpSpaceShare spaceShare(@NonNull String userId, @NonNull String spaceId) throws WxErrorException;
 
+  /**
+   * 获取文件列表
+   * 该接口用于获取指定地址下的文件列表。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_list?access_token=ACCESS_TOKEN
+   *
+   * @param request 获取文件列表请求参数
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpFileList fileList(@NonNull WxCpFileListRequest request) throws WxErrorException;
+
+  /**
+   * 上传文件
+   * 该接口用于向微盘中的指定位置上传文件。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_upload?access_token=ACCESS_TOKEN
+   *
+   * @param request 上传文件请求参数
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpFileUpload fileUpload(@NonNull WxCpFileUploadRequest request) throws WxErrorException;
+
 }

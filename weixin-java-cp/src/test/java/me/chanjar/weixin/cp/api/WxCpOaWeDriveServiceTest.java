@@ -1,13 +1,16 @@
 package me.chanjar.weixin.cp.api;
+
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.wedrive.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import org.testng.annotations.Test;
+import sun.misc.BASE64Encoder;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ public class WxCpOaWeDriveServiceTest {
   private static WxCpService cpService;
 
   @Test
-  public void test() throws WxErrorException {
+  public void test() throws Exception {
 
     InputStream inputStream = ClassLoader.getSystemResourceAsStream("test-config.xml");
     WxCpDemoInMemoryConfigStorage config = WxCpDemoInMemoryConfigStorage.fromXml(inputStream);
@@ -40,6 +43,43 @@ public class WxCpOaWeDriveServiceTest {
 
     String uId = "WangKai";
     String spId = "s.ww45d3e188865aca30.652091685u4h";
+    // 空间的文件id
+    String fileId = "s.ww45d3e188865aca30.652091685u4h_f.652344507ysDL";
+
+    /**
+     * 上传文件
+     */
+    WxCpFileUploadRequest fileUploadRequest = new WxCpFileUploadRequest();
+    fileUploadRequest.setUserId(uId);
+    fileUploadRequest.setSpaceId(spId);
+    fileUploadRequest.setFatherId(spId);
+    fileUploadRequest.setFileName("第一个文件");
+
+    // 将文件转成base64字符串
+    File file = new File("D:/info.log.2022-05-07.0.log");
+    FileInputStream inputFile = new FileInputStream(file);
+    byte[] buffer = new byte[(int)file.length()];
+    inputFile.read(buffer);
+    inputFile.close();
+    String encodeBase64Content = new BASE64Encoder().encode(buffer);
+    fileUploadRequest.setFileBase64Content(encodeBase64Content);
+
+    WxCpFileUpload fileUpload = cpService.getOaWeDriveService().fileUpload(fileUploadRequest);
+    log.info("上传文件为：{}", fileUpload.toJson());
+
+    /**
+     * 获取文件列表
+     */
+    WxCpFileListRequest fileListRequest = new WxCpFileListRequest();
+    fileListRequest.setUserId(uId);
+    fileListRequest.setSpaceId(spId);
+    fileListRequest.setFatherId(spId);
+    fileListRequest.setSortType(1);
+    fileListRequest.setStart(0);
+    fileListRequest.setLimit(100);
+
+    WxCpFileList fileList = cpService.getOaWeDriveService().fileList(fileListRequest);
+    log.info("获取文件列表为：{}", fileList.toJson());
 
     /**
      * 权限管理
