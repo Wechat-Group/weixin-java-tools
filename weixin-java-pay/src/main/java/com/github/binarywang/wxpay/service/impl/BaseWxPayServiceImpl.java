@@ -78,6 +78,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final PartnerTransferService partnerTransferService = new PartnerTransferServiceImpl(this);
   private final PayrollService payrollService = new PayrollServiceImpl(this);
   private final ComplaintService complaintsService = new ComplaintServiceImpl(this);
+  private final BankService bankService = new BankServiceImpl(this);
 
   protected Map<String, WxPayConfig> configMap;
 
@@ -1261,4 +1262,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     return complaintsService;
   }
 
+  @Override
+  public BankService getBankService() {
+    return bankService;
+  }
 }

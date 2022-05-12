@@ -1348,4 +1348,11 @@ public interface WxPayService {
    * @return the complaints service
    */
   ComplaintService getComplaintsService();
+
+
+  /**
+   * 获取银行组件服务
+   * @return  银行组件服务
+   */
+  BankService getBankService();
 }
