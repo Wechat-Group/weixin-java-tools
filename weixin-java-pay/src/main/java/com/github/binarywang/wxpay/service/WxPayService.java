@@ -165,6 +165,17 @@ public interface WxPayService {
   String getV3(String url) throws WxPayException;
 
   /**
+   * 发送get请求，得到响应字符串.
+   * <p>
+   * 部分字段会包含敏感信息，所以在提交前需要在请求头中会包含"Wechatpay-Serial"信息
+   *
+   * @param url        请求地址
+   * @return 返回请求结果字符串 string
+   * @throws WxPayException the wx pay exception
+   */
+  String getV3WithWechatPaySerial(String url) throws WxPayException;
+
+  /**
    * 发送下载 V3请求，得到响应流.
    *
    * @param url 请求地址
