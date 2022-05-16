@@ -155,6 +155,9 @@ public interface WxCpApiPathConsts {
     String SPACE_SHARE = "/cgi-bin/wedrive/space_share";
     String FILE_LIST = "/cgi-bin/wedrive/file_list";
     String FILE_UPLOAD = "/cgi-bin/wedrive/file_upload";
+    String FILE_DOWNLOAD = "/cgi-bin/wedrive/file_download";
+    String FILE_RENAME = "/cgi-bin/wedrive/file_rename";
+    String FILE_CREATE = "/cgi-bin/wedrive/file_create";
 
     /**
      * 审批流程引擎

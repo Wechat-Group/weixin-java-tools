@@ -45,6 +45,19 @@ public class WxCpOaWeDriveServiceTest {
     String spId = "s.ww45d3e188865aca30.652091685u4h";
     // 空间的文件id
     String fileId = "s.ww45d3e188865aca30.652091685u4h_f.652344507ysDL";
+    String fileId2 = "s.ww45d3e188865aca30.652091685u4h_f.652696024TU4P";
+
+    /**
+     * 新建文件/微文档
+     */
+    WxCpFileCreate fileCreate = cpService.getOaWeDriveService().fileCreate(uId, spId, spId, 3, "新建微文档1");
+    log.info("新建文件/微文档：{}", fileCreate.toJson());
+
+    /**
+     * 下载文件
+     */
+    WxCpFileDownload fileDownload = cpService.getOaWeDriveService().fileDownload(uId, fileId);
+    log.info("下载文件为：{}", fileDownload.toJson());
 
     /**
      * 上传文件
@@ -57,6 +70,7 @@ public class WxCpOaWeDriveServiceTest {
 
     // 将文件转成base64字符串
     File file = new File("D:/info.log.2022-05-07.0.log");
+//    File file = new File("D:/16.png");
     FileInputStream inputFile = new FileInputStream(file);
     byte[] buffer = new byte[(int)file.length()];
     inputFile.read(buffer);
@@ -66,6 +80,12 @@ public class WxCpOaWeDriveServiceTest {
 
     WxCpFileUpload fileUpload = cpService.getOaWeDriveService().fileUpload(fileUploadRequest);
     log.info("上传文件为：{}", fileUpload.toJson());
+
+    /**
+     * 重命名文件
+     */
+    WxCpFileRename fileRename = cpService.getOaWeDriveService().fileRename(uId, fileUpload.getFileId(), "新的名字呢");
+    log.info("重命名文件：{}", fileRename.toJson());
 
     /**
      * 获取文件列表

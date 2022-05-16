@@ -147,4 +147,51 @@ public interface WxCpOaWeDriveService {
    */
   WxCpFileUpload fileUpload(@NonNull WxCpFileUploadRequest request) throws WxErrorException;
 
+  /**
+   * 下载文件
+   * 该接口用于下载文件，请求的userid需有下载权限。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_download?access_token=ACCESS_TOKEN
+   *
+   * @param userId
+   * @param fileId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpFileDownload fileDownload(@NonNull String userId, @NonNull String fileId) throws WxErrorException;
+
+  /**
+   * 重命名文件
+   * 该接口用于对指定文件进行重命名。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_rename?access_token=ACCESS_TOKEN
+   *
+   * @param userId
+   * @param fileId
+   * @param newName
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpFileRename fileRename(@NonNull String userId, @NonNull String fileId, @NonNull String newName) throws WxErrorException;
+
+  /**
+   * 新建文件/微文档
+   * 该接口用于在微盘指定位置新建文件、微文档。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_create?access_token=ACCESS_TOKEN
+   *
+   * @param userId   操作者userid
+   * @param spaceId  空间spaceid
+   * @param fatherId 父目录fileid, 在根目录时为空间spaceid
+   * @param fileType 文件类型, 1:文件夹 3:微文档(文档) 4:微文档(表格)
+   * @param fileName 文件名字
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpFileCreate fileCreate(@NonNull String userId, @NonNull String spaceId,
+                            @NonNull String fatherId, @NonNull Integer fileType, @NonNull String fileName) throws WxErrorException;
+
 }
