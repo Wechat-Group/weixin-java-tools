@@ -418,6 +418,8 @@ public class WxMaApiUrlConstants {
       String ORDER_ADD = "https://api.weixin.qq.com/shop/order/add";
       String ORDER_PAY = "https://api.weixin.qq.com/shop/order/pay";
       String ORDER_GET = "https://api.weixin.qq.com/shop/order/get";
+      String ORDER_GET_LIST = "https://api.weixin.qq.com/shop/order/get_list";
+      String ORDER_GET_PAYMENT_PARAMS = "https://api.weixin.qq.com/shop/order/getpaymentparams";
     }
 
     interface Register {
