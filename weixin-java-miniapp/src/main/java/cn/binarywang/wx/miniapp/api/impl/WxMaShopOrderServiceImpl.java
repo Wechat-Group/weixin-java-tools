@@ -28,7 +28,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Order.*
 @Slf4j
 public class WxMaShopOrderServiceImpl implements WxMaShopOrderService {
 
-  private final Format dateFormat = FastDateFormat.getInstance("yyyy-MM-dd  HH:mm:ss");
+  private final Format dateFormat = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss");
 
   private static final String ERR_CODE = "errcode";
   private static final String MATCH_KEY = "is_matched";
