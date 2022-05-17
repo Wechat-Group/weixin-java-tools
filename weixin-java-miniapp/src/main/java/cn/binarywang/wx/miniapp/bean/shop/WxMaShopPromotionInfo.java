@@ -13,6 +13,7 @@ import java.io.Serializable;
  **/
 @Data
 public class WxMaShopPromotionInfo implements Serializable {
+  private static final long serialVersionUID = -812058443344709898L;
   /**
    * 推广员唯一ID
    */
