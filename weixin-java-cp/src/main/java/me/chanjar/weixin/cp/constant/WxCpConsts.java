@@ -374,6 +374,12 @@ public class WxCpConsts {
      * 图文消息（点击跳转到外链）.
      */
     public static final String NEWS = "news";
+
+    /**
+     * 文件类型消息.
+     */
+    public static final String FILE = "file";
+
   }
 
   /**

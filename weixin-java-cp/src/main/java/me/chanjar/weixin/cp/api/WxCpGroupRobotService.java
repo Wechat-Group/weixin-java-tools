@@ -88,4 +88,13 @@ public interface WxCpGroupRobotService {
    * @throws WxErrorException 异常
    */
   void sendNews(String webhookUrl, List<NewArticle> articleList) throws WxErrorException;
+
+  /**
+   * 发送文件类型的消息
+   *
+   * @param webhookUrl  webhook地址
+   * @param mediaId 文件id
+   * @throws WxErrorException 异常
+   */
+  void sendFile(String webhookUrl, String mediaId) throws WxErrorException;
 }

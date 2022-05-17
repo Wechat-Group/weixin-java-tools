@@ -1,7 +1,6 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpGroupRobotService;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -14,8 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 
 import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType;
-import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.MARKDOWN;
-import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.TEXT;
 
 /**
  * 企业微信群机器人消息发送api 实现
@@ -59,7 +56,7 @@ public class WxCpGroupRobotServiceImpl implements WxCpGroupRobotService {
   @Override
   public void sendText(String webhookUrl, String content, List<String> mentionedList, List<String> mobileList) throws WxErrorException {
     this.cpService.postWithoutToken(webhookUrl, new WxCpGroupRobotMessage()
-      .setMsgType(TEXT)
+      .setMsgType(GroupRobotMsgType.TEXT)
       .setContent(content)
       .setMentionedList(mentionedList)
       .setMentionedMobileList(mobileList)
@@ -69,7 +66,7 @@ public class WxCpGroupRobotServiceImpl implements WxCpGroupRobotService {
   @Override
   public void sendMarkdown(String webhookUrl, String content) throws WxErrorException {
     this.cpService.postWithoutToken(webhookUrl, new WxCpGroupRobotMessage()
-      .setMsgType(MARKDOWN)
+      .setMsgType(GroupRobotMsgType.MARKDOWN)
       .setContent(content)
       .toJson());
   }
@@ -87,6 +84,13 @@ public class WxCpGroupRobotServiceImpl implements WxCpGroupRobotService {
     this.cpService.postWithoutToken(webhookUrl, new WxCpGroupRobotMessage()
       .setMsgType(GroupRobotMsgType.NEWS)
       .setArticles(articleList).toJson());
+  }
+
+  @Override
+  public void sendFile(String webhookUrl, String mediaId) throws WxErrorException {
+    this.cpService.postWithoutToken(webhookUrl, new WxCpGroupRobotMessage()
+      .setMsgType(GroupRobotMsgType.FILE)
+      .setMediaId(mediaId).toJson());
   }
 
 }
