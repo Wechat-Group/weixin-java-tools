@@ -10,6 +10,8 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.wedrive.*;
 
+import java.util.List;
+
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 
 /**
@@ -117,7 +119,7 @@ public class WxCpOaWeDriveServiceImpl implements WxCpOaWeDriveService {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_RENAME);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("userid", userId);
-    jsonObject.addProperty("fileiid", fileId);
+    jsonObject.addProperty("fileid", fileId);
     jsonObject.addProperty("new_name", newName);
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
     return WxCpFileRename.fromJson(responseContent);
@@ -134,6 +136,31 @@ public class WxCpOaWeDriveServiceImpl implements WxCpOaWeDriveService {
     jsonObject.addProperty("file_name", fileName);
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
     return WxCpFileCreate.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpFileMove fileMove(@NonNull WxCpFileMoveRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_MOVE);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpFileMove.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp fileDelete(@NonNull String userId, @NonNull List<String> fileId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_DELETE);
+    WxCpFileDeleteRequest request = new WxCpFileDeleteRequest(userId, fileId);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpFileInfo fileInfo(@NonNull String userId, @NonNull String fileId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_INFO);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("userid", userId);
+    jsonObject.addProperty("fileid", fileId);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpFileInfo.fromJson(responseContent);
   }
 
 }

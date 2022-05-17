@@ -5,6 +5,8 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.wedrive.*;
 
+import java.util.List;
+
 /**
  * 企业微信微盘相关接口.
  * https://developer.work.weixin.qq.com/document/path/93654
@@ -193,5 +195,46 @@ public interface WxCpOaWeDriveService {
    */
   WxCpFileCreate fileCreate(@NonNull String userId, @NonNull String spaceId,
                             @NonNull String fatherId, @NonNull Integer fileType, @NonNull String fileName) throws WxErrorException;
+
+  /**
+   * 移动文件
+   * 该接口用于将文件移动到指定位置。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_move?access_token=ACCESS_TOKEN
+   *
+   * @param request 移动文件的请求参数
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpFileMove fileMove(@NonNull WxCpFileMoveRequest request) throws WxErrorException;
+
+  /**
+   * 删除文件
+   * 该接口用于删除指定文件。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_delete?access_token=ACCESS_TOKEN
+   *
+   * @param userId 操作者userid
+   * @param fileId 文件fileid列表
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp fileDelete(@NonNull String userId, @NonNull List<String> fileId) throws WxErrorException;
+
+  /**
+   * 文件信息
+   * 该接口用于获取指定文件的信息。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_info?access_token=ACCESS_TOKEN
+   *
+   * @param userId
+   * @param fileId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpFileInfo fileInfo(@NonNull String userId, @NonNull String fileId) throws WxErrorException;
 
 }

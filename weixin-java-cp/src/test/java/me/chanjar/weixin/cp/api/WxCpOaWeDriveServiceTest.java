@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.api;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
@@ -46,6 +47,33 @@ public class WxCpOaWeDriveServiceTest {
     // 空间的文件id
     String fileId = "s.ww45d3e188865aca30.652091685u4h_f.652344507ysDL";
     String fileId2 = "s.ww45d3e188865aca30.652091685u4h_f.652696024TU4P";
+
+
+    /**
+     * 删除文件
+     */
+    ArrayList<String> fileIds = Lists.newArrayList();
+    fileIds.add(fileId);
+    WxCpBaseResp fileDelete = cpService.getOaWeDriveService().fileDelete(uId, fileIds);
+    log.info("删除文件数据为：{}", fileDelete.toJson());
+
+    /**
+     * 文件信息
+     */
+    WxCpFileInfo fileInfo = cpService.getOaWeDriveService().fileInfo(uId, fileId);
+    log.info("fileInfo数据为：{}", fileInfo.toJson());
+
+    /**
+     * 移动文件
+     */
+    WxCpFileMoveRequest fileMoveRequest = new WxCpFileMoveRequest();
+    fileMoveRequest.setUserId(uId);
+    fileMoveRequest.setFatherId(spId);
+    fileMoveRequest.setReplace(true);
+    fileMoveRequest.setFileId(new String[]{fileId});
+
+    WxCpFileMove fileMove = cpService.getOaWeDriveService().fileMove(fileMoveRequest);
+    log.info("fileMove数据为：{}", fileMove.toJson());
 
     /**
      * 新建文件/微文档
