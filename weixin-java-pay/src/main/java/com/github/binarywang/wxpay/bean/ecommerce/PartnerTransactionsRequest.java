@@ -1,6 +1,8 @@
 package com.github.binarywang.wxpay.bean.ecommerce;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +19,9 @@ import java.util.List;
  * @author cloudX
  */
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class PartnerTransactionsRequest implements Serializable {
   private static final long serialVersionUID = -1550405819444680465L;
 
@@ -277,6 +281,7 @@ public class PartnerTransactionsRequest implements Serializable {
 
   @Data
   @NoArgsConstructor
+  @AllArgsConstructor
   public static class Amount implements Serializable {
     private static final long serialVersionUID = -4967636398225864273L;
 
@@ -312,6 +317,7 @@ public class PartnerTransactionsRequest implements Serializable {
 
   @Data
   @NoArgsConstructor
+  @AllArgsConstructor
   public static class Payer implements Serializable {
     private static final long serialVersionUID = -3946401119476159971L;
 

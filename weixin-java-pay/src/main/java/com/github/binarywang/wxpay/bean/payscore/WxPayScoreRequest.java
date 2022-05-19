@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
@@ -17,7 +18,7 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
  * @date 2020/5/12 16:36
  */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
@@ -82,6 +83,6 @@ public class WxPayScoreRequest implements Serializable {
   @SerializedName("detail")
   private Detail detail;
   @SerializedName("authorization_code")
-  private  String authorizationCode;
+  private String authorizationCode;
 
 }
