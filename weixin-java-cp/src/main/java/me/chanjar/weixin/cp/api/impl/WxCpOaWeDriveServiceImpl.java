@@ -154,6 +154,20 @@ public class WxCpOaWeDriveServiceImpl implements WxCpOaWeDriveService {
   }
 
   @Override
+  public WxCpBaseResp fileAclAdd(@NonNull WxCpFileAclAddRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_ACL_ADD);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp fileAclDel(@NonNull WxCpFileAclDelRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_ACL_DEL);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
   public WxCpFileInfo fileInfo(@NonNull String userId, @NonNull String fileId) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_INFO);
     JsonObject jsonObject = new JsonObject();

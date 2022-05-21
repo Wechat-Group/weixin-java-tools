@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.api;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.wedrive.*;
@@ -48,6 +49,42 @@ public class WxCpOaWeDriveServiceTest {
     String fileId = "s.ww45d3e188865aca30.652091685u4h_f.652344507ysDL";
     String fileId2 = "s.ww45d3e188865aca30.652091685u4h_f.652696024TU4P";
 
+    /**
+     * 删除指定人
+     */
+    WxCpFileAclDelRequest aclDelRequest = new WxCpFileAclDelRequest();
+    aclDelRequest.setUserId(uId);
+    aclDelRequest.setFileId(fileId2);
+
+    ArrayList<WxCpFileAclDelRequest.AuthInfo> aclDelList = Lists.newArrayList();
+
+    WxCpFileAclDelRequest.AuthInfo aclDelAuthInfo = new WxCpFileAclDelRequest.AuthInfo();
+    aclDelAuthInfo.setType(1);
+    aclDelAuthInfo.setUserId(uId);
+
+    aclDelList.add(aclDelAuthInfo);
+    aclDelRequest.setAuthInfo(aclDelList);
+
+    WxCpBaseResp aclDel = cpService.getOaWeDriveService().fileAclDel(aclDelRequest);
+    log.info("删除指定人返回结果为：{}", aclDel.toJson());
+
+    /**
+     * 新增指定人
+     */
+    WxCpFileAclAddRequest fileAclAdd = new WxCpFileAclAddRequest();
+    fileAclAdd.setUserId(uId);
+    fileAclAdd.setFileId(fileId2);
+    var authInfoData = new WxCpFileAclAddRequest.AuthInfo();
+    authInfoData.setType(1);
+    authInfoData.setAuth(1);
+    authInfoData.setUserId(uId);
+
+    ArrayList<WxCpFileAclAddRequest.AuthInfo> authList = Lists.newArrayList();
+    authList.add(authInfoData);
+    fileAclAdd.setAuthInfo(authList);
+
+    WxCpBaseResp result = cpService.getOaWeDriveService().fileAclAdd(fileAclAdd);
+    log.info("返回结果为：{}", result.toJson());
 
     /**
      * 删除文件

@@ -161,6 +161,8 @@ public interface WxCpApiPathConsts {
     String FILE_MOVE = "/cgi-bin/wedrive/file_move";
     String FILE_DELETE = "/cgi-bin/wedrive/file_delete";
     String FILE_INFO = "/cgi-bin/wedrive/file_info";
+    String FILE_ACL_ADD = "/cgi-bin/wedrive/file_acl_add";
+    String FILE_ACL_DEL = "/cgi-bin/wedrive/file_acl_del";
 
     /**
      * 审批流程引擎

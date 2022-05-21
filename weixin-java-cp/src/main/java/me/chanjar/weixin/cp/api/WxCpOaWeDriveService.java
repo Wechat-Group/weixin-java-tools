@@ -224,6 +224,32 @@ public interface WxCpOaWeDriveService {
   WxCpBaseResp fileDelete(@NonNull String userId, @NonNull List<String> fileId) throws WxErrorException;
 
   /**
+   * 新增指定人
+   * 该接口用于对指定文件添加指定人/部门。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_acl_add?access_token=ACCESS_TOKEN
+   *
+   * @param request 新增指定人请求参数
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp fileAclAdd(@NonNull WxCpFileAclAddRequest request) throws WxErrorException;
+
+  /**
+   * 删除指定人
+   * 该接口用于删除指定文件的指定人/部门。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_acl_del?access_token=ACCESS_TOKEN
+   *
+   * @param request 请求参数
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp fileAclDel(@NonNull WxCpFileAclDelRequest request) throws WxErrorException;
+
+  /**
    * 文件信息
    * 该接口用于获取指定文件的信息。
    * <p>
