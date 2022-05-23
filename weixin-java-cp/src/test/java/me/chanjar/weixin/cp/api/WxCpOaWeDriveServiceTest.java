@@ -9,12 +9,12 @@ import me.chanjar.weixin.cp.bean.oa.wedrive.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import org.testng.annotations.Test;
-import sun.misc.BASE64Encoder;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -140,7 +140,7 @@ public class WxCpOaWeDriveServiceTest {
     byte[] buffer = new byte[(int)file.length()];
     inputFile.read(buffer);
     inputFile.close();
-    String encodeBase64Content = new BASE64Encoder().encode(buffer);
+    String encodeBase64Content = Base64.getEncoder().encodeToString(buffer);
     fileUploadRequest.setFileBase64Content(encodeBase64Content);
 
     WxCpFileUpload fileUpload = cpService.getOaWeDriveService().fileUpload(fileUploadRequest);

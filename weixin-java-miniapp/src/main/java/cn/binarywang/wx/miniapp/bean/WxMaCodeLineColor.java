@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -12,6 +13,7 @@ import lombok.Data;
  * @author Element
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class WxMaCodeLineColor {
   private String r = "0", g = "0", b = "0";
