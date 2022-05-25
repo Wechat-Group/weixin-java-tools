@@ -7,6 +7,7 @@ import lombok.Data;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.api.WxMessageDuplicateChecker;
 import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
+import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateCheckerSingleton;
 import me.chanjar.weixin.common.session.InternalSession;
 import me.chanjar.weixin.common.session.InternalSessionManager;
 import me.chanjar.weixin.common.session.StandardSessionManager;
@@ -48,7 +49,7 @@ public class WxMaMessageRouter {
       0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
-    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+    this.messageDuplicateChecker = WxMessageInMemoryDuplicateCheckerSingleton.getInstance();
   }
 
   /**
@@ -59,7 +60,7 @@ public class WxMaMessageRouter {
     this.executorService = executorService;
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
-    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+    this.messageDuplicateChecker = WxMessageInMemoryDuplicateCheckerSingleton.getInstance();
   }
 
   /**
