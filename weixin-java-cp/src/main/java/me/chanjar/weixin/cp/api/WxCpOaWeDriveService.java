@@ -250,6 +250,36 @@ public interface WxCpOaWeDriveService {
   WxCpBaseResp fileAclDel(@NonNull WxCpFileAclDelRequest request) throws WxErrorException;
 
   /**
+   * 分享设置
+   * 该接口用于文件的分享设置。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_setting?access_token=ACCESS_TOKEN
+   *
+   * @param userId
+   * @param fileId
+   * @param authScope
+   * @param auth
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp fileSetting(@NonNull String userId, @NonNull String fileId, @NonNull Integer authScope, Integer auth) throws WxErrorException;
+
+  /**
+   * 获取分享链接
+   * 该接口用于获取文件的分享链接。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_share?access_token=ACCESS_TOKEN
+   *
+   * @param userId
+   * @param fileId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpFileShare fileShare(@NonNull String userId, @NonNull String fileId) throws WxErrorException;
+
+  /**
    * 文件信息
    * 该接口用于获取指定文件的信息。
    * <p>

@@ -49,6 +49,19 @@ public class WxCpOaWeDriveServiceTest {
     String fileId = "s.ww45d3e188865aca30.652091685u4h_f.652344507ysDL";
     String fileId2 = "s.ww45d3e188865aca30.652091685u4h_f.652696024TU4P";
 
+
+    /**
+     * 获取分享链接
+     */
+    WxCpFileShare fileShare = cpService.getOaWeDriveService().fileShare(uId, fileId2);
+    log.info("获取分享链接返回结果为：{}", fileShare.toJson());
+
+    /**
+     * 分享设置
+     */
+    WxCpBaseResp fileSetting = cpService.getOaWeDriveService().fileSetting(uId, fileId2, 2, 1);
+    log.info("分享设置返回结果为：{}", fileSetting.toJson());
+
     /**
      * 删除指定人
      */
