@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 微信V3接口
@@ -46,7 +47,6 @@ public class ProfitSharingUnfreezeResult implements Serializable {
   @SerializedName("order_id")
   private String orderId;
 
-
   /**
    * <pre>
    * 字段名：分账单状态
@@ -58,6 +58,12 @@ public class ProfitSharingUnfreezeResult implements Serializable {
    */
   @SerializedName("state")
   private String state;
+
+  /**
+   * 分账接收方列表
+   */
+  @SerializedName("receivers")
+  private List<Receiver> receivers;
 
   @Data
   public static class Receiver implements Serializable {
