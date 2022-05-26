@@ -201,6 +201,14 @@ public class EcommerceServiceImpl implements EcommerceService {
   }
 
   @Override
+  public ProfitSharingOrdersUnSplitAmountResult queryProfitSharingOrdersUnsplitAmount(ProfitSharingOrdersUnSplitAmountRequest request) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/profitsharing/orders/%s/amounts",
+      this.payService.getPayBaseUrl(), request.getTransactionId());
+    String response = this.payService.getV3(url);
+    return GSON.fromJson(response, ProfitSharingOrdersUnSplitAmountResult.class);
+  }
+
+  @Override
   public ProfitSharingReceiverResult addReceivers(ProfitSharingReceiverRequest request) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/profitsharing/receivers/add", this.payService.getPayBaseUrl());
     String response = this.payService.postV3(url, GSON.toJson(request));

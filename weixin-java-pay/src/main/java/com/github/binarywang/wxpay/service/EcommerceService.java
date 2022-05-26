@@ -254,6 +254,18 @@ public interface EcommerceService {
 
   /**
    * <pre>
+   * 查询订单剩余待分金额API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_4_9.shtml
+   * </pre>
+   *
+   * @param request 查询订单剩余待分金额请求
+   * @return 返回数据 profit sharing UnSplitAmount result
+   * @throws WxPayException the wx pay exception
+   */
+  ProfitSharingOrdersUnSplitAmountResult queryProfitSharingOrdersUnsplitAmount(ProfitSharingOrdersUnSplitAmountRequest request) throws WxPayException;
+
+  /**
+   * <pre>
    * 添加分账接收方API
    * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_7.shtml
    * </pre>
