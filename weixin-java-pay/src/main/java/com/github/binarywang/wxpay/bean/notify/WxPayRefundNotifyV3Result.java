@@ -184,7 +184,7 @@ public class WxPayRefundNotifyV3Result implements Serializable {
      * </pre>
      */
     @SerializedName(value = "refund")
-    private String refund;
+    private Integer refund;
     /**
      * <pre>
      * 字段名：用户支付金额
@@ -210,6 +210,6 @@ public class WxPayRefundNotifyV3Result implements Serializable {
      * </pre>
      */
     @SerializedName(value = "payer_refund")
-    private String payerRefund;
+    private Integer payerRefund;
   }
 }
