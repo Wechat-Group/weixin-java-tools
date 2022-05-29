@@ -238,10 +238,10 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
     public void lock() {
       try (Jedis jedis = getConfiguredJedis()) {
 
-        if (!tryGetDistributedLock(jedis)) {
+        if (!acquire(jedis)) {
           throw new WxRuntimeException("acquire timeouted");
         }
-      } catch (Exception e) {
+      } catch (InterruptedException e) {
         throw new WxRuntimeException("lock failed", e);
       }
     }
@@ -250,7 +250,7 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
     @Override
     public void lockInterruptibly() throws InterruptedException {
       try (Jedis jedis = getConfiguredJedis()) {
-        if (!tryGetDistributedLock(jedis)) {
+        if (!acquire(jedis)) {
           throw new WxRuntimeException("acquire timeouted");
         }
       }
@@ -259,8 +259,8 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
     @Override
     public boolean tryLock() {
       try (Jedis jedis = getConfiguredJedis()) {
-        return tryGetDistributedLock(jedis);
-      } catch (Exception e) {
+        return acquire(jedis);
+      } catch (InterruptedException e) {
         throw new WxRuntimeException("lock failed", e);
       }
     }
@@ -268,7 +268,7 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
     @Override
     public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
       try (Jedis jedis = getConfiguredJedis()) {
-        return tryGetDistributedLock(jedis);
+        return acquire(jedis);
       }
     }
 
@@ -284,6 +284,28 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
       throw new WxRuntimeException("unsupported method");
     }
 
+
+    /**
+     * 尝试获取锁 有限次数的重试
+     *
+     * @param jedis
+     * @return
+     * @throws InterruptedException
+     */
+    private Boolean acquire(Jedis jedis) throws InterruptedException {
+      Integer i = 0;
+      do {
+        i++;
+        boolean locked = tryGetDistributedLock(jedis);
+        if (locked) {
+          return true;
+        } else {
+          Thread.sleep(100L);
+        }
+      } while (i < 20);
+      return false;
+    }
+
     /**
      * 尝试获取锁
      *
@@ -294,10 +316,7 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
       Long millisecondsToExpire = 2L;
       Long threadId = Thread.currentThread().getId();
       String result = jedis.set(this.lockKey, threadId.toString(), SetParams.setParams().nx().px(millisecondsToExpire));
-      if (LOCK_SUCCESS.equals(result)) {
-        return Boolean.TRUE;
-      }
-      return Boolean.FALSE;
+      return LOCK_SUCCESS.equals(result);
     }
 
 
@@ -307,14 +326,11 @@ public abstract class AbstractWxMaRedisConfig extends WxMaDefaultConfigImpl {
      * @param jedis
      * @return 是否释放成功
      */
-    public Boolean releaseDistributedLock(Jedis jedis) {
+    private Boolean releaseDistributedLock(Jedis jedis) {
       Long threadId = Thread.currentThread().getId();
       String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
       Object result = jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList(threadId.toString()));
-      if (RELEASE_SUCCESS.equals(result)) {
-        return Boolean.TRUE;
-      }
-      return Boolean.FALSE;
+      return RELEASE_SUCCESS.equals(result);
     }
 
   }
