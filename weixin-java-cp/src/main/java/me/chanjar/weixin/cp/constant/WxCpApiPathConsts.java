@@ -173,6 +173,11 @@ public interface WxCpApiPathConsts {
     String GET_OPEN_APPROVAL_DATA = "/cgi-bin/corp/getopenapprovaldata";
   }
 
+  interface School {
+    String GET_HEALTH_REPORT_STAT = "/cgi-bin/health/get_health_report_stat";
+    String GET_REPORT_JOBIDS = "/cgi-bin/health/get_report_jobids";
+  }
+
   interface Living {
     String GET_LIVING_CODE = "/cgi-bin/living/get_living_code";
     String GET_LIVING_INFO = "/cgi-bin/living/get_living_info?livingid=";

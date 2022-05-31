@@ -168,7 +168,14 @@ public class WxCpMsgAuditTest {
                 return;
             }
 
-            // 拉取媒体文件
+            /**
+             * 拉取媒体文件
+             *
+             * 注意：
+             * 1、根据上面返回的文件类型，拼接好存放文件的绝对路径即可。此时绝对路径写入文件流，来达到获取媒体文件的目的。
+             * 2、拉取完媒体文件之后，此时文件已经存在绝对路径，可以通过mq异步上传到对象存储
+             * 3、比如可以上传到阿里云oss或者腾讯云cos
+             */
             String targetPath = path + md5Sum + suffix;
             cpService.getMsgAuditService().getMediaFile(sdkFileId, null, null, 1000L, targetPath);
 
