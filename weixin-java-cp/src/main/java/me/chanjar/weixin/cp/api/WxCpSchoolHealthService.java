@@ -3,7 +3,8 @@ package me.chanjar.weixin.cp.api;
 import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.school.health.WxCpGetHealthReportStat;
-import me.chanjar.weixin.cp.bean.school.health.WxCpGetReportJobids;
+import me.chanjar.weixin.cp.bean.school.health.WxCpGetReportJobIds;
+import me.chanjar.weixin.cp.bean.school.health.WxCpGetReportJobInfo;
 
 /**
  * 企业微信家校应用 健康上报接口.
@@ -37,6 +38,20 @@ public interface WxCpSchoolHealthService {
    * @return
    * @throws WxErrorException
    */
-  WxCpGetReportJobids getReportJobids(Integer offset, Integer limit) throws WxErrorException;
+  WxCpGetReportJobIds getReportJobIds(Integer offset, Integer limit) throws WxErrorException;
+
+  /**
+   * 获取健康上报任务详情
+   * 通过此接口可以获取指定的健康上报任务详情。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/health/get_report_job_info?access_token=ACCESS_TOKEN
+   *
+   * @param jobId 是	任务ID
+   * @param date  是	具体某天任务详情，仅支持获取最近14天数据
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetReportJobInfo getReportJobInfo(@NonNull String jobId, @NonNull String date) throws WxErrorException;
 
 }

@@ -4,7 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.school.health.WxCpGetHealthReportStat;
-import me.chanjar.weixin.cp.bean.school.health.WxCpGetReportJobids;
+import me.chanjar.weixin.cp.bean.school.health.WxCpGetReportJobIds;
+import me.chanjar.weixin.cp.bean.school.health.WxCpGetReportJobInfo;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import org.testng.annotations.Test;
@@ -35,14 +36,22 @@ public class WxCpSchoolHealthTest {
     wxCpConfigStorage = config;
     cpService = new WxCpServiceImpl();
     cpService.setWxCpConfigStorage(config);
+    String currDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
 
     /**
      * 获取健康上报任务ID列表
      * https://developer.work.weixin.qq.com/document/path/93677
      */
-    WxCpGetReportJobids reportJobids = cpService.getSchoolHealthService().getReportJobids(null, null);
+    WxCpGetReportJobIds reportJobids = cpService.getSchoolHealthService().getReportJobIds(null, null);
     log.info("返回的reportJobids为：{}", reportJobids.toJson());
+
+    /**
+     * 获取健康上报任务详情
+     * https://developer.work.weixin.qq.com/document/path/93678
+     */
+    WxCpGetReportJobInfo reportJobInfo = cpService.getSchoolHealthService().getReportJobInfo(null, currDate);
+    log.info("返回的reportJobInfo为：{}", reportJobInfo.toJson());
 
     /**
      * 获取健康上报使用统计

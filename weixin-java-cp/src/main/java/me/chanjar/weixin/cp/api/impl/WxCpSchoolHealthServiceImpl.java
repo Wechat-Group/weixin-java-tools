@@ -8,7 +8,8 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpSchoolHealthService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.school.health.WxCpGetHealthReportStat;
-import me.chanjar.weixin.cp.bean.school.health.WxCpGetReportJobids;
+import me.chanjar.weixin.cp.bean.school.health.WxCpGetReportJobIds;
+import me.chanjar.weixin.cp.bean.school.health.WxCpGetReportJobInfo;
 
 import java.util.Optional;
 
@@ -36,13 +37,23 @@ public class WxCpSchoolHealthServiceImpl implements WxCpSchoolHealthService {
   }
 
   @Override
-  public WxCpGetReportJobids getReportJobids(Integer offset, Integer limit) throws WxErrorException {
+  public WxCpGetReportJobIds getReportJobIds(Integer offset, Integer limit) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_REPORT_JOBIDS);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("offset", Optional.ofNullable(offset).orElse(0));
     jsonObject.addProperty("limit", Optional.ofNullable(limit).orElse(100));
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
-    return WxCpGetReportJobids.fromJson(responseContent);
+    return WxCpGetReportJobIds.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpGetReportJobInfo getReportJobInfo(@NonNull String jobId, @NonNull String date) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_REPORT_JOB_INFO);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("jobid", jobId);
+    jsonObject.addProperty("date", date);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpGetReportJobInfo.fromJson(responseContent);
   }
 
 }

@@ -176,6 +176,7 @@ public interface WxCpApiPathConsts {
   interface School {
     String GET_HEALTH_REPORT_STAT = "/cgi-bin/health/get_health_report_stat";
     String GET_REPORT_JOBIDS = "/cgi-bin/health/get_report_jobids";
+    String GET_REPORT_JOB_INFO = "/cgi-bin/health/get_report_job_info";
   }
 
   interface Living {

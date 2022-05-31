@@ -14,7 +14,7 @@ import java.util.List;
  * @author Wang_Wong
  */
 @Data
-public class WxCpGetReportJobids extends WxCpBaseResp implements Serializable {
+public class WxCpGetReportJobIds extends WxCpBaseResp implements Serializable {
   private static final long serialVersionUID = -5028321625142879581L;
 
   @SerializedName("ending")
@@ -23,8 +23,8 @@ public class WxCpGetReportJobids extends WxCpBaseResp implements Serializable {
   @SerializedName("jobids")
   private List<String> jobIds;
 
-  public static WxCpGetReportJobids fromJson(String json) {
-    return WxCpGsonBuilder.create().fromJson(json, WxCpGetReportJobids.class);
+  public static WxCpGetReportJobIds fromJson(String json) {
+    return WxCpGsonBuilder.create().fromJson(json, WxCpGetReportJobIds.class);
   }
 
   public String toJson() {
