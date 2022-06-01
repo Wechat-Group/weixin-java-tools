@@ -18,7 +18,8 @@ public abstract class AbstractWxCpConfigStorageConfiguration {
     String token = properties.getToken();
     Integer agentId = properties.getAgentId();
     String aesKey = properties.getAesKey();
-    // 企业微信,会话存档路径
+    // 企业微信，私钥，会话存档路径
+    String msgAuditPriKey = properties.getMsgAuditPriKey();
     String msgAuditLibPath = properties.getMsgAuditLibPath();
 
     config.setCorpId(corpId);
@@ -31,6 +32,9 @@ public abstract class AbstractWxCpConfigStorageConfiguration {
     }
     if (StringUtils.isNotBlank(aesKey)) {
       config.setAesKey(aesKey);
+    }
+    if (StringUtils.isNotBlank(msgAuditPriKey)) {
+      config.setMsgAuditPriKey(msgAuditPriKey);
     }
     if (StringUtils.isNotBlank(msgAuditLibPath)) {
       config.setMsgAuditLibPath(msgAuditLibPath);

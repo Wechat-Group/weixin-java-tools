@@ -1,6 +1,5 @@
 package me.chanjar.weixin.cp.api;
 import com.google.common.collect.Lists;
-
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.msgaudit.*;
@@ -28,6 +27,7 @@ public class WxCpMsgAuditTest {
   private static WxCpService cpService;
 
   // com.binarywang.spring.starter.wxjava.cp.config.WxCpServiceAutoConfiguration
+  // WxCpServiceImpl.getAccessToken()
   @Test
   public void test() throws Exception {
 
@@ -39,20 +39,24 @@ public class WxCpMsgAuditTest {
     cpService.setWxCpConfigStorage(config);
 
     /**
-     * 配置：
+     * 仔细配置：
      * <xml>
-     *   <corpId>wwa3bexxXXXXXX</corpId>
-     *   <agentId>自定义agentId</agentId>
-     *   <corpSecret>xIpum7Yt4NMXXXXXXX</corpSecret>
-     *   <token>2bSNqXXXXXXXX</token>
-     *   <aesKey>MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDZuPVMyVyMvJkdSCZA893B2pggd1r95T8k2QZgz+VejtaDJCbD60mYoW1Uwwlwuqy8W78M6MmXsskn+5XunyR1WJlJGqgi0OMVGYvSfkNb9kD50fM21CGLcN1y4miL9fVNBIsvJmIUeJCNS8TioAVGFvh2EgzjqTR1gHfDwu8If7rfGmTHkPYL8hQxMg/EQ3451JOIBHSa7EQSx64SIoVWEgSDFQjGEpjUiJRfciyyz+nTSkEDgFa9hpyTS6E0c/3Q5lVDFgIwTArC19XBFKb00PbcFuLriOIsTBX4K9XWBtefVXowAdqUVQDH6BNUIK7/iVPQ4L3p+F5DBOrx8I/7AgMBAAECggEBAK53C/nwEX2lU3ynaB/8SuMga274ta1mmmbIkdfaQA65nyOPQJEWZe8szBN0BoiSzgBR9JI/p+srlQ25CLgiRnDSAmMWPU1I3e72fZi7HPcAKakGmEKDUi4OzyVUUDp3aY3B6lZqB4Yn5o2S/b4sRI2ZspfKdxGncSYHP/Far3i6hzq2C1hbyYM6HkHPcrQ+z6ir6GxjLvHXssVJ+/C0HMsVIQAWPyEGbzWozS+EswmQ+itk+7cewiLWbaCSp6lsjHKGTxJwCxRes0nUt2SfkLnIUkDLxB7c6zDQJCn1K2UckCjNBlCWl+oDWLkLQ7UAJ+4IYYSslR4wXzRg8PplW8ECgYEA9VlEprEoG2oSn3HXIMFg0MANViQe89QJQdwd7D5h4FLxXQLItxqmZj77iktlzlICcK9WT9WHRY1AOilsuMaDmY0VH3Z8r/X9BU712KFJqMYH5CNxrqHOya3BG+CclEKToaOTmo9kiOpFAMNSuuWs6gvILJ0CKEmSUo5G9fJu4fkCgYEA4yypHoRZIP0mDdVDeVtdHHcq5JdWF6xbAFs4P57VHG1KDMWouk3IHSeO279gEIwcBAdaLcMMgFfzyQBwcisxjC76oyoZnbSntB7ZMFdPqALKfxIdleLilbASuRKesVAF+OgOx/yp/aQUeLG2pVBivgn2TyGMwjnxznTh9vh+vpMCgYEAmOva7krdRLkIgnjiLXhab8JEjbxVzoQKgRJBVE5NkxQffGmP0RC7Rl9bSQdVnRNgkfu3QGtGtQMlVRscuM6Cl+JnmASyErqvye89LJja4GcN5BRzdvVDflDeXBHThlU4zza1eVCGyQ+7ko4rsnIVJIvTaHs0LQguO2aStBk3I4ECgYAyBsO3VK3L9fNLWItjThtTCWsIq8rpq6reiTf5yqBjgi2sYlqlrDtFMFDlU190RWZl/Lh/G1TFbpjgypf4jEp89Ft9UugRMpc7sw9g9dk0xmiRUwvw1eXP0NZOqysHIPgvt+qJX7qPgHKBoaD3Bpy3/Lmg82Jr4xa8wECCgnZmwQKBgH7hirPs1/HqBrbxS726IZUf9QTmVkyOYIwzuwFYKb/+4caSah+iaXexVux0xS5tchj/6c1dQSKJmlegV8smIb6EEcko7llA1y1P5QFtXtaaRd07tTsv3BKEg496YLRjbxPzgJn6Fsoz3TTdGwESL8Q3I2h0WmVVhmr/rjr+RkWQ</aesKey>
+     * <corpId>ww45xxx88865xxx</corpId>
+     * <corpSecret>xIpum7Yt4NMXcyxdzcQ2l_46BG4QIQDR57MhA45ebIw</corpSecret> // secret
+     * <agentId>200000</agentId> // 会话存档的应用id
+     * <token></token> // 回调配置的token
+     * <aesKey></aesKey> // 回调配置的EncodingAESKey
+     *
+     * // 企业微信会话存档，私钥，windows以及linux环境sdk路径
+     * <msgAuditPriKey>MIxxx893B2pggd1r95T8k2QxxxxbD6xxxxmXsskn+5XunyR1WJlJGqgi0OMVGYvSfkNb9kD50fM21CGLcN1y4miL9fVNBIsvJmIUeJCNS8TioAVGFvh2EgzjqTR1gH</msgAuditPriKey>
+     * <msgAuditLibPath>/www/osfile/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
+     * </xml>
      *
      * 注意：最好先配置lib开头的系统库，再配置sdk类库，配置绝对路径，最好配置为linux路径
-     *   windows:
-     *   <msgAuditLibPath>D:/WorkSpace/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
-     *   linux:
-     *   <msgAuditLibPath>/www/osfile/work_msg_storage/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
-     * </xml>
+     * Windows:
+     * <msgAuditLibPath>D:/WorkSpace/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
+     * Linux:
+     * <msgAuditLibPath>/www/osfile/work_msg_storage/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
      */
 
     /**
@@ -434,6 +438,15 @@ public class WxCpMsgAuditTest {
      */
     WxCpGroupChat room = cpService.getMsgAuditService().getGroupChat("wrOQpTDwAAyPl84GBJ40W5eWxWtixSCA");
     log.info(room.toJson());
+
+
+    /**
+     * 获取access_token
+     * https://developer.work.weixin.qq.com/document/path/91039
+     */
+    String getUrl = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
+    String data = cpService.get(String.format(getUrl, config.getCorpId(), config.getCorpSecret()), null);
+
 
   }
 

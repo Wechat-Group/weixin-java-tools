@@ -175,6 +175,13 @@ public interface WxCpConfigStorage {
   String getAesKey();
 
   /**
+   * 企微会话存档私钥
+   *
+   * @return
+   */
+  String getMsgAuditPriKey();
+
+  /**
    * 获取企微会话存档系统库 绝对路径
    *
    * @return

@@ -97,6 +97,7 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     Finance.FreeSlice(slice);
     WxCpChatDatas chatDatas = WxCpChatDatas.fromJson(content);
     if (chatDatas.getErrCode().intValue() != 0) {
+      Finance.DestroySingletonSDK(sdk);
       throw new WxErrorException(chatDatas.toJson());
     }
 
@@ -110,14 +111,19 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   }
 
   public String decryptChatData(WxCpChatDatas.WxCpChatData chatData) throws Exception {
-    // 企业获取的会话内容将用公钥加密，企业可用自行保存的私钥解开会话内容数据，aeskey不能为空
-    String priKey = cpService.getWxCpConfigStorage().getAesKey();
+    /**
+     * 企业获取的会话内容，使用企业自行配置的消息加密公钥进行加密，企业可用自行保存的私钥解开会话内容数据。
+     * msgAuditPriKey 会话存档私钥不能为空
+     */
+    String priKey = cpService.getWxCpConfigStorage().getMsgAuditPriKey();
     if (StringUtils.isEmpty(priKey)) {
-      throw new WxErrorException("请配置会话存档私钥【aesKey】");
+      throw new WxErrorException("请配置会话存档私钥【msgAuditPriKey】");
     }
 
     String decryptByPriKey = WxCpCryptUtil.decryptByPriKey(chatData.getEncryptRandomKey(), priKey);
-    // 每次使用DecryptData解密会话存档前需要调用NewSlice获取一个slice，在使用完slice中数据后，还需要调用FreeSlice释放。
+    /**
+     * 每次使用DecryptData解密会话存档前需要调用NewSlice获取一个slice，在使用完slice中数据后，还需要调用FreeSlice释放。
+     */
     long sdk = Finance.SingletonSDK();
     long msg = Finance.NewSlice();
 
@@ -128,7 +134,9 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
       throw new WxErrorException("msg err ret " + ret);
     }
 
-    // 明文
+    /**
+     * 明文
+     */
     String plainText = Finance.GetContentFromSlice(msg);
     Finance.FreeSlice(msg);
     return plainText;
