@@ -401,6 +401,13 @@ public interface WxCpService extends WxService {
   WxCpOaService getOaService();
 
   /**
+   * 获取家校应用复学码相关接口的服务类对象
+   *
+   * @return
+   */
+  WxCpSchoolService getSchoolService();
+
+  /**
    * 获取家校应用健康上报的服务类对象
    *
    * @return
