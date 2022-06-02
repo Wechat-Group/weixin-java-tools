@@ -34,24 +34,26 @@ public interface WxCpMsgAuditService {
    * 获取解密的聊天数据Model
    *
    * @param chatData getChatDatas()获取到的聊天数据
+   * @param pkcs1    使用什么方式进行解密，1代表使用PKCS1进行解密，2代表PKCS8进行解密 ...
    * @return 解密后的聊天数据
    * @throws Exception
    */
-  WxCpChatModel getDecryptData(@NonNull WxCpChatDatas.WxCpChatData chatData) throws Exception;
+  WxCpChatModel getDecryptData(@NonNull WxCpChatDatas.WxCpChatData chatData, @NonNull Integer pkcs1) throws Exception;
 
   /**
    * 获取解密的聊天数据明文
    *
    * @param chatData getChatDatas()获取到的聊天数据
+   * @param pkcs1    使用什么方式进行解密，1代表使用PKCS1进行解密，2代表PKCS8进行解密 ...
    * @return 解密后的明文
    * @throws Exception
    */
-  String getChatPlainText(@NonNull WxCpChatDatas.WxCpChatData chatData) throws Exception;
+  String getChatPlainText(@NonNull WxCpChatDatas.WxCpChatData chatData, @NonNull Integer pkcs1) throws Exception;
 
   /**
    * 获取媒体文件
    * 针对图片、文件等媒体数据，提供sdk接口拉取数据内容。
-   *
+   * <p>
    * 注意：
    * 根据上面返回的文件类型，拼接好存放文件的绝对路径即可。此时绝对路径写入文件流，来达到获取媒体文件的目的。
    * 详情可以看官方文档，亦可阅读此接口源码。

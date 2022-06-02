@@ -105,12 +105,12 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   }
 
   @Override
-  public WxCpChatModel getDecryptData(@NonNull WxCpChatDatas.WxCpChatData chatData) throws Exception {
-    String plainText = this.decryptChatData(chatData);
+  public WxCpChatModel getDecryptData(@NonNull WxCpChatDatas.WxCpChatData chatData, @NonNull Integer pkcs1) throws Exception {
+    String plainText = this.decryptChatData(chatData, pkcs1);
     return WxCpChatModel.fromJson(plainText);
   }
 
-  public String decryptChatData(WxCpChatDatas.WxCpChatData chatData) throws Exception {
+  public String decryptChatData(WxCpChatDatas.WxCpChatData chatData, Integer pkcs1) throws Exception {
     /**
      * 企业获取的会话内容，使用企业自行配置的消息加密公钥进行加密，企业可用自行保存的私钥解开会话内容数据。
      * msgAuditPriKey 会话存档私钥不能为空
@@ -120,13 +120,18 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
       throw new WxErrorException("请配置会话存档私钥【msgAuditPriKey】");
     }
 
-    String decryptByPriKey = WxCpCryptUtil.decryptByPriKey(chatData.getEncryptRandomKey(), priKey);
+    String decryptByPriKey = WxCpCryptUtil.decryptPriKey(chatData.getEncryptRandomKey(), priKey, pkcs1);
     /**
      * 每次使用DecryptData解密会话存档前需要调用NewSlice获取一个slice，在使用完slice中数据后，还需要调用FreeSlice释放。
      */
     long sdk = Finance.SingletonSDK();
     long msg = Finance.NewSlice();
 
+    /**
+     * 解密会话存档内容
+     * sdk不会要求用户传入rsa私钥，保证用户会话存档数据只有自己能够解密。
+     * 此处需要用户先用rsa私钥解密encrypt_random_key后，作为encrypt_key参数传入sdk来解密encrypt_chat_msg获取会话存档明文。
+     */
     int ret = Finance.DecryptData(sdk, decryptByPriKey, chatData.getEncryptChatMsg(), msg);
     if (ret != 0) {
       Finance.FreeSlice(msg);
@@ -143,8 +148,8 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   }
 
   @Override
-  public String getChatPlainText(WxCpChatDatas.@NonNull WxCpChatData chatData) throws Exception {
-    return this.decryptChatData(chatData);
+  public String getChatPlainText(WxCpChatDatas.@NonNull WxCpChatData chatData, @NonNull Integer pkcs1) throws Exception {
+    return this.decryptChatData(chatData, pkcs1);
   }
 
   @Override

@@ -17,7 +17,7 @@ import java.util.List;
  * 企业微信会话内容存档测试类.
  * 官方文档：https://developer.work.weixin.qq.com/document/path/91360
  *
- * @author Wang_Wong
+ * @author <a href="https://github.com/0katekate0">Wang_Wong</a>
  * @date 2022-01-17
  */
 @Slf4j
@@ -47,7 +47,9 @@ public class WxCpMsgAuditTest {
      * <token></token> // 回调配置的token
      * <aesKey></aesKey> // 回调配置的EncodingAESKey
      *
-     * // 企业微信会话存档，私钥，windows以及linux环境sdk路径
+     * // 企业微信会话存档
+     * // 1、会话存档私钥，一定要加上前缀！！
+     * // 2、仔细配置windows以及linux环境sdk路径
      * <msgAuditPriKey>MIxxx893B2pggd1r95T8k2QxxxxbD6xxxxmXsskn+5XunyR1WJlJGqgi0OMVGYvSfkNb9kD50fM21CGLcN1y4miL9fVNBIsvJmIUeJCNS8TioAVGFvh2EgzjqTR1gH</msgAuditPriKey>
      * <msgAuditLibPath>/www/osfile/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
      * </xml>
@@ -88,12 +90,13 @@ public class WxCpMsgAuditTest {
 //          Integer publickeyVer = chatData.getPublickeyVer();
 
           // 获取明文数据
-          final String chatPlainText = cpService.getMsgAuditService().getChatPlainText(chatData);
+          final String chatPlainText = cpService.getMsgAuditService().getChatPlainText(chatData, 2);
           final WxCpChatModel wxCpChatModel = WxCpChatModel.fromJson(chatPlainText);
           log.info("明文数据为：{}", wxCpChatModel.toJson());
 
           // 获取消息数据
-          final WxCpChatModel decryptData = cpService.getMsgAuditService().getDecryptData(chatData);
+          // https://developer.work.weixin.qq.com/document/path/91774
+          final WxCpChatModel decryptData = cpService.getMsgAuditService().getDecryptData(chatData, 2);
           log.info("获取消息数据为：{}", decryptData.toJson());
 
           /**
@@ -443,6 +446,7 @@ public class WxCpMsgAuditTest {
     /**
      * 获取access_token
      * https://developer.work.weixin.qq.com/document/path/91039
+     * https://www.jianshu.com/p/dde171887d63
      */
     String getUrl = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
     String data = cpService.get(String.format(getUrl, config.getCorpId(), config.getCorpSecret()), null);
