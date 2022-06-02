@@ -49,9 +49,16 @@ public class WxCpKfServiceImpl implements WxCpKfService {
   }
 
   @Override
-  public WxCpKfAccountListResp listAccount() throws WxErrorException {
+  public WxCpKfAccountListResp listAccount(Integer offset,Integer limit) throws WxErrorException {
     String url = cpService.getWxCpConfigStorage().getApiUrl(ACCOUNT_LIST);
-    String responseContent = cpService.post(url, "{}");
+    JsonObject json = new JsonObject();
+    if (offset != null) {
+      json.addProperty("offset", offset);
+    }
+    if (limit != null) {
+      json.addProperty("limit", limit);
+    }
+    String responseContent = cpService.post(url, json.toString());
     return WxCpKfAccountListResp.fromJson(responseContent);
   }
 

@@ -47,11 +47,12 @@ public interface WxCpKfService {
 
   /**
    * 获取客服帐号列表，包括所有的客服帐号的客服ID、名称和头像。
-   *
+   * @param offset 分页，偏移量, 默认为0
+   * @param limit  分页，预期请求的数据量，默认为100，取值范围 1 ~ 100
    * @return 客服帐号列表
    * @throws WxErrorException 异常
    */
-  WxCpKfAccountListResp listAccount() throws WxErrorException;
+  WxCpKfAccountListResp listAccount(Integer offset,Integer limit) throws WxErrorException;
 
   /**
    * 企业可通过此接口获取带有不同参数的客服链接，不同客服帐号对应不同的客服链接。获取后，企业可将链接嵌入到网页等场景中，
