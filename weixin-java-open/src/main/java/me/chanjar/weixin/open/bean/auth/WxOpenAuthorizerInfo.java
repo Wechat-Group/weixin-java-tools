@@ -43,6 +43,27 @@ public class WxOpenAuthorizerInfo implements Serializable {
    */
   private MiniProgramInfo miniProgramInfo;
 
+  /**
+   * 小程序注册方式
+   * 类型	说明
+   * 0	普通方式注册
+   * 2	通过复用公众号创建小程序 api 注册
+   * 6	通过法人扫脸创建企业小程序 api 注册
+   * 13	通过创建试用小程序 api 注册
+   * 15	通过联盟控制台注册
+   * 16	通过创建个人小程序 api 注册
+   * 17	通过创建个人交易小程序 api 注册
+   * 19	通过试用小程序转正 api 注册
+   * 22	通过复用商户号创建企业小程序 api 注册
+   * 23	通过复用商户号转正 api 注册
+   */
+  private Integer registerType;
+
+  /**
+   * 小程序基础配置信息
+   */
+  private BasicConfig basicConfig;
+
   @Data
   public static class MiniProgramInfo implements Serializable {
     private static final long serialVersionUID = 8857028017332191988L;
@@ -75,5 +96,14 @@ public class WxOpenAuthorizerInfo implements Serializable {
       @SerializedName("BizDomain")
       private List<String> bizDomain;
     }
+  }
+
+  @Data
+  public static class BasicConfig implements Serializable {
+    private static final long serialVersionUID = -8857028017332191989L;
+    @SerializedName("is_phone_configured")
+    private Boolean isPhoneConfigured;
+    @SerializedName("is_email_configured")
+    private Boolean isEmailConfigured;
   }
 }
