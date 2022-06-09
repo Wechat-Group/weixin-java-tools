@@ -177,6 +177,7 @@ public interface WxCpApiPathConsts {
     String GET_HEALTH_REPORT_STAT = "/cgi-bin/health/get_health_report_stat";
     String GET_REPORT_JOBIDS = "/cgi-bin/health/get_report_jobids";
     String GET_REPORT_JOB_INFO = "/cgi-bin/health/get_report_job_info";
+    String GET_REPORT_ANSWER = "/cgi-bin/health/get_report_answer";
 
     String GET_TEACHER_CUSTOMIZE_HEALTH_INFO = "/cgi-bin/school/user/get_teacher_customize_health_info";
     String GET_STUDENT_CUSTOMIZE_HEALTH_INFO = "/cgi-bin/school/user/get_student_customize_health_info";
