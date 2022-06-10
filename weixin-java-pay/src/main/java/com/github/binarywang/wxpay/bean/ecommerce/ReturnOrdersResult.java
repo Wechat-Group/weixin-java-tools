@@ -163,6 +163,6 @@ public class ReturnOrdersResult implements Serializable {
    * </pre>
    */
   @SerializedName(value = "finish_time")
-  private Date finishTime;
+  private String finishTime;
 
 }

@@ -66,7 +66,7 @@ public class RefundsResult implements Serializable {
    * </pre>
    */
   @SerializedName(value = "create_time")
-  private Date createTime;
+  private String createTime;
 
   /**
    * <pre>
