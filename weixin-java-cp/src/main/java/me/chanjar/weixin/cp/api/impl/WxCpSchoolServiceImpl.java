@@ -7,7 +7,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpSchoolService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.school.WxCpCustomizeHealthInfo;
+import me.chanjar.weixin.cp.bean.school.WxCpPaymentResult;
 import me.chanjar.weixin.cp.bean.school.WxCpResultList;
+import me.chanjar.weixin.cp.bean.school.WxCpTrade;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -62,6 +64,25 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
     jsonObject.addProperty("userids", userIds.toString());
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
     return WxCpResultList.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpPaymentResult getPaymentResult(@NotNull String paymentId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_PAYMENT_RESULT);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("payment_id", paymentId);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpPaymentResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpTrade getTrade(@NotNull String paymentId, @NotNull String tradeNo) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_TRADE);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("payment_id", paymentId);
+    jsonObject.addProperty("trade_no", tradeNo);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpTrade.fromJson(responseContent);
   }
 
 }

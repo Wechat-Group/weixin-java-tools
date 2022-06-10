@@ -2,7 +2,9 @@ package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.school.WxCpCustomizeHealthInfo;
+import me.chanjar.weixin.cp.bean.school.WxCpPaymentResult;
 import me.chanjar.weixin.cp.bean.school.WxCpResultList;
+import me.chanjar.weixin.cp.bean.school.WxCpTrade;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -56,5 +58,28 @@ public interface WxCpSchoolService {
    * @throws WxErrorException
    */
   WxCpResultList getHealthQrCode(@NotNull List<String> userIds, @NotNull Integer type) throws WxErrorException;
+
+  /**
+   * 获取学生付款结果
+   * 请求方式： POST（HTTPS）
+   * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/school/get_payment_result?access_token=ACCESS_TOKEN
+   *
+   * @param paymentId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpPaymentResult getPaymentResult(@NotNull String paymentId) throws WxErrorException;
+
+  /**
+   * 获取订单详情
+   * 请求方式： POST（HTTPS）
+   * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/school/get_trade?access_token=ACCESS_TOKEN
+   *
+   * @param paymentId
+   * @param tradeNo
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpTrade getTrade(@NotNull String paymentId, @NotNull String tradeNo) throws WxErrorException;
 
 }

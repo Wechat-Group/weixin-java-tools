@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.school.WxCpCustomizeHealthInfo;
+import me.chanjar.weixin.cp.bean.school.WxCpPaymentResult;
 import me.chanjar.weixin.cp.bean.school.WxCpResultList;
+import me.chanjar.weixin.cp.bean.school.WxCpTrade;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import org.testng.annotations.Test;
@@ -42,6 +44,34 @@ public class WxCpSchoolTest {
     cpService = new WxCpServiceImpl();
     cpService.setWxCpConfigStorage(config);
     String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+
+    /**
+     * 获取学生付款结果
+     * https://developer.work.weixin.qq.com/document/path/94553
+     */
+    String paymentResultStr = "{\"errcode\":0,\"errmsg\":\"ok\",\"project_name\":\"学费\",\"amount\":998,\"payment_result\":[{\"student_userid\":\"xxxx\",\"trade_state\":1,\"trade_no\":\"xxxxx\",\"payer_parent_userid\":\"zhangshan\"}]}";
+    WxCpPaymentResult cpPaymentResult = WxCpPaymentResult.fromJson(paymentResultStr);
+    log.info("cpPaymentResult:{}", cpPaymentResult.toJson());
+
+    WxCpPaymentResult paymentResult = cpService.getSchoolService().getPaymentResult("");
+    log.info("paymentResult:{}", paymentResult.toJson());
+
+    /**
+     * 获取订单详情
+     * https://developer.work.weixin.qq.com/document/path/94554
+     */
+    String tradeStr = "{\n" +
+      "\t\"errcode\":0,\n" +
+      "\t\"errmsg\":\"ok\",\n" +
+      "\t\"transaction_id\":\"xxxxx\",    \t     \n" +
+      "\t\"pay_time\":12345\n" +
+      "}";
+    WxCpTrade wxCpTrade = WxCpTrade.fromJson(tradeStr);
+    log.info("wxCpTrade:{}", wxCpTrade.toJson());
+
+    WxCpTrade trade = cpService.getSchoolService().getTrade("", "");
+    log.info("trade:{}", trade.toJson());
 
 
     /**

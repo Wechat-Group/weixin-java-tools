@@ -182,6 +182,9 @@ public interface WxCpApiPathConsts {
     String GET_TEACHER_CUSTOMIZE_HEALTH_INFO = "/cgi-bin/school/user/get_teacher_customize_health_info";
     String GET_STUDENT_CUSTOMIZE_HEALTH_INFO = "/cgi-bin/school/user/get_student_customize_health_info";
     String GET_HEALTH_QRCODE = "/cgi-bin/school/user/get_health_qrcode";
+
+    String GET_PAYMENT_RESULT = "/cgi-bin/school/get_payment_result";
+    String GET_TRADE = "/cgi-bin/school/get_trade";
   }
 
   interface Living {
