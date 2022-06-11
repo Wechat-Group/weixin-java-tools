@@ -149,6 +149,11 @@ public class EntPayRedpackRequest extends BaseWxPayRequest {
   }
 
   @Override
+  protected String[] getIgnoredParamsForSign() {
+    return new String[]{"sign_type"};
+  }
+
+  @Override
   protected void storeMap(Map<String, String> map) {
     map.put("mch_billno", mchBillNo);
     map.put("wxappid", wxAppId);
