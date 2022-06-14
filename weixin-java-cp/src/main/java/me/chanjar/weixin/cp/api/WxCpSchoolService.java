@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.api;
 
+import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.school.*;
 
@@ -88,5 +89,19 @@ public interface WxCpSchoolService {
    * @return
    */
   WxCpSchoolLivingInfo getLivingInfo(@NotNull String livingId) throws WxErrorException;
+
+  /**
+   * 获取观看直播统计
+   * 通过该接口可以获取所有观看直播的人员统计
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/living/get_watch_stat?access_token=ACCESS_TOKEN
+   *
+   * @param livingId
+   * @param nextKey
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpSchoolWatchStat getWatchStat(@NonNull String livingId, String nextKey) throws WxErrorException;
 
 }

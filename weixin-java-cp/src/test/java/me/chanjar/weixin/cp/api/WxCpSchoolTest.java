@@ -48,6 +48,13 @@ public class WxCpSchoolTest {
      */
     String livingId = "lvOQpTDwAAh0hxHsSeSwTQcmH0nWUC_Q";
 
+    String str2 = "{\"errcode\":0,\"errmsg\":\"ok\",\"ending\":1,\"next_key\":\"NEXT_KEY\",\"stat_infoes\":{\"students\":[{\"student_userid\":\"zhansan_child\",\"parent_userid\":\"zhangsan\",\"partyids\":[10,11],\"watch_time\":30,\"enter_time\":1586433904,\"leave_time\":1586434000,\"is_comment\":1},{\"student_userid\":\"lisi_child\",\"parent_userid\":\"lisi\",\"partyids\":[10,11],\"watch_time\":30,\"enter_time\":1586433904,\"leave_time\":1586434000,\"is_comment\":0}],\"visitors\":[{\"nickname\":\"wx_nickname1\",\"watch_time\":30,\"enter_time\":1586433904,\"leave_time\":1586434000,\"is_comment\":1},{\"nickname\":\"wx_nickname2\",\"watch_time\":30,\"enter_time\":1586433904,\"leave_time\":1586434000,\"is_comment\":0}]}}";
+    WxCpSchoolWatchStat wxCpSchoolWatchStat = WxCpSchoolWatchStat.fromJson(str2);
+    log.info("wxCpSchoolWatchStat：{}", wxCpSchoolWatchStat.toJson());
+
+    WxCpSchoolWatchStat watchStat = cpService.getSchoolService().getWatchStat(livingId, "0");
+    log.info("watchStat：{}", watchStat.toJson());
+
     String str1 = "{\"errcode\":0,\"errmsg\":\"ok\",\"living_info\":{\"theme\":\"直角三角形讲解\",\"living_start\":1586405229,\"living_duration\":1800,\"anchor_userid\":\"zhangsan\",\"living_range\":{\"partyids\":[1,4,9],\"group_names\":[\"group_name1\",\"group_name2\"]},\"viewer_num\":100,\"comment_num\":110,\"open_replay\":1,\"push_stream_url\":\"https://www.qq.test.com\"}}";
     WxCpSchoolLivingInfo wxCpSchoolLivingInfo = WxCpSchoolLivingInfo.fromJson(str1);
     log.info("str1：{}", wxCpSchoolLivingInfo.toJson());

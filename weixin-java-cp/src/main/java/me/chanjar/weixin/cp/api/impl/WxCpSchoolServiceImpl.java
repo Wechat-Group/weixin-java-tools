@@ -1,12 +1,14 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.JsonObject;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpSchoolService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.school.*;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -87,6 +89,18 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_LIVING_INFO) + livingId;
     String responseContent = this.cpService.get(apiUrl, null);
     return WxCpSchoolLivingInfo.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpSchoolWatchStat getWatchStat(@NonNull String livingId, String nextKey) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_WATCH_STAT);
+    JsonObject jsonObject = new JsonObject();
+    if (StringUtils.isNotBlank(nextKey)) {
+      jsonObject.addProperty("next_key", nextKey);
+    }
+    jsonObject.addProperty("livingid", livingId);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpSchoolWatchStat.fromJson(responseContent);
   }
 
 }

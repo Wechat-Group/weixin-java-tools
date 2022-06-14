@@ -190,7 +190,7 @@ public interface WxCpApiPathConsts {
      * 上课直播
      */
     String GET_LIVING_INFO = "/cgi-bin/school/living/get_living_info?livingid=";
-
+    String GET_WATCH_STAT = "/cgi-bin/school/living/get_watch_stat";
   }
 
   interface Living {
