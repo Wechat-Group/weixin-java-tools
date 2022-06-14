@@ -1,10 +1,7 @@
 package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.cp.bean.school.WxCpCustomizeHealthInfo;
-import me.chanjar.weixin.cp.bean.school.WxCpPaymentResult;
-import me.chanjar.weixin.cp.bean.school.WxCpResultList;
-import me.chanjar.weixin.cp.bean.school.WxCpTrade;
+import me.chanjar.weixin.cp.bean.school.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -81,5 +78,15 @@ public interface WxCpSchoolService {
    * @throws WxErrorException
    */
   WxCpTrade getTrade(@NotNull String paymentId, @NotNull String tradeNo) throws WxErrorException;
+
+  /**
+   * 获取直播详情
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/living/get_living_info?access_token=ACCESS_TOKEN&livingid=LIVINGID
+   *
+   * @param livingId
+   * @return
+   */
+  WxCpSchoolLivingInfo getLivingInfo(@NotNull String livingId) throws WxErrorException;
 
 }

@@ -4,10 +4,7 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
-import me.chanjar.weixin.cp.bean.school.WxCpCustomizeHealthInfo;
-import me.chanjar.weixin.cp.bean.school.WxCpPaymentResult;
-import me.chanjar.weixin.cp.bean.school.WxCpResultList;
-import me.chanjar.weixin.cp.bean.school.WxCpTrade;
+import me.chanjar.weixin.cp.bean.school.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import org.testng.annotations.Test;
@@ -44,6 +41,21 @@ public class WxCpSchoolTest {
     cpService = new WxCpServiceImpl();
     cpService.setWxCpConfigStorage(config);
     String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+
+    /**
+     * 上课直播
+     */
+    String livingId = "lvOQpTDwAAh0hxHsSeSwTQcmH0nWUC_Q";
+
+    String str1 = "{\"errcode\":0,\"errmsg\":\"ok\",\"living_info\":{\"theme\":\"直角三角形讲解\",\"living_start\":1586405229,\"living_duration\":1800,\"anchor_userid\":\"zhangsan\",\"living_range\":{\"partyids\":[1,4,9],\"group_names\":[\"group_name1\",\"group_name2\"]},\"viewer_num\":100,\"comment_num\":110,\"open_replay\":1,\"push_stream_url\":\"https://www.qq.test.com\"}}";
+    WxCpSchoolLivingInfo wxCpSchoolLivingInfo = WxCpSchoolLivingInfo.fromJson(str1);
+    log.info("str1：{}", wxCpSchoolLivingInfo.toJson());
+
+    // 获取直播详情
+    // https://developer.work.weixin.qq.com/document/path/93740
+    WxCpSchoolLivingInfo schoolLivingInfo = cpService.getSchoolService().getLivingInfo(livingId);
+    log.info("schoolLivingInfo：{}", schoolLivingInfo.toJson());
 
 
     /**

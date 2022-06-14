@@ -22,7 +22,7 @@ public class WxCpLivingInfo implements Serializable {
   private Long livingStart;
 
   @SerializedName("living_duration")
-  private Long livingDurationme;
+  private Long livingDuration;
 
   @SerializedName("status")
   private Integer status;

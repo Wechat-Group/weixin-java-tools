@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpSchoolService;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.school.WxCpCustomizeHealthInfo;
-import me.chanjar.weixin.cp.bean.school.WxCpPaymentResult;
-import me.chanjar.weixin.cp.bean.school.WxCpResultList;
-import me.chanjar.weixin.cp.bean.school.WxCpTrade;
+import me.chanjar.weixin.cp.bean.school.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -83,6 +80,13 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
     jsonObject.addProperty("trade_no", tradeNo);
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
     return WxCpTrade.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpSchoolLivingInfo getLivingInfo(@NotNull String livingId) throws WxErrorException{
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_LIVING_INFO) + livingId;
+    String responseContent = this.cpService.get(apiUrl, null);
+    return WxCpSchoolLivingInfo.fromJson(responseContent);
   }
 
 }

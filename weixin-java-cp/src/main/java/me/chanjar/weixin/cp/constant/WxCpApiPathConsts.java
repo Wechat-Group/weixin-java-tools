@@ -185,6 +185,12 @@ public interface WxCpApiPathConsts {
 
     String GET_PAYMENT_RESULT = "/cgi-bin/school/get_payment_result";
     String GET_TRADE = "/cgi-bin/school/get_trade";
+
+    /**
+     * 上课直播
+     */
+    String GET_LIVING_INFO = "/cgi-bin/school/living/get_living_info?livingid=";
+
   }
 
   interface Living {
