@@ -48,7 +48,7 @@ public interface WxCpLivingService {
    * @return
    * @throws WxErrorException
    */
-  WxCpWatchStat getWatchStat(@NonNull String livingId, Integer nextKey) throws WxErrorException;
+  WxCpWatchStat getWatchStat(@NonNull String livingId, String nextKey) throws WxErrorException;
 
   /**
    * 获取成员直播ID列表

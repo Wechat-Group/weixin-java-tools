@@ -191,6 +191,7 @@ public interface WxCpApiPathConsts {
      */
     String GET_LIVING_INFO = "/cgi-bin/school/living/get_living_info?livingid=";
     String GET_WATCH_STAT = "/cgi-bin/school/living/get_watch_stat";
+    String GET_UNWATCH_STAT = "/cgi-bin/school/living/get_unwatch_stat";
   }
 
   interface Living {

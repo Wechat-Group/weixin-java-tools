@@ -12,13 +12,15 @@ import me.chanjar.weixin.cp.api.WxCpLivingService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.living.*;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Living.*;
 
 /**
  * 企业微信直播接口实现类.
+ * https://developer.work.weixin.qq.com/document/path/93633
  *
- * @author Wang_Wong
+ * @author <a href="https://github.com/0katekate0">Wang_Wong</a>
  * @date 2021-12-21
  */
 @Slf4j
@@ -48,11 +50,11 @@ public class WxCpLivingServiceImpl implements WxCpLivingService {
   }
 
   @Override
-  public WxCpWatchStat getWatchStat(String livingId, Integer nextKey) throws WxErrorException {
+  public WxCpWatchStat getWatchStat(String livingId, String nextKey) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_WATCH_STAT);
     JsonObject jsonObject = new JsonObject();
-    if (nextKey != null) {
-      jsonObject.addProperty("next_key", String.valueOf(nextKey));
+    if (StringUtils.isNotBlank(nextKey)) {
+      jsonObject.addProperty("next_key", nextKey);
     }
     jsonObject.addProperty("livingid", livingId);
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());

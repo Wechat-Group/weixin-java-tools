@@ -32,7 +32,7 @@ public class WxCpLivingResult implements Serializable {
     private String nextCursor;
 
     @SerializedName("livingid_list")
-    private String[] livingidList;
+    private String[] livingIdList;
 
     public static LivingIdResult fromJson(String json) {
       return WxCpGsonBuilder.create().fromJson(json, LivingIdResult.class);

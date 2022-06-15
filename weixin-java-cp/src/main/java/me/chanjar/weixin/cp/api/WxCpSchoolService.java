@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.api;
 
 import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.cp.bean.living.WxCpLivingResult;
 import me.chanjar.weixin.cp.bean.school.*;
 
 import javax.validation.constraints.NotNull;
@@ -91,6 +92,21 @@ public interface WxCpSchoolService {
   WxCpSchoolLivingInfo getLivingInfo(@NotNull String livingId) throws WxErrorException;
 
   /**
+   * 获取老师直播ID列表
+   * 通过此接口可以获取指定老师的所有直播ID
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/living/get_user_all_livingid?access_token=ACCESS_TOKEN
+   *
+   * @param userId
+   * @param cursor
+   * @param limit
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpLivingResult.LivingIdResult getUserAllLivingId(@NonNull String userId, String cursor, Integer limit) throws WxErrorException;
+
+  /**
    * 获取观看直播统计
    * 通过该接口可以获取所有观看直播的人员统计
    * <p>
@@ -103,5 +119,30 @@ public interface WxCpSchoolService {
    * @throws WxErrorException
    */
   WxCpSchoolWatchStat getWatchStat(@NonNull String livingId, String nextKey) throws WxErrorException;
+
+  /**
+   * 获取未观看直播统计
+   * 通过该接口可以获取未观看直播的学生统计，学生的家长必须是已经关注「学校通知」才会纳入统计范围。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/living/get_unwatch_stat?access_token=ACCESS_TOKEN
+   *
+   * @param livingId
+   * @param nextKey
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpSchoolUnwatchStat getUnwatchStat(@NonNull String livingId, String nextKey) throws WxErrorException;
+
+  /**
+   * 删除直播回放
+   * 请求方式： POST（HTTPS）
+   * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/living/delete_replay_data?access_token=ACCESS_TOKEN
+   *
+   * @param livingId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpLivingResult deleteReplayData(@NonNull String livingId) throws WxErrorException;
 
 }
