@@ -271,6 +271,12 @@ public class WxCpTpPermanentCodeInfo extends WxCpBaseResp {
 
     @SerializedName("avatar")
     private String avatar;
+
+    /**
+     * 授权管理员的open_userid，可能为空
+     */
+    @SerializedName("open_userid")
+    private String openUserid;
   }
 
   /**
