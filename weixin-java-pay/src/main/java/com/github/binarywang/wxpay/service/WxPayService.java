@@ -1352,7 +1352,15 @@ public interface WxPayService {
 
   /**
    * 获取银行组件服务
-   * @return  银行组件服务
+   *
+   * @return 银行组件服务
    */
   BankService getBankService();
+
+  /**
+   * 获取商家转账到零钱服务类.
+   *
+   * @return the transfers service
+   */
+  TransferService getTransferService();
 }
