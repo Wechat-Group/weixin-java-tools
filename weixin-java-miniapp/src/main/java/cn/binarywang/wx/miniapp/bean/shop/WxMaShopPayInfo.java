@@ -21,6 +21,9 @@ public class WxMaShopPayInfo implements Serializable {
   @SerializedName("pay_method_type")
   private Integer payMethodType;
 
+  @SerializedName("pay_method")
+  private String payMethod;
+
   /**
    * 预支付ID
    * <pre>

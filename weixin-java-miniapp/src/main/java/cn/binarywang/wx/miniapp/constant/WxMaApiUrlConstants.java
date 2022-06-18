@@ -451,6 +451,16 @@ public class WxMaApiUrlConstants {
       String AFTERSALE_GET = "https://api.weixin.qq.com/shop/aftersale/get";
       String AFTERSALE_UPDATE = "https://api.weixin.qq.com/shop/aftersale/update";
     }
+
+    interface Sharer {
+      String BIND = "https://api.weixin.qq.com/shop/sharer/bind";
+      String GET_SHARER_DATA_SUMMARY = "https://api.weixin.qq.com/shop/sharer/get_sharer_data_summary";
+      String GET_SHARER_LIST = "https://api.weixin.qq.com/shop/sharer/get_sharer_list";
+      String GET_SHARER_LIVE_ORDER_LIST = "https://api.weixin.qq.com/shop/sharer/get_sharer_live_order_list";
+      String GET_SHARER_LIVE_SUMMARY_LIST = "https://api.weixin.qq.com/shop/sharer/get_sharer_live_summary_list";
+      String SEARCH_SHARER = "https://api.weixin.qq.com/shop/sharer/search_sharer";
+      String UNBIND = "https://api.weixin.qq.com/shop/sharer/unbind";
+    }
   }
 
   /**
