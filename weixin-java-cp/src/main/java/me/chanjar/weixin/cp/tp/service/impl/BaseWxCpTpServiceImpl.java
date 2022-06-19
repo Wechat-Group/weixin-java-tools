@@ -48,6 +48,8 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   private WxCpTpMediaService wxCpTpMediaService = new WxCpTpMediaServiceImpl(this);
   private WxCpTpOAService wxCpTpOAService = new WxCpTpOAServiceImpl(this);
   private WxCpTpUserService wxCpTpUserService = new WxCpTpUserServiceImpl(this);
+  private WxCpTpOrderService wxCpTpOrderService = new WxCpTpOrderServiceImpl(this);
+  private WxCpTpEditionService wxCpTpEditionService = new WxCpTpEditionServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -592,6 +594,26 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   @Override
   public void expireProviderToken() {
     this.configStorage.expireProviderToken();
+  }
+
+  @Override
+  public WxCpTpOrderService getWxCpTpOrderService() {
+    return wxCpTpOrderService;
+  }
+
+  @Override
+  public void setWxCpTpOrderService(WxCpTpOrderService wxCpTpOrderService) {
+    this.wxCpTpOrderService = wxCpTpOrderService;
+  }
+
+  @Override
+  public WxCpTpEditionService getWxCpTpEditionService() {
+    return wxCpTpEditionService;
+  }
+
+  @Override
+  public void setWxCpTpOrderService(WxCpTpEditionService wxCpTpEditionService) {
+    this.wxCpTpEditionService = wxCpTpEditionService;
   }
 
   private WxJsapiSignature doCreateWxJsapiSignature(String url, String authCorpId, String jsapiTicket) {

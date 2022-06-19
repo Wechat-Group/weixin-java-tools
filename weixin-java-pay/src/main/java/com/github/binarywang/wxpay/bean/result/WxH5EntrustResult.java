@@ -19,6 +19,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@XStreamAlias("xml")
 public class WxH5EntrustResult extends BaseWxPayResult implements Serializable {
 
   private static final long serialVersionUID = 1L;

@@ -13,7 +13,7 @@ import me.chanjar.weixin.mp.bean.invoice.merchant.*;
  * 73100: 开票平台错误
  * <p>
  * 流程文档: https://developers.weixin.qq.com/doc/offiaccount/WeChat_Invoice/E_Invoice/Vendor_and_Invoicing_Platform_Mode_Instruction.html
- * 接口文档: https://developers.weixin.qq.com/doc/offiaccount/WeChat_Invoice/E_Invoice/Vendor_API_List.html
+ * 接口文档: <a href="https://developers.weixin.qq.com/doc/offiaccount/WeChat_Invoice/E_Invoice/Vendor_API_List.html">https://developers.weixin.qq.com/doc/offiaccount/WeChat_Invoice/E_Invoice/Vendor_API_List.html</a>
  *
  * @author Mario Luo
  */

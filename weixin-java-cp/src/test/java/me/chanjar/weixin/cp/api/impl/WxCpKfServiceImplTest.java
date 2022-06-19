@@ -58,7 +58,7 @@ public class WxCpKfServiceImplTest {
 
   @Test(priority = 3)
   public void testAccountList() throws Exception {
-    WxCpKfAccountListResp resp = this.wxService.getKfService().listAccount();
+    WxCpKfAccountListResp resp = this.wxService.getKfService().listAccount(0,10);
     System.out.println(resp);
   }
 

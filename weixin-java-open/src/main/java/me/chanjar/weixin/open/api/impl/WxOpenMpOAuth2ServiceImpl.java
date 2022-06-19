@@ -28,7 +28,7 @@ public class WxOpenMpOAuth2ServiceImpl extends WxOAuth2ServiceDecorator {
 
   /**
    * 第三方平台代公众号发起网页授权
-   * 文档地址:https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Before_Develop/Official_Accounts/official_account_website_authorization.html
+   * 文档地址:<a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Before_Develop/Official_Accounts/official_account_website_authorization.html">第三方平台代公众号发起网页授权</a>
    *
    * @param code 微信授权code
    * @return 微信用户信息

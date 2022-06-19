@@ -22,7 +22,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateStatusBatchRequest implements Serializable {
-
   private static final long serialVersionUID = 7016357689566912199L;
   /**
    * 用户openid

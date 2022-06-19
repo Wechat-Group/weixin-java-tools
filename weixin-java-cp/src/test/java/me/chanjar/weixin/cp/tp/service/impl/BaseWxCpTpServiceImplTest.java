@@ -12,6 +12,9 @@ import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+import java.util.Objects;
+
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_AUTH_INFO;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_PERMANENT_CODE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -179,6 +182,30 @@ public class BaseWxCpTpServiceImplTest {
       "    \"userid\": \"yuanqixun\", \n" +
       "    \"name\": \"袁启勋\", \n" +
       "    \"avatar\": \"http://wework.qpic.cn/bizmail/ZYqy8EswiaFyPnk7gy7eiafoicz3TL35f4bAvCf2eSe6RVYSK7aPDFxcw/0\"\n" +
+      "  },\n" +
+      "  \"edition_info\":\n" +
+      "  {\n" +
+      "      \"agent\" :\n" +
+      "      [\n" +
+      "          {\n" +
+      "              \"agentid\":1,\n" +
+      "              \"edition_id\":\"RLS65535\",\n" +
+      "              \"edition_name\":\"协同版\",\n" +
+      "              \"app_status\":3,\n" +
+      "              \"user_limit\":200,\n" +
+      "              \"expired_time\":1541990791\n" +
+      "          },\n" +
+      "          {\n" +
+      "              \"agentid\":1,\n" +
+      "              \"edition_id\":\"RLS65535\",\n" +
+      "              \"edition_name\":\"协同版\",\n" +
+      "              \"app_status\":3,\n" +
+      "              \"user_limit\":200,\n" +
+      "              \"expired_time\":1541990791,\n" +
+      "              \"is_virtual_version\":false,\n" +
+      "              \"is_shared_from_other_corp\":true\n" +
+      "          }\n" +
+      "      ]\n" +
       "  }\n" +
       "}";
 
@@ -192,6 +219,15 @@ public class BaseWxCpTpServiceImplTest {
     assertThat(tpPermanentCodeInfo.getAuthInfo().getAgents().get(0).getAgentId()).isEqualTo(1000012);
     Assert.assertNotNull(tpPermanentCodeInfo.getAuthInfo().getAgents().get(0).getSquareLogoUrl());
     Assert.assertNotNull(tpPermanentCodeInfo.getAuthCorpInfo().getCorpSquareLogoUrl());
+
+    final WxCpTpPermanentCodeInfo.EditionInfo editionInfo = tpPermanentCodeInfo.getEditionInfo();
+    Assert.assertNotNull(editionInfo);
+
+    final List<WxCpTpPermanentCodeInfo.Agent> editionInfoAgents = editionInfo.getAgents();
+    Assert.assertTrue(Objects.nonNull(editionInfoAgents) && !editionInfoAgents.isEmpty());
+
+    Assert.assertNotNull(editionInfoAgents.get(0).getExpiredTime());
+
   }
 
   @Test
@@ -250,6 +286,32 @@ public class BaseWxCpTpServiceImplTest {
       "                \"appid\":5\n" +
       "            }\n" +
       "        ]\n" +
+      "    },\n" +
+      "    \"edition_info\":\n" +
+      "    {\n" +
+      "        \"agent\" :\n" +
+      "        [\n" +
+      "            {\n" +
+      "                \"agentid\":1,\n" +
+      "                \"edition_id\":\"RLS65535\",\n" +
+      "                \"edition_name\":\"协同版\",\n" +
+      "                \"app_status\":3,\n" +
+      "                \"user_limit\":200,\n" +
+      "                \"expired_time\":1541990791,\n" +
+      "                \"is_virtual_version\":false,\n" +
+      "                \"is_shared_from_other_corp\":true\n" +
+      "            },\n" +
+      "            {\n" +
+      "                \"agentid\":1,\n" +
+      "                \"edition_id\":\"RLS65535\",\n" +
+      "                \"edition_name\":\"协同版\",\n" +
+      "                \"app_status\":3,\n" +
+      "                \"user_limit\":200,\n" +
+      "                \"expired_time\":1541990791,\n" +
+      "                \"is_virtual_version\":false,\n" +
+      "                \"is_shared_from_other_corp\":true\n" +
+      "            }\n" +
+      "        ]\n" +
       "    }\n" +
       "}\n";
 
@@ -263,6 +325,14 @@ public class BaseWxCpTpServiceImplTest {
     Mockito.doReturn(returnJson).when(tpService).post(configStorage.getApiUrl(GET_AUTH_INFO), jsonObject.toString());
     WxCpTpAuthInfo authInfo = tpService.getAuthInfo(authCorpId, permanentCode);
     Assert.assertNotNull(authInfo.getAuthCorpInfo().getCorpId());
+
+    final WxCpTpAuthInfo.EditionInfo editionInfo = authInfo.getEditionInfo();
+    Assert.assertNotNull(editionInfo);
+
+    final List<WxCpTpAuthInfo.Agent> editionInfoAgents = editionInfo.getAgents();
+    Assert.assertTrue(Objects.nonNull(editionInfoAgents) && !editionInfoAgents.isEmpty());
+
+    Assert.assertNotNull(editionInfoAgents.get(0).getExpiredTime());
   }
 
   @Test

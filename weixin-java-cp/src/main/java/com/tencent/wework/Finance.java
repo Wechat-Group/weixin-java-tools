@@ -2,6 +2,8 @@ package com.tencent.wework;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 /**
  * 注意：
  * 此类必须配置在com.tencent.wework路径底下，否则会报错：
@@ -147,7 +149,7 @@ public class Finance {
    * @param libFiles   类库配置文件
    * @param prefixPath 类库文件的前缀路径
    */
-  public Finance(String[] libFiles, String prefixPath) {
+  public Finance(List<String> libFiles, String prefixPath) {
     boolean isWindows = Finance.isWindows();
     for (String file : libFiles) {
       String suffix = file.substring(file.lastIndexOf(".") + 1);
@@ -173,7 +175,7 @@ public class Finance {
    * @param prefixPath
    * @return
    */
-  public synchronized static Finance loadingLibraries(String[] libFiles, String prefixPath) {
+  public synchronized static Finance loadingLibraries(List<String> libFiles, String prefixPath) {
     if (finance != null) {
       return finance;
     }

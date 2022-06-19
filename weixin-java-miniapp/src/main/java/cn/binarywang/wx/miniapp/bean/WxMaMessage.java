@@ -7,6 +7,7 @@ import cn.binarywang.wx.miniapp.util.xml.XStreamTransformer;
 import com.google.gson.annotations.SerializedName;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import lombok.Data;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.XmlUtils;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -143,6 +145,29 @@ public class WxMaMessage implements Serializable {
   @XStreamAlias("status_code")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String statusCode;
+
+  /**
+   * 异步校验图片/音频内容安全 接口版本
+   * @since 2.0
+   */
+  @SerializedName("version")
+  @XStreamAlias("version")
+  private Integer version;
+  /**
+   * 异步校验图片/音频内容安全 综合结果
+   * @since 2.0
+   */
+  @SerializedName("result")
+  @XStreamAlias("result")
+  private WxMaMediaAsyncCheckResult.ResultBean result;
+  /**
+   * 异步校验图片/音频内容安全 详细检测结果
+   * @since 2.0
+   */
+  @SerializedName("detail")
+  @XStreamAlias("detail")
+  @XStreamImplicit
+  private List<WxMaMediaAsyncCheckResult.DetailBean> detail;
 
   @SerializedName("Scene")
   @XStreamAlias("Scene")

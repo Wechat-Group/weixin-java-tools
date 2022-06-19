@@ -1,17 +1,16 @@
 package me.chanjar.weixin.cp.api;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import lombok.NonNull;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
 import me.chanjar.weixin.cp.bean.external.contact.*;
-import me.chanjar.weixin.cp.bean.oa.WxCpApprovalInfoQueryFilter;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +56,6 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   WxCpContactWayInfo getContactWay(@NonNull String configId) throws WxErrorException;
-
   /**
    * 更新企业已配置的「联系我」方式
    *
@@ -171,6 +169,50 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException .
    */
   String unionidToExternalUserid(@NotNull String unionid,String openid) throws WxErrorException;
+
+  /**
+   *
+   * 配置客户群进群方式
+   * 企业可以在管理后台-客户联系中配置「加入群聊」的二维码或者小程序按钮，客户通过扫描二维码或点击小程序上的按钮，即可加入特定的客户群。
+   * 企业可通过此接口为具有客户联系功能的成员生成专属的二维码或者小程序按钮。
+   * 如果配置的是小程序按钮，需要开发者的小程序接入小程序插件。
+   * 注意:
+   * 通过API添加的配置不会在管理端进行展示，每个企业可通过API最多配置50万个「加入群聊」(与「联系我」共用50万的额度)。
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/92229
+   * @param wxCpGroupJoinWayInfo
+   * @return {@link WxCpGroupJoinWayResult}
+   * @throws WxErrorException
+   */
+  WxCpGroupJoinWayResult addJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException;
+
+  /**
+   *更新客户群进群方式配置
+   * 更新进群方式配置信息。注意：使用覆盖的方式更新。
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/92229
+   * @param wxCpGroupJoinWayInfo
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp updateJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException;
+
+  /**
+   * 获取客户群进群方式配置
+   * 获取企业配置的群二维码或小程序按钮。
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/92229
+   * @param configId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGroupJoinWayInfo getJoinWay(@NonNull String configId) throws WxErrorException;
+
+  /**
+   * 删除客户群进群方式配置
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/92229
+   * @param configId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp delJoinWay( @NonNull String configId) throws WxErrorException;
 
   /**
    * 代开发应用external_userid转换
@@ -960,5 +1002,71 @@ public interface WxCpExternalContactService {
   WxMediaUploadResult uploadAttachment(String mediaType, Integer attachmentType, File file)
     throws WxErrorException;
 
+  /**
+   * <pre>
+   * 新建敏感词规则
+   * 企业和第三方应用可以通过此接口新建敏感词规则
+   * 请求方式：POST(HTTPS)
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_intercept_rule?access_token=ACCESS_TOKEN
+   * <pre>
+   */
+  WxCpInterceptRuleResultResp addInterceptRule(WxCpInterceptRuleResp ruleResp) throws  WxErrorException;
+  /**
+   * <pre>
+   * 修改敏感词规则
+   * 企业和第三方应用可以通过此接口修改敏感词规则
+   * 请求方式：POST(HTTPS)
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/update_intercept_rule?access_token=ACCESS_TOKEN
+   * <pre>
+   */
+  WxCpInterceptRuleResultResp updateInterceptRule(WxCpInterceptRuleResp ruleResp) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 删除敏感词规则
+   * 企业和第三方应用可以通过此接口修改敏感词规则
+   * 请求方式：POST(HTTPS)
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/del_intercept_rule?access_token=ACCESS_TOKEN
+   * <pre>
+   * @param rule_id 规则id
+   */
+  WxCpBaseResp delInterceptRule(String rule_id) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 创建商品图册
+   * 企业和第三方应用可以通过此接口增加商品
+   * 请求方式：POST(HTTPS)
+   * 请求地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_product_album?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_product_album?access_token=ACCESS_TOKEN</a>
+   * 文档地址：<a href="https://developer.work.weixin.qq.com/document/path/95096#%E5%88%9B%E5%BB%BA%E5%95%86%E5%93%81%E5%9B%BE%E5%86%8C">https://developer.work.weixin.qq.com/document/path/95096#%E5%88%9B%E5%BB%BA%E5%95%86%E5%93%81%E5%9B%BE%E5%86%8C</a>
+   * <pre>
+   * @param wxCpProductAlbumInfo 商品图册信息
+   * @return 商品id
+   */
+  String addProductAlbum(WxCpProductAlbumInfo wxCpProductAlbumInfo) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 编辑商品图册
+   * 企业和第三方应用可以通过此接口修改商品信息
+   * 请求方式：POST(HTTPS)
+   * 请求地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/update_product_album?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/externalcontact/update_product_album?access_token=ACCESS_TOKEN</a>
+   * 文档地址：<a href="https://developer.work.weixin.qq.com/document/path/95096#%E7%BC%96%E8%BE%91%E5%95%86%E5%93%81%E5%9B%BE%E5%86%8C">https://developer.work.weixin.qq.com/document/path/95096#%E7%BC%96%E8%BE%91%E5%95%86%E5%93%81%E5%9B%BE%E5%86%8C</a>
+   * <pre>
+   * @param wxCpProductAlbumInfo 商品图册信息
+   */
+  void updateProductAlbum(WxCpProductAlbumInfo wxCpProductAlbumInfo) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 删除商品图册
+   * 企业和第三方应用可以通过此接口删除商品信息
+   * 请求方式：POST(HTTPS)
+   * 请求地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/delete_product_album?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/externalcontact/delete_product_album?access_token=ACCESS_TOKEN</a>
+   * 文档地址：<a href="https://developer.work.weixin.qq.com/document/path/95096#%E5%88%A0%E9%99%A4%E5%95%86%E5%93%81%E5%9B%BE%E5%86%8C">https://developer.work.weixin.qq.com/document/path/95096#%E5%88%A0%E9%99%A4%E5%95%86%E5%93%81%E5%9B%BE%E5%86%8C</a>
+   * <pre>
+   * @param productId 商品id
+   */
+  void deleteProductAlbum(String productId) throws WxErrorException;
 
 }

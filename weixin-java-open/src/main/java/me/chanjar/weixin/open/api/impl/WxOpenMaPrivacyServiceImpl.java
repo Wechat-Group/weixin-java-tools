@@ -6,9 +6,7 @@ import lombok.SneakyThrows;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenMaPrivacyService;
-import me.chanjar.weixin.open.bean.ma.privacy.GetPrivacySettingResult;
-import me.chanjar.weixin.open.bean.ma.privacy.SetPrivacySetting;
-import me.chanjar.weixin.open.bean.ma.privacy.UploadPrivacyFileResult;
+import me.chanjar.weixin.open.bean.ma.privacy.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,5 +49,17 @@ public class WxOpenMaPrivacyServiceImpl implements WxOpenMaPrivacyService {
 //    String json = wxMaService.execute(executor, OPEN_UPLOAD_PRIVACY_FILE, data);
 //    return WxOpenGsonBuilder.create().fromJson(json, UploadPrivacyFileResult.class);
     throw new WxErrorException(new WxError(5003, "暂未实现用户隐私指引内容上传"));
+  }
+
+  @Override
+  public GetPrivacyInterfaceResult getPrivacyInterface() throws WxErrorException {
+    String json = wxMaService.get(GET_PRIVATE_INTERFACE, "");
+    return WxOpenGsonBuilder.create().fromJson(json, GetPrivacyInterfaceResult.class);
+  }
+
+  @Override
+  public ApplyPrivacyInterfaceResult applyPrivacyInterface(ApplyPrivacyInterface dto) throws WxErrorException {
+    String json = wxMaService.post(APPLY_PRIVATE_INTERFACE, dto);
+    return WxOpenGsonBuilder.create().fromJson(json, ApplyPrivacyInterfaceResult.class);
   }
 }

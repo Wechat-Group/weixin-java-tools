@@ -1,9 +1,13 @@
 package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.complaint.*;
+import com.github.binarywang.wxpay.bean.media.ImageUploadResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 import javax.crypto.BadPaddingException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * <pre>
@@ -128,5 +132,32 @@ public interface ComplaintService {
    * @throws WxPayException the wx pay exception
    */
   void complete(CompleteRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 商户上传反馈图片API
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter10_2_10.shtml
+   * 接口链接：https://api.mch.weixin.qq.com/v3/merchant-service/images/upload
+   * </pre>
+   *
+   * @param imageFile 需要上传的图片文件
+   * @return ImageUploadResult 微信返回的媒体文件标识Id。示例值：BB04A5DEEFEA18D4F2554C1EDD3B610B.bmp
+   * @throws WxPayException the wx pay exception
+   */
+  ImageUploadResult uploadResponseImage(File imageFile) throws WxPayException, IOException;
+
+  /**
+   * <pre>
+   * 商户上传反馈图片API
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter10_2_10.shtml
+   * 接口链接：https://api.mch.weixin.qq.com/v3/merchant-service/images/upload
+   * </pre>
+   *
+   * @param inputStream 需要上传的图片文件流
+   * @param fileName 需要上传的图片文件名
+   * @return ImageUploadResult 微信返回的媒体文件标识Id。示例值：BB04A5DEEFEA18D4F2554C1EDD3B610B.bmp
+   * @throws WxPayException the wx pay exception
+   */
+  ImageUploadResult uploadResponseImage(InputStream inputStream, String fileName) throws WxPayException, IOException;
 
 }

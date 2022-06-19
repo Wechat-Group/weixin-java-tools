@@ -50,4 +50,8 @@ public class WxCpProductAlbumInfo implements Serializable {
     return WxCpGsonBuilder.create().fromJson(json, WxCpProductAlbumInfo.class);
   }
 
+  public String toJson() {
+    return WxCpGsonBuilder.create().toJson(this);
+  }
+
 }

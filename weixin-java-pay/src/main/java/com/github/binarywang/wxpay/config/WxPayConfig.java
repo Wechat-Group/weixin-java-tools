@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
+import java.util.Base64;
 import java.util.Collections;
 
 /**
@@ -102,14 +103,27 @@ public class WxPayConfig {
   private String signType;
   private SSLContext sslContext;
   /**
+   * p12证书base64编码
+   */
+  private String keyString;
+  /**
    * p12证书文件的绝对路径或者以classpath:开头的类路径.
    */
   private String keyPath;
 
   /**
+   * apiclient_key.pem证书base64编码
+   */
+  private String privateKeyString;
+  /**
    * apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径.
    */
   private String privateKeyPath;
+
+  /**
+   * apiclient_cert.pem证书base64编码
+   */
+  private String privateCertString;
   /**
    * apiclient_cert.pem证书文件的绝对路径或者以classpath:开头的类路径.
    */
@@ -222,7 +236,7 @@ public class WxPayConfig {
       throw new WxPayException("请确保商户号mchId已设置");
     }
 
-    InputStream inputStream = this.loadConfigInputStream(this.getKeyPath(), this.keyContent, "p12证书");
+    InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(), this.keyContent, "p12证书");
 
     try {
       KeyStore keystore = KeyStore.getInstance("PKCS12");
@@ -245,7 +259,9 @@ public class WxPayConfig {
    * @author doger.wang
    **/
   public CloseableHttpClient initApiV3HttpClient() throws WxPayException {
+    val privateKeyString = this.getPrivateKeyString();
     val privateKeyPath = this.getPrivateKeyPath();
+    val privateCertString = this.getPrivateCertString();
     val privateCertPath = this.getPrivateCertPath();
     val serialNo = this.getCertSerialNo();
     val apiV3Key = this.getApiV3Key();
@@ -253,8 +269,8 @@ public class WxPayConfig {
       throw new WxPayException("请确保apiV3Key值已设置");
     }
 
-    InputStream keyInputStream = this.loadConfigInputStream(privateKeyPath, this.privateKeyContent, "privateKeyPath");
-    InputStream certInputStream = this.loadConfigInputStream(privateCertPath, this.privateCertContent, "privateCertPath");
+    InputStream keyInputStream = this.loadConfigInputStream(privateKeyString, privateKeyPath, this.privateKeyContent, "privateKeyPath");
+    InputStream certInputStream = this.loadConfigInputStream(privateCertString, privateCertPath, this.privateCertContent, "privateCertPath");
     try {
       PrivateKey merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
       X509Certificate certificate = PemUtils.loadCertificate(certInputStream);
@@ -298,9 +314,12 @@ public class WxPayConfig {
     return null;
   }
 
-  private InputStream loadConfigInputStream(String configPath, byte[] configContent, String fileName) throws WxPayException {
+  private InputStream loadConfigInputStream(String configString, String configPath, byte[] configContent, String fileName) throws WxPayException {
     InputStream inputStream;
     if (configContent != null) {
+      inputStream = new ByteArrayInputStream(configContent);
+    } else if(StringUtils.isNotEmpty(configString)) {
+      configContent = Base64.getDecoder().decode(configString);
       inputStream = new ByteArrayInputStream(configContent);
     } else {
       if (StringUtils.isBlank(configPath)) {

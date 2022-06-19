@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * WxCpConfigStorage 抽象配置类
  *
- * @author yl
+ * @author yl & Wang_Wong
  * @date 2021/12/6
  */
 public abstract class AbstractWxCpConfigStorageConfiguration {
@@ -18,6 +18,9 @@ public abstract class AbstractWxCpConfigStorageConfiguration {
     String token = properties.getToken();
     Integer agentId = properties.getAgentId();
     String aesKey = properties.getAesKey();
+    // 企业微信，私钥，会话存档路径
+    String msgAuditPriKey = properties.getMsgAuditPriKey();
+    String msgAuditLibPath = properties.getMsgAuditLibPath();
 
     config.setCorpId(corpId);
     config.setCorpSecret(corpSecret);
@@ -29,6 +32,12 @@ public abstract class AbstractWxCpConfigStorageConfiguration {
     }
     if (StringUtils.isNotBlank(aesKey)) {
       config.setAesKey(aesKey);
+    }
+    if (StringUtils.isNotBlank(msgAuditPriKey)) {
+      config.setMsgAuditPriKey(msgAuditPriKey);
+    }
+    if (StringUtils.isNotBlank(msgAuditLibPath)) {
+      config.setMsgAuditLibPath(msgAuditLibPath);
     }
 
     WxCpProperties.ConfigStorage storage = properties.getConfigStorage();
@@ -50,4 +59,5 @@ public abstract class AbstractWxCpConfigStorageConfiguration {
     }
     return config;
   }
+
 }

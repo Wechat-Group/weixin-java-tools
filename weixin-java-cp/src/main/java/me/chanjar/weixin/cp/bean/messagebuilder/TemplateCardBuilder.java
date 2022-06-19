@@ -37,6 +37,21 @@ public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
   private String sourceDesc;
 
   /**
+   * 来源文字的颜色，目前支持：0(默认) 灰色，1 黑色，2 红色，3 绿色
+   */
+  private Integer sourceDescColor;
+
+  /**
+   * 更多操作界面的描述
+   */
+  private String actionMenuDesc;
+
+  /**
+   * 操作列表，列表长度取值范围为 [1, 3]
+   */
+  private List<ActionMenuItem> actionMenuActionList;
+
+  /**
    * 一级标题，建议不超过36个字
    */
   private String mainTitleTitle;
@@ -172,6 +187,16 @@ public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
     return this;
   }
 
+  public TemplateCardBuilder actionMenuDesc(String actionMenuDesc) {
+    this.actionMenuDesc = actionMenuDesc;
+    return this;
+  }
+
+  public TemplateCardBuilder actionMenuActionList(List<ActionMenuItem> actionMenuItemList) {
+    this.actionMenuActionList = actionMenuItemList;
+    return this;
+  }
+
   public TemplateCardBuilder sourceIconUrl(String sourceIconUrl) {
     this.sourceIconUrl = sourceIconUrl;
     return this;
@@ -179,6 +204,11 @@ public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
 
   public TemplateCardBuilder sourceDesc(String sourceDesc) {
     this.sourceDesc = sourceDesc;
+    return this;
+  }
+
+  public TemplateCardBuilder sourceDescColor(Integer sourceDescColor) {
+    this.sourceDescColor = sourceDescColor;
     return this;
   }
 
@@ -294,6 +324,9 @@ public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
     m.setCardType(this.cardType);
     m.setSourceIconUrl(this.sourceIconUrl);
     m.setSourceDesc(this.sourceDesc);
+    m.setSourceDescColor(this.sourceDescColor);
+    m.setActionMenuDesc(this.actionMenuDesc);
+    m.setActionMenuActionList(this.actionMenuActionList);
     m.setMainTitleTitle(this.mainTitleTitle);
     m.setMainTitleDesc(this.mainTitleDesc);
     m.setCardImageUrl(this.cardImageUrl);

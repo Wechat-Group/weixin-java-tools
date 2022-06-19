@@ -166,6 +166,12 @@ public class WxCpMessageTest {
       .value("企业微信.apk")
       .media_id("文件的media_id")
       .build();
+    HorizontalContent hContent4 = HorizontalContent.builder()
+      .type(3)
+      .keyname("员工信息")
+      .value("点击查看")
+      .userid("zhangsan")
+      .build();
 
     TemplateCardJump jump1 = TemplateCardJump.builder()
       .type(1)
@@ -178,7 +184,7 @@ public class WxCpMessageTest {
       .appid("小程序的appid")
       .pagepath("/index.html")
       .build();
-    QuoteArea quoteArea=QuoteArea.builder()
+    QuoteArea quoteArea = QuoteArea.builder()
       .type(1)
       .title("引用文献标题")
       .appid("小程序的appid")
@@ -186,17 +192,31 @@ public class WxCpMessageTest {
       .url("https://work.weixin.qq.com")
       .quoteText("引用文献样式的引用文案")
       .build();
+    ActionMenuItem action1 = ActionMenuItem.builder()
+      .text("接受推送")
+      .key("A")
+      .build();
+    ActionMenuItem action2 = ActionMenuItem.builder()
+      .text("不再推送")
+      .key("B")
+      .build();
     WxCpMessage reply = WxCpMessage.TEMPLATECARD().toUser("OPENID")
+      .toParty("PartyID1 | PartyID2")
+      .toTag("TagID1 | TagID2")
       .agentId(1000002)
       .cardType(WxConsts.TemplateCardType.TEXT_NOTICE)
+      .taskId("task_id")
       .sourceIconUrl("图片的url")
       .sourceDesc("企业微信")
+      .sourceDescColor(1)
+      .actionMenuDesc("卡片副交互辅助文本说明")
+      .actionMenuActionList(Arrays.asList(action1, action2))
       .mainTitleTitle("欢迎使用企业微信")
       .mainTitleDesc("您的好友正在邀请您加入企业微信")
       .emphasisContentTitle("100")
       .emphasisContentDesc("核心数据")
       .subTitleText("下载企业微信还能抢红包！")
-      .horizontalContents(Arrays.asList(hContent1,hContent2,hContent3))
+      .horizontalContents(Arrays.asList(hContent1, hContent2, hContent3, hContent4))
       .jumps(Arrays.asList(jump1,jump2))
       .cardActionType(2)
       .cardActionAppid("小程序的appid")
@@ -209,8 +229,7 @@ public class WxCpMessageTest {
     reply.setDuplicateCheckInterval(1800);
 //    System.out.println(reply.toJson());
     assertThat(reply.toJson())
-      .isEqualTo("{\"agentid\":1000002,\"touser\":\"OPENID\",\"msgtype\":\"template_card\",\"duplicate_check_interval\":1800,\"template_card\":{\"card_type\":\"text_notice\",\"source\":{\"icon_url\":\"图片的url\",\"desc\":\"企业微信\"},\"main_title\":{\"title\":\"欢迎使用企业微信\",\"desc\":\"您的好友正在邀请您加入企业微信\"},\"emphasis_content\":{\"title\":\"100\",\"desc\":\"核心数据\"},\"sub_title_text\":\"下载企业微信还能抢红包！\",\"horizontal_content_list\":[{\"keyname\":\"邀请人\",\"value\":\"张三\"},{\"type\":1,\"keyname\":\"企业微信官网\",\"value\":\"点击访问\",\"url\":\"https://work.weixin.qq.com\"},{\"type\":2,\"keyname\":\"企业微信下载\",\"value\":\"企业微信.apk\",\"media_id\":\"文件的media_id\"}],\"jump_list\":[{\"type\":1,\"title\":\"企业微信官网\",\"url\":\"https://work.weixin.qq.com\"},{\"type\":2,\"title\":\"跳转小程序\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\"}],\"card_action\":{\"type\":2,\"url\":\"https://work.weixin.qq.com\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\"},\"quote_area\":{\"type\":1,\"url\":\"https://work.weixin.qq.com\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\",\"title\":\"引用文献标题\",\"quote_text\":\"引用文献样式的引用文案\"}}}");
-
+      .isEqualTo("{\"agentid\":1000002,\"touser\":\"OPENID\",\"msgtype\":\"template_card\",\"toparty\":\"PartyID1 | PartyID2\",\"totag\":\"TagID1 | TagID2\",\"duplicate_check_interval\":1800,\"template_card\":{\"card_type\":\"text_notice\",\"source\":{\"icon_url\":\"图片的url\",\"desc\":\"企业微信\",\"desc_color\":1},\"action_menu\":{\"desc\":\"卡片副交互辅助文本说明\",\"action_list\":[{\"text\":\"接受推送\",\"key\":\"A\"},{\"text\":\"不再推送\",\"key\":\"B\"}]},\"main_title\":{\"title\":\"欢迎使用企业微信\",\"desc\":\"您的好友正在邀请您加入企业微信\"},\"emphasis_content\":{\"title\":\"100\",\"desc\":\"核心数据\"},\"sub_title_text\":\"下载企业微信还能抢红包！\",\"task_id\":\"task_id\",\"horizontal_content_list\":[{\"keyname\":\"邀请人\",\"value\":\"张三\"},{\"type\":1,\"keyname\":\"企业微信官网\",\"value\":\"点击访问\",\"url\":\"https://work.weixin.qq.com\"},{\"type\":2,\"keyname\":\"企业微信下载\",\"value\":\"企业微信.apk\",\"media_id\":\"文件的media_id\"},{\"type\":3,\"keyname\":\"员工信息\",\"value\":\"点击查看\",\"userid\":\"zhangsan\"}],\"jump_list\":[{\"type\":1,\"title\":\"企业微信官网\",\"url\":\"https://work.weixin.qq.com\"},{\"type\":2,\"title\":\"跳转小程序\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\"}],\"card_action\":{\"type\":2,\"url\":\"https://work.weixin.qq.com\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\"},\"quote_area\":{\"type\":1,\"url\":\"https://work.weixin.qq.com\",\"appid\":\"小程序的appid\",\"pagepath\":\"/index.html\",\"title\":\"引用文献标题\",\"quote_text\":\"引用文献样式的引用文案\"}}}");
   }
 
   /**
@@ -404,13 +423,13 @@ public class WxCpMessageTest {
       .question_key("question_key1")
       .title("选择器标签1")
       .selected_id("selection_id1")
-      .options(Arrays.asList(option1,option2))
+      .options(Arrays.asList(option1, option2))
       .build();
     MultipleSelect mSelect2 = MultipleSelect.builder()
       .question_key("question_key2")
       .title("选择器标签2")
       .selected_id("selection_id3")
-      .options(Arrays.asList(option3,option4))
+      .options(Arrays.asList(option3, option4))
       .build();
 
 

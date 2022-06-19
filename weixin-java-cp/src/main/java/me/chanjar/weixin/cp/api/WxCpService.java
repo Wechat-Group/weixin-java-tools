@@ -264,6 +264,14 @@ public interface WxCpService extends WxService {
   String replaceParty(String mediaId) throws WxErrorException;
 
   /**
+   * 上传用户列表，增量更新成员
+   * @param mediaId 媒体id
+   * @return jobId 异步任务id
+   * @throws WxErrorException the wx error exception
+   */
+  String syncUser(String mediaId) throws WxErrorException;
+
+  /**
    * 上传用户列表覆盖企业号上的用户信息
    *
    * @param mediaId 媒体id
@@ -275,11 +283,11 @@ public interface WxCpService extends WxService {
   /**
    * 获取异步任务结果
    *
-   * @param joinId the join id
+   * @param jobId 异步任务id
    * @return the task result
    * @throws WxErrorException the wx error exception
    */
-  String getTaskResult(String joinId) throws WxErrorException;
+  String getTaskResult(String jobId) throws WxErrorException;
 
   /**
    * 初始化http请求对象
@@ -386,11 +394,25 @@ public interface WxCpService extends WxService {
   WxCpMessageService getMessageService();
 
   /**
-   * Gets oa service.
+   * 获取OA相关接口的服务类对象.
    *
    * @return the oa service
    */
   WxCpOaService getOaService();
+
+  /**
+   * 获取家校应用复学码相关接口的服务类对象
+   *
+   * @return
+   */
+  WxCpSchoolService getSchoolService();
+
+  /**
+   * 获取家校应用健康上报的服务类对象
+   *
+   * @return
+   */
+  WxCpSchoolHealthService getSchoolHealthService();
 
   /**
    * 获取直播相关接口的服务类对象
@@ -398,6 +420,20 @@ public interface WxCpService extends WxService {
    * @return the Living service
    */
   WxCpLivingService getLivingService();
+
+  /**
+   * 获取OA 自建应用相关接口的服务类对象
+   *
+   * @return
+   */
+  WxCpOaAgentService getOaAgentService();
+
+  /**
+   * 获取OA效率工具 微盘的服务类对象
+   *
+   * @return
+   */
+  WxCpOaWeDriveService getOaWeDriveService();
 
   /**
    * 获取会话存档相关接口的服务类对象
@@ -496,4 +532,18 @@ public interface WxCpService extends WxService {
    * @param kfService the kf service
    */
   void setKfService(WxCpKfService kfService);
+
+  /**
+   * 获取异步导出服务
+   *
+   * @return 异步导出服务
+   */
+  WxCpExportService getExportService();
+
+  /**
+   * 设置异步导出服务
+   *
+   * @param exportService 异步导出服务
+   */
+  void setExportService(WxCpExportService exportService);
 }

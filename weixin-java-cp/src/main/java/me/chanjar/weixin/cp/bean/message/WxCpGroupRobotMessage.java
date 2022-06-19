@@ -57,6 +57,11 @@ public class WxCpGroupRobotMessage implements Serializable {
    */
   private List<NewArticle> articles;
 
+  /**
+   * 文件id
+   */
+  private String mediaId;
+
   public String toJson() {
     JsonObject messageJson = new JsonObject();
     messageJson.addProperty("msgtype", this.getMsgType());
@@ -110,6 +115,12 @@ public class WxCpGroupRobotMessage implements Serializable {
         }
         text.add("articles", array);
         messageJson.add("news", text);
+        break;
+      }
+      case FILE: {
+        JsonObject file = new JsonObject();
+        file.addProperty("media_id", this.getMediaId());
+        messageJson.add("file", file);
         break;
       }
       default:

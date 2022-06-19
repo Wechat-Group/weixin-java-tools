@@ -1,8 +1,7 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.complaint.*;
-import com.github.binarywang.wxpay.bean.profitsharing.*;
-import com.github.binarywang.wxpay.constant.WxPayConstants;
+import com.github.binarywang.wxpay.bean.media.ImageUploadResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
@@ -13,6 +12,8 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 import javax.crypto.BadPaddingException;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * <pre>
@@ -150,6 +151,23 @@ public class ComplaintServiceImplTest {
       .complaintedMchid(this.payService.getConfig().getMchId())
       .build();
     this.payService.getComplaintsService().complete(request);
+  }
+
+  /**
+   *  商户上传反馈图片API
+   * @throws WxPayException
+   * @throws IOException
+   */
+  @Test
+  public  void testUploadResponseImage() throws WxPayException, IOException {
+    String filePath="你的图片文件的路径地址";
+//    String filePath="WxJava/images/banners/wiki.jpg";
+
+    File file = new File(filePath);
+
+    ImageUploadResult imageUploadResult = this.payService.getComplaintsService().uploadResponseImage(file);
+    imageUploadResult.getMediaId();
+
   }
 
 }

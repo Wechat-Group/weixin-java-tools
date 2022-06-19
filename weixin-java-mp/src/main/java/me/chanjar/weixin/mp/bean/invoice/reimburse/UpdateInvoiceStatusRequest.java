@@ -21,7 +21,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateInvoiceStatusRequest implements Serializable {
-
   private static final long serialVersionUID = -4122242332481909977L;
 
 

@@ -7,17 +7,20 @@ import lombok.Data;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * <pre>
  * 查询报销发票信息响应对象
  * </pre>
+ *
  * @author <a href="https://github.com/mr-xiaoyu">xiaoyu</a>
  * @since 2021-03-23
  */
 @Data
-public class InvoiceInfoResponse {
+public class InvoiceInfoResponse implements Serializable {
+  private static final long serialVersionUID = -4835089274990526299L;
 
   /**
    * 发票ID

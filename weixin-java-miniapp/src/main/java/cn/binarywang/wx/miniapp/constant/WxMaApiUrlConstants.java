@@ -70,6 +70,7 @@ public class WxMaApiUrlConstants {
     String GET_SUPPORT_VERSION_URL = "https://api.weixin.qq.com/cgi-bin/wxopen/getweappsupportversion";
     String SET_SUPPORT_VERSION_URL = "https://api.weixin.qq.com/cgi-bin/wxopen/setweappsupportversion";
     String UNDO_CODE_AUDIT_URL = "https://api.weixin.qq.com/wxa/undocodeaudit";
+    String GET_VERSION_INFO_URL = "https://api.weixin.qq.com/wxa/getversioninfo";
   }
 
   public interface Express {
@@ -272,6 +273,14 @@ public class WxMaApiUrlConstants {
       String UPDATE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/update";
       String GET_GOODS_WARE_HOUSE = "https://api.weixin.qq.com/wxa/business/getgoodswarehouse";
       String GET_APPROVED_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getapproved";
+      /**
+       * 直播挂件设置全局 Key
+       */
+      String SET_KEY = "https://api.weixin.qq.com/wxaapi/broadcast/goods/setkey";
+      /**
+       * 直播挂件获取全局 Key
+       */
+      String GET_KEY = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getkey";
     }
 
     /**
@@ -409,6 +418,8 @@ public class WxMaApiUrlConstants {
       String ORDER_ADD = "https://api.weixin.qq.com/shop/order/add";
       String ORDER_PAY = "https://api.weixin.qq.com/shop/order/pay";
       String ORDER_GET = "https://api.weixin.qq.com/shop/order/get";
+      String ORDER_GET_LIST = "https://api.weixin.qq.com/shop/order/get_list";
+      String ORDER_GET_PAYMENT_PARAMS = "https://api.weixin.qq.com/shop/order/getpaymentparams";
     }
 
     interface Register {

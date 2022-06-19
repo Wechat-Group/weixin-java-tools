@@ -3,17 +3,20 @@ package me.chanjar.weixin.mp.bean.invoice.reimburse;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * <pre>
  * 用户可在发票票面看到的主要信息
  * </pre>
+ *
  * @author <a href="https://github.com/mr-xiaoyu">xiaoyu</a>
  * @since 2021-03-23
  */
 @Data
-public class InvoiceUserInfo {
+public class InvoiceUserInfo implements Serializable {
+  private static final long serialVersionUID = 4970283608560240497L;
 
   /**
    * 发票加税合计金额，以分为单位

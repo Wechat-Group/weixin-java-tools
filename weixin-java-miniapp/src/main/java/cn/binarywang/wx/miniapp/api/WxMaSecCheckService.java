@@ -23,7 +23,7 @@ public interface WxMaSecCheckService {
    * 应用场景举例：
    * 1）图片智能鉴黄：涉及拍照的工具类应用(如美拍，识图类应用)用户拍照上传检测；电商类商品上架图片检测；媒体类用户文章里的图片检测等；
    * 2）敏感人脸识别：用户头像；媒体类用户文章里的图片检测；社交类用户上传的图片检测等。频率限制：单个 appId 调用上限为 1000 次/分钟，100,000 次/天
-   * 详情请见: https://developers.weixin.qq.com/miniprogram/dev/api/open-api/sec-check/imgSecCheck.html
+   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/sec-check/imgSecCheck.html">https://developers.weixin.qq.com/miniprogram/dev/api/open-api/sec-check/imgSecCheck.html</a>
    * </pre>
    *
    * @param file the file
@@ -48,7 +48,7 @@ public interface WxMaSecCheckService {
    * 用户个人资料违规文字检测；
    * 媒体新闻类用户发表文章，评论内容检测；
    * 游戏类用户编辑上传的素材(如答题类小游戏用户上传的问题及答案)检测等。 频率限制：单个 appId 调用上限为 4000 次/分钟，2,000,000 次/天*
-   * 详情请见: https://developers.weixin.qq.com/miniprogram/dev/api/open-api/sec-check/msgSecCheck.html
+   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/sec-check/msgSecCheck.html">https://developers.weixin.qq.com/miniprogram/dev/api/open-api/sec-check/msgSecCheck.html</a>
    * </pre>
    *
    * @param msgString the msg string
@@ -61,9 +61,9 @@ public interface WxMaSecCheckService {
   /**
    * <pre>
    * 检查一段文本是否含有违法违规内容（新版本接口，主要是request和response做了参数优化）
-   * 详情请见: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html
+   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html">https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html</a>
    * </pre>
-   * @param msgRequest
+   * @param msgRequest request
    * @return WxMaMsgSecCheckCheckResponse
    * @throws WxErrorException the wx error exception
    */
@@ -79,7 +79,7 @@ public interface WxMaSecCheckService {
    * 频率限制：
    * 单个 appId 调用上限为 2000 次/分钟，200,000 次/天；文件大小限制：单个文件大小不超过10M
    * 详情请见:
-   * https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.mediaCheckAsync.html
+   * <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.mediaCheckAsync.html">https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.mediaCheckAsync.html</a>
    * </pre>
    *
    * @param mediaUrl  要检测的多媒体url
@@ -88,7 +88,6 @@ public interface WxMaSecCheckService {
    * @throws WxErrorException the wx error exception
    */
   WxMaMediaAsyncCheckResult mediaCheckAsync(String mediaUrl, int mediaType) throws WxErrorException;
-
 
   /**
    * <pre>
@@ -100,14 +99,14 @@ public interface WxMaSecCheckService {
    * 频率限制：
    * 单个 appId 调用上限为 2000 次/分钟，200,000 次/天；文件大小限制：单个文件大小不超过10M
    * 详情请见:
-   * https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.mediaCheckAsync.html
+   * <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.mediaCheckAsync.html">https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.mediaCheckAsync.html</a>
    * </pre>
    *
-   * @param medisRequest
+   * @param request 请求
    * @return wx ma media async check result
    * @throws WxErrorException the wx error exception
    */
 
-  WxMaMediaAsyncCheckResult mediaCheckAsync(WxMaMediaSecCheckCheckRequest medisRequest) throws WxErrorException;
+  WxMaMediaAsyncCheckResult mediaCheckAsync(WxMaMediaSecCheckCheckRequest request) throws WxErrorException;
 
 }

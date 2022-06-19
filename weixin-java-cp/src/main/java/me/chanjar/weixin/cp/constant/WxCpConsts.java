@@ -215,7 +215,7 @@ public class WxCpConsts {
        */
       public static final String DEL_MEMBER = "del_member";
       /**
-       * 成员退群
+       * 群主变更
        */
       public static final String CHANGE_OWNER = "change_owner";
       /**
@@ -228,8 +228,9 @@ public class WxCpConsts {
       public static final String CHANGE_NOTICE = "change_notice";
     }
   }
+
   @UtilityClass
-  public static class ExternalTagChangeType{
+  public static class ExternalTagChangeType {
 
     /**
      * 创建企业客户标签
@@ -250,7 +251,7 @@ public class WxCpConsts {
   }
 
   @UtilityClass
-  public static class TageType{
+  public static class TageType {
     /**
      * 标签
      */
@@ -373,6 +374,12 @@ public class WxCpConsts {
      * 图文消息（点击跳转到外链）.
      */
     public static final String NEWS = "news";
+
+    /**
+     * 文件类型消息.
+     */
+    public static final String FILE = "file";
+
   }
 
   /**

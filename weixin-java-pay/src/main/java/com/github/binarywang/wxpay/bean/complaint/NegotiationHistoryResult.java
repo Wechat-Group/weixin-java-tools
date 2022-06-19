@@ -67,7 +67,7 @@ public class NegotiationHistoryResult implements Serializable {
      * </pre>
      */
     @SerializedName("complaint_media_list")
-    private List<ComplaintDetailResult.ComplaintMedia> complaintMediaList;
+    private List<ComplaintMedia> complaintMediaList;
 
     @Data
     public static class ComplaintMedia implements Serializable {
@@ -97,7 +97,7 @@ public class NegotiationHistoryResult implements Serializable {
        * </pre>
        */
       @SerializedName("media_url")
-      private String mediaUrl;
+      private List<String> mediaUrl;
 
     }
 

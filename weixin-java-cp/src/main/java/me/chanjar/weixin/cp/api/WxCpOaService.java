@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.api;
 
 import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.*;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * 企业微信OA相关接口.
  *
- * @author Element
+ * @author Element & Wang_Wong
  * @date 2019-04-06 10:52
  */
 public interface WxCpOaService {
@@ -107,6 +108,7 @@ public interface WxCpOaService {
    */
   WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime) throws WxErrorException;
 
+
   /**
    * <pre>
    *   获取审批申请详情
@@ -121,6 +123,72 @@ public interface WxCpOaService {
    * @throws WxErrorException .
    */
   WxCpApprovalDetailResult getApprovalDetail(@NonNull String spNo) throws WxErrorException;
+
+
+  /**
+   * 获取企业假期管理配置
+   * 企业可通过审批应用或自建应用Secret调用本接口，获取可见范围内员工的“假期管理”配置，包括：各个假期的id、名称、请假单位、时长计算方式、发放规则等。
+   * 第三方应用可获取应用可见范围内员工的“假期管理”配置，包括：各个假期的id、名称、请假单位、时长计算方式、发放规则等。
+   *
+   * 请求方式：GET(HTTPS)
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/oa/vacation/getcorpconf?access_token=ACCESS_TOKEN
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpCorpConfInfo getCorpConf() throws WxErrorException;
+
+
+  /**
+   * 获取成员假期余额
+   * 企业可通过审批应用或自建应用Secret调用本接口，获取可见范围内各个员工的假期余额数据。
+   * 第三方应用可获取应用可见范围内各个员工的假期余额数据。
+   *
+   * 请求方式：POST(HTTPS)
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/oa/vacation/getuservacationquota?access_token=ACCESS_TOKEN
+   *
+   * @param userId 需要获取假期余额的成员的userid
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpUserVacationQuota getUserVacationQuota(@NonNull String userId) throws WxErrorException;
+
+
+  /**
+   * 获取审批数据（旧）
+   * 提示：推荐使用新接口“批量获取审批单号”及“获取审批申请详情”，此接口后续将不再维护、逐步下线。
+   * 通过本接口来获取公司一段时间内的审批记录。一次拉取调用最多拉取100个审批记录，可以通过多次拉取的方式来满足需求，但调用频率不可超过600次/分。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/corp/getapprovaldata?access_token=ACCESS_TOKEN
+   *
+   * @param startTime 获取审批记录的开始时间。Unix时间戳
+   * @param endTime 获取审批记录的结束时间。Unix时间戳
+   * @param nextSpNum 第一个拉取的审批单号，不填从该时间段的第一个审批单拉取
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpGetApprovalData getApprovalData(@NonNull Long startTime, @NonNull Long endTime, Long nextSpNum) throws WxErrorException;
+
+
+  /**
+   * 修改成员假期余额
+   * 企业可通过审批应用或自建应用Secret调用本接口，修改可见范围内员工的“假期余额”。
+   * 第三方应用可通过应本接口修改应用可见范围内指定员工的“假期余额”。
+   *
+   * 请求方式：POST(HTTPS)
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/oa/vacation/setoneuserquota?access_token=ACCESS_TOKEN
+   *
+   * @param userId 需要修改假期余额的成员的userid
+   * @param vacationId 假期id
+   * @param leftDuration 设置的假期余额，单位为秒，不能大于1000天或24000小时，当假期时间刻度为按小时请假时，必须为360整倍数，即0.1小时整倍数，按天请假时，必须为8640整倍数，即0.1天整倍数
+   * @param timeAttr 假期时间刻度：0-按天请假；1-按小时请假
+   * @param remarks 修改备注，用于显示在假期余额的修改记录当中，可对修改行为作说明，不超过200字符
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp setOneUserQuota(@NonNull String userId, @NonNull Integer vacationId, @NonNull Integer leftDuration, @NonNull Integer timeAttr, String remarks) throws WxErrorException;
+
 
   /**
    * 获取公费电话拨打记录
@@ -187,4 +255,17 @@ public interface WxCpOaService {
    * @throws WxErrorException the wx error exception
    */
   void setCheckinScheduleList(WxCpSetCheckinSchedule wxCpSetCheckinSchedule) throws WxErrorException;
+  /**
+   * <pre>
+   * 录入打卡人员人脸信息
+   * 企业可通过打卡应用Secret调用本接口，为企业打卡人员录入人脸信息，人脸信息仅用于人脸打卡。
+   * 上传图片大小限制:图片数据不超过1M
+   * 请求方式：POST(HTTPS)
+   * 请求地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/checkin/addcheckinuserface?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/checkin/addcheckinuserface?access_token=ACCESS_TOKEN</a>
+   * 文档地址：<a href="https://developer.work.weixin.qq.com/document/path/93378">https://developer.work.weixin.qq.com/document/path/93378</a>
+   * <pre>
+   * @param userId 需要录入的用户id
+   * @param userFace 需要录入的人脸图片数据，需要将图片数据base64处理后填入，对已录入的人脸会进行更新处理
+   */
+  void addCheckInUserFace(String userId, String userFace) throws WxErrorException;
 }

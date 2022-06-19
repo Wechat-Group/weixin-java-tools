@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 微信消费者投诉2.0
@@ -65,7 +66,7 @@ public class ResponseRequest implements Serializable {
    * </pre>
    */
   @SerializedName("response_images")
-  private String responseImages;
+  private List<String> responseImages;
 
   /**
    * <pre>

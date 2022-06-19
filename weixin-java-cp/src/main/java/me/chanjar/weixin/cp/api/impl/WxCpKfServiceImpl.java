@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpKfService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
+import me.chanjar.weixin.cp.bean.kf.*;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountAdd;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountAddResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountDel;
@@ -27,6 +27,8 @@ import me.chanjar.weixin.cp.bean.kf.WxCpKfServiceUpgradeConfigResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfServicerListResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfServicerOpResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.util.List;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Kf.*;
 
@@ -63,9 +65,16 @@ public class WxCpKfServiceImpl implements WxCpKfService {
   }
 
   @Override
-  public WxCpKfAccountListResp listAccount() throws WxErrorException {
+  public WxCpKfAccountListResp listAccount(Integer offset,Integer limit) throws WxErrorException {
     String url = cpService.getWxCpConfigStorage().getApiUrl(ACCOUNT_LIST);
-    String responseContent = cpService.post(url, "{}");
+    JsonObject json = new JsonObject();
+    if (offset != null) {
+      json.addProperty("offset", offset);
+    }
+    if (limit != null) {
+      json.addProperty("limit", limit);
+    }
+    String responseContent = cpService.post(url, json.toString());
     return WxCpKfAccountListResp.fromJson(responseContent);
   }
 
@@ -246,4 +255,11 @@ public class WxCpKfServiceImpl implements WxCpKfService {
     String response = cpService.post(url, json);
     return WxCpBaseResp.fromJson(response);
   }
+  @Override
+  public WxCpKfGetCorpStatisticResp getCorpStatistic(WxCpKfGetCorpStatisticRequest request) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(GET_CORP_STATISTIC);
+    String responseContent = cpService.post(url, GSON.toJson(request));
+    return WxCpKfGetCorpStatisticResp.fromJson(responseContent);
+  }
+
 }

@@ -236,8 +236,8 @@ public class WxPayRefundV3Request implements Serializable {
      */
     @SerializedName(value = "refund_quantity")
     private Integer refundQuantity;
-
-    @SerializedName(value = "sub_mchid")
-    private String subMchid;
   }
+
+  @SerializedName(value = "sub_mchid")
+  private String subMchid;
 }

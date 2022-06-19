@@ -408,7 +408,7 @@ public interface WxOpenComponentService {
    * @return the wx mp o auth 2 access token
    * @throws WxErrorException the wx error exception
    * @see WxMpService#getOAuth2Service()
-   * @deprecated 2021-05-21: 已修正公众号相关接口,请使用:WxOpenCommpentService.getWxMpServiceByAppid(mpAppId).getOAuth2Service().getAccessToken(code)
+   * @deprecated 2021-05-21: 已修正公众号相关接口,请使用:WxOpenComponentService.getWxMpServiceByAppid(mpAppId).getOAuth2Service().getAccessToken(code)
    */
   @Deprecated
   WxOAuth2AccessToken oauth2getAccessToken(String appid, String code) throws WxErrorException;

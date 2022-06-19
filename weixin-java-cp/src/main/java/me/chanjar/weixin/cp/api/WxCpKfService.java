@@ -1,6 +1,5 @@
 package me.chanjar.weixin.cp.api;
 
-import java.util.List;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfAccountAdd;
@@ -19,6 +18,9 @@ import me.chanjar.weixin.cp.bean.kf.WxCpKfServiceStateTransResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfServiceUpgradeConfigResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfServicerListResp;
 import me.chanjar.weixin.cp.bean.kf.WxCpKfServicerOpResp;
+import me.chanjar.weixin.cp.bean.kf.*;
+
+import java.util.List;
 
 /**
  * 微信客服接口
@@ -61,11 +63,12 @@ public interface WxCpKfService {
 
   /**
    * 获取客服帐号列表，包括所有的客服帐号的客服ID、名称和头像。
-   *
+   * @param offset 分页，偏移量, 默认为0
+   * @param limit  分页，预期请求的数据量，默认为100，取值范围 1 ~ 100
    * @return 客服帐号列表
    * @throws WxErrorException 异常
    */
-  WxCpKfAccountListResp listAccount() throws WxErrorException;
+  WxCpKfAccountListResp listAccount(Integer offset,Integer limit) throws WxErrorException;
 
   /**
    * 企业可通过此接口获取带有不同参数的客服链接，不同客服帐号对应不同的客服链接。获取后，企业可将链接嵌入到网页等场景中，
@@ -189,6 +192,19 @@ public interface WxCpKfService {
    */
   WxCpKfCustomerBatchGetResp customerBatchGet(List<String> externalUserIdList)
     throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取「客户数据统计」企业汇总数据
+   * 通过此接口，可以获取咨询会话数、咨询客户数等企业汇总统计数据
+   * 请求方式：POST(HTTPS)
+   * 请求地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/kf/get_corp_statistic?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/kf/get_corp_statistic?access_token=ACCESS_TOKEN</a>
+   * 文档地址：<a href="https://developer.work.weixin.qq.com/document/path/95489">https://developer.work.weixin.qq.com/document/path/95489</a>
+   * <pre>
+   * @param request 查询参数
+   * @return 客户数据统计-企业汇总数据
+   */
+  WxCpKfGetCorpStatisticResp getCorpStatistic(WxCpKfGetCorpStatisticRequest request) throws WxErrorException;
 
   // 「升级服务」配置
   /**

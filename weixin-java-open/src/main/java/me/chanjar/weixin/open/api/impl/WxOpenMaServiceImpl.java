@@ -406,6 +406,30 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return (WxMaAuditMediaUploadResult) this.execute(AuditMediaUploadRequestExecutor.create(getRequestHttp()), API_AUDIT_UPLOAD_MEDIA, file);
   }
 
+  @Override
+  public WxAmpLinkResult getWxAmpLink() throws WxErrorException {
+    String response = post(API_WX_AMP_LINK_GET, "{}");
+    return WxMaGsonBuilder.create().fromJson(response, WxAmpLinkResult.class);
+  }
+
+  @Override
+  public WxOpenResult wxAmpLink(String appid, String notifyUsers, String showProfile) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("appid", appid);
+    params.addProperty("notify_users", notifyUsers);
+    params.addProperty("show_profile", showProfile);
+    String response = post(API_WX_AMP_LINK_CREATE, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult wxAmpUnLink(String appid) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("appid", appid);
+    String response = post(API_WX_AMP_LINK_UN, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
   private JsonArray toJsonArray(List<String> strList) {
     JsonArray jsonArray = new JsonArray();
     if (strList != null && !strList.isEmpty()) {

@@ -22,9 +22,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InvoiceInfoRequest implements Serializable {
-
   private static final long serialVersionUID = 7854633127026139444L;
-
 
   /**
   * 发票卡券的card_id
@@ -44,8 +42,6 @@ public class InvoiceInfoRequest implements Serializable {
   */
   @SerializedName("encrypt_code")
   private String encryptCode;
-
-
 
   public String toJson() {
     return WxMpGsonBuilder.create().toJson(this);

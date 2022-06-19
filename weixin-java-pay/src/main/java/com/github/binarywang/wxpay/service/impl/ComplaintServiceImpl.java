@@ -1,15 +1,20 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.complaint.*;
+import com.github.binarywang.wxpay.bean.media.ImageUploadResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.ComplaintService;
 import com.github.binarywang.wxpay.service.WxPayService;
+import com.github.binarywang.wxpay.v3.WechatPayUploadHttpPost;
 import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.crypto.BadPaddingException;
+import java.io.*;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -34,7 +39,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     List<ComplaintDetailResult> data = complaintResult.getData();
     for (ComplaintDetailResult complaintDetailResult : data) {
       // 对手机号进行解密操作
-      if(complaintDetailResult.getPayerPhone() != null) {
+      if (complaintDetailResult.getPayerPhone() != null) {
         String payerPhone = RsaCryptoUtil.decryptOAEP(complaintDetailResult.getPayerPhone(), this.payService.getConfig().getPrivateKey());
         complaintDetailResult.setPayerPhone(payerPhone);
       }
@@ -49,7 +54,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     String response = this.payService.getV3(url);
     ComplaintDetailResult result = GSON.fromJson(response, ComplaintDetailResult.class);
     // 对手机号进行解密操作
-    if(result.getPayerPhone() != null) {
+    if (result.getPayerPhone() != null) {
       String payerPhone = RsaCryptoUtil.decryptOAEP(result.getPayerPhone(), this.payService.getConfig().getPrivateKey());
       result.setPayerPhone(payerPhone);
     }
@@ -105,6 +110,43 @@ public class ComplaintServiceImpl implements ComplaintService {
     // 上面url已经含有complaintId，这里设置为空，避免在body中再次传递，否则微信会报错
     request.setComplaintId(null);
     this.payService.postV3(url, GSON.toJson(request));
+  }
+
+  @Override
+  public ImageUploadResult uploadResponseImage(File imageFile) throws WxPayException, IOException {
+    String url = String.format("%s/v3/merchant-service/images/upload", this.payService.getPayBaseUrl());
+
+    try (FileInputStream s1 = new FileInputStream(imageFile)) {
+      String sha256 = DigestUtils.sha256Hex(s1);
+      try (InputStream s2 = new FileInputStream(imageFile)) {
+        WechatPayUploadHttpPost request = new WechatPayUploadHttpPost.Builder(URI.create(url))
+          .withImage(imageFile.getName(), sha256, s2)
+          .build();
+        String result = this.payService.postV3(url, request);
+        return ImageUploadResult.fromJson(result);
+      }
+    }
+  }
+
+  @Override
+  public ImageUploadResult uploadResponseImage(InputStream inputStream, String fileName) throws WxPayException, IOException {
+    String url = String.format("%s/v3/merchant-service/images/upload", this.payService.getPayBaseUrl());
+    try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+      //文件大小不能超过2M
+      byte[] buffer = new byte[2048];
+      int len;
+      while ((len = inputStream.read(buffer)) > -1) {
+        bos.write(buffer, 0, len);
+      }
+      bos.flush();
+      byte[] data = bos.toByteArray();
+      String sha256 = DigestUtils.sha256Hex(data);
+      WechatPayUploadHttpPost request = new WechatPayUploadHttpPost.Builder(URI.create(url))
+        .withImage(fileName, sha256, new ByteArrayInputStream(data))
+        .build();
+      String result = this.payService.postV3(url, request);
+      return ImageUploadResult.fromJson(result);
+    }
   }
 
 }

@@ -241,7 +241,17 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     HttpGet httpGet = new HttpGet(url);
     httpGet.addHeader("Accept", "application/json");
     httpGet.addHeader("Content-Type", "application/json");
-    return this.requestV3(url.toString(), httpGet);
+    return this.requestV3(url, httpGet);
+  }
+
+  @Override
+  public String getV3WithWechatPaySerial(String url) throws WxPayException {
+    HttpGet httpGet = new HttpGet(url);
+    httpGet.addHeader("Accept", "application/json");
+    httpGet.addHeader("Content-Type", "application/json");
+    String serialNumber = getConfig().getVerifier().getValidCertificate().getSerialNumber().toString(16).toUpperCase();
+    httpGet.addHeader("Wechatpay-Serial", serialNumber);
+    return this.requestV3(url, httpGet);
   }
 
   @Override

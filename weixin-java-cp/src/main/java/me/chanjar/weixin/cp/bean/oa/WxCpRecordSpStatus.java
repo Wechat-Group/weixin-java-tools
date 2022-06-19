@@ -39,7 +39,17 @@ public enum WxCpRecordSpStatus {
    * 已退回
    */
   @SerializedName("11")
-  WITHDRAWN(11);
+  WITHDRAWN(11),
+  /**
+   * 12-已加签
+   */
+  @SerializedName("12")
+  SIGNED(12),
+  /**
+   * 13-已同意并加签
+   */
+  @SerializedName("13")
+  PASSEDANDSIGNED(13);
 
   private final Integer status;
 

@@ -18,6 +18,12 @@ public class WxMaShopOrderDetail implements Serializable {
   private WxMaPromotionInfo promotionInfo;
 
   /**
+   * 推广员、分享员信息
+   */
+  @SerializedName("promotion_info")
+  private WxMaShopPromotionInfo promotionInfo;
+
+  /**
    * 下单商品信息
    * <pre>
    * 是否必填：是

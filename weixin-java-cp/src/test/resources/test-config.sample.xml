@@ -11,4 +11,18 @@
   <tagId>企业号通讯录里的某个tagid</tagId>
   <oauth2redirectUri>网页授权获取用户信息回调地址</oauth2redirectUri>
   <webhookKey>webhook链接地址的key值</webhookKey>
+  <!-- 企业微信会话存档，私钥，windows以及linux环境sdk路径 -->
+  <msgAuditPriKey>-----BEGIN RSA PRIVATE KEY-----
+    MIICXAIBAAKBgQCTfm5cxqfglfOV7b/Z7OtTZZoZpk2EPTvVhn/ngsfKR899xRdR
+    25s4h8HkK0XhxqYdOGoAdG3Gms+DvCSY/vu3UtImf0eZSNXpKZJBUnvUVjX4ivnr
+    Ohu2Rjw6O4gPjPnZKw8voCu0Nae1YLeNvFYw48PK7QrqmpHQv1sCd/8zHwIDAQAB
+    AoGAResz7xgfQghjsgnEHk9BGUY7YHhlG9CZWjYJ0Ro+ksYq9vClBuGHeitk/0CC
+    Pq7YVVbGbVPELFd8EvNwF/UcJsMlvFis16FzNS60Hn7M/o82gI6AVhSQmocoGhNs
+    MIKxTnXRqqlKFbCdcSfG+hQP7syHah6Z8UhLYuEA8s/ppd0CQQD99HTSvB4P5FfL
+    rlKTz6w6uh4qBYl53u5cLQxCRFGgXD6HvPnEwdzQf+2LCVM1zIhyxw2Kak1U467Q
+    6JizEuHDTC2YljEbg/j+/AlpA/Ua5HQYnH5yD3DCK7rQyTvqE5gU+CfRbwTbLGre
+    fk/WJK4iqizgZobNRyUCQGB7jR5b8K7NsX7SoV7v/PFOsoj4G2W5q7LSz4GaoXGl
+    3F+dSlXPYHdTow3dzfgVDldEzgoThs5UWMTQvBUZch0=
+    -----END RSA PRIVATE KEY-----</msgAuditPriKey>
+  <msgAuditLibPath>/www/osfile/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
 </xml>

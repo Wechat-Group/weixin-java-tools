@@ -10,8 +10,6 @@ import lombok.NonNull;
 import me.chanjar.weixin.common.redis.JedisWxRedisOps;
 import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
 import me.chanjar.weixin.common.redis.WxRedisOps;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.util.Pool;
 
 /**
  * <pre>

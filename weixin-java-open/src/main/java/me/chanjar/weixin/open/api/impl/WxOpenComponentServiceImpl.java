@@ -467,8 +467,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public String oauth2buildAuthorizationUrl(String appId, String redirectURI, String scope, String state) {
-    return String.format(CONNECT_OAUTH2_AUTHORIZE_URL,
-      appId, URIUtil.encodeURIComponent(redirectURI), scope, StringUtils.trimToEmpty(state), getWxOpenConfigStorage().getComponentAppId());
+    return String.format(CONNECT_OAUTH2_AUTHORIZE_URL, appId, URIUtil.encodeURIComponent(redirectURI), scope,
+      StringUtils.trimToEmpty(state), getWxOpenConfigStorage().getComponentAppId());
   }
 
   @Override

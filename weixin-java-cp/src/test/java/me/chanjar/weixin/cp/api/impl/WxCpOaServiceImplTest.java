@@ -1,15 +1,13 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.*;
-import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
@@ -25,9 +23,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * 企业微信 OA数据接口 测试用例
  *
- * @author Element
+ * @author Element & Wang_Wong
  */
-
+@Slf4j
 @Guice(modules = ApiTestModule.class)
 public class WxCpOaServiceImplTest {
 
@@ -164,11 +162,73 @@ public class WxCpOaServiceImplTest {
     this.wxService.getOaService().apply(new WxCpOaApplyEventRequest().setCreatorUserId("123"));
   }
 
+  /**
+   * 获取审批数据（旧）
+   * https://developer.work.weixin.qq.com/document/path/91530
+   *
+   * @throws WxErrorException
+   */
   @Test
-  public void testGetApprovalData() {
+  public void testGetApprovalData() throws WxErrorException {
+
+    // 提示：推荐使用新接口“批量获取审批单号”及“获取审批申请详情”，此接口后续将不再维护、逐步下线。
+//    WxCpGetApprovalData approvalData = this.wxService.getOaService().getApprovalData(System.currentTimeMillis(), System.currentTimeMillis() + 3600L, null);
+//    log.info("返回数据：{}", approvalData.toJson());
+
+    String text = "{\"errcode\":0,\"errmsg\":\"ok\",\"count\":3,\"total\":5,\"next_spnum\":201704240001,\"data\":[{\"spname\":\"报销\",\"apply_name\":\"报销测试\",\"apply_org\":\"报销测试企业\",\"approval_name\":[\"审批人测试\"],\"notify_name\":[\"抄送人测试\"],\"sp_status\":1,\"sp_num\":201704200001,\"mediaids\":[\"WWCISP_G8PYgRaOVHjXWUWFqchpBqqqUpGj0OyR9z6WTwhnMZGCPHxyviVstiv_2fTG8YOJq8L8zJT2T2OvTebANV-2MQ\"],\"apply_time\":1499153693,\"apply_user_id\":\"testuser\",\"expense\":{\"expense_type\":1,\"reason\":\"\",\"item\":[{\"expenseitem_type\":6,\"time\":1492617600,\"sums\":9900,\"reason\":\"\"}]},\"comm\":{\"apply_data\":\"{\\\"item-1492610773696\\\":{\\\"title\\\":\\\"abc\\\",\\\"type\\\":\\\"text\\\",\\\"value\\\":\\\"\\\"}}\"}},{\"spname\":\"请假\",\"apply_name\":\"请假测试\",\"apply_org\":\"请假测试企业\",\"approval_name\":[\"审批人测试\"],\"notify_name\":[\"抄送人测试\"],\"sp_status\":1,\"sp_num\":201704200004,\"apply_time\":1499153693,\"apply_user_id\":\"testuser\",\"leave\":{\"timeunit\":0,\"leave_type\":4,\"start_time\":1492099200,\"end_time\":1492790400,\"duration\":144,\"reason\":\"\"},\"comm\":{\"apply_data\":\"{\\\"item-1492610773696\\\":{\\\"title\\\":\\\"abc\\\",\\\"type\\\":\\\"text\\\",\\\"value\\\":\\\"\\\"}}\"}},{\"spname\":\"自定义审批\",\"apply_name\":\"自定义\",\"apply_org\":\"自定义测试企业\",\"approval_name\":[\"自定义审批人\"],\"notify_name\":[\"自定义抄送人\"],\"sp_status\":1,\"sp_num\":201704240001,\"apply_time\":1499153693,\"apply_user_id\":\"testuser\",\"comm\":{\"apply_data\":\"{\\\"item-1492610773696\\\":{\\\"title\\\":\\\"abc\\\",\\\"type\\\":\\\"text\\\",\\\"value\\\":\\\"\\\"}}\"}}]}";
+    WxCpGetApprovalData wxCpGetApprovalData = WxCpGetApprovalData.fromJson(text);
+    log.info("返回数据2：{}", wxCpGetApprovalData.toJson());
+
   }
 
   @Test
   public void testGetDialRecord() {
   }
+
+  /**
+   * 获取企业假期管理配置
+   * https://developer.work.weixin.qq.com/document/path/93375
+   *
+   * @throws WxErrorException
+   */
+  @Test
+  public void testGetCorpConf() throws WxErrorException {
+    WxCpCorpConfInfo corpConf = this.wxService.getOaService().getCorpConf();
+    log.info(corpConf.toJson());
+  }
+
+  /**
+   * 获取成员假期余额
+   * https://developer.work.weixin.qq.com/document/path/93376
+   *
+   * @throws WxErrorException
+   */
+  @Test
+  public void testGetUserVacationQuota() throws WxErrorException {
+    WxCpUserVacationQuota vacationQuota = this.wxService.getOaService().getUserVacationQuota("WangKai");
+    log.info(vacationQuota.toJson());
+
+    String text = "{\"errcode\":0,\"errmsg\":\"ok\",\"lists\":[{\"id\":1,\"assignduration\":0,\"usedduration\":0,\"leftduration\":604800,\"vacationname\":\"年假\"},{\"id\":2,\"assignduration\":0,\"usedduration\":0,\"leftduration\":1296000,\"vacationname\":\"事假\"},{\"id\":3,\"assignduration\":0,\"usedduration\":0,\"leftduration\":0,\"vacationname\":\"病假\"}]}";
+    WxCpUserVacationQuota json = WxCpUserVacationQuota.fromJson(text);
+    log.info("数据为：{}", json.toJson());
+
+  }
+
+  /**
+   * 修改成员假期余额
+   * https://developer.work.weixin.qq.com/document/path/93377
+   *
+   * @throws WxErrorException
+   */
+  @Test
+  public void testSetOneUserQuota() throws WxErrorException {
+
+    String text = "{\"errcode\":0,\"errmsg\":\"ok\"}";
+    WxCpBaseResp resp = WxCpBaseResp.fromJson(text);
+    log.info("返回结果为：{}", resp.toJson());
+
+//    WxCpBaseResp wxCpBaseResp = this.wxService.getOaService().setOneUserQuota(, , , , );
+
+  }
+
 }

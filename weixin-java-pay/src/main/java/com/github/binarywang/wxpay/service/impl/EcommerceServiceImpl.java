@@ -12,15 +12,15 @@ import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
 import com.google.common.base.CaseFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.commons.lang3.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanMap;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.text.DateFormat;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -30,6 +30,11 @@ import java.util.Set;
 public class EcommerceServiceImpl implements EcommerceService {
 
   private static final Gson GSON = new GsonBuilder().create();
+
+  // https://stackoverflow.com/questions/6873020/gson-date-format
+  // gson default date format not match, so custom DateFormat
+  // detail DateFormat: FULL,LONG,SHORT,MEDIUM
+  private static final Gson GSON_CUSTOM = new GsonBuilder().setDateFormat(DateFormat.FULL, DateFormat.FULL).create();
   private final WxPayService payService;
 
   @Override
@@ -71,7 +76,7 @@ public class EcommerceServiceImpl implements EcommerceService {
 
   @Override
   public CombineTransactionsNotifyResult parseCombineNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
-    if(Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)){
+    if (Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)) {
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     NotifyResponse response = GSON.fromJson(notifyData, NotifyResponse.class);
@@ -81,7 +86,7 @@ public class EcommerceServiceImpl implements EcommerceService {
     String nonce = resource.getNonce();
     String apiV3Key = this.payService.getConfig().getApiV3Key();
     try {
-      String result = AesUtils.decryptToString(associatedData, nonce,cipherText, apiV3Key);
+      String result = AesUtils.decryptToString(associatedData, nonce, cipherText, apiV3Key);
       CombineTransactionsResult transactionsResult = GSON.fromJson(result, CombineTransactionsResult.class);
 
       CombineTransactionsNotifyResult notifyResult = new CombineTransactionsNotifyResult();
@@ -110,13 +115,14 @@ public class EcommerceServiceImpl implements EcommerceService {
   @Override
   public <T> T partnerTransactions(TradeTypeEnum tradeType, PartnerTransactionsRequest request) throws WxPayException {
     TransactionsResult result = this.partner(tradeType, request);
-    return result.getPayInfo(tradeType, request.getSpAppid(),
+    String appId = request.getSubAppid() != null ? request.getSubAppid() : request.getSpAppid();
+    return result.getPayInfo(tradeType, appId,
       request.getSpMchid(), payService.getConfig().getPrivateKey());
   }
 
   @Override
   public PartnerTransactionsNotifyResult parsePartnerNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
-    if(Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)){
+    if (Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)) {
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     NotifyResponse response = GSON.fromJson(notifyData, NotifyResponse.class);
@@ -126,7 +132,7 @@ public class EcommerceServiceImpl implements EcommerceService {
     String nonce = resource.getNonce();
     String apiV3Key = this.payService.getConfig().getApiV3Key();
     try {
-      String result = AesUtils.decryptToString(associatedData, nonce,cipherText, apiV3Key);
+      String result = AesUtils.decryptToString(associatedData, nonce, cipherText, apiV3Key);
       PartnerTransactionsResult transactionsResult = GSON.fromJson(result, PartnerTransactionsResult.class);
 
       PartnerTransactionsNotifyResult notifyResult = new PartnerTransactionsNotifyResult();
@@ -200,6 +206,14 @@ public class EcommerceServiceImpl implements EcommerceService {
   }
 
   @Override
+  public ProfitSharingOrdersUnSplitAmountResult queryProfitSharingOrdersUnsplitAmount(ProfitSharingOrdersUnSplitAmountRequest request) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/profitsharing/orders/%s/amounts",
+      this.payService.getPayBaseUrl(), request.getTransactionId());
+    String response = this.payService.getV3(url);
+    return GSON.fromJson(response, ProfitSharingOrdersUnSplitAmountResult.class);
+  }
+
+  @Override
   public ProfitSharingReceiverResult addReceivers(ProfitSharingReceiverRequest request) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/profitsharing/receivers/add", this.payService.getPayBaseUrl());
     String response = this.payService.postV3(url, GSON.toJson(request));
@@ -268,7 +282,7 @@ public class EcommerceServiceImpl implements EcommerceService {
 
   @Override
   public RefundNotifyResult parseRefundNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
-    if(Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)){
+    if (Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)) {
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     NotifyResponse response = GSON.fromJson(notifyData, NotifyResponse.class);
@@ -278,7 +292,7 @@ public class EcommerceServiceImpl implements EcommerceService {
     String nonce = resource.getNonce();
     String apiV3Key = this.payService.getConfig().getApiV3Key();
     try {
-      String result = AesUtils.decryptToString(associatedData, nonce,cipherText, apiV3Key);
+      String result = AesUtils.decryptToString(associatedData, nonce, cipherText, apiV3Key);
       RefundNotifyResult notifyResult = GSON.fromJson(result, RefundNotifyResult.class);
       notifyResult.setRawData(response);
       return notifyResult;
@@ -350,8 +364,9 @@ public class EcommerceServiceImpl implements EcommerceService {
 
   /**
    * 校验通知签名
+   *
    * @param header 通知头信息
-   * @param data 通知数据
+   * @param data   通知数据
    * @return true:校验通过 false:校验不通过
    */
   private boolean verifyNotifySign(SignatureHeader header, String data) {
@@ -365,8 +380,9 @@ public class EcommerceServiceImpl implements EcommerceService {
 
   /**
    * 对象拼接到url
+   *
    * @param o 转换对象
-   * @return  拼接好的string
+   * @return 拼接好的string
    */
   private String parseURLPair(Object o) {
     Map<Object, Object> map = new BeanMap(o);
@@ -375,7 +391,7 @@ public class EcommerceServiceImpl implements EcommerceService {
     StringBuilder sb = new StringBuilder();
     while (it.hasNext()) {
       Map.Entry<Object, Object> e = it.next();
-      if ( !"class".equals(e.getKey()) && e.getValue() != null) {
+      if (!"class".equals(e.getKey()) && e.getValue() != null) {
         sb.append(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, String.valueOf(e.getKey())))
           .append("=").append(e.getValue()).append("&");
       }
@@ -383,5 +399,4 @@ public class EcommerceServiceImpl implements EcommerceService {
     return sb.deleteCharAt(sb.length() - 1).toString();
   }
 
-
-  }
+}

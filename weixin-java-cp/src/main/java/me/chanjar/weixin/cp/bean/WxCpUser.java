@@ -31,6 +31,7 @@ public class WxCpUser implements Serializable {
   private String mobile;
   private Gender gender;
   private String email;
+  private String bizMail;
   private String avatar;
   private String thumbAvatar;
   private String mainDepartment;

@@ -16,8 +16,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class ProfitSharingResult implements Serializable {
-
   private static final long serialVersionUID = 9026456165403642050L;
+
   /**
    * <pre>
    * 字段名：二级商户号
@@ -278,5 +278,18 @@ public class ProfitSharingResult implements Serializable {
      */
     @SerializedName(value = "receiver_account")
     private String receiverAccount;
+
+    /**
+     * <pre>
+     * 字段名：分账明细单号
+     * 变量名：detail_id
+     * 类型：string[1,64]
+     * 是否必填：是 （查询明细结果时是必有的）
+     * 描述：微信分账明细单号，每笔分账业务执行的明细单号，可与资金账单对账使用
+     * 示例值：3601111111111111111111
+     * </pre>
+     */
+    @SerializedName(value = "detail_id")
+    private String detailId;
   }
 }

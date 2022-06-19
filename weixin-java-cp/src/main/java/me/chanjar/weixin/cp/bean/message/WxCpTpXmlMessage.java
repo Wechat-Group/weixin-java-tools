@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * sxh 修改版本，有些参数类型错误，修正版
  * 回调推送的message
  * https://work.weixin.qq.com/api/doc#90001/90143/90612
  *
@@ -314,6 +315,26 @@ public class WxCpTpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String taskId;
 
+  @XStreamAlias("PaidCorpId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String paidCorpId;
+
+  @XStreamAlias("OrderId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String orderId;
+
+  @XStreamAlias("OperatorId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String operatorId;
+
+  @XStreamAlias("OldOrderId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String oldOrderId;
+
+  @XStreamAlias("NewOrderId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String newOrderId;
+  
   @Data
   @XStreamAlias("ContactSync")
   public static class ContactSync implements Serializable {
@@ -363,13 +384,13 @@ public class WxCpTpXmlMessage implements Serializable {
     private static final long serialVersionUID = 6031833682211475786L;
 
     @XStreamAlias("ThirdNo")
-    protected Long thirdNo;
+    protected String thirdNo;
 
     @XStreamAlias("OpenSpName")
     protected String openSpName;
 
     @XStreamAlias("OpenTemplateId")
-    protected Integer openTemplateId;
+    protected String openTemplateId;
 
     @XStreamAlias("OpenSpStatus")
     protected Integer openSpStatus;
@@ -381,7 +402,7 @@ public class WxCpTpXmlMessage implements Serializable {
     protected String applyUserName;
 
     @XStreamAlias("ApplyUserId")
-    protected Integer applyUserId;
+    protected String applyUserId;
 
     @XStreamAlias("ApplyUserParty")
     protected String applyUserParty;
@@ -427,7 +448,7 @@ public class WxCpTpXmlMessage implements Serializable {
         @XStreamAlias("ItemName")
         protected String itemName;
         @XStreamAlias("ItemUserId")
-        protected Integer itemUserId;
+        protected String itemUserId;
         @XStreamAlias("ItemImage")
         protected String itemImage;
         @XStreamAlias("ItemStatus")
@@ -447,7 +468,7 @@ public class WxCpTpXmlMessage implements Serializable {
       @XStreamAlias("ItemName")
       protected String itemName;
       @XStreamAlias("ItemUserId")
-      protected Integer itemUserId;
+      protected String itemUserId;
       @XStreamAlias("ItemImage")
       protected String itemImage;
     }

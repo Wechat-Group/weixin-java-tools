@@ -8,7 +8,9 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import java.io.Serializable;
 
 /**
- * @author yqx
+ * 返回结果
+ *
+ * @author yqx & WangWong
  * @date 2020/3/16
  */
 @Getter
@@ -29,4 +31,9 @@ public class WxCpBaseResp implements Serializable {
   public static WxCpBaseResp fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpBaseResp.class);
   }
+
+  public String toJson() {
+    return WxCpGsonBuilder.create().toJson(this);
+  }
+
 }

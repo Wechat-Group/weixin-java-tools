@@ -78,6 +78,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final PartnerTransferService partnerTransferService = new PartnerTransferServiceImpl(this);
   private final PayrollService payrollService = new PayrollServiceImpl(this);
   private final ComplaintService complaintsService = new ComplaintServiceImpl(this);
+  private final BankService bankService = new BankServiceImpl(this);
 
   protected Map<String, WxPayConfig> configMap;
 
@@ -344,9 +345,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
         if (result.getSignType() != null) {
           // 如果解析的通知对象中signType有值，则使用它进行验签
           signType = result.getSignType();
-        } else if (this.getConfig().getSignType() != null) {
+        } else if (configMap.get(result.getMchId()).getSignType() != null) {
           // 如果配置中signType有值，则使用它进行验签
-          signType = this.getConfig().getSignType();
+          signType = configMap.get(result.getMchId()).getSignType();
+          this.switchover(result.getMchId());
         }
       }
 
@@ -429,6 +431,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       WxPayRefundNotifyResult result;
       if (XmlConfig.fastMode) {
         result = BaseWxPayResult.fromXML(xmlData, WxPayRefundNotifyResult.class);
+        this.switchover(result.getMchId());
         result.decryptReqInfo(this.getConfig().getMchKey());
       } else {
         result = WxPayRefundNotifyResult.fromXML(xmlData, this.getConfig().getMchKey());
@@ -464,12 +467,13 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
-  public WxScanPayNotifyResult parseScanPayNotifyResult(String xmlData, String signType) throws WxPayException {
+  public WxScanPayNotifyResult parseScanPayNotifyResult(String xmlData, @Deprecated String signType) throws WxPayException {
     try {
       log.debug("扫码支付回调通知请求参数：{}", xmlData);
       WxScanPayNotifyResult result = BaseWxPayResult.fromXML(xmlData, WxScanPayNotifyResult.class);
+      this.switchover(result.getMchId());
       log.debug("扫码支付回调通知解析后的对象：{}", result);
-      result.checkResult(this, signType, false);
+      result.checkResult(this, this.getConfig().getSignType(), false);
       return result;
     } catch (WxPayException e) {
       throw e;
@@ -480,8 +484,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public WxScanPayNotifyResult parseScanPayNotifyResult(String xmlData) throws WxPayException {
-    final String signType = this.getConfig().getSignType();
-    return this.parseScanPayNotifyResult(xmlData, signType);
+//    final String signType = this.getConfig().getSignType();
+    return this.parseScanPayNotifyResult(xmlData, null);
   }
 
   @Override
@@ -1261,4 +1265,8 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     return complaintsService;
   }
 
+  @Override
+  public BankService getBankService() {
+    return bankService;
+  }
 }

@@ -22,7 +22,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InvoiceBatchRequest implements Serializable {
-
   private static final long serialVersionUID = -9121443117105107231L;
 
   /**

@@ -7,9 +7,12 @@ import java.util.List;
 
 /**
  * 开票信息请求参数
+ *
+ * @author Mario Luo
  */
 @Data
 public class MakeOutInvoiceRequest implements Serializable {
+  private static final long serialVersionUID = 2089481479917841771L;
 
   private InvoiceInfo invoiceinfo;
 
@@ -18,6 +21,8 @@ public class MakeOutInvoiceRequest implements Serializable {
    */
   @Data
   public static class InvoiceInfo implements Serializable {
+    private static final long serialVersionUID = 8492738482767944634L;
+
     /**
      * 维修openid
      */
@@ -145,6 +150,8 @@ public class MakeOutInvoiceRequest implements Serializable {
    */
   @Data
   public static class InvoiceDetailItem implements Serializable {
+    private static final long serialVersionUID = 2981363715996297681L;
+
     /**
      * 发票性质
      */

@@ -7,6 +7,7 @@ import lombok.Data;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.api.WxMessageDuplicateChecker;
 import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
+import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateCheckerSingleton;
 import me.chanjar.weixin.common.session.InternalSession;
 import me.chanjar.weixin.common.session.InternalSessionManager;
 import me.chanjar.weixin.common.session.StandardSessionManager;
@@ -48,7 +49,52 @@ public class WxMaMessageRouter {
       0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
-    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+    this.messageDuplicateChecker = WxMessageInMemoryDuplicateCheckerSingleton.getInstance();
+  }
+
+  /**
+   * 使用自定义的 {@link ExecutorService}.
+   */
+  public WxMaMessageRouter(WxMaService wxMaService, ExecutorService executorService) {
+    this.wxMaService = wxMaService;
+    this.executorService = executorService;
+    this.sessionManager = new StandardSessionManager();
+    this.exceptionHandler = new LogExceptionHandler();
+    this.messageDuplicateChecker = WxMessageInMemoryDuplicateCheckerSingleton.getInstance();
+  }
+
+  /**
+   * 系统退出前，应该调用该方法
+   */
+  public void shutDownExecutorService() {
+    this.executorService.shutdown();
+  }
+
+  /**
+   * 系统退出前，应该调用该方法，增加了超时时间检测
+   */
+  public void shutDownExecutorService(Integer second) {
+    this.executorService.shutdown();
+    try {
+      if (!this.executorService.awaitTermination(second, TimeUnit.SECONDS)) {
+        this.executorService.shutdownNow();
+        if (!this.executorService.awaitTermination(second, TimeUnit.SECONDS))
+          log.error("线程池未关闭！");
+      }
+    } catch (InterruptedException ie) {
+      this.executorService.shutdownNow();
+      Thread.currentThread().interrupt();
+    }
+  }
+
+  /**
+   * <pre>
+   * 设置自定义的 {@link ExecutorService}
+   * 如果不调用该方法，默认使用内置的
+   * </pre>
+   */
+  public void setExecutorService(ExecutorService executorService) {
+    this.executorService = executorService;
   }
 
   /**

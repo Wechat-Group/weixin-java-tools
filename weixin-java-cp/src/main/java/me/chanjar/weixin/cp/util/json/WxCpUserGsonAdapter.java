@@ -73,6 +73,7 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     user.setMobile(GsonHelper.getString(o, "mobile"));
     user.setGender(Gender.fromCode(GsonHelper.getString(o, "gender")));
     user.setEmail(GsonHelper.getString(o, "email"));
+    user.setBizMail(GsonHelper.getString(o, "biz_mail"));
     user.setAvatar(GsonHelper.getString(o, "avatar"));
     user.setThumbAvatar(GsonHelper.getString(o, "thumb_avatar"));
     user.setAddress(GsonHelper.getString(o, "address"));
@@ -198,15 +199,9 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
   @Override
   public JsonElement serialize(WxCpUser user, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject o = new JsonObject();
-    if (user.getUserId() != null) {
-      o.addProperty("userid", user.getUserId());
-    }
-    if (user.getNewUserId() != null) {
-      o.addProperty("new_userid", user.getNewUserId());
-    }
-    if (user.getName() != null) {
-      o.addProperty("name", user.getName());
-    }
+    this.addProperty(o, "userid", user.getUserId());
+    this.addProperty(o, "new_userid", user.getNewUserId());
+    this.addProperty(o, "name", user.getName());
     if (user.getDepartIds() != null) {
       JsonArray jsonArray = new JsonArray();
       for (Long departId : user.getDepartIds()) {
@@ -223,9 +218,7 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
       o.add("order", jsonArray);
     }
 
-    if (user.getPosition() != null) {
-      o.addProperty("position", user.getPosition());
-    }
+    this.addProperty(o, "position", user.getPosition());
 
     if (user.getPositions() != null) {
       JsonArray jsonArray = new JsonArray();
@@ -235,39 +228,20 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
       o.add("positions", jsonArray);
     }
 
-    if (user.getMobile() != null) {
-      o.addProperty("mobile", user.getMobile());
-    }
+    this.addProperty(o, "mobile", user.getMobile());
     if (user.getGender() != null) {
       o.addProperty("gender", user.getGender().getCode());
     }
-    if (user.getEmail() != null) {
-      o.addProperty("email", user.getEmail());
-    }
-    if (user.getAvatar() != null) {
-      o.addProperty("avatar", user.getAvatar());
-    }
-    if (user.getThumbAvatar() != null) {
-      o.addProperty("thumb_avatar", user.getThumbAvatar());
-    }
-    if (user.getAddress() != null) {
-      o.addProperty("address", user.getAddress());
-    }
-    if (user.getAvatarMediaId() != null) {
-      o.addProperty("avatar_mediaid", user.getAvatarMediaId());
-    }
-    if (user.getStatus() != null) {
-      o.addProperty("status", user.getStatus());
-    }
-    if (user.getEnable() != null) {
-      o.addProperty("enable", user.getEnable());
-    }
-    if (user.getAlias() != null) {
-      o.addProperty("alias", user.getAlias());
-    }
-    if (user.getIsLeader() != null) {
-      o.addProperty("isleader", user.getIsLeader());
-    }
+    this.addProperty(o, "email", user.getEmail());
+    this.addProperty(o, "biz_mail", user.getBizMail());
+    this.addProperty(o, "avatar", user.getAvatar());
+    this.addProperty(o, "thumb_avatar", user.getThumbAvatar());
+    this.addProperty(o, "address", user.getAddress());
+    this.addProperty(o, "avatar_mediaid", user.getAvatarMediaId());
+    this.addProperty(o, "status", user.getStatus());
+    this.addProperty(o, "enable", user.getEnable());
+    this.addProperty(o, "alias", user.getAlias());
+    this.addProperty(o, "isleader", user.getIsLeader());
     if (user.getIsLeaderInDept() != null && user.getIsLeaderInDept().length > 0) {
       JsonArray ary = new JsonArray();
       for (int item : user.getIsLeaderInDept()) {
@@ -275,24 +249,14 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
       }
       o.add("is_leader_in_dept", ary);
     }
-    if (user.getHideMobile() != null) {
-      o.addProperty("hide_mobile", user.getHideMobile());
-    }
-    if (user.getEnglishName() != null) {
-      o.addProperty("english_name", user.getEnglishName());
-    }
-    if (user.getTelephone() != null) {
-      o.addProperty("telephone", user.getTelephone());
-    }
-    if (user.getQrCode() != null) {
-      o.addProperty("qr_code", user.getQrCode());
-    }
+    this.addProperty(o, "hide_mobile", user.getHideMobile());
+    this.addProperty(o, "english_name", user.getEnglishName());
+    this.addProperty(o, "telephone", user.getTelephone());
+    this.addProperty(o, "qr_code", user.getQrCode());
     if (user.getToInvite() != null) {
       o.addProperty("to_invite", user.getToInvite());
     }
-    if (user.getMainDepartment() != null) {
-      o.addProperty("main_department", user.getMainDepartment());
-    }
+    this.addProperty(o, "main_department", user.getMainDepartment());
 
     if (!user.getExtAttrs().isEmpty()) {
       JsonArray attrsJsonArray = new JsonArray();
@@ -322,16 +286,12 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
       o.add(EXTRA_ATTR, attrsJson);
     }
 
-    if (user.getExternalPosition() != null) {
-      o.addProperty(EXTERNAL_POSITION, user.getExternalPosition());
-    }
+    this.addProperty(o, EXTERNAL_POSITION, user.getExternalPosition());
 
     JsonObject attrsJson = new JsonObject();
     o.add(EXTERNAL_PROFILE, attrsJson);
 
-    if (user.getExternalCorpName() != null) {
-      attrsJson.addProperty(EXTERNAL_CORP_NAME, user.getExternalCorpName());
-    }
+    this.addProperty(attrsJson, EXTERNAL_CORP_NAME, user.getExternalCorpName());
 
     if (user.getWechatChannels() != null) {
       attrsJson.add(WECHAT_CHANNELS, GsonHelper.buildJsonObject("nickname", user.getWechatChannels().getNickname(), "status", user.getWechatChannels().getStatus()));
@@ -368,6 +328,18 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     }
 
     return o;
+  }
+
+  private void addProperty(JsonObject object, String property, Integer value) {
+    if (value != null) {
+      object.addProperty(property, value);
+    }
+  }
+
+  private void addProperty(JsonObject object, String property, String value) {
+    if (value != null) {
+      object.addProperty(property, value);
+    }
   }
 
 }

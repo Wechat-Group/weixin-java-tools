@@ -530,4 +530,31 @@ public interface WxCpTpService {
    */
   void expireProviderToken();
 
+  /**
+   * 获取应用版本付费订单相关接口服务
+   *
+   * @return the wx cp tp order service
+   */
+  WxCpTpOrderService getWxCpTpOrderService();
+
+  /**
+   * 设置应用版本付费订单相关接口服务
+   *
+   * @param wxCpTpOrderService the wx cp tp order service
+   */
+  void setWxCpTpOrderService(WxCpTpOrderService wxCpTpOrderService);
+
+  /**
+   * 获取应用版本付费版本相关接口服务
+   *
+   * @return the wx cp tp edition service
+   */
+  WxCpTpEditionService getWxCpTpEditionService();
+
+  /**
+   * 设置应用版本付费版本相关接口服务
+   *
+   * @param wxCpTpEditionService the wx cp tp edition service
+   */
+  void setWxCpTpOrderService(WxCpTpEditionService wxCpTpEditionService);
 }

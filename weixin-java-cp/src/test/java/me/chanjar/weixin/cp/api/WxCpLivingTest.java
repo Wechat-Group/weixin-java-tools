@@ -1,6 +1,7 @@
 package me.chanjar.weixin.cp.api;
 
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.living.*;
@@ -10,6 +11,7 @@ import org.eclipse.jetty.util.ajax.JSON;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -34,6 +36,46 @@ public class WxCpLivingTest {
     wxCpService = new WxCpServiceImpl();
     wxCpService.setWxCpConfigStorage(config);
 
+    /**
+     * 测试创建直播
+     */
+    WxCpLivingCreateRequest createRequest = new WxCpLivingCreateRequest();
+    createRequest.setAnchorUserid("WangKai");
+    createRequest.setTheme("直播1");
+
+    long currentTimeMillis = System.currentTimeMillis() + 3600000L;
+    createRequest.setLivingStart(currentTimeMillis);
+    createRequest.setLivingDuration(3600L);
+    createRequest.setType(4);
+    createRequest.setDescription("这是通用直播1");
+
+    val activityDetail = new WxCpLivingCreateRequest.ActivityDetail();
+    activityDetail.setDescription("活动描述，非活动类型的直播不用传");
+
+//    String[] strings = new String[]{"MEDIA_ID_2", "MEDIA_ID_1"};
+    ArrayList imageList = new ArrayList();
+    imageList.add("MEDIA_ID_1");
+    imageList.add("MEDIA_ID_2");
+
+    activityDetail.setImageList(imageList);
+    createRequest.setActivityDetail(activityDetail);
+
+    String livingCreate = wxCpService.getLivingService().livingCreate(createRequest);
+    log.info("返回的直播id为：{}", livingCreate);
+
+    WxCpLivingCreateRequest thisReq = WxCpLivingCreateRequest.fromJson(createRequest.toJson());
+    log.info("返回的数据：{}", thisReq.toJson());
+
+    // 创建预约直播
+    String createJson = "{\"anchor_userid\":\"ChenHu\",\"theme\":\"theme\",\"living_start\":164037820420,\"living_duration\":3600,\"description\":\"test description\",\"type\":4,\"remind_time\":60,\"activity_cover_mediaid\":\"MEDIA_ID\",\"activity_share_mediaid\":\"MEDIA_ID\",\"activity_detail\":{\"description\":\"活动描述，非活动类型的直播不用传\",\"image_list\":[\"xxxx1\",\"xxxx1\"]}}";
+    WxCpLivingCreateRequest requestData = WxCpLivingCreateRequest.fromJson(createJson);
+    String thisLivingId = wxCpService.getLivingService().livingCreate(requestData);
+    log.info("livingId为：{}", thisLivingId);
+
+
+    /**
+     * other api
+     */
     String livingCode = wxCpService.getLivingService().getLivingCode("o50by5NezHciWnoexJsrI49ILNqI", "lvOQpTDwAAD2MYuOq9y_bmLNMJfbbdGw");
     log.info(JSON.toString(livingCode));
 

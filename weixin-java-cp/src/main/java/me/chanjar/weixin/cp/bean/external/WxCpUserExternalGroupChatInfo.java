@@ -84,6 +84,12 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     private int joinScene;
 
     /**
+     * 该成员入群方式对应的state参数
+     */
+    @SerializedName("state")
+    private String state;
+
+    /**
      * 在群里的昵称
      */
     @SerializedName("group_nickname")

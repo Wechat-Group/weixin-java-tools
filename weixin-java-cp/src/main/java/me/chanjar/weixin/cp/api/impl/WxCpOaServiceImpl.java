@@ -11,8 +11,10 @@ import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpOaService;
 import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.*;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -166,6 +168,50 @@ public class WxCpOaServiceImpl implements WxCpOaService {
   }
 
   @Override
+  public WxCpCorpConfInfo getCorpConf() throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CORP_CONF);
+    String responseContent = this.mainService.get(url, null);
+    return WxCpCorpConfInfo.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpUserVacationQuota getUserVacationQuota(@NonNull String userId) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_USER_VACATION_QUOTA);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("userid", userId);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return WxCpUserVacationQuota.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpGetApprovalData getApprovalData(@NonNull Long startTime, @NonNull Long endTime, Long nextSpNum) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_APPROVAL_DATA);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("starttime", startTime);
+    jsonObject.addProperty("endtime", endTime);
+    if (nextSpNum != null) {
+      jsonObject.addProperty("next_spnum", nextSpNum);
+    }
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return WxCpGetApprovalData.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp setOneUserQuota(@NonNull String userId, @NonNull Integer vacationId, @NonNull Integer leftDuration, @NonNull Integer timeAttr, String remarks) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(SET_ONE_USER_QUOTA);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("userid", userId);
+    jsonObject.addProperty("vacation_id", vacationId);
+    jsonObject.addProperty("leftduration", leftDuration);
+    jsonObject.addProperty("time_attr", timeAttr);
+    if (StringUtils.isNotEmpty(remarks)) {
+      jsonObject.addProperty("remarks", remarks);
+    }
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
   public List<WxCpDialRecord> getDialRecord(Date startTime, Date endTime, Integer offset, Integer limit)
     throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
@@ -307,5 +353,14 @@ public class WxCpOaServiceImpl implements WxCpOaService {
   public void setCheckinScheduleList(WxCpSetCheckinSchedule wxCpSetCheckinSchedule) throws WxErrorException {
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(SET_CHECKIN_SCHEDULE_DATA);
     this.mainService.post(url, WxCpGsonBuilder.create().toJson(wxCpSetCheckinSchedule));
+  }
+
+  @Override
+  public void addCheckInUserFace(String userId, String userFace) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("userid", userId);
+    jsonObject.addProperty("userface", userFace);
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(ADD_CHECK_IN_USER_FACE);
+    this.mainService.post(url, jsonObject.toString());
   }
 }
