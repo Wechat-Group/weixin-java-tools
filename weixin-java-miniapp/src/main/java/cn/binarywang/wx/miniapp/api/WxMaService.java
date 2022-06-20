@@ -498,4 +498,9 @@ public interface WxMaService extends WxService {
    */
   WxMaShopSharerService getShopSharerService();
 
+  /**
+   * 标准交易组件接口
+   * @return
+   */
+  WxMaProductService getProductService();
 }

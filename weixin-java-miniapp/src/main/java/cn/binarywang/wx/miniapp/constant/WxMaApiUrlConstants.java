@@ -400,6 +400,31 @@ public class WxMaApiUrlConstants {
     String FILE_COMM = "https://api.weixin.qq.com/cv/ocr/comm";
   }
 
+  public interface Product {
+    interface Spu {
+      String PRODUCT_SPU_ADD_URL = "https://api.weixin.qq.com/product/spu/add";
+      String PRODUCT_SPU_DEL_URL = "https://api.weixin.qq.com/product/spu/del";
+      String PRODUCT_SPU_GET_URL = "https://api.weixin.qq.com/product/spu/get";
+      String PRODUCT_SPU_GET_LIST_URL = "https://api.weixin.qq.com/product/spu/get_list";
+      String PRODUCT_SPU_UPDATE_URL = "https://api.weixin.qq.com/product/spu/update";
+      String PRODUCT_SPU_LISTING_URL = "https://api.weixin.qq.com/product/spu/listing";
+      String PRODUCT_SPU_DELISTING_URL = "https://api.weixin.qq.com/product/spu/delisting";
+    }
+
+    interface Sku {
+      String PRODUCT_ADD_SKU_URL = "https://api.weixin.qq.com/product/sku/add";
+      String PRODUCT_BATCH_ADD_SKU_URL = "https://api.weixin.qq.com/product/sku/batch_add";
+      String PRODUCT_DEL_SKU_URL = "https://api.weixin.qq.com/product/sku/del";
+      String PRODUCT_UPDATE_SKU_URL = "https://api.weixin.qq.com/product/sku/update";
+      String PRODUCT_UPDATE_SKU_PRICE_URL = "https://api.weixin.qq.com/product/sku/update_price";
+      String PRODUCT_UPDATE_SKU_STOCK_URL = "https://api.weixin.qq.com/product/stock/update";
+    }
+
+    interface Order {
+      String PRODUCT_ORDER_GET_LIST = "https://api.weixin.qq.com/product/order/get_list";
+    }
+  }
+
   public interface Shop {
     interface Spu {
       String SPU_ADD_URL = "https://api.weixin.qq.com/shop/spu/add";
