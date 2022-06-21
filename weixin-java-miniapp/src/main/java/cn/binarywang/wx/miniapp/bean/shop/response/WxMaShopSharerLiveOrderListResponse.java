@@ -15,8 +15,20 @@ public class WxMaShopSharerLiveOrderListResponse extends WxMaShopBaseResponse im
 
   private static final long serialVersionUID = -4190199778148290127L;
 
-  private List<WxMaShopOrderDetail> orders;
+  private List<WxMaShopOrderItem> orders;
 
   @SerializedName("total_num")
   private Integer totalNum;
+
+  @Data
+  public static class WxMaShopOrderItem {
+    @SerializedName("order_id")
+    private Long orderId;
+    @SerializedName("out_order_id")
+    private String outOrderId;
+    private Integer status;
+    private String path;
+    @SerializedName("order_detail")
+    private WxMaShopOrderDetail orderDetail;
+  }
 }
