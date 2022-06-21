@@ -183,6 +183,14 @@ public interface WxCpApiPathConsts {
     String GET_STUDENT_CUSTOMIZE_HEALTH_INFO = "/cgi-bin/school/user/get_student_customize_health_info";
     String GET_HEALTH_QRCODE = "/cgi-bin/school/user/get_health_qrcode";
 
+    String CREATE_STUDENT = "/cgi-bin/school/user/create_student";
+    String DELETE_STUDENT = "/cgi-bin/school/user/delete_student?userid=";
+    String UPDATE_STUDENT = "/cgi-bin/school/user/update_student";
+    String CREATE_PARENT = "/cgi-bin/school/user/create_parent";
+    String UPDATE_PARENT = "/cgi-bin/school/user/update_parent";
+    String DELETE_PARENT = "/cgi-bin/school/user/delete_parent?userid=";
+    String SET_ARCH_SYNC_MODE = "/cgi-bin/school/set_arch_sync_mode";
+
     String GET_PAYMENT_RESULT = "/cgi-bin/school/get_payment_result";
     String GET_TRADE = "/cgi-bin/school/get_trade";
 
