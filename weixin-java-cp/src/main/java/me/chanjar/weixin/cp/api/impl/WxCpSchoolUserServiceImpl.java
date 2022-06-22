@@ -10,8 +10,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpSchoolUserService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.school.user.WxCpCreateParentRequest;
-import me.chanjar.weixin.cp.bean.school.user.WxCpUpdateParentRequest;
+import me.chanjar.weixin.cp.bean.school.user.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -103,6 +102,48 @@ public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
     jsonObject.addProperty("arch_sync_mode", archSyncMode);
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
     return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpCreateDepartment createDepartment(@NonNull WxCpCreateDepartmentRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_CREATE);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpCreateDepartment.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp updateDepartment(@NonNull WxCpUpdateDepartmentRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_UPDATE);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp deleteDepartment(Integer id) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_DELETE) + id;
+    String responseContent = this.cpService.get(apiUrl, null);
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDepartmentList listDepartment(Integer id) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_LIST) + id;
+    String responseContent = this.cpService.get(apiUrl, null);
+    return WxCpDepartmentList.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpSetUpgradeInfo setUpgradeInfo(Long upgradeTime, Integer upgradeSwitch) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(SET_UPGRADE_INFO);
+    JsonObject jsonObject = new JsonObject();
+    if (upgradeTime != null) {
+      jsonObject.addProperty("upgrade_time", upgradeTime);
+    }
+    if (upgradeSwitch != null) {
+      jsonObject.addProperty("upgrade_switch", upgradeSwitch);
+    }
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpSetUpgradeInfo.fromJson(responseContent);
   }
 
 }

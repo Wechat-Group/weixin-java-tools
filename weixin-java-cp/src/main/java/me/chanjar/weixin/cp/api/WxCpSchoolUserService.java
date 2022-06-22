@@ -3,8 +3,7 @@ package me.chanjar.weixin.cp.api;
 import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.school.user.WxCpCreateParentRequest;
-import me.chanjar.weixin.cp.bean.school.user.WxCpUpdateParentRequest;
+import me.chanjar.weixin.cp.bean.school.user.*;
 
 import java.util.List;
 
@@ -100,5 +99,63 @@ public interface WxCpSchoolUserService {
    * @throws WxErrorException
    */
   WxCpBaseResp setArchSyncMode(@NonNull Integer archSyncMode) throws WxErrorException;
+
+  /**
+   * 创建部门
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/create?access_token=ACCESS_TOKEN
+   *
+   * @param request 请求参数对象
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpCreateDepartment createDepartment(@NonNull WxCpCreateDepartmentRequest request) throws WxErrorException;
+
+  /**
+   * 更新部门
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/update?access_token=ACCESS_TOKEN
+   *
+   * @param request
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp updateDepartment(@NonNull WxCpUpdateDepartmentRequest request) throws WxErrorException;
+
+  /**
+   * 删除部门
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/delete?access_token=ACCESS_TOKEN&id=ID
+   *
+   * @param id
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp deleteDepartment(Integer id) throws WxErrorException;
+
+  /**
+   * 获取部门列表
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/list?access_token=ACCESS_TOKEN&id=ID
+   *
+   * @param id
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpDepartmentList listDepartment(Integer id) throws WxErrorException;
+
+  /**
+   * 修改自动升年级的配置
+   * 请求方式： POST（HTTPS）
+   * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/school/set_upgrade_info?access_token=ACCESS_TOKEN
+   *
+   * @param upgradeTime
+   * @param upgradeSwitch
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpSetUpgradeInfo setUpgradeInfo(Long upgradeTime, Integer upgradeSwitch) throws WxErrorException;
 
 }

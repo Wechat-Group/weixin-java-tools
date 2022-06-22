@@ -182,6 +182,7 @@
 1. [007gzs](https://github.com/007gzs)
 1. [Silloy](https://github.com/silloy)
 1. [mgcnrx11](https://github.com/mgcnrx11)
+1. [0katekate0 (Wang_Wong)](https://github.com/0katekate0)
 1. [yuanqixun](https://github.com/yuanqixun)
 1. [kakotor](https://github.com/kakotor)
 1. [aimilin6688 (Jonk)](https://github.com/aimilin6688)

@@ -6,8 +6,7 @@ import lombok.var;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.school.user.WxCpCreateParentRequest;
-import me.chanjar.weixin.cp.bean.school.user.WxCpUpdateParentRequest;
+import me.chanjar.weixin.cp.bean.school.user.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import org.testng.annotations.Test;
@@ -44,6 +43,72 @@ public class WxCpSchoolUserTest {
     list.add(3);
     log.info("list:{}", list.toString());
 
+    final String userId = "WangKai";
+
+
+    /**
+     * 修改自动升年级的配置
+     * https://developer.work.weixin.qq.com/document/path/92949
+     */
+    WxCpSetUpgradeInfo wxCpSetUpgradeInfo = cpService.getSchoolUserService().setUpgradeInfo(1594090969L, 2);
+    log.info("wxCpSetUpgradeInfo:{}", wxCpSetUpgradeInfo.toJson());
+
+    /**
+     * 获取部门列表
+     * https://developer.work.weixin.qq.com/document/path/92343
+     */
+    String str5 = "{\"errcode\":0,\"errmsg\":\"ok\",\"departments\":[{\"name\":\"一年级\",\"parentid\":1,\"id\":2,\"type\":2,\"register_year\":2018,\"standard_grade\":1,\"order\":1,\"department_admins\":[{\"userid\":\"zhangsan\",\"type\":1},{\"userid\":\"lisi\",\"type\":2}],\"is_graduated\":0},{\"name\":\"一年级一班\",\"parentid\":1,\"id\":3,\"type\":1,\"department_admins\":[{\"userid\":\"zhangsan\",\"type\":3,\"subject\":\"语文\"},{\"userid\":\"lisi\",\"type\":4,\"subject\":\"数学\"}],\"open_group_chat\":1,\"group_chat_id\":\"group_chat_id\"}]}";
+    WxCpDepartmentList wxCpDepartmentList = WxCpDepartmentList.fromJson(str5);
+    log.info("wxCpDepartmentList:{}", wxCpDepartmentList.toJson());
+
+    WxCpDepartmentList departmentList = cpService.getSchoolUserService().listDepartment(7);
+    log.info("departmentList:{}", departmentList.toJson());
+
+    /**
+     * 删除部门
+     * https://developer.work.weixin.qq.com/document/path/92342
+     */
+    WxCpBaseResp deleteDepartment = cpService.getSchoolUserService().deleteDepartment(7);
+    log.info("deleteDepartment:{}", deleteDepartment.toJson());
+
+    /**
+     * 更新部门
+     * https://developer.work.weixin.qq.com/document/path/92341
+     */
+    String str4 = "{\"name\":\"一年级\",\"parentid\":5,\"id\":2,\"register_year\":2018,\"standard_grade\":1,\"order\":1,\"new_id\":100,\"department_admins\":[{\"op\":0,\"userid\":\"zhangsan\",\"type\":3,\"subject\":\"语文\"},{\"op\":1,\"userid\":\"lisi\",\"type\":4,\"subject\":\"数学\"}]}";
+    WxCpUpdateDepartmentRequest wxCpUpdateDepartmentRequest = WxCpUpdateDepartmentRequest.fromJson(str4);
+    log.info("wxCpUpdateParentRequest:{}", wxCpUpdateDepartmentRequest.toJson());
+
+    WxCpBaseResp updateDepartment = cpService.getSchoolUserService().updateDepartment(wxCpUpdateDepartmentRequest);
+    log.info("updateDepartment:{}", updateDepartment.toJson());
+
+    /**
+     * 创建部门
+     * https://developer.work.weixin.qq.com/document/path/92340
+     */
+    String str3 = "{\"name\":\"一年级\",\"parentid\":5,\"id\":2,\"type\":1,\"register_year\":2018,\"standard_grade\":1,\"order\":1,\"department_admins\":[{\"userid\":\"zhangsan\",\"type\":4,\"subject\":\"语文\"},{\"userid\":\"lisi\",\"type\":3,\"subject\":\"数学\"}]}";
+    WxCpCreateDepartmentRequest wxCpCreateDepartmentRequest = WxCpCreateDepartmentRequest.fromJson(str3);
+    log.info("wxCpCreateDepartmentRequest:{}", wxCpCreateDepartmentRequest.toJson());
+
+    WxCpCreateDepartmentRequest createDepartmentRequest = new WxCpCreateDepartmentRequest();
+    createDepartmentRequest.setParentId(5);
+    createDepartmentRequest.setName("一年级");
+    createDepartmentRequest.setId(2);
+    createDepartmentRequest.setType(1);
+    createDepartmentRequest.setRegisterYear(2018);
+    createDepartmentRequest.setStandardGrade(1);
+    createDepartmentRequest.setOrder(1);
+
+    var departmentAdmin = new WxCpCreateDepartmentRequest.DepartmentAdmin();
+    departmentAdmin.setUserId(userId);
+    departmentAdmin.setType(4);
+    departmentAdmin.setSubject("英语");
+    List<WxCpCreateDepartmentRequest.DepartmentAdmin> createDepartList = Lists.newArrayList();
+    createDepartList.add(departmentAdmin);
+
+    createDepartmentRequest.setDepartmentAdmins(createDepartList);
+    WxCpCreateDepartment createDepartment = cpService.getSchoolUserService().createDepartment(createDepartmentRequest);
+    log.info("createDepartment:{}", createDepartment.toJson());
 
     /**
      * 更新家长
