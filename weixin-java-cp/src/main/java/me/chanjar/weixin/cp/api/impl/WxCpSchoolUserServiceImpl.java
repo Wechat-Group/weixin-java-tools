@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.ExternalContact.GET_SUBSCRIBE_QR_CODE;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.School.*;
 
 /**
@@ -130,6 +131,13 @@ public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_LIST) + id;
     String responseContent = this.cpService.get(apiUrl, null);
     return WxCpDepartmentList.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpSubscribeQrCode getSubscribeQrCode() throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_SUBSCRIBE_QR_CODE);
+    String responseContent = this.cpService.get(apiUrl, null);
+    return WxCpSubscribeQrCode.fromJson(responseContent);
   }
 
   @Override

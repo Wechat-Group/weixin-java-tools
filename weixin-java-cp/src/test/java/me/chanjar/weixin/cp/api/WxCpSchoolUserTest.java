@@ -45,6 +45,23 @@ public class WxCpSchoolUserTest {
 
     final String userId = "WangKai";
 
+    /**
+     * 获取「学校通知」二维码
+     * https://developer.work.weixin.qq.com/document/path/92320
+     */
+    String str6 = "{\n" +
+      "   \"errcode\": 0,\n" +
+      "   \"errmsg\": \"ok\",\n" +
+      "   \"qrcode_big\":\"http://p.qpic.cn/wwhead/XXXX\",\n" +
+      "   \"qrcode_middle\":\"http://p.qpic.cn/wwhead/XXXX\",\n" +
+      "   \"qrcode_thumb\":\"http://p.qpic.cn/wwhead/XXXX\"\n" +
+      "}";
+
+    WxCpSubscribeQrCode cpSubscribeQrCode = WxCpSubscribeQrCode.fromJson(str6);
+    log.info("cpSubscribeQrCode:{}", cpSubscribeQrCode.toJson());
+
+    WxCpSubscribeQrCode subscribeQrCode = cpService.getSchoolUserService().getSubscribeQrCode();
+    log.info("subscribeQrCode:{}", subscribeQrCode.toJson());
 
     /**
      * 修改自动升年级的配置

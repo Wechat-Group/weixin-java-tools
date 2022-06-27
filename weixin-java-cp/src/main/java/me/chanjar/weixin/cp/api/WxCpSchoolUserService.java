@@ -147,6 +147,17 @@ public interface WxCpSchoolUserService {
   WxCpDepartmentList listDepartment(Integer id) throws WxErrorException;
 
   /**
+   * 获取「学校通知」二维码
+   * 学校可通过此接口获取「学校通知」二维码，家长可通过扫描此二维码关注「学校通知」并接收学校推送的消息。
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_subscribe_qr_code?access_token=ACCESS_TOKEN
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpSubscribeQrCode getSubscribeQrCode() throws WxErrorException;
+
+  /**
    * 修改自动升年级的配置
    * 请求方式： POST（HTTPS）
    * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/school/set_upgrade_info?access_token=ACCESS_TOKEN
