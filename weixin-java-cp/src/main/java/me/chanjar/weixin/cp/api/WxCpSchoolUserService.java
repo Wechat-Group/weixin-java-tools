@@ -161,6 +161,19 @@ public interface WxCpSchoolUserService {
   Integer getSubscribeMode() throws WxErrorException;
 
   /**
+   * 获取外部联系人详情
+   * 学校可通过此接口，根据外部联系人的userid（如何获取?），拉取外部联系人详情。
+   * <p>
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get?access_token=ACCESS_TOKEN&external_userid=EXTERNAL_USERID
+   *
+   * @param externalUserId 外部联系人的userid，注意不是学校成员的帐号
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpExternalContact getExternalContact(@NonNull String externalUserId) throws WxErrorException;
+
+  /**
    * 获取部门列表
    * 请求方式：GET（HTTPS）
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/list?access_token=ACCESS_TOKEN&id=ID

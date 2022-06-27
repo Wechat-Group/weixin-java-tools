@@ -144,6 +144,13 @@ public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
   }
 
   @Override
+  public WxCpExternalContact getExternalContact(@NonNull String externalUserId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(EXTERNAL_CONTACT_GET) + externalUserId;
+    String responseContent = this.cpService.get(apiUrl, null);
+    return WxCpExternalContact.fromJson(responseContent);
+  }
+
+  @Override
   public WxCpDepartmentList listDepartment(Integer id) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_LIST) + id;
     String responseContent = this.cpService.get(apiUrl, null);

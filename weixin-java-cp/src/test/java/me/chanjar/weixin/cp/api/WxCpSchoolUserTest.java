@@ -44,7 +44,19 @@ public class WxCpSchoolUserTest {
     log.info("list:{}", list.toString());
 
     final String userId = "WangKai";
+    final String exUserId = "wmOQpTDwAAJFHrryZ8I8ALLEZuLHIUKA";
 
+    /**
+     * 家校沟通 获取外部联系人详情
+     * https://developer.work.weixin.qq.com/document/path/92322
+     */
+    String str7 = "{\"errcode\":0,\"errmsg\":\"ok\",\"external_contact\":{\"external_userid\":\"woAAAA\",\"name\":\"李四\",\"position\":\"Mangaer\",\"avatar\":\"http://p.qlogo.cn/bizmail/IcsdgagqefergqerhewSdage/0\",\"corp_name\":\"腾讯\",\"corp_full_name\":\"腾讯科技有限公司\",\"type\":2,\"gender\":1,\"unionid\":\"unAAAAA\",\"is_subscribe\":1,\"subscriber_info\":{\"tag_id\":[\"TAG_ID1\",\"TAG_ID2\"],\"remark_mobiles\":[\"10000000000\",\"10000000001\"],\"remark\":\"李小明-爸爸\"},\"external_profile\":{\"external_attr\":[{\"type\":0,\"name\":\"文本名称\",\"text\":{\"value\":\"文本\"}},{\"type\":1,\"name\":\"网页名称\",\"web\":{\"url\":\"http://www.test.com\",\"title\":\"标题\"}},{\"type\":2,\"name\":\"测试app\",\"miniprogram\":{\"appid\":\"wxAAAAA\",\"pagepath\":\"/index\",\"title\":\"my miniprogram\"}}]}},\"follow_user\":[{\"userid\":\"rocky\",\"remark\":\"李部长\",\"description\":\"对接采购事物\",\"createtime\":1525779812,\"tags\":[{\"group_name\":\"标签分组名称\",\"tag_name\":\"标签名称\",\"type\":1}],\"remark_corp_name\":\"腾讯科技\",\"remark_mobiles\":[10000000003,10000000004]},{\"userid\":\"tommy\",\"remark\":\"李总\",\"description\":\"采购问题咨询\",\"createtime\":1525881637,\"state\":\"外联二维码1\"}]}";
+    WxCpExternalContact wxCpExternalContact = WxCpExternalContact.fromJson(str7);
+    log.info("wxCpExternalContact:{}", wxCpExternalContact.toJson());
+
+//    cpService.getExternalContactService().getExternalContact();
+    WxCpExternalContact externalContact = cpService.getSchoolUserService().getExternalContact(exUserId);
+    log.info("externalContact:{}", externalContact.toJson());
 
     /**
      * 获取关注「学校通知」的模式
