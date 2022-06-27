@@ -45,6 +45,23 @@ public class WxCpSchoolUserTest {
 
     final String userId = "WangKai";
 
+
+    /**
+     * 获取关注「学校通知」的模式
+     * 可通过此接口获取家长关注「学校通知」的模式：“可扫码填写资料加入”或“禁止扫码填写资料加入”
+     * https://developer.work.weixin.qq.com/document/path/92290
+     */
+    Integer subscribeMode = cpService.getSchoolUserService().getSubscribeMode();
+    log.info("subscribeMode:{}", subscribeMode);
+
+    /**
+     * 管理「学校通知」的关注模式
+     * 设置关注「学校通知」的模式
+     * https://developer.work.weixin.qq.com/document/path/92290
+     */
+    WxCpBaseResp setSubscribeMode = cpService.getSchoolUserService().setSubscribeMode(1);
+    log.info("setSubscribeMode:{}", setSubscribeMode.toJson());
+
     /**
      * 获取「学校通知」二维码
      * https://developer.work.weixin.qq.com/document/path/92320

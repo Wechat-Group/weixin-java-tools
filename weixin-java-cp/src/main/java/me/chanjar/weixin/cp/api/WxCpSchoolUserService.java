@@ -136,6 +136,31 @@ public interface WxCpSchoolUserService {
   WxCpBaseResp deleteDepartment(Integer id) throws WxErrorException;
 
   /**
+   * 设置关注「学校通知」的模式
+   * 可通过此接口修改家长关注「学校通知」的模式：“可扫码填写资料加入”或“禁止扫码填写资料加入”
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/set_subscribe_mode?access_token=ACCESS_TOKEN
+   *
+   * @param subscribeMode 关注模式, 1:可扫码填写资料加入, 2:禁止扫码填写资料加入
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBaseResp setSubscribeMode(@NonNull Integer subscribeMode) throws WxErrorException;
+
+  /**
+   * 获取关注「学校通知」的模式
+   * 可通过此接口获取家长关注「学校通知」的模式：“可扫码填写资料加入”或“禁止扫码填写资料加入”
+   * <p>
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_subscribe_mode?access_token=ACCESS_TOKEN
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  Integer getSubscribeMode() throws WxErrorException;
+
+  /**
    * 获取部门列表
    * 请求方式：GET（HTTPS）
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/list?access_token=ACCESS_TOKEN&id=ID

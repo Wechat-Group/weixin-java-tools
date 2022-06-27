@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpSchoolUserService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
@@ -15,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.ExternalContact.GET_SUBSCRIBE_QR_CODE;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.ExternalContact.*;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.School.*;
 
 /**
@@ -124,6 +125,22 @@ public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_DELETE) + id;
     String responseContent = this.cpService.get(apiUrl, null);
     return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp setSubscribeMode(@NonNull Integer subscribeMode) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(SET_SUBSCRIBE_MODE);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("subscribe_mode", subscribeMode);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public Integer getSubscribeMode() throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_SUBSCRIBE_MODE);
+    String responseContent = this.cpService.get(apiUrl, null);
+    return GsonParser.parse(responseContent).get("subscribe_mode").getAsInt();
   }
 
   @Override

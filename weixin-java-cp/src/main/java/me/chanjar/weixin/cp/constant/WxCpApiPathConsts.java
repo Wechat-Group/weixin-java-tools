@@ -364,6 +364,8 @@ public interface WxCpApiPathConsts {
     String UPLOAD_ATTACHMENT = "/cgi-bin/media/upload_attachment";
 
     String GET_SUBSCRIBE_QR_CODE = "/cgi-bin/externalcontact/get_subscribe_qr_code";
+    String SET_SUBSCRIBE_MODE = "/cgi-bin/externalcontact/set_subscribe_mode";
+    String GET_SUBSCRIBE_MODE = "/cgi-bin/externalcontact/get_subscribe_mode";
 
     String ADD_INTERCEPT_RULE = "/cgi-bin/externalcontact/add_intercept_rule";
     String UPDATE_INTERCEPT_RULE = "/cgi-bin/externalcontact/update_intercept_rule";
