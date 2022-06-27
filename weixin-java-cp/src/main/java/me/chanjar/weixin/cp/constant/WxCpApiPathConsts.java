@@ -271,6 +271,22 @@ public interface WxCpApiPathConsts {
 
   }
 
+  interface License {
+    String CREATE_NEW_ORDER = "/cgi-bin/license/create_new_order";
+    String CREATE_RENEW_ORDER_JOB = "/cgi-bin/license/create_renew_order_job";
+    String SUBMIT_ORDER_JOB = "/cgi-bin/license/submit_order_job";
+    String LIST_ORDER = "/cgi-bin/license/list_order";
+    String GET_ORDER = "/cgi-bin/license/get_order";
+    String LIST_ORDER_ACCOUNT = "/cgi-bin/license/list_order_account";
+    String ACTIVE_ACCOUNT = "/cgi-bin/license/active_account";
+    String BATCH_ACTIVE_ACCOUNT = "/cgi-bin/license/batch_active_account";
+    String GET_ACTIVE_INFO_BY_CODE = "/cgi-bin/license/get_active_info_by_code";
+    String BATCH_GET_ACTIVE_INFO_BY_CODE = "/cgi-bin/license/batch_get_active_info_by_code";
+    String LIST_ACTIVED_ACCOUNT = "/cgi-bin/license/list_actived_account";
+    String GET_ACTIVE_INFO_BY_USER = "/cgi-bin/license/get_active_info_by_user";
+    String BATCH_TRANSFER_LICENSE = "/cgi-bin/license/batch_transfer_license";
+  }
+
   interface User {
     String USER_AUTHENTICATE = "/cgi-bin/user/authsucc?userid=";
     String USER_CREATE = "/cgi-bin/user/create";
