@@ -475,6 +475,21 @@ public interface WxCpTpService {
   void setWxCpTpUserService(WxCpTpUserService wxCpTpUserService);
 
   /**
+   * set license service
+   *
+   * @param wxCpTpLicenseService the oa service
+   */
+  void setWxCpTpLicenseService(WxCpTpLicenseService wxCpTpLicenseService);
+
+
+  /**
+   * get license service
+   *
+   * @return getCpTPLicenseService wx cp tp license service
+   */
+  WxCpTpLicenseService getWxCpTpLicenseService();
+
+  /**
    * 获取应用的管理员列表
    *
    * @param authCorpId the auth corp id
