@@ -143,6 +143,40 @@ public class WxCpConsts {
      */
     public static final String DELETE_SCHEDULE = "delete_schedule";
 
+    /**
+     * 家校通讯录事件
+     */
+    public static final String CHANGE_SCHOOL_CONTACT = "change_school_contact";
+
+  }
+
+  /**
+   * 家校通讯录变更事件CHANGE_TYPE
+   */
+  @UtilityClass
+  public static class SchoolContactChangeType {
+
+    /**
+     * 部门变更事件
+     * https://developer.work.weixin.qq.com/document/path/92052
+     */
+    public static final String CREATE_DEPARTMENT = "create_department";
+    public static final String UPDATE_DEPARTMENT = "update_department";
+    public static final String DELETE_DEPARTMENT = "delete_department";
+
+    /**
+     * 成员变更事件
+     * https://developer.work.weixin.qq.com/document/path/92032
+     */
+    public static final String CREATE_STUDENT = "create_student";
+    public static final String UPDATE_STUDENT = "update_student";
+    public static final String DELETE_STUDENT = "delete_student";
+    public static final String CREATE_PARENT = "create_parent";
+    public static final String UPDATE_PARENT = "update_parent";
+    public static final String DELETE_PARENT = "delete_parent";
+    public static final String SUBSCRIBE = "subscribe";
+    public static final String UNSUBSCRIBE = "unsubscribe";
+
   }
 
   /**

@@ -4,15 +4,20 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.school.user.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
+import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
+import org.eclipse.jetty.util.ajax.JSON;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 企业微信家校沟通相关接口.
@@ -45,6 +50,93 @@ public class WxCpSchoolUserTest {
 
     final String userId = "WangKai";
     final String exUserId = "wmOQpTDwAAJFHrryZ8I8ALLEZuLHIUKA";
+
+
+//    String changeContact = WxCpConsts.EventType.CHANGE_CONTACT;
+    /**
+     * 增加变更事件类型：
+     */
+//    WxCpConsts.EventType.CHANGE_SCHOOL_CONTACT;
+//    WxCpConsts.SchoolContactChangeType.DELETE_STUDENT;
+//    WxCpConsts.SchoolContactChangeType.CREATE_DEPARTMENT;
+
+    /**
+     * 测试家校通讯录变更回调
+     * https://developer.work.weixin.qq.com/document/path/92052
+     *
+     * 新增学生事件
+     * 当学校在家校通讯录中新增学生时，回调此事件。
+     */
+    String createStudentXml = "<xml>\n" +
+      "\t<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "\t<CreateTime>1403610513</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[change_school_contact]]></Event>\n" +
+      "\t<ChangeType><![CDATA[create_student]]></ChangeType>\n" +
+      "\t<Id><![CDATA[xiaoming]]></Id>\n" +
+      "</xml>";
+
+    /**
+     * 家长取消关注事件
+     * 当家长取消关注家校通知时，回调此事件。
+     */
+    String unSubscribeXml = "<xml>\n" +
+      "\t<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "\t<CreateTime>1403610513</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[change_school_contact]]></Event>\n" +
+      "\t<ChangeType><![CDATA[unsubscribe]]></ChangeType>\n" +
+      "\t<Id><![CDATA[xiaoming]]></Id>\n" +
+      "</xml>";
+
+    /**
+     * 创建部门事件
+     * 当学校在家校通讯录中创建部门时，回调此事件。
+     */
+    String createDepartmentXml = "<xml>\n" +
+      "\t<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "\t<CreateTime>1403610513</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[change_school_contact]]></Event>\n" +
+      "\t<ChangeType><![CDATA[create_deparmtment]]></ChangeType>\n" +
+      "\t<Id><![CDATA[1]]></Id>\n" +
+      "</xml>";
+
+    /**
+     * 删除部门事件
+     * 当学校删除家校通讯录部门时，回调此事件。
+     */
+    String deleteDepartmentXml = "<xml>\n" +
+      "\t<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "\t<CreateTime>1403610513</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[change_school_contact]]></Event>\n" +
+      "\t<ChangeType><![CDATA[delete_deparmtment]]></ChangeType>\n" +
+      "\t<Id><![CDATA[1]]></Id>\n" +
+      "</xml>";
+
+//    WxCpXmlMessage.fromXml(createStudentXml);
+    final WxCpXmlMessage createStudentMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, createStudentXml);
+    Map<String, Object> map1 = XmlUtils.xml2Map(createStudentXml);
+    createStudentMsg.setAllFieldsMap(map1);
+    log.info("createStudentMsg:{}", JSON.toString(createStudentMsg));
+
+    final WxCpXmlMessage unSubscribeMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, unSubscribeXml);
+    Map<String, Object> map2 = XmlUtils.xml2Map(unSubscribeXml);
+    unSubscribeMsg.setAllFieldsMap(map2);
+    log.info("unSubscribeMsg:{}", JSON.toString(unSubscribeMsg));
+
+    final WxCpXmlMessage createDepartmentMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, createDepartmentXml);
+    createDepartmentMsg.setAllFieldsMap(XmlUtils.xml2Map(createDepartmentXml));
+    log.info("createDepartmentMsg:{}", JSON.toString(createDepartmentMsg));
+
+    final WxCpXmlMessage deleteDepartmentMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, deleteDepartmentXml);
+    deleteDepartmentMsg.setAllFieldsMap(XmlUtils.xml2Map(deleteDepartmentXml));
+    log.info("deleteDepartmentMsg:{}", JSON.toString(deleteDepartmentMsg));
 
 
     /**
