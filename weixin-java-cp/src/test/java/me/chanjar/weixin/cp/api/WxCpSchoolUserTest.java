@@ -46,6 +46,35 @@ public class WxCpSchoolUserTest {
     final String userId = "WangKai";
     final String exUserId = "wmOQpTDwAAJFHrryZ8I8ALLEZuLHIUKA";
 
+
+    /**
+     * 获取可使用的家长范围
+     * https://developer.work.weixin.qq.com/document/path/94895
+     */
+    String str8 = "{\n" +
+      "   \"errcode\": 0,\n" +
+      "   \"errmsg\": \"ok\",\n" +
+      "   \"allow_scope\": {\n" +
+      "       \"students\": [\n" +
+      "             {\"userid\": \"student1\"},\n" +
+      "             {\"userid\": \"student2\"}\n" +
+      "       ],\n" +
+      "\t   \"departments\": [1, 2]\n" +
+      "    }\n" +
+      "}";
+    WxCpAllowScope cpAllowScope = WxCpAllowScope.fromJson(str8);
+    log.info("cpAllowScope:{}", cpAllowScope.toJson());
+
+    WxCpAllowScope allowScope = cpService.getSchoolUserService().getAllowScope(100000);
+    log.info("allowScope:{}", allowScope);
+
+    /**
+     * 外部联系人openid转换
+     * https://developer.work.weixin.qq.com/document/path/92323
+     */
+    String openId = cpService.getSchoolUserService().convertToOpenId("wmOQpTDwAAh_sKvmJBJ4FQ0iYAcbppFA");
+    log.info("openId:{}", openId);
+
     /**
      * 家校沟通 获取外部联系人详情
      * https://developer.work.weixin.qq.com/document/path/92322

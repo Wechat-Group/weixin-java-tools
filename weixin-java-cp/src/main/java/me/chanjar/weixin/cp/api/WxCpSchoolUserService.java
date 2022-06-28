@@ -174,6 +174,32 @@ public interface WxCpSchoolUserService {
   WxCpExternalContact getExternalContact(@NonNull String externalUserId) throws WxErrorException;
 
   /**
+   * 获取可使用的家长范围
+   * 获取可在微信「学校通知-学校应用」使用该应用的家长范围，以学生或部门列表的形式返回。应用只能给该列表下的家长发送「学校通知」。注意该范围只能由学校的系统管理员在「管理端-家校沟通-配置」配置。
+   * <p>
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/agent/get_allow_scope?access_token=ACCESS_TOKEN&agentid=AGENTID
+   *
+   * @param agentId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpAllowScope getAllowScope(@NonNull Integer agentId) throws WxErrorException;
+
+  /**
+   * 外部联系人openid转换
+   * 企业和服务商可通过此接口，将微信外部联系人的userid（如何获取?）转为微信openid，用于调用支付相关接口。暂不支持企业微信外部联系人（ExternalUserid为wo开头）的userid转openid。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/convert_to_openid?access_token=ACCESS_TOKEN
+   *
+   * @param externalUserId
+   * @return
+   * @throws WxErrorException
+   */
+  String convertToOpenId(@NonNull String externalUserId) throws WxErrorException;
+
+  /**
    * 获取部门列表
    * 请求方式：GET（HTTPS）
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/list?access_token=ACCESS_TOKEN&id=ID

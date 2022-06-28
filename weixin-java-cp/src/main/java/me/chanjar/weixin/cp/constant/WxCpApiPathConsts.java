@@ -199,6 +199,7 @@ public interface WxCpApiPathConsts {
 
     String GET_PAYMENT_RESULT = "/cgi-bin/school/get_payment_result";
     String GET_TRADE = "/cgi-bin/school/get_trade";
+    String GET_ALLOW_SCOPE = "/cgi-bin/school/agent/get_allow_scope?agentid=";
 
     /**
      * 上课直播

@@ -151,6 +151,18 @@ public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
   }
 
   @Override
+  public WxCpAllowScope getAllowScope(@NonNull Integer agentId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_ALLOW_SCOPE) + agentId;
+    String responseContent = this.cpService.get(apiUrl, null);
+    return WxCpAllowScope.fromJson(responseContent);
+  }
+
+  @Override
+  public String convertToOpenId(@NonNull String externalUserId) throws WxErrorException {
+    return cpService.getExternalContactService().convertToOpenid(externalUserId);
+  }
+
+  @Override
   public WxCpDepartmentList listDepartment(Integer id) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_LIST) + id;
     String responseContent = this.cpService.get(apiUrl, null);
