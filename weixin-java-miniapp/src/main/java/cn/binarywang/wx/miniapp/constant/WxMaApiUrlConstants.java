@@ -483,9 +483,17 @@ public class WxMaApiUrlConstants {
     }
 
     interface Aftersale {
-      String AFTERSALE_ADD = "https://api.weixin.qq.com/shop/aftersale/add";
-      String AFTERSALE_GET = "https://api.weixin.qq.com/shop/aftersale/get";
-      String AFTERSALE_UPDATE = "https://api.weixin.qq.com/shop/aftersale/update";
+      String AFTERSALE_ADD = "https://api.weixin.qq.com/shop/ecaftersale/add";
+      String AFTERSALE_CANCEL = "https://api.weixin.qq.com/shop/ecaftersale/cancel";
+      String AFTERSALE_UPDATE = "https://api.weixin.qq.com/shop/ecaftersale/update";
+      String AFTERSALE_UPLOAD_RETURN_INFO = "https://api.weixin.qq.com/shop/ecaftersale/uploadreturninfo";
+      String AFTERSALE_ACCEPT_REFUND = "https://api.weixin.qq.com/shop/ecaftersale/acceptrefund";
+      String AFTERSALE_ACCEPT_RETURN = "https://api.weixin.qq.com/shop/ecaftersale/acceptreturn";
+      String AFTERSALE_REJECT = "https://api.weixin.qq.com/shop/ecaftersale/reject";
+      String AFTERSALE_UPLOAD_CERTIFICATES = "https://api.weixin.qq.com/shop/ecaftersale/upload_certificates";
+      String AFTERSALE_UPLOAD_DEADLINE = "https://api.weixin.qq.com/shop/aftersale/update_deadline";
+      String AFTERSALE_GET_LIST = "https://api.weixin.qq.com/shop/ecaftersale/get_list";
+      String AFTERSALE_GET = "https://api.weixin.qq.com/shop/ecaftersale/get";
     }
 
     interface Sharer {
