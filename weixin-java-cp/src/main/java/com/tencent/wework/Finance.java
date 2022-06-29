@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 /**
+ * 企业微信会话内容存档Finance类
  * 注意：
- * 此类必须配置在com.tencent.wework路径底下，否则会报错：
- * java.lang.UnsatisfiedLinkError: com.xxx.Finance.NewSdk()
+ * 此类必须配置在com.tencent.wework路径底下，否则会报错：java.lang.UnsatisfiedLinkError: com.xxx.Finance.NewSdk()
  * <p>
  * Q：JAVA版本的sdk报错UnsatisfiedLinkError？
  * A：请检查是否修改了sdk的包名。
@@ -15,7 +15,7 @@ import java.util.List;
  * 官方文档：
  * https://developer.work.weixin.qq.com/document/path/91552
  *
- * @author Wang_Wong
+ * @author <a href="https://github.com/0katekate0">Wang_Wong</a>
  * @date 2022-01-17
  */
 @Slf4j

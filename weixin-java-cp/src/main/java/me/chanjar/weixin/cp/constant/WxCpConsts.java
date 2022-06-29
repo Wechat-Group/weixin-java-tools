@@ -94,7 +94,7 @@ public class WxCpConsts {
     public static final String TASKCARD_CLICK = "taskcard_click";
 
     /**
-     * 企业成员添加外部联系人事件推送
+     * 企业成员添加外部联系人事件推送 & 会话存档客户同意进行聊天内容存档事件回调事件
      */
     public static final String CHANGE_EXTERNAL_CONTACT = "change_external_contact";
 
@@ -147,6 +147,22 @@ public class WxCpConsts {
      * 家校通讯录事件
      */
     public static final String CHANGE_SCHOOL_CONTACT = "change_school_contact";
+
+    /**
+     * 产生会话回调事件
+     */
+    public static final String MSGAUDIT_NOTIFY = "msgaudit_notify";
+
+  }
+
+  /**
+   * 会话存档事件CHANGE_TYPE
+   * https://developer.work.weixin.qq.com/document/path/92005
+   */
+  @UtilityClass
+  public static class MsgAuditChangeType {
+
+    public static final String MSG_AUDIT_APPROVED = "msg_audit_approved";
 
   }
 
