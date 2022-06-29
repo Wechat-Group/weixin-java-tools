@@ -44,7 +44,7 @@ public class WxMaShopAfterSaleAddRequest implements Serializable {
   @SerializedName("type")
   private Integer type;
   @SerializedName("product_info")
-  private List<ProductInfosBean> productInfos;
+  private ProductInfosBean productInfo;
   @SerializedName("orderamt")
   private Long orderamt;
   @SerializedName("refund_reason")

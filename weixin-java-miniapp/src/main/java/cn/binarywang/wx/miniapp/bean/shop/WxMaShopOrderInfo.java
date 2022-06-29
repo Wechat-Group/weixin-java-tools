@@ -115,7 +115,7 @@ public class WxMaShopOrderInfo implements Serializable {
    * </pre>
    */
   @SerializedName("trace_id")
-  private String trace_id; // 会影响主播归因、分享员归因等，从下单前置检查获取
+  private String traceId; // 会影响主播归因、分享员归因等，从下单前置检查获取
   /**
    * 默认退货地址，退货售后超时时，会让用户将货物寄往此地址
    * <pre>
