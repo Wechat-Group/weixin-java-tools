@@ -40,7 +40,7 @@ public class WxMaOpenCommitStandardExt implements Serializable {
   /**
    * 授权小程序Appid，可填入商户小程序AppID，以区分不同商户
    */
-  @SerializedName("extAppId")
+  @SerializedName("extAppid")
   private String extAppId;
 
   /**
