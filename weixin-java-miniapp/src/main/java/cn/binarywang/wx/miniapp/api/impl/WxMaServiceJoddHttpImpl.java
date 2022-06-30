@@ -46,7 +46,8 @@ public class WxMaServiceJoddHttpImpl extends BaseWxMaServiceImpl<HttpConnectionP
 
   @Override
   protected String doGetAccessTokenRequest() throws IOException {
-    String url = StringUtils.isNotEmpty(this.getWxMaConfig().getApiHostUrl()) ?
+    String url = StringUtils.isNotEmpty(this.getWxMaConfig().getAccessTokenUrl()) ?
+      this.getWxMaConfig().getAccessTokenUrl() : StringUtils.isNotEmpty(this.getWxMaConfig().getApiHostUrl()) ?
       WxMaService.GET_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", this.getWxMaConfig().getApiHostUrl()) :
       WxMaService.GET_ACCESS_TOKEN_URL;
 

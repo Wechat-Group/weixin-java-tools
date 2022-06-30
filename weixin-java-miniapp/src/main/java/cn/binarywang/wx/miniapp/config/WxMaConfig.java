@@ -250,4 +250,19 @@ public interface WxMaConfig {
    * @return 自定义的api域名地址
    */
   String getApiHostUrl();
+
+  /**
+   * 获取自定义的获取accessToken地址，用于向自定义统一服务获取accessToken
+   *
+   * @return 自定义的获取accessToken地址
+   */
+  String getAccessTokenUrl();
+
+  /**
+   * 设置自定义的获取accessToken地址
+   * 可用于设置获取accessToken的自定义服务
+   *
+   * @param accessTokenUrl 自定义的获取accessToken地址
+   */
+  void setAccessTokenUrl(String accessTokenUrl);
 }
