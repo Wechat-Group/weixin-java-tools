@@ -30,6 +30,39 @@ public interface WxCpSchoolUserService {
   WxCpBaseResp createStudent(@NonNull String studentUserId, @NonNull String name, @NonNull List<Integer> departments) throws WxErrorException;
 
   /**
+   * 批量创建学生
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/batch_create_student?access_token=ACCESS_TOKEN
+   *
+   * @param request
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBatchResultList batchCreateStudent(@NonNull WxCpBatchCreateStudentRequest request) throws WxErrorException;
+
+  /**
+   * 批量删除学生
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/batch_delete_student?access_token=ACCESS_TOKEN
+   *
+   * @param request
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBatchResultList batchDeleteStudent(@NonNull WxCpBatchDeleteStudentRequest request) throws WxErrorException;
+
+  /**
+   * 批量更新学生
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/batch_update_student?access_token=ACCESS_TOKEN
+   *
+   * @param request
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBatchResultList batchUpdateStudent(@NonNull WxCpBatchUpdateStudentRequest request) throws WxErrorException;
+
+  /**
    * 删除学生
    * 请求方式：GET（HTTPS）
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/delete_student?access_token=ACCESS_TOKEN&userid=USERID

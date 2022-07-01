@@ -48,6 +48,27 @@ public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
   }
 
   @Override
+  public WxCpBatchResultList batchCreateStudent(@NonNull WxCpBatchCreateStudentRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(BATCH_CREATE_STUDENT);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBatchResultList.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBatchResultList batchDeleteStudent(@NonNull WxCpBatchDeleteStudentRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(BATCH_DELETE_STUDENT);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBatchResultList.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBatchResultList batchUpdateStudent(@NonNull WxCpBatchUpdateStudentRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(BATCH_UPDATE_STUDENT);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBatchResultList.fromJson(responseContent);
+  }
+
+  @Override
   public WxCpBaseResp deleteStudent(@NonNull String studentUserId) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(DELETE_STUDENT) + studentUserId;
     String responseContent = this.cpService.get(apiUrl, null);

@@ -192,6 +192,10 @@ public interface WxCpApiPathConsts {
     String GET_STUDENT_CUSTOMIZE_HEALTH_INFO = "/cgi-bin/school/user/get_student_customize_health_info";
     String GET_HEALTH_QRCODE = "/cgi-bin/school/user/get_health_qrcode";
 
+    String BATCH_CREATE_STUDENT = "/cgi-bin/school/user/batch_create_student";
+    String BATCH_DELETE_STUDENT = "/cgi-bin/school/user/batch_delete_student";
+    String BATCH_UPDATE_STUDENT = "/cgi-bin/school/user/batch_update_student";
+
     String CREATE_STUDENT = "/cgi-bin/school/user/create_student";
     String DELETE_STUDENT = "/cgi-bin/school/user/delete_student?userid=";
     String UPDATE_STUDENT = "/cgi-bin/school/user/update_student";

@@ -52,6 +52,86 @@ public class WxCpSchoolUserTest {
     final String exUserId = "wmOQpTDwAAJFHrryZ8I8ALLEZuLHIUKA";
 
 
+    // 返回值
+    String batchResult = "{\n" +
+      "\t\"errcode\": 1,\n" +
+      "\t\"errmsg\": \"invalid student_userid: zhangsan\",\n" +
+      "\t\"result_list\": [\n" +
+      "\t\t{\n" +
+      "\t\t\t\"student_userid\": \"zhangsan\",\n" +
+      "\t\t\t\"errcode\": 1,\n" +
+      "\t\t\t\"errmsg\": \"invalid student_userid: zhangsan\"\n" +
+      "\t\t}\n" +
+      "\t]\n" +
+      "}";
+
+    WxCpBatchResultList batchResultList = WxCpBatchResultList.fromJson(batchResult);
+    log.info("batchResultList: {}", batchResultList.toJson());
+
+
+    /**
+     * 批量更新学生
+     * https://developer.work.weixin.qq.com/document/path/92330
+     *
+     * 请求方式：POST（HTTPS）
+     * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/batch_update_student?access_token=ACCESS_TOKEN
+     */
+    String batchUpdateStudent = "{\n" +
+      "\t\"students\":[\n" +
+      "        {\n" +
+      "\t\t\t\"student_userid\": \"zhangsan\",\n" +
+      "\t\t\t\"new_student_userid\":\"zhangsan_new\",\n" +
+      "\t\t\t\"name\": \"张三\",\n" +
+      "\t\t\t\"department\": [1, 2]\n" +
+      "\t\t},\n" +
+      "        {\n" +
+      "\t\t\t\"student_userid\": \"lisi\",\n" +
+      "\t\t\t\"name\": \"李四\",\n" +
+      "\t\t\t\"department\": [3, 4]\n" +
+      "\t\t}\n" +
+      "     ]\n" +
+      "}";
+    WxCpBatchUpdateStudentRequest batchUpdateStudentRequest = WxCpBatchUpdateStudentRequest.fromJson(batchUpdateStudent);
+    WxCpBatchResultList list3 = cpService.getSchoolUserService().batchUpdateStudent(batchUpdateStudentRequest);
+    log.info("list3: {}", list3.toJson());
+
+    /**
+     * 批量删除学生
+     * https://developer.work.weixin.qq.com/document/path/92329
+     *
+     * 请求方式：POST（HTTPS）
+     * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/batch_delete_student?access_token=ACCESS_TOKEN
+     */
+    String batchDeleteStudent = "{\n" +
+      "\t\"useridlist\": [\"zhangsan\", \"lisi\"]\n" +
+      "}\n";
+    WxCpBatchDeleteStudentRequest batchDeleteStudentRequest = WxCpBatchDeleteStudentRequest.fromJson(batchDeleteStudent);
+    WxCpBatchResultList list2 = cpService.getSchoolUserService().batchDeleteStudent(batchDeleteStudentRequest);
+    log.info("list2: {}", list2.toJson());
+
+    /**
+     * 批量创建学生
+     * https://developer.work.weixin.qq.com/document/path/92328
+     */
+    String batchCreateStudent = "{\n" +
+      "\t\"students\":[\n" +
+      "        {\n" +
+      "\t\t\t\"student_userid\": \"zhangsan\",\n" +
+      "\t\t\t\"name\": \"张三\",\n" +
+      "\t\t\t\"department\": [1, 2]\n" +
+      "\t\t},\n" +
+      "        {\n" +
+      "\t\t\t\"student_userid\": \"lisi\",\n" +
+      "\t\t\t\"name\": \"李四\",\n" +
+      "\t\t\t\"department\": [3, 4]\n" +
+      "\t\t}\n" +
+      "     ]\n" +
+      "}";
+    WxCpBatchCreateStudentRequest batchCreateStudentRequest = WxCpBatchCreateStudentRequest.fromJson(batchCreateStudent);
+    WxCpBatchResultList list1 = cpService.getSchoolUserService().batchCreateStudent(batchCreateStudentRequest);
+    log.info("list1: {}", list1.toJson());
+
+
 //    String changeContact = WxCpConsts.EventType.CHANGE_CONTACT;
     /**
      * 增加变更事件类型：
