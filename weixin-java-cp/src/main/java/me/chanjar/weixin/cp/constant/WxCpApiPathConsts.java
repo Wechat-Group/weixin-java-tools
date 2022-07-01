@@ -28,6 +28,7 @@ public interface WxCpApiPathConsts {
    * https://work.weixin.qq.com/api/doc/90000/90135/90235
    */
   interface Message {
+
     /**
      * 发送应用消息
      */
@@ -40,8 +41,16 @@ public interface WxCpApiPathConsts {
 
     /**
      * 互联企业发送应用消息
+     * https://developer.work.weixin.qq.com/document/path/90250
      */
     String LINKEDCORP_MESSAGE_SEND = "/cgi-bin/linkedcorp/message/send";
+
+    /**
+     * 发送「学校通知」
+     * https://developer.work.weixin.qq.com/document/path/92321
+     */
+    String EXTERNAL_CONTACT_MESSAGE_SEND = "/cgi-bin/externalcontact/message/send";
+
   }
 
   interface Agent {

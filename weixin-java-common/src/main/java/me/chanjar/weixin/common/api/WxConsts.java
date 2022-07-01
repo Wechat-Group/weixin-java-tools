@@ -10,7 +10,7 @@ import static me.chanjar.weixin.common.error.WxMpErrorMsgEnum.*;
 /**
  * 微信开发所使用到的常量类.
  *
- * @author Daniel Qian & binarywang
+ * @author Daniel Qian & binarywang & Wang_Wong
  */
 public class WxConsts {
   /**
@@ -131,6 +131,54 @@ public class WxConsts {
      * 发送图文消息（点击跳转到图文消息页面）使用通过 “发布” 系列接口得到的 article_id(草稿箱功能上线后不再支持客服接口中带 media_id 的 mpnews 类型的图文消息)
      */
     public static final String MP_NEWS_ARTICLE = "mpnewsarticle";
+  }
+
+  /**
+   * 发送「学校通知」类型
+   * https://developer.work.weixin.qq.com/document/path/92321
+   */
+  public static class SchoolContactMsgType {
+
+    /**
+     * 文本消息.
+     */
+    public static final String TEXT = "text";
+
+    /**
+     * 图片消息.
+     */
+    public static final String IMAGE = "image";
+
+    /**
+     * 语音消息.
+     */
+    public static final String VOICE = "voice";
+
+    /**
+     * 视频消息.
+     */
+    public static final String VIDEO = "video";
+
+    /**
+     * 文件消息
+     */
+    public static final String FILE = "file";
+
+    /**
+     * 图文消息
+     */
+    public static final String NEWS = "news";
+
+    /**
+     * 图文消息（mpnews）
+     */
+    public static final String MPNEWS = "mpnews";
+
+    /**
+     * 小程序消息
+     */
+    public static final String MINIPROGRAM = "miniprogram";
+
   }
 
   /**

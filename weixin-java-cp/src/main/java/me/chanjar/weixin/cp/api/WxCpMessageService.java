@@ -50,4 +50,20 @@ public interface WxCpMessageService {
    * @throws WxErrorException the wx error exception
    */
   WxCpLinkedCorpMessageSendResult sendLinkedCorpMessage(WxCpLinkedCorpMessage message) throws WxErrorException;
+
+  /**
+   * 发送「学校通知」
+   * https://developer.work.weixin.qq.com/document/path/92321
+   * <p>
+   * 学校可以通过此接口来给家长发送不同类型的学校通知，来满足多种场景下的学校通知需求。目前支持的消息类型为文本、图片、语音、视频、文件、图文。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/externalcontact/message/send?access_token=ACCESS_TOKEN
+   *
+   * @param message 要发送的消息对象
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpSchoolContactMessageSendResult sendSchoolContactMessage(WxCpSchoolContactMessage message) throws WxErrorException;
+
 }

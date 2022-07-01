@@ -46,4 +46,15 @@ public class WxCpMessageServiceImpl implements WxCpMessageService {
     return WxCpLinkedCorpMessageSendResult.fromJson(this.cpService.post(this.cpService.getWxCpConfigStorage()
       .getApiUrl(Message.LINKEDCORP_MESSAGE_SEND), message.toJson()));
   }
+
+  @Override
+  public WxCpSchoolContactMessageSendResult sendSchoolContactMessage(WxCpSchoolContactMessage message) throws WxErrorException {
+    if (null == message.getAgentId()) {
+      message.setAgentId(this.cpService.getWxCpConfigStorage().getAgentId());
+    }
+
+    return WxCpSchoolContactMessageSendResult.fromJson(this.cpService.post(this.cpService.getWxCpConfigStorage()
+      .getApiUrl(Message.EXTERNAL_CONTACT_MESSAGE_SEND), message.toJson()));
+  }
+
 }
