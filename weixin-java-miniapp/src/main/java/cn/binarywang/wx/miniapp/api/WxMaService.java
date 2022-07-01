@@ -503,4 +503,6 @@ public interface WxMaService extends WxService {
    * @return
    */
   WxMaProductService getProductService();
+
+  WxMaShopCouponService getWxMaShopCouponService();
 }

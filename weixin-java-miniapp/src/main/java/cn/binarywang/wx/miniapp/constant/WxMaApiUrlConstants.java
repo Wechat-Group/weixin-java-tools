@@ -505,6 +505,19 @@ public class WxMaApiUrlConstants {
       String SEARCH_SHARER = "https://api.weixin.qq.com/shop/sharer/search_sharer";
       String UNBIND = "https://api.weixin.qq.com/shop/sharer/unbind";
     }
+
+    interface Coupon {
+      String ADD_COUPON = "https://api.weixin.qq.com/shop/coupon/add";
+      String GET_COUPON = "https://api.weixin.qq.com/shop/coupon/get";
+      String GET_COUPON_LIST = "https://api.weixin.qq.com/shop/coupon/get_list";
+      String UPDATE_COUPON = "https://api.weixin.qq.com/shop/coupon/update";
+      String UPDATE_COUPON_STATUS = "https://api.weixin.qq.com/shop/coupon/update_status";
+      String UPDATE_COUPON_STOCK = "https://api.weixin.qq.com/shop/coupon/update_coupon_stock";
+      String ADD_USER_COUPON = "https://api.weixin.qq.com/shop/coupon/add_user_coupon";
+      String GET_USER_COUPON_LIST = "https://api.weixin.qq.com/shop/coupon/get_usercoupon_list";
+      String UPDATE_USER_COUPON = "https://api.weixin.qq.com/shop/coupon/update_user_coupon";
+      String UPDATE_USER_COUPON_STATUS = "https://api.weixin.qq.com/shop/coupon/update_usercoupon_status";
+    }
   }
 
   /**
