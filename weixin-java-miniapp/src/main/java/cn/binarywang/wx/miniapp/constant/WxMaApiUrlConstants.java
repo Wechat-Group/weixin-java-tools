@@ -430,6 +430,7 @@ public class WxMaApiUrlConstants {
       String GET_CATEGORY = "https://api.weixin.qq.com/product/category/get";
       String GET_BRAND = "https://api.weixin.qq.com/product/brand/get";
       String GET_FREIGHT_TEMPLATE = "https://api.weixin.qq.com/product/delivery/get_freight_template";
+      String IMG_UPLOAD = "https://api.weixin.qq.com/product/img/upload";
     }
   }
 

@@ -16,7 +16,9 @@ import cn.binarywang.wx.miniapp.bean.product.WxMinishopUpdateGoodsSkuData;
 import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopSpuPageRequest;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopBaseResponse;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopGetSpuListResponse;
+import java.io.File;
 import java.util.List;
+import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -25,6 +27,10 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author boris
  */
 public interface WxMaProductService {
+
+  WxMinishopImageUploadResult uploadImg(File file, Integer respType, Integer width, Integer height) throws WxErrorException;
+
+  WxMinishopImageUploadResult uploadImg(String imgUrl, Integer respType) throws WxErrorException;
 
   WxMinishopGetCategoryResponse getCategory(Integer fCatId) throws WxErrorException;
 

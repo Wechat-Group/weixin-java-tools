@@ -3,6 +3,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHER.GET_BRAND;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHER.GET_CATEGORY;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHER.GET_FREIGHT_TEMPLATE;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHER.IMG_UPLOAD;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.PRODUCT_ORDER_GET_LIST;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_ADD_SKU_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_BATCH_ADD_SKU_URL;
@@ -38,13 +39,16 @@ import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.http.MinishopUploadRequestExecutor;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
 
@@ -57,6 +61,29 @@ public class WxMaProductServiceImpl implements WxMaProductService {
 
   private static final String ERR_CODE = "errcode";
   private final WxMaService wxMaService;
+
+  @Override
+  public WxMinishopImageUploadResult uploadImg(File file, Integer respType, Integer width,
+    Integer height) throws WxErrorException {
+    String url = IMG_UPLOAD + "?upload_type=0" + "&height=" + height + "&width=" + width + "&resp_type=" + respType;
+    WxMinishopImageUploadResult result = this.wxMaService.execute(
+      MinishopUploadRequestExecutor.create(this.wxMaService.getRequestHttp()), url, file);
+    return result;
+  }
+
+  @Override
+  public WxMinishopImageUploadResult uploadImg(String imgUrl, Integer respType) throws WxErrorException {
+    JsonObject jsonObject = GsonHelper.buildJsonObject("img_url", imgUrl);
+    String url = IMG_UPLOAD + "?upload_type=1" + "&resp_type=" + respType;
+    String response = this.wxMaService.post(url, jsonObject);
+    JsonObject respObj = GsonParser.parse(response);
+
+    if (respObj.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
+    }
+
+    return WxMinishopImageUploadResult.fromJson(response);
+  }
 
   @Override
   public WxMinishopGetCategoryResponse getCategory(Integer fCatId) throws WxErrorException {
