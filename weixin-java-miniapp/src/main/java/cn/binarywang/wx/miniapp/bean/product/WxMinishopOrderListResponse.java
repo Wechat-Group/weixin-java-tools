@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 public class WxMinishopOrderListResponse extends WxMaShopBaseResponse {
-  private List<WxMinishopOrderDetail> orders;
+  private List<WxMinishopOrderResult> orders;
   @SerializedName("total_num")
   private Long totalNum;
 }

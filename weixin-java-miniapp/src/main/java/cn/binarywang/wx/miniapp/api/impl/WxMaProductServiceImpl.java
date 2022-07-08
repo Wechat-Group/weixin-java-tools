@@ -322,20 +322,6 @@ public class WxMaProductServiceImpl implements WxMaProductService {
     return result;
   }
 
-  @Override
-  public WxMinishopOrderListResponse minishopOrderGetList(String startCreateTime, String endCreateTime,
-    Integer status, Integer page, Integer pageSize, Integer source) throws WxErrorException {
-    String response = this.wxMaService
-      .post(PRODUCT_ORDER_GET_LIST, GsonHelper.buildJsonObject(
-        "start_create_time", startCreateTime, "end_create_time", endCreateTime,
-        "status", status, "page", page, "page_size", pageSize, "source", source));
 
-    JsonObject jsonObject = GsonParser.parse(response);
-    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
-      throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
-    }
-
-    return WxMaGsonBuilder.create().fromJson(response, WxMinishopOrderListResponse.class);
-  }
 
 }

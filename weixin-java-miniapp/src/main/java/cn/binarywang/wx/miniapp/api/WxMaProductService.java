@@ -124,6 +124,4 @@ public interface WxMaProductService {
   WxMinishopResult<WxMinishopUpdateGoodsSkuData> minishopGoodsUpdateSkuStock(Long productId,
     Long outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws WxErrorException;
 
-  WxMinishopOrderListResponse minishopOrderGetList(String startCreateTime, String endCreateTime,
-    Integer status, Integer page, Integer pageSize, Integer source) throws WxErrorException;
 }

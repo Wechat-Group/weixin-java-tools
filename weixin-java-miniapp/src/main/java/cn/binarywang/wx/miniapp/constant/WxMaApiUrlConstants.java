@@ -422,6 +422,8 @@ public class WxMaApiUrlConstants {
 
     interface Order {
       String PRODUCT_ORDER_GET_LIST = "https://api.weixin.qq.com/product/order/get_list";
+      String PRODUCT_ORDER_DETAIL_URL = "https://api.weixin.qq.com/product/order/get";
+      String PRODUCT_ORDER_CHANGE_MERCHANT_NOTES_URL = "https://api.weixin.qq.com/product/order/change_merchant_notes";
     }
 
     interface OTHER {

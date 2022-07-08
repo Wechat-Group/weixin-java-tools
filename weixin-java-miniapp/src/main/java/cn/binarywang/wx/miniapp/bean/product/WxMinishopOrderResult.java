@@ -1,6 +1,5 @@
 package cn.binarywang.wx.miniapp.bean.product;
 
-import cn.binarywang.wx.miniapp.bean.shop.WxMaShopOrderDetail;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import lombok.Data;
