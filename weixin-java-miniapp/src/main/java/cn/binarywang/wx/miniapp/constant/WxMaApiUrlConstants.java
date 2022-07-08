@@ -423,6 +423,12 @@ public class WxMaApiUrlConstants {
     interface Order {
       String PRODUCT_ORDER_GET_LIST = "https://api.weixin.qq.com/product/order/get_list";
     }
+
+    interface OTHER {
+      String GET_CATEGORY = "https://api.weixin.qq.com/product/category/get";
+      String GET_BRAND = "https://api.weixin.qq.com/product/brand/get";
+      String GET_FREIGHT_TEMPLATE = "https://api.weixin.qq.com/product/delivery/get_freight_template";
+    }
   }
 
   public interface Shop {

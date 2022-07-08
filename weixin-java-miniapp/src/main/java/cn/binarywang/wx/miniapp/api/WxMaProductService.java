@@ -2,6 +2,9 @@ package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopAddGoodsSkuData;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopAddGoodsSpuData;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetBrandResponse;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetCategoryResponse;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetFrightTemplateResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderListResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopResult;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSku;
@@ -22,6 +25,13 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author boris
  */
 public interface WxMaProductService {
+
+  WxMinishopGetCategoryResponse getCategory(Integer fCatId) throws WxErrorException;
+
+  WxMinishopGetBrandResponse getBrand() throws WxErrorException;
+
+  WxMinishopGetFrightTemplateResponse getFreightTemplate() throws WxErrorException;
+
   WxMinishopResult addSpu(WxMinishopSpu spuInfo) throws WxErrorException;
 
   WxMaShopBaseResponse deleteSpu(Integer productId, String outProductId) throws WxErrorException;

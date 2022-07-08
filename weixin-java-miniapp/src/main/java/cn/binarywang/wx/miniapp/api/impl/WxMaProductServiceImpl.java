@@ -1,5 +1,8 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHER.GET_BRAND;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHER.GET_CATEGORY;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHER.GET_FREIGHT_TEMPLATE;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.PRODUCT_ORDER_GET_LIST;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_ADD_SKU_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_BATCH_ADD_SKU_URL;
@@ -19,6 +22,9 @@ import cn.binarywang.wx.miniapp.api.WxMaProductService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopAddGoodsSkuData;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopAddGoodsSpuData;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetBrandResponse;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetCategoryResponse;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetFrightTemplateResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderListResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopResult;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSku;
@@ -51,6 +57,43 @@ public class WxMaProductServiceImpl implements WxMaProductService {
 
   private static final String ERR_CODE = "errcode";
   private final WxMaService wxMaService;
+
+  @Override
+  public WxMinishopGetCategoryResponse getCategory(Integer fCatId) throws WxErrorException {
+    JsonObject jsonObject = GsonHelper.buildJsonObject("f_cat_id", fCatId);
+    String response = this.wxMaService.post(GET_CATEGORY, jsonObject);
+    JsonObject respObj = GsonParser.parse(response);
+
+    if (respObj.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
+    }
+
+    return WxMaGsonBuilder.create().fromJson(response, WxMinishopGetCategoryResponse.class);
+  }
+
+  @Override
+  public WxMinishopGetBrandResponse getBrand() throws WxErrorException {
+    String response = this.wxMaService.post(GET_BRAND, new Object());
+    JsonObject respObj = GsonParser.parse(response);
+
+    if (respObj.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
+    }
+
+    return WxMaGsonBuilder.create().fromJson(response, WxMinishopGetBrandResponse.class);
+  }
+
+  @Override
+  public WxMinishopGetFrightTemplateResponse getFreightTemplate() throws WxErrorException {
+    String response = this.wxMaService.post(GET_FREIGHT_TEMPLATE, new Object());
+    JsonObject respObj = GsonParser.parse(response);
+
+    if (respObj.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
+    }
+
+    return WxMaGsonBuilder.create().fromJson(response, WxMinishopGetFrightTemplateResponse.class);
+  }
 
   @Override
   public WxMinishopResult<WxMinishopAddGoodsSpuData> addSpu(WxMinishopSpu spu) throws WxErrorException {
