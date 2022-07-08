@@ -7,6 +7,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
+import me.chanjar.weixin.cp.bean.WxCpOauth2UserInfo;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.school.user.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -18,6 +19,8 @@ import org.testng.annotations.Test;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 企业微信家校沟通相关接口.
@@ -50,6 +53,20 @@ public class WxCpSchoolUserTest {
 
     final String userId = "WangKai";
     final String exUserId = "wmOQpTDwAAJFHrryZ8I8ALLEZuLHIUKA";
+
+
+    /**
+     * 获取家校访问用户身份
+     * https://developer.work.weixin.qq.com/document/path/95791
+     */
+    WxCpOauth2UserInfo schoolUserInfo = cpService.getSchoolUserService().getSchoolUserInfo("abc");
+    assertThat(schoolUserInfo).isNotNull();
+
+    WxCpOauth2UserInfo oauth2UserInfo = cpService.getSchoolUserService().getUserInfo("abc");
+    assertThat(oauth2UserInfo).isNotNull();
+
+    WxCpOauth2UserInfo userInfo = cpService.getOauth2Service().getUserInfo("abc");
+    assertThat(userInfo).isNotNull();
 
 
     // 返回值

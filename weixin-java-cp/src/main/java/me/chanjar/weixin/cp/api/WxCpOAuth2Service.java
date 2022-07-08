@@ -9,6 +9,8 @@ import me.chanjar.weixin.cp.bean.WxCpUserDetail;
  * OAuth2相关管理接口.
  *  Created by BinaryWang on 2017/6/24.
  * </pre>
+ * <p>
+ * 文档1：https://developer.work.weixin.qq.com/document/path/91856
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
@@ -83,6 +85,19 @@ public interface WxCpOAuth2Service {
    * @see #getUserInfo(String)
    */
   WxCpOauth2UserInfo getUserInfo(Integer agentId, String code) throws WxErrorException;
+
+  /**
+   * 获取家校访问用户身份
+   * 该接口用于根据code获取家长或者学生信息
+   * <p>
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/getuserinfo?access_token=ACCESS_TOKEN&code=CODE
+   *
+   * @param code
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpOauth2UserInfo getSchoolUserInfo(String code) throws WxErrorException;
 
   /**
    * <pre>

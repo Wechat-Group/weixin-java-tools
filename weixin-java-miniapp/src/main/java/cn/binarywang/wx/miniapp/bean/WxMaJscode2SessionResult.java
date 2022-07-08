@@ -10,7 +10,8 @@ import java.io.Serializable;
 /**
  * <pre>
  * code换取session_key接口的响应
- * 文档地址：https://mp.weixin.qq.com/debug/wxadoc/dev/api/api-login.html#wxloginobject
+ * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
+ *
  * 微信返回报文：{"session_key":"nzoqhc3OnwHzeTxJs+inbQ==","openid":"oVBkZ0aYgDMDIywRdgPW8-joxXc4"}
  * </pre>
  * @author <a href="https://github.com/binarywang">Binary Wang</a>

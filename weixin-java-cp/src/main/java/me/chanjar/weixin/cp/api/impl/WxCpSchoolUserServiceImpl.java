@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpSchoolUserService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
+import me.chanjar.weixin.cp.bean.WxCpOauth2UserInfo;
 import me.chanjar.weixin.cp.bean.school.user.*;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,6 +32,16 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.School.*;
 public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
 
   private final WxCpService cpService;
+
+  @Override
+  public WxCpOauth2UserInfo getUserInfo(@NonNull String code) throws WxErrorException {
+    return cpService.getOauth2Service().getUserInfo(code);
+  }
+
+  @Override
+  public WxCpOauth2UserInfo getSchoolUserInfo(@NonNull String code) throws WxErrorException {
+    return cpService.getOauth2Service().getSchoolUserInfo(code);
+  }
 
   @Override
   public WxCpBaseResp createStudent(@NonNull String studentUserId, @NonNull String name, @NonNull List<Integer> departments) throws WxErrorException {

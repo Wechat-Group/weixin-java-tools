@@ -67,6 +67,7 @@ public interface WxCpApiPathConsts {
 
   interface OAuth2 {
     String GET_USER_INFO = "/cgi-bin/user/getuserinfo?code=%s&agentid=%d";
+    String GET_SCHOOL_USER_INFO = "/cgi-bin/school/getuserinfo?code=%s";
     String GET_USER_DETAIL = "/cgi-bin/user/getuserdetail";
     String URL_OAUTH2_AUTHORIZE = "https://open.weixin.qq.com/connect/oauth2/authorize";
   }

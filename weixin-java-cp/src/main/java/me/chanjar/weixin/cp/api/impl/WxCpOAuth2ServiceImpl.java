@@ -77,6 +77,20 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
       .userTicket(GsonHelper.getString(jo, "user_ticket"))
       .expiresIn(GsonHelper.getString(jo, "expires_in"))
       .externalUserId(GsonHelper.getString(jo, "external_userid"))
+      .parentUserId(GsonHelper.getString(jo, "parent_userid"))
+      .studentUserId(GsonHelper.getString(jo, "student_userid"))
+      .build();
+  }
+
+  @Override
+  public WxCpOauth2UserInfo getSchoolUserInfo(String code) throws WxErrorException {
+    String responseText = this.mainService.get(String.format(this.mainService.getWxCpConfigStorage().getApiUrl(GET_SCHOOL_USER_INFO), code), null);
+    JsonObject jo = GsonParser.parse(responseText);
+
+    return WxCpOauth2UserInfo.builder()
+      .deviceId(GsonHelper.getString(jo, "DeviceId"))
+      .parentUserId(GsonHelper.getString(jo, "parent_userid"))
+      .studentUserId(GsonHelper.getString(jo, "student_userid"))
       .build();
   }
 
