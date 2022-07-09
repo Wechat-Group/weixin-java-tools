@@ -306,7 +306,7 @@ public class WxMaProductServiceImpl implements WxMaProductService {
 
   @Override
   public WxMinishopResult<WxMinishopUpdateGoodsSkuData> minishopGoodsUpdateSkuPrice(
-    Long productId, Long outProductId, String outSkuId, Long skuId, Long salePrice,
+    Long productId, String outProductId, String outSkuId, Long skuId, Long salePrice,
     Long marketPrice) throws WxErrorException {
     String response = this.wxMaService
       .post(PRODUCT_UPDATE_SKU_PRICE_URL, GsonHelper.buildJsonObject(
@@ -329,7 +329,7 @@ public class WxMaProductServiceImpl implements WxMaProductService {
 
   @Override
   public WxMinishopResult<WxMinishopUpdateGoodsSkuData> minishopGoodsUpdateSkuStock(
-    Long productId, Long outProductId, String outSkuId, Long skuId, Integer type,
+    Long productId, String outProductId, String outSkuId, Long skuId, Integer type,
     Integer stockNum) throws WxErrorException {
     String response = this.wxMaService
       .post(PRODUCT_UPDATE_SKU_STOCK_URL, GsonHelper.buildJsonObject(

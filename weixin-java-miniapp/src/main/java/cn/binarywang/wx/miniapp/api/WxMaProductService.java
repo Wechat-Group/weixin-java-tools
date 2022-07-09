@@ -38,7 +38,7 @@ public interface WxMaProductService {
 
   WxMinishopGetFrightTemplateResponse getFreightTemplate() throws WxErrorException;
 
-  WxMinishopResult addSpu(WxMinishopSpu spuInfo) throws WxErrorException;
+  WxMinishopResult<WxMinishopAddGoodsSpuData> addSpu(WxMinishopSpu spuInfo) throws WxErrorException;
 
   WxMaShopBaseResponse deleteSpu(Integer productId, String outProductId) throws WxErrorException;
 
@@ -112,7 +112,7 @@ public interface WxMaProductService {
    * @throws WxErrorException
    */
   WxMinishopResult<WxMinishopUpdateGoodsSkuData> minishopGoodsUpdateSkuPrice(Long productId,
-    Long outProductId, String outSkuId, Long skuId, Long salePrice, Long marketPrice) throws WxErrorException;
+    String outProductId, String outSkuId, Long skuId, Long salePrice, Long marketPrice) throws WxErrorException;
 
 
   /**
@@ -128,6 +128,6 @@ public interface WxMaProductService {
    * @throws WxErrorException
    */
   WxMinishopResult<WxMinishopUpdateGoodsSkuData> minishopGoodsUpdateSkuStock(Long productId,
-    Long outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws WxErrorException;
+    String outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws WxErrorException;
 
 }
