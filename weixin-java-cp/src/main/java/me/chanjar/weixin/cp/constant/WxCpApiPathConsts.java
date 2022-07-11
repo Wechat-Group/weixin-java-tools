@@ -196,6 +196,9 @@ public interface WxCpApiPathConsts {
     String BATCH_CREATE_STUDENT = "/cgi-bin/school/user/batch_create_student";
     String BATCH_DELETE_STUDENT = "/cgi-bin/school/user/batch_delete_student";
     String BATCH_UPDATE_STUDENT = "/cgi-bin/school/user/batch_update_student";
+    String BATCH_CREATE_PARENT = "/cgi-bin/school/user/batch_create_parent";
+    String BATCH_DELETE_PARENT = "/cgi-bin/school/user/batch_delete_parent";
+    String BATCH_UPDATE_PARENT = "/cgi-bin/school/user/batch_update_parent";
 
     String CREATE_STUDENT = "/cgi-bin/school/user/create_student";
     String DELETE_STUDENT = "/cgi-bin/school/user/delete_student?userid=";

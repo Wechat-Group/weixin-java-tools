@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.XmlUtils;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.WxCpOauth2UserInfo;
@@ -56,7 +57,152 @@ public class WxCpSchoolUserTest {
 
 
     /**
+     * 批量更新家长
+     *
+     * https://developer.work.weixin.qq.com/document/path/92336
+     */
+    String batchUpdateParentRequestParam = "{\n" +
+      "    \"parents\":[\n" +
+      "        {   \n" +
+      "            \"parent_userid\": \"zhangsan_baba\",\n" +
+      "\t\t\t\"new_parent_userid\":\"zhangsan_baba_new\",\n" +
+      "            \"mobile\": \"10000000000\",\n" +
+      "            \"children\":[\n" +
+      "                {   \n" +
+      "                    \"student_userid\": \"zhangsan\",\n" +
+      "                    \"relation\": \"爸爸\"\n" +
+      "                }   \n" +
+      "            ]   \n" +
+      "        },  \n" +
+      "        {   \n" +
+      "            \"parent_userid\": \"lisi_mama\",\n" +
+      "            \"mobile\": \"10000000001\",\n" +
+      "            \"children\":[\n" +
+      "                {\n" +
+      "                    \"student_userid\": \"lisi\",\n" +
+      "                    \"relation\": \"妈妈\"\n" +
+      "                }   \n" +
+      "            ]   \n" +
+      "        }   \n" +
+      "    ]   \n" +
+      "}";
+    WxCpBatchUpdateParentRequest batchUpdateParentRequest = WxCpBatchUpdateParentRequest.fromJson(batchUpdateParentRequestParam);
+    WxCpBatchResultList batchUpdateParentResult = cpService.getSchoolUserService().batchUpdateParent(batchUpdateParentRequest);
+
+
+    /**
+     * 批量删除家长
+     *
+     * https://developer.work.weixin.qq.com/document/path/92335
+     */
+    WxCpBatchResultList batchDeleteParentResult = cpService.getSchoolUserService().batchDeleteParent(new String[]{"abc", userId});
+
+
+    /**
+     * 批量创建家长 封装请求参数
+     *
+     * https://developer.work.weixin.qq.com/document/path/92334
+     */
+    var child1 = WxCpBatchCreateParentRequest.Children.builder()
+      .relation("爸爸")
+      .studentUserId("zhangsan")
+      .build();
+    var child2 = WxCpBatchCreateParentRequest.Children.builder()
+      .relation("伯父")
+      .studentUserId("lisi")
+      .build();
+    var child3 = WxCpBatchCreateParentRequest.Children.builder()
+      .relation("爸爸")
+      .studentUserId("lisi")
+      .build();
+    var child4 = WxCpBatchCreateParentRequest.Children.builder()
+      .relation("伯父")
+      .studentUserId("zhangsan")
+      .build();
+
+    List<WxCpBatchCreateParentRequest.Children> childrenList1 = Lists.newArrayList();
+    childrenList1.add(child1);
+    childrenList1.add(child2);
+
+    List<WxCpBatchCreateParentRequest.Children> childrenList2 = Lists.newArrayList();
+    childrenList2.add(child3);
+    childrenList2.add(child4);
+
+    var zhangsanParent = WxCpBatchCreateParentRequest.Parent.builder()
+      .parentUserId("zhangsan_parent_userid")
+      .mobile("18000000000")
+      .toInvite(false)
+      .children(childrenList1)
+      .build();
+    var lisiParent = WxCpBatchCreateParentRequest.Parent.builder()
+      .parentUserId("lisi_parent_userid")
+      .mobile("18000000001")
+      .children(childrenList2)
+      .build();
+
+    List<WxCpBatchCreateParentRequest.Parent> batchCreateParent = Lists.newArrayList();
+    batchCreateParent.add(zhangsanParent);
+    batchCreateParent.add(lisiParent);
+    WxCpBatchCreateParentRequest wxCpBatchCreateParentRequest = WxCpBatchCreateParentRequest.builder()
+      .parents(batchCreateParent)
+      .build();
+
+    // 请求参数json
+    String batchCreateParentRequestParam = "{\n" +
+      "\t\"parents\":[\n" +
+      "\t\t{\n" +
+      "\t\t\t\"parent_userid\": \"zhangsan_parent_userid\",\n" +
+      "    \t\t\"mobile\": \"18000000000\",\n" +
+      "\t\t\t\"to_invite\": false,\n" +
+      "\t\t\t\"children\":[\n" +
+      "\t\t\t\t{\n" +
+      "\t\t\t\t\t\"student_userid\": \"zhangsan\",\n" +
+      "    \t\t        \"relation\": \"爸爸\"\n" +
+      "    \t\t    },\n" +
+      "    \t\t    {\n" +
+      "\t\t\t\t\t\"student_userid\": \"lisi\",\n" +
+      "    \t\t        \"relation\": \"伯父\"\n" +
+      "    \t\t    }\n" +
+      "    \t\t]\n" +
+      "\t\t},\n" +
+      "\t\t{\n" +
+      "\t\t\t\"parent_userid\": \"lisi_parent_userid\",\n" +
+      "    \t\t\"mobile\": \"18000000001\",\n" +
+      "\t\t\t\"children\":[\n" +
+      "\t\t\t\t{\n" +
+      "\t\t\t\t\t\"student_userid\": \"lisi\",\n" +
+      "    \t\t        \"relation\": \"爸爸\"\n" +
+      "    \t\t    },\n" +
+      "    \t\t    {\n" +
+      "\t\t\t\t\t\"student_userid\": \"zhangsan\",\n" +
+      "    \t\t        \"relation\": \"伯父\"\n" +
+      "    \t\t    }\n" +
+      "    \t\t]\n" +
+      "\t\t}\n" +
+      "\t]\n" +
+      "}";
+    assertThat(wxCpBatchCreateParentRequest.toJson()).isEqualTo(GsonParser.parse(batchCreateParentRequestParam).toString());
+
+    WxCpBatchResultList batchCreateParentResult = cpService.getSchoolUserService().batchCreateParent(wxCpBatchCreateParentRequest);
+
+    // 返回结果
+    String batchResultStr = "{\n" +
+      "\t\"errcode\": 1,\n" +
+      "\t\"errmsg\": \"invalid parent_userid: lisi_parent_userid\",\n" +
+      "\t\"result_list\": [\n" +
+      "\t\t{\n" +
+      "\t\t\t\"parent_userid\": \"lisi_parent_userid\",\n" +
+      "\t\t\t\"errcode\": 1,\n" +
+      "\t\t\t\"errmsg\": \"invalid parent_userid: lisi_parent_userid\",\n" +
+      "\t\t}\n" +
+      "\t]\n" +
+      "}";
+    assertThat(batchCreateParentResult.toJson()).isEqualTo(GsonParser.parse(batchResultStr).toString());
+
+
+    /**
      * 获取家校访问用户身份
+     *
      * https://developer.work.weixin.qq.com/document/path/95791
      */
     WxCpOauth2UserInfo schoolUserInfo = cpService.getSchoolUserService().getSchoolUserInfo("abc");

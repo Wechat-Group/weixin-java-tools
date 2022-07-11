@@ -9,30 +9,50 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 创建家长请求.
+ * 批量创建家长.
  *
  * @author Wang_Wong
- * @date 2022-06-20
+ * @date 2022-07-11
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class WxCpCreateParentRequest implements Serializable {
+public class WxCpBatchCreateParentRequest implements Serializable {
   private static final long serialVersionUID = -4960239393895754138L;
 
-  @SerializedName("parent_userid")
-  private String parentUserId;
+  @SerializedName("parents")
+  private List<Parent> parents;
 
-  @SerializedName("mobile")
-  private String mobile;
+  @Setter
+  @Getter
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Parent implements Serializable {
 
-  @SerializedName("to_invite")
-  private Boolean toInvite;
+    @SerializedName("parent_userid")
+    private String parentUserId;
 
-  @SerializedName("children")
-  private List<Children> children;
+    @SerializedName("mobile")
+    private String mobile;
+
+    @SerializedName("to_invite")
+    private Boolean toInvite;
+
+    @SerializedName("children")
+    private List<Children> children;
+
+    public static Parent fromJson(String json) {
+      return WxCpGsonBuilder.create().fromJson(json, Parent.class);
+    }
+
+    public String toJson() {
+      return WxCpGsonBuilder.create().toJson(this);
+    }
+
+  }
 
   @Setter
   @Getter
@@ -57,8 +77,8 @@ public class WxCpCreateParentRequest implements Serializable {
 
   }
 
-  public static WxCpCreateParentRequest fromJson(String json) {
-    return WxCpGsonBuilder.create().fromJson(json, WxCpCreateParentRequest.class);
+  public static WxCpBatchCreateParentRequest fromJson(String json) {
+    return WxCpGsonBuilder.create().fromJson(json, WxCpBatchCreateParentRequest.class);
   }
 
   public String toJson() {

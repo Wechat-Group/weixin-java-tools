@@ -126,6 +126,39 @@ public interface WxCpSchoolUserService {
   WxCpBaseResp createParent(@NonNull WxCpCreateParentRequest request) throws WxErrorException;
 
   /**
+   * 批量创建家长
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/batch_create_parent?access_token=ACCESS_TOKEN
+   *
+   * @param request
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBatchResultList batchCreateParent(@NonNull WxCpBatchCreateParentRequest request) throws WxErrorException;
+
+  /**
+   * 批量删除家长
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/batch_delete_parent?access_token=ACCESS_TOKEN
+   *
+   * @param userIdList
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBatchResultList batchDeleteParent(@NonNull String... userIdList) throws WxErrorException;
+
+  /**
+   * 批量更新家长
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/batch_update_parent?access_token=ACCESS_TOKEN
+   *
+   * @param request
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpBatchResultList batchUpdateParent(@NonNull WxCpBatchUpdateParentRequest request) throws WxErrorException;
+
+  /**
    * 更新家长
    * 请求方式：POST（HTTPS）
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/update_parent?access_token=ACCESS_TOKEN
