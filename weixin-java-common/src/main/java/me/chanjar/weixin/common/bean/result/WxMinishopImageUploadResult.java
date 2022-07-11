@@ -27,6 +27,7 @@ public class WxMinishopImageUploadResult  implements Serializable {
       JsonObject picObject = jsonObject.get("pic_file").getAsJsonObject();
       picFileResult.setMediaId(picObject.get("media_id").getAsString());
       picFileResult.setPayMediaId(picObject.get("pay_media_id").getAsString());
+      picFileResult.setTempImgUrl(picObject.get("temp_img_url").getAsString());
       result.setPicFile(picFileResult);
 
     }
