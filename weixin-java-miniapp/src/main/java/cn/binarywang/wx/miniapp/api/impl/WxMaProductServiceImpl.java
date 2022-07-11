@@ -4,7 +4,6 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHE
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHER.GET_CATEGORY;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHER.GET_FREIGHT_TEMPLATE;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHER.IMG_UPLOAD;
-import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.PRODUCT_ORDER_GET_LIST;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_ADD_SKU_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_BATCH_ADD_SKU_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_DEL_SKU_URL;
@@ -26,7 +25,6 @@ import cn.binarywang.wx.miniapp.bean.product.WxMinishopAddGoodsSpuData;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetBrandResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetCategoryResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetFrightTemplateResponse;
-import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderListResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopResult;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSku;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSpu;

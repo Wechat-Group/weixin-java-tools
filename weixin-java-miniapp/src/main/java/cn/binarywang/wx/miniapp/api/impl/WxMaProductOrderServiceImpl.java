@@ -1,20 +1,28 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.AFTER_SALE_ACCEPT_APPLY;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.AFTER_SALE_REJECT_APPLY;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.BATCH_GET_AFTER_SALE_ORDER;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.GET_AFTER_SALE_ORDER;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.PRODUCT_ORDER_CHANGE_MERCHANT_NOTES_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.PRODUCT_ORDER_DETAIL_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.PRODUCT_ORDER_GET_LIST;
 
 import cn.binarywang.wx.miniapp.api.WxMaProductOrderService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.product.WxMiniBatchGetAfterSaleOrderResponse;
+import cn.binarywang.wx.miniapp.bean.product.WxMiniGetAfterSaleOrderResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderDetailResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderListResponse;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopBaseResponse;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
  * 小程序交易组件-标准版-订单服务
@@ -83,5 +91,62 @@ public class WxMaProductOrderServiceImpl implements WxMaProductOrderService {
     }
   }
 
+  @Override
+  public WxMiniGetAfterSaleOrderResponse getAfterSaleOrder(Long afterSaleOrderId)
+    throws WxErrorException {
+    String response = this.wxMaService.post(GET_AFTER_SALE_ORDER,
+      GsonHelper.buildJsonObject("after_sale_order_id", afterSaleOrderId));
 
+    WxMiniGetAfterSaleOrderResponse orderResponse = WxMaGsonBuilder.create()
+      .fromJson(response, WxMiniGetAfterSaleOrderResponse.class);
+    if (orderResponse.getErrCode() != 0) {
+      throw new WxErrorException(
+        new WxError(orderResponse.getErrCode(), orderResponse.getErrMsg()));
+    }
+    return orderResponse;
+  }
+
+  @Override
+  public WxMiniBatchGetAfterSaleOrderResponse batchGetAfterSaleOrder(
+    List<Long> afterSaleOrderIdList)
+    throws WxErrorException {
+    String response = this.wxMaService.post(BATCH_GET_AFTER_SALE_ORDER,
+      GsonHelper.buildJsonObject("after_sale_order_id_list", afterSaleOrderIdList));
+
+    WxMiniBatchGetAfterSaleOrderResponse orderResponse = WxMaGsonBuilder.create()
+      .fromJson(response, WxMiniBatchGetAfterSaleOrderResponse.class);
+    if (orderResponse.getErrCode() != 0) {
+      throw new WxErrorException(
+        new WxError(orderResponse.getErrCode(), orderResponse.getErrMsg()));
+    }
+    return orderResponse;
+  }
+
+  @Override
+  public WxMaShopBaseResponse afterSaleAccept(Long orderId, Long addressId)
+    throws WxErrorException {
+    String response = this.wxMaService.post(AFTER_SALE_ACCEPT_APPLY,
+      GsonHelper.buildJsonObject("order_id", orderId, "address_id", addressId));
+    WxMaShopBaseResponse baseResponse = WxGsonBuilder.create()
+      .fromJson(response, WxMaShopBaseResponse.class);
+    if (baseResponse.getErrCode() != 0) {
+      throw new WxErrorException(
+        new WxError(baseResponse.getErrCode(), baseResponse.getErrMsg()));
+    }
+    return baseResponse;
+  }
+
+  @Override
+  public WxMaShopBaseResponse afterSaleReject(Long afterSaleOrderId, String rejectReason)
+    throws WxErrorException {
+    String response = this.wxMaService.post(AFTER_SALE_REJECT_APPLY,
+      GsonHelper.buildJsonObject("order_id", afterSaleOrderId, "reject_reason", rejectReason));
+    WxMaShopBaseResponse baseResponse = WxGsonBuilder.create()
+      .fromJson(response, WxMaShopBaseResponse.class);
+    if (baseResponse.getErrCode() != 0) {
+      throw new WxErrorException(
+        new WxError(baseResponse.getErrCode(), baseResponse.getErrMsg()));
+    }
+    return baseResponse;
+  }
 }

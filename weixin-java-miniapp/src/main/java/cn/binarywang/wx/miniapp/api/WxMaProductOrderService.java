@@ -1,7 +1,11 @@
 package cn.binarywang.wx.miniapp.api;
 
+import cn.binarywang.wx.miniapp.bean.product.WxMiniBatchGetAfterSaleOrderResponse;
+import cn.binarywang.wx.miniapp.bean.product.WxMiniGetAfterSaleOrderResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderDetailResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderListResponse;
+import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopBaseResponse;
+import java.util.List;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -53,4 +57,16 @@ public interface WxMaProductOrderService {
    * @param merchantNotes 备注内容
    */
   void changeMerchantNotes(Long orderId,String merchantNotes) throws WxErrorException;
+
+  WxMiniGetAfterSaleOrderResponse getAfterSaleOrder(Long afterSaleOrderId)
+    throws WxErrorException;
+
+  WxMiniBatchGetAfterSaleOrderResponse batchGetAfterSaleOrder(List<Long> afterSaleOrderIdList)
+    throws WxErrorException;
+
+  WxMaShopBaseResponse afterSaleAccept(Long orderId, Long addressId)
+    throws WxErrorException;
+
+  WxMaShopBaseResponse afterSaleReject(Long afterSaleOrderId, String rejectReason)
+    throws WxErrorException;
 }

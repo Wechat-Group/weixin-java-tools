@@ -36,7 +36,7 @@ public class WxMinishopOrderResult implements Serializable {
   private WxMinishopOrderDetail orderDetail;
 
   @SerializedName("aftersale_detail")
-  private WxMiniAfterSaleDetail afterSaleDetail;
+  private WxMiniOrderAfterSaleDetail afterSaleDetail;
 
   /**
    * 商家小程序该订单的用户id

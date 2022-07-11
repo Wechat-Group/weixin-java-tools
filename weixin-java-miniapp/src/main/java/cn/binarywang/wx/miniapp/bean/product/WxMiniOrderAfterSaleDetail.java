@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2022/6/20 7:16 下午
  */
 @Data
-public class WxMiniAfterSaleDetail {
+public class WxMiniOrderAfterSaleDetail {
   @SerializedName("aftersale_order_list")
   private List<AfterSaleOrder> aftersaleOrderList;
   @SerializedName("on_aftersale_order_cnt")
