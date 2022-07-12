@@ -16,7 +16,7 @@ public class WxMinishopAddressInfo {
   @SerializedName("province_name")
   private String provinceName;
   @SerializedName("city_name")
-  private String cityame;
+  private String cityName;
   @SerializedName("county_name")
   private String countyName;
   @SerializedName("detail_info")

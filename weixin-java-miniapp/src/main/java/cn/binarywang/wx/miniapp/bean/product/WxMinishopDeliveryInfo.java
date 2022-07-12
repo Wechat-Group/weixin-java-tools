@@ -17,7 +17,7 @@ public class WxMinishopDeliveryInfo {
   @SerializedName("delivery_product_info")
   private List<DeliveryProductInfo> deliveryProductInfo;
   @SerializedName("ship_done_time")
-  private Long ship_done_time;
+  private Long shipDoneTime;
   @SerializedName("insurance_info")
   private InsuranceInfo insuranceInfo;
   @SerializedName("deliver_type")
@@ -53,10 +53,10 @@ public class WxMinishopDeliveryInfo {
   @Data
   public static class ProductInfo {
     @SerializedName("product_id")
-    private Long product_id;
+    private Long productId;
     @SerializedName("sku_id")
-    private Long sku_id;
+    private Long skuId;
     @SerializedName("product_cnt")
-    private Long product_cnt;
+    private Long productCnt;
   }
 }
