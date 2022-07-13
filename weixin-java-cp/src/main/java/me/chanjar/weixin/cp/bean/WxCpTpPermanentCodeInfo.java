@@ -45,6 +45,12 @@ public class WxCpTpPermanentCodeInfo extends WxCpBaseResp {
    */
   @SerializedName("auth_user_info")
   private AuthUserInfo authUserInfo;
+  
+  /**
+   * 推广二维码安装相关信息
+   */
+  @SerializedName("register_code_info")
+  private RegisterCodeInfo registerCodeInfo;
 
   /**
    * 企业当前生效的版本信息
@@ -277,6 +283,34 @@ public class WxCpTpPermanentCodeInfo extends WxCpBaseResp {
      */
     @SerializedName("open_userid")
     private String openUserid;
+  }
+  
+  /**
+   * 推广二维码安装相关信息
+   */
+  @Getter
+  @Setter
+  public static class RegisterCodeInfo implements Serializable {
+    private static final long serialVersionUID = -5028321625140879571L;
+
+    /**
+     * 注册码
+     */
+    @SerializedName("register_code")
+    private String registerCode;
+
+    /**
+     * 推广包ID
+     */
+    @SerializedName("template_id")
+    private String templateId;
+
+    /**
+     * 仅当获取注册码指定该字段时才返回
+     */
+    @SerializedName("state")
+    private String state;
+
   }
 
   /**
