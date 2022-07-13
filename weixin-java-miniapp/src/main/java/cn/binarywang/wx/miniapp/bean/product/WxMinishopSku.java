@@ -18,6 +18,9 @@ public class WxMinishopSku implements Serializable {
   @SerializedName("out_sku_id")
   private String outSkuId;
 
+  @SerializedName("sku_id")
+  private Long skuId;
+
   @SerializedName("thumb_img")
   private String thumbImg;
 
