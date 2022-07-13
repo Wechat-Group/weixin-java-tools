@@ -311,7 +311,6 @@ public class WxMaProductServiceImpl implements WxMaProductService {
     result.setErrcode(jsonObject.get("errcode").getAsInt());
     JsonObject dataObj = jsonObject.get("data").getAsJsonObject();
     WxMinishopUpdateGoodsSkuData resultData = new WxMinishopUpdateGoodsSkuData();
-    resultData.setSkuId(dataObj.get("sku_id").getAsLong());
     resultData.setUpdateTime(dataObj.get("update_time").getAsString());
     result.setData(resultData);
     return result;
