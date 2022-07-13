@@ -143,6 +143,27 @@ public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
   }
 
   @Override
+  public WxCpUserResult getUser(@NonNull String userId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_USER) + userId;
+    String responseContent = this.cpService.get(apiUrl, null);
+    return WxCpUserResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpUserListResult getUserList(@NonNull Integer departmentId, Integer fetchChild) throws WxErrorException {
+    String apiUrl = String.format(this.cpService.getWxCpConfigStorage().getApiUrl(GET_USER_LIST), departmentId, fetchChild);
+    String responseContent = this.cpService.get(apiUrl, null);
+    return WxCpUserListResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpListParentResult getUserListParent(@NonNull Integer departmentId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_USER_LIST_PARENT) + departmentId;
+    String responseContent = this.cpService.get(apiUrl, null);
+    return WxCpListParentResult.fromJson(responseContent);
+  }
+
+  @Override
   public WxCpBaseResp updateParent(@NonNull WxCpUpdateParentRequest request) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(UPDATE_PARENT);
     String responseContent = this.cpService.post(apiUrl, request.toJson());

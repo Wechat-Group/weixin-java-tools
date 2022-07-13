@@ -206,6 +206,9 @@ public interface WxCpApiPathConsts {
     String CREATE_PARENT = "/cgi-bin/school/user/create_parent";
     String UPDATE_PARENT = "/cgi-bin/school/user/update_parent";
     String DELETE_PARENT = "/cgi-bin/school/user/delete_parent?userid=";
+    String GET_USER = "/cgi-bin/school/user/get?userid=";
+    String GET_USER_LIST = "/cgi-bin/school/user/list?department_id=%s&fetch_child=%d";
+    String GET_USER_LIST_PARENT = "/cgi-bin/school/user/list_parent?department_id=";
     String SET_ARCH_SYNC_MODE = "/cgi-bin/school/set_arch_sync_mode";
     String SET_UPGRADE_INFO = "/cgi-bin/school/set_upgrade_info";
 

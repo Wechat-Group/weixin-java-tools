@@ -159,6 +159,40 @@ public interface WxCpSchoolUserService {
   WxCpBatchResultList batchUpdateParent(@NonNull WxCpBatchUpdateParentRequest request) throws WxErrorException;
 
   /**
+   * 读取学生或家长
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/get?access_token=ACCESS_TOKEN&userid=USERID
+   *
+   * @param userId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpUserResult getUser(@NonNull String userId) throws WxErrorException;
+
+  /**
+   * 获取部门成员详情
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/list?access_token=ACCESS_TOKEN&department_id=DEPARTMENT_ID&fetch_child=FETCH_CHILD
+   *
+   * @param departmentId 获取的部门id
+   * @param fetchChild   1/0：是否递归获取子部门下面的成员
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpUserListResult getUserList(@NonNull Integer departmentId, Integer fetchChild) throws WxErrorException;
+
+  /**
+   * 获取部门家长详情
+   * 请求方式：GET（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/list_parent?access_token=ACCESS_TOKEN&department_id=DEPARTMENT_ID
+   *
+   * @param departmentId 获取的部门id
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpListParentResult getUserListParent(@NonNull Integer departmentId) throws WxErrorException;
+
+  /**
    * 更新家长
    * 请求方式：POST（HTTPS）
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/update_parent?access_token=ACCESS_TOKEN

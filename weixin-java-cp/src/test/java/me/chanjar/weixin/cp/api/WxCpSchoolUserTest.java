@@ -57,6 +57,160 @@ public class WxCpSchoolUserTest {
 
 
     /**
+     * 获取部门家长详情
+     *
+     * https://developer.work.weixin.qq.com/document/path/92446
+     */
+    WxCpListParentResult userListParent = cpService.getSchoolUserService().getUserListParent(1);
+
+    String jsonUserListParentResult = "{\n" +
+      "    \"errcode\": 0,\n" +
+      "    \"errmsg\": \"ok\",\n" +
+      "    \"parents\": [\n" +
+      "        {\n" +
+      "            \"parent_userid\": \"zhangsan_parent\",\n" +
+      "            \"mobile\": \"18900000000\",\n" +
+      "            \"is_subscribe\": 1,\n" +
+      "\t\t\t\"external_userid\":\"xxx\",\n" +
+      "            \"children\": [\n" +
+      "                {\n" +
+      "                    \"student_userid\": \"zhangsan\",\n" +
+      "                    \"relation\": \"爸爸\",\n" +
+      "                    \"name\": \"张三\"\n" +
+      "                }\n" +
+      "            ]\n" +
+      "        },\n" +
+      "\t\t{\n" +
+      "            \"parent_userid\": \"lisi_parent\",\n" +
+      "            \"mobile\": \"18900000001\",\n" +
+      "            \"is_subscribe\": 0,\n" +
+      "            \"children\": [\n" +
+      "                {\n" +
+      "                    \"student_userid\": \"lisi\",\n" +
+      "                    \"relation\": \"妈妈\",\n" +
+      "                    \"name\": \"李四\"\n" +
+      "                }\n" +
+      "            ]\n" +
+      "        }\n" +
+      "    ]\n" +
+      "}";
+
+    WxCpListParentResult wxCpListParentResult = WxCpListParentResult.fromJson(jsonUserListParentResult);
+    assertThat(wxCpListParentResult.toJson()).isEqualTo(GsonParser.parse(jsonUserListParentResult).toString());
+
+
+    /**
+     * 获取部门成员详情
+     *
+     * https://developer.work.weixin.qq.com/document/path/92043
+     */
+    WxCpUserListResult userList = cpService.getSchoolUserService().getUserList(1, 0);
+
+    String jsonUserListResult = "{\n" +
+      "\t\"errcode\": 0,\n" +
+      "\t\"errmsg\": \"ok\",\n" +
+      "\t\"students\":[\n" +
+      "\t\t{\n" +
+      "\t\t\t\"student_userid\": \"zhangsan\",\n" +
+      "\t\t\t\"name\": \"张三\",\n" +
+      "\t\t\t\"department\": [1, 2],\n" +
+      "\t\t\t\"parents\": [\n" +
+      "\t\t\t\t{\n" +
+      "\t\t\t\t\t\"parent_userid\": \"zhangsan_parent1\",\n" +
+      "\t\t\t\t\t\"relation\": \"爸爸\",\n" +
+      "\t\t\t\t\t\"mobile\": \"18000000001\",\n" +
+      "\t\t\t\t\t\"is_subscribe\": 1,\n" +
+      "\t\t\t\t\t\"external_userid\":\"xxx\"\n" +
+      "\t\t\t\t},\n" +
+      "\t\t\t\t{\n" +
+      "\t\t\t\t\t\"parent_userid\": \"zhangsan_parent2\",\n" +
+      "\t\t\t\t\t\"relation\": \"妈妈\",\n" +
+      "\t\t\t\t\t\"mobile\": \"18000000002\",\n" +
+      "\t\t\t\t\t\"is_subscribe\": 0\n" +
+      "\t\t\t\t}\n" +
+      "\t\t\t]\n" +
+      "\t\t},\n" +
+      "\t\t{\n" +
+      "\t\t\t\"student_userid\": \"lisi\",\n" +
+      "\t\t\t\"name\": \"李四\",\n" +
+      "\t\t\t\"department\": [4, 5],\n" +
+      "\t\t\t\"parents\": [\n" +
+      "\t\t\t\t{\n" +
+      "\t\t\t\t\t\"parent_userid\": \"lisi_parent1\",\n" +
+      "\t\t\t\t\t\"relation\": \"爷爷\",\n" +
+      "\t\t\t\t\t\"mobile\": \"18000000003\",\n" +
+      "\t\t\t\t\t\"is_subscribe\": 1,\n" +
+      "\t\t\t\t\t\"external_userid\":\"xxx\"\n" +
+      "\t\t\t\t},\n" +
+      "\t\t\t\t{\n" +
+      "\t\t\t\t\t\"parent_userid\": \"lisi_parent2\",\n" +
+      "\t\t\t\t\t\"relation\": \"妈妈\",\n" +
+      "\t\t\t\t\t\"mobile\": \"18000000004\",\n" +
+      "\t\t\t\t\t\"is_subscribe\": 1,\n" +
+      "\t\t\t\t\t\"external_userid\":\"xxx\"\n" +
+      "\t\t\t\t}\n" +
+      "\t\t\t]\n" +
+      "\t\t}\n" +
+      "\t]\n" +
+      "}";
+
+    WxCpUserListResult wxCpUserListResult = WxCpUserListResult.fromJson(jsonUserListResult);
+    assertThat(wxCpUserListResult.toJson()).isEqualTo(GsonParser.parse(jsonUserListResult).toString());
+
+    /**
+     * 读取学生或家长
+     *
+     * https://developer.work.weixin.qq.com/document/path/92337
+     */
+    WxCpUserResult userResult = cpService.getSchoolUserService().getUser(userId);
+
+    String jsonUserResult = "{\n" +
+      "\t\"errcode\": 0,\n" +
+      "\t\"errmsg\": \"ok\",\n" +
+      "\t\"user_type\": 1,\n" +
+      "\t\"student\":{\n" +
+      "\t\t\"student_userid\": \"zhangsan\",\n" +
+      "\t\t\"name\": \"张三\",\n" +
+      "\t\t\"department\": [1, 2],\n" +
+      "\t\t\"parents\":[\n" +
+      "\t\t\t{\n" +
+      "\t\t\t\t\"parent_userid\": \"zhangsan_parent1\",\n" +
+      "\t\t\t\t\"relation\": \"爸爸\",\n" +
+      "\t\t\t\t\"mobile\":\"18000000000\",\n" +
+      "\t\t\t\t\"is_subscribe\": 1,\n" +
+      "\t\t\t\t\"external_userid\":\"xxxxx\"\n" +
+      "\t\t\t},\n" +
+      "\t\t\t{\n" +
+      "\t\t\t\t\"parent_userid\": \"zhangsan_parent2\",\n" +
+      "\t\t\t\t\"relation\": \"妈妈\",\n" +
+      "\t\t\t\t\"mobile\": \"18000000001\",\n" +
+      "\t\t\t\t\"is_subscribe\": 0\n" +
+      "\t\t\t}\n" +
+      "\t\t]\n" +
+      "    },\n" +
+      "\t\"parent\":{\n" +
+      "\t\t\"parent_userid\": \"zhangsan_parent2\",\n" +
+      "\t\t\"mobile\": \"18000000003\",\n" +
+      "\t\t\"is_subscribe\": 1,\n" +
+      "\t\t\"external_userid\":\"xxxxx\",\n" +
+      "\t\t\"children\":[\n" +
+      "\t\t\t{\n" +
+      "\t\t\t\t\"student_userid\": \"zhangsan\",\n" +
+      "\t\t\t\t\"relation\": \"妈妈\"\n" +
+      "\t\t\t},\n" +
+      "\t\t\t{\n" +
+      "\t\t\t\t\"student_userid\": \"lisi\",\n" +
+      "\t\t\t\t\"relation\": \"伯母\"\n" +
+      "\t\t\t}\n" +
+      "\t\t]\n" +
+      "\t}\n" +
+      "}";
+
+    WxCpUserResult wxCpUserResult = WxCpUserResult.fromJson(jsonUserResult);
+    assertThat(wxCpUserResult.toJson()).isEqualTo(GsonParser.parse(jsonUserResult).toString());
+
+
+    /**
      * 批量更新家长
      *
      * https://developer.work.weixin.qq.com/document/path/92336
