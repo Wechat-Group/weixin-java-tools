@@ -418,6 +418,7 @@ public class WxMaApiUrlConstants {
       String PRODUCT_UPDATE_SKU_URL = "https://api.weixin.qq.com/product/sku/update";
       String PRODUCT_UPDATE_SKU_PRICE_URL = "https://api.weixin.qq.com/product/sku/update_price";
       String PRODUCT_UPDATE_SKU_STOCK_URL = "https://api.weixin.qq.com/product/stock/update";
+      String PRODUCT_SKU_LIST = "https://api.weixin.qq.com/product/sku/get_list";
     }
 
     interface Order {

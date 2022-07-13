@@ -8,6 +8,7 @@ import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetFrightTemplateResponse
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderListResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopResult;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSku;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopSkuListResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSpu;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSpuGet;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSpuGetResponse;
@@ -54,6 +55,9 @@ public interface WxMaProductService {
     throws WxErrorException;
 
   WxMaShopBaseResponse delistingSpu(Integer productId, String outProductId)
+    throws WxErrorException;
+
+  WxMinishopSkuListResponse getSkuList(Long productId, Integer needRealStock, Integer needEditSku)
     throws WxErrorException;
 
   /**

@@ -7,6 +7,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.OTHE
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_ADD_SKU_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_BATCH_ADD_SKU_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_DEL_SKU_URL;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_SKU_LIST;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_UPDATE_SKU_PRICE_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_UPDATE_SKU_STOCK_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Sku.PRODUCT_UPDATE_SKU_URL;
@@ -27,6 +28,7 @@ import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetCategoryResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetFrightTemplateResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopResult;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSku;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopSkuListResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSpu;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSpuGetResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSpuListResponse;
@@ -223,6 +225,19 @@ public class WxMaProductServiceImpl implements WxMaProductService {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopBaseResponse.class);
+  }
+
+  @Override
+  public WxMinishopSkuListResponse getSkuList(Long productId, Integer needRealStock, Integer needEditSku)
+    throws WxErrorException {
+    String responseContent = this.wxMaService
+      .post(PRODUCT_SKU_LIST, GsonHelper.buildJsonObject("product_id", productId,
+        "need_edit_sku", needEditSku, "need_real_stock", needRealStock));
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return WxMaGsonBuilder.create().fromJson(responseContent, WxMinishopSkuListResponse.class);
   }
 
   @Override
