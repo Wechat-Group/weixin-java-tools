@@ -115,9 +115,9 @@ public class WxMaProductOrderServiceImpl implements WxMaProductOrderService {
 
     WxMiniBatchGetAfterSaleOrderResponse orderResponse = WxMaGsonBuilder.create()
       .fromJson(response, WxMiniBatchGetAfterSaleOrderResponse.class);
-    if (orderResponse.getErrCode() != 0) {
+    if (orderResponse.getAfterSaleOrderList() == null) {
       throw new WxErrorException(
-        new WxError(orderResponse.getErrCode(), orderResponse.getErrMsg()));
+        new WxError(orderResponse.getErrCode(), "售后查询不存在"));
     }
     return orderResponse;
   }
