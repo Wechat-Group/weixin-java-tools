@@ -4,6 +4,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Orde
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.AFTER_SALE_REJECT_APPLY;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.BATCH_GET_AFTER_SALE_ORDER;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.GET_AFTER_SALE_ORDER;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.PRODUCT_DELIVERY_SEND;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.PRODUCT_ORDER_CHANGE_MERCHANT_NOTES_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.PRODUCT_ORDER_DETAIL_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Order.PRODUCT_ORDER_GET_LIST;
@@ -12,6 +13,7 @@ import cn.binarywang.wx.miniapp.api.WxMaProductOrderService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.product.WxMiniBatchGetAfterSaleOrderResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMiniGetAfterSaleOrderResponse;
+import cn.binarywang.wx.miniapp.bean.product.WxMiniOrderDeliveryRequest;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderDetailResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderListResponse;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopBaseResponse;
@@ -89,6 +91,19 @@ public class WxMaProductOrderServiceImpl implements WxMaProductOrderService {
       throw new WxErrorException(
         new WxError(changeResult.getErrCode(), changeResult.getErrMsg()));
     }
+  }
+
+  @Override
+  public WxMaShopBaseResponse deliverySend(WxMiniOrderDeliveryRequest request)
+    throws WxErrorException {
+    String response = this.wxMaService.post(PRODUCT_DELIVERY_SEND, request);
+    WxMaShopBaseResponse baseResponse = WxMaGsonBuilder.create()
+      .fromJson(response, WxMaShopBaseResponse.class);
+    if (baseResponse.getErrCode() != 0) {
+      throw new WxErrorException(
+        new WxError(baseResponse.getErrCode(), baseResponse.getErrMsg()));
+    }
+    return baseResponse;
   }
 
   @Override

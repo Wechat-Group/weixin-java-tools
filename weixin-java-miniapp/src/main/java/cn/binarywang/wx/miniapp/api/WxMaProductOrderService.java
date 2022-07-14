@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.product.WxMiniBatchGetAfterSaleOrderResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMiniGetAfterSaleOrderResponse;
+import cn.binarywang.wx.miniapp.bean.product.WxMiniOrderDeliveryRequest;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderDetailResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderListResponse;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopBaseResponse;
@@ -57,6 +58,9 @@ public interface WxMaProductOrderService {
    * @param merchantNotes 备注内容
    */
   void changeMerchantNotes(Long orderId,String merchantNotes) throws WxErrorException;
+
+  WxMaShopBaseResponse deliverySend(WxMiniOrderDeliveryRequest request)
+    throws WxErrorException;
 
   WxMiniGetAfterSaleOrderResponse getAfterSaleOrder(Long afterSaleOrderId)
     throws WxErrorException;

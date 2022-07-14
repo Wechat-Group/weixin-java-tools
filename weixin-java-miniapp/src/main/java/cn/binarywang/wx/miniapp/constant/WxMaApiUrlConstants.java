@@ -426,6 +426,8 @@ public class WxMaApiUrlConstants {
       String PRODUCT_ORDER_DETAIL_URL = "https://api.weixin.qq.com/product/order/get";
       String PRODUCT_ORDER_CHANGE_MERCHANT_NOTES_URL = "https://api.weixin.qq.com/product/order/change_merchant_notes";
 
+      String PRODUCT_DELIVERY_SEND = "https://api.weixin.qq.com/product/delivery/send";
+
       String GET_AFTER_SALE_ORDER = "https://api.weixin.qq.com/product/order/getaftersaleorder";
       String BATCH_GET_AFTER_SALE_ORDER = "https://api.weixin.qq.com/product/order/batchgetaftersaleorder";
       String AFTER_SALE_ACCEPT_APPLY = "https://api.weixin.qq.com/product/order/acceptapply";
