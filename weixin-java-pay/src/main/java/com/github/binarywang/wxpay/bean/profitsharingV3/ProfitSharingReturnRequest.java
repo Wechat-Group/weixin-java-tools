@@ -24,6 +24,16 @@ public class ProfitSharingReturnRequest implements Serializable {
 
   /**
    * <pre>
+   * 字段名：子商户号
+   * 是否必填：是
+   * 描述：分账回退的接收商户，对应原分账出资的分账方商户，填写微信支付分配的商户号
+   * </pre>
+   */
+  @SerializedName("sub_mchid")
+  private String subMchId;
+
+  /**
+   * <pre>
    * 字段名：微信分账单号
    * 是否必填：是
    * 描述：微信分账单号，微信系统返回的唯一标识。
