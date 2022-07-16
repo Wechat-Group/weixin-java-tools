@@ -9,11 +9,16 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
+import me.chanjar.weixin.cp.bean.school.user.WxCpAllowScope;
+import me.chanjar.weixin.cp.bean.school.user.WxCpListParentResult;
+import me.chanjar.weixin.cp.bean.school.user.WxCpUserListResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -52,20 +57,36 @@ public class WxCpSchoolContactMessageTest {
     cpService = new WxCpServiceImpl();
     cpService.setWxCpConfigStorage(config);
 
+    // 获取可使用的家长范围 返回的数据
+    WxCpAllowScope allowScope = cpService.getSchoolUserService().getAllowScope(1000002);
+
+    WxCpUserListResult userList = cpService.getSchoolUserService().getUserList(1, 1);
+
+    // 测试发送给家长 [学校通知]
+    WxCpListParentResult userListParent = cpService.getSchoolUserService().getUserListParent(1);
+    List<WxCpListParentResult.Parent> collect = userListParent.getParents()
+      .stream()
+      .filter(parent -> parent.getMobile().equals("13079226621"))
+      .collect(Collectors.toList());
+
+    String[] parentsId = {"ab0b1691d0204d4900f6b7a7e5a6aa8f", collect.get(0).getParentUserId()};
+
     WxCpSchoolContactMessageSendResult sendResult = this.cpService.getMessageService().sendSchoolContactMessage(
 
       WxCpSchoolContactMessage.builder()
         .recvScope(0)
-        .msgType(WxConsts.SchoolContactMsgType.TEXT)
-        .toParentUserId(new String[]{"parent_userid1", "parent_userid2"})
-        .toStudentUserId(new String[]{"student_userid1", "student_userid2"})
-        .toParty(new String[]{"partyid1", "partyid2"})
+        .msgType(WxConsts.SchoolContactMsgType.NEWS)
+        .toParentUserId(parentsId)
+//        .toStudentUserId(new String[]{"student_userid1", "student_userid2"})
+//        .toParty(new String[]{"partyid1", "partyid2"})
         .toAll(false)
-        .agentId(1)
-        .content("你的快递已到，请携带工卡前往邮件中心领取。\n出发前可查看<a href=\"http://work.weixin.qq.com\">邮件中心视频实况</a>，聪明避开排队。")
-        .enableIdTrans(false)
-        .enableDuplicateCheck(false)
-        .duplicateCheckInterval(1800)
+        .agentId(cpService.getWxCpConfigStorage().getAgentId())
+        .articles(Lists.newArrayList(NewArticle.builder()
+          .title("这是接口测试标题")
+          .description("今年中秋节公司有豪礼相送哦")
+          .url("https://www.baidu.com/")
+          .picUrl("http://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png")
+          .build()))
         .build()
 
     );

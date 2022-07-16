@@ -30,10 +30,27 @@ public class WxCpAllowScope extends WxCpBaseResp implements Serializable {
     private List<Student> students;
 
     @SerializedName("departments")
-    private List<Integer> departments;
+    private Department departments;
 
     public static AllowScope fromJson(String json) {
       return WxCpGsonBuilder.create().fromJson(json, AllowScope.class);
+    }
+
+    public String toJson() {
+      return WxCpGsonBuilder.create().toJson(this);
+    }
+
+  }
+
+  @Setter
+  @Getter
+  public static class Department implements Serializable {
+
+    @SerializedName("partyid")
+    private List<Integer> partyId;
+
+    public static Department fromJson(String json) {
+      return WxCpGsonBuilder.create().fromJson(json, Department.class);
     }
 
     public String toJson() {
