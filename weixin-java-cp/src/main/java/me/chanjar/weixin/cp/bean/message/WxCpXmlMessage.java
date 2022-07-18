@@ -474,6 +474,15 @@ public class WxCpXmlMessage implements Serializable {
   private SendLocationInfo sendLocationInfo = new SendLocationInfo();
 
 
+  /**
+   * 审批消息
+   *
+   * 审批申请状态变化回调通知
+   * https://developer.work.weixin.qq.com/document/path/91815
+   *
+   * 自建应用审批状态变化通知回调
+   * https://developer.work.weixin.qq.com/document/path/90269
+   */
   @XStreamAlias("ApprovalInfo")
   private WxCpXmlApprovalInfo approvalInfo = new WxCpXmlApprovalInfo();
 

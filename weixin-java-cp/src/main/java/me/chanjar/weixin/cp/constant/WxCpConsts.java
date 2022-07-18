@@ -110,6 +110,7 @@ public class WxCpConsts {
 
     /**
      * 企业微信审批事件推送（自建应用审批）
+     * https://developer.work.weixin.qq.com/document/path/90269
      */
     public static final String OPEN_APPROVAL_CHANGE = "open_approval_change";
 
