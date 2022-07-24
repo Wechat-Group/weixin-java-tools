@@ -65,7 +65,7 @@ public class WxCryptUtil {
   public WxCryptUtil(String token, String encodingAesKey, String appidOrCorpid) {
     this.token = token;
     this.appidOrCorpid = appidOrCorpid;
-    this.aesKey = Base64.decodeBase64(CharMatcher.whitespace().removeFrom(encodingAesKey));
+    this.aesKey = Base64.decodeBase64(StringUtils.remove(encodingAesKey));
   }
 
   private static String extractEncryptPart(String xml) {
