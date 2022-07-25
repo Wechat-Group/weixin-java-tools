@@ -47,7 +47,7 @@ public class RsaCryptoUtil {
           Object oldValue = field.get(encryptObject);
           if (oldValue != null) {
             String oldStr = (String) oldValue;
-            if (!oldStr.trim().equals("'")) {
+            if (!"".equals(oldStr.trim())) {
               field.set(encryptObject, encryptOAEP(oldStr, certificate));
             }
           }
