@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.cloud.*;
+import cn.binarywang.wx.miniapp.bean.cloud.request.WxCloudSendSmsV2Request;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Lists;
@@ -393,5 +394,18 @@ public class WxMaCloudServiceImplTest {
     assertThat(result.getCollections()[0].getSize()).isGreaterThan(0);
     assertThat(result.getCollections()[0].getIndexCount()).isGreaterThan(0);
     assertThat(result.getCollections()[0].getIndexSize()).isGreaterThan(0);
+  }
+
+  @Test
+  public void testSendSmsV2() throws WxErrorException {
+    WxCloudSendSmsV2Request request = WxCloudSendSmsV2Request.builder()
+      .urlLink("https://wxaurl.cn/xxxxxx")
+      .templateId("844110")
+      .templateParamList(Arrays.asList(new String[]{"能力上新"}))
+      .phoneNumberList(Arrays.asList("+8612345678910"))
+      .build();
+
+    final WxCloudSendSmsV2Result result = this.wxMaService.getCloudService().sendSmsV2(request);
+    assertThat(result).isNotNull();
   }
 }

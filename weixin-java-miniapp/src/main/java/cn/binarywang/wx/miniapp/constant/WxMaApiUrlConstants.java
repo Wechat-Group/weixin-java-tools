@@ -42,6 +42,7 @@ public class WxMaApiUrlConstants {
     String DATABASE_UPDATE_URL = "https://api.weixin.qq.com/tcb/databaseupdate";
     String DATABASE_DELETE_URL = "https://api.weixin.qq.com/tcb/databasedelete";
     String DATABASE_ADD_URL = "https://api.weixin.qq.com/tcb/databaseadd";
+    String SEND_SMS_V2_URL = "https://api.weixin.qq.com/tcb/sendsmsv2";
   }
 
   public interface Msg {
