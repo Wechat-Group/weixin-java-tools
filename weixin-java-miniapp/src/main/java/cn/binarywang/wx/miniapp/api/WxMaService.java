@@ -494,17 +494,25 @@ public interface WxMaService extends WxService {
 
   /**
    * 分享人接口
-   * @return
+   * @return WxMaShopSharerService
    */
   WxMaShopSharerService getShopSharerService();
 
   /**
    * 标准交易组件接口
-   * @return
+   * @return WxMaProductService
    */
   WxMaProductService getProductService();
 
+  /**
+   * 小商店-标准交易组件-订单服务
+   * @return getProductOrderService
+   */
   WxMaProductOrderService getProductOrderService();
 
+  /**
+   * 小商店-标准交易组件-优惠券
+   * @return getWxMaShopCouponService
+   */
   WxMaShopCouponService getWxMaShopCouponService();
 }
