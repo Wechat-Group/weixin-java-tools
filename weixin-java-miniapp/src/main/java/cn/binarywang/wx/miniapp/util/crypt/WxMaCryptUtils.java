@@ -14,6 +14,7 @@ import com.google.common.base.CharMatcher;
 import com.google.common.io.BaseEncoding;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
@@ -28,7 +29,7 @@ public class WxMaCryptUtils extends me.chanjar.weixin.common.util.crypto.WxCrypt
   public WxMaCryptUtils(WxMaConfig config) {
     this.appidOrCorpid = config.getAppid();
     this.token = config.getToken();
-    this.aesKey = BaseEncoding.base64().decode(CharMatcher.whitespace().removeFrom(config.getAesKey()));
+    this.aesKey = java.util.Base64.getDecoder().decode(StringUtils.remove(config.getAesKey(), " "));
   }
 
   /**

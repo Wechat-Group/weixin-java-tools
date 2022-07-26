@@ -1,6 +1,5 @@
 language: java
 
-
 jdk:
   - openjdk8
 script: "mvn clean package -DskipTests=true -Dcheckstyle.skip=true"
@@ -15,4 +14,4 @@ cache:
 
 notifications:
   email:
-    - binarywang@vip.qq.com
+    - a@binarywang.com

@@ -27,6 +27,12 @@ public class ModifySettlementRequest implements Serializable {
   @SerializedName("account_type")
   private AccountTypeEnum accountType;
   /**
+   * 开户名称
+   */
+  @SpecEncrypt
+  @SerializedName("account_name")
+  private String accountName;
+  /**
    * 开户银行
    */
   @SerializedName("account_bank")

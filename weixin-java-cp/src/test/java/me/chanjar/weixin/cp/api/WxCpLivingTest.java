@@ -84,7 +84,7 @@ public class WxCpLivingTest {
     log.info(livingInfo.toJson());
 
     // 直播观看明细
-    WxCpWatchStat watchStat = wxCpService.getLivingService().getWatchStat("lvOQpTDwAAcP9wNOSSxTwpbni-TMPNSg", 0);
+    WxCpWatchStat watchStat = wxCpService.getLivingService().getWatchStat("lvOQpTDwAAcP9wNOSSxTwpbni-TMPNSg", "0");
     log.info(watchStat.toJson());
 
     final String watchStateJson = "{\"errcode\":0,\"errmsg\":\"ok\",\"ending\":1,\"next_key\":\"NEXT_KEY\",\"stat_info\":{\"users\":[{\"userid\":\"userid\",\"watch_time\":30,\"is_comment\":1,\"is_mic\":1}],\"external_users\":[{\"external_userid\":\"external_userid1\",\"type\":1,\"name\":\"user name\",\"watch_time\":30,\"is_comment\":1,\"is_mic\":1},{\"external_userid\":\"external_userid2\",\"type\":2,\"name\":\"user_name\",\"watch_time\":30,\"is_comment\":1,\"is_mic\":1}]}}";

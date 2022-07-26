@@ -257,6 +257,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     private final String appId;
     private WxMpHostConfig hostConfig;
     private String apiHostUrl;
+    private String accessTokenUrl;
 
     /**
      * 小程序原始ID

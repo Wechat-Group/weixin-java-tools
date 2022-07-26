@@ -232,7 +232,7 @@ public class WxCpTpAuthInfo extends WxCpBaseResp {
      * </ul>
      */
     @SerializedName("user_limit")
-    private Integer userLimit;
+    private Long userLimit;
 
     /**
      * 版本到期时间, 秒级时间戳, 根据需要自行乘以1000（根据购买版本，可能是试用到期时间或付费使用到期时间）。

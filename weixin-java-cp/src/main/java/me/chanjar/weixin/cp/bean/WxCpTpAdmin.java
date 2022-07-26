@@ -30,6 +30,9 @@ public class WxCpTpAdmin extends WxCpBaseResp {
 
     @SerializedName("userid")
     private String userId;
+    
+    @SerializedName("open_userid")
+    private String openUserId;
 
     @SerializedName("auth_type")
     private Integer authType;

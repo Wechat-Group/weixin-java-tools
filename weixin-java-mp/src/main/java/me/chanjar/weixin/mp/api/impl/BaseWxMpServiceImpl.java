@@ -87,7 +87,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpTemplateMsgService templateMsgService = new WxMpTemplateMsgServiceImpl(this);
   @Getter
   @Setter
-  private final WxMpSubscribeMsgService subscribeMsgService = new WxMpSubscribeMsgServiceImpl(this);
+  private WxMpSubscribeMsgService subscribeMsgService = new WxMpSubscribeMsgServiceImpl(this);
   @Getter
   @Setter
   private WxMpDeviceService deviceService = new WxMpDeviceServiceImpl(this);
@@ -105,7 +105,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpAiOpenService aiOpenService = new WxMpAiOpenServiceImpl(this);
   @Getter
   @Setter
-  private final WxMpWifiService wifiService = new WxMpWifiServiceImpl(this);
+  private WxMpWifiService wifiService = new WxMpWifiServiceImpl(this);
   @Getter
   @Setter
   private WxMpMarketingService marketingService = new WxMpMarketingServiceImpl(this);
@@ -435,12 +435,12 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       }
 
       if (error.getErrorCode() != 0) {
-        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
       throw new WxErrorException(e);
     }
   }

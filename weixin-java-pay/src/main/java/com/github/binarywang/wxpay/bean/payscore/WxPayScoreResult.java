@@ -86,7 +86,7 @@ public class WxPayScoreResult implements Serializable {
   private Map<String, String> payScoreSignInfo;
 
   @SerializedName("openid")
-  private String openId;
+  private String openid;
 
   @SerializedName("apply_permissions_token")
   private String applyPermissionsToken;
@@ -102,9 +102,6 @@ public class WxPayScoreResult implements Serializable {
 
   @SerializedName("authorization_success_time")
   private String authorizationSuccessTime;
-
-  @SerializedName("openid")
-  private String openid;
 
   /**
    * 收款信息

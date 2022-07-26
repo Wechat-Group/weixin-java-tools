@@ -408,6 +408,13 @@ public interface WxCpService extends WxService {
   WxCpSchoolService getSchoolService();
 
   /**
+   * 获取家校沟通相关接口的服务类对象
+   *
+   * @return
+   */
+  WxCpSchoolUserService getSchoolUserService();
+
+  /**
    * 获取家校应用健康上报的服务类对象
    *
    * @return

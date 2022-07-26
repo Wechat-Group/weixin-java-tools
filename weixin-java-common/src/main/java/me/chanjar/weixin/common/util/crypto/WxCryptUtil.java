@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
@@ -65,7 +66,7 @@ public class WxCryptUtil {
   public WxCryptUtil(String token, String encodingAesKey, String appidOrCorpid) {
     this.token = token;
     this.appidOrCorpid = appidOrCorpid;
-    this.aesKey = Base64.decodeBase64(CharMatcher.whitespace().removeFrom(encodingAesKey));
+    this.aesKey = Base64.decodeBase64(StringUtils.remove(encodingAesKey, " "));
   }
 
   private static String extractEncryptPart(String xml) {

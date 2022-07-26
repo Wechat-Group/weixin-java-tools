@@ -27,6 +27,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.Getter;
+import lombok.Setter;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -63,99 +65,63 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   static ThreadLocal<WxPayApiData> wxApiData = new ThreadLocal<>();
 
+
+  @Setter
+  @Getter
   private EntPayService entPayService = new EntPayServiceImpl(this);
+
+  @Getter
   private final ProfitSharingService profitSharingService = new ProfitSharingServiceImpl(this);
+
+  @Getter
   private final ProfitSharingV3Service profitSharingV3Service = new ProfitSharingV3ServiceImpl(this);
+
+  @Getter
   private final RedpackService redpackService = new RedpackServiceImpl(this);
+
+  @Getter
   private final PayScoreService payScoreService = new PayScoreServiceImpl(this);
+
+  @Getter
   private final EcommerceService ecommerceService = new EcommerceServiceImpl(this);
+
+  @Getter
   private final BusinessCircleService businessCircleService = new BusinessCircleServiceImpl(this);
+
+  @Getter
   private final MerchantMediaService merchantMediaService = new MerchantMediaServiceImpl(this);
+
+  @Getter
   private final MarketingMediaService marketingMediaService = new MarketingMediaServiceImpl(this);
+
+  @Getter
   private final MarketingFavorService marketingFavorService = new MarketingFavorServiceImpl(this);
+
+  @Getter
   private final MarketingBusiFavorService marketingBusiFavorService = new MarketingBusiFavorServiceImpl(this);
+
+  @Getter
   private final WxEntrustPapService wxEntrustPapService = new WxEntrustPapServiceImpl(this);
+
+  @Getter
   private final PartnerTransferService partnerTransferService = new PartnerTransferServiceImpl(this);
+
+  @Getter
   private final PayrollService payrollService = new PayrollServiceImpl(this);
+
+  @Getter
   private final ComplaintService complaintsService = new ComplaintServiceImpl(this);
+
+  @Getter
   private final BankService bankService = new BankServiceImpl(this);
 
+  @Getter
+  private final TransferService transferService = new TransferServiceImpl(this);
+
+  @Getter
+  private final MerchantTransferService merchantTransferService = new MerchantTransferServiceImpl(this);
+
   protected Map<String, WxPayConfig> configMap;
-
-  @Override
-  public EntPayService getEntPayService() {
-    return entPayService;
-  }
-
-  @Override
-  public ProfitSharingService getProfitSharingService() {
-    return profitSharingService;
-  }
-
-  @Override
-  public ProfitSharingV3Service getProfitSharingV3Service() {
-    return profitSharingV3Service;
-  }
-
-  @Override
-  public PayScoreService getPayScoreService() {
-    return payScoreService;
-  }
-
-  @Override
-  public RedpackService getRedpackService() {
-    return this.redpackService;
-  }
-
-  @Override
-  public EcommerceService getEcommerceService() {
-    return ecommerceService;
-  }
-
-  @Override
-  public BusinessCircleService getBusinessCircleService() {
-    return this.businessCircleService;
-  }
-
-  @Override
-  public MerchantMediaService getMerchantMediaService() {
-    return this.merchantMediaService;
-  }
-
-  @Override
-  public MarketingMediaService getMarketingMediaService() {
-    return this.marketingMediaService;
-  }
-
-  @Override
-  public MarketingFavorService getMarketingFavorService() {
-    return this.marketingFavorService;
-  }
-
-  @Override
-  public MarketingBusiFavorService getMarketingBusiFavorService() {
-    return this.marketingBusiFavorService;
-  }
-
-  @Override
-  public void setEntPayService(EntPayService entPayService) {
-    this.entPayService = entPayService;
-  }
-
-  @Override
-  public WxEntrustPapService getWxEntrustPapService() {
-    return wxEntrustPapService;
-  }
-
-  @Override
-  public PartnerTransferService getPartnerTransferService() {
-    return partnerTransferService;
-  }
-
-  @Override
-  public PayrollService getPayrollService() {
-    return payrollService;
-  }
 
   @Override
   public WxPayConfig getConfig() {
@@ -1268,5 +1234,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public BankService getBankService() {
     return bankService;
+  }
+
+  @Override
+  public TransferService getTransferService() {
+    return transferService;
   }
 }

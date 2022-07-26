@@ -28,6 +28,7 @@ public interface WxCpApiPathConsts {
    * https://work.weixin.qq.com/api/doc/90000/90135/90235
    */
   interface Message {
+
     /**
      * 发送应用消息
      */
@@ -40,8 +41,16 @@ public interface WxCpApiPathConsts {
 
     /**
      * 互联企业发送应用消息
+     * https://developer.work.weixin.qq.com/document/path/90250
      */
     String LINKEDCORP_MESSAGE_SEND = "/cgi-bin/linkedcorp/message/send";
+
+    /**
+     * 发送「学校通知」
+     * https://developer.work.weixin.qq.com/document/path/92321
+     */
+    String EXTERNAL_CONTACT_MESSAGE_SEND = "/cgi-bin/externalcontact/message/send";
+
   }
 
   interface Agent {
@@ -58,6 +67,7 @@ public interface WxCpApiPathConsts {
 
   interface OAuth2 {
     String GET_USER_INFO = "/cgi-bin/user/getuserinfo?code=%s&agentid=%d";
+    String GET_SCHOOL_USER_INFO = "/cgi-bin/school/getuserinfo?code=%s";
     String GET_USER_DETAIL = "/cgi-bin/user/getuserdetail";
     String URL_OAUTH2_AUTHORIZE = "https://open.weixin.qq.com/connect/oauth2/authorize";
   }
@@ -183,8 +193,40 @@ public interface WxCpApiPathConsts {
     String GET_STUDENT_CUSTOMIZE_HEALTH_INFO = "/cgi-bin/school/user/get_student_customize_health_info";
     String GET_HEALTH_QRCODE = "/cgi-bin/school/user/get_health_qrcode";
 
+    String BATCH_CREATE_STUDENT = "/cgi-bin/school/user/batch_create_student";
+    String BATCH_DELETE_STUDENT = "/cgi-bin/school/user/batch_delete_student";
+    String BATCH_UPDATE_STUDENT = "/cgi-bin/school/user/batch_update_student";
+    String BATCH_CREATE_PARENT = "/cgi-bin/school/user/batch_create_parent";
+    String BATCH_DELETE_PARENT = "/cgi-bin/school/user/batch_delete_parent";
+    String BATCH_UPDATE_PARENT = "/cgi-bin/school/user/batch_update_parent";
+
+    String CREATE_STUDENT = "/cgi-bin/school/user/create_student";
+    String DELETE_STUDENT = "/cgi-bin/school/user/delete_student?userid=";
+    String UPDATE_STUDENT = "/cgi-bin/school/user/update_student";
+    String CREATE_PARENT = "/cgi-bin/school/user/create_parent";
+    String UPDATE_PARENT = "/cgi-bin/school/user/update_parent";
+    String DELETE_PARENT = "/cgi-bin/school/user/delete_parent?userid=";
+    String GET_USER = "/cgi-bin/school/user/get?userid=";
+    String GET_USER_LIST = "/cgi-bin/school/user/list?department_id=%s&fetch_child=%d";
+    String GET_USER_LIST_PARENT = "/cgi-bin/school/user/list_parent?department_id=";
+    String SET_ARCH_SYNC_MODE = "/cgi-bin/school/set_arch_sync_mode";
+    String SET_UPGRADE_INFO = "/cgi-bin/school/set_upgrade_info";
+
+    String DEPARTMENT_CREATE = "/cgi-bin/school/department/create";
+    String DEPARTMENT_UPDATE = "/cgi-bin/school/department/update";
+    String DEPARTMENT_DELETE = "/cgi-bin/school/department/delete?id=";
+    String DEPARTMENT_LIST = "/cgi-bin/school/department/list?id=";
+
     String GET_PAYMENT_RESULT = "/cgi-bin/school/get_payment_result";
     String GET_TRADE = "/cgi-bin/school/get_trade";
+    String GET_ALLOW_SCOPE = "/cgi-bin/school/agent/get_allow_scope?agentid=";
+
+    /**
+     * 上课直播
+     */
+    String GET_LIVING_INFO = "/cgi-bin/school/living/get_living_info?livingid=";
+    String GET_WATCH_STAT = "/cgi-bin/school/living/get_watch_stat";
+    String GET_UNWATCH_STAT = "/cgi-bin/school/living/get_unwatch_stat";
   }
 
   interface Living {
@@ -248,6 +290,22 @@ public interface WxCpApiPathConsts {
     // 延长试用期
     String PROLONG_TRY = "/cgi-bin/service/prolong_try";
 
+  }
+
+  interface License {
+    String CREATE_NEW_ORDER = "/cgi-bin/license/create_new_order";
+    String CREATE_RENEW_ORDER_JOB = "/cgi-bin/license/create_renew_order_job";
+    String SUBMIT_ORDER_JOB = "/cgi-bin/license/submit_order_job";
+    String LIST_ORDER = "/cgi-bin/license/list_order";
+    String GET_ORDER = "/cgi-bin/license/get_order";
+    String LIST_ORDER_ACCOUNT = "/cgi-bin/license/list_order_account";
+    String ACTIVE_ACCOUNT = "/cgi-bin/license/active_account";
+    String BATCH_ACTIVE_ACCOUNT = "/cgi-bin/license/batch_active_account";
+    String GET_ACTIVE_INFO_BY_CODE = "/cgi-bin/license/get_active_info_by_code";
+    String BATCH_GET_ACTIVE_INFO_BY_CODE = "/cgi-bin/license/batch_get_active_info_by_code";
+    String LIST_ACTIVED_ACCOUNT = "/cgi-bin/license/list_actived_account";
+    String GET_ACTIVE_INFO_BY_USER = "/cgi-bin/license/get_active_info_by_user";
+    String BATCH_TRANSFER_LICENSE = "/cgi-bin/license/batch_transfer_license";
   }
 
   interface User {
@@ -342,6 +400,10 @@ public interface WxCpApiPathConsts {
 
     String UPLOAD_ATTACHMENT = "/cgi-bin/media/upload_attachment";
 
+    String GET_SUBSCRIBE_QR_CODE = "/cgi-bin/externalcontact/get_subscribe_qr_code";
+    String SET_SUBSCRIBE_MODE = "/cgi-bin/externalcontact/set_subscribe_mode";
+    String GET_SUBSCRIBE_MODE = "/cgi-bin/externalcontact/get_subscribe_mode";
+    String EXTERNAL_CONTACT_GET = "/cgi-bin/externalcontact/get?external_userid=";
 
     String ADD_INTERCEPT_RULE = "/cgi-bin/externalcontact/add_intercept_rule";
     String UPDATE_INTERCEPT_RULE = "/cgi-bin/externalcontact/update_intercept_rule";

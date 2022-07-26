@@ -50,6 +50,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxCpAgentService agentService = new WxCpAgentServiceImpl(this);
   private WxCpOaService oaService = new WxCpOaServiceImpl(this);
   private WxCpSchoolService schoolService = new WxCpSchoolServiceImpl(this);
+  private WxCpSchoolUserService schoolUserService = new WxCpSchoolUserServiceImpl(this);
   private WxCpSchoolHealthService schoolHealthService = new WxCpSchoolHealthServiceImpl(this);
   private WxCpLivingService livingService = new WxCpLivingServiceImpl(this);
   private WxCpOaAgentService oaAgentService = new WxCpOaAgentServiceImpl(this);
@@ -332,12 +333,12 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
       }
 
       if (error.getErrorCode() != 0) {
-        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
       throw new WxRuntimeException(e);
     }
   }
@@ -498,6 +499,11 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public WxCpSchoolService getSchoolService() {
     return schoolService;
+  }
+
+  @Override
+  public WxCpSchoolUserService getSchoolUserService() {
+    return schoolUserService;
   }
 
   @Override

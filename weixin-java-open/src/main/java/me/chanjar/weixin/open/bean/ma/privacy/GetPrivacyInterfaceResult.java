@@ -80,7 +80,7 @@ public class GetPrivacyInterfaceResult extends WxOpenResult {
     /**
      * api文档链接
      */
-    @SerializedName("fail_reapi_linkason")
+    @SerializedName("api_link")
     private String apiLink;
 
     /**

@@ -183,6 +183,10 @@ public class WxMaMessageRouter {
       messageId.append("-").append(wxMessage.getToUser());
     }
 
+    if (StringUtils.isNotEmpty(wxMessage.getTraceId())) {
+      messageId.append("-").append(wxMessage.getTraceId());
+    }
+
     return this.messageDuplicateChecker.isDuplicate(messageId.toString());
   }
 

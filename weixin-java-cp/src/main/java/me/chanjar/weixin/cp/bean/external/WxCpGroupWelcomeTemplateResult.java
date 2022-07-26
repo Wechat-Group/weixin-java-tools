@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.bean.external;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.*;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.msg.*;
@@ -32,6 +33,18 @@ public class WxCpGroupWelcomeTemplateResult extends WxCpBaseResp implements Seri
   private File file;
 
   private Video video;
+
+  /**
+   * 欢迎语素材id
+   * https://developer.work.weixin.qq.com/document/path/92366
+   */
+  @SerializedName("template_id")
+  private String templateId;
+
+  /**
+   * 是否通知成员将这条入群欢迎语应用到客户群中，0-不通知，1-通知， 不填则通知
+   */
+  private Integer notify;
 
   public static WxCpGroupWelcomeTemplateResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpGroupWelcomeTemplateResult.class);

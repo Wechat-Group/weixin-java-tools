@@ -116,7 +116,7 @@ public class DeclarationRequest implements Serializable {
    * </pre>
    */
   @SerializedName(value = "duty")
-  private String duty;
+  private Integer duty;
 
   /**
    * <pre>
@@ -159,7 +159,7 @@ public class DeclarationRequest implements Serializable {
    * </pre>
    */
   @SerializedName(value = "order_fee")
-  private String orderFee;
+  private Integer orderFee;
 
   /**
    * <pre>
@@ -173,7 +173,7 @@ public class DeclarationRequest implements Serializable {
    * </pre>
    */
   @SerializedName(value = "transport_fee")
-  private String transportFee;
+  private Integer transportFee;
 
   /**
    * <pre>
@@ -187,5 +187,5 @@ public class DeclarationRequest implements Serializable {
    * </pre>
    */
   @SerializedName(value = "product_fee")
-  private String productFee;
+  private Integer productFee;
 }

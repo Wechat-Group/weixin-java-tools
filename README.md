@@ -4,8 +4,8 @@
 [![Github](https://img.shields.io/github/stars/Wechat-Group/WxJava?logo=github&style=flat)](https://github.com/Wechat-Group/WxJava)
 [![GitHub release](https://img.shields.io/github/release/Wechat-Group/WxJava.svg)](https://github.com/Wechat-Group/WxJava/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.binarywang/wx-java.svg)](http://mvnrepository.com/artifact/com.github.binarywang/wx-java)
-[![Build Status](https://travis-ci.com/Wechat-Group/WxJava.svg?branch=develop)](https://travis-ci.com/Wechat-Group/WxJava)
-[![使用IntelliJ IDEA开发维护](https://img.shields.io/badge/IntelliJ%20IDEA-提供支持-blue.svg)](https://www.jetbrains.com/?from=WxJava-weixin-java-tools)
+[![Build Status](https://app.travis-ci.com/Wechat-Group/WxJava.svg?branch=develop)](https://app.travis-ci.com/github/Wechat-Group/WxJava)
+[![使用IntelliJ IDEA开发维护](https://img.shields.io/badge/IntelliJ%20IDEA-支持-blue.svg)](https://www.jetbrains.com/?from=WxJava-weixin-java-tools)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 #### 微信`Java`开发工具包，支持包括微信支付、开放平台、公众号、企业微信/企业号、小程序等微信功能模块的后端开发。
@@ -182,6 +182,7 @@
 1. [007gzs](https://github.com/007gzs)
 1. [Silloy](https://github.com/silloy)
 1. [mgcnrx11](https://github.com/mgcnrx11)
+1. [0katekate0 (Wang_Wong)](https://github.com/0katekate0)
 1. [yuanqixun](https://github.com/yuanqixun)
 1. [kakotor](https://github.com/kakotor)
 1. [aimilin6688 (Jonk)](https://github.com/aimilin6688)

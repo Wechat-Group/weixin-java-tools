@@ -1,7 +1,5 @@
 package com.github.binarywang.wxpay.v3.util;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.io.BaseEncoding;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.crypto.Cipher;
@@ -10,6 +8,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -58,7 +57,7 @@ public class AesUtils {
   }
 
   public String decryptToString(byte[] associatedData, byte[] nonce, String ciphertext)
-      throws GeneralSecurityException, IOException {
+    throws GeneralSecurityException, IOException {
     try {
       Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
 
@@ -68,7 +67,7 @@ public class AesUtils {
       cipher.init(Cipher.DECRYPT_MODE, key, spec);
       cipher.updateAAD(associatedData);
 
-      return new String(cipher.doFinal(BaseEncoding.base64().decode(CharMatcher.whitespace().removeFrom(ciphertext))), "utf-8");
+      return new String(cipher.doFinal(Base64.getDecoder().decode(StringUtils.remove(ciphertext, " "))), StandardCharsets.UTF_8);
     } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
       throw new IllegalStateException(e);
     } catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
@@ -76,7 +75,7 @@ public class AesUtils {
     }
   }
 
-  public static String decryptToString(String associatedData, String nonce, String ciphertext,String apiV3Key)
+  public static String decryptToString(String associatedData, String nonce, String ciphertext, String apiV3Key)
     throws GeneralSecurityException, IOException {
     try {
       Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
@@ -87,7 +86,7 @@ public class AesUtils {
       cipher.init(Cipher.DECRYPT_MODE, key, spec);
       cipher.updateAAD(associatedData.getBytes());
 
-      return new String(cipher.doFinal(Base64.getDecoder().decode(ciphertext)), "utf-8");
+      return new String(cipher.doFinal(Base64.getDecoder().decode(ciphertext)), StandardCharsets.UTF_8);
     } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
       throw new IllegalStateException(e);
     } catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
@@ -116,9 +115,9 @@ public class AesUtils {
   public static String HMACSHA256(String data, String key) {
     try {
       Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-      SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
+      SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
       sha256_HMAC.init(secret_key);
-      byte[] array = sha256_HMAC.doFinal(data.getBytes("UTF-8"));
+      byte[] array = sha256_HMAC.doFinal(data.getBytes(StandardCharsets.UTF_8));
       StringBuilder sb = new StringBuilder();
       for (byte item : array) {
         sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));

@@ -13,15 +13,18 @@ import com.github.binarywang.wxpay.exception.WxPayException;
  */
 public interface CustomDeclarationService {
 
-  static  String DECLARATION_BASE_URL = "https://apihk.mch.weixin.qq.com/global/v3/customs";
+  /**
+   * The constant DECLARATION_BASE_URL.
+   */
+  String DECLARATION_BASE_URL = "https://apihk.mch.weixin.qq.com/global/v3/customs";
 
   /**
    * <pre>
    * 报关API
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_1.shtml
+   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_1.shtml">...</a>
    * </pre>
    *
-   * @param request
+   * @param request the request
    * @return 返回数据 declaration result
    * @throws WxPayException the wx pay exception
    */
@@ -30,10 +33,10 @@ public interface CustomDeclarationService {
   /**
    * <pre>
    * 报关查询API
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_3.shtml
+   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_3.shtml">...</a>
    * </pre>
    *
-   * @param request
+   * @param request the request
    * @return 返回数据 declaration query result
    * @throws WxPayException the wx pay exception
    */
@@ -42,10 +45,10 @@ public interface CustomDeclarationService {
   /**
    * <pre>
    * 身份信息校验API
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_2.shtml
+   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_2.shtml">...</a>
    * </pre>
    *
-   * @param request
+   * @param request the request
    * @return 返回数据 verify certification result
    * @throws WxPayException the wx pay exception
    */
@@ -54,10 +57,10 @@ public interface CustomDeclarationService {
   /**
    * <pre>
    * 报关信息修改API
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_5.shtml
+   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_5.shtml">...</a>
    * </pre>
    *
-   * @param request
+   * @param request the request
    * @return 返回数据 declaration result
    * @throws WxPayException the wx pay exception
    */
@@ -66,10 +69,10 @@ public interface CustomDeclarationService {
   /**
    * <pre>
    * 报关重推API
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_4.shtml
+   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_4.shtml">...</a>
    * </pre>
    *
-   * @param request
+   * @param request the request
    * @return 返回数据 redeclaration result
    * @throws WxPayException the wx pay exception
    */

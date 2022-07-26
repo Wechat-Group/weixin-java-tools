@@ -72,6 +72,23 @@ public class WxCpTpConsts {
      */
     public static final String CHANGE_EDITION = "change_editon";
 
+
+    /**
+     * 接口许可失效通知
+     */
+    public static final String UNLICENSED_NOTIFY = "unlicensed_notify";
+
+    /**
+     * 支付成功通知
+     */
+    public static final String LICENSE_PAY_SUCCESS = "license_pay_success";
+
+    /**
+     * 退款结果通知
+     */
+    public static final String LICENSE_REFUND = "license_refund";
+
+
   }
 
 }

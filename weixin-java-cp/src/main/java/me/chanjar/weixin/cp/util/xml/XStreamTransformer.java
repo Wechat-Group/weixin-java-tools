@@ -1,13 +1,13 @@
 package me.chanjar.weixin.cp.util.xml;
 
+import com.thoughtworks.xstream.XStream;
+import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.cp.bean.WxCpTpXmlPackage;
+import me.chanjar.weixin.cp.bean.message.*;
+
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.thoughtworks.xstream.XStream;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
-import me.chanjar.weixin.cp.bean.message.*;
-import me.chanjar.weixin.cp.bean.WxCpTpXmlPackage;
 
 public class XStreamTransformer {
 

@@ -1,10 +1,16 @@
 package me.chanjar.weixin.cp.api;
+
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.msgaudit.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import me.chanjar.weixin.cp.constant.WxCpConsts;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
+import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
+import org.eclipse.jetty.util.ajax.JSON;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
@@ -37,6 +43,55 @@ public class WxCpMsgAuditTest {
     wxCpConfigStorage = config;
     cpService = new WxCpServiceImpl();
     cpService.setWxCpConfigStorage(config);
+
+
+    /**
+     * 客户同意进行聊天内容存档事件回调
+     * 配置了客户联系功能的成员添加外部联系人同意进行聊天内容存档时，回调该事件。
+     *
+     * https://developer.work.weixin.qq.com/document/path/92005
+     */
+    String msgAuditApprovedXml = "<xml>\n" +
+      "\t<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "\t<CreateTime>1403610513</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[change_external_contact]]></Event>\n" +
+      "\t<ChangeType><![CDATA[msg_audit_approved]]></ChangeType>\n" +
+      "\t<UserID><![CDATA[zhangsan]]></UserID>\n" +
+      "\t<ExternalUserID><![CDATA[woAJ2GCAAABiuyujaWJHDDGi0mACHAAA]]></ExternalUserID>\n" +
+      "\t<WelcomeCode><![CDATA[WELCOMECODE]]></WelcomeCode>\n" +
+      "</xml>";
+
+    final WxCpXmlMessage msgAuditApprovedXmlMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, msgAuditApprovedXml);
+    msgAuditApprovedXmlMsg.setAllFieldsMap(XmlUtils.xml2Map(msgAuditApprovedXml));
+    log.info("msgAuditApprovedXmlMsg:{}", JSON.toString(msgAuditApprovedXmlMsg));
+
+    /**
+     * 产生会话回调事件
+     * 为了提升企业会话存档的使用性能，降低无效的轮询次数。
+     * 当企业收到或发送新消息时，企业微信可以以事件的形式推送到企业指定的url。回调间隔为15秒，在15秒内若有消息则触发回调，若无消息则不会触发回调。
+     *
+     * https://developer.work.weixin.qq.com/document/path/95039
+     */
+    String msgAuditNotifyXml = "<xml>\n" +
+      "   <ToUserName><![CDATA[CorpID]]></ToUserName>\n" +
+      "   <FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "   <CreateTime>1629101687</CreateTime>\n" +
+      "   <MsgType><![CDATA[event]]></MsgType>\n" +
+      "   <AgentID>2000004</AgentID>\n" +
+      "   <Event><![CDATA[msgaudit_notify]]></Event>\n" +
+      "</xml>";
+
+    final WxCpXmlMessage msgAuditNotifyXmlMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, msgAuditNotifyXml);
+    msgAuditNotifyXmlMsg.setAllFieldsMap(XmlUtils.xml2Map(msgAuditNotifyXml));
+    log.info("msgAuditNotifyXmlMsg:{}", JSON.toString(msgAuditNotifyXmlMsg));
+
+    /**
+     * 增加变更事件类型：产生会话回调事件
+     */
+    String msgauditNotify = WxCpConsts.EventType.MSGAUDIT_NOTIFY;
+
 
     /**
      * 仔细配置：
