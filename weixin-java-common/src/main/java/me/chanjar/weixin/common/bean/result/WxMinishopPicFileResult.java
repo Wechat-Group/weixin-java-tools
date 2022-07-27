@@ -8,4 +8,5 @@ import java.io.Serializable;
 public class WxMinishopPicFileResult implements Serializable {
   private String mediaId;
   private String payMediaId;
+  private String tempImgUrl;
 }

@@ -252,6 +252,11 @@ public interface WxOpenMaService extends WxMaService {
   String API_WX_AMP_LINK_UN = "https://api.weixin.qq.com/cgi-bin/wxopen/wxampunlink";
 
   /**
+   * 小程序管理-查询小程序版本信息
+   */
+  String API_GET_VERSION_INFO = "https://api.weixin.qq.com/wxa/getversioninfo";
+
+  /**
    * 获得小程序的域名配置信息
    *
    * @return the domain
@@ -701,5 +706,13 @@ public interface WxOpenMaService extends WxMaService {
    * @return 响应结果
    */
   WxOpenResult wxAmpUnLink(String appid) throws WxErrorException;
+
+  /**
+   * 查询小程序版本信息
+   *
+   * @return the wx open result
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenResult getVersionInfo() throws WxErrorException;
 
 }

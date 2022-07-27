@@ -1,6 +1,5 @@
 package cn.binarywang.wx.miniapp.bean.product;
 
-import cn.binarywang.wx.miniapp.bean.shop.WxMaShopOrderDetail;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import lombok.Data;
@@ -37,7 +36,7 @@ public class WxMinishopOrderResult implements Serializable {
   private WxMinishopOrderDetail orderDetail;
 
   @SerializedName("aftersale_detail")
-  private WxMiniAfterSaleDetail afterSaleDetail;
+  private WxMiniOrderAfterSaleDetail afterSaleDetail;
 
   /**
    * 商家小程序该订单的用户id

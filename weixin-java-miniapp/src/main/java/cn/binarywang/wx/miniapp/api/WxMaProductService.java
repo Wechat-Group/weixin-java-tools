@@ -2,9 +2,13 @@ package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopAddGoodsSkuData;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopAddGoodsSpuData;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetBrandResponse;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetCategoryResponse;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopGetFrightTemplateResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopOrderListResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopResult;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSku;
+import cn.binarywang.wx.miniapp.bean.product.WxMinishopSkuListResponse;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSpu;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSpuGet;
 import cn.binarywang.wx.miniapp.bean.product.WxMinishopSpuGetResponse;
@@ -13,7 +17,9 @@ import cn.binarywang.wx.miniapp.bean.product.WxMinishopUpdateGoodsSkuData;
 import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopSpuPageRequest;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopBaseResponse;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopGetSpuListResponse;
+import java.io.File;
 import java.util.List;
+import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -22,7 +28,18 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author boris
  */
 public interface WxMaProductService {
-  WxMinishopResult addSpu(WxMinishopSpu spuInfo) throws WxErrorException;
+
+  WxMinishopImageUploadResult uploadImg(File file, Integer respType, Integer width, Integer height) throws WxErrorException;
+
+  WxMinishopImageUploadResult uploadImg(String imgUrl, Integer respType) throws WxErrorException;
+
+  WxMinishopGetCategoryResponse getCategory(Integer fCatId) throws WxErrorException;
+
+  WxMinishopGetBrandResponse getBrand() throws WxErrorException;
+
+  WxMinishopGetFrightTemplateResponse getFreightTemplate() throws WxErrorException;
+
+  WxMinishopResult<WxMinishopAddGoodsSpuData> addSpu(WxMinishopSpu spuInfo) throws WxErrorException;
 
   WxMaShopBaseResponse deleteSpu(Integer productId, String outProductId) throws WxErrorException;
 
@@ -38,6 +55,9 @@ public interface WxMaProductService {
     throws WxErrorException;
 
   WxMaShopBaseResponse delistingSpu(Integer productId, String outProductId)
+    throws WxErrorException;
+
+  WxMinishopSkuListResponse getSkuList(Long productId, Integer needRealStock, Integer needEditSku)
     throws WxErrorException;
 
   /**
@@ -96,7 +116,7 @@ public interface WxMaProductService {
    * @throws WxErrorException
    */
   WxMinishopResult<WxMinishopUpdateGoodsSkuData> minishopGoodsUpdateSkuPrice(Long productId,
-    Long outProductId, String outSkuId, Long skuId, Long salePrice, Long marketPrice) throws WxErrorException;
+    String outProductId, String outSkuId, Long skuId, Long salePrice, Long marketPrice) throws WxErrorException;
 
 
   /**
@@ -112,8 +132,6 @@ public interface WxMaProductService {
    * @throws WxErrorException
    */
   WxMinishopResult<WxMinishopUpdateGoodsSkuData> minishopGoodsUpdateSkuStock(Long productId,
-    Long outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws WxErrorException;
+    String outProductId, String outSkuId, Long skuId, Integer type, Integer stockNum) throws WxErrorException;
 
-  WxMinishopOrderListResponse minishopOrderGetList(String startCreateTime, String endCreateTime,
-    Integer status, Integer page, Integer pageSize, Integer source) throws WxErrorException;
 }

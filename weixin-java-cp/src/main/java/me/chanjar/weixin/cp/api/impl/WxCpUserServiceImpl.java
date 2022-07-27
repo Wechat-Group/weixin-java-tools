@@ -12,11 +12,14 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpUserService;
 import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
+import me.chanjar.weixin.cp.bean.WxCpUseridToOpenUseridResult;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
+import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.text.Format;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -223,4 +226,18 @@ public class WxCpUserServiceImpl implements WxCpUserService {
     JsonObject tmpJson = GsonParser.parse(responseContent);
     return tmpJson.get("active_cnt").getAsInt();
   }
+
+  @Override
+  public WxCpUseridToOpenUseridResult useridToOpenUserid(ArrayList<String> useridList) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    JsonArray jsonArray = new JsonArray();
+    for(String userid:useridList){
+      jsonArray.add(userid);
+    }
+    jsonObject.add("userid_list", jsonArray);
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(USERID_TO_OPEN_USERID);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return WxCpUseridToOpenUseridResult.fromJson(responseContent);
+  }
+
 }

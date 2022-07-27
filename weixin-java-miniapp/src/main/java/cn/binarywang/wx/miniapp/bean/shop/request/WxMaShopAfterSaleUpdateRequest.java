@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.shop.request;
 
+import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopAfterSaleAddRequest.UploadMediaList;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,16 @@ public class WxMaShopAfterSaleUpdateRequest implements Serializable {
   private String openid;
   @SerializedName("out_aftersale_id")
   private String outAftersaleId;
+  @SerializedName("type")
+  private Integer type;
+  @SerializedName("orderamt")
+  private Long orderamt;
+  @SerializedName("refund_reason")
+  private String refundReason;
+  @SerializedName("refund_reason_type")
+  private Integer refundReasonType;
+  @SerializedName("media_list")
+  private UploadMediaList mediaList;
   @SerializedName("status")
   private Integer status;
   @SerializedName("finish_all_aftersale")

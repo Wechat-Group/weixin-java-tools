@@ -3,8 +3,10 @@ package me.chanjar.weixin.cp.api;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
+import me.chanjar.weixin.cp.bean.WxCpUseridToOpenUseridResult;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -217,4 +219,14 @@ public interface WxCpUserService {
    * @throws WxErrorException .
    */
   Integer getActiveStat(Date date) throws WxErrorException;
+
+  /**
+   * userid转换为open_userid
+   * 将自建应用或代开发应用获取的userid转换为第三方应用的userid
+   * https://developer.work.weixin.qq.com/document/path/95603
+   * @param useridList
+   * @return the WxCpUseridToOpenUseridResult
+   * @throws WxErrorException
+   */
+  WxCpUseridToOpenUseridResult useridToOpenUserid(ArrayList<String> useridList) throws WxErrorException;
 }

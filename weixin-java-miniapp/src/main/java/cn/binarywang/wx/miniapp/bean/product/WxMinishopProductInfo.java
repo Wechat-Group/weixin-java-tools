@@ -18,11 +18,17 @@ public class WxMinishopProductInfo implements Serializable {
   @SerializedName("product_id")
   private Integer productId;
 
+  @SerializedName("out_product_id")
+  private String outProductId;
+
   /**
    * 交易组件平台内部skuID，可填0（如果这个product_id下没有sku）
    */
   @SerializedName("sku_id")
   private Integer skuId;
+
+  @SerializedName("out_sku_id")
+  private String outSkuId;
   /**
    * 购买的数量
    * <pre>

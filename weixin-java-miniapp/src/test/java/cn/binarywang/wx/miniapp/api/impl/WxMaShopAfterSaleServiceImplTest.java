@@ -38,12 +38,11 @@ public class WxMaShopAfterSaleServiceImplTest {
       .outAftersaleId("318092069606883328X")
       .openid("odIi15CuQ0IQviqsnUMy6CKNetrMX")
       .type(1)
-      .createTime("2021-08-20 00:00:00")
       .status(1)
       .finishAllAftersale(0)
       .path("/pages/aftersale.html?out_aftersale_id=318092069606883328X")
       .refund(100L)
-      .productInfos(new ArrayList<>(Arrays.asList(productInfosBean)))
+      .productInfo(productInfosBean)
       .build();
     WxMaShopBaseResponse response = wxService.getShopAfterSaleService().add(request);
     assertThat(response).isNotNull();

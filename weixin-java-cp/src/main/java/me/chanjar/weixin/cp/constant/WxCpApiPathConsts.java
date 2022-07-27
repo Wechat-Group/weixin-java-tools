@@ -324,6 +324,7 @@ public interface WxCpApiPathConsts {
     String GET_EXTERNAL_CONTACT = "/cgi-bin/crm/get_external_contact?external_userid=";
     String GET_JOIN_QR_CODE = "/cgi-bin/corp/get_join_qrcode?size_type=";
     String GET_ACTIVE_STAT = "/cgi-bin/user/get_active_stat";
+    String USERID_TO_OPEN_USERID = "/cgi-bin/batch/userid_to_openuserid";
   }
 
   interface ExternalContact {

@@ -439,4 +439,12 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     }
     return jsonArray;
   }
+
+  @Override
+  public WxOpenResult getVersionInfo() throws WxErrorException {
+    JsonObject params = new JsonObject();
+    String response = post(API_GET_VERSION_INFO, GSON.toJson(params));
+    WxOpenResult result = WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+    return result;
+  }
 }
