@@ -113,7 +113,8 @@ public abstract class WxMaDeliveryBaseRequest implements Serializable {
             str = str.concat(getShopOrderId());
         }
         str = str.concat(getAppSecret());
-        return DigestUtils.sha1Hex(str);
+        this.deliverySign = DigestUtils.sha1Hex(str);
+        return this.deliverySign;
     }
 
 }

@@ -98,6 +98,7 @@ public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliverySe
    */
   @Override
   public AddOrderResponse addOrder(final AddOrderRequest request) throws WxErrorException {
+    request.getDeliverySign();
     return this.parse(this.wxMaService.post(WxMaApiUrlConstants.InstantDelivery.PlaceAnOrder.ADD_ORDER, request),
       AddOrderResponse.class);
   }
@@ -115,6 +116,7 @@ public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliverySe
    */
   @Override
   public GetOrderResponse getOrder(final GetOrderRequest request) throws WxErrorException {
+    request.getDeliverySign();
     return this.parse(this.wxMaService.post(WxMaApiUrlConstants.InstantDelivery.GET_ORDER, request),
       GetOrderResponse.class);
   }
@@ -131,6 +133,7 @@ public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliverySe
    */
   @Override
   public CancelOrderResponse cancelOrder(final CancelOrderRequest request) throws WxErrorException {
+    request.getDeliverySign();
     return this.parse(this.wxMaService.post(WxMaApiUrlConstants.InstantDelivery.Cancel.CANCEL_ORDER, request),
       CancelOrderResponse.class);
   }
@@ -147,6 +150,7 @@ public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliverySe
    */
   @Override
   public AbnormalConfirmResponse abnormalConfirm(final AbnormalConfirmRequest request) throws WxErrorException {
+    request.getDeliverySign();
     return this.parse(this.wxMaService.post(WxMaApiUrlConstants.InstantDelivery.Cancel.ABNORMAL_CONFIRM, request),
       AbnormalConfirmResponse.class);
   }

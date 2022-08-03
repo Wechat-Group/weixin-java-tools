@@ -34,6 +34,18 @@ public class TemplateCardButton implements Serializable {
    */
   private String key;
 
+  /**
+   * 按钮点击事件类型，0 或不填代表回调点击事件，1 代表跳转url
+   */
+  private int type;
+
+  /**
+   * 跳转事件的url，button_list.type是1时必填
+   */
+  private String url;
+
+
+
   public JsonObject toJson() {
     JsonObject btnObject = new JsonObject();
 
@@ -44,6 +56,10 @@ public class TemplateCardButton implements Serializable {
       btnObject.addProperty("style", this.getStyle());
     }
     btnObject.addProperty("key", this.getKey());
+    btnObject.addProperty("type", this.getType());
+    if (null != this.getUrl()) {
+      btnObject.addProperty("url", this.getUrl());
+    }
     return btnObject;
   }
 }

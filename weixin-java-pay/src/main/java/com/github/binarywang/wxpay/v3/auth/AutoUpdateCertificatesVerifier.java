@@ -123,7 +123,7 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
    * 检查证书是否在有效期内，如果不在有效期内则进行更新
    */
   private void checkAndAutoUpdateCert() {
-    if (instant == null || instant.plus(minutesInterval, ChronoUnit.MINUTES).compareTo(Instant.now()) >= 0) {
+    if (instant == null || instant.plus(minutesInterval, ChronoUnit.MINUTES).compareTo(Instant.now()) <= 0) {
       if (lock.tryLock()) {
         try {
           autoUpdateCert();

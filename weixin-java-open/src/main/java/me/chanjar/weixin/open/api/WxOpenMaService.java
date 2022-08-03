@@ -713,6 +713,6 @@ public interface WxOpenMaService extends WxMaService {
    * @return the wx open result
    * @throws WxErrorException the wx error exception
    */
-  WxOpenResult getVersionInfo() throws WxErrorException;
+  WxOpenVersioninfoResult getVersionInfo() throws WxErrorException;
 
 }
