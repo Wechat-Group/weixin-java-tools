@@ -24,7 +24,7 @@ wx:
 wx:
   pay:
     appId: xxxxxxxxxxx
-    mchId: 1511367551 #商户id
+    mchId: 15xxxxxxxxx #商户id
     apiV3Key: Dc1DBwSc094jACxxxxxxxxxxxxxxx #V3密钥
     certSerialNo: 62C6CEAA360BCxxxxxxxxxxxxxxx
     privateKeyPath: classpath:cert/apiclient_key.pem #apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径
