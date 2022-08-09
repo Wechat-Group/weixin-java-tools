@@ -5,6 +5,7 @@ import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 import me.chanjar.weixin.cp.bean.WxCpUseridToOpenUseridResult;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
+import me.chanjar.weixin.cp.bean.user.WxCpDeptUserResult;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -224,9 +225,25 @@ public interface WxCpUserService {
    * userid转换为open_userid
    * 将自建应用或代开发应用获取的userid转换为第三方应用的userid
    * https://developer.work.weixin.qq.com/document/path/95603
+   *
    * @param useridList
    * @return the WxCpUseridToOpenUseridResult
    * @throws WxErrorException
    */
   WxCpUseridToOpenUseridResult useridToOpenUserid(ArrayList<String> useridList) throws WxErrorException;
+
+  /**
+   * 获取成员ID列表
+   * 获取企业成员的userid与对应的部门ID列表，预计于2022年8月8号发布。若需要获取其他字段，参见「适配建议」。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/user/list_id?access_token=ACCESS_TOKEN
+   *
+   * @param cursor
+   * @param limit
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpDeptUserResult getUserListId(String cursor, Integer limit) throws WxErrorException;
+
 }

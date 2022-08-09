@@ -1,23 +1,26 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.testng.annotations.*;
-
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.Gender;
 import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
+import me.chanjar.weixin.cp.bean.user.WxCpDeptUserResult;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertNotNull;
 
 /**
  * <pre>
@@ -26,6 +29,7 @@ import static org.testng.Assert.*;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Slf4j
 @Guice(modules = ApiTestModule.class)
 public class WxCpUserServiceImplTest {
   @Inject
@@ -129,4 +133,20 @@ public class WxCpUserServiceImplTest {
     System.out.printf("active stat: %d", activeStat);
     assertNotNull(activeStat);
   }
+
+  /**
+   * 获取成员ID列表
+   * 获取企业成员的userid与对应的部门ID列表，预计于2022年8月8号发布。若需要获取其他字段，参见「适配建议」。
+   * <p>
+   * https://developer.work.weixin.qq.com/document/40856
+   *
+   * @throws WxErrorException
+   */
+  @Test
+  public void testGetUserListId() throws WxErrorException {
+    WxCpDeptUserResult result = this.wxCpService.getUserService().getUserListId(null, 10);
+    log.info("返回结果为：{}", result.toJson());
+    assertNotNull(result);
+  }
+
 }
