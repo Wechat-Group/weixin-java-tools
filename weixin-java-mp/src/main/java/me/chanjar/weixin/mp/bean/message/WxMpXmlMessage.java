@@ -190,6 +190,12 @@ public class WxMpXmlMessage implements Serializable {
   // 群发消息返回的结果
   ///////////////////////////////////////
   /**
+   * 群发的消息ID
+   */
+  @XStreamAlias("MsgID")
+  @JacksonXmlProperty(localName = "MsgID")
+  private Long massMsgId;
+  /**
    * 群发的结果.
    */
   @XStreamAlias("Status")
