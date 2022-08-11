@@ -1,6 +1,5 @@
 package me.chanjar.weixin.cp.util.crypto;
 
-import com.google.common.io.BaseEncoding;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.crypto.WxCryptUtil;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -61,7 +60,7 @@ public class WxCpCryptUtil extends WxCryptUtil {
    * @throws Exception
    */
   public static String decryptPriKeyByPKCS8(String encryptRandomKey, String msgAuditPriKey) throws Exception {
-    String privateKey = msgAuditPriKey.replaceAll("\\n", "")
+    String privateKey = msgAuditPriKey.replaceAll("(\r\n|\r|\n|\n\r)", "")
       .replace("-----BEGIN PRIVATE KEY-----", "")
       .replace("-----END PRIVATE KEY-----", "")
       .replaceAll(" ", "");
@@ -87,7 +86,7 @@ public class WxCpCryptUtil extends WxCryptUtil {
    * @throws Exception
    */
   public static String decryptPriKeyByPKCS1(String encryptRandomKey, String msgAuditPriKey) throws Exception {
-    String privateKey = msgAuditPriKey.replaceAll("\\n", "")
+    String privateKey = msgAuditPriKey.replaceAll("(\r\n|\r|\n|\n\r)", "")
       .replace("-----BEGIN RSA PRIVATE KEY-----", "")
       .replace("-----END RSA PRIVATE KEY-----", "")
       .replaceAll(" ", "");
