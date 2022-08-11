@@ -76,11 +76,11 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     osLib.addAll(fileLib);
 
     Finance.loadingLibraries(osLib, prefixPath);
-    long sdk = Finance.SingletonSDK();
+    long sdk = Finance.NewSdk();
 
     long ret = Finance.Init(sdk, cpService.getWxCpConfigStorage().getCorpId(), cpService.getWxCpConfigStorage().getCorpSecret());
     if (ret != 0) {
-      Finance.DestroySingletonSDK(sdk);
+      Finance.DestroySdk(sdk);
       throw new WxErrorException("init sdk err ret " + ret);
     }
 
@@ -88,7 +88,7 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     ret = Finance.GetChatData(sdk, seq, limit, proxy, passwd, timeout, slice);
     if (ret != 0) {
       Finance.FreeSlice(slice);
-      Finance.DestroySingletonSDK(sdk);
+      Finance.DestroySdk(sdk);
       throw new WxErrorException("getchatdata err ret " + ret);
     }
 
@@ -97,20 +97,21 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     Finance.FreeSlice(slice);
     WxCpChatDatas chatDatas = WxCpChatDatas.fromJson(content);
     if (chatDatas.getErrCode().intValue() != 0) {
-      Finance.DestroySingletonSDK(sdk);
+      Finance.DestroySdk(sdk);
       throw new WxErrorException(chatDatas.toJson());
     }
 
+    chatDatas.setSdk(sdk);
     return chatDatas;
   }
 
   @Override
-  public WxCpChatModel getDecryptData(@NonNull WxCpChatDatas.WxCpChatData chatData, @NonNull Integer pkcs1) throws Exception {
-    String plainText = this.decryptChatData(chatData, pkcs1);
+  public WxCpChatModel getDecryptData(@NonNull long sdk, @NonNull WxCpChatDatas.WxCpChatData chatData, @NonNull Integer pkcs1) throws Exception {
+    String plainText = this.decryptChatData(sdk, chatData, pkcs1);
     return WxCpChatModel.fromJson(plainText);
   }
 
-  public String decryptChatData(WxCpChatDatas.WxCpChatData chatData, Integer pkcs1) throws Exception {
+  public String decryptChatData(long sdk, WxCpChatDatas.WxCpChatData chatData, Integer pkcs1) throws Exception {
     /**
      * 企业获取的会话内容，使用企业自行配置的消息加密公钥进行加密，企业可用自行保存的私钥解开会话内容数据。
      * msgAuditPriKey 会话存档私钥不能为空
@@ -124,7 +125,6 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     /**
      * 每次使用DecryptData解密会话存档前需要调用NewSlice获取一个slice，在使用完slice中数据后，还需要调用FreeSlice释放。
      */
-    long sdk = Finance.SingletonSDK();
     long msg = Finance.NewSlice();
 
     /**
@@ -135,7 +135,7 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     int ret = Finance.DecryptData(sdk, decryptByPriKey, chatData.getEncryptChatMsg(), msg);
     if (ret != 0) {
       Finance.FreeSlice(msg);
-      Finance.DestroySingletonSDK(sdk);
+      Finance.DestroySdk(sdk);
       throw new WxErrorException("msg err ret " + ret);
     }
 
@@ -148,12 +148,12 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   }
 
   @Override
-  public String getChatPlainText(WxCpChatDatas.@NonNull WxCpChatData chatData, @NonNull Integer pkcs1) throws Exception {
-    return this.decryptChatData(chatData, pkcs1);
+  public String getChatPlainText(@NonNull long sdk, WxCpChatDatas.@NonNull WxCpChatData chatData, @NonNull Integer pkcs1) throws Exception {
+    return this.decryptChatData(sdk, chatData, pkcs1);
   }
 
   @Override
-  public void getMediaFile(@NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout, @NonNull String targetFilePath) throws WxErrorException {
+  public void getMediaFile(@NonNull long sdk, @NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout, @NonNull String targetFilePath) throws WxErrorException {
     /**
      * 1、媒体文件每次拉取的最大size为512k，因此超过512k的文件需要分片拉取。
      * 2、若该文件未拉取完整，sdk的IsMediaDataFinish接口会返回0，同时通过GetOutIndexBuf接口返回下次拉取需要传入GetMediaData的indexbuf。
@@ -166,13 +166,13 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
     String indexbuf = "";
     int ret, data_len = 0;
+    log.debug("正在分片拉取媒体文件 sdkFileId为{}", sdkfileid);
     while (true) {
       long mediaData = Finance.NewMediaData();
-      long sdk = Finance.SingletonSDK();
       ret = Finance.GetMediaData(sdk, indexbuf, sdkfileid, proxy, passwd, timeout, mediaData);
       if (ret != 0) {
         Finance.FreeMediaData(mediaData);
-        Finance.DestroySingletonSDK(sdk);
+        Finance.DestroySdk(sdk);
         throw new WxErrorException("getmediadata err ret " + ret);
       }
 
