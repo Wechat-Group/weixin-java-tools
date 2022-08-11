@@ -3,10 +3,13 @@ package me.chanjar.weixin.cp.api;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.living.*;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
+import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 import org.eclipse.jetty.util.ajax.JSON;
 import org.testng.annotations.Test;
 
@@ -18,7 +21,8 @@ import java.util.Date;
  * 企业微信直播测试类.
  * 官方文档：https://open.work.weixin.qq.com/api/doc/90000/90135/93632
  *
- * @author Wang_Wong
+ * @author <a href="https://github.com/0katekate0">Wang_Wong</a>
+ * @date 2021-12-23
  */
 @Slf4j
 public class WxCpLivingTest {
@@ -35,6 +39,31 @@ public class WxCpLivingTest {
     wxCpConfigStorage = config;
     wxCpService = new WxCpServiceImpl();
     wxCpService.setWxCpConfigStorage(config);
+
+
+    /**
+     * 直播回调事件
+     * 一场完整的直播，会经历 预约直播/开始直播/结束直播 等一系列状态变更。
+     * 为了让企业实时获取直播的动态，当直播状态变更后，企业微信会将该变更推送到开发者配置的回调URL。
+     * 只有通过接口创建的预约/立即直播才会回调。
+     *
+     * 请注意，只有用企业微信api创建的直播才能收到回调，且调用创建直播接口的应用，要配置好回调url。
+     */
+    String livingXml = "<xml>\n" +
+      "   <ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "   <FromUserName><![CDATA[fromUser]]></FromUserName> \n" +
+      "   <CreateTime>1348831860</CreateTime>\n" +
+      "   <MsgType><![CDATA[event]]></MsgType>\n" +
+      "   <Event><![CDATA[living_status_change]]></Event>\n" +
+      "   <LivingId><![CDATA[LivingId]]></LivingId>\n" +
+      "   <Status>1</Status>\n" +
+      "   <AgentID>1</AgentID>\n" +
+      "</xml>";
+
+    final WxCpXmlMessage livingXmlMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, livingXml);
+    livingXmlMsg.setAllFieldsMap(XmlUtils.xml2Map(livingXml));
+    log.info("livingXmlMsg:{}", JSON.toString(livingXmlMsg));
+
 
     /**
      * 测试创建直播

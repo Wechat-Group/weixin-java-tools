@@ -434,10 +434,19 @@ public class WxCpXmlMessage implements Serializable {
    * 1. 群发的结果.
    * 2. 通讯录变更事件
    * 激活状态：1=已激活 2=已禁用 4=未激活 已激活代表已激活企业微信或已关注微工作台（原企业号）.
+   * 3. 直播回调事件
+   * 直播状态 ，0：预约中，1：直播中，2：已结束，4：已取消 （已过期状态目前没有回调）
    */
   @XStreamAlias("Status")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String status;
+
+  /**
+   * 直播ID
+   */
+  @XStreamAlias("LivingId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String livingId;
 
   /**
    * group_id下粉丝数；或者openid_list中的粉丝数.
