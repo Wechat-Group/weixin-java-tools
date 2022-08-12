@@ -8,6 +8,7 @@ import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.bean.living.*;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import me.chanjar.weixin.cp.constant.WxCpConsts;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 import org.eclipse.jetty.util.ajax.JSON;
@@ -63,6 +64,12 @@ public class WxCpLivingTest {
     final WxCpXmlMessage livingXmlMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, livingXml);
     livingXmlMsg.setAllFieldsMap(XmlUtils.xml2Map(livingXml));
     log.info("livingXmlMsg:{}", JSON.toString(livingXmlMsg));
+
+    /**
+     * 直播回调事件常量
+     * https://developer.work.weixin.qq.com/document/path/94145
+     */
+    String livingStatusChange = WxCpConsts.EventType.LIVING_STATUS_CHANGE;
 
 
     /**

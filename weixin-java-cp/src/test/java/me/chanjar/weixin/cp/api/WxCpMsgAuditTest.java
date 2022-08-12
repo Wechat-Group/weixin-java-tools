@@ -104,7 +104,7 @@ public class WxCpMsgAuditTest {
      * <aesKey></aesKey> // 回调配置的EncodingAESKey
      *
      * // 企业微信会话存档
-     * // 1、会话存档私钥，一定要加上前缀！！
+     * // 1、会话存档私钥，最好去除前缀和换行，如下所示！
      * // 2、仔细配置windows以及linux环境sdk路径
      * <msgAuditPriKey>MIxxx893B2pggd1r95T8k2QxxxxbD6xxxxmXsskn+5XunyR1WJlJGqgi0OMVGYvSfkNb9kD50fM21CGLcN1y4miL9fVNBIsvJmIUeJCNS8TioAVGFvh2EgzjqTR1gH</msgAuditPriKey>
      * <msgAuditLibPath>/www/osfile/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
@@ -131,6 +131,17 @@ public class WxCpMsgAuditTest {
      *       secret: xIpum7Yt4NMXcyxdzcQ2l_46BG4Qxxxxxxxxxxx
      *       token:
      *       aesKey:
+     *       msgAuditPriKey: MIxxx893B2pggd1r95T8k2QxxxxbD6xxxxmXsskn+5XunyR1WJlJGqgi0OMVGYvSfkNb9kD50fM21CGLcN1y4miL9fVNBIsvJmIUeJCNS8TioAVGFvh2EgzjqTR1gHxxx
+     *       msgAuditLibPath: /www/osfile/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so
+     *
+     *
+     * 在线生成非对称加密公钥私钥对：
+     * http://web.chacuo.net/netrsakeypair
+     *
+     *
+     * 或者可以在linux上使用如下命令生成公钥私钥对：
+     * openssl genrsa -out private_key.pem 2048
+     * openssl rsa -in private_key.pem -pubout -out public_key.pem
      * /
 
     /**
@@ -262,7 +273,7 @@ public class WxCpMsgAuditTest {
         }
       }
       // 注意：
-      // 当此批次数据拉取完毕后，可以释放此次sdk
+      // 当此批次数据拉取完毕后，应释放此次sdk
       log.info("释放sdk {}", chatDatas.getSdk());
       Finance.DestroySdk(chatDatas.getSdk());
 

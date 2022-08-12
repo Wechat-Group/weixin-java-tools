@@ -154,6 +154,11 @@ public class WxCpConsts {
      */
     public static final String MSGAUDIT_NOTIFY = "msgaudit_notify";
 
+    /**
+     * 直播回调事件
+     */
+    public static final String LIVING_STATUS_CHANGE = "living_status_change";
+
   }
 
   /**
