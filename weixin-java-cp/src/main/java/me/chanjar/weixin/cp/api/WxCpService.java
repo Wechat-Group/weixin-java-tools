@@ -457,6 +457,13 @@ public interface WxCpService extends WxService {
   WxCpOaCalendarService getOaCalendarService();
 
   /**
+   * 获取会议室相关接口的服务类对象
+   *
+   * @return the oa meetingroom service
+   */
+  WxCpOaMeetingRoomService getOaMeetingRoomService();
+
+  /**
    * 获取日程相关接口的服务类对象
    *
    * @return the oa schedule service
