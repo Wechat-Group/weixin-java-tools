@@ -536,6 +536,10 @@ public class WxMaApiUrlConstants {
       String UPDATE_USER_COUPON = "https://api.weixin.qq.com/shop/coupon/update_user_coupon";
       String UPDATE_USER_COUPON_STATUS = "https://api.weixin.qq.com/shop/coupon/update_usercoupon_status";
     }
+
+    interface Pay {
+      String CREATE_ORDER = "https://api.weixin.qq.com/shop/pay/createorder";
+    }
   }
 
   /**

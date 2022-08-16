@@ -14,7 +14,7 @@ import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 import me.chanjar.weixin.cp.bean.WxCpUseridToOpenUseridResult;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
+import me.chanjar.weixin.cp.bean.user.WxCpDeptUserResult;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.time.FastDateFormat;
 
@@ -231,7 +231,7 @@ public class WxCpUserServiceImpl implements WxCpUserService {
   public WxCpUseridToOpenUseridResult useridToOpenUserid(ArrayList<String> useridList) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     JsonArray jsonArray = new JsonArray();
-    for(String userid:useridList){
+    for (String userid : useridList) {
       jsonArray.add(userid);
     }
     jsonObject.add("userid_list", jsonArray);
@@ -239,5 +239,20 @@ public class WxCpUserServiceImpl implements WxCpUserService {
     String responseContent = this.mainService.post(url, jsonObject.toString());
     return WxCpUseridToOpenUseridResult.fromJson(responseContent);
   }
+
+  @Override
+  public WxCpDeptUserResult getUserListId(String cursor, Integer limit) throws WxErrorException {
+    String apiUrl = this.mainService.getWxCpConfigStorage().getApiUrl(USER_LIST_ID);
+    JsonObject jsonObject = new JsonObject();
+    if (cursor != null) {
+      jsonObject.addProperty("cursor", cursor);
+    }
+    if (limit != null) {
+      jsonObject.addProperty("limit", limit);
+    }
+    String responseContent = this.mainService.post(apiUrl, jsonObject.toString());
+    return WxCpDeptUserResult.fromJson(responseContent);
+  }
+
 
 }

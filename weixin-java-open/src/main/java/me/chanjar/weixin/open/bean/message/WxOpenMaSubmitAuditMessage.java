@@ -47,4 +47,10 @@ public class WxOpenMaSubmitAuditMessage implements Serializable {
    */
   @SerializedName("feedback_stuff")
   private String feedbackStuff;
+
+  /**
+   * 用于声明是否不使用“代码中检测出但是未配置的隐私相关接口”
+   */
+  @SerializedName("privacy_api_not_use")
+  private Boolean privacyApiNotUse;
 }

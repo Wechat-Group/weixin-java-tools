@@ -72,6 +72,13 @@ public class WxCpDepartmentServiceImplTest {
     this.wxCpService.getDepartmentService().delete(this.depart.getId());
   }
 
+  /**
+   * 获取子部门ID列表
+   * https://developer.work.weixin.qq.com/document/path/95350
+   *
+   * @param id
+   * @throws WxErrorException
+   */
   @Test(dataProvider = "departIds")
   public void testSimpleList(Long id) throws WxErrorException {
     System.out.println("=================获取子部门ID列表");

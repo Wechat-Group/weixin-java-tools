@@ -45,6 +45,9 @@ public class ContentValue implements Serializable {
   @SerializedName("date_range")
   private Attendance.DataRange dateRange;
 
+  @SerializedName("punch_correction")
+  private PunchCorrection punchCorrection;
+
   @Data
   public static class Date implements Serializable {
     private static final long serialVersionUID = -6181554080062231138L;
@@ -167,6 +170,13 @@ public class ContentValue implements Serializable {
     private static final long serialVersionUID = 3152481506054355937L;
     private String text;
     private String lang;
+  }
+
+  @Data
+  public static class PunchCorrection implements Serializable {
+    private static final long serialVersionUID = 2120523160034749170L;
+    private String state;
+    private Long time;
   }
 
 }
