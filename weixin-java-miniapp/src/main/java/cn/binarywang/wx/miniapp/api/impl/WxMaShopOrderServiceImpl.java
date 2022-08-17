@@ -56,7 +56,7 @@ public class WxMaShopOrderServiceImpl implements WxMaShopOrderService {
   }
 
   @Override
-  public WxMaShopGetOrderResponse getOrder(Integer orderId, String outOrderId, String openid) throws WxErrorException {
+  public WxMaShopGetOrderResponse getOrder(Long orderId, String outOrderId, String openid) throws WxErrorException {
     return this.post(ORDER_GET, GsonHelper.buildJsonObject("order_id", orderId, "out_order_id", outOrderId,
       "openid", openid), WxMaShopGetOrderResponse.class);
   }
