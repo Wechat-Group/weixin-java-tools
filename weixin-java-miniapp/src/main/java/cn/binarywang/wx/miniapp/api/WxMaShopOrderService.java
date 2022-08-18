@@ -19,7 +19,7 @@ public interface WxMaShopOrderService {
 
   WxMaShopBaseResponse orderPay(WxMaShopOrderPayRequest request) throws WxErrorException;
 
-  WxMaShopGetOrderResponse getOrder(Integer orderId, String outOrderId, String openid)
+  WxMaShopGetOrderResponse getOrder(Long orderId, String outOrderId, String openid)
     throws WxErrorException;
 
 

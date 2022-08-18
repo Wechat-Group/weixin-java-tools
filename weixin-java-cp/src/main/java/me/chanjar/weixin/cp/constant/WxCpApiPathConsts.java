@@ -152,6 +152,15 @@ public interface WxCpApiPathConsts {
     String SCHEDULE_LIST = "/cgi-bin/oa/schedule/get_by_calendar";
 
     /**
+     * 会议
+     * https://developer.work.weixin.qq.com/document/path/93624
+     */
+    String MEETINGROOM_ADD = "/cgi-bin/oa/meetingroom/add";
+    String MEETINGROOM_LIST = "/cgi-bin/oa/meetingroom/list";
+    String MEETINGROOM_EDIT = "/cgi-bin/oa/meetingroom/edit";
+    String MEETINGROOM_DEL = "/cgi-bin/oa/meetingroom/del";
+
+    /**
      * 微盘
      * https://developer.work.weixin.qq.com/document/path/93654
      */
@@ -325,6 +334,8 @@ public interface WxCpApiPathConsts {
     String GET_JOIN_QR_CODE = "/cgi-bin/corp/get_join_qrcode?size_type=";
     String GET_ACTIVE_STAT = "/cgi-bin/user/get_active_stat";
     String USERID_TO_OPEN_USERID = "/cgi-bin/batch/userid_to_openuserid";
+
+    String USER_LIST_ID = "/cgi-bin/user/list_id";
   }
 
   interface ExternalContact {

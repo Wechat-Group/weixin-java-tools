@@ -1,6 +1,7 @@
 package me.chanjar.weixin.cp.api;
 
 import com.google.common.collect.Lists;
+import com.tencent.wework.Finance;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
@@ -103,7 +104,7 @@ public class WxCpMsgAuditTest {
      * <aesKey></aesKey> // 回调配置的EncodingAESKey
      *
      * // 企业微信会话存档
-     * // 1、会话存档私钥，一定要加上前缀！！
+     * // 1、会话存档私钥，最好去除前缀和换行，如下所示！
      * // 2、仔细配置windows以及linux环境sdk路径
      * <msgAuditPriKey>MIxxx893B2pggd1r95T8k2QxxxxbD6xxxxmXsskn+5XunyR1WJlJGqgi0OMVGYvSfkNb9kD50fM21CGLcN1y4miL9fVNBIsvJmIUeJCNS8TioAVGFvh2EgzjqTR1gH</msgAuditPriKey>
      * <msgAuditLibPath>/www/osfile/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
@@ -114,7 +115,34 @@ public class WxCpMsgAuditTest {
      * <msgAuditLibPath>D:/WorkSpace/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
      * Linux:
      * <msgAuditLibPath>/www/osfile/work_msg_storage/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so</msgAuditLibPath>
-     */
+     *
+     *
+     * yml配置（支持多个corpId）：
+     * wx:
+     *   cp:
+     *     appConfigs:
+     *     - agentId: 10001 #客户联系
+     *       corpId: xxxxxxxxxxx
+     *       secret: T5fTj1n-sBAT4rKNW5c9IYNfPdXZxxxxxxxxxxx
+     *       token: 2bSNqTcLtxxxxxxxxxxx
+     *       aesKey: AXazu2Xyw44SNY1x8go2phn9p9B2xxxxxxxxxxx
+     *     - agentId: 10002 #会话内容存档
+     *       corpId: xxxxxxxxxxx
+     *       secret: xIpum7Yt4NMXcyxdzcQ2l_46BG4Qxxxxxxxxxxx
+     *       token:
+     *       aesKey:
+     *       msgAuditPriKey: MIxxx893B2pggd1r95T8k2QxxxxbD6xxxxmXsskn+5XunyR1WJlJGqgi0OMVGYvSfkNb9kD50fM21CGLcN1y4miL9fVNBIsvJmIUeJCNS8TioAVGFvh2EgzjqTR1gHxxx
+     *       msgAuditLibPath: /www/osfile/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,libWeWorkFinanceSdk_Java.so
+     *
+     *
+     * 在线生成非对称加密公钥私钥对：
+     * http://web.chacuo.net/netrsakeypair
+     *
+     *
+     * 或者可以在linux上使用如下命令生成公钥私钥对：
+     * openssl genrsa -out private_key.pem 2048
+     * openssl rsa -in private_key.pem -pubout -out public_key.pem
+     * /
 
     /**
      * 建议放到redis，本次请求获取消息记录开始的seq值。首次访问填写0，非首次使用上次企业微信返回的最大seq。允许从任意seq重入拉取。
@@ -145,13 +173,13 @@ public class WxCpMsgAuditTest {
 //          Integer publickeyVer = chatData.getPublickeyVer();
 
           // 获取明文数据
-          final String chatPlainText = cpService.getMsgAuditService().getChatPlainText(chatData, 2);
+          final String chatPlainText = cpService.getMsgAuditService().getChatPlainText(chatDatas.getSdk(), chatData, 2);
           final WxCpChatModel wxCpChatModel = WxCpChatModel.fromJson(chatPlainText);
           log.info("明文数据为：{}", wxCpChatModel.toJson());
 
           // 获取消息数据
           // https://developer.work.weixin.qq.com/document/path/91774
-          final WxCpChatModel decryptData = cpService.getMsgAuditService().getDecryptData(chatData, 2);
+          final WxCpChatModel decryptData = cpService.getMsgAuditService().getDecryptData(chatDatas.getSdk(), chatData, 2);
           log.info("获取消息数据为：{}", decryptData.toJson());
 
           /**
@@ -239,13 +267,15 @@ public class WxCpMsgAuditTest {
              * 3、比如可以上传到阿里云oss或者腾讯云cos
              */
             String targetPath = path + md5Sum + suffix;
-            cpService.getMsgAuditService().getMediaFile(sdkFileId, null, null, 1000L, targetPath);
+            cpService.getMsgAuditService().getMediaFile(chatDatas.getSdk(), sdkFileId, null, null, 1000L, targetPath);
 
           }
-
         }
-
       }
+      // 注意：
+      // 当此批次数据拉取完毕后，应释放此次sdk
+      log.info("释放sdk {}", chatDatas.getSdk());
+      Finance.DestroySdk(chatDatas.getSdk());
 
     }
 

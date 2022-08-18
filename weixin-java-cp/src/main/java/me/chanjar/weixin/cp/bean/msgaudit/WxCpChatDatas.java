@@ -12,7 +12,8 @@ import java.util.List;
 /**
  * 聊天记录数据内容.
  *
- * @author Wang_Wong
+ * @author <a href="https://github.com/0katekate0">Wang_Wong</a>
+ * @date 2022-01-17
  */
 @Data
 public class WxCpChatDatas implements Serializable {
@@ -23,6 +24,9 @@ public class WxCpChatDatas implements Serializable {
 
   @SerializedName("errmsg")
   private String errMsg;
+
+  @SerializedName("sdk")
+  private long sdk;
 
   @SerializedName("chatdata")
   private List<WxCpChatData> chatData;
