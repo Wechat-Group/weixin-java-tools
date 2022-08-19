@@ -3,9 +3,17 @@ package me.chanjar.weixin.open.api.impl;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
+import me.chanjar.weixin.open.bean.result.WxOpenResult;
+import me.chanjar.weixin.open.bean.tcb.ShareCloudBaseEnvRequest;
+import me.chanjar.weixin.open.bean.tcb.ShareCloudBaseEnvResponse;
+import me.chanjar.weixin.open.bean.tcbComponent.GetShareCloudBaseEnvResponse;
+import me.chanjar.weixin.open.bean.tcbComponent.GetTcbEnvListResponse;
 import me.chanjar.weixin.open.test.ApiTestModule;
+import org.testng.Assert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
+
+import java.util.Arrays;
 
 /**
  * 单元测试类.
@@ -170,5 +178,33 @@ public class WxOpenComponentServiceImplTest {
   @Test
   public void testStartPushTicket() throws WxErrorException {
     wxOpenComponentService.startPushTicket();
+  }
+
+  @Test
+  public void testGetShareCloudBaseEnv() throws WxErrorException {
+    GetShareCloudBaseEnvResponse response = wxOpenComponentService.getShareCloudBaseEnv(Arrays.asList("wxad2ee6fa2df2c46d"));
+    Assert.assertNotNull(response);
+  }
+
+  @Test
+  public void testGetTcbEnvListv() throws WxErrorException {
+    GetTcbEnvListResponse response = wxOpenComponentService.getTcbEnvList();
+    Assert.assertNotNull(response);
+  }
+
+  @Test
+  public void testChangeTcbEnv() throws WxErrorException {
+    WxOpenResult response = wxOpenComponentService.changeTcbEnv("test");
+    Assert.assertNotNull(response);
+  }
+
+  @Test
+  public void testShareCloudBaseEnv() throws WxErrorException {
+    ShareCloudBaseEnvRequest request = ShareCloudBaseEnvRequest.builder()
+      .data(Arrays.asList(ShareCloudBaseEnvRequest.DataDTO.builder()
+        .env("test-env-6gni9ity244a6ea3").appids(Arrays.asList("wx5fe6bb43205e9e07")).build()))
+      .build();
+    ShareCloudBaseEnvResponse response = wxOpenComponentService.shareCloudBaseEnv(request);
+    Assert.assertNotNull(response);
   }
 }

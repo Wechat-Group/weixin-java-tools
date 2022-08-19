@@ -15,6 +15,10 @@ import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCouponStock;
 import me.chanjar.weixin.open.bean.minishop.goods.*;
 import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountGoods;
 import me.chanjar.weixin.open.bean.result.*;
+import me.chanjar.weixin.open.bean.tcb.ShareCloudBaseEnvRequest;
+import me.chanjar.weixin.open.bean.tcb.ShareCloudBaseEnvResponse;
+import me.chanjar.weixin.open.bean.tcbComponent.GetShareCloudBaseEnvResponse;
+import me.chanjar.weixin.open.bean.tcbComponent.GetTcbEnvListResponse;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -130,9 +134,9 @@ public interface WxOpenComponentService {
    */
   String FAST_REGISTER_PERSONAL_WEAPP_SEARCH_URL = "https://api.weixin.qq.com/wxa/component/fastregisterpersonalweapp?action=query";
 
-    /**
-     * 快速创建试用小程序接口.
-     */
+  /**
+   * 快速创建试用小程序接口.
+   */
   String FAST_REGISTER_BETA_WEAPP_URL = "https://api.weixin.qq.com/wxa/component/fastregisterbetaweapp";
 
   /**
@@ -184,6 +188,13 @@ public interface WxOpenComponentService {
 
   String MINISHOP_GET_DELIVERY_COMPANY_URL = "https://api.weixin.qq.com/product/delivery/get_company_list";
 
+  String BATCH_GET_ENVID_URL = "https://api.weixin.qq.com/componenttcb/batchgetenvid";
+
+  String DESCRIBE_ENVS_URL = "https://api.weixin.qq.com/componenttcb/describeenvs";
+
+  String MODIFY_ENV_URL = "https://api.weixin.qq.com/tcb/modifyenv";
+
+  String BATCH_SHARE_ENV = "https://api.weixin.qq.com/componenttcb/batchshareenv";
 
   /**
    * Gets wx mp service by appid.
@@ -600,9 +611,9 @@ public interface WxOpenComponentService {
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Register_Mini_Programs/fastregisterpersonalweapp.html
    * 快速创建个人小程序
    *
-   * @param idname              个人用户名字
-   * @param wxuser              个人用户微信号
-   * @param componentPhone      第三方联系电话
+   * @param idname         个人用户名字
+   * @param wxuser         个人用户微信号
+   * @param componentPhone 第三方联系电话
    * @return the wx open result
    * @throws WxErrorException
    */
@@ -622,7 +633,7 @@ public interface WxOpenComponentService {
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/beta_Mini_Programs/fastregister.html
    * 注册试用小程序
    *
-   * @param name 小程序名称
+   * @param name   小程序名称
    * @param openid 微信用户的openid（不是微信号）
    * @return the wx open result
    * @throws WxErrorException
@@ -1020,4 +1031,44 @@ public interface WxOpenComponentService {
    * @return
    */
   WxOpenResult updateLimitDiscountStatus(String appId, Long taskId, Integer status) throws WxErrorException;
+
+  /**
+   * 查询环境共享信息
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/cloudbase-batch/env-mgnt/getShareCloudbaseEnv.html
+   *
+   * @param appids 要查询的appid
+   * @return
+   */
+  GetShareCloudBaseEnvResponse getShareCloudBaseEnv(List<String> appids) throws WxErrorException;
+
+
+  /**
+   * 获取环境信息
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/cloudbase-batch/env-mgnt/getTcbEnvList.html
+   *
+   * @return
+   * @throws WxErrorException
+   */
+  GetTcbEnvListResponse getTcbEnvList() throws WxErrorException;
+
+  /**
+   * 转换云环境
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/cloudbase-batch/env-mgnt/changeTcbEnv.html
+   *
+   * @param env 环境id
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult changeTcbEnv(String env) throws WxErrorException;
+
+
+  /**
+   * 环境共享
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/cloudbase-batch/env-mgnt/shareCloudbaseEnv.html
+   *
+   * @param request
+   * @return
+   * @throws WxErrorException
+   */
+  ShareCloudBaseEnvResponse shareCloudBaseEnv(ShareCloudBaseEnvRequest request) throws WxErrorException;
 }
