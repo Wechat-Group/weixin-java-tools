@@ -1,6 +1,7 @@
 package me.chanjar.weixin.open.api.impl;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -28,6 +29,10 @@ import me.chanjar.weixin.open.bean.minishop.goods.*;
 import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountGoods;
 import me.chanjar.weixin.open.bean.minishop.limitdiscount.LimitDiscountSku;
 import me.chanjar.weixin.open.bean.result.*;
+import me.chanjar.weixin.open.bean.tcb.ShareCloudBaseEnvRequest;
+import me.chanjar.weixin.open.bean.tcb.ShareCloudBaseEnvResponse;
+import me.chanjar.weixin.open.bean.tcbComponent.GetShareCloudBaseEnvResponse;
+import me.chanjar.weixin.open.bean.tcbComponent.GetTcbEnvListResponse;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
@@ -1221,5 +1226,38 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
 
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public GetShareCloudBaseEnvResponse getShareCloudBaseEnv(List<String> appids) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    JsonArray jsonArray = new JsonArray();
+    for(String appId : appids) {
+      jsonArray.add(appId);
+    }
+    jsonObject.add("appids", jsonArray);
+    String response = post(BATCH_GET_ENVID_URL, jsonObject.toString());
+    return WxOpenGsonBuilder.create().fromJson(response, GetShareCloudBaseEnvResponse.class);
+  }
+
+  @Override
+  public GetTcbEnvListResponse getTcbEnvList() throws WxErrorException {
+    String response = post(DESCRIBE_ENVS_URL, new JsonObject().toString());
+    return WxOpenGsonBuilder.create().fromJson(response, GetTcbEnvListResponse.class);
+  }
+
+  @Override
+  public WxOpenResult changeTcbEnv(String env) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("env", env);
+    String response = post(MODIFY_ENV_URL, jsonObject.toString());
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public ShareCloudBaseEnvResponse shareCloudBaseEnv(ShareCloudBaseEnvRequest request) throws WxErrorException {
+    Gson gson = new Gson();
+    String response = post(BATCH_SHARE_ENV, gson.toJson(request));
+    return WxOpenGsonBuilder.create().fromJson(response, ShareCloudBaseEnvResponse.class);
   }
 }
