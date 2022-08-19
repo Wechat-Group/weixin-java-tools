@@ -48,6 +48,8 @@ public class WxEntrustPapServiceImpl implements WxEntrustPapService {
   @Override
   public WxH5EntrustResult h5Sign(WxH5EntrustRequest wxH5EntrustRequest) throws WxPayException {
     wxH5EntrustRequest.checkAndSign(payService.getConfig());
+    // 微信最新接口signType不能参与签名，否则报错：签约参数签名校验错误
+    wxH5EntrustRequest.setSignType(null);
 
     String sign = SignUtils.createSign(wxH5EntrustRequest, WxPayConstants.SignType.HMAC_SHA256, payService.getConfig().getMchKey(), null);
     /**
