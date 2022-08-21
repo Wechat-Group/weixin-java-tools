@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.live.WxMaCreateRoomResult;
 import cn.binarywang.wx.miniapp.bean.live.WxMaLiveResult;
 import cn.binarywang.wx.miniapp.bean.live.WxMaLiveRoomInfo;
+import cn.binarywang.wx.miniapp.bean.live.WxMaLiveSharedCode;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
@@ -95,7 +96,7 @@ public class WxMaLiveServiceImplTest {
 
   @Test
   public void getSharedCode() throws Exception {
-    String result = this.wxService.getLiveService().getSharedCode(39, null);
+    WxMaLiveSharedCode result = this.wxService.getLiveService().getSharedCode(39, null);
     System.out.println(result);
   }
 

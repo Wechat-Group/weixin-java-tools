@@ -84,7 +84,7 @@ public interface WxMaLiveService {
    * @return .
    * @throws WxErrorException .
    */
-  String getSharedCode(Integer roomId, String params) throws WxErrorException;
+  WxMaLiveSharedCode getSharedCode(Integer roomId, String params) throws WxErrorException;
 
   /**
    * 获取直播房间列表.（分页）

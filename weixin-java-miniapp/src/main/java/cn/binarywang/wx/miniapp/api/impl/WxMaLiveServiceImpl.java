@@ -87,7 +87,7 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
   }
 
   @Override
-  public String getSharedCode(Integer roomId, String params) throws WxErrorException {
+  public WxMaLiveSharedCode getSharedCode(Integer roomId, String params) throws WxErrorException {
     Map<String, Object> map = new HashMap<>(2);
     map.put(ROOM_ID, roomId);
     if (null != params) {
@@ -98,7 +98,7 @@ public class WxMaLiveServiceImpl implements WxMaLiveService {
     if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
-    return jsonObject.get("cdnUrl").getAsString();
+    return WxMaGsonBuilder.create().fromJson(responseContent, WxMaLiveSharedCode.class);
   }
 
   @Override
