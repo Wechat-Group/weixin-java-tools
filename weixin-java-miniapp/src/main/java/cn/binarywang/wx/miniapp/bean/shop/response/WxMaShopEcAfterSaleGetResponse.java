@@ -51,9 +51,9 @@ public class WxMaShopEcAfterSaleGetResponse extends WxMaShopBaseResponse impleme
     @Data
     public static class ProductInfoDTO implements Serializable {
       @SerializedName("out_product_id")
-      private Integer outProductId;
+      private String outProductId;
       @SerializedName("out_sku_id")
-      private Integer outSkuId;
+      private String outSkuId;
       @SerializedName("product_cnt")
       private Integer productCnt;
     }
