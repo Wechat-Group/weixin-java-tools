@@ -511,7 +511,8 @@ public class WxMaApiUrlConstants {
       String AFTERSALE_UPLOAD_CERTIFICATES = "https://api.weixin.qq.com/shop/ecaftersale/upload_certificates";
       String AFTERSALE_UPLOAD_DEADLINE = "https://api.weixin.qq.com/shop/aftersale/update_deadline";
       String AFTERSALE_GET_LIST = "https://api.weixin.qq.com/shop/ecaftersale/get_list";
-      String AFTERSALE_GET = "https://api.weixin.qq.com/shop/ecaftersale/get";
+      String AFTERSALE_GET = "https://api.weixin.qq.com/shop/aftersale/get";
+      String ECAFTERSALE_GET = "https://api.weixin.qq.com/shop/ecaftersale/get";
     }
 
     interface Sharer {
