@@ -329,13 +329,11 @@
   </dependencyManagement>
 
   <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
     <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <!--必须与 settings.xml 的 id 一致-->
+      <id>efashion-efashion-cloud-maven</id>
+      <name>maven</name>
+      <url>https://efashion-maven.pkg.coding.net/repository/efashion-cloud/maven/</url>
     </repository>
   </distributionManagement>
 
