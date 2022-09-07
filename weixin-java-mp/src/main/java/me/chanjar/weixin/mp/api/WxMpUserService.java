@@ -95,6 +95,19 @@ public interface WxMpUserService {
 
   /**
    * <pre>
+   * 获取用户列表（全部）
+   * 公众号可通过本接口来获取帐号的关注者列表，
+   * 关注者列表由一串OpenID（加密后的微信号，每个用户对每个公众号的OpenID是唯一的）组成。
+   * @see #userList(java.lang.String) 的增强，内部进行了多次数据拉取的汇总
+   * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140840&token=&lang=zh_CN
+   * http请求方式: GET（请使用https协议）
+   * 接口地址：https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&next_openid=NEXT_OPENID
+   * </pre>
+   */
+  WxMpUserList userList() throws WxErrorException;
+
+  /**
+   * <pre>
    * 微信公众号主体变更迁移用户 openid
    * 详情请见: http://kf.qq.com/faq/170221aUnmmU170221eUZJNf.html
    * http://kf.qq.com/faq/1901177NrqMr190117nqYJze.html
