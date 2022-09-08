@@ -3,6 +3,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopPayCreateOrderRequest;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopPayCreateOrderResponse;
+import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopPayGetOrderResponse;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import org.testng.annotations.Guice;
@@ -35,6 +36,12 @@ public class WxMaShopPayServiceImplTest {
         ))
         .build();
     WxMaShopPayCreateOrderResponse response = wxService.getWxMaShopPayService().createOrder(request);
+    assertThat(response).isNotNull();
+  }
+
+  @Test
+  public void testGetOrder() throws Exception {
+    WxMaShopPayGetOrderResponse response = wxService.getWxMaShopPayService().getOrder("457243057210572800");
     assertThat(response).isNotNull();
   }
 }
