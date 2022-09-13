@@ -7,9 +7,11 @@ import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopPayOrderRefundRequest;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopBaseResponse;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopPayCreateOrderResponse;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopPayGetOrderResponse;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Pay.*;
@@ -32,7 +34,8 @@ public class WxMaShopPayServiceImpl implements WxMaShopPayService {
 
   @Override
   public WxMaShopPayGetOrderResponse getOrder(String tradeNo) throws WxErrorException {
-    String response = this.wxMaService.post(GET_ORDER, tradeNo);
+    JsonObject request = GsonHelper.buildJsonObject("trade_no", tradeNo);
+    String response = this.wxMaService.post(GET_ORDER, request);
     return WxGsonBuilder.create().fromJson(response, WxMaShopPayGetOrderResponse.class);
   }
 
