@@ -56,20 +56,20 @@ public class WxMpUserServiceImpl implements WxMpUserService {
   @Override
   public WxMpUserList userList() throws WxErrorException {
     String responseContent = this.wxMpService.get(USER_GET_URL, null);
-    WxMpUserList merageList = new WxMpUserList();
+    WxMpUserList mergeList = new WxMpUserList();
 
     WxMpUserList wxMpUserList = WxMpUserList.fromJson(responseContent);
-    merageList.getOpenids().addAll(wxMpUserList.getOpenids());
-    merageList.setCount(wxMpUserList.getCount());
-    merageList.setTotal(wxMpUserList.getTotal());
+    mergeList.getOpenids().addAll(wxMpUserList.getOpenids());
+    mergeList.setCount(wxMpUserList.getCount());
+    mergeList.setTotal(wxMpUserList.getTotal());
 
     while (StringUtils.isNotEmpty(wxMpUserList.getNextOpenid())) {
       WxMpUserList nextReqUserList = userList(wxMpUserList.getNextOpenid());
-      merageList.getOpenids().addAll(nextReqUserList.getOpenids());
-      merageList.setCount(merageList.getCount() + nextReqUserList.getCount());
+      mergeList.getOpenids().addAll(nextReqUserList.getOpenids());
+      mergeList.setCount(mergeList.getCount() + nextReqUserList.getCount());
       wxMpUserList = nextReqUserList;
     }
-    return merageList;
+    return mergeList;
   }
 
   @Override
