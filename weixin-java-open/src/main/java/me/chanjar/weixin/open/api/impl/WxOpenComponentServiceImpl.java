@@ -607,6 +607,12 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     return WxOpenGetResult.fromJson(json);
   }
 
+  @Override
+  public WxOpenHaveResult haveOpen() throws WxErrorException {
+    String json = post(GET_OPEN_URL, null);
+    return WxOpenHaveResult.fromJson(json);
+  }
+
 
   @Override
   public WxOpenResult fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException {

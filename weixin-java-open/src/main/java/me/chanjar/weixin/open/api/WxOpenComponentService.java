@@ -116,6 +116,11 @@ public interface WxOpenComponentService {
   String GET_OPEN_URL = "https://api.weixin.qq.com/cgi-bin/open/get";
 
   /**
+   * 查询公众号/小程序是否绑定 open 帐号
+   */
+  String HAVE_OPEN_URL = "https://api.weixin.qq.com/cgi-bin/open/have";
+
+  /**
    * 快速创建小程序接口.
    */
   String FAST_REGISTER_WEAPP_URL = "https://api.weixin.qq.com/cgi-bin/component/fastregisterweapp?action=create";
@@ -574,6 +579,16 @@ public interface WxOpenComponentService {
    * @throws WxErrorException the wx error exception
    */
   WxOpenGetResult getOpenAccount(String appId, String appIdType) throws WxErrorException;
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/getbindopeninfo.html
+   * 查询公众号/小程序是否绑定 open 帐号
+   *
+   * @return 是否绑定 open 帐号，true表示绑定；false表示未绑定任何 open 帐号
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenHaveResult haveOpen() throws WxErrorException;
+
 
   /**
    * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21538208049W8uwq&token=&lang=zh_CN

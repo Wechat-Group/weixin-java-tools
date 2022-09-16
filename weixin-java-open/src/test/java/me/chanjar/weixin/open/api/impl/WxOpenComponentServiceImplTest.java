@@ -3,6 +3,7 @@ package me.chanjar.weixin.open.api.impl;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
+import me.chanjar.weixin.open.bean.result.WxOpenHaveResult;
 import me.chanjar.weixin.open.bean.result.WxOpenResult;
 import me.chanjar.weixin.open.bean.tcb.ShareCloudBaseEnvRequest;
 import me.chanjar.weixin.open.bean.tcb.ShareCloudBaseEnvResponse;
@@ -165,6 +166,11 @@ public class WxOpenComponentServiceImplTest {
 
   @Test
   public void testGetOpenAccount() {
+  }
+  @Test
+  public void testHaveOpen() throws WxErrorException {
+    WxOpenHaveResult wxOpenHaveResult = wxOpenComponentService.haveOpen();
+    Assert.assertNotNull(wxOpenHaveResult);
   }
 
   @Test
