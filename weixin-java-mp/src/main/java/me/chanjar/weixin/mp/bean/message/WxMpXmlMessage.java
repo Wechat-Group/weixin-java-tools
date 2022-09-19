@@ -831,6 +831,14 @@ public class WxMpXmlMessage implements Serializable {
   @JacksonXmlProperty(localName = "nsrsbh")
   private String nsrsbh;
 
+
+  /**
+   * 授权用户资料变更
+   */
+  @XStreamAlias("RevokeInfo")
+  @JacksonXmlProperty(localName = "RevokeInfo")
+  private String revokeInfo;
+
   /**
    * 加密消息
    */
