@@ -317,6 +317,11 @@ public class WxConsts {
     public static final String USER_INFO_MODIFIED = "user_info_modified";
 
     /**
+     * 用户撤回授权事件
+     */
+    public static final String USER_AUTHORIZATION_REVOKE = "user_authorization_revoke";
+
+    /**
      * 群发模板回调事件
      */
     public static final String TEMPLATE_SEND_JOB_FINISH = "TEMPLATESENDJOBFINISH";
