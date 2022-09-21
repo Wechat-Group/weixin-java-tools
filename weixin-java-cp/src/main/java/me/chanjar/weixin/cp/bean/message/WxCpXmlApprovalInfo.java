@@ -453,7 +453,7 @@ public class WxCpXmlApprovalInfo implements Serializable {
 
   @Data
   @XStreamAlias("CommentUserInfo")
-  private static class CommentUserInfo implements Serializable {
+  public static class CommentUserInfo implements Serializable {
     private static final long serialVersionUID = 5031739716823000947L;
 
     /**
