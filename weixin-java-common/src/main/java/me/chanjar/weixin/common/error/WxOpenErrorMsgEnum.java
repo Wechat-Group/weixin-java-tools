@@ -1137,6 +1137,11 @@ public enum WxOpenErrorMsgEnum {
   CODE_40222(40222, "invalid request idc domain"),
 
   /**
+   * empty media cover, please check the media
+   */
+  CODE_40229(40229, "媒体封面为空，请添加媒体封面"),
+
+  /**
    * 缺少 access_token 参数  access_token missing
    */
   CODE_41001(41001, "缺少 access_token 参数"),
