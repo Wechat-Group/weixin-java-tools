@@ -414,6 +414,10 @@ public class WxConsts {
     public static final String WEAPP_AUDIT_FAIL = "weapp_audit_fail";
 
     /**
+     * 小程序自定义交易组件支付通知
+     */
+    public static final  String OPEN_PRODUCT_ORDER_PAY = "open_product_order_pay";
+    /**
      * 点击菜单跳转小程序的事件推送
      */
     public static final String VIEW_MINIPROGRAM = "view_miniprogram";

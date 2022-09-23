@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -290,5 +291,41 @@ public class WxMaMessageTest {
       .containsEntry("ActionMsg", "揽件阶段-揽件成功")
       .containsEntry("Lat", "0")
       .containsEntry("Lng", "0");
+  }
+
+  /**
+   * 自定义交易组件付款通知事件测试用例
+   * msgType等于event且event等于WxConsts.EventType.OPEN_PRODUCT_ORDER_PAY
+   */
+  @Test
+  public void testFromXmlForOpenProductOrderPayEvent(){
+    String xml = "<xml>     \n" +
+      "     <ToUserName>gh_abcdefg</ToUserName> \n" +
+      "     <FromUserName>oABCD</FromUserName>      \n" +
+      "     <CreateTime>1642658087</CreateTime>     \n" +
+      "     <MsgType>event</MsgType>      \n" +
+      "     <Event>open_product_order_pay</Event>\n" +
+      "     <order_info>\n" +
+      "          <out_order_id>123456</out_order_id>\n" +
+      "          <order_id>1234567</order_id>\n" +
+      "          <transaction_id>42000000123123</transaction_id>\n" +
+      "          <pay_time>2021-12-30 22:31:00</pay_time>\n" +
+      "          <amount>10</amount>\n" +
+      "          <sp_openid>oNMZ-5C0SPGHUiKsTwnOXpSHzFvw</sp_openid>\n" +
+      "     </order_info>\n" +
+      "</xml>";
+    WxMaMessage wxMessage = WxMaMessage.fromXml(xml);
+    assertThat(wxMessage.getMsgType()).isEqualTo("event");
+    assertThat(wxMessage.getEvent()).isEqualTo(WxConsts.EventType.OPEN_PRODUCT_ORDER_PAY);
+    Map<String, Object> allFieldsMap = wxMessage.getAllFieldsMap();
+    Map<String, Object> orderInfo = (Map<String, Object>) allFieldsMap.get("order_info");
+    assertThat(orderInfo).isNotEmpty();
+    assertThat(orderInfo)
+      .containsEntry("out_order_id","123456")
+      .containsEntry("order_id","1234567")
+      .containsEntry("transaction_id","42000000123123")
+      .containsEntry("pay_time","2021-12-30 22:31:00")
+      .containsEntry("amount","10")
+      .containsEntry("sp_openid","oNMZ-5C0SPGHUiKsTwnOXpSHzFvw");
   }
 }
