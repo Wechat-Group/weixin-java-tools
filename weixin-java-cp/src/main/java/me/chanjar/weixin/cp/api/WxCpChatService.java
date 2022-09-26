@@ -49,7 +49,7 @@ public interface WxCpChatService {
    * 应用支持推送文本、图片、视频、文件、图文等类型.
    * 请求方式： POST（HTTPS）
    * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/appchat/send?access_token=ACCESS_TOKEN
-   * 文档地址：https://work.weixin.qq.com/api/doc#90000/90135/90248
+   * 文档地址：<a href="https://work.weixin.qq.com/api/doc#90000/90135/90248">...</a>
    *
    * @param message 要发送的消息内容对象
    * @throws WxErrorException 异常

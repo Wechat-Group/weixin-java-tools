@@ -29,7 +29,7 @@ public class WxPayScoreRequest implements Serializable {
     return WxGsonBuilder.create().toJson(this);
   }
 
-  /**
+  /**`
    * out_order_no : 1234323JKHDFE1243252
    * appid : wxd678efh567hg6787
    * service_id : 500001
@@ -43,6 +43,7 @@ public class WxPayScoreRequest implements Serializable {
    * notify_url : https://api.test.com
    * openid : oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
    * need_user_confirm : true
+   * profitSharing :Y-是，需要分账  N-否，不分账，字母要求大写，不传默认不分账
    */
   @SerializedName("out_order_no")
   private String outOrderNo;
@@ -67,7 +68,7 @@ public class WxPayScoreRequest implements Serializable {
   @SerializedName("need_user_confirm")
   private Boolean needUserConfirm;
   @SerializedName("profit_sharing")
-  private Boolean profitSharing;
+  private String profitSharing;
   @SerializedName("post_payments")
   private List<PostPayment> postPayments;
   @SerializedName("post_discounts")
