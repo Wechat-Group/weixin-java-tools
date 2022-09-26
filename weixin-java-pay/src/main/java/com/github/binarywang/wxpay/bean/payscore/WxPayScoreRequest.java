@@ -1,17 +1,15 @@
 package com.github.binarywang.wxpay.bean.payscore;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author doger.wang
@@ -43,7 +41,7 @@ public class WxPayScoreRequest implements Serializable {
    * notify_url : https://api.test.com
    * openid : oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
    * need_user_confirm : true
-   * profitSharing :Y-是，需要分账  N-否，不分账，字母要求大写，不传默认不分账
+   * profitSharing : false：不分账，默认：false,true：分账
    */
   @SerializedName("out_order_no")
   private String outOrderNo;
@@ -68,7 +66,7 @@ public class WxPayScoreRequest implements Serializable {
   @SerializedName("need_user_confirm")
   private Boolean needUserConfirm;
   @SerializedName("profit_sharing")
-  private String profitSharing;
+  private Boolean profitSharing;
   @SerializedName("post_payments")
   private List<PostPayment> postPayments;
   @SerializedName("post_discounts")

@@ -202,7 +202,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public String getPayBaseUrl() {
     if (this.getConfig().isUseSandboxEnv()) {
-      return this.getConfig().getPayBaseUrl() + "/sandboxnew";
+      return this.getConfig().getPayBaseUrl() + "/xdc/apiv2sandbox";
     }
 
     return this.getConfig().getPayBaseUrl();
@@ -213,10 +213,6 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     request.checkAndSign(this.getConfig());
 
     String url = this.getPayBaseUrl() + "/secapi/pay/refund";
-    if (this.getConfig().isUseSandboxEnv()) {
-      url = this.getConfig().getPayBaseUrl() + "/sandboxnew/pay/refund";
-    }
-
     String responseContent = this.post(url, request.toXML(), true);
     WxPayRefundResult result = BaseWxPayResult.fromXML(responseContent, WxPayRefundResult.class);
     result.composeRefundCoupons();
@@ -229,10 +225,6 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     request.checkAndSign(this.getConfig());
 
     String url = this.getPayBaseUrl() + "/secapi/pay/refundv2";
-    if (this.getConfig().isUseSandboxEnv()) {
-      url = this.getConfig().getPayBaseUrl() + "/sandboxnew/pay/refundv2";
-    }
-
     String responseContent = this.post(url, request.toXML(), true);
     WxPayRefundResult result = BaseWxPayResult.fromXML(responseContent, WxPayRefundResult.class);
     result.composePromotionDetails();
@@ -1087,7 +1079,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     WxPayDefaultRequest request = new WxPayDefaultRequest();
     request.checkAndSign(this.getConfig());
 
-    String url = "https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey";
+    String url = "https://api.mch.weixin.qq.com/xdc/apiv2getsignkey/sign/getsignkey";
     String responseContent = this.post(url, request.toXML(), false);
     WxPaySandboxSignKeyResult result = BaseWxPayResult.fromXML(responseContent, WxPaySandboxSignKeyResult.class);
     result.checkResult(this, request.getSignType(), true);

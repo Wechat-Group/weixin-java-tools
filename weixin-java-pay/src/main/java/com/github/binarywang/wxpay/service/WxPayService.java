@@ -1192,7 +1192,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 获取仿真测试系统的验签密钥.
-   * 请求Url： https://api.mch.weixin.qq.com/sandboxnew/pay/getsignkey
+   * 请求Url： https://api.mch.weixin.qq.com/xdc/apiv2getsignkey/sign/getsignkey
    * 是否需要证书： 否
    * 请求方式： POST
    * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=23_1
