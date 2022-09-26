@@ -34,6 +34,24 @@ public class WxCpTpConsts {
     public static final String CANCEL_AUTH = "cancel_auth";
 
     /**
+     * 企业互联共享应用事件回调
+     * 本事件触发时机为： 集团企业把第三方应用共享给下属企业使用 集团企业把下属企业从共享的第三方应用中移除
+     */
+    public static final String SHARE_AGENT_CHANGE = "share_agent_change";
+
+    /**
+     * 重置永久授权码通知
+     * 在服务商管理端的代开发应用详情页，点击“重新获取secret”会触发该事件的回调，服务商收到回调事件后，可使用AuthCode通过获取企业永久授权码接口获取代开发应用最新的secret（即permanent_code字段）。
+     */
+    public static final String RESET_PERMANENT_CODE = "reset_permanent_code";
+
+    /**
+     * 应用管理员变更通知
+     * 当授权方（即授权企业）在企业微信管理端修改了应用负责人，通过该接口通知服务商。服务商接收到变更通知之后，需自行调用获取应用的管理员列表进行授权内容变更比对。
+     */
+    public static final String CHANGE_APP_ADMIN = "change_app_admin";
+
+    /**
      * 通讯录变更通知
      */
     public static final String CHANGE_CONTACT = "change_contact";
