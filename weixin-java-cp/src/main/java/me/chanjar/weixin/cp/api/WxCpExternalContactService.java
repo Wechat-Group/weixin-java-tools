@@ -595,6 +595,24 @@ public interface WxCpExternalContactService {
    */
   WxCpUserExternalGroupChatTransferResp transferGroupChat(String[] chatIds, String newOwner) throws WxErrorException;
 
+
+  /**
+   * 企业可通过此接口，将在职成员为群主的群，分配给另一个客服成员。
+   * <per>
+   *   注意：
+   * 继承给的新群主，必须是配置了客户联系功能的成员
+   * 继承给的新群主，必须有设置实名
+   * 继承给的新群主，必须有激活企业微信
+   * 同一个人的群，限制每天最多分配300个给新群主
+   * 为保障客户服务体验，90个自然日内，在职成员的每个客户群仅可被转接2次。
+   * </pre>
+   * @param chatIds  需要转群主的客户群ID列表。取值范围： 1 ~ 100
+   * @param newOwner 新群主ID
+   * @return 分配结果 ，主要是分配失败的群列表
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpUserExternalGroupChatTransferResp onjobTransferGroupChat(String[] chatIds, String newOwner) throws WxErrorException;
+
   /**
    * <pre>
    * 企业可通过此接口获取成员联系客户的数据，包括发起申请数、新增客户数、聊天数、发送消息数和删除/拉黑成员的客户数等指标。

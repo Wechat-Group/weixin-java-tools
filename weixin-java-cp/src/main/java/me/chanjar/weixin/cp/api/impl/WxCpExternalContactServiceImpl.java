@@ -374,6 +374,18 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpUserExternalGroupChatTransferResp onjobTransferGroupChat(String[] chatIds, String newOwner) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    if (ArrayUtils.isNotEmpty(chatIds)) {
+      json.add("chat_id_list", new Gson().toJsonTree(chatIds).getAsJsonArray());
+    }
+    json.addProperty("new_owner", newOwner);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GROUP_CHAT_ONJOB_TRANSFER);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpUserExternalGroupChatTransferResp.fromJson(result);
+  }
+
+  @Override
   public WxCpUserExternalUserBehaviorStatistic getUserBehaviorStatistic(Date startTime, Date endTime,
                                                                         String[] userIds, String[] partyIds) throws WxErrorException {
     JsonObject json = new JsonObject();

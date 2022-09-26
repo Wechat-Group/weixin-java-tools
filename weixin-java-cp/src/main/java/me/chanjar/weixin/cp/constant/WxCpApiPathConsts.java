@@ -1055,6 +1055,10 @@ public interface WxCpApiPathConsts {
      */
     String GROUP_CHAT_TRANSFER = "/cgi-bin/externalcontact/groupchat/transfer";
     /**
+     * The constant GROUP_CHAT_ONJOB_TRANSFER.
+     */
+    String GROUP_CHAT_ONJOB_TRANSFER = "/cgi-bin/externalcontact/groupchat/onjob_transfer";
+    /**
      * The constant LIST_USER_BEHAVIOR_DATA.
      */
     String LIST_USER_BEHAVIOR_DATA = "/cgi-bin/externalcontact/get_user_behavior_data";
