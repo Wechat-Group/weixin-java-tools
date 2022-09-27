@@ -116,6 +116,11 @@ public interface WxOpenComponentService {
   String GET_OPEN_URL = "https://api.weixin.qq.com/cgi-bin/open/get";
 
   /**
+   * 查询 rid 信息
+   */
+  String GET_RID_URL = "https://api.weixin.qq.com/cgi-bin/openapi/rid/get";
+
+  /**
    * 查询公众号/小程序是否绑定 open 帐号
    */
   String HAVE_OPEN_URL = "https://api.weixin.qq.com/cgi-bin/open/have";
@@ -589,6 +594,14 @@ public interface WxOpenComponentService {
    */
   WxOpenHaveResult haveOpen() throws WxErrorException;
 
+
+  /**
+   * 本接口用于查询调用公众号/小程序/第三方平台等接口报错返回的 rid 详情信息，辅助开发者高效定位问题。
+   * @param rid 调用接口报错返回的rid
+   * @return 请求和返回详情
+   * @throws WxErrorException
+   */
+  WxOpenGetRidResult getRid(String rid) throws WxErrorException;
 
   /**
    * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21538208049W8uwq&token=&lang=zh_CN

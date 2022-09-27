@@ -613,6 +613,14 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     return WxOpenHaveResult.fromJson(json);
   }
 
+  @Override
+  public WxOpenGetRidResult getRid(String rid) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("rid", rid);
+    String json = post(GET_RID_URL, param.toString());
+
+    return WxOpenGsonBuilder.create().fromJson(json,WxOpenGetRidResult.class);
+  }
 
   @Override
   public WxOpenResult fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException {
