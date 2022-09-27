@@ -234,7 +234,7 @@ public class WxCpXmlApprovalInfo implements Serializable {
   /**
    * 审批编号
    */
-  @XStreamAlias(" SpNo")
+  @XStreamAlias("SpNo")
   private String spNo;
 
   /**
