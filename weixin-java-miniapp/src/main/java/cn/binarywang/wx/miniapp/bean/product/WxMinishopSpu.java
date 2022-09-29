@@ -9,6 +9,9 @@ import lombok.Data;
 public class WxMinishopSpu implements Serializable {
   private static final long serialVersionUID = 6689040014027161007L;
 
+  @SerializedName("product_id")
+  private String productId;
+
   @SerializedName("out_product_id")
   private String outProductId;
 
