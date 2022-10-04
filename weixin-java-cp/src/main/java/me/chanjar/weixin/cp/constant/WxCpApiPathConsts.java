@@ -997,6 +997,10 @@ public interface WxCpApiPathConsts {
      */
     String TO_SERVICE_EXTERNAL_USERID = "/cgi-bin/externalcontact/to_service_external_userid";
     /**
+     * The constant FROM_SERVICE_EXTERNAL_USERID.
+     */
+    String FROM_SERVICE_EXTERNAL_USERID = "/cgi-bin/externalcontact/from_service_external_userid";
+    /**
      * The constant FINISH_EXTERNAL_USERID_MIGRATION.
      */
     String FINISH_EXTERNAL_USERID_MIGRATION = "/cgi-bin/externalcontact/finish_external_userid_migration";

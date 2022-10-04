@@ -153,6 +153,16 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public String fromServiceExternalUserid(String externalUserid, String sourceAgentId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("external_userid", externalUserid);
+    json.addProperty("source_agentid", sourceAgentId);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(FROM_SERVICE_EXTERNAL_USERID);
+    String responseContent = this.mainService.post(url, json.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("external_userid").getAsString();
+  }
+  @Override
   public WxCpExternalUserIdList unionidToExternalUserid3rd(String unionid, String openid,
                                                            String corpid) throws WxErrorException {
     JsonObject json = new JsonObject();

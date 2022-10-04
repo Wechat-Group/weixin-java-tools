@@ -240,6 +240,23 @@ public interface WxCpExternalContactService {
   String toServiceExternalUserid(String externalUserid) throws WxErrorException;
 
   /**
+   * 将代开发应用或第三方应用获取的externaluserid转换成自建应用的externaluserid
+   * <pre>
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/95884#external-userid%E8%BD%AC%E6%8D%A2
+   *
+   * 权限说明：
+   *
+   * 需要使用自建应用或基础应用的access_token
+   * 客户的跟进人，或者用户所在客户群的群主，需要同时在access_token和source_agentid所对应应用的可见范围内
+   * </pre>
+   * @param externalUserid 服务商主体的external_userid，必须是source_agentid对应的应用所获取
+   * @param sourceAgentId 企业授权的代开发自建应用或第三方应用的agentid
+   * @return
+   * @throws WxErrorException
+   */
+  String fromServiceExternalUserid(String externalUserid, String sourceAgentId) throws WxErrorException;
+
+  /**
    * 企业客户微信unionid的升级 - unionid查询external_userid
    * <pre>
    *
