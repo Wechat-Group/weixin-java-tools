@@ -931,6 +931,10 @@ public interface WxCpApiPathConsts {
      * The constant USERID_TO_OPEN_USERID.
      */
     String USERID_TO_OPEN_USERID = "/cgi-bin/batch/userid_to_openuserid";
+    /**
+     * The constant OPEN_USERID_TO_USERID.
+     */
+    String OPEN_USERID_TO_USERID = "/cgi-bin/batch/openuserid_to_userid";
 
     /**
      * The constant USER_LIST_ID.

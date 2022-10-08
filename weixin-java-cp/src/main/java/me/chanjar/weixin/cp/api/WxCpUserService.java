@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpInviteResult;
+import me.chanjar.weixin.cp.bean.WxCpOpenUseridToUseridResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 import me.chanjar.weixin.cp.bean.WxCpUseridToOpenUseridResult;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
@@ -232,6 +233,24 @@ public interface WxCpUserService {
    * @throws WxErrorException the wx error exception
    */
   WxCpUseridToOpenUseridResult useridToOpenUserid(ArrayList<String> useridList) throws WxErrorException;
+
+  /**
+   * open_userid转换为userid
+   * 将代开发应用或第三方应用获取的密文open_userid转换为明文userid
+   * <pre>
+   * 文档地址：<a href="https://developer.work.weixin.qq.com/document/path/95884#userid%E8%BD%AC%E6%8D%A2">https://developer.work.weixin.qq.com/document/path/95884#userid%E8%BD%AC%E6%8D%A2</a>
+   *
+   * 权限说明：
+   *
+   * 需要使用自建应用或基础应用的access_token
+   * 成员需要同时在access_token和source_agentid所对应应用的可见范围内
+   * </pre>
+   * @param openUseridList open_userid列表，最多不超过1000个。必须是source_agentid对应的应用所获取
+   * @param sourceAgentId 企业授权的代开发自建应用或第三方应用的agentid
+   * @return the WxCpOpenUseridToUseridResult
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpOpenUseridToUseridResult openUseridToUserid(List<String> openUseridList, String sourceAgentId) throws WxErrorException;
 
   /**
    * 获取成员ID列表
