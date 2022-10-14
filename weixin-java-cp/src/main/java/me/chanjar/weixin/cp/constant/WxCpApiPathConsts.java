@@ -995,7 +995,7 @@ public interface WxCpApiPathConsts {
     /**
      * The constant GET_NEW_EXTERNAL_USERID.
      */
-    String GET_NEW_EXTERNAL_USERID = "/cgi-bin/service/externalcontact/get_new_external_userid";
+    String GET_NEW_EXTERNAL_USERID = "/cgi-bin/externalcontact/get_new_external_userid";
     /**
      * The constant TO_SERVICE_EXTERNAL_USERID.
      */
