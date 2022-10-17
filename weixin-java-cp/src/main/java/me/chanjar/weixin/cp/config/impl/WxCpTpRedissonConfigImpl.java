@@ -429,7 +429,6 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
 
   /**
    * 一个provider 会有多个suite,需要唯一标识作为前缀
-   *
    */
   private String keyWithPrefix(String key) {
     return keyPrefix + ":" + suiteId + ":" + key;
@@ -438,7 +437,6 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   /**
    * provider 应该独享一个key,且不和任何suite关联
    * 一个provider  会有多个suite,不同的suite 都应该指向同一个provider 的数据
-   *
    */
   private String providerKeyWithPrefix(String key) {
     return keyPrefix + ":" + corpId + ":" + key;

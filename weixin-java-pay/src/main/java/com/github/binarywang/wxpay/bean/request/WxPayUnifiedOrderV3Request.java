@@ -80,7 +80,7 @@ public class WxPayUnifiedOrderV3Request implements Serializable {
   /**
    * <pre>
    * 字段名：交易结束时间
-   * 变量名：out_trade_no
+   * 变量名：time_expire
    * 是否必填：是
    * 类型：string[1,64]
    * 描述：

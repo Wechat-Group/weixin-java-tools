@@ -10,7 +10,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
  * </pre>
  *
  * @author Hipple
- * @date 2019/01/23
+ * created on  2019/01/23
  * @deprecated 2021-06-23 本接口原有方法并非仅快速创建小程序的专用接口，普通小程序授权到第三方平台皆可使用，所以请使用 {@link WxOpenMaBasicService} 类替代。获取方法: WxOpenComponentService.getWxMaServiceByAppid(maApppId).getBasicService()
  */
 @Deprecated

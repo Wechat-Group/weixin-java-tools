@@ -38,7 +38,7 @@ public interface WxCpService extends WxService {
    *
    * @return the access token
    * @throws WxErrorException the wx error exception
-   * @see #getAccessToken(boolean) #getAccessToken(boolean)#getAccessToken(boolean)
+   * @see #getAccessToken(boolean) #getAccessToken(boolean)#getAccessToken(boolean)#getAccessToken(boolean)
    */
   String getAccessToken() throws WxErrorException;
 
@@ -62,7 +62,7 @@ public interface WxCpService extends WxService {
    *
    * @return the jsapi ticket
    * @throws WxErrorException the wx error exception
-   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)
+   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)#getJsapiTicket(boolean)
    */
   String getJsapiTicket() throws WxErrorException;
 
@@ -89,7 +89,7 @@ public interface WxCpService extends WxService {
    *
    * @return the agent jsapi ticket
    * @throws WxErrorException the wx error exception
-   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)
+   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)#getJsapiTicket(boolean)
    */
   String getAgentJsapiTicket() throws WxErrorException;
 
@@ -134,7 +134,7 @@ public interface WxCpService extends WxService {
    *
    * @param url url
    * @return the agent jsapi signature
-   * @throws WxErrorException
+   * @throws WxErrorException the wx error exception
    */
   WxCpAgentJsapiSignature createAgentJsapiSignature(String url) throws WxErrorException;
 
@@ -264,6 +264,15 @@ public interface WxCpService extends WxService {
   String replaceParty(String mediaId) throws WxErrorException;
 
   /**
+   * 上传用户列表，增量更新成员
+   *
+   * @param mediaId 媒体id
+   * @return jobId 异步任务id
+   * @throws WxErrorException the wx error exception
+   */
+  String syncUser(String mediaId) throws WxErrorException;
+
+  /**
    * 上传用户列表覆盖企业号上的用户信息
    *
    * @param mediaId 媒体id
@@ -275,11 +284,11 @@ public interface WxCpService extends WxService {
   /**
    * 获取异步任务结果
    *
-   * @param joinId the join id
+   * @param jobId 异步任务id
    * @return the task result
    * @throws WxErrorException the wx error exception
    */
-  String getTaskResult(String joinId) throws WxErrorException;
+  String getTaskResult(String jobId) throws WxErrorException;
 
   /**
    * 初始化http请求对象
@@ -302,9 +311,10 @@ public interface WxCpService extends WxService {
 
   /**
    * 构造扫码登录链接 - 构造独立窗口登录二维码
+   *
    * @param redirectUri 重定向地址，需要进行UrlEncode
-   * @param state 用于保持请求和回调的状态，授权请求后原样带回给企业。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议企业带上该参数，可设置为简单的随机数加session进行校验
-   * @return .
+   * @param state       用于保持请求和回调的状态，授权请求后原样带回给企业。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议企业带上该参数，可设置为简单的随机数加session进行校验
+   * @return . string
    */
   String buildQrConnectUrl(String redirectUri, String state);
 
@@ -386,11 +396,60 @@ public interface WxCpService extends WxService {
   WxCpMessageService getMessageService();
 
   /**
-   * Gets oa service.
+   * 获取OA相关接口的服务类对象.
    *
    * @return the oa service
    */
   WxCpOaService getOaService();
+
+  /**
+   * 获取家校应用复学码相关接口的服务类对象
+   *
+   * @return school service
+   */
+  WxCpSchoolService getSchoolService();
+
+  /**
+   * 获取家校沟通相关接口的服务类对象
+   *
+   * @return school user service
+   */
+  WxCpSchoolUserService getSchoolUserService();
+
+  /**
+   * 获取家校应用健康上报的服务类对象
+   *
+   * @return school health service
+   */
+  WxCpSchoolHealthService getSchoolHealthService();
+
+  /**
+   * 获取直播相关接口的服务类对象
+   *
+   * @return the Living service
+   */
+  WxCpLivingService getLivingService();
+
+  /**
+   * 获取OA 自建应用相关接口的服务类对象
+   *
+   * @return oa agent service
+   */
+  WxCpOaAgentService getOaAgentService();
+
+  /**
+   * 获取OA效率工具 微盘的服务类对象
+   *
+   * @return oa we drive service
+   */
+  WxCpOaWeDriveService getOaWeDriveService();
+
+  /**
+   * 获取会话存档相关接口的服务类对象
+   *
+   * @return msg audit service
+   */
+  WxCpMsgAuditService getMsgAuditService();
 
   /**
    * 获取日历相关接口的服务类对象
@@ -398,6 +457,13 @@ public interface WxCpService extends WxService {
    * @return the oa calendar service
    */
   WxCpOaCalendarService getOaCalendarService();
+
+  /**
+   * 获取会议室相关接口的服务类对象
+   *
+   * @return the oa meetingroom service
+   */
+  WxCpOaMeetingRoomService getOaMeetingRoomService();
 
   /**
    * 获取日程相关接口的服务类对象
@@ -419,6 +485,13 @@ public interface WxCpService extends WxService {
    * @return the workbench service
    */
   WxCpAgentWorkBenchService getWorkBenchService();
+
+  /**
+   * 获取微信客服服务
+   *
+   * @return 微信客服服务 kf service
+   */
+  WxCpKfService getKfService();
 
   /**
    * http请求对象
@@ -469,4 +542,24 @@ public interface WxCpService extends WxService {
    */
   void setTagService(WxCpTagService tagService);
 
+  /**
+   * Sets kf service.
+   *
+   * @param kfService the kf service
+   */
+  void setKfService(WxCpKfService kfService);
+
+  /**
+   * 获取异步导出服务
+   *
+   * @return 异步导出服务 export service
+   */
+  WxCpExportService getExportService();
+
+  /**
+   * 设置异步导出服务
+   *
+   * @param exportService 异步导出服务
+   */
+  void setExportService(WxCpExportService exportService);
 }

@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
  * 测试类.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-06-22
+ * created on  2019-06-22
  */
 @Test
 @Guice(modules = ApiTestModule.class)

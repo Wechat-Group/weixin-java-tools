@@ -55,6 +55,15 @@ public interface WxMaUserService {
   WxMaPhoneNumberInfo getPhoneNoInfo(String sessionKey, String encryptedData, String ivStr);
 
   /**
+   * 获取手机号信息,基础库:2.21.2及以上
+   *
+   * @param code 动态令牌
+   * @return .
+   * @throws WxErrorException .
+   */
+  WxMaPhoneNumberInfo getNewPhoneNoInfo(String code) throws WxErrorException;
+
+  /**
    * 验证用户信息完整性.
    *
    * @param sessionKey 会话密钥

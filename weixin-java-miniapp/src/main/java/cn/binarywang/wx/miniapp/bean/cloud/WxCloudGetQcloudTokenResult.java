@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 获取腾讯云API调用凭证结果.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-01-27
+ * created on  2020-01-27
  */
 @Data
 public class WxCloudGetQcloudTokenResult implements Serializable {

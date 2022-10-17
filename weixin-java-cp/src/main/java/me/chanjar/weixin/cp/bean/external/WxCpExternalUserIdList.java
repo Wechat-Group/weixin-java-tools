@@ -12,16 +12,19 @@ import java.util.List;
 /**
  * 企业客户微信unionid的升级 - 企业客户external_userid列表
  *
- * @author Mr.Pan
- * @date 2021/11/18
+ * @author Mr.Pan  created on  2021/11/18
  */
 @Getter
 @Setter
 public class WxCpExternalUserIdList extends WxCpBaseResp {
+  private static final long serialVersionUID = 3922210865083522513L;
 
   @SerializedName("external_userid_info")
   private List<ExternalUserIdInfo> externalUserIdInfo;
 
+  /**
+   * The type External user id info.
+   */
   @Getter
   @Setter
   public static class ExternalUserIdInfo implements Serializable {
@@ -47,6 +50,12 @@ public class WxCpExternalUserIdList extends WxCpBaseResp {
 
   }
 
+  /**
+   * From json wx cp external user id list.
+   *
+   * @param json the json
+   * @return the wx cp external user id list
+   */
   public static WxCpExternalUserIdList fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpExternalUserIdList.class);
   }

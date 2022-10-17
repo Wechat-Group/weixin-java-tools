@@ -1,9 +1,9 @@
 package me.chanjar.weixin.cp.bean;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.List;
-
-import lombok.Data;
 
 /**
  * 群聊
@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class WxCpChat implements Serializable {
   private static final long serialVersionUID = -4301684507150486556L;
-  
+
   private String id;
   private String name;
   private String owner;

@@ -15,9 +15,15 @@ import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * The type Api test module.
+ */
 @Slf4j
 public class ApiTestModule implements Module {
   private static final String TEST_CONFIG_XML = "test-config.xml";
+  /**
+   * The Config.
+   */
   protected WxXmlCpInMemoryConfigStorage config;
 
   private static <T> T fromXml(Class<T> clazz, InputStream is) {
@@ -45,15 +51,30 @@ public class ApiTestModule implements Module {
     }
   }
 
+  /**
+   * The type Wx xml cp in memory config storage.
+   */
   @Data
   @EqualsAndHashCode(callSuper = true)
   @XStreamAlias("xml")
   public static class WxXmlCpInMemoryConfigStorage extends WxCpDefaultConfigImpl {
     private static final long serialVersionUID = -4521839921547374822L;
 
+    /**
+     * The User id.
+     */
     protected String userId;
+    /**
+     * The Department id.
+     */
     protected String departmentId;
+    /**
+     * The Tag id.
+     */
     protected String tagId;
+    /**
+     * The External user id.
+     */
     protected String externalUserId;
   }
 

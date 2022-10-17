@@ -18,9 +18,17 @@ import org.testng.annotations.Test;
 @Guice(modules = ApiTestModule.class)
 public class WxCpBaseAPITest {
 
+  /**
+   * The Wx service.
+   */
   @Inject
   protected WxCpServiceImpl wxService;
 
+  /**
+   * Test refresh access token.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   public void testRefreshAccessToken() throws WxErrorException {
     WxCpConfigStorage configStorage = this.wxService.getWxCpConfigStorage();
     String before = configStorage.getAccessToken();

@@ -12,7 +12,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * 小程序交易组件-接入商品前必需接口(审核相关接口)
  *
  * @author liming1019
- * @date 2021/8/12
+ * created on  2021/8/12
  */
 public interface WxMaShopAuditService {
   /**

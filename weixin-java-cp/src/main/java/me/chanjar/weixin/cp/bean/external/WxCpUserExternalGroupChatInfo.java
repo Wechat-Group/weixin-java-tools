@@ -10,8 +10,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author yqx
- * @date 2020/3/116
+ * The type Wx cp user external group chat info.
+ *
+ * @author yqx  created on  2020/3/116
  */
 @Getter
 @Setter
@@ -20,6 +21,9 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
   @SerializedName("group_chat")
   private GroupChat groupChat;
 
+  /**
+   * The type Group chat.
+   */
   @Getter
   @Setter
   public static class GroupChat implements Serializable {
@@ -47,6 +51,9 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     private List<GroupAdmin> adminList;
   }
 
+  /**
+   * The type Group member.
+   */
   @Getter
   @Setter
   public static class GroupMember implements Serializable {
@@ -84,6 +91,12 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     private int joinScene;
 
     /**
+     * 该成员入群方式对应的state参数
+     */
+    @SerializedName("state")
+    private String state;
+
+    /**
      * 在群里的昵称
      */
     @SerializedName("group_nickname")
@@ -104,6 +117,9 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     private Invitor invitor;
   }
 
+  /**
+   * The type Invitor.
+   */
   @Getter
   @Setter
   public static class Invitor {
@@ -115,6 +131,9 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     private String userId;
   }
 
+  /**
+   * The type Group admin.
+   */
   @Getter
   @Setter
   public static class GroupAdmin {
@@ -126,6 +145,12 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     private String userId;
   }
 
+  /**
+   * From json wx cp user external group chat info.
+   *
+   * @param json the json
+   * @return the wx cp user external group chat info
+   */
   public static WxCpUserExternalGroupChatInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserExternalGroupChatInfo.class);
   }

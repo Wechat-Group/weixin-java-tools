@@ -12,11 +12,21 @@ import java.util.List;
  * 请求分账API返回的分账结果实体
  *
  * @author pg
- * @date 2021-6-24
+ * created on  2021-6-24
  */
 @Data
 public class ProfitSharingResult implements Serializable {
   private static final long serialVersionUID = -6201692412535987502L;
+
+  /**
+   * <pre>
+   * 字段名：子商户号
+   * 是否必填：是
+   * 描述：微信支付分配的子商户号，即分账的出资商户号。
+   * </pre>
+   */
+  @SerializedName("sub_mchid")
+  private String subMchId;
 
   /**
    * <pre>
@@ -168,5 +178,16 @@ public class ProfitSharingResult implements Serializable {
      */
     @SerializedName("finish_time")
     private String finishTime;
+
+    /**
+     * <pre>
+     * 字段名：微信分账明细单号
+     * 是否必填：是
+     * 每笔分账业务执行的明细单号，可与资金账单对账使用，
+     * 例如：36011111111111111111111
+     * </pre>
+     */
+    @SerializedName("detail_id")
+    private String detailId;
   }
 }

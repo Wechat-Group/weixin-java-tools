@@ -96,6 +96,11 @@ public class WxMpKefuMessageGsonAdapter implements JsonSerializer<WxMpKefuMessag
           messageJson.add("msgmenu", msgmenuJsonObject);
         break;
       }
+      case KefuMsgType.MP_NEWS_ARTICLE:
+        JsonObject mpNewsArticleJson = new JsonObject();
+        mpNewsArticleJson.addProperty("article_id", message.getMpNewsArticleId());
+        messageJson.add("mpnewsarticle", mpNewsArticleJson);
+        break;
       default: {
         throw new WxRuntimeException("非法消息类型，暂不支持");
       }

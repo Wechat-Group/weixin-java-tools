@@ -257,8 +257,6 @@ public interface WxCpTpConfigStorage {
    */
   void updateAuthSuiteJsApiTicket(String authCorpId, String jsApiTicket, int expiredInSeconds);
 
-  ;
-
   /**
    * Is provider token expired boolean.
    *

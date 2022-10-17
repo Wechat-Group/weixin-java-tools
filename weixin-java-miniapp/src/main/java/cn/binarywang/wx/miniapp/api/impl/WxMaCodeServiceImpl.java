@@ -139,6 +139,12 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
   }
 
   @Override
+  public WxMaCodeVersionInfo getVersionInfo() throws WxErrorException {
+    String responseContent = this.service.post(GET_VERSION_INFO_URL, "{}");
+    return WxMaCodeVersionInfo.fromJson(responseContent);
+  }
+
+  @Override
   public void setSupportVersion(String version) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("version", version);

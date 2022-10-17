@@ -10,11 +10,21 @@ import java.io.Serializable;
  * 请求分账回退API返回实体
  *
  * @author pg
- * @date 2021-6-25
+ * created on  2021-6-25
  */
 @Data
 public class ProfitSharingReturnResult implements Serializable {
   private static final long serialVersionUID = -2175582517588397426L;
+
+  /**
+   * <pre>
+   * 字段名：子商户号
+   * 是否必填：是
+   * 描述：分账回退的接收商户，对应原分账出资的分账方商户，填写微信支付分配的商户号
+   * </pre>
+   */
+  @SerializedName("sub_mchid")
+  private String subMchId;
 
   /**
    * <pre>

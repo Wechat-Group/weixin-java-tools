@@ -16,8 +16,7 @@ import java.util.List;
 /**
  * 日历.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-09-20
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-09-20
  */
 @Data
 @Builder
@@ -91,6 +90,9 @@ public class WxCpOaCalendar implements Serializable, ToJson {
   @SerializedName("shares")
   private List<ShareInfo> shares;
 
+  /**
+   * The type Share info.
+   */
   @Data
   @AllArgsConstructor
   public static class ShareInfo implements Serializable {

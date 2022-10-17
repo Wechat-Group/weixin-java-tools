@@ -96,7 +96,7 @@ public class WxCryptUtilTest {
 
       String encrypt = nodelist1.item(0).getTextContent();
       String fromXML = String.format(this.xmlFormat, encrypt);
-      pc.decrypt("12345", this.timestamp, this.nonce, fromXML); // 这里签名错误
+      pc.decryptXml("12345", this.timestamp, this.nonce, fromXML); // 这里签名错误
     } catch (RuntimeException e) {
       assertEquals(e.getMessage(), "加密消息签名校验失败");
       return;

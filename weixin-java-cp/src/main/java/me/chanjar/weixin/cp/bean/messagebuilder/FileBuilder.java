@@ -14,10 +14,19 @@ import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 public final class FileBuilder extends BaseBuilder<FileBuilder> {
   private String mediaId;
 
+  /**
+   * Instantiates a new File builder.
+   */
   public FileBuilder() {
     this.msgType = WxConsts.KefuMsgType.FILE;
   }
 
+  /**
+   * Media id file builder.
+   *
+   * @param media_id the media id
+   * @return the file builder
+   */
   public FileBuilder mediaId(String media_id) {
     this.mediaId = media_id;
     return this;

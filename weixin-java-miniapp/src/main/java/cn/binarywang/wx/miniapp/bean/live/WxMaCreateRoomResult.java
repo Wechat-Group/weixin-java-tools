@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 创建直播间接口返回.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-11-29
+ * created on  2020-11-29
  */
 @Data
 public class WxMaCreateRoomResult implements Serializable {

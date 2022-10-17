@@ -11,7 +11,7 @@ import java.util.List;
  * 图片素材列表
  *
  * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a>
- * @date 2021/5/12/012
+ * created on  2021/5/12/012
  */
 @Data
 public class WxMpGuideImgMaterialInfoList implements Serializable {

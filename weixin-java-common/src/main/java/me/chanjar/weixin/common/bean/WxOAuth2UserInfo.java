@@ -11,7 +11,7 @@ import java.io.Serializable;
  * oauth2用户个人信息.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-10-11
+ * created on  2020-10-11
  */
 @Data
 public class WxOAuth2UserInfo implements Serializable {
@@ -26,6 +26,23 @@ public class WxOAuth2UserInfo implements Serializable {
    */
   private String nickname;
   /**
+   * sex	普通用户性别，1为男性，2为女性
+   */
+  private Integer sex;
+  /**
+   * city	普通用户个人资料填写的城市
+   */
+  private String city;
+
+  /**
+   * province	普通用户个人资料填写的省份
+   */
+  private String province;
+  /**
+   * country	国家，如中国为CN
+   */
+  private String country;
+  /**
    * headimgurl	用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），
    * 用户没有头像时该项为空
    */
@@ -36,12 +53,16 @@ public class WxOAuth2UserInfo implements Serializable {
    */
   @SerializedName("unionid")
   private String unionId;
-
   /**
    * privilege	用户特权信息，json数组，如微信沃卡用户为（chinaunicom）
    */
   @SerializedName("privilege")
   private String[] privileges;
+  /**
+   * is_snapshotuser  是否为快照页模式虚拟账号，值为0时是普通用户，1时是虚拟帐号
+   */
+  @SerializedName("is_snapshotuser")
+  private Integer snapshotUser;
 
   public static WxOAuth2UserInfo fromJson(String json) {
     return WxGsonBuilder.create().fromJson(json, WxOAuth2UserInfo.class);

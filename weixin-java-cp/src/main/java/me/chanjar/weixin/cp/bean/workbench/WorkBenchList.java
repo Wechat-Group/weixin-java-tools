@@ -5,8 +5,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author songshiyu
- * @date : create in 10:21 2020/9/28
+ * The type Work bench list.
+ *
+ * @author songshiyu  created on  : create in 10:21 2020/9/28
  * @description: 列表模板类型
  */
 @Data

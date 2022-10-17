@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 微信小程序分类目录.
  *
  * @author yqx
- * @date 2018/9/13
+ * created on  2018/9/13
  */
 @Data
 public class WxOpenMaCategory implements Serializable {

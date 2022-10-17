@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /** 文字素材信息
  * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a>
- * @date 2021/5/12/012
+ * created on  2021/5/12/012
  */
 
 @Data

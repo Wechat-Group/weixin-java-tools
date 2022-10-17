@@ -23,7 +23,7 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.OAuth2.*;
  * oauth2 相关接口实现类.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-08-08
+ * created on  2020-08-08
  */
 @RequiredArgsConstructor
 public class WxMpOAuth2ServiceImpl implements WxOAuth2Service {

@@ -7,15 +7,20 @@ import cn.binarywang.wx.miniapp.util.xml.XStreamTransformer;
 import com.google.gson.annotations.SerializedName;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import lombok.Data;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -24,6 +29,11 @@ import java.nio.charset.StandardCharsets;
 @Data
 public class WxMaMessage implements Serializable {
   private static final long serialVersionUID = -3586245291677274914L;
+
+  /**
+   * 使用dom4j解析的存放所有xml属性和值的map.
+   */
+  private Map<String, Object> allFieldsMap;
 
   @SerializedName("Encrypt")
   @XStreamAlias("Encrypt")
@@ -136,6 +146,29 @@ public class WxMaMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String statusCode;
 
+  /**
+   * 异步校验图片/音频内容安全 接口版本
+   * @since 2.0
+   */
+  @SerializedName("version")
+  @XStreamAlias("version")
+  private Integer version;
+  /**
+   * 异步校验图片/音频内容安全 综合结果
+   * @since 2.0
+   */
+  @SerializedName("result")
+  @XStreamAlias("result")
+  private WxMaMediaAsyncCheckResult.ResultBean result;
+  /**
+   * 异步校验图片/音频内容安全 详细检测结果
+   * @since 2.0
+   */
+  @SerializedName("detail")
+  @XStreamAlias("detail")
+  @XStreamImplicit
+  private List<WxMaMediaAsyncCheckResult.DetailBean> detail;
+
   @SerializedName("Scene")
   @XStreamAlias("Scene")
   private Integer scene;
@@ -145,10 +178,72 @@ public class WxMaMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String query;
 
+  @SerializedName("AppID")
+  @XStreamAlias("AppID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String appID;
+
+  @SerializedName("RevokeInfo")
+  @XStreamAlias("RevokeInfo")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String revokeInfo;
+
+  @SerializedName("OpenID")
+  @XStreamAlias("OpenID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String openId;
+
+  @SerializedName("PluginID")
+  @XStreamAlias("PluginID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String pluginId;
+
+  @SerializedName("OpenPID")
+  @XStreamAlias("OpenPID")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String openPid;
+
+  @XStreamAlias("SubscribeMsgPopupEvent")
+  private WxMaSubscribeMsgEvent.SubscribeMsgPopupEvent subscribeMsgPopupEvent;
+
+  @XStreamAlias("SubscribeMsgChangeEvent")
+  private WxMaSubscribeMsgEvent.SubscribeMsgChangeEvent subscribeMsgChangeEvent;
+
+  @XStreamAlias("SubscribeMsgSentEvent")
+  private WxMaSubscribeMsgEvent.SubscribeMsgSentEvent subscribeMsgSentEvent;
+
+  /**
+   * 不要直接使用这个字段，
+   * 这个字段只是为了适配 SubscribeMsgPopupEvent SubscribeMsgChangeEvent SubscribeMsgSentEvent
+   * 在json里面名称都是List并且有时候是对象有时候是数组的问题
+   * 当List只有一个对象的时候，微信服务器推送过来的的List是对象而非数组，当有多个对象的时候推送过来的才是数组
+   * 当只有一个对象的时候
+   * "List": {
+   *         "TemplateId": "hD-ixGOhYmUfjOnI8MCzQMPshzGVeux_2vzyvQu7O68",
+   *         "SubscribeStatusString": "accept",
+   *         "PopupScene": "0"
+   *     }
+   * 当有多条数据的时候
+   * "List": [   {
+   *         "TemplateId": "hD-ixGOhYmUfjOnI8MCzQMPshzGVeux_2vzyvQu7O68",
+   *         "SubscribeStatusString": "accept",
+   *         "PopupScene": "0"
+   *     }, {
+   *         "TemplateId": "hD-ixGOhYmUfjOnI8MCzQMPshzGVeux_2vzyvQu7O68",
+   *         "SubscribeStatusString": "accept",
+   *         "PopupScene": "0"
+   *     }]
+   */
+  @SerializedName("List")
+  private WxMaSubscribeMsgEvent.WxMaSubscribeMsgEventJson uselessMsg;
+
   public static WxMaMessage fromXml(String xml) {
-    return XStreamTransformer.fromXml(WxMaMessage.class, xml);
+    WxMaMessage message = XStreamTransformer.fromXml(WxMaMessage.class, xml);
+    message.setAllFieldsMap(XmlUtils.xml2Map(xml));
+    return message;
   }
 
+  @Deprecated
   public static WxMaMessage fromXml(InputStream is) {
     return XStreamTransformer.fromXml(WxMaMessage.class, is);
   }
@@ -165,7 +260,7 @@ public class WxMaMessage implements Serializable {
   public static WxMaMessage fromEncryptedXml(String encryptedXml,
                                              WxMaConfig wxMaConfig, String timestamp, String nonce,
                                              String msgSignature) {
-    String plainText = new WxMaCryptUtils(wxMaConfig).decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    String plainText = new WxMaCryptUtils(wxMaConfig).decryptXml(msgSignature, timestamp, nonce, encryptedXml);
     return fromXml(plainText);
   }
 
@@ -180,7 +275,19 @@ public class WxMaMessage implements Serializable {
   }
 
   public static WxMaMessage fromJson(String json) {
-    return WxMaGsonBuilder.create().fromJson(json, WxMaMessage.class);
+    WxMaMessage message =  WxMaGsonBuilder.create().fromJson(json, WxMaMessage.class);
+    // 在这里处理 event的json格式时候的 list 问题，让json和xml的程序接口可以保持一致， 详见 uselessMsg 字段的注释
+    if (message.getUselessMsg() != null) {
+      if (StringUtils.equals(message.getEvent(), "subscribe_msg_popup_event")) {
+        message.setSubscribeMsgPopupEvent(message.getUselessMsg().getPopupEvents());
+      } else if (StringUtils.equals(message.getEvent(), "subscribe_msg_change_event")) {
+        message.setSubscribeMsgChangeEvent(message.getUselessMsg().getChangeEvents());
+      } else if (StringUtils.equals(message.getEvent(), "subscribe_msg_sent_event")) {
+        message.setSubscribeMsgSentEvent(message.getUselessMsg().getSentEvent());
+      }
+      message.setUselessMsg(null);
+    }
+    return message;
   }
 
   public static WxMaMessage fromEncryptedJson(String encryptedJson, WxMaConfig config) {

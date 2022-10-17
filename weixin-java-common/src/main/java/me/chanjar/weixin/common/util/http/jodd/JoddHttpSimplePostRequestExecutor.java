@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
  * .
  *
  * @author ecoolper
- * @date 2017/5/4
+ * created on  2017/5/4
  */
 public class JoddHttpSimplePostRequestExecutor extends SimplePostRequestExecutor<HttpConnectionProvider, ProxyInfo> {
   public JoddHttpSimplePostRequestExecutor(RequestHttp requestHttp) {

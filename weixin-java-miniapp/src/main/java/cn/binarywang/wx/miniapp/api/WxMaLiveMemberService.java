@@ -9,7 +9,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * https://developers.weixin.qq.com/miniprogram/dev/framework/liveplayer/role-manage.html
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2021 -02-15
+ * created on  2021 -02-15
  */
 public interface WxMaLiveMemberService {
   /**

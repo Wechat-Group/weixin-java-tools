@@ -14,7 +14,7 @@ import org.w3c.dom.Document;
 
 /**
  * @author chenliang
- * @date 2021-08-02 4:59 下午
+ * created on  2021-08-02 4:59 下午
  * <pre>
  *   微信签约/解约 回调结果
  * </pre>
@@ -81,7 +81,7 @@ public class WxSignStatusNotifyResult extends BaseWxPayResult {
    * 请求序列号
    */
   @XStreamAlias("request_serial")
-  private Integer requestSerial;
+  private Long requestSerial;
 
   @Override
   public void checkResult(WxPayService wxPayService, String signType, boolean checkSuccess) throws WxPayException {
@@ -117,7 +117,7 @@ public class WxSignStatusNotifyResult extends BaseWxPayResult {
     contractId = readXmlString(d, "contract_id");
     contractExpiredTime = readXmlString(d, "contract_expired_time");
     contractTerminationMode = readXmlInteger(d, "contract_termination_mode");
-    requestSerial = readXmlInteger(d, "request_serial");
+    requestSerial = readXmlLong(d, "request_serial");
   }
 
   @Override

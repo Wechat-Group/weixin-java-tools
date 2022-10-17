@@ -10,7 +10,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 /**
  * .
  * @author leeis
- * @Date 2018/12/29
+ * created on  2018/12/29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

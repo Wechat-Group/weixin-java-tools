@@ -5,6 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * The type Template date.
+ *
  * @author Administrator
  */
 @Data

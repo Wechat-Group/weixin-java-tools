@@ -10,6 +10,7 @@ import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants.AccountType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.BillType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
@@ -773,6 +774,26 @@ public class BaseWxPayServiceImplTest {
     request.setOutRefundNo("123456789011");
     WxPayRefundQueryV3Result result = this.payService.refundQueryV3(request);
     System.out.println(GSON.toJson(result));
+  }
+
+  /**
+   * 测试包含正向代理的测试
+   * @throws WxPayException
+   */
+  @Test
+  public void testQueryOrderV3WithProxy()  {
+    try {
+      WxPayOrderQueryV3Request request = new WxPayOrderQueryV3Request();
+      request.setOutTradeNo("n1ZvYqjAg3D3LUBa");
+      WxPayConfig config = this.payService.getConfig();
+      config.setPayBaseUrl("http://api.mch.weixin.qq.com");
+      config.setHttpProxyHost("12.11.1.113");
+      config.setHttpProxyPort(8015);
+      WxPayOrderQueryV3Result result = this.payService.queryOrderV3(request);
+      System.out.println(GSON.toJson(result));
+    } catch (WxPayException e) {
+    }
+
   }
 
 }

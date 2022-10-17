@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 测试类.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-12-15
+ * created on  2019-12-15
  */
 @Test
 @Guice(modules = ApiTestModule.class)

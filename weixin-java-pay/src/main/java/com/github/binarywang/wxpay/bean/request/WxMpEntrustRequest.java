@@ -10,7 +10,7 @@ import java.util.Objects;
 
 /**
  * @author chenliang
- * @date 2021-08-02 5:17 下午
+ * created on  2021-08-02 5:17 下午
  *
  * <pre>
  *   公众号纯签约入参

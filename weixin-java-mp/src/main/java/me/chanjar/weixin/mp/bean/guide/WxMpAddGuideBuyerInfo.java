@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * 客户信息dto
  * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a>
- * @date 2021/5/11/011
+ * created on  2021/5/11/011
  */
 
 @Data

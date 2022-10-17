@@ -25,11 +25,7 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.DataUtils;
 import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
-import me.chanjar.weixin.common.util.http.RequestExecutor;
-import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
-import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
-import me.chanjar.weixin.common.util.http.URIUtil;
+import me.chanjar.weixin.common.util.http.*;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.*;
@@ -46,16 +42,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.CLEAR_QUOTA_URL;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.FETCH_SHORTEN_URL;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GEN_SHORTEN_URL;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_CALLBACK_IP_URL;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_CURRENT_AUTOREPLY_INFO_URL;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_TICKET_URL;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.NETCHECK_URL;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.QRCONNECT_URL;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.SEMANTIC_SEMPROXY_SEARCH_URL;
-import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.SHORTURL_API_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.*;
 
 /**
  * 基础实现类.
@@ -100,7 +87,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpTemplateMsgService templateMsgService = new WxMpTemplateMsgServiceImpl(this);
   @Getter
   @Setter
-  private final WxMpSubscribeMsgService subscribeMsgService = new WxMpSubscribeMsgServiceImpl(this);
+  private WxMpSubscribeMsgService subscribeMsgService = new WxMpSubscribeMsgServiceImpl(this);
   @Getter
   @Setter
   private WxMpDeviceService deviceService = new WxMpDeviceServiceImpl(this);
@@ -118,7 +105,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpAiOpenService aiOpenService = new WxMpAiOpenServiceImpl(this);
   @Getter
   @Setter
-  private final WxMpWifiService wifiService = new WxMpWifiServiceImpl(this);
+  private WxMpWifiService wifiService = new WxMpWifiServiceImpl(this);
   @Getter
   @Setter
   private WxMpMarketingService marketingService = new WxMpMarketingServiceImpl(this);
@@ -448,12 +435,12 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       }
 
       if (error.getErrorCode() != 0) {
-        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
       throw new WxErrorException(e);
     }
   }
@@ -482,6 +469,10 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider) {
     final String defaultMpId = wxConfigProvider.getAppId();
+    if (defaultMpId == null) {
+      throw new WxRuntimeException("appid不能设置为null");
+    }
+
     this.setMultiConfigStorages(ImmutableMap.of(defaultMpId, wxConfigProvider), defaultMpId);
   }
 

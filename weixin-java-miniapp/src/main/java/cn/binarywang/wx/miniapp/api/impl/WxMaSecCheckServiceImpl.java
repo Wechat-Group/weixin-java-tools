@@ -85,8 +85,8 @@ public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
   }
 
   @Override
-  public WxMaMediaAsyncCheckResult mediaCheckAsync(WxMaMediaSecCheckCheckRequest medisRequest) throws WxErrorException {
-    String response = this.service.post(MEDIA_CHECK_ASYNC_URL,medisRequest);
+  public WxMaMediaAsyncCheckResult mediaCheckAsync(WxMaMediaSecCheckCheckRequest request) throws WxErrorException {
+    String response = this.service.post(MEDIA_CHECK_ASYNC_URL, request);
     parseErrorResponse(response);
     return WxMaGsonBuilder.create().fromJson(response,WxMaMediaAsyncCheckResult.class);
   }

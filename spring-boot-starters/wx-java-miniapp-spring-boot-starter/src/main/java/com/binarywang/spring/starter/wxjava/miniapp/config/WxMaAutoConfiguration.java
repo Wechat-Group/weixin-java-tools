@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
  * 自动配置.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-08-10
+ * created on  2019-08-10
  */
 @Configuration
 @EnableConfigurationProperties(WxMaProperties.class)

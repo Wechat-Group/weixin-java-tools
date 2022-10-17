@@ -35,7 +35,7 @@ public class WxMaImgProcServiceImpl implements WxImgProcService {
       //ignore
     }
 
-    final String result = this.service.get(String.format(QRCODE, imgUrl), null);
+    final String result = this.service.post(String.format(QRCODE, imgUrl), "");
     return WxImgProcQrCodeResult.fromJson(result);
   }
 

@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 顾问快捷回复
  *
  * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a>
- * @date 2021/5/8/008
+ * created on  2021/5/8/008
  */
 @Data
 public class WxMpGuideFastReply implements ToJson, Serializable {

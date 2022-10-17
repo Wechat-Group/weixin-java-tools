@@ -46,10 +46,21 @@ public class WxCpTagGetResult implements Serializable {
   @SerializedName("tagname")
   private String tagname;
 
+  /**
+   * From json wx cp tag get result.
+   *
+   * @param json the json
+   * @return the wx cp tag get result
+   */
   public static WxCpTagGetResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpTagGetResult.class);
   }
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }

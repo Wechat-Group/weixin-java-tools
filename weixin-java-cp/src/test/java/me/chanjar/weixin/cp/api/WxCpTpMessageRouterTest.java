@@ -15,9 +15,15 @@ import java.util.Map;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.AssertJUnit.assertNull;
 
+/**
+ * The type Wx cp tp message router test.
+ */
 public class WxCpTpMessageRouterTest {
 
 
+  /**
+   * Test message router.
+   */
   @Test
   public void testMessageRouter() {
     WxCpTpService service = new WxCpTpServiceApacheHttpClientImpl();
@@ -40,7 +46,8 @@ public class WxCpTpMessageRouterTest {
 
     router.rule().infoType("change_contact").changeType("update_tag").handler(new WxCpTpMessageHandler() {
       @Override
-      public WxCpXmlOutMessage handle(WxCpTpXmlMessage wxMessage, Map<String, Object> context, WxCpTpService wxCpService, WxSessionManager sessionManager) throws WxErrorException {
+      public WxCpXmlOutMessage handle(WxCpTpXmlMessage wxMessage, Map<String, Object> context,
+                                      WxCpTpService wxCpService, WxSessionManager sessionManager) throws WxErrorException {
         System.out.println("handler enter");
         assertNotNull(wxCpService);
         return null;

@@ -32,8 +32,11 @@ public class WxCpSetCheckinSchedule implements Serializable {
   private Integer yearmonth;
 
 
+  /**
+   * The type Item.
+   */
   @Data
-  public static class Item implements Serializable{
+  public static class Item implements Serializable {
 
     private static final long serialVersionUID = -918057757709951513L;
 
@@ -44,7 +47,7 @@ public class WxCpSetCheckinSchedule implements Serializable {
     private String userid;
 
     /**
-     * 	要设置的天日期，取值在1-31之间。联合yearmonth组成唯一日期 比如20201205
+     * 要设置的天日期，取值在1-31之间。联合yearmonth组成唯一日期 比如20201205
      */
     @SerializedName("day")
     private Integer day;

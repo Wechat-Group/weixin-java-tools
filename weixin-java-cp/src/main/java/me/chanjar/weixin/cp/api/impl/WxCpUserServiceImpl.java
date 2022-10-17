@@ -11,10 +11,17 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpUserService;
 import me.chanjar.weixin.cp.bean.WxCpInviteResult;
+import me.chanjar.weixin.cp.bean.WxCpOpenUseridToUseridResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
+import me.chanjar.weixin.cp.bean.WxCpUseridToOpenUseridResult;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
+import me.chanjar.weixin.cp.bean.user.WxCpDeptUserResult;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import org.apache.commons.lang3.time.FastDateFormat;
 
+import java.text.Format;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +36,8 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.User.*;
  */
 @RequiredArgsConstructor
 public class WxCpUserServiceImpl implements WxCpUserService {
+  private final Format dateFormat = FastDateFormat.getInstance("yyyy-MM-dd");
+
   private final WxCpService mainService;
 
   @Override
@@ -208,4 +217,57 @@ public class WxCpUserServiceImpl implements WxCpUserService {
     JsonObject tmpJson = GsonParser.parse(responseContent);
     return tmpJson.get("join_qrcode").getAsString();
   }
+
+  @Override
+  public Integer getActiveStat(Date date) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("date", this.dateFormat.format(date));
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_ACTIVE_STAT);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("active_cnt").getAsInt();
+  }
+
+  @Override
+  public WxCpUseridToOpenUseridResult useridToOpenUserid(ArrayList<String> useridList) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    JsonArray jsonArray = new JsonArray();
+    for (String userid : useridList) {
+      jsonArray.add(userid);
+    }
+    jsonObject.add("userid_list", jsonArray);
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(USERID_TO_OPEN_USERID);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return WxCpUseridToOpenUseridResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpOpenUseridToUseridResult openUseridToUserid(List<String> openUseridList, String sourceAgentId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    JsonArray jsonArray = new JsonArray();
+    for (String openUserid : openUseridList) {
+      jsonArray.add(openUserid);
+    }
+    jsonObject.add("open_userid_list", jsonArray);
+    jsonObject.addProperty("source_agentid", sourceAgentId);
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(OPEN_USERID_TO_USERID);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return WxCpOpenUseridToUseridResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDeptUserResult getUserListId(String cursor, Integer limit) throws WxErrorException {
+    String apiUrl = this.mainService.getWxCpConfigStorage().getApiUrl(USER_LIST_ID);
+    JsonObject jsonObject = new JsonObject();
+    if (cursor != null) {
+      jsonObject.addProperty("cursor", cursor);
+    }
+    if (limit != null) {
+      jsonObject.addProperty("limit", limit);
+    }
+    String responseContent = this.mainService.post(apiUrl, jsonObject.toString());
+    return WxCpDeptUserResult.fromJson(responseContent);
+  }
+
+
 }

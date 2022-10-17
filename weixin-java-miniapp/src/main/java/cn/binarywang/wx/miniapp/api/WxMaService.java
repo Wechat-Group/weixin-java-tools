@@ -462,4 +462,63 @@ public interface WxMaService extends WxService {
    * @return
    */
   WxMaReimburseInvoiceService getReimburseInvoiceService();
+
+  /**
+   * 返回设备订阅消息相关接口服务对象
+   *
+   * @return WxMaDeviceSubscribeService plugin service
+   */
+  WxMaDeviceSubscribeService getDeviceSubscribeService();
+
+  /**
+   * 返回小程序广告接入相关接口服务对象
+   *
+   * @return WxMaDeviceSubscribeService plugin service
+   */
+  WxMaMarketingService getMarketingService();
+
+  /**
+   * 返回微信小程序即时配送服务接口.
+   *
+   * @return WxMaImmediateDeliveryService
+   */
+  WxMaImmediateDeliveryService getWxMaImmediateDeliveryService();
+
+
+  /**
+   * 小程序安全风控相关接口服务
+   *
+   * @return safetyRiskControl service
+   */
+  WxMaSafetyRiskControlService getSafetyRiskControlService();
+
+  /**
+   * 分享人接口
+   * @return WxMaShopSharerService
+   */
+  WxMaShopSharerService getShopSharerService();
+
+  /**
+   * 标准交易组件接口
+   * @return WxMaProductService
+   */
+  WxMaProductService getProductService();
+
+  /**
+   * 小商店-标准交易组件-订单服务
+   * @return getProductOrderService
+   */
+  WxMaProductOrderService getProductOrderService();
+
+  /**
+   * 小商店-标准交易组件-优惠券
+   * @return getWxMaShopCouponService
+   */
+  WxMaShopCouponService getWxMaShopCouponService();
+
+  /**
+   * 小程序支付管理-订单支付
+   * @return getWxMaShopPayService
+   */
+  WxMaShopPayService getWxMaShopPayService();
 }

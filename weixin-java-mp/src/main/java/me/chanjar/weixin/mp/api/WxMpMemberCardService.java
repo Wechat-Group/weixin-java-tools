@@ -14,7 +14,7 @@ import me.chanjar.weixin.mp.bean.card.membercard.*;
  * @author YuJian(mgcnrx11 @ gmail.com)
  * @author yuanqixun
  * @version 2017/7/8
- * @date 2018-08-30
+ * created on  2018-08-30
  */
 public interface WxMpMemberCardService {
   /**

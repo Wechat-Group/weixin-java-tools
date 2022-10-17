@@ -9,7 +9,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 /**
  *
  * @author Binary Wang
- * @date 2016/7/18
+ * created on  2016/7/18
  */
 @Data
 public class WxMpKfMsgRecord implements Serializable {

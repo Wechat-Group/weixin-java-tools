@@ -241,7 +241,17 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     HttpGet httpGet = new HttpGet(url);
     httpGet.addHeader("Accept", "application/json");
     httpGet.addHeader("Content-Type", "application/json");
-    return this.requestV3(url.toString(), httpGet);
+    return this.requestV3(url, httpGet);
+  }
+
+  @Override
+  public String getV3WithWechatPaySerial(String url) throws WxPayException {
+    HttpGet httpGet = new HttpGet(url);
+    httpGet.addHeader("Accept", "application/json");
+    httpGet.addHeader("Content-Type", "application/json");
+    String serialNumber = getConfig().getVerifier().getValidCertificate().getSerialNumber().toString(16).toUpperCase();
+    httpGet.addHeader("Wechatpay-Serial", serialNumber);
+    return this.requestV3(url, httpGet);
   }
 
   @Override
@@ -267,6 +277,24 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     } finally {
       httpGet.releaseConnection();
     }
+  }
+
+  @Override
+  public String putV3(String url, String requestStr) throws WxPayException {
+    HttpPut httpPut = new HttpPut(url);
+    StringEntity entity = this.createEntry(requestStr);
+    httpPut.setEntity(entity);
+    httpPut.addHeader("Accept", "application/json");
+    httpPut.addHeader("Content-Type", "application/json");
+    return requestV3(url, httpPut);
+  }
+
+  @Override
+  public String deleteV3(String url) throws WxPayException {
+    HttpDelete httpDelete = new HttpDelete(url);
+    httpDelete.addHeader("Accept", "application/json");
+    httpDelete.addHeader("Content-Type", "application/json");
+    return requestV3(url, httpDelete);
   }
 
   private CloseableHttpClient createApiV3HttpClient() throws WxPayException {

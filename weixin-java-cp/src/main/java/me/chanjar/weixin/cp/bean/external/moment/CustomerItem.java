@@ -4,6 +4,11 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The type Customer item.
+ *
+ * @author Boris
+ */
 @Getter
 @Setter
 public class CustomerItem {

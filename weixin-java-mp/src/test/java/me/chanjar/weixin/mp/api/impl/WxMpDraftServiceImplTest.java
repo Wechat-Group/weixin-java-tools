@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 草稿箱单元测试.
  *
  * @author dragon
- * @date 2021-10-22
+ * created on  2021-10-22
  */
 @Guice(modules = ApiTestModule.class)
 public class WxMpDraftServiceImplTest {

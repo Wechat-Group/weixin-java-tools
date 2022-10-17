@@ -18,25 +18,52 @@ public class TextCardBuilder extends BaseBuilder<TextCardBuilder> {
   private String url;
   private String btnTxt;
 
+  /**
+   * Instantiates a new Text card builder.
+   */
   public TextCardBuilder() {
     this.msgType = WxConsts.KefuMsgType.TEXTCARD;
   }
 
+  /**
+   * Title text card builder.
+   *
+   * @param title the title
+   * @return the text card builder
+   */
   public TextCardBuilder title(String title) {
     this.title = title;
     return this;
   }
 
+  /**
+   * Description text card builder.
+   *
+   * @param description the description
+   * @return the text card builder
+   */
   public TextCardBuilder description(String description) {
     this.description = description;
     return this;
   }
 
+  /**
+   * Url text card builder.
+   *
+   * @param url the url
+   * @return the text card builder
+   */
   public TextCardBuilder url(String url) {
     this.url = url;
     return this;
   }
 
+  /**
+   * Btn txt text card builder.
+   *
+   * @param btnTxt the btn txt
+   * @return the text card builder
+   */
   public TextCardBuilder btnTxt(String btnTxt) {
     this.btnTxt = btnTxt;
     return this;

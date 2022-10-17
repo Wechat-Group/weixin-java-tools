@@ -8,7 +8,7 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 /**
  *
  * @author keungtung.
- * @date 14/12/2016
+ * created on  14/12/2016
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

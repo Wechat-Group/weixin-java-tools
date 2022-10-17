@@ -7,7 +7,9 @@ import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateDateRange;
 import java.io.Serializable;
 
 /**
- * @author gyv12345@163.com
+ * The type Template attendance.
+ *
+ * @author gyv12345 @163.com
  */
 @Data
 public class TemplateAttendance implements Serializable {

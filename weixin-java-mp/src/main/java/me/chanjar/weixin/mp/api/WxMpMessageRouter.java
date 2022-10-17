@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
 import me.chanjar.weixin.common.api.WxMessageDuplicateChecker;
 import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
+import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateCheckerSingleton;
 import me.chanjar.weixin.common.session.InternalSession;
 import me.chanjar.weixin.common.session.InternalSessionManager;
 import me.chanjar.weixin.common.session.StandardSessionManager;
@@ -72,7 +73,7 @@ public class WxMpMessageRouter {
     ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxMpMessageRouter-pool-%d").build();
     this.executorService = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE,
       0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
-    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+    this.messageDuplicateChecker = WxMessageInMemoryDuplicateCheckerSingleton.getInstance();
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
   }
@@ -83,18 +84,34 @@ public class WxMpMessageRouter {
   public WxMpMessageRouter(WxMpService wxMpService, ExecutorService executorService) {
     this.wxMpService = wxMpService;
     this.executorService = executorService;
-    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+    this.messageDuplicateChecker = WxMessageInMemoryDuplicateCheckerSingleton.getInstance();
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
   }
 
   /**
-   * 如果使用默认的 {@link ExecutorService}，则系统退出前，应该调用该方法.
+   * 系统退出前，应该调用该方法
    */
   public void shutDownExecutorService() {
     this.executorService.shutdown();
   }
 
+  /**
+   * 系统退出前，应该调用该方法，增加了超时时间检测
+   */
+  public void shutDownExecutorService(Integer second) {
+    this.executorService.shutdown();
+    try {
+      if (!this.executorService.awaitTermination(second, TimeUnit.SECONDS)) {
+        this.executorService.shutdownNow();
+        if (!this.executorService.awaitTermination(second, TimeUnit.SECONDS))
+          log.error("线程池未关闭！");
+      }
+    } catch (InterruptedException ie) {
+      this.executorService.shutdownNow();
+      Thread.currentThread().interrupt();
+    }
+  }
 
   /**
    * <pre>

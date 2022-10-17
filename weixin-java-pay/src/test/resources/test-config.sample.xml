@@ -1,21 +1,22 @@
 <xml>
   <appId>公众号appid</appId>
   <mchId>微信商户平台ID</mchId>
-  <mchKey>商户平台设置的API密钥</mchKey>
   <!---
-  以下为官网文档所提供样例参数，仅供部分接口测试使用
-  <appId>wxd930ea5d5a258f4f</appId>
-  <mchId>10000100</mchId>
-  <mchKey>192006250b4c09247ec02edce69f6a2d</mchKey>
-  -->
+    以下为官网文档所提供样例参数，仅供部分接口测试使用
+    <appId>wxd930ea5d5a258f4f</appId>
+    <mchId>10000100</mchId>
+    <mchKey>192006250b4c09247ec02edce69f6a2d</mchKey>
+-->
+  <!-- v2版本 -->
+  <mchKey>商户平台设置的API密钥</mchKey>
   <keyPath>商户平台的证书文件地址</keyPath>
-  <openid>某个openId</openid>
 
-  <!--
-  apiv3 模式下所需配置
-  <privateKeyPath>apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径.</privateKeyPath>
-  <privateCertPath>apiclient_cert.pem证书文件的绝对路径或者以classpath:开头的类路径.</privateCertPath>
+  <!-- v3版本 模式下所需配置 -->
   <apiV3Key> apiV3 秘钥值.</apiV3Key>
   <certSerialNo>apiV3 证书序列号值</certSerialNo>
-  -->
+  <privateKeyPath>apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径.</privateKeyPath>
+  <privateCertPath>apiclient_cert.pem证书文件的绝对路径或者以classpath:开头的类路径.</privateCertPath>
+
+  <!-- other配置 -->
+  <openid>某个openId</openid>
 </xml>

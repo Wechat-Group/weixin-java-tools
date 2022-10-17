@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  * 企点接口地址域名部分的自定义设置信息.
  *
  * @author alegria
- * @date 2020-12-24
+ * created on  2020-12-24
  */
 @Data
 @Builder

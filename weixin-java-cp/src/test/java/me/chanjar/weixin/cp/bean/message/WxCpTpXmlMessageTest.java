@@ -5,8 +5,14 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
+/**
+ * The type Wx cp tp xml message test.
+ */
 public class WxCpTpXmlMessageTest {
 
+  /**
+   * Test user notify xml.
+   */
   @Test
   public void testUserNotifyXML() {
     String xml = "<xml>\n" +
@@ -24,7 +30,9 @@ public class WxCpTpXmlMessageTest {
       "    <Position><![CDATA[产品经理]]></Position>\n" +
       "    <Gender>1</Gender>\n" +
       "    <Email><![CDATA[zhangsan@xxx.com]]></Email>\n" +
-      "    <Avatar><![CDATA[http://wx.qlogo.cn/mmopen/ajNVdqHZLLA3WJ6DSZUfiakYe37PKnQhBIeOQBO4czqrnZDS79FH5Wm5m4X69TBicnHFlhiafvDwklOpZeXYQQ2icg/0]]></Avatar>\n" +
+      "    <Avatar><![CDATA[http://wx.qlogo" +
+      ".cn/mmopen/ajNVdqHZLLA3WJ6DSZUfiakYe37PKnQhBIeOQBO4czqrnZDS79FH5Wm5m4X69TBicnHFlhiafvDwklOpZeXYQQ2icg/0" +
+      "]]></Avatar>\n" +
       "    <Alias><![CDATA[zhangsan]]></Alias>\n" +
       "    <Telephone><![CDATA[020-111111]]></Telephone>\n" +
       "    <ExtAttr>\n" +
@@ -54,6 +62,9 @@ public class WxCpTpXmlMessageTest {
   }
 
 
+  /**
+   * Test register corp.
+   */
   @Test
   public void testRegisterCorp() {
     String xml = "<xml>\n" +
@@ -85,6 +96,9 @@ public class WxCpTpXmlMessageTest {
     assertEquals(wxXmlMessage.getTemplateId(), "tpl1test");
   }
 
+  /**
+   * Tag notify test.
+   */
   @Test
   public void tagNotifyTest() {
     String xml = "<xml>\n" +
@@ -118,6 +132,9 @@ public class WxCpTpXmlMessageTest {
   }
 
 
+  /**
+   * Enter app test.
+   */
   @Test
   public void enterAppTest() {
     String xml = "<xml><ToUserName><![CDATA[toUser]]></ToUserName>\n" +
@@ -138,6 +155,9 @@ public class WxCpTpXmlMessageTest {
     assertEquals(wxXmlMessage.getAgentID(), Integer.valueOf(1));
   }
 
+  /**
+   * Text message test.
+   */
   @Test
   public void textMessageTest() {
     String xml = "<xml>\n" +
@@ -160,6 +180,9 @@ public class WxCpTpXmlMessageTest {
     assertEquals(wxXmlMessage.getId(), "etEsNADQAAaiB0cWCSDFiJ2qCap-ww9A");
   }
 
+  /**
+   * Approval info test.
+   */
   @Test
   public void ApprovalInfoTest() {
     String xml = "<xml>\n" +
@@ -227,13 +250,17 @@ public class WxCpTpXmlMessageTest {
 
     assertNotNull(wxXmlMessage.getApprovalInfo().getApprovalNodes().get(0).getItems());
     assertEquals(wxXmlMessage.getApprovalInfo().getApprovalNodes().get(0).getItems().get(0).getItemName(), "xiaohong");
-    assertEquals(wxXmlMessage.getApprovalInfo().getApprovalNodes().get(0).getItems().get(0).getItemOpTime(), Long.valueOf(0));
+    assertEquals(wxXmlMessage.getApprovalInfo().getApprovalNodes().get(0).getItems().get(0).getItemOpTime(),
+      Long.valueOf(0));
 
     assertNotNull(wxXmlMessage.getApprovalInfo().getNotifyNodes().get(0));
     assertEquals(wxXmlMessage.getApprovalInfo().getNotifyNodes().get(0).getItemImage(), "http://www.qq.com/xxx.png");
     assertEquals(wxXmlMessage.getApprovalInfo().getNotifyNodes().get(0).getItemUserId(), Integer.valueOf(3));
   }
 
+  /**
+   * Test from xml.
+   */
   @Test
   public void testFromXml() {
     String xml = "<xml>\n" +

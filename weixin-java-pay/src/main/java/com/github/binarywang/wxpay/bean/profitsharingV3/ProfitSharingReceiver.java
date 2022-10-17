@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * 微信V3接口 分账接收方实体
  * @author pg
- * @date 2021-6-25
+ * created on  2021-6-25
  *
  */
 @Data
@@ -22,6 +22,17 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ProfitSharingReceiver implements Serializable {
   private static final long serialVersionUID = -4391888575149767840L;
+
+
+  /**
+   * <pre>
+   * 字段名：子商户号
+   * 是否必填：是
+   * 描述：微信支付分配的子商户号，即分账的出资商户号。
+   * </pre>
+   */
+  @SerializedName("sub_mchid")
+  private String subMchId;
 
   /**
    * <pre>

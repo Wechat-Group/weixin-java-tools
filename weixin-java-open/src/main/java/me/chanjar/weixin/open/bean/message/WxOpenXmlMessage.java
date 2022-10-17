@@ -147,7 +147,7 @@ public class WxOpenXmlMessage implements Serializable {
   public static WxOpenXmlMessage fromEncryptedXml(String encryptedXml, WxOpenConfigStorage wxOpenConfigStorage,
                                                   String timestamp, String nonce, String msgSignature) {
     WxOpenCryptUtil cryptUtil = new WxOpenCryptUtil(wxOpenConfigStorage);
-    String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    String plainText = cryptUtil.decryptXml(msgSignature, timestamp, nonce, encryptedXml);
     log.debug("解密后的原始xml消息内容：{}", plainText);
     return fromXml(plainText);
   }
@@ -155,7 +155,7 @@ public class WxOpenXmlMessage implements Serializable {
   public static WxMpXmlMessage fromEncryptedMpXml(String encryptedXml, WxOpenConfigStorage wxOpenConfigStorage,
                                                   String timestamp, String nonce, String msgSignature) {
     WxOpenCryptUtil cryptUtil = new WxOpenCryptUtil(wxOpenConfigStorage);
-    String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    String plainText = cryptUtil.decryptXml(msgSignature, timestamp, nonce, encryptedXml);
     return WxMpXmlMessage.fromXml(plainText);
   }
 

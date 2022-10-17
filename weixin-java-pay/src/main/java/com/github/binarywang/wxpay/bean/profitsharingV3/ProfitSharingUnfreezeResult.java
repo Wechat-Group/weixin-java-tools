@@ -4,13 +4,14 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 微信V3接口
  * 解冻剩余资金API返回实体
  *
  * @author pg
- * @date 2021-6-25
+ * created on  2021-6-25
  */
 @Data
 public class ProfitSharingUnfreezeResult implements Serializable {
@@ -46,7 +47,6 @@ public class ProfitSharingUnfreezeResult implements Serializable {
   @SerializedName("order_id")
   private String orderId;
 
-
   /**
    * <pre>
    * 字段名：分账单状态
@@ -58,6 +58,12 @@ public class ProfitSharingUnfreezeResult implements Serializable {
    */
   @SerializedName("state")
   private String state;
+
+  /**
+   * 分账接收方列表
+   */
+  @SerializedName("receivers")
+  private List<Receiver> receivers;
 
   @Data
   public static class Receiver implements Serializable {

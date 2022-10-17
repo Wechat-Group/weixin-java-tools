@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author leiin
- * @date 2021/3/23
+ * created on  2021/3/23
  */
 @Data
 public class WxMaShopProductInfo implements Serializable {
@@ -88,5 +88,8 @@ public class WxMaShopProductInfo implements Serializable {
    */
   @SerializedName("real_price")
   private Integer realPrice;
+
+  @SerializedName("sku_real_price")
+  private Integer skuRealPrice;
 }
 

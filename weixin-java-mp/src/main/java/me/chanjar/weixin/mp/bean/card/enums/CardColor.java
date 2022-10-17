@@ -4,7 +4,7 @@ package me.chanjar.weixin.mp.bean.card.enums;
  * 会员卡颜色
  *
  * @author yuanqixun
- * @date 2018-08-29
+ * created on  2018-08-29
  */
 public enum CardColor {
   Color010("#63b359"),

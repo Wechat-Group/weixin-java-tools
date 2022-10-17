@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 老板加点注释吧.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-07-14
+ * created on  2019-07-14
  */
 public class WxMpUserActionTest {
 

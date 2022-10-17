@@ -13,7 +13,7 @@ import java.util.List;
  * </pre>
  *
  * @author zhangq <zhangq002@gmail.com>
- * @since 2021-02-14 16:02
+ * @since 2021 -02-14 16:02
  */
 public interface WxCpTpTagService {
   /**
@@ -25,8 +25,8 @@ public interface WxCpTpTagService {
    *
    * @param name 标签名称，长度限制为32个字以内（汉字或英文字母），标签名不可与其他标签重名。
    * @param id   标签id，非负整型，指定此参数时新增的标签会生成对应的标签id，不指定时则以目前最大的id自增。
-   * @return 标签id
-   * @throws WxErrorException
+   * @return 标签id string
+   * @throws WxErrorException the wx error exception
    */
   String create(String name, Integer id) throws WxErrorException;
 
@@ -49,9 +49,10 @@ public interface WxCpTpTagService {
 
   /**
    * 获取标签成员
-   * @param tagId
-   * @return
-   * @throws WxErrorException
+   *
+   * @param tagId the tag id
+   * @return wx cp tp tag get result
+   * @throws WxErrorException the wx error exception
    */
   WxCpTpTagGetResult get(String tagId) throws WxErrorException;
 
@@ -61,7 +62,7 @@ public interface WxCpTpTagService {
    * @param tagId    标签id
    * @param userIds  用户ID 列表
    * @param partyIds 企业部门ID列表
-   * @return .
+   * @return . wx cp tp tag add or remove users result
    * @throws WxErrorException .
    */
   WxCpTpTagAddOrRemoveUsersResult addUsers2Tag(String tagId, List<String> userIds, List<String> partyIds)
@@ -73,7 +74,7 @@ public interface WxCpTpTagService {
    * @param tagId    标签id
    * @param userIds  用户id列表
    * @param partyIds 企业部门ID列表
-   * @return .
+   * @return . wx cp tp tag add or remove users result
    * @throws WxErrorException .
    */
   WxCpTpTagAddOrRemoveUsersResult removeUsersFromTag(String tagId, List<String> userIds, List<String> partyIds)
@@ -82,7 +83,7 @@ public interface WxCpTpTagService {
   /**
    * 获得标签列表.
    *
-   * @return 标签列表
+   * @return 标签列表 list
    * @throws WxErrorException .
    */
   List<WxCpTpTag> listAll() throws WxErrorException;

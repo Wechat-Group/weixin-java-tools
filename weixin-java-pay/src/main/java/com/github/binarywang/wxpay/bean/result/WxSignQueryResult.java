@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
  * @author chenliang
- * @date 2021-08-02 5:40 下午
+ * created on  2021-08-02 5:40 下午
  *
  * <pre>
  *   微信签约查询返回结果
@@ -42,7 +42,7 @@ public class WxSignQueryResult extends BaseWxPayResult implements Serializable {
    * 请求序列号
    */
   @XStreamAlias("request_serial")
-  private Integer requestSerial;
+  private Long requestSerial;
 
   /**
    * 签约协议号
@@ -106,7 +106,7 @@ public class WxSignQueryResult extends BaseWxPayResult implements Serializable {
   protected void loadXml(Document d) {
     contractId = readXmlString(d, "contract_id");
     planId = readXmlString(d, "plan_id");
-    requestSerial = readXmlInteger(d, "request_serial");
+    requestSerial = readXmlLong(d, "request_serial");
     contractCode = readXmlString(d, "contract_code");
     contractDisplayAccount = readXmlString(d, "contract_display_account");
     contractState = readXmlInteger(d, "contract_state");

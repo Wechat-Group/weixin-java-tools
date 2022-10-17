@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brayden Wong
- * @date 2021/1/16
+ * created on  2021/1/16
  * 提供accesstoken保存在concurrenthashmap中的实现，支持高并发。仅限于单机部署。
  */
 @Data

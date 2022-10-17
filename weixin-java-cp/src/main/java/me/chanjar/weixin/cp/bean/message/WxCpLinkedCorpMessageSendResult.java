@@ -9,8 +9,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 /**
  * 互联企业的消息推送接口返回实体
  *
- * @author pg
- * @date 2021年6月22日
+ * @author pg  created on  2021年6月22日
  */
 @Setter
 @Getter
@@ -31,6 +30,12 @@ public class WxCpLinkedCorpMessageSendResult extends WxCpBaseResp {
     return WxCpGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * From json wx cp linked corp message send result.
+   *
+   * @param json the json
+   * @return the wx cp linked corp message send result
+   */
   public static WxCpLinkedCorpMessageSendResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpLinkedCorpMessageSendResult.class);
   }

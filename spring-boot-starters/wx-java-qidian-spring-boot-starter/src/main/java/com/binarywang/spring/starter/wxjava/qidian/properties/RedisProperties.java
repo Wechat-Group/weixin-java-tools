@@ -8,7 +8,7 @@ import java.io.Serializable;
  * redis 配置属性.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-08-30
+ * created on  2020-08-30
  */
 @Data
 public class RedisProperties implements Serializable {

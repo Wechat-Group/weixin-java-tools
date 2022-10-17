@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.json;
 
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
+import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMsgEvent;
 import cn.binarywang.wx.miniapp.bean.WxMaUniformMessage;
 import cn.binarywang.wx.miniapp.bean.analysis.WxMaRetainInfo;
 import cn.binarywang.wx.miniapp.bean.analysis.WxMaUserPortrait;
@@ -10,12 +11,14 @@ import cn.binarywang.wx.miniapp.bean.code.WxMaCodeVersionDistribution;
 import cn.binarywang.wx.miniapp.json.adaptor.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.Objects;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMaGsonBuilder {
   private static final GsonBuilder INSTANCE = new GsonBuilder();
+  private static volatile Gson GSON_INSTANCE;
 
   static {
     INSTANCE.disableHtmlEscaping();
@@ -26,10 +29,18 @@ public class WxMaGsonBuilder {
     INSTANCE.registerTypeAdapter(WxMaVisitDistribution.class, new WxMaVisitDistributionGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMaRetainInfo.class, new WxMaRetainInfoGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMaUserPortrait.class, new WxMaUserPortraitGsonAdapter());
+    INSTANCE.registerTypeAdapter(WxMaSubscribeMsgEvent.WxMaSubscribeMsgEventJson.class, new WxMaSubscribeMsgEventJsonAdapter());
   }
 
   public static Gson create() {
-    return INSTANCE.create();
+    if (Objects.isNull(GSON_INSTANCE)) {
+      synchronized (INSTANCE) {
+        if (Objects.isNull(GSON_INSTANCE)) {
+          GSON_INSTANCE = INSTANCE.create();
+        }
+      }
+    }
+    return GSON_INSTANCE;
   }
 
 }

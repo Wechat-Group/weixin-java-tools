@@ -16,8 +16,7 @@ import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.*;
 /**
  * 微信群机器人消息
  *
- * @author yr
- * @date 2020-08-20
+ * @author yr  created on  2020-08-20
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,7 +24,7 @@ import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.*;
 @Data
 public class WxCpGroupRobotMessage implements Serializable {
   private static final long serialVersionUID = -4301684507150486556L;
-  
+
   /**
    * 消息类型
    */
@@ -57,6 +56,16 @@ public class WxCpGroupRobotMessage implements Serializable {
    */
   private List<NewArticle> articles;
 
+  /**
+   * 文件id
+   */
+  private String mediaId;
+
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     JsonObject messageJson = new JsonObject();
     messageJson.addProperty("msgtype", this.getMsgType());
@@ -110,6 +119,12 @@ public class WxCpGroupRobotMessage implements Serializable {
         }
         text.add("articles", array);
         messageJson.add("news", text);
+        break;
+      }
+      case FILE: {
+        JsonObject file = new JsonObject();
+        file.addProperty("media_id", this.getMediaId());
+        messageJson.add("file", file);
         break;
       }
       default:

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * @author leiin
- * @date 2021/3/23
+ * created on  2021/3/23
  */
 @Data
 public class WxMaShopBaseResponse implements Serializable {
@@ -21,7 +21,7 @@ public class WxMaShopBaseResponse implements Serializable {
    * </pre>
    */
   @SerializedName("errcode")
-  private Integer errcode;
+  private Integer errCode;
 
   /**
    * 错误信息
@@ -30,5 +30,5 @@ public class WxMaShopBaseResponse implements Serializable {
    * </pre>
    */
   @SerializedName("errmsg")
-  private String errmsg;
+  private String errMsg;
 }

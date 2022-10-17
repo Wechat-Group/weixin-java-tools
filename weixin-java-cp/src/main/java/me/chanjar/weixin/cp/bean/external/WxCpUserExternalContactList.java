@@ -30,31 +30,67 @@ public class WxCpUserExternalContactList implements Serializable {
   @Expose
   private List<String> externalUserId = null;
 
+  /**
+   * Gets errcode.
+   *
+   * @return the errcode
+   */
   public Long getErrcode() {
     return errcode;
   }
 
+  /**
+   * Sets errcode.
+   *
+   * @param errcode the errcode
+   */
   public void setErrcode(Long errcode) {
     this.errcode = errcode;
   }
 
+  /**
+   * Gets errmsg.
+   *
+   * @return the errmsg
+   */
   public String getErrmsg() {
     return errmsg;
   }
 
+  /**
+   * Sets errmsg.
+   *
+   * @param errmsg the errmsg
+   */
   public void setErrmsg(String errmsg) {
     this.errmsg = errmsg;
   }
 
 
+  /**
+   * Gets external user id.
+   *
+   * @return the external user id
+   */
   public List<String> getExternalUserId() {
     return externalUserId;
   }
 
+  /**
+   * Sets external user id.
+   *
+   * @param externalUserId the external user id
+   */
   public void setExternalUserId(List<String> externalUserId) {
     this.externalUserId = externalUserId;
   }
 
+  /**
+   * From json wx cp user external contact list.
+   *
+   * @param json the json
+   * @return the wx cp user external contact list
+   */
   public static WxCpUserExternalContactList fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserExternalContactList.class);
   }

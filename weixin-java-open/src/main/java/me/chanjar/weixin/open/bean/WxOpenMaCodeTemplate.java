@@ -46,4 +46,16 @@ public class WxOpenMaCodeTemplate implements Serializable {
    */
   @SerializedName(value = "createTime", alternate = "create_time")
   private Long createTime;
+
+  /**
+   * 开发小程序的appid
+   */
+  @SerializedName(value = "sourceMiniProgramAppid", alternate = "source_miniprogram_appid")
+  private String sourceMiniProgramAppid;
+
+  /**
+   * 开发小程序的名称
+   */
+  @SerializedName(value = "sourceMiniProgram", alternate = "source_miniprogram")
+  private String sourceMiniProgram;
 }

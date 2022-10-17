@@ -1,13 +1,17 @@
 package me.chanjar.weixin.cp.bean.message;
 
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutVoiceMessage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+/**
+ * The type Wx cp xml out voice message test.
+ */
 @Test
 public class WxCpXmlOutVoiceMessageTest {
 
+  /**
+   * Test.
+   */
   public void test() {
     WxCpXmlOutVoiceMessage m = new WxCpXmlOutVoiceMessage();
     m.setMediaId("ddfefesfsdfef");
@@ -26,6 +30,9 @@ public class WxCpXmlOutVoiceMessageTest {
     Assert.assertEquals(m.toXml().replaceAll("\\s", ""), expected.replaceAll("\\s", ""));
   }
 
+  /**
+   * Test build.
+   */
   public void testBuild() {
     WxCpXmlOutVoiceMessage m = WxCpXmlOutMessage.VOICE().mediaId("ddfefesfsdfef").fromUser("from").toUser("to").build();
     String expected = "<xml>"

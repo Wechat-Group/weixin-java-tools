@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a>
- * @date 2021/5/13/013
+ * created on  2021/5/13/013
  */
 public interface WxMpGuideMassedJobService {
 

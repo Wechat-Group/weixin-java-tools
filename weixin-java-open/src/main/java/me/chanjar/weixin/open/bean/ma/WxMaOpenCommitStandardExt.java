@@ -35,13 +35,12 @@ import java.util.Map;
  */
 @Data
 public class WxMaOpenCommitStandardExt implements Serializable {
-
   private static final long serialVersionUID = 4595618023108631477L;
 
   /**
    * 授权小程序Appid，可填入商户小程序AppID，以区分不同商户
    */
-  @SerializedName("create_time")
+  @SerializedName("extAppid")
   private String extAppId;
 
   /**

@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * @author f00lish
- * @date 2020/09/14
+ * created on  2020/09/14
  */
 @Data
 @Builder
@@ -163,6 +163,6 @@ public class ReturnOrdersResult implements Serializable {
    * </pre>
    */
   @SerializedName(value = "finish_time")
-  private Date finishTime;
+  private String finishTime;
 
 }

@@ -71,9 +71,7 @@ public class WxCpMessage implements Serializable {
   private String taskId;
   private List<TaskCardButton> taskButtons = new ArrayList<>();
 
-  /**
-   * 模板型卡片特有属性
-   */
+  // 模板型卡片特有属性
   /**
    * 模板卡片类型，文本通知型卡片填写 “text_notice”,
    * 图文展示型卡片此处填写 “news_notice”,
@@ -81,62 +79,77 @@ public class WxCpMessage implements Serializable {
    * 投票选择型卡片填写”vote_interaction”,
    * 多项选择型卡片填写 “multiple_interaction”
    */
-  private String card_type;
+  private String cardType;
 
   /**
    * 卡片来源样式信息，不需要来源样式可不填写
    * 来源图片的url
    */
-  private String source_icon_url;
+  private String sourceIconUrl;
   /**
    * 卡片来源样式信息，不需要来源样式可不填写
    * 来源图片的描述，建议不超过20个字
    */
-  private String source_desc;
+  private String sourceDesc;
+
+  /**
+   * 来源文字的颜色，目前支持：0(默认) 灰色，1 黑色，2 红色，3 绿色
+   */
+  private Integer sourceDescColor;
+
+  /**
+   * 更多操作界面的描述
+   */
+  private String actionMenuDesc;
+
+  /**
+   * 操作列表，列表长度取值范围为 [1, 3]
+   */
+  private List<ActionMenuItem> actionMenuActionList;
 
   /**
    * 一级标题，建议不超过36个字
    */
-  private String main_title_title;
+  private String mainTitleTitle;
   /**
    * 标题辅助信息，建议不超过44个字
    */
-  private String main_title_desc;
+  private String mainTitleDesc;
 
   /**
    * 图文展示型的卡片必须有图片字段。
    * 图片的url.
    */
-  private String card_image_url;
+  private String cardImageUrl;
 
   /**
    * 图片的宽高比，宽高比要小于2.25，大于1.3，不填该参数默认1.3
    */
-  private Float card_image_aspect_ratio;
+  private Float cardImageAspectRatio;
   /**
    * 关键数据样式
    * 关键数据样式的数据内容，建议不超过14个字
    */
-  private String emphasis_content_title;
+  private String emphasisContentTitle;
   /**
    * 关键数据样式的数据描述内容，建议不超过22个字
    */
-  private String emphasis_content_desc;
+  private String emphasisContentDesc;
 
   /**
    * 二级普通文本，建议不超过160个字
    */
-  private String sub_title_text;
+  private String subTitleText;
 
   /**
    * 卡片二级垂直内容，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过4
    */
-  private List<VerticalContent> vertical_contents;
+  private List<VerticalContent> verticalContents;
 
   /**
    * 二级标题+文本列表，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过6
    */
-  private List<HorizontalContent> horizontal_contents;
+  private List<HorizontalContent> horizontalContents;
 
   /**
    * 跳转指引样式的列表，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过3
@@ -147,21 +160,21 @@ public class WxCpMessage implements Serializable {
    * 整体卡片的点击跳转事件，text_notice必填本字段
    * 跳转事件类型，1 代表跳转url，2 代表打开小程序。text_notice卡片模版中该字段取值范围为[1,2]
    */
-  private Integer  card_action_type;
+  private Integer cardActionType;
   /**
    * 跳转事件的url，card_action.type是1时必填
    */
-  private String card_action_url;
+  private String cardActionUrl;
 
   /**
    * 跳转事件的小程序的appid，必须是与当前应用关联的小程序，card_action.type是2时必填
    */
-  private String card_action_appid;
+  private String cardActionAppid;
 
   /**
    * 跳转事件的小程序的pagepath，card_action.type是2时选填
    */
-  private String card_action_pagepath;
+  private String cardActionPagepath;
 
   /**
    * 按钮交互型卡片需指定。
@@ -173,12 +186,12 @@ public class WxCpMessage implements Serializable {
    * 投票选择型卡片需要指定
    * 选择题key值，用户提交选项后，会产生回调事件，回调事件会带上该key值表示该题，最长支持1024字节
    */
-  private String checkbox_question_key;
+  private String checkboxQuestionKey;
 
   /**
    * 选择题模式，单选：0，多选：1，不填默认0
    */
-  private Integer checkbox_mode;
+  private Integer checkboxMode;
 
   /**
    * 选项list，选项个数不超过 20 个，最少1个
@@ -189,18 +202,25 @@ public class WxCpMessage implements Serializable {
    * 提交按钮样式
    * 按钮文案，建议不超过10个字，不填默认为提交
    */
-  private String submit_button_text;
+  private String submitButtonText;
   /**
    * 提交按钮的key，会产生回调事件将本参数作为EventKey返回，最长支持1024字节
    */
-  private String submit_button_key;
+  private String submitButtonKey;
   /**
    * 下拉式的选择器列表，multiple_interaction类型的卡片该字段不可为空，一个消息最多支持 3 个选择器
    */
   private List<MultipleSelect> selects;
 
   /**
+   * 引用文献样式
+   */
+  private QuoteArea quoteArea;
+
+  /**
    * 获得文本消息builder.
+   *
+   * @return the text builder
    */
   public static TextBuilder TEXT() {
     return new TextBuilder();
@@ -208,6 +228,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得文本卡片消息builder.
+   *
+   * @return the text card builder
    */
   public static TextCardBuilder TEXTCARD() {
     return new TextCardBuilder();
@@ -215,6 +237,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得图片消息builder.
+   *
+   * @return the image builder
    */
   public static ImageBuilder IMAGE() {
     return new ImageBuilder();
@@ -222,6 +246,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得语音消息builder.
+   *
+   * @return the voice builder
    */
   public static VoiceBuilder VOICE() {
     return new VoiceBuilder();
@@ -229,6 +255,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得视频消息builder.
+   *
+   * @return the video builder
    */
   public static VideoBuilder VIDEO() {
     return new VideoBuilder();
@@ -236,6 +264,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得图文消息builder.
+   *
+   * @return the news builder
    */
   public static NewsBuilder NEWS() {
     return new NewsBuilder();
@@ -243,6 +273,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得mpnews图文消息builder.
+   *
+   * @return the mpnews builder
    */
   public static MpnewsBuilder MPNEWS() {
     return new MpnewsBuilder();
@@ -250,6 +282,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得markdown消息builder.
+   *
+   * @return the markdown msg builder
    */
   public static MarkdownMsgBuilder MARKDOWN() {
     return new MarkdownMsgBuilder();
@@ -257,6 +291,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得文件消息builder.
+   *
+   * @return the file builder
    */
   public static FileBuilder FILE() {
     return new FileBuilder();
@@ -264,6 +300,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得任务卡片消息builder.
+   *
+   * @return the task card builder
    */
   public static TaskCardBuilder TASKCARD() {
     return new TaskCardBuilder();
@@ -271,6 +309,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得任务卡片消息builder.
+   *
+   * @return the template card builder
    */
   public static TemplateCardBuilder TEMPLATECARD() {
     return new TemplateCardBuilder();
@@ -278,6 +318,8 @@ public class WxCpMessage implements Serializable {
 
   /**
    * 获得小程序通知消息builder.
+   *
+   * @return the mini program notice msg builder
    */
   public static MiniProgramNoticeMsgBuilder newMiniProgramNoticeBuilder() {
     return new MiniProgramNoticeMsgBuilder();
@@ -305,6 +347,11 @@ public class WxCpMessage implements Serializable {
     this.msgType = msgType;
   }
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     JsonObject messageJson = new JsonObject();
     if (this.getAgentId() != null) {
@@ -405,6 +452,8 @@ public class WxCpMessage implements Serializable {
           articleJson.addProperty("description", article.getDescription());
           articleJson.addProperty("url", article.getUrl());
           articleJson.addProperty("picurl", article.getPicUrl());
+          articleJson.addProperty("appid", article.getAppid());
+          articleJson.addProperty("pagepath", article.getPagepath());
           articleJsonArray.add(articleJson);
         }
         newsJsonObject.add("articles", articleJsonArray);
@@ -467,64 +516,88 @@ public class WxCpMessage implements Serializable {
       }
       case TEMPLATE_CARD: {
         JsonObject template = new JsonObject();
-        template.addProperty("card_type", this.getCard_type());
+        template.addProperty("card_type", this.getCardType());
 
-        if (StringUtils.isNotBlank(this.getSource_icon_url()) || StringUtils.isNotBlank(this.getSource_desc())) {
+        if (StringUtils.isNotBlank(this.getSourceIconUrl()) || StringUtils.isNotBlank(this.getSourceDesc())) {
           JsonObject source = new JsonObject();
-          if (StringUtils.isNotBlank(this.getSource_icon_url())) {
-            source.addProperty("icon_url", this.getSource_icon_url());
+          if (StringUtils.isNotBlank(this.getSourceIconUrl())) {
+            source.addProperty("icon_url", this.getSourceIconUrl());
           }
-          if (StringUtils.isNotBlank(this.getSource_desc())) {
-            source.addProperty("desc", this.getSource_desc());
+          if (StringUtils.isNotBlank(this.getSourceDesc())) {
+            source.addProperty("desc", this.getSourceDesc());
           }
+          source.addProperty("desc_color", this.getSourceDescColor());
           template.add("source", source);
         }
 
-        if (StringUtils.isNotBlank(this.getMain_title_title()) || StringUtils.isNotBlank(this.getMain_title_desc())) {
-          JsonObject main_title = new JsonObject();
-          if (StringUtils.isNotBlank(this.getMain_title_title())) {
-            main_title.addProperty("title", this.getMain_title_title());
+        if (StringUtils.isNotBlank(this.getActionMenuDesc())) {
+          JsonObject action_menu = new JsonObject();
+          action_menu.addProperty("desc", this.getActionMenuDesc());
+          JsonArray actionList = new JsonArray();
+          List<ActionMenuItem> actionMenuItemList = this.getActionMenuActionList();
+          for (ActionMenuItem actionItemI : actionMenuItemList) {
+            actionList.add(actionItemI.toJson());
           }
-          if (StringUtils.isNotBlank(this.getMain_title_desc())) {
-            main_title.addProperty("desc", this.getMain_title_desc());
-          }
-          template.add("main_title", main_title);
+          action_menu.add("action_list", actionList);
+          template.add("action_menu", action_menu);
         }
 
-        if (StringUtils.isNotBlank(this.getEmphasis_content_title()) || StringUtils.isNotBlank(this.getEmphasis_content_desc())) {
-          JsonObject emphasis_content = new JsonObject();
-          if (StringUtils.isNotBlank(this.getEmphasis_content_title())) {
-            emphasis_content.addProperty("title", this.getEmphasis_content_title());
+        if (StringUtils.isNotBlank(this.getMainTitleTitle()) || StringUtils.isNotBlank(this.getMainTitleDesc())) {
+          JsonObject mainTitle = new JsonObject();
+          if (StringUtils.isNotBlank(this.getMainTitleTitle())) {
+            mainTitle.addProperty("title", this.getMainTitleTitle());
           }
-          if (StringUtils.isNotBlank(this.getEmphasis_content_desc())) {
-            emphasis_content.addProperty("desc", this.getEmphasis_content_desc());
+          if (StringUtils.isNotBlank(this.getMainTitleDesc())) {
+            mainTitle.addProperty("desc", this.getMainTitleDesc());
           }
-          template.add("emphasis_content", emphasis_content);
+          template.add("main_title", mainTitle);
+        }
+
+        if (StringUtils.isNotBlank(this.getCardImageUrl()) || this.getCardImageAspectRatio() != null) {
+          JsonObject cardImage = new JsonObject();
+          if (StringUtils.isNotBlank(this.getCardImageUrl())) {
+            cardImage.addProperty("url", this.getCardImageUrl());
+          }
+          if (null != this.getCardImageAspectRatio()) {
+            cardImage.addProperty("aspect_ratio", this.getCardImageAspectRatio());
+          }
+          template.add("card_image", cardImage);
+        }
+
+        if (StringUtils.isNotBlank(this.getEmphasisContentTitle()) || StringUtils.isNotBlank(this.getEmphasisContentDesc())) {
+          JsonObject emphasisContent = new JsonObject();
+          if (StringUtils.isNotBlank(this.getEmphasisContentTitle())) {
+            emphasisContent.addProperty("title", this.getEmphasisContentTitle());
+          }
+          if (StringUtils.isNotBlank(this.getEmphasisContentDesc())) {
+            emphasisContent.addProperty("desc", this.getEmphasisContentDesc());
+          }
+          template.add("emphasis_content", emphasisContent);
         }
 
 
-        if (StringUtils.isNotBlank(this.getSub_title_text())) {
-          template.addProperty("sub_title_text", this.getSub_title_text());
+        if (StringUtils.isNotBlank(this.getSubTitleText())) {
+          template.addProperty("sub_title_text", this.getSubTitleText());
         }
 
         if (StringUtils.isNotBlank(this.getTaskId())) {
           template.addProperty("task_id", this.getTaskId());
         }
 
-        List<VerticalContent> verticalContents = this.getVertical_contents();
-        if(null != verticalContents && verticalContents.size() > 0) {
+        List<VerticalContent> verticalContents = this.getVerticalContents();
+        if (null != verticalContents && !verticalContents.isEmpty()) {
           JsonArray vContentJsonArray = new JsonArray();
-          for (VerticalContent vContent : this.getVertical_contents()) {
+          for (VerticalContent vContent : this.getVerticalContents()) {
             JsonObject tempObject = vContent.toJson();
             vContentJsonArray.add(tempObject);
           }
           template.add("vertical_content_list", vContentJsonArray);
         }
 
-        List<HorizontalContent> horizontalContents = this.getHorizontal_contents();
-        if(null != horizontalContents && horizontalContents.size() > 0) {
+        List<HorizontalContent> horizontalContents = this.getHorizontalContents();
+        if (null != horizontalContents && !horizontalContents.isEmpty()) {
           JsonArray hContentJsonArray = new JsonArray();
-          for (HorizontalContent hContent : this.getHorizontal_contents()) {
+          for (HorizontalContent hContent : this.getHorizontalContents()) {
             JsonObject tempObject = hContent.toJson();
             hContentJsonArray.add(tempObject);
           }
@@ -532,7 +605,7 @@ public class WxCpMessage implements Serializable {
         }
 
         List<TemplateCardJump> jumps = this.getJumps();
-        if(null != jumps && jumps.size() > 0) {
+        if (null != jumps && !jumps.isEmpty()) {
           JsonArray jumpJsonArray = new JsonArray();
           for (TemplateCardJump jump : this.getJumps()) {
             JsonObject tempObject = jump.toJson();
@@ -541,23 +614,23 @@ public class WxCpMessage implements Serializable {
           template.add("jump_list", jumpJsonArray);
         }
 
-        if (null != this.getCard_action_type()) {
+        if (null != this.getCardActionType()) {
           JsonObject cardAction = new JsonObject();
-          cardAction.addProperty("type", this.getCard_action_type());
-          if (StringUtils.isNotBlank(this.getCard_action_url())) {
-            cardAction.addProperty("url", this.getCard_action_url());
+          cardAction.addProperty("type", this.getCardActionType());
+          if (StringUtils.isNotBlank(this.getCardActionUrl())) {
+            cardAction.addProperty("url", this.getCardActionUrl());
           }
-          if (StringUtils.isNotBlank(this.getCard_action_appid())) {
-            cardAction.addProperty("appid", this.getCard_action_appid());
+          if (StringUtils.isNotBlank(this.getCardActionAppid())) {
+            cardAction.addProperty("appid", this.getCardActionAppid());
           }
-          if (StringUtils.isNotBlank(this.getCard_action_pagepath())) {
-            cardAction.addProperty("pagepath", this.getCard_action_pagepath());
+          if (StringUtils.isNotBlank(this.getCardActionPagepath())) {
+            cardAction.addProperty("pagepath", this.getCardActionPagepath());
           }
           template.add("card_action", cardAction);
         }
 
         List<TemplateCardButton> buttons = this.getButtons();
-        if(null != buttons && buttons.size() > 0) {
+        if (null != buttons && !buttons.isEmpty()) {
           JsonArray btnJsonArray = new JsonArray();
           for (TemplateCardButton btn : this.getButtons()) {
             JsonObject tempObject = btn.toJson();
@@ -567,11 +640,11 @@ public class WxCpMessage implements Serializable {
         }
 
         // checkbox
-        if (StringUtils.isNotBlank(this.getCheckbox_question_key())) {
+        if (StringUtils.isNotBlank(this.getCheckboxQuestionKey())) {
           JsonObject checkBox = new JsonObject();
-          checkBox.addProperty("question_key", this.getCheckbox_question_key());
-          if (null != this.getCheckbox_mode()) {
-            checkBox.addProperty("mode", this.getCheckbox_mode());
+          checkBox.addProperty("question_key", this.getCheckboxQuestionKey());
+          if (null != this.getCheckboxMode()) {
+            checkBox.addProperty("mode", this.getCheckboxMode());
           }
           JsonArray optionArray = new JsonArray();
           for (CheckboxOption option : this.getOptions()) {
@@ -584,26 +657,32 @@ public class WxCpMessage implements Serializable {
         }
 
         // submit_button
-        if (StringUtils.isNotBlank(this.getSubmit_button_text()) || StringUtils.isNotBlank(this.getSubmit_button_key())) {
+        if (StringUtils.isNotBlank(this.getSubmitButtonText()) || StringUtils.isNotBlank(this.getSubmitButtonKey())) {
           JsonObject submit_button = new JsonObject();
-          if (StringUtils.isNotBlank(this.getSubmit_button_text())) {
-            submit_button.addProperty("text", this.getSubmit_button_text());
+          if (StringUtils.isNotBlank(this.getSubmitButtonText())) {
+            submit_button.addProperty("text", this.getSubmitButtonText());
           }
-          if (StringUtils.isNotBlank(this.getSubmit_button_key())) {
-            submit_button.addProperty("key", this.getSubmit_button_key());
+          if (StringUtils.isNotBlank(this.getSubmitButtonKey())) {
+            submit_button.addProperty("key", this.getSubmitButtonKey());
           }
           template.add("submit_button", submit_button);
         }
 
         // select_list
         List<MultipleSelect> selects = this.getSelects();
-        if(null != selects && selects.size() > 0) {
+        if (null != selects && !selects.isEmpty()) {
           JsonArray selectJsonArray = new JsonArray();
           for (MultipleSelect select : this.getSelects()) {
             JsonObject tempObject = select.toJson();
             selectJsonArray.add(tempObject);
           }
           template.add("select_list", selectJsonArray);
+        }
+
+        QuoteArea quoteArea = this.getQuoteArea();
+        if (null != quoteArea) {
+          JsonObject quoteAreaJson = quoteArea.toJson();
+          template.add("quote_area", quoteAreaJson);
         }
 
         messageJson.add("template_card", template);

@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
  * 测试.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2021-02-15
+ * created on  2021-02-15
  */
 @Test
 @Guice(modules = ApiTestModule.class)

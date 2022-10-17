@@ -9,8 +9,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 /**
  * 企业发表内容到客户的朋友圈 创建发表任务结果
  *
- * @author leiin
- * @date 2021-10-29
+ * @author leiin  created on  2021-10-29
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -20,6 +19,12 @@ public class WxCpAddMomentResult extends WxCpBaseResp {
   @SerializedName("jobid")
   private String jobId;
 
+  /**
+   * From json wx cp add moment result.
+   *
+   * @param json the json
+   * @return the wx cp add moment result
+   */
   public static WxCpAddMomentResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpAddMomentResult.class);
   }

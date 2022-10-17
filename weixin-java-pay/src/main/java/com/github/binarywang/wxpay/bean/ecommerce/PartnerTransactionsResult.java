@@ -12,10 +12,12 @@ import java.util.List;
  * <pre>
  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/e_transactions/chapter3_5.shtml
  * </pre>
+ * @author cloudX
  */
 @Data
 @NoArgsConstructor
 public class PartnerTransactionsResult implements Serializable {
+  private static final long serialVersionUID = 2371448241965534820L;
 
   /**
    * <pre>

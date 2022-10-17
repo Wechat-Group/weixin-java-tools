@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 /**
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-06-06
+ * created on  2020-06-06
  */
 public class WxNetCheckResultTest {
 

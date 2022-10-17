@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.cloud.*;
+import cn.binarywang.wx.miniapp.bean.cloud.request.WxCloudSendSmsV2Request;
 import com.google.gson.JsonArray;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -11,7 +12,7 @@ import java.util.Map;
  * 云开发相关接口.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020 -01-22
+ * created on  2020 -01-22
  */
 public interface WxMaCloudService {
   /**
@@ -539,4 +540,15 @@ public interface WxMaCloudService {
    * @throws WxErrorException .
    */
   WxCloudDatabaseCollectionGetResult databaseCollectionGet(String env, Long limit, Long offset) throws WxErrorException;
+
+  /**
+   * 发送携带 URL Link 的短信
+   *
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/cloudbase/cloudbase.sendSmsV2.html
+   * @param request
+   * @return WxCloudSendSmsV2Result
+   * @throws WxErrorException
+   */
+  WxCloudSendSmsV2Result sendSmsV2(WxCloudSendSmsV2Request request) throws WxErrorException;
+
 }

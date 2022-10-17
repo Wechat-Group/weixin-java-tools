@@ -11,7 +11,7 @@ import java.util.List;
  * 发布能力-获取成功发布列表.
  *
  * @author dragon
- * @date 2021-10-22
+ * created on  2021-10-22
  */
 @Data
 public class WxMpFreePublishList implements Serializable {

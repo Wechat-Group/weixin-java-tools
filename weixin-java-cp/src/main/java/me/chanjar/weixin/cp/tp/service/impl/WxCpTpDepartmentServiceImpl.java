@@ -7,7 +7,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.impl.WxCpDepartmentServiceImpl;
-import me.chanjar.weixin.cp.bean.WxCpDepart;
 import me.chanjar.weixin.cp.bean.WxCpTpDepart;
 import me.chanjar.weixin.cp.tp.service.WxCpTpDepartmentService;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
@@ -18,10 +17,11 @@ import java.util.List;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Department.*;
 
 /**
+ * The type Wx cp tp department service.
+ *
  * @author uianz
- * @description corp from {@link WxCpDepartmentServiceImpl )}
- * 唯一不同在于获取部门列表时需要传对应企业的accessToken
- * @since 2020/12/23 下午 02:39
+ * @description corp from {@link WxCpDepartmentServiceImpl )} 唯一不同在于获取部门列表时需要传对应企业的accessToken
+ * @since 2020 /12/23 下午 02:39
  */
 @RequiredArgsConstructor
 public class WxCpTpDepartmentServiceImpl implements WxCpTpDepartmentService {

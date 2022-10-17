@@ -12,7 +12,7 @@ import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
  * 微信开放平台小程序体验者列表返回.
  *
  * @author yqx
- * @date 2018/9/12
+ * created on  2018/9/12
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

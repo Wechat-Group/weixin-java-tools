@@ -8,11 +8,18 @@ import java.util.List;
 
 /**
  * @author leiin
- * @date 2021/3/23
+ * created on  2021/3/23
  */
 @Data
 public class WxMaShopOrderDetail implements Serializable {
   private static final long serialVersionUID = 3325843289672341160L;
+
+
+  /**
+   * 推广员、分享员信息
+   */
+  @SerializedName("promotion_info")
+  private WxMaShopPromotionInfo promotionInfo;
 
   /**
    * 下单商品信息

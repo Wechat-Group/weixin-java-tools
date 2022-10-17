@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
  * 测试类.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-12-26
+ * created on  2019-12-26
  */
 @Slf4j
 @Test

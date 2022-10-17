@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * @author zxfreedom
  * @description
- * @date 2019/12/30
+ * created on  2019/12/30
  */
 @Data
 public class WxOpenMaPreviewInfo {

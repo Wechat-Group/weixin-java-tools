@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-07-05
+ * created on  2020-07-05
  */
 @Test
 @Guice(modules = ApiTestModule.class)

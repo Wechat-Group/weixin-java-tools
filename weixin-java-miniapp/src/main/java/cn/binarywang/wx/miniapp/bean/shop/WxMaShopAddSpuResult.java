@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author leiin
- * @date 2021/3/23
+ * created on  2021/3/23
  * 添加商品参数返回
  */
 @Data

@@ -1,8 +1,8 @@
 package me.chanjar.weixin.cp.api.impl;
 
 
-import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
@@ -21,6 +21,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import java.io.IOException;
 
 /**
+ * The type Wx cp service apache http client.
+ *
  * @author someone
  */
 public class WxCpServiceApacheHttpClientImpl extends BaseWxCpServiceImpl<CloseableHttpClient, HttpHost> {
@@ -49,7 +51,8 @@ public class WxCpServiceApacheHttpClientImpl extends BaseWxCpServiceImpl<Closeab
     }
 
     synchronized (this.globalAccessTokenRefreshLock) {
-      String url = String.format(this.configStorage.getApiUrl(WxCpApiPathConsts.GET_TOKEN), this.configStorage.getCorpId(), this.configStorage.getCorpSecret());
+      String url = String.format(this.configStorage.getApiUrl(WxCpApiPathConsts.GET_TOKEN),
+        this.configStorage.getCorpId(), this.configStorage.getCorpSecret());
 
       try {
         HttpGet httpGet = new HttpGet(url);

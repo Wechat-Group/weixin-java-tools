@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 交易账单请求
  *
  * @author f00lish
- * @date 2020/09/28
+ * created on  2020/09/28
  */
 @Data
 @Builder

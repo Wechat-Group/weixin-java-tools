@@ -19,7 +19,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.Ro
  * .
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2021-02-15
+ * created on  2021-02-15
  */
 @RequiredArgsConstructor
 public class WxMaLiveMemberServiceImpl implements WxMaLiveMemberService {

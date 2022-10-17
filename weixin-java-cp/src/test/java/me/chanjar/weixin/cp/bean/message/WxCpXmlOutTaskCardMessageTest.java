@@ -1,12 +1,17 @@
 package me.chanjar.weixin.cp.bean.message;
 
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutTaskCardMessage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+/**
+ * The type Wx cp xml out task card message test.
+ */
 @Test
 public class WxCpXmlOutTaskCardMessageTest {
 
+  /**
+   * Test.
+   */
   public void test() {
     WxCpXmlOutTaskCardMessage m = new WxCpXmlOutTaskCardMessage();
     m.setReplaceName("已驳回");
@@ -25,8 +30,12 @@ public class WxCpXmlOutTaskCardMessageTest {
     Assert.assertEquals(m.toXml().replaceAll("\\s", ""), expected.replaceAll("\\s", ""));
   }
 
+  /**
+   * Test build.
+   */
   public void testBuild() {
-    WxCpXmlOutTaskCardMessage m = WxCpXmlOutMessage.TASK_CARD().replaceName("已驳回").fromUser("from").toUser("to").build();
+    WxCpXmlOutTaskCardMessage m =
+      WxCpXmlOutMessage.TASK_CARD().replaceName("已驳回").fromUser("from").toUser("to").build();
     String expected = "<xml>"
       + "<ToUserName><![CDATA[to]]></ToUserName>"
       + "<FromUserName><![CDATA[from]]></FromUserName>"

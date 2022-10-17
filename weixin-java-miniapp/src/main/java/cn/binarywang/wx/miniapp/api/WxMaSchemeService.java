@@ -11,7 +11,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * </pre>
  *
  * @author : cofedream
- * @date : 2021-01-26
+ * created on  : 2021-01-26
  */
 public interface WxMaSchemeService {
   /**

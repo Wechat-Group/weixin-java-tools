@@ -1,14 +1,15 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * <pre>
  *  使用user_ticket获取成员详情接口返回类.
  *  Created by BinaryWang on 2018/4/22.
+ *  官方文档：https://developer.work.weixin.qq.com/document/path/91122
  * </pre>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>

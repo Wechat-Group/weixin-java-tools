@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * 转接在职成员的客户给其他成员，请求对象
  *
- * @author pg
- * @date 2021年6月21日
+ * @author pg  created on  2021年6月21日
  */
 @Getter
 @Setter
@@ -43,6 +42,11 @@ public class WxCpUserTransferCustomerReq implements Serializable {
   @SerializedName("transfer_success_msg")
   private String transferMsg;
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }

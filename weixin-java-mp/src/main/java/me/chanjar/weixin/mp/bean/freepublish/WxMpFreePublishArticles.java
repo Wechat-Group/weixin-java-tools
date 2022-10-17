@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 一条发布的图文记录
  *
  * @author dragon
- * @date 2021-10-23
+ * created on  2021-10-23
  */
 @NoArgsConstructor
 @Data
@@ -63,6 +63,12 @@ public class WxMpFreePublishArticles implements Serializable {
    */
   @SerializedName("only_fans_can_comment")
   private Integer onlyFansCanComment;
+
+  /**
+   * 图文消息的封面url
+   */
+  @SerializedName("thumb_url")
+  private String thumbUrl;
 
   /*
    * ===== 上面的参数，就是草稿箱的内容的字段，为了后续扩展，单独写一份====

@@ -1,14 +1,14 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-import java.util.Map;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
+
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 回调消息包.
@@ -26,18 +26,33 @@ public class WxCpTpXmlPackage implements Serializable {
    */
   private Map<String, Object> allFieldsMap;
 
+  /**
+   * The To user name.
+   */
   @XStreamAlias("ToUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String toUserName;
 
+  /**
+   * The Agent id.
+   */
   @XStreamAlias("AgentID")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String agentId;
 
+  /**
+   * The Msg encrypt.
+   */
   @XStreamAlias("Encrypt")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String msgEncrypt;
 
+  /**
+   * From xml wx cp tp xml package.
+   *
+   * @param xml the xml
+   * @return the wx cp tp xml package
+   */
   public static WxCpTpXmlPackage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
     //xml = xml.replace("</PicList><PicList>", "");

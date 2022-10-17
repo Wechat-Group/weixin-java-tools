@@ -9,7 +9,7 @@ import me.chanjar.weixin.mp.bean.freepublish.WxMpFreePublishStatus;
  * 微信 发布能力 接口.
  *
  * @author dragon
- * @date 2021-10-23
+ * created on  2021-10-23
  */
 public interface WxMpFreePublishService {
 

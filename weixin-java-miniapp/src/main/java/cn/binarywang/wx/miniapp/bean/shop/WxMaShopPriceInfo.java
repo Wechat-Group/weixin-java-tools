@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author leiin
- * @date 2021/3/23
+ * created on  2021/3/23
  */
 @Data
 public class WxMaShopPriceInfo implements Serializable {

@@ -21,8 +21,7 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 /**
  * 企业微信日程接口实现类.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-12-25
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-12-25
  */
 @Slf4j
 @RequiredArgsConstructor

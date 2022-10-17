@@ -8,7 +8,7 @@ import java.io.Serializable;
  * window对象
  *
  * @author yqx
- * @date 2018/9/13
+ * created on  2018/9/13
  */
 @Data
 public class WxMaOpenWindow implements Serializable {

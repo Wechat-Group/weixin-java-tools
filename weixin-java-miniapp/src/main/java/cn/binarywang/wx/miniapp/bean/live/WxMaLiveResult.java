@@ -74,6 +74,11 @@ public class WxMaLiveResult implements Serializable {
      */
     @SerializedName("third_party_tag")
     private String thirdPartyTag;
+
+    /**
+     * 当商品为第三方小程序的商品则填写为对应第三方小程序的appid，自身小程序商品则为''
+     */
+    private String thirdPartyAppid;
   }
 
   /**

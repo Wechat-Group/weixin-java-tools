@@ -6,15 +6,18 @@ import java.io.Serializable;
 
 /**
  * 发票充红请求参数
+ *
+ * @author Mario Luo
  */
 @Data
 public class ClearOutInvoiceRequest implements Serializable {
-
+  private static final long serialVersionUID = 36469746428007271L;
 
   private ClearOutInvoiceInfo invoiceinfo;
 
   @Data
   public static class ClearOutInvoiceInfo implements Serializable {
+    private static final long serialVersionUID = -9119257155033644495L;
 
     /**
      * 用户的openid 用户知道是谁在开票

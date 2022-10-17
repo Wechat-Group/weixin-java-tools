@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author wuxingye
- * @date 2020/6/12
+ * created on  2020/6/12
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

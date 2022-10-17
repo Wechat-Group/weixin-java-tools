@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-08-05
+ * created on  2019-08-05
  */
 public class WxMpGetSelfMenuInfoResultTest {
 

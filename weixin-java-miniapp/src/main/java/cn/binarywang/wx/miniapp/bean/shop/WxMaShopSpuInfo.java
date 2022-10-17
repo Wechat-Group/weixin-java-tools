@@ -7,7 +7,7 @@ import lombok.Data;
 
 /**
  * @author Boris
- * @date 2021/3/23
+ * created on  2021/3/23
  */
 @Data
 public class WxMaShopSpuInfo implements Serializable {

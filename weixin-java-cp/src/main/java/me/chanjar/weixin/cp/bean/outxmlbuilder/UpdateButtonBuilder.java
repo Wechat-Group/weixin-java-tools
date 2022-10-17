@@ -1,6 +1,5 @@
 package me.chanjar.weixin.cp.bean.outxmlbuilder;
 
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutTaskCardMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlOutUpdateBtnMessage;
 
 /**
@@ -13,6 +12,12 @@ public class UpdateButtonBuilder extends BaseBuilder<UpdateButtonBuilder, WxCpXm
 
   private String replaceName;
 
+  /**
+   * Replace name update button builder.
+   *
+   * @param replaceName the replace name
+   * @return the update button builder
+   */
   public UpdateButtonBuilder replaceName(String replaceName) {
     this.replaceName = replaceName;
     return this;

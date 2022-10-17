@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 云开发数据库迁移状态查询结果.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-01-26
+ * created on  2020-01-26
  */
 @Data
 public class WxCloudCloudDatabaseMigrateQueryInfoResult implements Serializable {

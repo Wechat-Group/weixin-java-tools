@@ -9,7 +9,7 @@ import com.thoughtworks.xstream.converters.basic.StringConverter;
  * Integer型数组转换器.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-08-22
+ * created on  2019-08-22
  */
 public class IntegerArrayConverter extends StringConverter {
   @Override

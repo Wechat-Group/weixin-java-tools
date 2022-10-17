@@ -13,9 +13,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+/**
+ * The type Wx cp busy retry test.
+ */
 @Test
 @Slf4j
 public class WxCpBusyRetryTest {
+  /**
+   * Get service object [ ] [ ].
+   *
+   * @return the object [ ] [ ]
+   */
   @DataProvider(name = "getService")
   public Object[][] getService() {
     WxCpService service = new WxCpServiceImpl() {
@@ -36,11 +44,24 @@ public class WxCpBusyRetryTest {
     };
   }
 
+  /**
+   * Test retry.
+   *
+   * @param service the service
+   * @throws WxErrorException the wx error exception
+   */
   @Test(dataProvider = "getService", expectedExceptions = RuntimeException.class)
   public void testRetry(WxCpService service) throws WxErrorException {
     service.execute(null, null, null);
   }
 
+  /**
+   * Test retry in thread pool.
+   *
+   * @param service the service
+   * @throws InterruptedException the interrupted exception
+   * @throws ExecutionException   the execution exception
+   */
   @Test(dataProvider = "getService")
   public void testRetryInThreadPool(final WxCpService service) throws InterruptedException, ExecutionException {
     // 当线程池中的线程复用的时候，还是能保证相同的重试次数

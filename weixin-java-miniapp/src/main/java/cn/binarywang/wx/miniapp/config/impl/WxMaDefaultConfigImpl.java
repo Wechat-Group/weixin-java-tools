@@ -56,6 +56,7 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   protected volatile Lock cardApiTicketLock = new ReentrantLock();
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
   private String apiHostUrl;
+  private String accessTokenUrl;
 
   /**
    * 会过期的数据提前过期时间，默认预留200秒的时间
@@ -301,6 +302,11 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   @Override
   public void setApiHostUrl(String apiHostUrl) {
     this.apiHostUrl = apiHostUrl;
+  }
+
+  @Override
+  public void setAccessTokenUrl(String accessTokenUrl) {
+    this.accessTokenUrl = accessTokenUrl;
   }
 
   @Override

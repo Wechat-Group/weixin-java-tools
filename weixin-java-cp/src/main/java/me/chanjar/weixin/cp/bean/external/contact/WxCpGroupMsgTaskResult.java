@@ -28,6 +28,9 @@ public class WxCpGroupMsgTaskResult extends WxCpBaseResp implements Serializable
   @SerializedName("next_cursor")
   private String nextCursor;
 
+  /**
+   * The type External contact group msg task info.
+   */
   @Getter
   @Setter
   public static class ExternalContactGroupMsgTaskInfo implements Serializable {
@@ -43,6 +46,12 @@ public class WxCpGroupMsgTaskResult extends WxCpBaseResp implements Serializable
 
   }
 
+  /**
+   * From json wx cp group msg task result.
+   *
+   * @param json the json
+   * @return the wx cp group msg task result
+   */
   public static WxCpGroupMsgTaskResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpGroupMsgTaskResult.class);
   }

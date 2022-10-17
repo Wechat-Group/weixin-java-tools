@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 三方平台提交小程序代码审核
  *
  * @author yqx
- * @date 2018/9/13
+ * created on  2018/9/13
  */
 @Data
 public class WxOpenMaSubmitAudit implements Serializable {

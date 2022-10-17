@@ -1,8 +1,6 @@
 package me.chanjar.weixin.common.util.locks;
 
 import lombok.Getter;
-import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -34,11 +32,11 @@ public class RedisTemplateSimpleDistributedLock implements Lock {
 
   private final ThreadLocal<String> valueThreadLocal = new ThreadLocal<>();
 
-  public RedisTemplateSimpleDistributedLock(@NonNull StringRedisTemplate redisTemplate, int leaseMilliseconds) {
+  public RedisTemplateSimpleDistributedLock( StringRedisTemplate redisTemplate, int leaseMilliseconds) {
     this(redisTemplate, "lock:" + UUID.randomUUID().toString(), leaseMilliseconds);
   }
 
-  public RedisTemplateSimpleDistributedLock(@NonNull StringRedisTemplate redisTemplate, @NonNull String key, int leaseMilliseconds) {
+  public RedisTemplateSimpleDistributedLock( StringRedisTemplate redisTemplate,  String key, int leaseMilliseconds) {
     if (leaseMilliseconds <= 0) {
       throw new IllegalArgumentException("Parameter 'leaseMilliseconds' must grate then 0: " + leaseMilliseconds);
     }
@@ -84,7 +82,7 @@ public class RedisTemplateSimpleDistributedLock implements Lock {
   }
 
   @Override
-  public boolean tryLock(long time, @NotNull TimeUnit unit) throws InterruptedException {
+  public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
     long waitMs = unit.toMillis(time);
     boolean locked = tryLock();
     while (!locked && waitMs > 0) {

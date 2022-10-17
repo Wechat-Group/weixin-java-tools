@@ -14,7 +14,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Scheme.GENER
 
 /**
  * @author : cofedream
- * @date : 2021-01-28
+ * created on  : 2021-01-28
  */
 @AllArgsConstructor
 public class WxMaSchemeServiceImpl implements WxMaSchemeService {

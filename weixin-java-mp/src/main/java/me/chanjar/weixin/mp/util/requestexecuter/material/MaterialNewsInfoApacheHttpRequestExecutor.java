@@ -24,7 +24,7 @@ import java.io.IOException;
  * httpclient 实现的素材请求执行器.
  *
  * @author ecoolper
- * @date 2017/5/5
+ * created on  2017/5/5
  */
 public class MaterialNewsInfoApacheHttpRequestExecutor
     extends MaterialNewsInfoRequestExecutor<CloseableHttpClient, HttpHost> {

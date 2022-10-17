@@ -19,27 +19,42 @@ import java.util.stream.Stream;
 /**
  * 微信群机器人消息发送api 单元测试
  *
- * @author yr
- * @date 2020-08-20
+ * @author yr  created on  2020-08-20
  */
 @Slf4j
 @Guice(modules = ApiTestModule.class)
 public class WxCpGroupRobotServiceImplTest {
+  /**
+   * The Wx service.
+   */
   @Inject
   protected WxCpService wxService;
 
   private WxCpGroupRobotService robotService;
 
+  /**
+   * Sets .
+   */
   @BeforeTest
   public void setup() {
     robotService = wxService.getGroupRobotService();
   }
 
+  /**
+   * Test send text.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSendText() throws WxErrorException {
     robotService.sendText("Hello World", null, null);
   }
 
+  /**
+   * Test send mark down.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSendMarkDown() throws WxErrorException {
     String content = "实时新增用户反馈<font color=\"warning\">132例</font>，请相关同事注意。\n" +
@@ -49,6 +64,11 @@ public class WxCpGroupRobotServiceImplTest {
     robotService.sendMarkdown(content);
   }
 
+  /**
+   * Test send image.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSendImage() throws WxErrorException {
     InputStream inputStream = getClass().getClassLoader().getResourceAsStream("mm.jpeg");
@@ -58,10 +78,15 @@ public class WxCpGroupRobotServiceImplTest {
     robotService.sendImage(base64, md5);
   }
 
+  /**
+   * Test send news.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSendNews() throws WxErrorException {
     NewArticle article = new NewArticle("图文消息测试", "hello world", "http://www.baidu.com",
-      "http://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png", null);
+      "http://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png", null, null, null);
     robotService.sendNews(Stream.of(article).collect(Collectors.toList()));
   }
 }

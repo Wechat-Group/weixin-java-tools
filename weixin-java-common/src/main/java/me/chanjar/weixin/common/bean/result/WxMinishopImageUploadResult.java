@@ -1,5 +1,6 @@
 package me.chanjar.weixin.common.bean.result;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Data;
@@ -25,8 +26,12 @@ public class WxMinishopImageUploadResult  implements Serializable {
     if (result.getErrcode().equals("0")) {
       WxMinishopPicFileResult picFileResult = new WxMinishopPicFileResult();
       JsonObject picObject = jsonObject.get("pic_file").getAsJsonObject();
-      picFileResult.setMediaId(picObject.get("media_id").getAsString());
-      picFileResult.setPayMediaId(picObject.get("pay_media_id").getAsString());
+      JsonElement mediaId = picObject.get("media_id");
+      picFileResult.setMediaId(mediaId==null ? "" : mediaId.getAsString());
+      JsonElement payMediaId = picObject.get("pay_media_id");
+      picFileResult.setPayMediaId(payMediaId==null ? "" : payMediaId.getAsString());
+      JsonElement tempImgUrl = picObject.get("temp_img_url");
+      picFileResult.setTempImgUrl(tempImgUrl==null ? "" : tempImgUrl.getAsString());
       result.setPicFile(picFileResult);
 
     }

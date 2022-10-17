@@ -16,6 +16,7 @@ import me.chanjar.weixin.mp.bean.result.*;
 import me.chanjar.weixin.mp.bean.subscribe.WxMpSubscribeMessage;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateIndustry;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
+import java.util.Objects;
 
 /**
  * @author someone
@@ -23,6 +24,7 @@ import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 public class WxMpGsonBuilder {
 
   private static final GsonBuilder INSTANCE = new GsonBuilder();
+  private static volatile Gson GSON_INSTANCE;
 
   static {
     INSTANCE.disableHtmlEscaping();
@@ -64,7 +66,14 @@ public class WxMpGsonBuilder {
   }
 
   public static Gson create() {
-    return INSTANCE.create();
+    if (Objects.isNull(GSON_INSTANCE)) {
+      synchronized (INSTANCE) {
+        if (Objects.isNull(GSON_INSTANCE)) {
+          GSON_INSTANCE = INSTANCE.create();
+        }
+      }
+    }
+    return GSON_INSTANCE;
   }
 
 }

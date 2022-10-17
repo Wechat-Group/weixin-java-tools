@@ -15,7 +15,7 @@ import java.io.Serializable;
  * 对话能力-顾问信息.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-10-06
+ * created on  2020-10-06
  */
 @Data
 @Builder

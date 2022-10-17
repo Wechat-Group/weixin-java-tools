@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 顾问的客户列表
  * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a>
- * @date 2021/5/11/011
+ * created on  2021/5/11/011
  */
 @Data
 public class WxMpGuideBuyerInfoList implements Serializable {

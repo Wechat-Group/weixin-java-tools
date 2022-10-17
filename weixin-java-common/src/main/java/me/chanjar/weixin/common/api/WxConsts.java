@@ -10,7 +10,7 @@ import static me.chanjar.weixin.common.error.WxMpErrorMsgEnum.*;
 /**
  * 微信开发所使用到的常量类.
  *
- * @author Daniel Qian & binarywang
+ * @author Daniel Qian & binarywang & Wang_Wong
  */
 public class WxConsts {
   /**
@@ -126,6 +126,59 @@ public class WxConsts {
      * 模板卡片消息.
      */
     public static final String TEMPLATE_CARD = "template_card";
+
+    /**
+     * 发送图文消息（点击跳转到图文消息页面）使用通过 “发布” 系列接口得到的 article_id(草稿箱功能上线后不再支持客服接口中带 media_id 的 mpnews 类型的图文消息)
+     */
+    public static final String MP_NEWS_ARTICLE = "mpnewsarticle";
+  }
+
+  /**
+   * 发送「学校通知」类型
+   * https://developer.work.weixin.qq.com/document/path/92321
+   */
+  public static class SchoolContactMsgType {
+
+    /**
+     * 文本消息.
+     */
+    public static final String TEXT = "text";
+
+    /**
+     * 图片消息.
+     */
+    public static final String IMAGE = "image";
+
+    /**
+     * 语音消息.
+     */
+    public static final String VOICE = "voice";
+
+    /**
+     * 视频消息.
+     */
+    public static final String VIDEO = "video";
+
+    /**
+     * 文件消息
+     */
+    public static final String FILE = "file";
+
+    /**
+     * 图文消息
+     */
+    public static final String NEWS = "news";
+
+    /**
+     * 图文消息（mpnews）
+     */
+    public static final String MPNEWS = "mpnews";
+
+    /**
+     * 小程序消息
+     */
+    public static final String MINIPROGRAM = "miniprogram";
+
   }
 
   /**
@@ -256,7 +309,23 @@ public class WxConsts {
      */
     public static final String LOCATION_SELECT = "location_select";
 
+    /**
+     * 授权用户资料变更事件
+     * 1、 当部分用户的资料存在风险时，平台会对用户资料进行清理，并通过消息推送服务器通知最近30天授权过的公众号开发者，我们建议开发者留意响应该事件，及时主动更新或清理用户的头像及昵称，降低风险。
+     * 2、 当用户撤回授权信息时，平台会通过消息推送服务器通知给公众号开发者，请开发者注意及时删除用户信息。
+     */
+    public static final String USER_INFO_MODIFIED = "user_info_modified";
+
+    /**
+     * 用户撤回授权事件
+     */
+    public static final String USER_AUTHORIZATION_REVOKE = "user_authorization_revoke";
+
+    /**
+     * 群发模板回调事件
+     */
     public static final String TEMPLATE_SEND_JOB_FINISH = "TEMPLATESENDJOBFINISH";
+
     /**
      * 微信小店 订单付款通知.
      */
@@ -282,6 +351,10 @@ public class WxConsts {
      */
     public static final String CARD_USER_GIFTING_CARD = "user_gifting_card";
 
+    /**
+     * 异步安全校验事件
+     */
+    public static final String WXA_MEDIA_CHECK = "wxa_media_check";
 
     /**
      * 卡券事件：用户核销卡券
@@ -339,6 +412,15 @@ public class WxConsts {
      * 小程序审核事件：审核不通过
      */
     public static final String WEAPP_AUDIT_FAIL = "weapp_audit_fail";
+
+    /**
+     * 小程序自定义交易组件支付通知
+     */
+    public static final  String OPEN_PRODUCT_ORDER_PAY = "open_product_order_pay";
+    /**
+     * 点击菜单跳转小程序的事件推送
+     */
+    public static final String VIEW_MINIPROGRAM = "view_miniprogram";
 
   }
 

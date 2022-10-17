@@ -30,6 +30,9 @@ public class WxOAuth2AccessToken implements Serializable {
   @SerializedName("scope")
   private String scope;
 
+  @SerializedName("is_snapshotuser")
+  private Integer snapshotUser;
+
   /**
    * https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&announce_id=11513156443eZYea&version=&lang=zh_CN.
    * 本接口在scope参数为snsapi_base时不再提供unionID字段。

@@ -92,7 +92,22 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
   }
 
   @Override
+  public String getV3WithWechatPaySerial(String url) throws WxPayException {
+    return null;
+  }
+
+  @Override
   public InputStream downloadV3(String url) throws WxPayException {
+    return null;
+  }
+
+  @Override
+  public String putV3(String url, String requestStr) throws WxPayException {
+    return null;
+  }
+
+  @Override
+  public String deleteV3(String url) throws WxPayException {
     return null;
   }
 

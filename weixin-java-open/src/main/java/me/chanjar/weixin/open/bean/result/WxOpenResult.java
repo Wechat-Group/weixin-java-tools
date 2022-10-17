@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 基础的微信开放平台请求结果.
  *
  * @author yqx
- * @date 2018/10/1
+ * created on  2018/10/1
  */
 @Data
 public class WxOpenResult implements Serializable {

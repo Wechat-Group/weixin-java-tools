@@ -23,12 +23,22 @@ public class WxCpOAuth2ServiceImplTest {
   @Inject
   private WxCpService wxService;
 
+  /**
+   * Test get user detail.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testGetUserDetail() throws WxErrorException {
     WxCpUserDetail userDetail = this.wxService.getOauth2Service().getUserDetail("b");
     System.out.println(userDetail);
   }
 
+  /**
+   * Test get user info.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testGetUserInfo() throws WxErrorException {
     final WxCpOauth2UserInfo result = this.wxService.getOauth2Service().getUserInfo("abc");
@@ -36,6 +46,9 @@ public class WxCpOAuth2ServiceImplTest {
     System.out.println(result);
   }
 
+  /**
+   * Test build authorization url.
+   */
   @Test
   public void testBuildAuthorizationUrl() {
   }

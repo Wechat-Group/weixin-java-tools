@@ -10,7 +10,7 @@ import java.util.List;
  * 营销详情	.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-06-07
+ * created on  2020-06-07
  */
 @Data
 public class WxPayRefundPromotionDetail implements Serializable {

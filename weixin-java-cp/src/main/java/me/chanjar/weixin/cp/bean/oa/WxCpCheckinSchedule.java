@@ -45,6 +45,9 @@ public class WxCpCheckinSchedule implements Serializable {
   @SerializedName("schedule")
   private UserSchedule schedule;
 
+  /**
+   * The type User schedule.
+   */
   @Data
   public class UserSchedule implements Serializable {
     private static final long serialVersionUID = 9138985222324576857L;
@@ -54,6 +57,9 @@ public class WxCpCheckinSchedule implements Serializable {
     @SerializedName("scheduleList")
     private List<Schedule> scheduleList;
 
+    /**
+     * The type Schedule.
+     */
     @Data
     public class Schedule implements Serializable {
 
@@ -71,6 +77,9 @@ public class WxCpCheckinSchedule implements Serializable {
       @SerializedName("schedule_info")
       private ScheduleInfo scheduleInfo;
 
+      /**
+       * The type Schedule info.
+       */
       @Data
       public class ScheduleInfo implements Serializable {
         private static final long serialVersionUID = 1317096341116256963L;
@@ -93,6 +102,9 @@ public class WxCpCheckinSchedule implements Serializable {
         private List<TimeSection> timeSection;
 
 
+        /**
+         * The type Time section.
+         */
         @Data
         public class TimeSection implements Serializable {
           private static final long serialVersionUID = -3447467962751285748L;

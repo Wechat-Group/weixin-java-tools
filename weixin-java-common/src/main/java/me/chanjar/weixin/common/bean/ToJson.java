@@ -4,7 +4,7 @@ package me.chanjar.weixin.common.bean;
  * 包含toJson()方法的接口.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-10-05
+ * created on  2020-10-05
  */
 public interface ToJson {
   /**

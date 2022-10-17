@@ -10,9 +10,11 @@ import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.CONTACT_SEARCH;
 
 /**
+ * The type Wx cp tp contact service.
+ *
  * @author uianz
  * @description
- * @since 2020/12/23 下午 02:39
+ * @since 2020 /12/23 下午 02:39
  */
 @RequiredArgsConstructor
 public class WxCpTpContactServiceImpl implements WxCpTpContactService {

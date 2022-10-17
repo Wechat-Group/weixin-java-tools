@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
  * 小程序接口地址常量.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2021-01-28
+ * created on  2021-01-28
  */
 @UtilityClass
 public class WxMaApiUrlConstants {
@@ -42,6 +42,7 @@ public class WxMaApiUrlConstants {
     String DATABASE_UPDATE_URL = "https://api.weixin.qq.com/tcb/databaseupdate";
     String DATABASE_DELETE_URL = "https://api.weixin.qq.com/tcb/databasedelete";
     String DATABASE_ADD_URL = "https://api.weixin.qq.com/tcb/databaseadd";
+    String SEND_SMS_V2_URL = "https://api.weixin.qq.com/tcb/sendsmsv2";
   }
 
   public interface Msg {
@@ -70,6 +71,7 @@ public class WxMaApiUrlConstants {
     String GET_SUPPORT_VERSION_URL = "https://api.weixin.qq.com/cgi-bin/wxopen/getweappsupportversion";
     String SET_SUPPORT_VERSION_URL = "https://api.weixin.qq.com/cgi-bin/wxopen/setweappsupportversion";
     String UNDO_CODE_AUDIT_URL = "https://api.weixin.qq.com/wxa/undocodeaudit";
+    String GET_VERSION_INFO_URL = "https://api.weixin.qq.com/wxa/getversioninfo";
   }
 
   public interface Express {
@@ -158,22 +160,107 @@ public class WxMaApiUrlConstants {
   }
 
   public interface Broadcast {
-    String GET_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/getliveinfo";
-
     /**
      * 直播间管理相关接口
      */
     interface Room {
+      /**
+       * 创建直播间
+       */
       String CREATE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/create";
+      /**
+       * 获取直播间列表
+       * 获取直播间回放
+       */
+      String GET_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/getliveinfo";
+      /**
+       * 直播间导入商品
+       */
       String ADD_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/room/addgoods";
+      /**
+       * 删除直播间
+       */
       String DELETE_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/deleteroom";
+      /**
+       * 编辑直播间
+       */
       String EDIT_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/room/editroom";
+      /**
+       * 获取直播间推流地址
+       */
       String GET_PUSH_URL = "https://api.weixin.qq.com/wxaapi/broadcast/room/getpushurl";
+      /**
+       * 获取直播间分享二维码
+       */
       String GET_SHARED_CODE = "https://api.weixin.qq.com/wxaapi/broadcast/room/getsharedcode";
+      /**
+       * 添加管理直播间小助手
+       */
       String ADD_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/addassistant";
+      /**
+       * 修改管理直播间小助手
+       */
       String MODIFY_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/modifyassistant";
+      /**
+       * 删除管理直播间小助手
+       */
       String REMOVE_ASSISTANT = "https://api.weixin.qq.com/wxaapi/broadcast/room/removeassistant";
+      /**
+       * 查询管理直播间小助手
+       */
       String GET_ASSISTANT_LIST = "https://api.weixin.qq.com/wxaapi/broadcast/room/getassistantlist";
+      /**
+       * 添加主播副号
+       */
+      String ADD_SUBANCHOR = "https://api.weixin.qq.com/wxaapi/broadcast/room/addsubanchor";
+      /**
+       * 修改主播副号
+       */
+      String MODIFY_SUBANCHOR = "https://api.weixin.qq.com/wxaapi/broadcast/room/modifysubanchor";
+      /**
+       * 删除主播副号
+       */
+      String DELETE_SUBANCHOR = "https://api.weixin.qq.com/wxaapi/broadcast/room/deletesubanchor";
+      /**
+       * 获取主播副号
+       */
+      String GET_SUBANCHOR = "https://api.weixin.qq.com/wxaapi/broadcast/room/getsubanchor";
+      /**
+       * 开启/关闭直播间官方收录
+       */
+      String UPDATE_FEED_PUBLIC = "https://api.weixin.qq.com/wxaapi/broadcast/room/updatefeedpublic";
+      /**
+       * 开启/关闭回放功能
+       */
+      String UPDATE_REPLAY = "https://api.weixin.qq.com/wxaapi/broadcast/room/updatereplay";
+      /**
+       * 开启/关闭客服功能
+       */
+      String UPDATE_KF = "https://api.weixin.qq.com/wxaapi/broadcast/room/updatekf";
+      /**
+       * 开启/关闭直播间全局禁言
+       */
+      String UPDATE_COMMENT = "https://api.weixin.qq.com/wxaapi/broadcast/room/updatecomment";
+      /**
+       * 上下架商品
+       */
+      String ONSALE = "https://api.weixin.qq.com/wxaapi/broadcast/goods/onsale";
+      /**
+       * 删除商品
+       */
+      String DELETE_IN_ROOM = "https://api.weixin.qq.com/wxaapi/broadcast/goods/deleteInRoom";
+      /**
+       * 推送商品
+       */
+      String PUSH = "https://api.weixin.qq.com/wxaapi/broadcast/goods/push";
+      /**
+       * 商品排序
+       */
+      String SORT = "https://api.weixin.qq.com/wxaapi/broadcast/goods/sort";
+      /**
+       * 下载商品讲解视频
+       */
+      String GET_VIDEO = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getVideo";
     }
 
     /**
@@ -187,6 +274,14 @@ public class WxMaApiUrlConstants {
       String UPDATE_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/update";
       String GET_GOODS_WARE_HOUSE = "https://api.weixin.qq.com/wxa/business/getgoodswarehouse";
       String GET_APPROVED_GOODS = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getapproved";
+      /**
+       * 直播挂件设置全局 Key
+       */
+      String SET_KEY = "https://api.weixin.qq.com/wxaapi/broadcast/goods/setkey";
+      /**
+       * 直播挂件获取全局 Key
+       */
+      String GET_KEY = "https://api.weixin.qq.com/wxaapi/broadcast/goods/getkey";
     }
 
     /**
@@ -288,6 +383,7 @@ public class WxMaApiUrlConstants {
 
   public interface User {
     String SET_USER_STORAGE = "https://api.weixin.qq.com/wxa/set_user_storage?appid=%s&signature=%s&openid=%s&sig_method=%s";
+    String GET_PHONE_NUMBER_URL = "https://api.weixin.qq.com/wxa/business/getuserphonenumber";
   }
 
   public interface Ocr {
@@ -303,6 +399,48 @@ public class WxMaApiUrlConstants {
     String FILE_BIZ_LICENSE = "https://api.weixin.qq.com/cv/ocr/bizlicense";
     String COMM = "https://api.weixin.qq.com/cv/ocr/comm?img_url=%s";
     String FILE_COMM = "https://api.weixin.qq.com/cv/ocr/comm";
+  }
+
+  public interface Product {
+    interface Spu {
+      String PRODUCT_SPU_ADD_URL = "https://api.weixin.qq.com/product/spu/add";
+      String PRODUCT_SPU_DEL_URL = "https://api.weixin.qq.com/product/spu/del";
+      String PRODUCT_SPU_GET_URL = "https://api.weixin.qq.com/product/spu/get";
+      String PRODUCT_SPU_GET_LIST_URL = "https://api.weixin.qq.com/product/spu/get_list";
+      String PRODUCT_SPU_UPDATE_URL = "https://api.weixin.qq.com/product/spu/update";
+      String PRODUCT_SPU_LISTING_URL = "https://api.weixin.qq.com/product/spu/listing";
+      String PRODUCT_SPU_DELISTING_URL = "https://api.weixin.qq.com/product/spu/delisting";
+    }
+
+    interface Sku {
+      String PRODUCT_ADD_SKU_URL = "https://api.weixin.qq.com/product/sku/add";
+      String PRODUCT_BATCH_ADD_SKU_URL = "https://api.weixin.qq.com/product/sku/batch_add";
+      String PRODUCT_DEL_SKU_URL = "https://api.weixin.qq.com/product/sku/del";
+      String PRODUCT_UPDATE_SKU_URL = "https://api.weixin.qq.com/product/sku/update";
+      String PRODUCT_UPDATE_SKU_PRICE_URL = "https://api.weixin.qq.com/product/sku/update_price";
+      String PRODUCT_UPDATE_SKU_STOCK_URL = "https://api.weixin.qq.com/product/stock/update";
+      String PRODUCT_SKU_LIST = "https://api.weixin.qq.com/product/sku/get_list";
+    }
+
+    interface Order {
+      String PRODUCT_ORDER_GET_LIST = "https://api.weixin.qq.com/product/order/get_list";
+      String PRODUCT_ORDER_DETAIL_URL = "https://api.weixin.qq.com/product/order/get";
+      String PRODUCT_ORDER_CHANGE_MERCHANT_NOTES_URL = "https://api.weixin.qq.com/product/order/change_merchant_notes";
+
+      String PRODUCT_DELIVERY_SEND = "https://api.weixin.qq.com/product/delivery/send";
+
+      String GET_AFTER_SALE_ORDER = "https://api.weixin.qq.com/product/order/getaftersaleorder";
+      String BATCH_GET_AFTER_SALE_ORDER = "https://api.weixin.qq.com/product/order/batchgetaftersaleorder";
+      String AFTER_SALE_ACCEPT_APPLY = "https://api.weixin.qq.com/product/order/acceptapply";
+      String AFTER_SALE_REJECT_APPLY = "https://api.weixin.qq.com/product/order/rejectrefund";
+    }
+
+    interface OTHER {
+      String GET_CATEGORY = "https://api.weixin.qq.com/product/category/get";
+      String GET_BRAND = "https://api.weixin.qq.com/product/brand/get";
+      String GET_FREIGHT_TEMPLATE = "https://api.weixin.qq.com/product/delivery/get_freight_template";
+      String IMG_UPLOAD = "https://api.weixin.qq.com/product/img/upload";
+    }
   }
 
   public interface Shop {
@@ -323,6 +461,8 @@ public class WxMaApiUrlConstants {
       String ORDER_ADD = "https://api.weixin.qq.com/shop/order/add";
       String ORDER_PAY = "https://api.weixin.qq.com/shop/order/pay";
       String ORDER_GET = "https://api.weixin.qq.com/shop/order/get";
+      String ORDER_GET_LIST = "https://api.weixin.qq.com/shop/order/get_list";
+      String ORDER_GET_PAYMENT_PARAMS = "https://api.weixin.qq.com/shop/order/getpaymentparams";
     }
 
     interface Register {
@@ -357,20 +497,59 @@ public class WxMaApiUrlConstants {
     interface Delivery {
       String GET_COMPANY_LIST = "https://api.weixin.qq.com/shop/delivery/get_company_list";
       String DELIVERY_SEND = "https://api.weixin.qq.com/shop/delivery/send";
-      String DELIVERY_RECEIVE  = "https://api.weixin.qq.com/shop/delivery/recieve";
+      String DELIVERY_RECEIVE = "https://api.weixin.qq.com/shop/delivery/recieve";
     }
 
     interface Aftersale {
-      String AFTERSALE_ADD = "https://api.weixin.qq.com/shop/aftersale/add";
+      String AFTERSALE_ADD = "https://api.weixin.qq.com/shop/ecaftersale/add";
+      String AFTERSALE_CANCEL = "https://api.weixin.qq.com/shop/ecaftersale/cancel";
+      String AFTERSALE_UPDATE = "https://api.weixin.qq.com/shop/aftersale/update";
+      String EC_AFTERSALE_UPDATE = "https://api.weixin.qq.com/shop/ecaftersale/update";
+      String AFTERSALE_UPLOAD_RETURN_INFO = "https://api.weixin.qq.com/shop/ecaftersale/uploadreturninfo";
+      String AFTERSALE_ACCEPT_REFUND = "https://api.weixin.qq.com/shop/ecaftersale/acceptrefund";
+      String AFTERSALE_ACCEPT_RETURN = "https://api.weixin.qq.com/shop/ecaftersale/acceptreturn";
+      String AFTERSALE_REJECT = "https://api.weixin.qq.com/shop/ecaftersale/reject";
+      String AFTERSALE_UPLOAD_CERTIFICATES = "https://api.weixin.qq.com/shop/ecaftersale/upload_certificates";
+      String AFTERSALE_UPLOAD_DEADLINE = "https://api.weixin.qq.com/shop/aftersale/update_deadline";
+      String AFTERSALE_GET_LIST = "https://api.weixin.qq.com/shop/ecaftersale/get_list";
       String AFTERSALE_GET = "https://api.weixin.qq.com/shop/aftersale/get";
-      String AFTERSALE_UPDATE  = "https://api.weixin.qq.com/shop/aftersale/update";
+      String ECAFTERSALE_GET = "https://api.weixin.qq.com/shop/ecaftersale/get";
+    }
+
+    interface Sharer {
+      String BIND = "https://api.weixin.qq.com/shop/sharer/bind";
+      String GET_SHARER_DATA_SUMMARY = "https://api.weixin.qq.com/shop/sharer/get_sharer_data_summary";
+      String GET_SHARER_LIST = "https://api.weixin.qq.com/shop/sharer/get_sharer_list";
+      String GET_SHARER_LIVE_ORDER_LIST = "https://api.weixin.qq.com/shop/sharer/get_sharer_live_order_list";
+      String GET_SHARER_LIVE_SUMMARY_LIST = "https://api.weixin.qq.com/shop/sharer/get_sharer_live_summary_list";
+      String SEARCH_SHARER = "https://api.weixin.qq.com/shop/sharer/search_sharer";
+      String UNBIND = "https://api.weixin.qq.com/shop/sharer/unbind";
+    }
+
+    interface Coupon {
+      String ADD_COUPON = "https://api.weixin.qq.com/shop/coupon/add";
+      String GET_COUPON = "https://api.weixin.qq.com/shop/coupon/get";
+      String GET_COUPON_LIST = "https://api.weixin.qq.com/shop/coupon/get_list";
+      String UPDATE_COUPON = "https://api.weixin.qq.com/shop/coupon/update";
+      String UPDATE_COUPON_STATUS = "https://api.weixin.qq.com/shop/coupon/update_status";
+      String UPDATE_COUPON_STOCK = "https://api.weixin.qq.com/shop/coupon/update_coupon_stock";
+      String ADD_USER_COUPON = "https://api.weixin.qq.com/shop/coupon/add_user_coupon";
+      String GET_USER_COUPON_LIST = "https://api.weixin.qq.com/shop/coupon/get_usercoupon_list";
+      String UPDATE_USER_COUPON = "https://api.weixin.qq.com/shop/coupon/update_user_coupon";
+      String UPDATE_USER_COUPON_STATUS = "https://api.weixin.qq.com/shop/coupon/update_usercoupon_status";
+    }
+
+    interface Pay {
+      String CREATE_ORDER = "https://api.weixin.qq.com/shop/pay/createorder";
+      String GET_ORDER = "https://api.weixin.qq.com/shop/pay/getorder";
+      String REFUND_ORDER = "https://api.weixin.qq.com/shop/pay/refundorder";
     }
   }
 
   /**
    * 电子发票报销方
    */
-  public interface Invoice{
+  public interface Invoice {
 
     /**
      * 报销方查询报销发票信息
@@ -393,7 +572,172 @@ public class WxMaApiUrlConstants {
     String UPDATE_STATUS_BATCH = "https://api.weixin.qq.com/card/invoice/reimburse/updatestatusbatch";
   }
 
-  public interface Internet{
+  public interface Internet {
     String GET_USER_ENCRYPT_KEY = "https://api.weixin.qq.com/wxa/business/getuserencryptkey";
   }
+
+  /**
+   * 设备订阅消息
+   */
+  public interface DeviceSubscribe {
+    /**
+     * 获取设备票据
+     */
+    String GET_SN_TICKET_URL = "https://api.weixin.qq.com/wxa/getsnticket";
+    /**
+     * 发送设备订阅消息
+     */
+    String SEND_DEVICE_SUBSCRIBE_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/device/subscribe/send";
+  }
+
+  /**
+   * 即时配送相关接口.
+   * <pre>
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/immediate-delivery/overview.html
+   * </pre>
+   */
+  public interface InstantDelivery {
+
+    /**
+     * 拉取已绑定账号.
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getBindAccount.html
+     * </pre>
+     */
+    String GET_BIND_ACCOUNT = "https://api.weixin.qq.com/cgi-bin/express/local/business/shop/get";
+
+    /**
+     * 拉取配送单信息.
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getOrder.html
+     * </pre>
+     */
+    String GET_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/get";
+
+    /**
+     * 模拟配送公司更新配送单状态.
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.mockUpdateOrder.html
+     * </pre>
+     */
+    String MOCK_UPDATE_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/test_update_order";
+
+    /**
+     * 物流服务-查询组件-跟踪物流面单
+     * 商户使用此接口向微信提供某交易单号对应的运单号。微信后台会跟踪运单的状态变化
+     */
+    String TRACE_WAYBILL_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/trace_waybill";
+
+
+    /**
+     * 物流服务-查询组件-查询运单接口 query_trace
+     * 商户在调用完trace_waybill接口后，可以使用本接口查询到对应运单的详情信息
+     */
+    String QUERY_WAYBILL_TRACE_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/query_trace";
+
+    /**
+     * 物流服务-消息组件-传运单接口(订阅消息) follow_waybill
+     * 商户在调用完trace_waybill接口后，可以使用本接口查询到对应运单的详情信息
+     */
+    String FOLLOW_WAYBILL_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/follow_waybill";
+
+    /**
+     * 物流服务-消息组件-查运单接口(订阅消息) query_follow_trace
+     * 商户在调用完trace_waybill接口后，可以使用本接口查询到对应运单的详情信息
+     */
+    String QUERY_FOLLOW_TRACE_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/query_follow_trace";
+
+
+    /**
+     * 下单接口.
+     */
+    interface PlaceAnOrder {
+
+      /**
+       * 获取已支持的配送公司列表接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getAllImmeDelivery.html
+       * </pre>
+       */
+      String GET_ALL_IMME_DELIVERY = "https://api.weixin.qq.com/cgi-bin/express/local/business/delivery/getall";
+
+      /**
+       * 预下配送单接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preAddOrder.html
+       * </pre>
+       */
+      String PRE_ADD_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/pre_add";
+
+      /**
+       * 下配送单接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addOrder.html
+       * </pre>
+       */
+      String ADD_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/add";
+
+      /**
+       * 重新下单.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.reOrder.html
+       * </pre>
+       */
+      String RE_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/readd";
+
+      /**
+       * 增加小费.
+       * <pre>
+       * 可以对待接单状态的订单增加小费。需要注意：订单的小费，以最新一次加小费动作的金额为准，故下一次增加小费额必须大于上一次小费额.
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addTip.html
+       * </pre>
+       */
+      String ADD_TIP = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/addtips";
+
+    }
+
+    /**
+     * 取消接口.
+     */
+    interface Cancel {
+
+      /**
+       * 预取消配送单接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preCancelOrder.html
+       * </pre>
+       */
+      String PRE_CANCEL_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/precancel";
+
+      /**
+       * 取消配送单接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.cancelOrder.html
+       * </pre>
+       */
+      String CANCEL_ORDER = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/cancel";
+
+      /**
+       * 异常件退回商家商家确认收货接口.
+       * <pre>
+       * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.abnormalConfirm.html
+       * </pre>
+       */
+      String ABNORMAL_CONFIRM = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/confirm_return";
+
+    }
+
+
+    /**
+     * 安全风控
+     */
+    interface SafetyRiskControl {
+      /**
+       * 获取用户的安全等级，无需用户授权
+       */
+      String GET_USER_RISK_RANK = "https://api.weixin.qq.com/wxa/getuserriskrank";
+    }
+
+  }
+
 }

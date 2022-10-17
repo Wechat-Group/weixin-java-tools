@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * 联系客户群统计数据
  *
- * @author yqx
- * @date 2020/3/16
+ * @author yqx  created on  2020/3/16
  */
 @Getter
 @Setter
@@ -29,6 +28,9 @@ public class WxCpUserExternalGroupChatStatistic extends WxCpBaseResp {
   @SerializedName("items")
   private List<StatisticItem> itemList;
 
+  /**
+   * The type Statistic item.
+   */
   @Getter
   @Setter
   public static class StatisticItem implements Serializable {
@@ -41,6 +43,9 @@ public class WxCpUserExternalGroupChatStatistic extends WxCpBaseResp {
     private ItemData itemData;
   }
 
+  /**
+   * The type Item data.
+   */
   @Getter
   @Setter
   public static class ItemData implements Serializable {
@@ -89,6 +94,12 @@ public class WxCpUserExternalGroupChatStatistic extends WxCpBaseResp {
     private int msgTotal;
   }
 
+  /**
+   * From json wx cp user external group chat statistic.
+   *
+   * @param json the json
+   * @return the wx cp user external group chat statistic
+   */
   public static WxCpUserExternalGroupChatStatistic fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserExternalGroupChatStatistic.class);
   }

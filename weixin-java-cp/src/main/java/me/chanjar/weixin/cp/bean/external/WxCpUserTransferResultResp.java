@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * 在职成员的客户转接情况
  *
- * @author pg
- * @date 2021年6月21日
+ * @author pg  created on  2021年6月21日
  */
 @Getter
 @Setter
@@ -24,6 +23,12 @@ public class WxCpUserTransferResultResp extends WxCpBaseResp {
 
   private List<TransferResult> customer;
 
+  /**
+   * From json wx cp user transfer result resp.
+   *
+   * @param json the json
+   * @return the wx cp user transfer result resp
+   */
   public static WxCpUserTransferResultResp fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserTransferResultResp.class);
   }
@@ -55,15 +60,29 @@ public class WxCpUserTransferResultResp extends WxCpBaseResp {
     @SerializedName("takeover_time")
     private Long takeOverTime;
 
+    /**
+     * From json wx cp user transfer result resp . transfer result.
+     *
+     * @param json the json
+     * @return the wx cp user transfer result resp . transfer result
+     */
     public static WxCpUserTransferResultResp.TransferResult fromJson(String json) {
       return WxCpGsonBuilder.create().fromJson(json, WxCpUserTransferResultResp.TransferResult.class);
     }
 
+    /**
+     * To json string.
+     *
+     * @return the string
+     */
     public String toJson() {
       return WxCpGsonBuilder.create().toJson(this);
     }
   }
 
+  /**
+   * The enum Status.
+   */
   public enum STATUS {
 
     /**

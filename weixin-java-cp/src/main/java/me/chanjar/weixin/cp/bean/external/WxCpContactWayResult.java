@@ -8,17 +8,26 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
  * 「联系我」方式 处理结果
+ *
+ * @author 爱因斯唐
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class WxCpContactWayResult extends WxCpBaseResp {
   private static final long serialVersionUID = -2612867517869192015L;
+
   @SerializedName("config_id")
   private String configId;
 
   @SerializedName("qr_code")
   private String qrCode;
 
+  /**
+   * From json wx cp contact way result.
+   *
+   * @param json the json
+   * @return the wx cp contact way result
+   */
   public static WxCpContactWayResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpContactWayResult.class);
   }

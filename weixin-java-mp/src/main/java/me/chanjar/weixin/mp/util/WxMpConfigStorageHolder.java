@@ -2,7 +2,7 @@ package me.chanjar.weixin.mp.util;
 
 /**
  * @author yd
- * @date 2019-03-20 22:06
+ * created on  2019-03-20 22:06
  */
 public class WxMpConfigStorageHolder {
   private static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<String>() {

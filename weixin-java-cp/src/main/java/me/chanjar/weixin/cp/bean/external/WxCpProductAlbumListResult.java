@@ -1,12 +1,13 @@
 package me.chanjar.weixin.cp.bean.external;
 
 import com.google.gson.annotations.SerializedName;
-import java.io.Serializable;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -19,7 +20,6 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 @Getter
 @Setter
 public class WxCpProductAlbumListResult extends WxCpBaseResp implements Serializable {
-
   private static final long serialVersionUID = 121265727802015428L;
 
   @SerializedName("product_list")
@@ -28,6 +28,12 @@ public class WxCpProductAlbumListResult extends WxCpBaseResp implements Serializ
   @SerializedName("next_cursor")
   private String nextCursor;
 
+  /**
+   * From json wx cp product album list result.
+   *
+   * @param json the json
+   * @return the wx cp product album list result
+   */
   public static WxCpProductAlbumListResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpProductAlbumListResult.class);
   }

@@ -4,8 +4,10 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopAfterSaleAddRequest;
 import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopAfterSaleGetRequest;
 import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopAfterSaleUpdateRequest;
+import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopEcAfterSaleGetRequest;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopAfterSaleGetResponse;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopBaseResponse;
+import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopEcAfterSaleGetResponse;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -38,12 +40,11 @@ public class WxMaShopAfterSaleServiceImplTest {
       .outAftersaleId("318092069606883328X")
       .openid("odIi15CuQ0IQviqsnUMy6CKNetrMX")
       .type(1)
-      .createTime("2021-08-20 00:00:00")
       .status(1)
       .finishAllAftersale(0)
       .path("/pages/aftersale.html?out_aftersale_id=318092069606883328X")
       .refund(100L)
-      .productInfos(new ArrayList<>(Arrays.asList(productInfosBean)))
+      .productInfo(productInfosBean)
       .build();
     WxMaShopBaseResponse response = wxService.getShopAfterSaleService().add(request);
     assertThat(response).isNotNull();
@@ -72,4 +73,15 @@ public class WxMaShopAfterSaleServiceImplTest {
     WxMaShopBaseResponse response = wxService.getShopAfterSaleService().update(request);
     assertThat(response).isNotNull();
   }
+
+  @Test
+  public void testEcGet() throws WxErrorException {
+    WxMaShopEcAfterSaleGetRequest request = WxMaShopEcAfterSaleGetRequest.builder()
+      .aftersaleId(123L)
+      .outAftersaleId("aso_123124341")
+      .build();
+    WxMaShopEcAfterSaleGetResponse response = wxService.getShopAfterSaleService().get(request);
+    assertThat(response).isNotNull();
+  }
+
 }

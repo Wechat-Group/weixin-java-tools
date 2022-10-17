@@ -25,7 +25,7 @@ import java.io.InputStream;
  * .
  *
  * @author ecoolper
- * @date 2017/5/5
+ * created on  2017/5/5
  */
 public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequestExecutor<CloseableHttpClient, HttpHost> {
   public ApacheMediaDownloadRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {

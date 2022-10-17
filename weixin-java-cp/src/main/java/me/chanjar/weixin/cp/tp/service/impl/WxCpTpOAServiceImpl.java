@@ -17,50 +17,49 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 /**
  * 企业微信 OA 接口实现
  *
- * @author Element
- * @date 2019-04-06 11:20
+ * @author Element  created on  2019-04-06 11:20
  */
 @RequiredArgsConstructor
 public class WxCpTpOAServiceImpl implements WxCpTpOAService {
-    private final WxCpTpService mainService;
+  private final WxCpTpService mainService;
 
 
-    @Override
-    public String apply(WxCpOaApplyEventRequest request, String corpId) throws WxErrorException {
-        String url = mainService.getWxCpTpConfigStorage().getApiUrl(APPLY_EVENT) +
-                "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
+  @Override
+  public String apply(WxCpOaApplyEventRequest request, String corpId) throws WxErrorException {
+    String url = mainService.getWxCpTpConfigStorage().getApiUrl(APPLY_EVENT) +
+      "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
 
-        String responseContent = this.mainService.post(url, request.toJson());
-        return GsonParser.parse(responseContent).get("sp_no").getAsString();
-    }
+    String responseContent = this.mainService.post(url, request.toJson());
+    return GsonParser.parse(responseContent).get("sp_no").getAsString();
+  }
 
-    @Override
-    public WxCpTemplateResult getTemplateDetail(@NonNull String templateId, String corpId) throws WxErrorException {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("template_id", templateId);
-        String url = mainService.getWxCpTpConfigStorage().getApiUrl(GET_TEMPLATE_DETAIL) +
-                "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
-        String responseContent = this.mainService.post(url, jsonObject.toString());
-        return WxCpGsonBuilder.create().fromJson(responseContent, WxCpTemplateResult.class);
-    }
+  @Override
+  public WxCpTemplateResult getTemplateDetail(@NonNull String templateId, String corpId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("template_id", templateId);
+    String url = mainService.getWxCpTpConfigStorage().getApiUrl(GET_TEMPLATE_DETAIL) +
+      "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return WxCpGsonBuilder.create().fromJson(responseContent, WxCpTemplateResult.class);
+  }
 
-    @Override
-    public String copyTemplate(@NonNull String openTemplateId, String corpId) throws WxErrorException {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("open_template_id", openTemplateId);
-        String url = mainService.getWxCpTpConfigStorage().getApiUrl(COPY_TEMPLATE) +
-                "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
-        String responseContent = this.mainService.post(url, jsonObject.toString());
-        return GsonParser.parse(responseContent).get("template_id").getAsString();
-    }
+  @Override
+  public String copyTemplate(@NonNull String openTemplateId, String corpId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("open_template_id", openTemplateId);
+    String url = mainService.getWxCpTpConfigStorage().getApiUrl(COPY_TEMPLATE) +
+      "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return GsonParser.parse(responseContent).get("template_id").getAsString();
+  }
 
-    @Override
-    public WxCpApprovalDetailResult getApprovalDetail(@NonNull String spNo, String corpId) throws WxErrorException {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("sp_no", spNo);
-        final String url = mainService.getWxCpTpConfigStorage().getApiUrl(GET_APPROVAL_DETAIL) +
-                "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
-        String responseContent = this.mainService.post(url, jsonObject.toString());
-        return WxCpGsonBuilder.create().fromJson(responseContent, WxCpApprovalDetailResult.class);
-    }
+  @Override
+  public WxCpApprovalDetailResult getApprovalDetail(@NonNull String spNo, String corpId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("sp_no", spNo);
+    final String url = mainService.getWxCpTpConfigStorage().getApiUrl(GET_APPROVAL_DETAIL) +
+      "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    return WxCpGsonBuilder.create().fromJson(responseContent, WxCpApprovalDetailResult.class);
+  }
 }

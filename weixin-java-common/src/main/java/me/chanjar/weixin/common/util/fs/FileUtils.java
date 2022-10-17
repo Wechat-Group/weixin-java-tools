@@ -43,7 +43,7 @@ public class FileUtils {
    * @param ext         扩展名
    */
   public static File createTmpFile(InputStream inputStream, String name, String ext) throws IOException {
-    return createTmpFile(inputStream, name, ext, Files.createTempDirectory("weixin-java-tools-temp").toFile());
+    return createTmpFile(inputStream, name, ext, Files.createTempDirectory("wxjava-temp").toFile());
   }
 
   /**

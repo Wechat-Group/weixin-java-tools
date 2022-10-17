@@ -9,7 +9,7 @@ import java.util.List;
  * 微信导购助手（现在叫对话能力）接口.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020 -10-06
+ * created on  2020 -10-06
  */
 public interface WxMpGuideService {
 

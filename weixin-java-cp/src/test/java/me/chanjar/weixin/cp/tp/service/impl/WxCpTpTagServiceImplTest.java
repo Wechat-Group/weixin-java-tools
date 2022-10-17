@@ -25,7 +25,7 @@ import static org.testng.Assert.*;
  * 企业微信-第三方开发-标签管理相关测试
  *
  * @author zhangq
- * @since 2021/2/15 9:14
+ * @since 2021 /2/15 9:14
  */
 public class WxCpTpTagServiceImplTest {
 
@@ -36,6 +36,9 @@ public class WxCpTpTagServiceImplTest {
 
   private WxCpTpTagService wxCpTpTagService;
 
+  /**
+   * Sets up.
+   */
   @BeforeClass
   public void setUp() {
     MockitoAnnotations.initMocks(this);
@@ -44,6 +47,11 @@ public class WxCpTpTagServiceImplTest {
     wxCpTpTagService = new WxCpTpTagServiceImpl(wxCpTpService);
   }
 
+  /**
+   * Test create.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testCreate() throws WxErrorException {
     String url = configStorage.getApiUrl(TAG_CREATE);
@@ -55,10 +63,16 @@ public class WxCpTpTagServiceImplTest {
     assertEquals(wxCpTpTagService.create(tagName, tagId), String.valueOf(tagId));
   }
 
+  /**
+   * Test list all.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testListAll() throws WxErrorException {
     String url = configStorage.getApiUrl(TAG_LIST);
-    String result = "{\"errcode\":0,\"errmsg\":\"ok\",\"taglist\":[{\"tagid\":1,\"tagname\":\"a\"},{\"tagid\":2,\"tagname\":\"b\"}]}";
+    String result = "{\"errcode\":0,\"errmsg\":\"ok\",\"taglist\":[{\"tagid\":1,\"tagname\":\"a\"},{\"tagid\":2," +
+      "\"tagname\":\"b\"}]}";
     when(wxCpTpService.get(eq(url), anyString())).thenReturn(result);
 
     List<WxCpTpTag> wxCpTpTags = wxCpTpTagService.listAll();
@@ -68,11 +82,17 @@ public class WxCpTpTagServiceImplTest {
     assertEquals(wxCpTpTags.get(1).getTagName(), "b");
   }
 
+  /**
+   * Test get.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testGet() throws WxErrorException {
     String tagId = "anyTagId";
     String url = String.format(configStorage.getApiUrl(TAG_GET), tagId);
-    String result = "{\"errcode\":0,\"errmsg\":\"ok\",\"tagname\":\"乒乓球协会\",\"userlist\":[{\"userid\":\"zhangsan\",\"name\":\"李四\"}],\"partylist\":[2]}";
+    String result = "{\"errcode\":0,\"errmsg\":\"ok\",\"tagname\":\"乒乓球协会\",\"userlist\":[{\"userid\":\"zhangsan\"," +
+      "\"name\":\"李四\"}],\"partylist\":[2]}";
     when(wxCpTpService.get(eq(url), anyString())).thenReturn(result);
 
     WxCpTpTagGetResult getResult = wxCpTpTagService.get(tagId);
@@ -81,6 +101,11 @@ public class WxCpTpTagServiceImplTest {
     assertEquals(getResult.getUserlist().get(0).getUserId(), "zhangsan");
   }
 
+  /**
+   * Test add users 2 tag.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testAddUsers2Tag() throws WxErrorException {
     String tagId = "anyTagId";
@@ -113,6 +138,11 @@ public class WxCpTpTagServiceImplTest {
     assertNull(postResult.getInvalidUsers());
   }
 
+  /**
+   * Test remove users from tag.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testRemoveUsersFromTag() throws WxErrorException {
     String tagId = "anyTagId";
@@ -129,7 +159,8 @@ public class WxCpTpTagServiceImplTest {
     // 部分失败时返回对象
     String partFailure = "{\"errcode\":0,\"errmsg\":\"ok\",\"invalidlist\":\"usr1|usr2\",\"invalidparty\":[2,3,4]}";
     when(wxCpTpService.post(eq(url), anyString())).thenReturn(partFailure);
-    postResult = wxCpTpTagService.removeUsersFromTag(tagId, Arrays.asList("usr1", "usr2"), Arrays.asList("dept1", "dept2"));
+    postResult = wxCpTpTagService.removeUsersFromTag(tagId, Arrays.asList("usr1", "usr2"), Arrays.asList("dept1",
+      "dept2"));
     assertEquals((int) postResult.getErrCode(), 0);
     assertEquals(postResult.getInvalidUserList().size(), 2);
     assertEquals(postResult.getInvalidUserList().get(1), "usr2");
@@ -139,7 +170,8 @@ public class WxCpTpTagServiceImplTest {
     // 全部失败时返回对象
     String allFailure = "{\"errcode\":40070,\"errmsg\":\"all list invalid \"}";
     when(wxCpTpService.post(eq(url), anyString())).thenReturn(allFailure);
-    postResult = wxCpTpTagService.removeUsersFromTag(tagId, Arrays.asList("usr1", "usr2"), Arrays.asList("dept1", "dept2"));
+    postResult = wxCpTpTagService.removeUsersFromTag(tagId, Arrays.asList("usr1", "usr2"), Arrays.asList("dept1",
+      "dept2"));
     assertEquals((int) postResult.getErrCode(), 40070);
     assertNull(postResult.getInvalidParty());
     assertNull(postResult.getInvalidUsers());

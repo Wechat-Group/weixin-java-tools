@@ -4,7 +4,7 @@ package com.github.binarywang.wxpay.config;
  * 微信支付配置策略.
  *
  * @author zenghao
- * @date 2021/3/12
+ * created on  2021/3/12
  */
 public class WxPayConfigHolder {
 

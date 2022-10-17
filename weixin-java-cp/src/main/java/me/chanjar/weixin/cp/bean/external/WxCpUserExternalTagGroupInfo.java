@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *
+ * The type Wx cp user external tag group info.
  */
 @Getter
 @Setter
@@ -20,6 +20,9 @@ public class WxCpUserExternalTagGroupInfo extends WxCpBaseResp {
   @SerializedName("tag_group")
   private TagGroup tagGroup;
 
+  /**
+   * The type Tag group.
+   */
   @Getter
   @Setter
   public static class TagGroup implements Serializable {
@@ -43,11 +46,19 @@ public class WxCpUserExternalTagGroupInfo extends WxCpBaseResp {
     @SerializedName("tag")
     private List<Tag> tag;
 
+    /**
+     * To json string.
+     *
+     * @return the string
+     */
     public String toJson() {
       return WxGsonBuilder.create().toJson(this);
     }
   }
 
+  /**
+   * The type Tag.
+   */
   @Getter
   @Setter
   public static class Tag implements Serializable {
@@ -78,6 +89,12 @@ public class WxCpUserExternalTagGroupInfo extends WxCpBaseResp {
     return WxGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * From json wx cp user external tag group info.
+   *
+   * @param json the json
+   * @return the wx cp user external tag group info
+   */
   public static WxCpUserExternalTagGroupInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserExternalTagGroupInfo.class);
   }

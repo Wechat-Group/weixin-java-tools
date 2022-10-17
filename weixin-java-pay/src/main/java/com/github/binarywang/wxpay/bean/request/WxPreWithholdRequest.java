@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * @author chenliang
- * @date 2021-08-02 5:20 下午
+ * created on  2021-08-02 5:20 下午
  *
  * <pre>
  *   微信预扣款请求参数
@@ -28,7 +28,7 @@ public class WxPreWithholdRequest implements Serializable {
    * 委托代扣协议ID
    */
   @SerializedName(value = "contract_id")
-  private String contractId;
+  private transient String contractId;
 
   /**
    * 直连商户号

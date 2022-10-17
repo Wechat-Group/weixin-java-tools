@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * 联系客户统计数据
  *
- * @author yqx
- * @date 2020/3/16
+ * @author yqx  created on  2020/3/16
  */
 @Getter
 @Setter
@@ -22,6 +21,9 @@ public class WxCpUserExternalUserBehaviorStatistic extends WxCpBaseResp {
   @SerializedName("behavior_data")
   private List<Behavior> behaviorList;
 
+  /**
+   * The type Behavior.
+   */
   @Getter
   @Setter
   public static class Behavior implements Serializable {
@@ -76,6 +78,12 @@ public class WxCpUserExternalUserBehaviorStatistic extends WxCpBaseResp {
     private int newContactCnt;
   }
 
+  /**
+   * From json wx cp user external user behavior statistic.
+   *
+   * @param json the json
+   * @return the wx cp user external user behavior statistic
+   */
   public static WxCpUserExternalUserBehaviorStatistic fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserExternalUserBehaviorStatistic.class);
   }

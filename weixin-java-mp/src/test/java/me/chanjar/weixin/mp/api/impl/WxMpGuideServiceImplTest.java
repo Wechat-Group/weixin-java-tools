@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 单元测试.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-10-06
+ * created on  2020-10-06
  */
 @Guice(modules = ApiTestModule.class)
 public class WxMpGuideServiceImplTest {

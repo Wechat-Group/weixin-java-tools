@@ -15,12 +15,21 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * The type Wx cp demo server.
+ */
 public class WxCpDemoServer {
 
   private static WxCpConfigStorage wxCpConfigStorage;
   private static WxCpService wxCpService;
   private static WxCpMessageRouter wxCpMessageRouter;
 
+  /**
+   * The entry point of application.
+   *
+   * @param args the input arguments
+   * @throws Exception the exception
+   */
   public static void main(String[] args) throws Exception {
     initWeixin();
 
@@ -29,7 +38,8 @@ public class WxCpDemoServer {
     ServletHandler servletHandler = new ServletHandler();
     server.setHandler(servletHandler);
 
-    ServletHolder endpointServletHolder = new ServletHolder(new WxCpEndpointServlet(wxCpConfigStorage, wxCpService, wxCpMessageRouter));
+    ServletHolder endpointServletHolder = new ServletHolder(new WxCpEndpointServlet(wxCpConfigStorage, wxCpService,
+      wxCpMessageRouter));
     servletHandler.addServletWithMapping(endpointServletHolder, "/*");
 
     ServletHolder oauthServletHolder = new ServletHolder(new WxCpOAuth2Servlet(wxCpService));

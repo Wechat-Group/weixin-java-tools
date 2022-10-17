@@ -63,27 +63,54 @@ public class XmlUtilsTest {
     assertThat(map).isNotNull();
     final Map<String, Object> copyrightCheckResult = (Map<String, Object>) map.get("CopyrightCheckResult");
     List<Map<String, Object>> resultList = (List<Map<String, Object>>) ((Map<String, Object>) copyrightCheckResult.get("ResultList")).get("item");
-    assertThat(copyrightCheckResult).isNotNull();
 
-    assertThat(copyrightCheckResult.get("Count")).isEqualTo("2");
-    assertThat(copyrightCheckResult.get("CheckState")).isEqualTo("2");
+    assertThat(copyrightCheckResult)
+      .isNotNull()
+      .containsEntry("Count", "2")
+      .containsEntry("CheckState", "2");
 
-    assertThat(resultList.get(0).get("ArticleIdx")).isEqualTo("1");
-    assertThat(resultList.get(0).get("UserDeclareState")).isEqualTo("0");
-    assertThat(resultList.get(0).get("AuditState")).isEqualTo("2");
-    assertThat(resultList.get(0).get("OriginalArticleUrl")).isEqualTo("Url_1");
-    assertThat(resultList.get(0).get("OriginalArticleType")).isEqualTo("1");
-    assertThat(resultList.get(0).get("CanReprint")).isEqualTo("1");
-    assertThat(resultList.get(0).get("NeedReplaceContent")).isEqualTo("1");
-    assertThat(resultList.get(0).get("NeedShowReprintSource")).isEqualTo("1");
+    assertThat(resultList.get(0)).containsEntry("ArticleIdx", "1")
+      .containsEntry("UserDeclareState", "0")
+      .containsEntry("AuditState", "2")
+      .containsEntry("OriginalArticleUrl", "Url_1")
+      .containsEntry("OriginalArticleType", "1")
+      .containsEntry("CanReprint", "1")
+      .containsEntry("NeedReplaceContent", "1")
+      .containsEntry("NeedShowReprintSource", "1");
 
-    assertThat(resultList.get(1).get("ArticleIdx")).isEqualTo("2");
-    assertThat(resultList.get(1).get("UserDeclareState")).isEqualTo("0");
-    assertThat(resultList.get(1).get("AuditState")).isEqualTo("2");
-    assertThat(resultList.get(1).get("OriginalArticleUrl")).isEqualTo("Url_2");
-    assertThat(resultList.get(1).get("OriginalArticleType")).isEqualTo("1");
-    assertThat(resultList.get(1).get("CanReprint")).isEqualTo("1");
-    assertThat(resultList.get(1).get("NeedReplaceContent")).isEqualTo("1");
-    assertThat(resultList.get(1).get("NeedShowReprintSource")).isEqualTo("1");
+    assertThat(resultList.get(1)).containsEntry("ArticleIdx", "2")
+      .containsEntry("UserDeclareState", "0")
+      .containsEntry("AuditState", "2")
+      .containsEntry("OriginalArticleUrl", "Url_2")
+      .containsEntry("OriginalArticleType", "1")
+      .containsEntry("CanReprint", "1")
+      .containsEntry("NeedReplaceContent", "1")
+      .containsEntry("NeedShowReprintSource", "1");
+  }
+
+  @Test
+  public void testXml2Map_another() {
+    String xml = "<xml> <ToUserName><![CDATA[gh_4d00ed8d6399]]></ToUserName> <FromUserName><![CDATA[oV5CrjpxgaGXNHIQigzNlgLTnwic]]></FromUserName> <CreateTime>1481013459</CreateTime> <MsgType><![CDATA[event]]></MsgType> <Event><![CDATA[PUBLISHJOBFINISH]]></Event> <PublishEventInfo> <publish_id>2247503051</publish_id> <publish_status>0</publish_status> <article_id><![CDATA[b5O2OUs25HBxRceL7hfReg-U9QGeq9zQjiDvy WP4Hq4]]></article_id> <article_detail> <count>1</count> <item> <idx>1</idx> <article_url><![CDATA[ARTICLE_URL]]></article_url> </item> <item> <idx>2</idx> <article_url><![CDATA[ARTICLE_URL_2]]></article_url> </item> </article_detail> </PublishEventInfo> </xml>";
+
+    final Map<String, Object> map = XmlUtils.xml2Map(xml);
+    assertThat(map).isNotNull()
+      .containsEntry("ToUserName", "gh_4d00ed8d6399")
+      .containsEntry("FromUserName", "oV5CrjpxgaGXNHIQigzNlgLTnwic")
+      .containsEntry("CreateTime", "1481013459")
+      .containsEntry("MsgType", "event");
+
+    Map<String, Object> publishEventInfo = (Map<String, Object>) map.get("PublishEventInfo");
+    assertThat(publishEventInfo).containsEntry("publish_id", "2247503051")
+      .containsEntry("publish_status", "0")
+      .containsEntry("article_id", "b5O2OUs25HBxRceL7hfReg-U9QGeq9zQjiDvy WP4Hq4");
+
+    Map<String, Object> articleDetail = (Map<String, Object>) publishEventInfo.get("article_detail");
+    assertThat(articleDetail).containsEntry("count", "1");
+    List< Map<String, Object>> item = (List<Map<String, Object>>) articleDetail.get("item");
+    assertThat(item.get(0)).containsEntry("idx", "1")
+      .containsEntry("article_url", "ARTICLE_URL");
+
+    assertThat(item.get(1)).containsEntry("idx", "2")
+      .containsEntry("article_url", "ARTICLE_URL_2");
   }
 }

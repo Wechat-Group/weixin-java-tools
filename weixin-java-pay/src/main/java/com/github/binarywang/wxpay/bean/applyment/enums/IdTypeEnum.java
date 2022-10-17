@@ -25,5 +25,17 @@ public enum IdTypeEnum {
    * 中国台湾居民-来往大陆通行证
    */
   IDENTIFICATION_TYPE_TAIWAN_PASSPORT,
+  /**
+   * 外国人居留证
+   */
+  IDENTIFICATION_TYPE_FOREIGN_RESIDENT,
+  /**
+   * 港澳居民证
+   */
+  IDENTIFICATION_TYPE_HONGKONG_MACAO_RESIDENT,
+  /**
+   * 台湾居民证
+   */
+  IDENTIFICATION_TYPE_TAIWAN_RESIDENT,
   ;
 }

@@ -15,7 +15,7 @@ import java.util.List;
  * </pre>
  *
  * @author Mklaus
- * @date 2018 -01-22 上午11:07
+ * created on  2018 -01-22 上午11:07
  */
 public interface WxMpSubscribeMsgService {
   /**

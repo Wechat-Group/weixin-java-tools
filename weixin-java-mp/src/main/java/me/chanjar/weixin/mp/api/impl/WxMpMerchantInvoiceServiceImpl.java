@@ -1,7 +1,9 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -97,7 +99,7 @@ public class WxMpMerchantInvoiceServiceImpl implements WxMpMerchantInvoiceServic
    */
   private <T> T doCommonInvoiceHttpPost(WxMpApiUrl url, Object data, Class<T> resultClass) throws WxErrorException {
     String json = "";
-    final Gson gson = WxMpGsonBuilder.create();
+    final Gson gson = this.createGson();
     if (data != null) {
       json = gson.toJson(data);
     }
@@ -107,5 +109,11 @@ public class WxMpMerchantInvoiceServiceImpl implements WxMpMerchantInvoiceServic
     }
 
     return gson.fromJson(responseText, resultClass);
+  }
+
+  private Gson createGson() {
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+    return gsonBuilder.create();
   }
 }

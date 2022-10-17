@@ -41,14 +41,6 @@ public enum CertTypeEnum {
    */
   CERTIFICATE_TYPE_2396,
   /**
-   * 慈善组织公开募捐资格证书
-   */
-  CERTIFICATE_TYPE_2397,
-  /**
-   * 农民专业合作社法人营业执照
-   */
-  CERTIFICATE_TYPE_2398,
-  /**
    * 宗教活动场所登记证
    */
   CERTIFICATE_TYPE_2399,
@@ -56,5 +48,17 @@ public enum CertTypeEnum {
    * 其他证书/批文/证明
    */
   CERTIFICATE_TYPE_2400,
+  /**
+   * 执业许可证/执业证
+   */
+  CERTIFICATE_TYPE_2520,
+  /**
+   * 基层群众性自治组织特别法人统一社会信用代码证
+   */
+  CERTIFICATE_TYPE_2521,
+  /**
+   * 农村集体经济组织登记证
+   */
+  CERTIFICATE_TYPE_2522,
   ;
 }

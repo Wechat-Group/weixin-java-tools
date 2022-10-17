@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * 提交审批申请 请求对象类.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-07-18
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-07-18
  */
 @Data
 @Accessors(chain = true)
@@ -68,10 +67,18 @@ public class WxCpOaApplyEventRequest implements Serializable {
   @SerializedName("summary_list")
   private List<SummaryInfo> summaryList;
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * The type Approver.
+   */
   @Data
   @Accessors(chain = true)
   public static class Approver implements Serializable {
@@ -89,6 +96,9 @@ public class WxCpOaApplyEventRequest implements Serializable {
     private String[] userIds;
   }
 
+  /**
+   * The type Apply data.
+   */
   @Data
   @Accessors(chain = true)
   public static class ApplyData implements Serializable {

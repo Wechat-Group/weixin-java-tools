@@ -11,7 +11,7 @@ import java.util.List;
  * 用户已领卡券返回
  *
  * @author yang229
- * @date 2019/12/22
+ * created on  2019/12/22
  */
 @Data
 public class WxUserCardListResult implements Serializable {

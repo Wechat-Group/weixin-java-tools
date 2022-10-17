@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 查询剩余待分金额API返回实体
  *
  * @author pg
- * @date 2021-6-25
+ * created on  2021-6-25
  */
 @Data
 public class ProfitSharingUnsplitResult implements Serializable {

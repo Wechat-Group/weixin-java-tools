@@ -20,7 +20,7 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.QRCONNECT_URL;
  * oauth2接口实现.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-10-19
+ * created on  2020-10-19
  */
 @AllArgsConstructor
 public class WxOpenOAuth2ServiceImpl extends WxOpenServiceImpl implements WxOAuth2Service {

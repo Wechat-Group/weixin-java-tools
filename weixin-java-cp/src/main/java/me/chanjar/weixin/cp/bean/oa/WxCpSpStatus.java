@@ -46,9 +46,9 @@ public enum WxCpSpStatus {
   @SerializedName("10")
   ALREADY_PAY(10);
 
-  private Integer status;
+  private final Integer status;
 
-  private WxCpSpStatus(Integer status) {
+  WxCpSpStatus(Integer status) {
     this.status = status;
   }
 }

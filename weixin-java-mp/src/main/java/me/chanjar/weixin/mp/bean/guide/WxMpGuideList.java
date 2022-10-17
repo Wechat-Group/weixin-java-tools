@@ -11,7 +11,7 @@ import java.util.List;
  * 顾问列表.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-10-07
+ * created on  2020-10-07
  */
 @Data
 public class WxMpGuideList implements Serializable {

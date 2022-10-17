@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @author yqx
- * @date 2018/9/19
+ * created on  2018/9/19
  */
 @Data
 public class ActivatePluginParam {

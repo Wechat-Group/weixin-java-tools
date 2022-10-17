@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author liming1019
- * @date 2021/8/12
+ * created on  2021/8/12
  */
 @Data
 @Builder
@@ -33,6 +33,8 @@ public class WxMaShopAfterSaleAddRequest implements Serializable {
    * product_infos : [{"out_product_id":"234245","out_sku_id":"23424","product_cnt":5}]
    */
 
+  @SerializedName("order_id")
+  private Long orderId;
   @SerializedName("out_order_id")
   private String outOrderId;
   @SerializedName("out_aftersale_id")
@@ -41,8 +43,14 @@ public class WxMaShopAfterSaleAddRequest implements Serializable {
   private String openid;
   @SerializedName("type")
   private Integer type;
-  @SerializedName("create_time")
-  private String createTime;
+  @SerializedName("product_info")
+  private ProductInfosBean productInfo;
+  @SerializedName("orderamt")
+  private Long orderamt;
+  @SerializedName("refund_reason")
+  private String refundReason;
+  @SerializedName("refund_reason_type")
+  private Integer refundReasonType;
   @SerializedName("status")
   private Integer status;
   @SerializedName("finish_all_aftersale")
@@ -51,8 +59,8 @@ public class WxMaShopAfterSaleAddRequest implements Serializable {
   private String path;
   @SerializedName("refund")
   private Long refund;
-  @SerializedName("product_infos")
-  private List<ProductInfosBean> productInfos;
+  @SerializedName("media_list")
+  private UploadMediaList mediaList;
 
   @Data
   @Builder
@@ -71,5 +79,13 @@ public class WxMaShopAfterSaleAddRequest implements Serializable {
     private String outSkuId;
     @SerializedName("product_cnt")
     private Integer productCnt;
+  }
+
+  @Data
+  public static class UploadMediaList {
+    private Integer type;
+    private String url;
+    @SerializedName("thumb_url")
+    private String thumbUrl;
   }
 }

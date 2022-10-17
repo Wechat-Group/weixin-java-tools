@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 /**
  * @author Mklaus
- * @date 2018-01-22 下午2:02
+ * created on  2018-01-22 下午2:02
  */
 @Guice(modules = ApiTestModule.class)
 public class WxMpSubscribeMsgServiceImplTest {

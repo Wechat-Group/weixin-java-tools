@@ -37,6 +37,7 @@ public class WxMpKefuMessage implements Serializable {
   private String headContent;
   private String tailContent;
   private List<WxArticle> articles = new ArrayList<>();
+  private String mpNewsArticleId;
 
   /**
    * 菜单消息里的菜单内容.
@@ -114,6 +115,13 @@ public class WxMpKefuMessage implements Serializable {
   }
 
   /**
+   * 发送图文消息（点击跳转到图文消息页面）使用通过 “发布” 系列接口得到的 article_id(草稿箱功能上线后不再支持客服接口中带 media_id 的 mpnews 类型的图文消息)
+   */
+  public static MpNewsArticleBuilder MPNEWSARTICLE() {
+    return new MpNewsArticleBuilder();
+  }
+
+  /**
    * <pre>
    * 请使用
    * {@link WxConsts.KefuMsgType#TEXT}
@@ -127,6 +135,7 @@ public class WxMpKefuMessage implements Serializable {
    * {@link WxConsts.KefuMsgType#MINIPROGRAMPAGE}
    * {@link WxConsts.KefuMsgType#TASKCARD}
    * {@link WxConsts.KefuMsgType#MSGMENU}
+   * {@link WxConsts.KefuMsgType#MP_NEWS_ARTICLE}
    * </pre>
    */
   public void setMsgType(String msgType) {

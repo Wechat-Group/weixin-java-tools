@@ -1,5 +1,7 @@
 package com.github.binarywang.wxpay.bean.ecommerce;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +12,9 @@ import java.io.Serializable;
  * 文档地址: https://wechatpay-api.gitbook.io/wechatpay-api-v3/qian-ming-zhi-nan-1/qian-ming-yan-zheng
  */
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class SignatureHeader implements Serializable {
   private static final long serialVersionUID = -6958015499416059949L;
   /**

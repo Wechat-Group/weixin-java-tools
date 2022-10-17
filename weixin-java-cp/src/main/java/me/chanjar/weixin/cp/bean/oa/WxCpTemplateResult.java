@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 审批模板详情
  *
- * @author gyv12345@163.com
+ * @author gyv12345 @163.com
  */
 @Data
 public class WxCpTemplateResult implements Serializable {

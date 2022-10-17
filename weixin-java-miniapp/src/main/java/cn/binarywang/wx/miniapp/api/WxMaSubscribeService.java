@@ -13,7 +13,7 @@ import java.util.List;
  * 订阅消息类
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-12-15
+ * created on  2019-12-15
  */
 public interface WxMaSubscribeService {
 

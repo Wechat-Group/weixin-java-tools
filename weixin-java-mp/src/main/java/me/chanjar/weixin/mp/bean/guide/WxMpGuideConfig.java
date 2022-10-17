@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 获取快捷回复，关注顾问自动回复返回类
  * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a>
- * @date 2021/5/8/008
+ * created on  2021/5/8/008
  */
 @Data
 public class WxMpGuideConfig implements Serializable {

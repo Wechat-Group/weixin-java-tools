@@ -9,6 +9,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.Goods.*;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Code.GET_PAGE_URL;
 
 /**
  * <pre>
@@ -92,6 +94,28 @@ public class WxMaLiveGoodsServiceImpl implements WxMaLiveGoodsService {
       }
     }
     return WxMaLiveResult.fromJson(jsonObject.toString());
+  }
+
+  @Override
+  public boolean setKey(List<String> goodsKey) throws WxErrorException {
+    Map<String, Object> map = new HashMap<>(1);
+    map.put("goodsKey", goodsKey);
+    this.wxMaService.post(SET_KEY, WxMaGsonBuilder.create().toJson(map));
+    return true;
+  }
+
+  @Override
+  public List<String> getKey() throws WxErrorException {
+    String responseContent = this.wxMaService.get(GET_KEY, null);
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    boolean vendorGoodsKey = jsonObject.has("vendorGoodsKey");
+    if (vendorGoodsKey) {
+      return WxMaGsonBuilder.create().fromJson(jsonObject.getAsJsonArray("vendorGoodsKey"),
+              new TypeToken<List<String>>() {
+              }.getType());
+    } else {
+      return null;
+    }
   }
 
 }

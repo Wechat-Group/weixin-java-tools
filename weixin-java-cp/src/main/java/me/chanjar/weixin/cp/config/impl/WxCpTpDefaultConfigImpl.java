@@ -45,12 +45,12 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   private volatile String suiteTicket;
   private volatile long suiteTicketExpiresTime;
   private volatile String oauth2redirectUri;
-  private volatile Map<String, String> authCorpAccessTokenMap = new HashMap<>();
-  private volatile Map<String, Long> authCorpAccessTokenExpireTimeMap = new HashMap<>();
-  private volatile Map<String, String> authCorpJsApiTicketMap = new HashMap<>();
-  private volatile Map<String, Long> authCorpJsApiTicketExpireTimeMap = new HashMap<>();
-  private volatile Map<String, String> authSuiteJsApiTicketMap = new HashMap<>();
-  private volatile Map<String, Long> authSuiteJsApiTicketExpireTimeMap = new HashMap<>();
+  private final Map<String, String> authCorpAccessTokenMap = new HashMap<>();
+  private final Map<String, Long> authCorpAccessTokenExpireTimeMap = new HashMap<>();
+  private final Map<String, String> authCorpJsApiTicketMap = new HashMap<>();
+  private final Map<String, Long> authCorpJsApiTicketExpireTimeMap = new HashMap<>();
+  private final Map<String, String> authSuiteJsApiTicketMap = new HashMap<>();
+  private final Map<String, Long> authSuiteJsApiTicketExpireTimeMap = new HashMap<>();
   private volatile String httpProxyHost;
   private volatile int httpProxyPort;
   private volatile String httpProxyUsername;

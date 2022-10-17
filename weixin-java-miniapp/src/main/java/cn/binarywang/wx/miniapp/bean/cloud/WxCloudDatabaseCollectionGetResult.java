@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 云开发获取集合接口的结果.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-01-28
+ * created on  2020-01-28
  */
 @Data
 public class WxCloudDatabaseCollectionGetResult implements Serializable {

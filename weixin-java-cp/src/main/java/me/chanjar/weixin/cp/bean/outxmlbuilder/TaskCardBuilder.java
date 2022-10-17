@@ -11,6 +11,12 @@ public final class TaskCardBuilder extends BaseBuilder<TaskCardBuilder, WxCpXmlO
 
   private String replaceName;
 
+  /**
+   * Replace name task card builder.
+   *
+   * @param replaceName the replace name
+   * @return the task card builder
+   */
   public TaskCardBuilder replaceName(String replaceName) {
     this.replaceName = replaceName;
     return this;

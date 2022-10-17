@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 解冻剩余资金API请求实体
  *
  * @author pg
- * @date 2021-6-25
+ * created on  2021-6-25
  */
 @Data
 @Builder(builderMethodName = "newBuilder")
@@ -21,6 +21,16 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ProfitSharingUnfreezeRequest implements Serializable {
   private static final long serialVersionUID = 6835471990040104843L;
+
+  /**
+   * <pre>
+   * 字段名：子商户号
+   * 是否必填：是
+   * 描述：微信支付分配的子商户号，即分账的出资商户号。
+   * </pre>
+   */
+  @SerializedName("sub_mchid")
+  private String subMchId;
 
   /**
    * <pre>

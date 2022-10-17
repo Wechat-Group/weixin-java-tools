@@ -2,6 +2,8 @@ package me.chanjar.weixin.mp.bean.invoice.reimburse;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  * 发票商品信息
@@ -10,7 +12,8 @@ import lombok.Data;
  * @since 2021-03-23
  */
 @Data
-public class InvoiceCommodityInfo {
+public class InvoiceCommodityInfo implements Serializable {
+  private static final long serialVersionUID = 5139576099614652523L;
 
   /**
    * 项目（商品）名称

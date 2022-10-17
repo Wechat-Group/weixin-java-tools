@@ -30,7 +30,7 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.SubscribeMsg.*;
  * 订阅消息接口.
  *
  * @author Mklaus
- * @date 2018-01-22 上午11:19
+ * created on  2018-01-22 上午11:19
  */
 @RequiredArgsConstructor
 public class WxMpSubscribeMsgServiceImpl implements WxMpSubscribeMsgService {

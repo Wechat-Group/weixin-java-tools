@@ -5,16 +5,16 @@ import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 import me.chanjar.weixin.cp.bean.templatecard.*;
 
 import java.util.List;
+
 /**
  * <pre>
  * 模板卡片消息Builder
  * 用法: WxCustomMessage m = WxCustomMessage.TEMPLATECARD().title(...)....toUser(...).build();
  * </pre>
  *
- * @author yzts</a>
- * @date 2019-05-16
+ * @author yzts</ a>  created on  2019-05-16
  */
-public class TemplateCardBuilder  extends BaseBuilder<TemplateCardBuilder>{
+public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
   /**
    * 模板卡片类型，文本通知型卡片填写 “text_notice”,
    * 图文展示型卡片此处填写 “news_notice”,
@@ -22,62 +22,77 @@ public class TemplateCardBuilder  extends BaseBuilder<TemplateCardBuilder>{
    * 投票选择型卡片填写”vote_interaction”,
    * 多项选择型卡片填写 “multiple_interaction”
    */
-  private String card_type;
+  private String cardType;
 
   /**
    * 卡片来源样式信息，不需要来源样式可不填写
    * 来源图片的url
    */
-  private String source_icon_url;
+  private String sourceIconUrl;
   /**
    * 卡片来源样式信息，不需要来源样式可不填写
    * 来源图片的描述，建议不超过20个字
    */
-  private String source_desc;
+  private String sourceDesc;
+
+  /**
+   * 来源文字的颜色，目前支持：0(默认) 灰色，1 黑色，2 红色，3 绿色
+   */
+  private Integer sourceDescColor;
+
+  /**
+   * 更多操作界面的描述
+   */
+  private String actionMenuDesc;
+
+  /**
+   * 操作列表，列表长度取值范围为 [1, 3]
+   */
+  private List<ActionMenuItem> actionMenuActionList;
 
   /**
    * 一级标题，建议不超过36个字
    */
-  private String main_title_title;
+  private String mainTitleTitle;
   /**
    * 标题辅助信息，建议不超过44个字
    */
-  private String main_title_desc;
+  private String mainTitleDesc;
 
   /**
    * 图文展示型的卡片必须有图片字段。
    * 图片的url.
    */
-  private String card_image_url;
+  private String cardImageUrl;
 
   /**
    * 图片的宽高比，宽高比要小于2.25，大于1.3，不填该参数默认1.3
    */
-  private Float card_image_aspect_ratio;
+  private Float cardImageAspectRatio;
   /**
    * 关键数据样式
    * 关键数据样式的数据内容，建议不超过14个字
    */
-  private String emphasis_content_title;
+  private String emphasisContentTitle;
   /**
    * 关键数据样式的数据描述内容，建议不超过22个字
    */
-  private String emphasis_content_desc;
+  private String emphasisContentDesc;
 
   /**
    * 二级普通文本，建议不超过160个字
    */
-  private String sub_title_text;
+  private String subTitleText;
 
   /**
    * 卡片二级垂直内容，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过4
    */
-  private List<VerticalContent> vertical_contents;
+  private List<VerticalContent> verticalContents;
 
   /**
    * 二级标题+文本列表，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过6
    */
-  private List<HorizontalContent> horizontal_contents;
+  private List<HorizontalContent> horizontalContents;
 
   /**
    * 跳转指引样式的列表，该字段可为空数组，但有数据的话需确认对应字段是否必填，列表长度不超过3
@@ -88,26 +103,26 @@ public class TemplateCardBuilder  extends BaseBuilder<TemplateCardBuilder>{
    * 整体卡片的点击跳转事件，text_notice必填本字段
    * 跳转事件类型，1 代表跳转url，2 代表打开小程序。text_notice卡片模版中该字段取值范围为[1,2]
    */
-  private Integer  card_action_type;
+  private Integer cardActionType;
   /**
    * 跳转事件的url，card_action.type是1时必填
    */
-  private String card_action_url;
+  private String cardActionUrl;
 
   /**
    * 跳转事件的小程序的appid，必须是与当前应用关联的小程序，card_action.type是2时必填
    */
-  private String card_action_appid;
+  private String cardActionAppid;
 
   /**
    * 跳转事件的小程序的pagepath，card_action.type是2时选填
    */
-  private String card_action_pagepath;
+  private String cardActionPagepath;
 
   /**
    * 任务id，同一个应用任务id不能重复，只能由数字、字母和“_-@”组成，最长128字节
    */
-  private String task_id;
+  private String taskId;
 
   /**
    * 按钮交互型卡片需指定。
@@ -119,12 +134,12 @@ public class TemplateCardBuilder  extends BaseBuilder<TemplateCardBuilder>{
    * 投票选择型卡片需要指定
    * 选择题key值，用户提交选项后，会产生回调事件，回调事件会带上该key值表示该题，最长支持1024字节
    */
-  private String checkbox_question_key;
+  private String checkboxQuestionKey;
 
   /**
    * 选择题模式，单选：0，多选：1，不填默认0
    */
-  private Integer checkbox_mode;
+  private Integer checkboxMode;
 
   /**
    * 选项list，选项个数不超过 20 个，最少1个
@@ -135,134 +150,346 @@ public class TemplateCardBuilder  extends BaseBuilder<TemplateCardBuilder>{
    * 提交按钮样式
    * 按钮文案，建议不超过10个字，不填默认为提交
    */
-  private String submit_button_text;
+  private String submitButtonText;
   /**
    * 提交按钮的key，会产生回调事件将本参数作为EventKey返回，最长支持1024字节
    */
-  private String submit_button_key;
+  private String submitButtonKey;
 
   /**
    * 下拉式的选择器列表，multiple_interaction类型的卡片该字段不可为空，一个消息最多支持 3 个选择器
    */
   private List<MultipleSelect> selects;
 
+  /**
+   * 引用文献样式
+   */
+  private QuoteArea quoteArea;
 
+
+  /**
+   * Instantiates a new Template card builder.
+   */
   public TemplateCardBuilder() {
     this.msgType = WxConsts.KefuMsgType.TEMPLATE_CARD;
   }
 
-  public TemplateCardBuilder card_type(String card_type) {
-    this.card_type = card_type;
+  /**
+   * Card type template card builder.
+   *
+   * @param cardType the card type
+   * @return the template card builder
+   */
+  public TemplateCardBuilder cardType(String cardType) {
+    this.cardType = cardType;
     return this;
   }
 
-  public TemplateCardBuilder source_icon_url(String source_icon_url) {
-    this.source_icon_url = source_icon_url;
+  /**
+   * Card image url template card builder.
+   *
+   * @param cardImageUrl the card image url
+   * @return the template card builder
+   */
+  public TemplateCardBuilder cardImageUrl(String cardImageUrl) {
+    this.cardImageUrl = cardImageUrl;
     return this;
   }
 
-  public TemplateCardBuilder source_desc(String source_desc) {
-    this.source_desc = source_desc;
+  /**
+   * Card image aspect ratio template card builder.
+   *
+   * @param cardImageAspectRatio the card image aspect ratio
+   * @return the template card builder
+   */
+  public TemplateCardBuilder cardImageAspectRatio(Float cardImageAspectRatio) {
+    this.cardImageAspectRatio = cardImageAspectRatio;
     return this;
   }
 
-  public TemplateCardBuilder main_title_title(String main_title_title) {
-    this.main_title_title = main_title_title;
+  /**
+   * Action menu desc template card builder.
+   *
+   * @param actionMenuDesc the action menu desc
+   * @return the template card builder
+   */
+  public TemplateCardBuilder actionMenuDesc(String actionMenuDesc) {
+    this.actionMenuDesc = actionMenuDesc;
     return this;
   }
 
-  public TemplateCardBuilder main_title_desc(String mainTitleDesc) {
-    this.main_title_desc = mainTitleDesc;
+  /**
+   * Action menu action list template card builder.
+   *
+   * @param actionMenuItemList the action menu item list
+   * @return the template card builder
+   */
+  public TemplateCardBuilder actionMenuActionList(List<ActionMenuItem> actionMenuItemList) {
+    this.actionMenuActionList = actionMenuItemList;
     return this;
   }
 
-  public TemplateCardBuilder emphasis_content_title(String emphasis_content_title) {
-    this.emphasis_content_title = emphasis_content_title;
+  /**
+   * Source icon url template card builder.
+   *
+   * @param sourceIconUrl the source icon url
+   * @return the template card builder
+   */
+  public TemplateCardBuilder sourceIconUrl(String sourceIconUrl) {
+    this.sourceIconUrl = sourceIconUrl;
     return this;
   }
 
-  public TemplateCardBuilder emphasis_content_desc(String emphasis_content_desc) {
-    this.emphasis_content_desc = emphasis_content_desc;
+  /**
+   * Source desc template card builder.
+   *
+   * @param sourceDesc the source desc
+   * @return the template card builder
+   */
+  public TemplateCardBuilder sourceDesc(String sourceDesc) {
+    this.sourceDesc = sourceDesc;
     return this;
   }
 
-  public TemplateCardBuilder sub_title_text(String sub_title_text) {
-    this.sub_title_text = sub_title_text;
+  /**
+   * Source desc color template card builder.
+   *
+   * @param sourceDescColor the source desc color
+   * @return the template card builder
+   */
+  public TemplateCardBuilder sourceDescColor(Integer sourceDescColor) {
+    this.sourceDescColor = sourceDescColor;
     return this;
   }
 
-  public TemplateCardBuilder  vertical_contents(List<VerticalContent> vertical_contents) {
-    this.vertical_contents = vertical_contents;
+  /**
+   * Main title title template card builder.
+   *
+   * @param mainTitleTitle the main title title
+   * @return the template card builder
+   */
+  public TemplateCardBuilder mainTitleTitle(String mainTitleTitle) {
+    this.mainTitleTitle = mainTitleTitle;
     return this;
   }
 
-  public TemplateCardBuilder horizontal_contents(List<HorizontalContent> horizontal_contents) {
-    this.horizontal_contents = horizontal_contents;
+  /**
+   * Main title desc template card builder.
+   *
+   * @param mainTitleDesc the main title desc
+   * @return the template card builder
+   */
+  public TemplateCardBuilder mainTitleDesc(String mainTitleDesc) {
+    this.mainTitleDesc = mainTitleDesc;
     return this;
   }
 
+  /**
+   * Emphasis content title template card builder.
+   *
+   * @param emphasisContentTitle the emphasis content title
+   * @return the template card builder
+   */
+  public TemplateCardBuilder emphasisContentTitle(String emphasisContentTitle) {
+    this.emphasisContentTitle = emphasisContentTitle;
+    return this;
+  }
+
+  /**
+   * Emphasis content desc template card builder.
+   *
+   * @param emphasisContentDesc the emphasis content desc
+   * @return the template card builder
+   */
+  public TemplateCardBuilder emphasisContentDesc(String emphasisContentDesc) {
+    this.emphasisContentDesc = emphasisContentDesc;
+    return this;
+  }
+
+  /**
+   * Sub title text template card builder.
+   *
+   * @param subTitleText the sub title text
+   * @return the template card builder
+   */
+  public TemplateCardBuilder subTitleText(String subTitleText) {
+    this.subTitleText = subTitleText;
+    return this;
+  }
+
+  /**
+   * Vertical contents template card builder.
+   *
+   * @param verticalContents the vertical contents
+   * @return the template card builder
+   */
+  public TemplateCardBuilder verticalContents(List<VerticalContent> verticalContents) {
+    this.verticalContents = verticalContents;
+    return this;
+  }
+
+  /**
+   * Horizontal contents template card builder.
+   *
+   * @param horizontalContents the horizontal contents
+   * @return the template card builder
+   */
+  public TemplateCardBuilder horizontalContents(List<HorizontalContent> horizontalContents) {
+    this.horizontalContents = horizontalContents;
+    return this;
+  }
+
+  /**
+   * Jumps template card builder.
+   *
+   * @param jumps the jumps
+   * @return the template card builder
+   */
   public TemplateCardBuilder jumps(List<TemplateCardJump> jumps) {
     this.jumps = jumps;
     return this;
   }
 
-  public TemplateCardBuilder card_action_type(Integer card_action_type) {
-    this.card_action_type = card_action_type;
+  /**
+   * Card action type template card builder.
+   *
+   * @param cardActionType the card action type
+   * @return the template card builder
+   */
+  public TemplateCardBuilder cardActionType(Integer cardActionType) {
+    this.cardActionType = cardActionType;
     return this;
   }
 
-  public TemplateCardBuilder card_action_url(String card_action_url) {
-    this.card_action_url = card_action_url;
+  /**
+   * Card action url template card builder.
+   *
+   * @param cardActionUrl the card action url
+   * @return the template card builder
+   */
+  public TemplateCardBuilder cardActionUrl(String cardActionUrl) {
+    this.cardActionUrl = cardActionUrl;
     return this;
   }
 
-  public TemplateCardBuilder card_action_appid(String card_action_appid) {
-    this.card_action_appid = card_action_appid;
+  /**
+   * Card action appid template card builder.
+   *
+   * @param cardActionAppid the card action appid
+   * @return the template card builder
+   */
+  public TemplateCardBuilder cardActionAppid(String cardActionAppid) {
+    this.cardActionAppid = cardActionAppid;
     return this;
   }
 
-  public TemplateCardBuilder card_action_pagepath(String card_action_pagepath) {
-    this.card_action_pagepath = card_action_pagepath;
+  /**
+   * Card action pagepath template card builder.
+   *
+   * @param cardActionPagepath the card action pagepath
+   * @return the template card builder
+   */
+  public TemplateCardBuilder cardActionPagepath(String cardActionPagepath) {
+    this.cardActionPagepath = cardActionPagepath;
     return this;
   }
 
-  public TemplateCardBuilder task_id(String taskId) {
-    this.task_id = taskId;
+  /**
+   * Task id template card builder.
+   *
+   * @param taskId the task id
+   * @return the template card builder
+   */
+  public TemplateCardBuilder taskId(String taskId) {
+    this.taskId = taskId;
     return this;
   }
 
+  /**
+   * Buttons template card builder.
+   *
+   * @param buttons the buttons
+   * @return the template card builder
+   */
   public TemplateCardBuilder buttons(List<TemplateCardButton> buttons) {
     this.buttons = buttons;
     return this;
   }
 
-  public TemplateCardBuilder checkbox_question_key(String checkbox_question_key) {
-    this.checkbox_question_key = checkbox_question_key;
+  /**
+   * Checkbox question key template card builder.
+   *
+   * @param checkboxQuestionKey the checkbox question key
+   * @return the template card builder
+   */
+  public TemplateCardBuilder checkboxQuestionKey(String checkboxQuestionKey) {
+    this.checkboxQuestionKey = checkboxQuestionKey;
     return this;
   }
 
-  public TemplateCardBuilder checkbox_mode(Integer checkbox_mode) {
-    this.checkbox_mode = checkbox_mode;
+  /**
+   * Checkbox mode template card builder.
+   *
+   * @param checkboxMode the checkbox mode
+   * @return the template card builder
+   */
+  public TemplateCardBuilder checkboxMode(Integer checkboxMode) {
+    this.checkboxMode = checkboxMode;
     return this;
   }
 
+  /**
+   * Options template card builder.
+   *
+   * @param options the options
+   * @return the template card builder
+   */
   public TemplateCardBuilder options(List<CheckboxOption> options) {
     this.options = options;
     return this;
   }
 
-  public TemplateCardBuilder submit_button_text(String submit_button_text) {
-    this.submit_button_text = submit_button_text;
+  /**
+   * Submit button text template card builder.
+   *
+   * @param submitButtonText the submit button text
+   * @return the template card builder
+   */
+  public TemplateCardBuilder submitButtonText(String submitButtonText) {
+    this.submitButtonText = submitButtonText;
     return this;
   }
 
-  public TemplateCardBuilder submit_button_key(String submit_button_key) {
-    this.submit_button_key = submit_button_key;
+  /**
+   * Submit button key template card builder.
+   *
+   * @param submitButtonKey the submit button key
+   * @return the template card builder
+   */
+  public TemplateCardBuilder submitButtonKey(String submitButtonKey) {
+    this.submitButtonKey = submitButtonKey;
     return this;
   }
 
+  /**
+   * Selects template card builder.
+   *
+   * @param selects the selects
+   * @return the template card builder
+   */
   public TemplateCardBuilder selects(List<MultipleSelect> selects) {
     this.selects = selects;
+    return this;
+  }
+
+  /**
+   * Quote area template card builder.
+   *
+   * @param quoteArea the quote area
+   * @return the template card builder
+   */
+  public TemplateCardBuilder quoteArea(QuoteArea quoteArea) {
+    this.quoteArea = quoteArea;
     return this;
   }
 
@@ -270,31 +497,35 @@ public class TemplateCardBuilder  extends BaseBuilder<TemplateCardBuilder>{
   public WxCpMessage build() {
     WxCpMessage m = super.build();
     m.setSafe(null);
-    m.setCard_type(this.card_type);
-    m.setSource_icon_url(this.source_icon_url);
-    m.setSource_desc(this.source_desc);
-    m.setMain_title_title(this.main_title_title);
-    m.setMain_title_desc(this.main_title_desc);
-    m.setCard_image_url(this.card_image_url);
-    m.setCard_image_aspect_ratio(this.card_image_aspect_ratio);
-    m.setEmphasis_content_title(this.emphasis_content_title);
-    m.setEmphasis_content_desc(this.emphasis_content_desc);
-    m.setSub_title_text(this.sub_title_text);
-    m.setVertical_contents(this.vertical_contents);
-    m.setHorizontal_contents(this.horizontal_contents);
+    m.setCardType(this.cardType);
+    m.setSourceIconUrl(this.sourceIconUrl);
+    m.setSourceDesc(this.sourceDesc);
+    m.setSourceDescColor(this.sourceDescColor);
+    m.setActionMenuDesc(this.actionMenuDesc);
+    m.setActionMenuActionList(this.actionMenuActionList);
+    m.setMainTitleTitle(this.mainTitleTitle);
+    m.setMainTitleDesc(this.mainTitleDesc);
+    m.setCardImageUrl(this.cardImageUrl);
+    m.setCardImageAspectRatio(this.cardImageAspectRatio);
+    m.setEmphasisContentTitle(this.emphasisContentTitle);
+    m.setEmphasisContentDesc(this.emphasisContentDesc);
+    m.setSubTitleText(this.subTitleText);
+    m.setVerticalContents(this.verticalContents);
+    m.setHorizontalContents(this.horizontalContents);
     m.setJumps(this.jumps);
-    m.setCard_action_type(this.card_action_type);
-    m.setCard_action_appid(this.card_action_appid);
-    m.setCard_action_pagepath(this.card_action_pagepath);
-    m.setCard_action_url(this.card_action_url);
-    m.setTaskId(this.task_id);
+    m.setCardActionType(this.cardActionType);
+    m.setCardActionAppid(this.cardActionAppid);
+    m.setCardActionPagepath(this.cardActionPagepath);
+    m.setCardActionUrl(this.cardActionUrl);
+    m.setTaskId(this.taskId);
     m.setButtons(this.buttons);
-    m.setCheckbox_mode(this.checkbox_mode);
-    m.setCheckbox_question_key(this.checkbox_question_key);
+    m.setCheckboxMode(this.checkboxMode);
+    m.setCheckboxQuestionKey(this.checkboxQuestionKey);
     m.setOptions(this.options);
-    m.setSubmit_button_text(this.submit_button_text);
-    m.setSubmit_button_key(this.submit_button_key);
+    m.setSubmitButtonText(this.submitButtonText);
+    m.setSubmitButtonKey(this.submitButtonKey);
     m.setSelects(this.selects);
+    m.setQuoteArea(this.quoteArea);
     return m;
   }
 }

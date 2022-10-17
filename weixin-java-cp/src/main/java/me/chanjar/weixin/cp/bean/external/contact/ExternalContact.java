@@ -9,8 +9,7 @@ import java.util.List;
 /**
  * 外部联系人.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-11-04
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-11-04
  */
 @Getter
 @Setter
@@ -25,6 +24,9 @@ public class ExternalContact implements Serializable {
 
   @SerializedName("name")
   private String name;
+
+  @SerializedName("nickname")
+  private String nickname;
 
   @SerializedName("avatar")
   private String avatar;
@@ -47,6 +49,9 @@ public class ExternalContact implements Serializable {
   @SerializedName("external_profile")
   private ExternalProfile externalProfile;
 
+  /**
+   * The type External profile.
+   */
   @Data
   public static class ExternalProfile implements Serializable {
     private static final long serialVersionUID = -2899906589789022765L;
@@ -61,6 +66,9 @@ public class ExternalContact implements Serializable {
     private List<ExternalAttribute> externalAttrs;
   }
 
+  /**
+   * The type Wechat channel.
+   */
   @Data
   @Builder
   @NoArgsConstructor
@@ -75,6 +83,9 @@ public class ExternalContact implements Serializable {
 
   }
 
+  /**
+   * The type External attribute.
+   */
   @Data
   @Builder
   @NoArgsConstructor
@@ -93,6 +104,9 @@ public class ExternalContact implements Serializable {
     @SerializedName("miniprogram")
     private MiniProgram miniProgram;
 
+    /**
+     * The type Text.
+     */
     @Data
     public static class Text implements Serializable {
       private static final long serialVersionUID = -8161579335600269094L;
@@ -100,6 +114,9 @@ public class ExternalContact implements Serializable {
       private String value;
     }
 
+    /**
+     * The type Web.
+     */
     @Data
     public static class Web implements Serializable {
       private static final long serialVersionUID = 3664557135411521862L;
@@ -108,6 +125,9 @@ public class ExternalContact implements Serializable {
       private String url;
     }
 
+    /**
+     * The type Mini program.
+     */
     @Data
     public static class MiniProgram implements Serializable {
       private static final long serialVersionUID = -5329210594501835796L;

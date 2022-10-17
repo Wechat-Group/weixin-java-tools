@@ -11,7 +11,7 @@ import java.util.Objects;
 
 /**
  * @author chenliang
- * @date 2021-08-02 5:23 下午
+ * created on  2021-08-02 5:23 下午
  * <pre>
  *   微信签约状态查询入参
  * </pre>

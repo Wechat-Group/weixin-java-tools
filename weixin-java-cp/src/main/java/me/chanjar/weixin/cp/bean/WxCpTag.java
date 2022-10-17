@@ -1,14 +1,15 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
+
 /**
  * Created by Daniel Qian.
+ *
  * @author Daniel Qian
  */
 @Data
@@ -22,10 +23,21 @@ public class WxCpTag implements Serializable {
   private String name;
 
 
+  /**
+   * From json wx cp tag.
+   *
+   * @param json the json
+   * @return the wx cp tag
+   */
   public static WxCpTag fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpTag.class);
   }
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }

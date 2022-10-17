@@ -9,8 +9,7 @@ import java.util.List;
 /**
  * 企业微信打卡规则.
  *
- * @author Element
- * @date 2019-04-06 13:22
+ * @author Element  created on  2019-04-06 13:22
  */
 @Data
 public class WxCpCheckinOption implements Serializable {
@@ -21,6 +20,9 @@ public class WxCpCheckinOption implements Serializable {
 
   private Group group;
 
+  /**
+   * The type Checkin date.
+   */
   @Data
   public static class CheckinDate implements Serializable {
     private static final long serialVersionUID = -5601722383347110974L;
@@ -40,6 +42,9 @@ public class WxCpCheckinOption implements Serializable {
     private Long limitAheadTime;
   }
 
+  /**
+   * The type Checkin time.
+   */
   @Data
   public static class CheckinTime implements Serializable {
     private static final long serialVersionUID = -8579954143265336276L;
@@ -57,6 +62,9 @@ public class WxCpCheckinOption implements Serializable {
     private Long remindOffWorkSec;
   }
 
+  /**
+   * The type Group.
+   */
   @Data
   public static class Group implements Serializable {
 
@@ -103,6 +111,9 @@ public class WxCpCheckinOption implements Serializable {
 
   }
 
+  /**
+   * The type Wifi mac info.
+   */
   @Data
   public static class WifiMacInfo implements Serializable {
     private static final long serialVersionUID = -4657809185716627368L;
@@ -114,6 +125,9 @@ public class WxCpCheckinOption implements Serializable {
     private String mac;
   }
 
+  /**
+   * The type Loc info.
+   */
   @Data
   public static class LocInfo implements Serializable {
     private static final long serialVersionUID = -618965280668099608L;
@@ -130,6 +144,9 @@ public class WxCpCheckinOption implements Serializable {
     private Long distance;
   }
 
+  /**
+   * The type Spe day.
+   */
   @Data
   public static class SpeDay implements Serializable {
     private static final long serialVersionUID = -3538818921359212748L;

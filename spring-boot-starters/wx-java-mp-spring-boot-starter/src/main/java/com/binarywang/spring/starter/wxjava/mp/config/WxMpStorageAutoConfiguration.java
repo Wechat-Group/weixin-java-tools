@@ -30,7 +30,7 @@ import java.util.Set;
 /**
  * 微信公众号存储策略自动配置.
  *
- * @author someone
+ * @author Luo
  */
 @Slf4j
 @Configuration
@@ -39,12 +39,6 @@ public class WxMpStorageAutoConfiguration {
   private final ApplicationContext applicationContext;
 
   private final WxMpProperties wxMpProperties;
-
-  @Value("${wx.mp.config-storage.redis.host:")
-  private String redisHost;
-
-  @Value("${wx.mp.configStorage.redis.host:")
-  private String redisHost2;
 
   @Bean
   @ConditionalOnMissingBean(WxMpConfigStorage.class)
@@ -81,14 +75,15 @@ public class WxMpStorageAutoConfiguration {
 
   private WxMpConfigStorage jedisConfigStorage() {
     JedisPoolAbstract jedisPool;
-    if (StringUtils.isNotEmpty(redisHost) || StringUtils.isNotEmpty(redisHost2)) {
+    if (wxMpProperties.getConfigStorage() != null && wxMpProperties.getConfigStorage().getRedis() != null
+      && StringUtils.isNotEmpty(wxMpProperties.getConfigStorage().getRedis().getHost())) {
       jedisPool = getJedisPool();
     } else {
       jedisPool = applicationContext.getBean(JedisPool.class);
     }
     WxRedisOps redisOps = new JedisWxRedisOps(jedisPool);
     WxMpRedisConfigImpl wxMpRedisConfig = new WxMpRedisConfigImpl(redisOps,
-        wxMpProperties.getConfigStorage().getKeyPrefix());
+      wxMpProperties.getConfigStorage().getKeyPrefix());
     setWxMpInfo(wxMpRedisConfig);
     return wxMpRedisConfig;
   }
@@ -114,7 +109,7 @@ public class WxMpStorageAutoConfiguration {
 
     WxRedisOps redisOps = new RedisTemplateWxRedisOps(redisTemplate);
     WxMpRedisConfigImpl wxMpRedisConfig = new WxMpRedisConfigImpl(redisOps,
-        wxMpProperties.getConfigStorage().getKeyPrefix());
+      wxMpProperties.getConfigStorage().getKeyPrefix());
 
     setWxMpInfo(wxMpRedisConfig);
     return wxMpRedisConfig;
@@ -160,6 +155,6 @@ public class WxMpStorageAutoConfiguration {
     }
 
     return new JedisPool(config, redis.getHost(), redis.getPort(), redis.getTimeout(), redis.getPassword(),
-        redis.getDatabase());
+      redis.getDatabase());
   }
 }

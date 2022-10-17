@@ -15,7 +15,7 @@ import me.chanjar.weixin.mp.enums.WxMpApiUrl;
  * 发布能力-service实现类.
  *
  * @author dragon
- * @date 2021-10-23
+ * created on  2021-10-23
  */
 @AllArgsConstructor
 public class WxMpFreePublishServiceImpl implements WxMpFreePublishService {

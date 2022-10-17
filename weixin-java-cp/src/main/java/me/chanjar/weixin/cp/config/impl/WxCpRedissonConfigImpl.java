@@ -13,8 +13,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * 基于Redisson的实现
  *
- * @author yuanqixun
- * @date 2020 /5/13
+ * @author yuanqixun  created on  2020 /5/13
  */
 public class WxCpRedissonConfigImpl extends WxCpDefaultConfigImpl {
   /**

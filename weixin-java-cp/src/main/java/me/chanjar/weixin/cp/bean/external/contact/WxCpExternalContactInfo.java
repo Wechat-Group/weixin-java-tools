@@ -29,6 +29,12 @@ public class WxCpExternalContactInfo implements Serializable {
   @SerializedName("next_cursor")
   private String nextCursor;
 
+  /**
+   * From json wx cp external contact info.
+   *
+   * @param json the json
+   * @return the wx cp external contact info
+   */
   public static WxCpExternalContactInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpExternalContactInfo.class);
   }

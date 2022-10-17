@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
  * .
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-08-18
+ * created on  2019-08-18
  */
 public class EntPayRequestTest {
 

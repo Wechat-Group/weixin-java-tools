@@ -18,7 +18,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Ocr.*;
  * ocr 接口实现.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-06-22
+ * created on  2019-06-22
  */
 @RequiredArgsConstructor
 public class WxMaOcrServiceImpl implements WxOcrService {

@@ -1,7 +1,7 @@
 package me.chanjar.weixin.cp.bean;
 
-import org.testng.*;
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 /**
  * Created by huansinho on 2018/4/13.
@@ -9,6 +9,9 @@ import org.testng.annotations.*;
 @Test
 public class WxCpAgentTest {
 
+  /**
+   * Test deserialize.
+   */
   public void testDeserialize() {
     String json = "{\"errcode\": 0,\"errmsg\": \"ok\",\"agentid\": 9,\"name\": \"测试应用\"," +
       "\"square_logo_url\": \"http://wx.qlogo.cn/mmhead/alksjf;lasdjf;lasjfuodiuj3rj2o34j/0\"," +

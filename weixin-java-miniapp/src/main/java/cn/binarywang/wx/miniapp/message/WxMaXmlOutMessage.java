@@ -18,7 +18,7 @@ import java.io.Serializable;
  * 微信小程序输出给微信服务器的消息.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-06-22
+ * created on  2019-06-22
  */
 @Data
 @XStreamAlias("xml")

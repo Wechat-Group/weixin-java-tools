@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * @author chenliang
- * @date 2021-08-02 5:37 下午
+ * created on  2021-08-02 5:37 下午
  *
  * <pre>
  *   h5纯签约后结果
@@ -19,6 +19,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@XStreamAlias("xml")
 public class WxH5EntrustResult extends BaseWxPayResult implements Serializable {
 
   private static final long serialVersionUID = 1L;

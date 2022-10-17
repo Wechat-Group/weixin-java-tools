@@ -15,7 +15,7 @@ import java.io.Serializable;
  * 分组顾问信息.
  *
  * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a>
- * @date 2021/5/8/008
+ * created on  2021/5/8/008
  */
 @Data
 @Builder

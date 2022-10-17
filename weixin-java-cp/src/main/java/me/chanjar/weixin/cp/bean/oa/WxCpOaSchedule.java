@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * 日程信息bean.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-12-25
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-12-25
  */
 @Data
 @Accessors(chain = true)
@@ -90,6 +89,9 @@ public class WxCpOaSchedule implements Serializable, ToJson {
     return WxCpGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * The type Attendee.
+   */
   @Data
   @Accessors(chain = true)
   public static class Attendee implements Serializable {
@@ -112,6 +114,9 @@ public class WxCpOaSchedule implements Serializable, ToJson {
     private Integer responseStatus;
   }
 
+  /**
+   * The type Reminder.
+   */
   @Data
   @Accessors(chain = true)
   public static class Reminder implements Serializable {

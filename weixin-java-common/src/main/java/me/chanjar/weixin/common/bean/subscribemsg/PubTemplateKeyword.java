@@ -8,7 +8,7 @@ import java.io.Serializable;
  * .
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2021-01-27
+ * created on  2021-01-27
  */
 @Data
 public class PubTemplateKeyword implements Serializable {

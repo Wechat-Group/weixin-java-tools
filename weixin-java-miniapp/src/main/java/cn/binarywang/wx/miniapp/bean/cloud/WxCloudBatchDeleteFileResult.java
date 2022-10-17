@@ -10,7 +10,7 @@ import java.util.List;
  * 文件删除结果.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-01-27
+ * created on  2020-01-27
  */
 @Data
 public class WxCloudBatchDeleteFileResult implements Serializable {

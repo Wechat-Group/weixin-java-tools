@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * GsonHelper 的单元测试.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-09-04
+ * created on  2020-09-04
  */
 public class GsonHelperTest {
 

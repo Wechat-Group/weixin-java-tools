@@ -6,8 +6,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2021-08-23
+ * The type File.
+ *
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2021-08-23
  */
 @Data
 public class File implements Serializable {

@@ -8,8 +8,7 @@ import java.util.List;
 /**
  * 企业微信日历接口.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-09-20
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-09-20
  */
 public interface WxCpOaCalendarService {
   /**
@@ -24,7 +23,7 @@ public interface WxCpOaCalendarService {
    * </pre>
    *
    * @param calendar 日历对象
-   * @return 日历ID
+   * @return 日历ID string
    * @throws WxErrorException .
    */
   String add(WxCpOaCalendar calendar) throws WxErrorException;
@@ -60,7 +59,7 @@ public interface WxCpOaCalendarService {
    * </pre>
    *
    * @param calIds 日历id列表
-   * @return 日历对象列表
+   * @return 日历对象列表 list
    * @throws WxErrorException .
    */
   List<WxCpOaCalendar> get(List<String> calIds) throws WxErrorException;

@@ -12,7 +12,7 @@ import static com.binarywang.spring.starter.wxjava.miniapp.properties.WxMaProper
  * 属性配置类.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-08-10
+ * created on  2019-08-10
  */
 @Data
 @ConfigurationProperties(prefix = PREFIX)

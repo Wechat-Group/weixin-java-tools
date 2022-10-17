@@ -10,7 +10,7 @@ import me.chanjar.weixin.mp.bean.draft.WxMpUpdateDraft;
  * 微信 草稿箱 接口.
  *
  * @author dragon
- * @date 2021-10-22
+ * created on  2021-10-22
  */
 public interface WxMpDraftService {
 

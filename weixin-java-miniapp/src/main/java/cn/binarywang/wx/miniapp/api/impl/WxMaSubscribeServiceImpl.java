@@ -27,7 +27,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Subscribe.*;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-12-15
+ * created on  2019-12-15
  */
 @RequiredArgsConstructor
 public class WxMaSubscribeServiceImpl implements WxMaSubscribeService {

@@ -1,23 +1,22 @@
 package com.github.binarywang.wxpay.bean.payscore;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author doger.wang
- * @date 2020/5/12 16:36
+ * created on  2020/5/12 16:36
  */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
@@ -28,7 +27,7 @@ public class WxPayScoreRequest implements Serializable {
     return WxGsonBuilder.create().toJson(this);
   }
 
-  /**
+  /**`
    * out_order_no : 1234323JKHDFE1243252
    * appid : wxd678efh567hg6787
    * service_id : 500001
@@ -42,6 +41,7 @@ public class WxPayScoreRequest implements Serializable {
    * notify_url : https://api.test.com
    * openid : oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
    * need_user_confirm : true
+   * profitSharing : false：不分账，默认：false,true：分账
    */
   @SerializedName("out_order_no")
   private String outOrderNo;
@@ -82,6 +82,6 @@ public class WxPayScoreRequest implements Serializable {
   @SerializedName("detail")
   private Detail detail;
   @SerializedName("authorization_code")
-  private  String authorizationCode;
+  private String authorizationCode;
 
 }

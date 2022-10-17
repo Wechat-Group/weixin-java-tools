@@ -1,5 +1,6 @@
 package me.chanjar.weixin.open.executor;
 
+import com.google.common.io.Files;
 import jodd.http.HttpConnectionProvider;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
@@ -125,7 +126,8 @@ public class GenericUploadRequestExecutor implements RequestExecutor<String, Inp
 
       HttpEntity entity = MultipartEntityBuilder
         .create()
-        .addBinaryBody(getParamName(), data, ContentType.create("multipart/form-data", StandardCharsets.UTF_8), getFileName())
+        .addBinaryBody(getParamName(), data, ContentType.create("multipart/form-data", StandardCharsets.UTF_8),
+          getFileName())
         .setMode(HttpMultipartMode.RFC6532)
         .build();
       bodyRequest.setEntity(entity);
@@ -147,8 +149,7 @@ public class GenericUploadRequestExecutor implements RequestExecutor<String, Inp
     @Override
     public String execute(String uri, InputStream data, WxType wxType) throws WxErrorException, IOException {
       OkHttpClient client = getRequestHttp().getRequestHttpClient();
-
-      byte[] bytes = data instanceof ByteArrayInputStream ? ((ByteArrayInputStream) data).readAllBytes() : IOUtils.toByteArray(data);
+      byte[] bytes = IOUtils.toByteArray(data);
       RequestBody body = new MultipartBody.Builder()
         .setType(Objects.requireNonNull(MediaType.parse("multipart/form-data")))
         .addFormDataPart("media", getFileName(), RequestBody.create(bytes, MediaType.parse("application/octet-stream")))
@@ -173,7 +174,6 @@ public class GenericUploadRequestExecutor implements RequestExecutor<String, Inp
       }
       request.withConnectionProvider(getRequestHttp().getRequestHttpClient());
 
-      byte[] bytes = data instanceof ByteArrayInputStream ? ((ByteArrayInputStream) data).readAllBytes() : IOUtils.toByteArray(data);
       request.form(getParamName(), data);
 
       HttpResponse response = request.send();

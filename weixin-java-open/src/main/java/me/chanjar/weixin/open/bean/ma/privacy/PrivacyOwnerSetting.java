@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * 小程序用户隐私保护指引 收集方（开发者）信息配置
@@ -51,7 +50,6 @@ public class PrivacyOwnerSetting {
   /**
    * 通知方式，指的是当开发者收集信息有变动时，通过该方式通知用户。这里服务商需要按照实际情况填写，例如通过弹窗或者公告或者其他方式。
    */
-  @NotNull
   @SerializedName("notice_method")
   private String noticeMethod;
 

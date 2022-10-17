@@ -10,8 +10,6 @@ import lombok.NonNull;
 import me.chanjar.weixin.common.redis.JedisWxRedisOps;
 import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
 import me.chanjar.weixin.common.redis.WxRedisOps;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.util.Pool;
 
 /**
  * <pre>
@@ -19,7 +17,7 @@ import redis.clients.jedis.util.Pool;
  * </pre>
  *
  * @author taneg
- * @date 2021/05/13 11:12:35
+ * created on  2021/05/13 11:12:35
  */
 public class WxOpenInRedisTemplateConfigStorage extends AbstractWxOpenInRedisConfigStorage {
 

@@ -16,8 +16,7 @@ import java.util.List;
  *  Created by Jeff on 2019-05-16.
  * </pre>
  *
- * @author <a href="https://github.com/domainname">Jeff</a>
- * @date 2019-05-16
+ * @author <a href="https://github.com/domainname">Jeff</a> created on  2019-05-16
  */
 @Data
 @AllArgsConstructor
@@ -36,6 +35,12 @@ public class WxCpTaskCardUpdateResult implements Serializable {
   @SerializedName("invaliduser")
   private List<String> invalidUsers;
 
+  /**
+   * From json wx cp task card update result.
+   *
+   * @param json the json
+   * @return the wx cp task card update result
+   */
   public static WxCpTaskCardUpdateResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpTaskCardUpdateResult.class);
   }

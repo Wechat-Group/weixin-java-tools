@@ -165,7 +165,9 @@ public interface WxMpMaterialService {
    * @param news 上传的图文消息, 请看{@link WxMpMaterialNews}
    * @return the wx mp material upload result
    * @throws WxErrorException the wx error exception
+   * @deprecated 关于永久图文素材相关接口下线的公告: https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&announce_id=11644831863qFQSh&version=&token=2085564289&lang=zh_CN
    */
+  @Deprecated
   WxMpMaterialUploadResult materialNewsUpload(WxMpMaterialNews news) throws WxErrorException;
 
   /**
@@ -221,7 +223,9 @@ public interface WxMpMaterialService {
    * @param wxMpMaterialArticleUpdate 用来更新图文素材的bean, 请看{@link WxMpMaterialArticleUpdate}
    * @return the boolean
    * @throws WxErrorException the wx error exception
+   * @deprecated 关于永久图文素材相关接口下线的公告: https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&announce_id=11644831863qFQSh&version=&token=2085564289&lang=zh_CN
    */
+  @Deprecated
   boolean materialNewsUpdate(WxMpMaterialArticleUpdate wxMpMaterialArticleUpdate) throws WxErrorException;
 
   /**

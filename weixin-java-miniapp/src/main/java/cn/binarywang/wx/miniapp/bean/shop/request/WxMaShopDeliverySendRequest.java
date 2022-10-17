@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.bean.shop.request;
 
+import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopAfterSaleAddRequest.ProductInfosBean;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import java.util.List;
 
 /**
  * @author liming1019
- * @date 2021/8/12
+ * created on  2021/8/12
  */
 @Data
 @Builder
@@ -38,6 +39,8 @@ public class WxMaShopDeliverySendRequest implements Serializable {
   private Integer finishAllDelivery;
   @SerializedName("delivery_list")
   private List<DeliveryListBean> deliveryList;
+  @SerializedName("ship_done_time")
+  private String shipDoneTme;
 
   @Data
   @Builder
@@ -53,5 +56,7 @@ public class WxMaShopDeliverySendRequest implements Serializable {
     private String deliveryId;
     @SerializedName("waybill_id")
     private String waybillId;
+    @SerializedName("product_info_list")
+    private List<ProductInfosBean> productInfoList;
   }
 }

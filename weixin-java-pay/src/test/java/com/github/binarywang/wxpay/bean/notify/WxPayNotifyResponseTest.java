@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.bean.notify;
 
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -8,10 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
  * WxPayNotifyResponse 测试.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-06-30
+ * created on  2019-06-30
  */
+@Slf4j
 public class WxPayNotifyResponseTest {
 
+  /**
+   * V2版本
+   */
   @Test
   public void testSuccess() {
     final String result = WxPayNotifyResponse.success("OK");
@@ -38,4 +43,23 @@ public class WxPayNotifyResponseTest {
       "<return_msg><![CDATA[500]]></return_msg>" +
       "</xml>");
   }
+
+  /**
+   * V3版本
+   * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_5.shtml
+   */
+  @Test
+  public void testV3Fail() {
+    final String result = WxPayNotifyV3Response.fail("失败");
+    log.info(result);
+    assertThat(result).isNotEmpty();
+  }
+
+  @Test
+  public void testV3Success() {
+    final String result = WxPayNotifyV3Response.success("成功");
+    log.info(result);
+    assertThat(result).isNotEmpty();
+  }
+
 }

@@ -6,16 +6,19 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.SignUtils;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.Map;
 
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.User.GET_PHONE_NUMBER_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.User.SET_USER_STORAGE;
 
 /**
@@ -56,6 +59,20 @@ public class WxMaUserServiceImpl implements WxMaUserService {
   @Override
   public WxMaPhoneNumberInfo getPhoneNoInfo(String sessionKey, String encryptedData, String ivStr) {
     return WxMaPhoneNumberInfo.fromJson(WxMaCryptUtils.decrypt(sessionKey, encryptedData, ivStr));
+  }
+
+  @Override
+  public WxMaPhoneNumberInfo getNewPhoneNoInfo(String code) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("code", code);
+    String responseContent = this.service.post(GET_PHONE_NUMBER_URL, param.toString());
+    JsonObject response = GsonParser.parse(responseContent);
+    boolean hasPhoneInfo = response.has("phone_info");
+    if (hasPhoneInfo) {
+      return WxMaGsonBuilder.create().fromJson(response.getAsJsonObject("phone_info"), WxMaPhoneNumberInfo.class);
+    } else {
+      return null;
+    }
   }
 
   @Override

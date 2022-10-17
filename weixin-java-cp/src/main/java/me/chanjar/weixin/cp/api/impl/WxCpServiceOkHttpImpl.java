@@ -1,8 +1,8 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
@@ -15,6 +15,8 @@ import java.io.IOException;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.GET_TOKEN;
 
 /**
+ * The type Wx cp service ok http.
+ *
  * @author someone
  */
 @Slf4j
@@ -48,7 +50,8 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
       OkHttpClient client = getRequestHttpClient();
       //请求的request
       Request request = new Request.Builder()
-        .url(String.format(this.configStorage.getApiUrl(GET_TOKEN), this.configStorage.getCorpId(), this.configStorage.getCorpSecret()))
+        .url(String.format(this.configStorage.getApiUrl(GET_TOKEN), this.configStorage.getCorpId(),
+          this.configStorage.getCorpSecret()))
         .get()
         .build();
       String resultContent = null;

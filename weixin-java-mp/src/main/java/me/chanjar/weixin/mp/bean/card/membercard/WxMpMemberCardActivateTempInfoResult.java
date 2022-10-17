@@ -6,7 +6,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
  * @author thomas
- * @date 2019/4/26
+ * created on  2019/4/26
  */
 @Data
 public class WxMpMemberCardActivateTempInfoResult {

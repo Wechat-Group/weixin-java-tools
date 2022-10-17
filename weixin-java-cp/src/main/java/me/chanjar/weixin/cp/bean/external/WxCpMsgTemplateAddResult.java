@@ -28,10 +28,21 @@ public class WxCpMsgTemplateAddResult implements Serializable {
   @SerializedName("msgid")
   private String msgId;
 
+  /**
+   * From json wx cp msg template add result.
+   *
+   * @param json the json
+   * @return the wx cp msg template add result
+   */
   public static WxCpMsgTemplateAddResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpMsgTemplateAddResult.class);
   }
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }

@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author gyv12345@163.com
+ * The type Template property.
+ *
+ * @author gyv12345 @163.com
  */
 @Data
 public class TemplateProperty implements Serializable {

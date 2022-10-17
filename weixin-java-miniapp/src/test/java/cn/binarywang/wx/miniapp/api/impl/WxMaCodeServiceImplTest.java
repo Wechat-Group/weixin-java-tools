@@ -1,25 +1,21 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
+import cn.binarywang.wx.miniapp.api.WxMaCodeService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.code.*;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.test.ApiTestModule;
+import com.google.inject.Inject;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.annotations.*;
-
-import cn.binarywang.wx.miniapp.api.WxMaCodeService;
-import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCategory;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCodeAuditStatus;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCodeCommitRequest;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCodeExtConfig;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCodeSubmitAuditRequest;
-import cn.binarywang.wx.miniapp.bean.code.WxMaCodeVersionDistribution;
-import cn.binarywang.wx.miniapp.config.WxMaConfig;
-import cn.binarywang.wx.miniapp.test.ApiTestModule;
-import com.google.inject.Inject;
-
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author <a href="https://github.com/charmingoh">Charming</a>
@@ -141,6 +137,12 @@ public class WxMaCodeServiceImplTest {
   public void testGetSupportVersion() throws Exception {
     WxMaCodeVersionDistribution distribution = wxService.getCodeService().getSupportVersion();
     System.out.println(distribution);
+  }
+
+  @Test
+  public void testGetVersionInfo() throws Exception {
+    WxMaCodeVersionInfo versionInfo = wxService.getCodeService().getVersionInfo();
+    System.out.println(versionInfo);
   }
 
   @Test

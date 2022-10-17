@@ -106,6 +106,14 @@ public interface WxMaCodeService {
   WxMaCodeVersionDistribution getSupportVersion() throws WxErrorException;
 
   /**
+   * 查询小程序版本信息
+   *
+   * @return 小程序的体验版和线上版本信息
+   * @throws WxErrorException 失败时抛出，具体错误码请看此接口的注释文档
+   */
+  WxMaCodeVersionInfo getVersionInfo() throws WxErrorException;
+
+  /**
    * 设置最低基础库版本（仅供第三方代小程序调用）.
    *
    * @param version 版本

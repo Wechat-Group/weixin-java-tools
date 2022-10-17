@@ -5,7 +5,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author gyv12345@163.com
+ * The type Template contact.
+ *
+ * @author gyv12345 @163.com
  */
 @Data
 public class TemplateContact implements Serializable {

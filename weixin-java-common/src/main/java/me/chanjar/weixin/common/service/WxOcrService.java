@@ -15,7 +15,7 @@ import java.io.File;
  * https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21516712284rHWMX
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-06-22
+ * created on  2019-06-22
  */
 public interface WxOcrService {
 

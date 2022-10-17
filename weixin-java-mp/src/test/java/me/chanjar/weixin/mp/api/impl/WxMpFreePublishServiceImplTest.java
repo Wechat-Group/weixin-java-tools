@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 发布能力-单元测试.
  *
  * @author dragon
- * @date 2021-10-23
+ * created on  2021-10-23
  */
 @Guice(modules = ApiTestModule.class)
 public class WxMpFreePublishServiceImplTest {

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 云开发数据库更新记录接口请求结果.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-01-26
+ * created on  2020-01-26
  */
 @Data
 public class WxCloudDatabaseUpdateResult implements Serializable {

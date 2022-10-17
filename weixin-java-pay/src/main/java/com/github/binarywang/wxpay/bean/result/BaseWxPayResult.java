@@ -230,6 +230,15 @@ public abstract class BaseWxPayResult {
     return Integer.parseInt(content);
   }
 
+  protected static Long readXmlLong(Document d, String tagName) {
+    String content = readXmlString(d, tagName);
+    if (content == null || content.trim().length() == 0) {
+      return null;
+    }
+
+    return Long.parseLong(content);
+  }
+
   /**
    * Gets logger.
    *

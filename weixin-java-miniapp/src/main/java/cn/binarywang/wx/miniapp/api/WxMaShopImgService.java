@@ -29,4 +29,14 @@ public interface WxMaShopImgService {
    * @throws WxErrorException
    */
   WxMinishopImageUploadCustomizeResult uploadImg(File file, String respType) throws WxErrorException;
+
+  /**
+   * 上传图片链接,带respType参数
+   *
+   * @param imgUrl
+   * @param respType
+   * @return WxMinishopImageUploadCustomizeResult
+   * @throws WxErrorException
+   */
+  WxMinishopImageUploadCustomizeResult uploadImg(String imgUrl, String respType) throws WxErrorException;
 }

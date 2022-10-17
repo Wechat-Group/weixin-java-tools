@@ -9,8 +9,7 @@ import java.util.List;
  * 企业微信日程接口.
  * 官方文档：https://work.weixin.qq.com/api/doc/90000/90135/93648
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020 -12-25
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020 -12-25
  */
 public interface WxCpOaScheduleService {
   /**

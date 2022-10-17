@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * 转接在职成员的客户给其他成员，返回对象
  *
- * @author pg
- * @date 2021年6月21日
+ * @author pg  created on  2021年6月21日
  */
 @Getter
 @Setter
@@ -24,6 +23,12 @@ public class WxCpUserTransferCustomerResp extends WxCpBaseResp {
    */
   private List<TransferCustomer> customer;
 
+  /**
+   * From json wx cp user transfer customer resp.
+   *
+   * @param json the json
+   * @return the wx cp user transfer customer resp
+   */
   public static WxCpUserTransferCustomerResp fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserTransferCustomerResp.class);
   }
@@ -49,10 +54,21 @@ public class WxCpUserTransferCustomerResp extends WxCpBaseResp {
      */
     private Integer errcode;
 
+    /**
+     * From json wx cp user transfer customer resp . transfer customer.
+     *
+     * @param json the json
+     * @return the wx cp user transfer customer resp . transfer customer
+     */
     public static WxCpUserTransferCustomerResp.TransferCustomer fromJson(String json) {
       return WxCpGsonBuilder.create().fromJson(json, WxCpUserTransferCustomerResp.TransferCustomer.class);
     }
 
+    /**
+     * To json string.
+     *
+     * @return the string
+     */
     public String toJson() {
       return WxCpGsonBuilder.create().toJson(this);
     }

@@ -29,7 +29,7 @@ public class WxMaLinkServiceImpl implements WxMaLinkService {
     String linkField = "url_link";
     JsonObject jsonObject = GsonParser.parse(result);
     if (jsonObject.has(linkField)) {
-      return jsonObject.get(linkField).toString();
+      return jsonObject.get(linkField).getAsString();
     }
     throw new WxErrorException("无url_link");
   }
@@ -40,7 +40,7 @@ public class WxMaLinkServiceImpl implements WxMaLinkService {
     String linkField = "link";
     JsonObject jsonObject = GsonParser.parse(result);
     if (jsonObject.has(linkField)) {
-      return jsonObject.get(linkField).toString();
+      return jsonObject.get(linkField).getAsString();
     }
     throw new WxErrorException("无link");
   }

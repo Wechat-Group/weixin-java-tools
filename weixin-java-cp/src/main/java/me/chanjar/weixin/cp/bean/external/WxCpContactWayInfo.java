@@ -25,6 +25,9 @@ public class WxCpContactWayInfo implements Serializable {
   @SerializedName("contact_way")
   private ContactWay contactWay;
 
+  /**
+   * The type Contact way.
+   */
   @Getter
   @Setter
   public static class ContactWay implements Serializable {
@@ -157,10 +160,21 @@ public class WxCpContactWayInfo implements Serializable {
      */
     private Conclusion conclusions;
 
+    /**
+     * From json wx cp contact way info . contact way.
+     *
+     * @param json the json
+     * @return the wx cp contact way info . contact way
+     */
     public static WxCpContactWayInfo.ContactWay fromJson(String json) {
       return WxCpGsonBuilder.create().fromJson(json, WxCpContactWayInfo.ContactWay.class);
     }
 
+    /**
+     * To json string.
+     *
+     * @return the string
+     */
     public String toJson() {
       return WxCpGsonBuilder.create().toJson(this);
     }
@@ -189,14 +203,28 @@ public class WxCpContactWayInfo implements Serializable {
   }
 
 
+  /**
+   * From json wx cp contact way info.
+   *
+   * @param json the json
+   * @return the wx cp contact way info
+   */
   public static WxCpContactWayInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpContactWayInfo.class);
   }
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * The enum Type.
+   */
   public enum TYPE {
     /**
      * 单人
@@ -208,10 +236,13 @@ public class WxCpContactWayInfo implements Serializable {
      * 多人
      */
     @SerializedName("2")
-    MULTI;
+    MULTI
 
   }
 
+  /**
+   * The enum Scene.
+   */
   public enum SCENE {
 
     /**
@@ -224,7 +255,7 @@ public class WxCpContactWayInfo implements Serializable {
      * 通过二维码联系
      */
     @SerializedName("2")
-    QRCODE;
+    QRCODE
 
   }
 

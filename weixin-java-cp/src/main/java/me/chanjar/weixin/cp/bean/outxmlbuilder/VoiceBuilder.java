@@ -11,6 +11,12 @@ public final class VoiceBuilder extends BaseBuilder<VoiceBuilder, WxCpXmlOutVoic
 
   private String mediaId;
 
+  /**
+   * Media id voice builder.
+   *
+   * @param mediaId the media id
+   * @return the voice builder
+   */
   public VoiceBuilder mediaId(String mediaId) {
     this.mediaId = mediaId;
     return this;

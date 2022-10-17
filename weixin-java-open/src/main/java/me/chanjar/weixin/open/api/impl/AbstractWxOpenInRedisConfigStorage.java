@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author yangyidian
- * @date 2020/01/09
+ * created on  2020/01/09
  **/
 public abstract class AbstractWxOpenInRedisConfigStorage extends WxOpenInMemoryConfigStorage {
   protected static final String COMPONENT_VERIFY_TICKET_KEY = "wechat_component_verify_ticket:";

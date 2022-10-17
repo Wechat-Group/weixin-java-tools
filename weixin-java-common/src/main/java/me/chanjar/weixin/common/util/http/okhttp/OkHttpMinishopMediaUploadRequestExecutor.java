@@ -18,7 +18,7 @@ import java.io.IOException;
  * .
  *
  * @author ecoolper
- * @date 2017/5/5
+ * created on  2017/5/5
  */
 @Slf4j
 public class OkHttpMinishopMediaUploadRequestExecutor extends MinishopUploadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {

@@ -21,7 +21,7 @@ import java.util.Map;
  * .
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-10-06
+ * created on  2020-10-06
  */
 @AllArgsConstructor
 public class WxMpGuideServiceImpl implements WxMpGuideService {

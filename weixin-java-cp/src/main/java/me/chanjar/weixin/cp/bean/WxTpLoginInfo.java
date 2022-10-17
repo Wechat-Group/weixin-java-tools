@@ -11,9 +11,8 @@ import java.util.List;
 /**
  * 登录信息
  *
- * @author Jamie.shi
- * @date 2020-08-03 17:18
- **/
+ * @author Jamie.shi  created on  2020-08-03 17:18
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class WxTpLoginInfo extends WxCpBaseResp {
@@ -29,10 +28,19 @@ public class WxTpLoginInfo extends WxCpBaseResp {
   private AuthInfo authInfo;
   private List<Agent> agent;
 
+  /**
+   * From json wx tp login info.
+   *
+   * @param json the json
+   * @return the wx tp login info
+   */
   public static WxTpLoginInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxTpLoginInfo.class);
   }
 
+  /**
+   * The type User info.
+   */
   @Data
   public static class UserInfo implements Serializable {
     private static final long serialVersionUID = -4558358748587735192L;
@@ -45,6 +53,9 @@ public class WxTpLoginInfo extends WxCpBaseResp {
     private String avatar;
   }
 
+  /**
+   * The type Corp info bean.
+   */
   @Data
   public static class CorpInfoBean implements Serializable {
     private static final long serialVersionUID = -3160146744148144984L;
@@ -53,12 +64,18 @@ public class WxTpLoginInfo extends WxCpBaseResp {
     private String corpId;
   }
 
+  /**
+   * The type Auth info.
+   */
   @Data
   public static class AuthInfo implements Serializable {
     private static final long serialVersionUID = -8697184659526210472L;
 
     private List<Department> department;
 
+    /**
+     * The type Department.
+     */
     @Data
     public static class Department implements Serializable {
       private static final long serialVersionUID = -4389328276936557541L;
@@ -68,6 +85,9 @@ public class WxTpLoginInfo extends WxCpBaseResp {
     }
   }
 
+  /**
+   * The type Agent.
+   */
   @Data
   public static class Agent implements Serializable {
     private static final long serialVersionUID = 1461544500964159037L;
