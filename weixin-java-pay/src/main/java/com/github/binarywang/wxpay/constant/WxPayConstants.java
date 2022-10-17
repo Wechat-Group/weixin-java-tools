@@ -166,15 +166,15 @@ public class WxPayConstants {
     /**
      * 基本账户
      */
-    public static final String BASIC = "Basic";
+    public static final String BASIC = "BASIC";
     /**
      * 运营账户
      */
-    public static final String OPERATION = "Operation";
+    public static final String OPERATION = "OPERATION";
     /**
      * Fees
      */
-    public static final String FEES = "Fees";
+    public static final String FEES = "FEES";
   }
 
   /**
