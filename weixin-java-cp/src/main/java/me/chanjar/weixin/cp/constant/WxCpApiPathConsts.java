@@ -84,6 +84,12 @@ public interface WxCpApiPathConsts {
      */
     String EXTERNAL_CONTACT_MESSAGE_SEND = "/cgi-bin/externalcontact/message/send";
 
+    /**
+     * 撤回应用消息
+     * https://developer.work.weixin.qq.com/document/path/94867
+     */
+    String MESSAGE_RECALL = "/cgi-bin/message/recall";
+
   }
 
   /**
