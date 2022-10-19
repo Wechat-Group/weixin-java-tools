@@ -58,12 +58,11 @@ public class WxCpMessageServiceImpl implements WxCpMessageService {
   }
 
   @Override
-  public WxCpMessageRecallResult recall(String msgId) throws WxErrorException {
+  public void recall(String msgId) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("msgid", msgId);
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(Message.MESSAGE_RECALL);
-    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
-    return WxCpMessageRecallResult.fromJson(responseContent);
+    this.cpService.post(apiUrl, jsonObject.toString());
   }
 
 }

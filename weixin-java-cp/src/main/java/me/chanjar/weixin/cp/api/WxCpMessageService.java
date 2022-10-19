@@ -73,9 +73,8 @@ public interface WxCpMessageService {
    * 文档地址: https://developer.work.weixin.qq.com/document/path/94867
    * </pre>
    * @param msgId 消息id
-   * @return the wx cp message recall result
    * @throws WxErrorException
    */
-  WxCpMessageRecallResult recall(String msgId) throws WxErrorException;
+  void recall(String msgId) throws WxErrorException;
 
 }
