@@ -22,15 +22,19 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.json.GsonParser;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.cp.bean.*;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.tp.service.*;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.*;
@@ -532,6 +536,16 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     String responseText = post(configStorage.getApiUrl(GET_LOGIN_INFO) + "?access_token=" + access_token,
       jsonObject.toString(), true);
     return WxTpLoginInfo.fromJson(responseText);
+  }
+
+  @Override
+  public WxTpCustomizedAuthUrl getCustomizedAuthUrl(@NotBlank String state, @NotEmpty List<String> templateIdList) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("state", state);
+    jsonObject.add("templateid_list", WxGsonBuilder.create().toJsonTree(templateIdList).getAsJsonArray());
+
+    String responseText = post(configStorage.getApiUrl(GET_CUSTOMIZED_AUTH_URL) + "?provider_access_token=" + getWxCpProviderToken(), jsonObject.toString(), true);
+    return WxTpCustomizedAuthUrl.fromJson(responseText);
   }
 
   @Override

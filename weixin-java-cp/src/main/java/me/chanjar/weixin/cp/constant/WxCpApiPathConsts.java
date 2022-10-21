@@ -775,6 +775,11 @@ public interface WxCpApiPathConsts {
      */
     String GET_LOGIN_INFO = "/cgi-bin/service/get_login_info";
 
+    /**
+     * The constant GET_CUSTOMIZED_AUTH_URL.
+     */
+    String GET_CUSTOMIZED_AUTH_URL = "/cgi-bin/service/get_customized_auth_url";
+
 
     /**
      * The constant CONTACT_SEARCH.

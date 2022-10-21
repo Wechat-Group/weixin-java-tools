@@ -10,6 +10,10 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.cp.bean.*;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
+
 /**
  * 企业微信第三方应用API的Service.
  *
@@ -388,6 +392,18 @@ public interface WxCpTpService {
    * @throws WxErrorException the wx error exception
    */
   WxTpLoginInfo getLoginInfo(String authCode) throws WxErrorException;
+
+  /**
+   * 获取带参授权链接
+   * <p>
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/95436
+   *
+   * @param state state
+   * @param templateIdList 代开发自建应用模版ID列表，数量不能超过9个
+   * @return customized auth url
+   * @throws WxErrorException the wx error exception
+   */
+  WxTpCustomizedAuthUrl getCustomizedAuthUrl(@NotBlank String state, @NotEmpty List<String> templateIdList) throws WxErrorException;
 
   /**
    * 获取服务商providerToken
