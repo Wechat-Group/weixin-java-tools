@@ -1,14 +1,13 @@
 package me.chanjar.weixin.mp.util.json;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
+
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * 群发消息json转换适配器.
@@ -47,8 +46,17 @@ public class WxMpMassTagMessageGsonAdapter implements JsonSerializer<WxMpMassTag
     }
     if (WxConsts.MassMsgType.IMAGE.equals(message.getMsgType())) {
       JsonObject sub = new JsonObject();
-      sub.addProperty("media_id", message.getMediaId());
-      messageJson.add(WxConsts.MassMsgType.IMAGE, sub);
+      List<String> mediaIds = message.getMediaIds();
+      if (mediaIds != null && !mediaIds.isEmpty() ) {
+        JsonArray json = new JsonArray();
+        mediaIds.forEach(json::add);
+        sub.add("media_ids", json);
+        messageJson.add(WxConsts.MassMsgType.IMAGES, sub);
+      } else {
+        String mediaId = message.getMediaId();
+        sub.addProperty("media_id", mediaId);
+        messageJson.add(WxConsts.MassMsgType.IMAGE, sub);
+      }
     }
     if (WxConsts.MassMsgType.MPVIDEO.equals(message.getMsgType())) {
       JsonObject sub = new JsonObject();
