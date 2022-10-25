@@ -466,4 +466,8 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     return this.getWebhookKey();
   }
 
+  @Override
+  public String getMsgAuditSecret() {
+    return null;
+  }
 }

@@ -78,9 +78,12 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
     Finance.loadingLibraries(osLib, prefixPath);
     long sdk = Finance.NewSdk();
-
-    long ret = Finance.Init(sdk, cpService.getWxCpConfigStorage().getCorpId(),
-      cpService.getWxCpConfigStorage().getCorpSecret());
+    //因为会话存档单独有个secret,优先使用会话存档的secret
+    String msgAuditSecret = cpService.getWxCpConfigStorage().getMsgAuditSecret();
+    if(StringUtils.isEmpty(msgAuditSecret)) {
+      msgAuditSecret = cpService.getWxCpConfigStorage().getCorpSecret();
+    }
+    long ret = Finance.Init(sdk, cpService.getWxCpConfigStorage().getCorpId(),msgAuditSecret);
     if (ret != 0) {
       Finance.DestroySdk(sdk);
       throw new WxErrorException("init sdk err ret " + ret);
