@@ -62,7 +62,7 @@ public class WxCpUserDetail implements Serializable {
   private String bizMail;
 
   /**
-   * 企业邮箱，仅在用户同意snsapi_privateinfo授权时返回，2022年6月20号后的新应用将返回
+   * 地址，仅在用户同意snsapi_privateinfo授权时返回，2022年6月20号后的新应用将返回
    */
   private String address;
 
