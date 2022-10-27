@@ -795,6 +795,15 @@ public interface WxCpApiPathConsts {
      * The constant GET_ADMIN_LIST.
      */
     String GET_ADMIN_LIST = "/cgi-bin/service/get_admin_list";
+    /**
+     *  The constant GET_APP_QRCODE.
+     */
+    String GET_APP_QRCODE = "/cgi-bin/service/get_app_qrcode";
+
+    /**
+     *  The constant CORPID_TO_OPENCORPID.
+     */
+    String CORPID_TO_OPENCORPID = "/cgi-bin/service/corpid_to_opencorpid";
 
     /**
      * The constant GET_ORDER.

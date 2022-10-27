@@ -213,4 +213,11 @@ public class WxOpenComponentServiceImplTest {
     ShareCloudBaseEnvResponse response = wxOpenComponentService.shareCloudBaseEnv(request);
     Assert.assertNotNull(response);
   }
+
+
+  @Test
+  public void testClearQuotaV2() throws WxErrorException {
+    WxOpenResult wxOpenResult = wxOpenComponentService.clearQuotaV2("");
+    Assert.assertNotNull(wxOpenResult);
+  }
 }

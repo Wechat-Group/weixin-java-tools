@@ -200,6 +200,7 @@ public interface WxOpenComponentService {
 
   String BATCH_SHARE_ENV = "https://api.weixin.qq.com/componenttcb/batchshareenv";
 
+  String COMPONENT_CLEAR_QUOTA_URL = "https://api.weixin.qq.com/cgi-bin/component/clear_quota/v2";
   /**
    * Gets wx mp service by appid.
    *
@@ -1085,4 +1086,15 @@ public interface WxOpenComponentService {
    * @throws WxErrorException
    */
   ShareCloudBaseEnvResponse shareCloudBaseEnv(ShareCloudBaseEnvRequest request) throws WxErrorException;
+
+  /**
+   * 使用 AppSecret 重置第三方平台 API 调用次数
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/openapi/clearComponentQuotaByAppSecret.html
+   *
+   * @param appid  授权用户appid
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult clearQuotaV2(String appid) throws WxErrorException;
+
 }

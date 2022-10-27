@@ -654,6 +654,24 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     return WxCpTpAdmin.fromJson(result);
   }
 
+  public WxCpTpAppQrcode getAppQrcode(String suiteId, String appId, String state, Integer style, Integer resultType) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("suite_id", suiteId);
+    jsonObject.addProperty("appid", appId);
+    jsonObject.addProperty("state", state);
+    jsonObject.addProperty("style", style);
+    jsonObject.addProperty("result_type", resultType);
+    String result = post(configStorage.getApiUrl(GET_APP_QRCODE), jsonObject.toString());
+    return WxCpTpAppQrcode.fromJson(result);
+  }
+
+  public WxCpTpCorpId2OpenCorpId corpId2OpenCorpId(String corpId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("corpid", corpId);
+    String result = post(configStorage.getApiUrl(CORPID_TO_OPENCORPID) +"?provider_access_token=" + this.configStorage.getAccessToken(corpId), jsonObject.toString());
+    return WxCpTpCorpId2OpenCorpId.fromJson(result);
+  }
+
   @Override
   public WxJsapiSignature createAuthCorpJsApiTicketSignature(String url, String authCorpId) throws WxErrorException {
     return doCreateWxJsapiSignature(url, authCorpId, this.getAuthCorpJsApiTicket(authCorpId));

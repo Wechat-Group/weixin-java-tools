@@ -1265,4 +1265,14 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = post(BATCH_SHARE_ENV, gson.toJson(request));
     return WxOpenGsonBuilder.create().fromJson(response, ShareCloudBaseEnvResponse.class);
   }
+
+  @Override
+  public WxOpenResult clearQuotaV2(String appid) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("appid", appid);
+    jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
+    jsonObject.addProperty("appsecret", getWxOpenConfigStorage().getComponentAppSecret());
+    String response = getWxOpenService().post(COMPONENT_CLEAR_QUOTA_URL, jsonObject.toString());
+    return WxOpenResult.fromJson(response);
+  }
 }
