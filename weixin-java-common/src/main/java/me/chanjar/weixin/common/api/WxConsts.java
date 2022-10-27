@@ -223,6 +223,7 @@ public class WxConsts {
     public static final String TEXT = "text";
     public static final String VOICE = "voice";
     public static final String IMAGE = "image";
+    public static final String IMAGES = "images";
     public static final String MPVIDEO = "mpvideo";
   }
 

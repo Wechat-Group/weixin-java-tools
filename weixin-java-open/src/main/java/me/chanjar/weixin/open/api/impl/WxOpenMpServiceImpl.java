@@ -1,6 +1,8 @@
 package me.chanjar.weixin.open.api.impl;
 
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
@@ -8,6 +10,8 @@ import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMpService;
 import me.chanjar.weixin.open.bean.mp.FastRegisterResult;
+import me.chanjar.weixin.open.bean.result.WxAmpLinkResult;
+import me.chanjar.weixin.open.bean.result.WxOpenResult;
 
 import java.net.URLEncoder;
 import java.util.Objects;
@@ -53,4 +57,30 @@ public class WxOpenMpServiceImpl extends WxMpServiceImpl implements WxOpenMpServ
     String json = post(API_FAST_REGISTER, ImmutableMap.of("ticket", ticket));
     return FastRegisterResult.fromJson(json);
   }
+
+
+  @Override
+  public WxAmpLinkResult getWxAmpLink() throws WxErrorException {
+    String response = post(API_WX_AMP_LINK_GET, "{}");
+    return WxMaGsonBuilder.create().fromJson(response, WxAmpLinkResult.class);
+  }
+
+  @Override
+  public WxOpenResult wxAmpLink(String appid, String notifyUsers, String showProfile) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("appid", appid);
+    params.addProperty("notify_users", notifyUsers);
+    params.addProperty("show_profile", showProfile);
+    String response = post(API_WX_AMP_LINK_CREATE, params.toString());
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult wxAmpUnLink(String appid) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("appid", appid);
+    String response = post(API_WX_AMP_LINK_UN, params.toString());
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
 }

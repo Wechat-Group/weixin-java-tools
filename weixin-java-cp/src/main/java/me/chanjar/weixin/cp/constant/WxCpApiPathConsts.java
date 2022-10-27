@@ -84,6 +84,12 @@ public interface WxCpApiPathConsts {
      */
     String EXTERNAL_CONTACT_MESSAGE_SEND = "/cgi-bin/externalcontact/message/send";
 
+    /**
+     * 撤回应用消息
+     * https://developer.work.weixin.qq.com/document/path/94867
+     */
+    String MESSAGE_RECALL = "/cgi-bin/message/recall";
+
   }
 
   /**
@@ -775,6 +781,11 @@ public interface WxCpApiPathConsts {
      */
     String GET_LOGIN_INFO = "/cgi-bin/service/get_login_info";
 
+    /**
+     * The constant GET_CUSTOMIZED_AUTH_URL.
+     */
+    String GET_CUSTOMIZED_AUTH_URL = "/cgi-bin/service/get_customized_auth_url";
+
 
     /**
      * The constant CONTACT_SEARCH.
@@ -931,6 +942,10 @@ public interface WxCpApiPathConsts {
      * The constant USERID_TO_OPEN_USERID.
      */
     String USERID_TO_OPEN_USERID = "/cgi-bin/batch/userid_to_openuserid";
+    /**
+     * The constant OPEN_USERID_TO_USERID.
+     */
+    String OPEN_USERID_TO_USERID = "/cgi-bin/batch/openuserid_to_userid";
 
     /**
      * The constant USER_LIST_ID.
@@ -991,11 +1006,15 @@ public interface WxCpApiPathConsts {
     /**
      * The constant GET_NEW_EXTERNAL_USERID.
      */
-    String GET_NEW_EXTERNAL_USERID = "/cgi-bin/service/externalcontact/get_new_external_userid";
+    String GET_NEW_EXTERNAL_USERID = "/cgi-bin/externalcontact/get_new_external_userid";
     /**
      * The constant TO_SERVICE_EXTERNAL_USERID.
      */
     String TO_SERVICE_EXTERNAL_USERID = "/cgi-bin/externalcontact/to_service_external_userid";
+    /**
+     * The constant FROM_SERVICE_EXTERNAL_USERID.
+     */
+    String FROM_SERVICE_EXTERNAL_USERID = "/cgi-bin/externalcontact/from_service_external_userid";
     /**
      * The constant FINISH_EXTERNAL_USERID_MIGRATION.
      */
@@ -1054,6 +1073,10 @@ public interface WxCpApiPathConsts {
      * The constant GROUP_CHAT_TRANSFER.
      */
     String GROUP_CHAT_TRANSFER = "/cgi-bin/externalcontact/groupchat/transfer";
+    /**
+     * The constant GROUP_CHAT_ONJOB_TRANSFER.
+     */
+    String GROUP_CHAT_ONJOB_TRANSFER = "/cgi-bin/externalcontact/groupchat/onjob_transfer";
     /**
      * The constant LIST_USER_BEHAVIOR_DATA.
      */

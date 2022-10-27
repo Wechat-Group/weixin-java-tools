@@ -17,6 +17,7 @@ import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMaBasicService;
 import me.chanjar.weixin.open.api.WxOpenMaPrivacyService;
 import me.chanjar.weixin.open.api.WxOpenMaService;
+import me.chanjar.weixin.open.bean.ma.WxMaPrefetchDomain;
 import me.chanjar.weixin.open.bean.ma.WxMaQrcodeParam;
 import me.chanjar.weixin.open.bean.ma.WxMaScheme;
 import me.chanjar.weixin.open.bean.message.WxOpenMaSubmitAuditMessage;
@@ -406,30 +407,6 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return (WxMaAuditMediaUploadResult) this.execute(AuditMediaUploadRequestExecutor.create(getRequestHttp()), API_AUDIT_UPLOAD_MEDIA, file);
   }
 
-  @Override
-  public WxAmpLinkResult getWxAmpLink() throws WxErrorException {
-    String response = post(API_WX_AMP_LINK_GET, "{}");
-    return WxMaGsonBuilder.create().fromJson(response, WxAmpLinkResult.class);
-  }
-
-  @Override
-  public WxOpenResult wxAmpLink(String appid, String notifyUsers, String showProfile) throws WxErrorException {
-    JsonObject params = new JsonObject();
-    params.addProperty("appid", appid);
-    params.addProperty("notify_users", notifyUsers);
-    params.addProperty("show_profile", showProfile);
-    String response = post(API_WX_AMP_LINK_CREATE, GSON.toJson(params));
-    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
-  }
-
-  @Override
-  public WxOpenResult wxAmpUnLink(String appid) throws WxErrorException {
-    JsonObject params = new JsonObject();
-    params.addProperty("appid", appid);
-    String response = post(API_WX_AMP_LINK_UN, GSON.toJson(params));
-    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
-  }
-
   private JsonArray toJsonArray(List<String> strList) {
     JsonArray jsonArray = new JsonArray();
     if (strList != null && !strList.isEmpty()) {
@@ -445,5 +422,25 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     JsonObject params = new JsonObject();
     String response = post(API_GET_VERSION_INFO, GSON.toJson(params));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenVersioninfoResult.class);
+  }
+
+  @Override
+  public WxOpenResult setPrefetchDomain(WxMaPrefetchDomain domain) throws WxErrorException {
+    String response = post(API_WX_SET_PREFETCH_DOMAIN, GSON.toJson(domain));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenMaPrefetchDomainResult getPrefetchDomain() throws WxErrorException {
+    String response = get(API_GET_PREFETCH_DOMAIN, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaPrefetchDomainResult.class);
+  }
+
+  @Override
+  public WxOpenMaApplyLiveInfoResult applyLiveInfo() throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("action","apply");
+    String response = post(API_WX_APPLY_LIVE_INFO, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response,WxOpenMaApplyLiveInfoResult.class);
   }
 }

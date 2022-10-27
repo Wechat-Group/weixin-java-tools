@@ -37,6 +37,10 @@ public class WxMpMassOpenIdsMessage implements Serializable {
   private String content;
   private String mediaId;
   /**
+   * 图片列表
+   */
+  private List<String> mediaIds;
+  /**
    * 文章被判定为转载时，是否继续进行群发操作。
    */
   private boolean sendIgnoreReprint = false;

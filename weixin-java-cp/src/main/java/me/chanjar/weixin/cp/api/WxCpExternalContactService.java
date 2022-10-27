@@ -1,12 +1,10 @@
 package me.chanjar.weixin.cp.api;
 
-import lombok.NonNull;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
 import me.chanjar.weixin.cp.bean.external.contact.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +40,7 @@ public interface WxCpExternalContactService {
    * @return wx cp contact way result
    * @throws WxErrorException the wx error exception
    */
-  WxCpContactWayResult addContactWay(@NonNull WxCpContactWayInfo info) throws WxErrorException;
+  WxCpContactWayResult addContactWay(WxCpContactWayInfo info) throws WxErrorException;
 
   /**
    * 获取企业已配置的「联系我」方式
@@ -55,7 +53,7 @@ public interface WxCpExternalContactService {
    * @return contact way
    * @throws WxErrorException the wx error exception
    */
-  WxCpContactWayInfo getContactWay(@NonNull String configId) throws WxErrorException;
+  WxCpContactWayInfo getContactWay(String configId) throws WxErrorException;
 
   /**
    * 更新企业已配置的「联系我」方式
@@ -68,7 +66,7 @@ public interface WxCpExternalContactService {
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpBaseResp updateContactWay(@NonNull WxCpContactWayInfo info) throws WxErrorException;
+  WxCpBaseResp updateContactWay(WxCpContactWayInfo info) throws WxErrorException;
 
   /**
    * 删除企业已配置的「联系我」方式
@@ -81,7 +79,7 @@ public interface WxCpExternalContactService {
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpBaseResp deleteContactWay(@NonNull String configId) throws WxErrorException;
+  WxCpBaseResp deleteContactWay(String configId) throws WxErrorException;
 
   /**
    * 结束临时会话
@@ -97,7 +95,7 @@ public interface WxCpExternalContactService {
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpBaseResp closeTempChat(@NonNull String userId, @NonNull String externalUserId) throws WxErrorException;
+  WxCpBaseResp closeTempChat(String userId, String externalUserId) throws WxErrorException;
 
 
   /**
@@ -170,7 +168,7 @@ public interface WxCpExternalContactService {
    * @return 该企业的外部联系人ID string
    * @throws WxErrorException .
    */
-  String unionidToExternalUserid(@NotNull String unionid, String openid) throws WxErrorException;
+  String unionidToExternalUserid(String unionid, String openid) throws WxErrorException;
 
   /**
    * 配置客户群进群方式
@@ -185,7 +183,7 @@ public interface WxCpExternalContactService {
    * @return {@link WxCpGroupJoinWayResult}
    * @throws WxErrorException the wx error exception
    */
-  WxCpGroupJoinWayResult addJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException;
+  WxCpGroupJoinWayResult addJoinWay(WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException;
 
   /**
    * 更新客户群进群方式配置
@@ -196,7 +194,7 @@ public interface WxCpExternalContactService {
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpBaseResp updateJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException;
+  WxCpBaseResp updateJoinWay(WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException;
 
   /**
    * 获取客户群进群方式配置
@@ -207,7 +205,7 @@ public interface WxCpExternalContactService {
    * @return join way
    * @throws WxErrorException the wx error exception
    */
-  WxCpGroupJoinWayInfo getJoinWay(@NonNull String configId) throws WxErrorException;
+  WxCpGroupJoinWayInfo getJoinWay(String configId) throws WxErrorException;
 
   /**
    * 删除客户群进群方式配置
@@ -217,7 +215,7 @@ public interface WxCpExternalContactService {
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpBaseResp delJoinWay(@NonNull String configId) throws WxErrorException;
+  WxCpBaseResp delJoinWay(String configId) throws WxErrorException;
 
   /**
    * 代开发应用external_userid转换
@@ -239,7 +237,24 @@ public interface WxCpExternalContactService {
    * @return 该服务商第三方应用下的企业的外部联系人ID string
    * @throws WxErrorException .
    */
-  String toServiceExternalUserid(@NotNull String externalUserid) throws WxErrorException;
+  String toServiceExternalUserid(String externalUserid) throws WxErrorException;
+
+  /**
+   * 将代开发应用或第三方应用获取的externaluserid转换成自建应用的externaluserid
+   * <pre>
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/95884#external-userid%E8%BD%AC%E6%8D%A2
+   *
+   * 权限说明：
+   *
+   * 需要使用自建应用或基础应用的access_token
+   * 客户的跟进人，或者用户所在客户群的群主，需要同时在access_token和source_agentid所对应应用的可见范围内
+   * </pre>
+   * @param externalUserid 服务商主体的external_userid，必须是source_agentid对应的应用所获取
+   * @param sourceAgentId 企业授权的代开发自建应用或第三方应用的agentid
+   * @return
+   * @throws WxErrorException
+   */
+  String fromServiceExternalUserid(String externalUserid, String sourceAgentId) throws WxErrorException;
 
   /**
    * 企业客户微信unionid的升级 - unionid查询external_userid
@@ -265,7 +280,7 @@ public interface WxCpExternalContactService {
    * @return 该服务商第三方应用下的企业的外部联系人ID wx cp external user id list
    * @throws WxErrorException .
    */
-  WxCpExternalUserIdList unionidToExternalUserid3rd(@NotNull String unionid, @NotNull String openid, String corpid) throws WxErrorException;
+  WxCpExternalUserIdList unionidToExternalUserid3rd(String unionid, String openid, String corpid) throws WxErrorException;
 
   /**
    * 转换external_userid
@@ -308,7 +323,7 @@ public interface WxCpExternalContactService {
    * @return wx cp base resp
    * @throws WxErrorException .
    */
-  WxCpBaseResp finishExternalUserIdMigration(@NotNull String corpid) throws WxErrorException;
+  WxCpBaseResp finishExternalUserIdMigration(String corpid) throws WxErrorException;
 
   /**
    * 客户群opengid转换
@@ -333,7 +348,7 @@ public interface WxCpExternalContactService {
    * @return 客户群ID ，可以用来调用获取客户群详情
    * @throws WxErrorException .
    */
-  String opengidToChatid(@NotNull String opengid) throws WxErrorException;
+  String opengidToChatid(String opengid) throws WxErrorException;
 
   /**
    * 批量获取客户详情.
@@ -472,7 +487,7 @@ public interface WxCpExternalContactService {
    * @return 客户转接接口实体 wx cp user transfer result resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpUserTransferResultResp transferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid,
+  WxCpUserTransferResultResp transferResult(String handOverUserid, String takeOverUserid,
                                             String cursor) throws WxErrorException;
 
   /**
@@ -513,7 +528,7 @@ public interface WxCpExternalContactService {
    * @return 客户转接接口实体 wx cp user transfer result resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpUserTransferResultResp resignedTransferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid,
+  WxCpUserTransferResultResp resignedTransferResult(String handOverUserid, String takeOverUserid,
                                                     String cursor) throws WxErrorException;
 
   /**
@@ -594,6 +609,24 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   WxCpUserExternalGroupChatTransferResp transferGroupChat(String[] chatIds, String newOwner) throws WxErrorException;
+
+
+  /**
+   * 企业可通过此接口，将在职成员为群主的群，分配给另一个客服成员。
+   * <per>
+   *   注意：
+   * 继承给的新群主，必须是配置了客户联系功能的成员
+   * 继承给的新群主，必须有设置实名
+   * 继承给的新群主，必须有激活企业微信
+   * 同一个人的群，限制每天最多分配300个给新群主
+   * 为保障客户服务体验，90个自然日内，在职成员的每个客户群仅可被转接2次。
+   * </pre>
+   * @param chatIds  需要转群主的客户群ID列表。取值范围： 1 ~ 100
+   * @param newOwner 新群主ID
+   * @return 分配结果 ，主要是分配失败的群列表
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpUserExternalGroupChatTransferResp onjobTransferGroupChat(String[] chatIds, String newOwner) throws WxErrorException;
 
   /**
    * <pre>
@@ -872,7 +905,7 @@ public interface WxCpExternalContactService {
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpGroupMsgListResult getGroupMsgListV2(String chatType, @NonNull Date startTime, @NonNull Date endTime,
+  WxCpGroupMsgListResult getGroupMsgListV2(String chatType, Date startTime, Date endTime,
                                            String creator, Integer filterType, Integer limit, String cursor) throws WxErrorException;
 
   /**
@@ -952,7 +985,7 @@ public interface WxCpExternalContactService {
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpGroupWelcomeTemplateResult getGroupWelcomeTemplate(@NotNull String templateId) throws WxErrorException;
+  WxCpGroupWelcomeTemplateResult getGroupWelcomeTemplate(String templateId) throws WxErrorException;
 
   /**
    * <pre>
@@ -966,7 +999,7 @@ public interface WxCpExternalContactService {
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpBaseResp delGroupWelcomeTemplate(@NotNull String templateId, String agentId) throws WxErrorException;
+  WxCpBaseResp delGroupWelcomeTemplate(String templateId, String agentId) throws WxErrorException;
 
   /**
    * <pre>

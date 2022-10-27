@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 按标签群发的消息.
@@ -34,6 +35,10 @@ public class WxMpMassTagMessage implements Serializable {
   private String msgType;
   private String content;
   private String mediaId;
+  /**
+   * 图片列表
+   */
+  private List<String> mediaIds;
   /**
    * 是否群发给所有用户.
    */

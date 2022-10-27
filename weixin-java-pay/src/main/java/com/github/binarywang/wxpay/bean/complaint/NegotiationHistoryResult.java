@@ -16,7 +16,6 @@ import java.util.List;
  */
 @Data
 public class NegotiationHistoryResult implements Serializable {
-
   private static final long serialVersionUID = -6201692411535927502L;
 
   /**
@@ -67,7 +66,7 @@ public class NegotiationHistoryResult implements Serializable {
      * </pre>
      */
     @SerializedName("complaint_media_list")
-    private List<ComplaintMedia> complaintMediaList;
+    private ComplaintMedia complaintMediaList;
 
     @Data
     public static class ComplaintMedia implements Serializable {

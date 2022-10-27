@@ -19,7 +19,6 @@ import me.chanjar.weixin.open.bean.tcb.ShareCloudBaseEnvRequest;
 import me.chanjar.weixin.open.bean.tcb.ShareCloudBaseEnvResponse;
 import me.chanjar.weixin.open.bean.tcbComponent.GetShareCloudBaseEnvResponse;
 import me.chanjar.weixin.open.bean.tcbComponent.GetTcbEnvListResponse;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.List;
@@ -500,7 +499,7 @@ public interface WxOpenComponentService {
    * @return 小程序代码模版列表 （templateId）
    * @throws WxErrorException 获取失败时返回，具体错误码请看此接口的注释文档
    */
-  List<WxOpenMaCodeTemplate> getTemplateList(@Nullable Integer templateType) throws WxErrorException;
+  List<WxOpenMaCodeTemplate> getTemplateList(Integer templateType) throws WxErrorException;
 
   /**
    * 请参考并使用 {@link #addToTemplate(long, int)}.

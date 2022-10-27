@@ -2,7 +2,6 @@ package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxCpErrorMsgEnum;
@@ -19,7 +18,6 @@ import me.chanjar.weixin.cp.bean.external.*;
 import me.chanjar.weixin.cp.bean.external.contact.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +39,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   private final WxCpService mainService;
 
   @Override
-  public WxCpContactWayResult addContactWay(@NonNull WxCpContactWayInfo info) throws WxErrorException {
+  public WxCpContactWayResult addContactWay(WxCpContactWayInfo info) throws WxErrorException {
 
     if (info.getContactWay().getUsers() != null && info.getContactWay().getUsers().size() > 100) {
       throw new WxRuntimeException("「联系我」使用人数默认限制不超过100人(包括部门展开后的人数)");
@@ -54,7 +52,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpContactWayInfo getContactWay(@NonNull String configId) throws WxErrorException {
+  public WxCpContactWayInfo getContactWay(String configId) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("config_id", configId);
 
@@ -64,7 +62,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpBaseResp updateContactWay(@NonNull WxCpContactWayInfo info) throws WxErrorException {
+  public WxCpBaseResp updateContactWay(WxCpContactWayInfo info) throws WxErrorException {
     if (StringUtils.isBlank(info.getContactWay().getConfigId())) {
       throw new WxRuntimeException("更新「联系我」方式需要指定configId");
     }
@@ -79,7 +77,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpBaseResp deleteContactWay(@NonNull String configId) throws WxErrorException {
+  public WxCpBaseResp deleteContactWay(String configId) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("config_id", configId);
 
@@ -90,7 +88,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpBaseResp closeTempChat(@NonNull String userId, @NonNull String externalUserId) throws WxErrorException {
+  public WxCpBaseResp closeTempChat(String userId, String externalUserId) throws WxErrorException {
 
     JsonObject json = new JsonObject();
     json.addProperty("userid", userId);
@@ -122,7 +120,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public String convertToOpenid(@NotNull String externalUserId) throws WxErrorException {
+  public String convertToOpenid(String externalUserId) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("external_userid", externalUserId);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(CONVERT_TO_OPENID);
@@ -132,7 +130,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public String unionidToExternalUserid(@NotNull String unionid, String openid) throws WxErrorException {
+  public String unionidToExternalUserid(String unionid, String openid) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("unionid", unionid);
     if (StringUtils.isNotEmpty(openid)) {
@@ -145,7 +143,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public String toServiceExternalUserid(@NotNull String externalUserid) throws WxErrorException {
+  public String toServiceExternalUserid(String externalUserid) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("external_userid", externalUserid);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(TO_SERVICE_EXTERNAL_USERID);
@@ -155,7 +153,17 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpExternalUserIdList unionidToExternalUserid3rd(@NotNull String unionid, @NotNull String openid,
+  public String fromServiceExternalUserid(String externalUserid, String sourceAgentId) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("external_userid", externalUserid);
+    json.addProperty("source_agentid", sourceAgentId);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(FROM_SERVICE_EXTERNAL_USERID);
+    String responseContent = this.mainService.post(url, json.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("external_userid").getAsString();
+  }
+  @Override
+  public WxCpExternalUserIdList unionidToExternalUserid3rd(String unionid, String openid,
                                                            String corpid) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("unionid", unionid);
@@ -180,7 +188,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpBaseResp finishExternalUserIdMigration(@NotNull String corpid) throws WxErrorException {
+  public WxCpBaseResp finishExternalUserIdMigration(String corpid) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("corpid", corpid);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(FINISH_EXTERNAL_USERID_MIGRATION);
@@ -189,7 +197,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public String opengidToChatid(@NotNull String opengid) throws WxErrorException {
+  public String opengidToChatid(String opengid) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("opengid", opengid);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(OPENID_TO_CHATID);
@@ -280,7 +288,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpUserTransferResultResp transferResult(@NotNull String handOverUserid, @NotNull String takeOverUserid,
+  public WxCpUserTransferResultResp transferResult(String handOverUserid, String takeOverUserid,
                                                    String cursor) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("cursor", cursor);
@@ -300,8 +308,8 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpUserTransferResultResp resignedTransferResult(@NotNull String handOverUserid,
-                                                           @NotNull String takeOverUserid, String cursor) throws WxErrorException {
+  public WxCpUserTransferResultResp resignedTransferResult(String handOverUserid,
+                                                           String takeOverUserid, String cursor) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("cursor", cursor);
     json.addProperty("handover_userid", handOverUserid);
@@ -369,6 +377,18 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     }
     json.addProperty("new_owner", newOwner);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GROUP_CHAT_TRANSFER);
+    final String result = this.mainService.post(url, json.toString());
+    return WxCpUserExternalGroupChatTransferResp.fromJson(result);
+  }
+
+  @Override
+  public WxCpUserExternalGroupChatTransferResp onjobTransferGroupChat(String[] chatIds, String newOwner) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    if (ArrayUtils.isNotEmpty(chatIds)) {
+      json.add("chat_id_list", new Gson().toJsonTree(chatIds).getAsJsonArray());
+    }
+    json.addProperty("new_owner", newOwner);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GROUP_CHAT_ONJOB_TRANSFER);
     final String result = this.mainService.post(url, json.toString());
     return WxCpUserExternalGroupChatTransferResp.fromJson(result);
   }
@@ -626,7 +646,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
    * @throws WxErrorException the wx error exception
    */
   @Override
-  public WxCpGroupMsgListResult getGroupMsgListV2(String chatType, @NonNull Date startTime, @NonNull Date endTime,
+  public WxCpGroupMsgListResult getGroupMsgListV2(String chatType, Date startTime, Date endTime,
                                                   String creator, Integer filterType, Integer limit, String cursor) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("chat_type", chatType);
@@ -762,7 +782,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
    * @throws WxErrorException the wx error exception
    */
   @Override
-  public WxCpGroupWelcomeTemplateResult getGroupWelcomeTemplate(@NotNull String templateId) throws WxErrorException {
+  public WxCpGroupWelcomeTemplateResult getGroupWelcomeTemplate(String templateId) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("template_id", templateId);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GROUP_WELCOME_TEMPLATE_GET);
@@ -783,7 +803,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
    * @throws WxErrorException the wx error exception
    */
   @Override
-  public WxCpBaseResp delGroupWelcomeTemplate(@NotNull String templateId, String agentId) throws WxErrorException {
+  public WxCpBaseResp delGroupWelcomeTemplate(String templateId, String agentId) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("template_id", templateId);
     if (!StringUtils.isEmpty(agentId)) {
@@ -896,7 +916,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpGroupJoinWayResult addJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException {
+  public WxCpGroupJoinWayResult addJoinWay(WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException {
     if (wxCpGroupJoinWayInfo.getJoinWay().getChatIdList() != null && wxCpGroupJoinWayInfo.getJoinWay().getChatIdList().size() > 5) {
       throw new WxRuntimeException("使用该配置的客户群ID列表，支持5个");
     }
@@ -907,7 +927,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpBaseResp updateJoinWay(@NonNull WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException {
+  public WxCpBaseResp updateJoinWay(WxCpGroupJoinWayInfo wxCpGroupJoinWayInfo) throws WxErrorException {
     if (wxCpGroupJoinWayInfo.getJoinWay().getChatIdList() != null && wxCpGroupJoinWayInfo.getJoinWay().getChatIdList().size() > 5) {
       throw new WxRuntimeException("使用该配置的客户群ID列表，支持5个");
     }
@@ -927,7 +947,7 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
-  public WxCpBaseResp delJoinWay(@NonNull String configId) throws WxErrorException {
+  public WxCpBaseResp delJoinWay(String configId) throws WxErrorException {
     JsonObject json = new JsonObject();
     json.addProperty("config_id", configId);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(DEL_JOIN_WAY);

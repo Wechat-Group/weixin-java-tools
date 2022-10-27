@@ -162,10 +162,11 @@ public interface WxCpTpUserService {
    * </pre>
    *
    * @param mobile 手机号码。长度为5~32个字节
+   * @param corpId – the corp id
    * @return userid mobile对应的成员userid
    * @throws WxErrorException .
    */
-  String getUserId(String mobile) throws WxErrorException;
+  String getUserId(String mobile, String corpId) throws WxErrorException;
 
   /**
    * 获取外部联系人详情.

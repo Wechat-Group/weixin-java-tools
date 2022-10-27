@@ -41,6 +41,8 @@ public class WxCpMessageServiceImplTest {
   private Runner mockRunner;
   private ApiTestModule.WxXmlCpInMemoryConfigStorage configStorage;
 
+  private WxCpMessageSendResult wxCpMessageSendResult;
+
   /**
    * Sets .
    */
@@ -96,6 +98,7 @@ public class WxCpMessageServiceImplTest {
 
     WxCpMessageSendResult messageSendResult = this.wxService.getMessageService().send(message);
     assertNotNull(messageSendResult);
+    wxCpMessageSendResult = messageSendResult;
     System.out.println(messageSendResult);
     System.out.println(messageSendResult.getInvalidPartyList());
     System.out.println(messageSendResult.getInvalidUserList());
@@ -220,6 +223,15 @@ public class WxCpMessageServiceImplTest {
     final WxCpMessageSendStatistics statistics = this.wxService.getMessageService().getStatistics(1);
     assertNotNull(statistics);
     assertThat(statistics.getStatistics()).isNotNull();
+  }
+
+  /**
+   * Test message recall
+   * @throws WxErrorException
+   */
+  @Test(dependsOnMethods = "testSendMessage1")
+  public void testRecall() throws WxErrorException {
+    this.wxService.getMessageService().recall(wxCpMessageSendResult.getMsgId());
   }
 
 }

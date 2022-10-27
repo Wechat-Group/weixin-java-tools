@@ -1,6 +1,7 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpMessageService;
@@ -54,6 +55,14 @@ public class WxCpMessageServiceImpl implements WxCpMessageService {
 
     return WxCpSchoolContactMessageSendResult.fromJson(this.cpService.post(this.cpService.getWxCpConfigStorage()
       .getApiUrl(Message.EXTERNAL_CONTACT_MESSAGE_SEND), message.toJson()));
+  }
+
+  @Override
+  public void recall(String msgId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("msgid", msgId);
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(Message.MESSAGE_RECALL);
+    this.cpService.post(apiUrl, jsonObject.toString());
   }
 
 }

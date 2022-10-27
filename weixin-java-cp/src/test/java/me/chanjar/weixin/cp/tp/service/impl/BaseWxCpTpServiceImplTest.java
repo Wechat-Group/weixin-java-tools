@@ -2,16 +2,27 @@ package me.chanjar.weixin.cp.tp.service.impl;
 
 import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.redis.RedissonWxRedisOps;
 import me.chanjar.weixin.cp.bean.WxCpTpAuthInfo;
 import me.chanjar.weixin.cp.bean.WxCpTpCorp;
 import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
+import me.chanjar.weixin.cp.bean.WxTpCustomizedAuthUrl;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
+import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 import me.chanjar.weixin.cp.config.impl.WxCpTpDefaultConfigImpl;
+import me.chanjar.weixin.cp.config.impl.WxCpTpRedissonConfigImpl;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
+import org.apache.http.util.Asserts;
 import org.mockito.Mockito;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +37,55 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class BaseWxCpTpServiceImplTest {
   private final WxCpTpService tpService = Mockito.spy(new WxCpTpServiceApacheHttpClientImpl());
+
+  /**
+   * The constant PROVIDER_CORP_ID.
+   */
+  public static final String PROVIDER_CORP_ID = "xxxxxx";
+  /**
+   * The constant PROVIDER_SECRET.
+   */
+  public static final String PROVIDER_SECRET = "xxxxxx";
+  /**
+   * The constant REDIS_ADDR.
+   */
+  public static final String REDIS_ADDR = "redis://xxx.xxx.xxx.xxx:6379";
+  /**
+   * The constant REDIS_PASSWD.
+   */
+  public static final String REDIS_PASSWD = "xxxxxx";
+
+  private WxCpTpService wxCpTpService;
+
+  /**
+   * Sets up.
+   */
+  @BeforeMethod
+  public void setUp() {
+    wxCpTpService = new WxCpTpServiceApacheHttpClientImpl();
+    wxCpTpService.setWxCpTpConfigStorage(wxCpTpConfigStorage());
+  }
+
+  /**
+   * Wx cp tp config storage wx cp tp config storage.
+   *
+   * @return the wx cp tp config storage
+   */
+  public WxCpTpConfigStorage wxCpTpConfigStorage() {
+    return WxCpTpRedissonConfigImpl.builder().corpId(PROVIDER_CORP_ID).providerSecret(PROVIDER_SECRET).wxRedisOps(new RedissonWxRedisOps(redissonClient())).build();
+  }
+
+  /**
+   * Redisson client redisson client.
+   *
+   * @return the redisson client
+   */
+  public RedissonClient redissonClient() {
+    Config config = new Config();
+    config.useSingleServer().setAddress(REDIS_ADDR).setConnectTimeout(10 * 1000).setDatabase(6)
+      .setPassword(REDIS_PASSWD).setConnectionMinimumIdleSize(2).setConnectionPoolSize(2);
+    return Redisson.create(config);
+  }
 
   /**
    * Test check signature.
@@ -443,5 +503,15 @@ public class BaseWxCpTpServiceImplTest {
    */
   @Test
   public void testGetRequestHttp() {
+  }
+
+  @Test
+  public void testGetCustomizedAuthUrl() throws WxErrorException {
+    String state = "test";
+    List<String> templateIdList = Arrays.asList("");
+
+    final WxTpCustomizedAuthUrl customizedAuthUrl = wxCpTpService.getCustomizedAuthUrl(state, templateIdList);
+    Assert.assertNotNull(customizedAuthUrl);
+    Assert.assertEquals((long) customizedAuthUrl.getErrcode(), 0);
   }
 }

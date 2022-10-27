@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.4.1.B</version>
+    <version>4.4.3.B</version>
   </parent>
 
   <artifactId>weixin-java-cp</artifactId>
@@ -86,6 +86,13 @@
     <dependency>
       <groupId>com.github.dreamhead</groupId>
       <artifactId>moco-runner</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.13.4</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

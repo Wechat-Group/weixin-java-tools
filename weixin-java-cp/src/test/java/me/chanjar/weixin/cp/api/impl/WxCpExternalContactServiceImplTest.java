@@ -407,6 +407,19 @@ public class WxCpExternalContactServiceImplTest {
   }
 
   /**
+   * Test onjob transfer group chat.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testOnjobTransferGroupChat() throws WxErrorException {
+    String[] str = {"wrHlLKQAAAFbfB99-BO97YZlcywznGZg", "error_group_id"};
+    WxCpUserExternalGroupChatTransferResp result = this.wxCpService.getExternalContactService().onjobTransferGroupChat(str
+      , "x");
+    System.out.println(result);
+    assertNotNull(result);
+  }
+  /**
    * Test get user behavior statistic.
    */
   @Test

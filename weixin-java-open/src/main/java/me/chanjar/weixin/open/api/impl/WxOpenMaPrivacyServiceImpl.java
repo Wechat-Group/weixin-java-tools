@@ -8,7 +8,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenMaPrivacyService;
 import me.chanjar.weixin.open.bean.ma.privacy.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +25,8 @@ public class WxOpenMaPrivacyServiceImpl implements WxOpenMaPrivacyService {
 
 
   @Override
-  public GetPrivacySettingResult getPrivacySetting(@Nullable Integer privacyVer) throws WxErrorException {
-    Map<String, Object> params = new HashMap<>();
+  public GetPrivacySettingResult getPrivacySetting(Integer privacyVer) throws WxErrorException {
+    Map<String, Object> params = new HashMap<>(1);
     if (privacyVer != null) {
       params.put("privacy_ver", privacyVer);
     }

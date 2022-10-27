@@ -2,7 +2,6 @@ package me.chanjar.weixin.mp.bean.template;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -200,7 +199,6 @@ public enum WxMpTemplateIndustryEnum {
    * @param secondClass 副行业名称
    * @return 如果找不到, 返回null
    */
-  @Nullable
   public static WxMpTemplateIndustryEnum findByClass(String firstClass, String secondClass) {
     for (WxMpTemplateIndustryEnum industryEnum : WxMpTemplateIndustryEnum.values()) {
       if (industryEnum.firstClass.equals(firstClass) && industryEnum.secondClass.contains(secondClass)) {

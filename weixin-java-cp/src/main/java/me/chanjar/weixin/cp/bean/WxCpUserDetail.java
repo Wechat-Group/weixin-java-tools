@@ -25,7 +25,7 @@ public class WxCpUserDetail implements Serializable {
   private String userId;
 
   /**
-   * 成员姓名
+   * 成员姓名，2022年6月20号后的新应用将不再返回此字段，旧应用正常返回
    */
   private String name;
 
@@ -54,5 +54,16 @@ public class WxCpUserDetail implements Serializable {
    */
   @SerializedName("qr_code")
   private String qrCode;
+
+  /**
+   * 企业邮箱，仅在用户同意snsapi_privateinfo授权时返回，2022年6月20号后的新应用将返回
+   */
+  @SerializedName("biz_mail")
+  private String bizMail;
+
+  /**
+   * 地址，仅在用户同意snsapi_privateinfo授权时返回，2022年6月20号后的新应用将返回
+   */
+  private String address;
 
 }
