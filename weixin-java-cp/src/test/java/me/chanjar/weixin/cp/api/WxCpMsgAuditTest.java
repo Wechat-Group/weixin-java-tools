@@ -12,6 +12,7 @@ import me.chanjar.weixin.cp.constant.WxCpConsts;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 import org.eclipse.jetty.util.ajax.JSON;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -41,7 +42,9 @@ public class WxCpMsgAuditTest {
    */
 // com.binarywang.spring.starter.wxjava.cp.config.WxCpServiceAutoConfiguration
   // WxCpServiceImpl.getAccessToken()
-  private WxCpService initCpservice() {
+
+  @BeforeTest
+  private void initCpservice() {
     if(cpService == null) {
       InputStream inputStream = ClassLoader.getSystemResourceAsStream("test-config.xml");
       WxCpDemoInMemoryConfigStorage config = WxCpDemoInMemoryConfigStorage.fromXml(inputStream);
@@ -50,12 +53,10 @@ public class WxCpMsgAuditTest {
       cpService = new WxCpServiceImpl();
       cpService.setWxCpConfigStorage(config);
     }
-    return cpService;
   }
 
   @Test
   public void test() throws Exception {
-    this.initCpservice();
     /**
      * 客户同意进行聊天内容存档事件回调
      * 配置了客户联系功能的成员添加外部联系人同意进行聊天内容存档时，回调该事件。
@@ -657,7 +658,6 @@ public class WxCpMsgAuditTest {
 
   @Test
   public void testGetMediaFile() throws Exception {
-    this.initCpservice();
     WxCpMsgAuditService msgAuditService = cpService.getMsgAuditService();
     WxCpChatDatas chatDatas = msgAuditService.getChatDatas(0L, 100L, null, null, 10);
     for (WxCpChatDatas.WxCpChatData chatDatum : chatDatas.getChatData()) {
@@ -740,6 +740,8 @@ public class WxCpMsgAuditTest {
       File file = new File(targetPath);
       if (!file.getParentFile().exists()) {
         file.getParentFile().mkdirs();
+      }else{
+        file.delete();
       }
         cpService.getMsgAuditService().getMediaFile(chatDatas.getSdk(), sdkFileId, null, null, 1000L, data -> {
           try {
