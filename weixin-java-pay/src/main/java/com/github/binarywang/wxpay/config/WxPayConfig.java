@@ -286,7 +286,7 @@ public class WxPayConfig {
 
       WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
-        .withWechatpay(Collections.singletonList(certificate))
+        //.withWechatpay(Collections.singletonList(certificate))
         .withValidator(new WxPayValidator(verifier));
       //初始化V3接口正向代理设置
       HttpProxyUtils.initHttpProxy(wxPayV3HttpClientBuilder,wxPayHttpProxy);
