@@ -175,9 +175,9 @@ public enum WxMpTemplateIndustryEnum {
    */
   PRINTING("印刷", "印刷", 40),
   /**
-   * 其它 - 其它
+   * 其他 - 其他
    */
-  OTHER("其它", "其它", 41);
+  OTHER("其他", "其他", 41);
 
   /**
    * 主行业（一级行业）
