@@ -14,10 +14,7 @@ import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 
 /**
@@ -273,6 +270,9 @@ public class WxCpMessageRouter {
       messageId.append(wxMessage.getMsgId())
         .append("-").append(wxMessage.getCreateTime())
         .append("-").append(wxMessage.getFromUserName());
+    }
+    if (Objects.nonNull(wxMessage.getApprovalInfo())) {
+      append(messageId, wxMessage.getApprovalInfo().getSpNo());
     }
     append(messageId, wxMessage.getUserId());
     append(messageId, wxMessage.getChangeType());
