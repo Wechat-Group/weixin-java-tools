@@ -432,9 +432,12 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
 
       /**
        * 法定代表人说明函
+       * 1、当证件持有人类型为经办人时，必须上传。其他情况，无需上传
+       * 2、若因特殊情况，无法提供法定代表人证件时，请参照示例图打印法定代表人说明函，全部信息需打印，不支持手写商户信息，并加盖公章。
+       * 3、可上传1张图片，请填写通过图片上传APIAPI预先上传图片生成好的MediaID。
        */
       @SerializedName("authorize_letter_copy")
-      private IdTypeEnum authorizeLetterCopy;
+      private String authorizeLetterCopy;
 
       /**
        * 身份证信息
