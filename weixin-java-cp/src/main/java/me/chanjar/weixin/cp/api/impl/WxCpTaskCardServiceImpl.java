@@ -33,7 +33,8 @@ public class WxCpTaskCardServiceImpl implements WxCpTaskCardService {
     data.put("userids", userIds);
     data.put("agentid", agentId);
     data.put("task_id", taskId);
-    data.put("replace_name", replaceName);
+    // 文档地址：https://open.work.weixin.qq.com/wwopen/devtool/interface?doc_id=16386
+    data.put("clicked_key", replaceName);
 
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_TASK_CARD);
     this.mainService.post(url, WxGsonBuilder.create().toJson(data));
