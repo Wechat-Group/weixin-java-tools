@@ -364,6 +364,28 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
   @XStreamAlias("profit_sharing")
   private String profitSharing;
 
+
+  /**
+   * <pre>
+   * 字段名：交易场景
+   * 变量名：trade_scene
+   * 是否必填：否
+   * 类型：string
+   * 描述：
+   *  委托代扣的交易场景值
+   *  目前支持 ：
+   *  1. PARKING：车场停车场景
+   *  2. PARKING SPACE；车位停车场景
+   *  3. GAS 加油场景
+   *  4. HIGHWAY 高速场景
+   *  5. BRIDGE 路桥场景
+   *  该值催缴时会向微信用户进行展示
+   *  详细参考  https://pay.weixin.qq.com/wiki/doc/api/vehicle_v2.php?chapter=20_982&index=2
+   * </pre>
+   */
+  @XStreamAlias("trade_scene")
+  private String tradeScene;
+
   /**
    * 如果配置中已经设置，可以不设置值.
    *
@@ -423,6 +445,7 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
     map.put("openid", openid);
     map.put("sub_openid", subOpenid);
     map.put("receipt", receipt);
+    map.put("trade_scene", tradeScene);
     map.put("scene_info", sceneInfo);
     map.put("fingerprint", fingerprint);
     map.put("profit_sharing", profitSharing);

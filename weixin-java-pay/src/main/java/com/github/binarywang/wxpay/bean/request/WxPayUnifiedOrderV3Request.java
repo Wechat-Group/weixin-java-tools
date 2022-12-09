@@ -177,6 +177,29 @@ public class WxPayUnifiedOrderV3Request implements Serializable {
    */
   @SerializedName(value = "detail")
   private Discount detail;
+
+
+  /**
+   * <pre>
+   * 字段名：交易场景
+   * 变量名：trade_scene
+   * 是否必填：否
+   * 类型：string
+   * 描述：
+   *  委托代扣的交易场景值
+   *  目前支持 ：
+   *  1. PARKING：车场停车场景
+   *  2. PARKING SPACE；车位停车场景
+   *  3. GAS 加油场景
+   *  4. HIGHWAY 高速场景
+   *  5. BRIDGE 路桥场景
+   *  该值催缴时会向微信用户进行展示
+   *  * 详细参考  https://pay.weixin.qq.com/wiki/doc/api/vehicle_v2.php?chapter=20_982&index=2
+   * </pre>
+   */
+  @SerializedName(value = "trade_scene")
+  private String tradeScene;
+
   /**
    * <pre>
    * 字段名：场景信息
