@@ -1,10 +1,7 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
-import com.github.binarywang.wxpay.bean.payscore.PayScoreNotifyData;
-import com.github.binarywang.wxpay.bean.payscore.UserAuthorizationStatusNotifyResult;
-import com.github.binarywang.wxpay.bean.payscore.WxPartnerPayScoreRequest;
-import com.github.binarywang.wxpay.bean.payscore.WxPartnerPayScoreResult;
+import com.github.binarywang.wxpay.bean.payscore.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.PartnerPayScoreService;
@@ -41,22 +38,24 @@ public class PartnerPayScoreServiceImpl implements PartnerPayScoreService {
     request.setAppid(request.getAppid());
     request.setServiceId(request.getServiceId());
     WxPayConfig config = this.payService.getConfig();
-    String permissionNotifyUrl = config.getPayScorePermissionNotifyUrl();
-    if (StringUtils.isBlank(permissionNotifyUrl)) {
-      throw new WxPayException("授权回调地址未配置");
+    if(StringUtils.isBlank(request.getAppid())){
+      request.setAppid(config.getAppId());
     }
-    String authorizationCode = request.getAuthorizationCode();
-    if (StringUtils.isBlank(authorizationCode)) {
+    if(StringUtils.isBlank((request.getServiceId()))){
+      request.setServiceId(config.getServiceId());
+    }
+    if (StringUtils.isBlank(request.getNotifyUrl())) {
+      request.setNotifyUrl(config.getPayScorePermissionNotifyUrl());
+    }
+    if (StringUtils.isBlank(request.getAuthorizationCode())) {
       throw new WxPayException("authorizationCode不允许为空");
     }
-    request.setNotifyUrl(permissionNotifyUrl);
     String result = this.payService.postV3(url, request.toJson());
     return WxPartnerPayScoreResult.fromJson(result);
   }
 
   @Override
-  public WxPartnerPayScoreResult permissionsQueryByAuthorizationCode(String serviceId, String subMchid, String authorizationCode)
-    throws WxPayException {
+  public WxPartnerPayScoreResult permissionsQueryByAuthorizationCode(String serviceId, String subMchid, String authorizationCode) throws WxPayException {
     if (StringUtils.isBlank(authorizationCode)) {
       throw new WxPayException("authorizationCode不允许为空");
     }
@@ -163,7 +162,15 @@ public class PartnerPayScoreServiceImpl implements PartnerPayScoreService {
     String url = this.payService.getPayBaseUrl() + "/v3/payscore/partner/serviceorder";
 
     WxPayConfig config = this.payService.getConfig();
-    request.setNotifyUrl(config.getPayScoreNotifyUrl());
+    if(StringUtils.isBlank(request.getAppid())){
+      request.setAppid(config.getAppId());
+    }
+    if(StringUtils.isBlank((request.getServiceId()))){
+      request.setServiceId(config.getServiceId());
+    }
+    if(StringUtils.isBlank((request.getNotifyUrl()))){
+      request.setNotifyUrl(config.getPayScoreNotifyUrl());
+    }
     String result = this.payService.postV3(url, request.toJson());
 
     return WxPartnerPayScoreResult.fromJson(result);
@@ -229,10 +236,14 @@ public class PartnerPayScoreServiceImpl implements PartnerPayScoreService {
   public void completeServiceOrder(WxPartnerPayScoreRequest request) throws WxPayException {
     String outOrderNo = request.getOutOrderNo();
     String url = String.format("%s/v3/payscore/partner/serviceorder/%s/complete", this.payService.getPayBaseUrl(), outOrderNo);
-    request.setAppid(request.getAppid());
-    request.setServiceId(request.getServiceId());
+    WxPayConfig config = this.payService.getConfig();
+    if (StringUtils.isBlank(request.getServiceId())) {
+      request.setServiceId(config.getServiceId());
+    }
+    if (StringUtils.isBlank(request.getSubMchid())) {
+      request.setSubMchid(config.getSubMchId());
+    }
     request.setOutOrderNo(null);
-    request.setSubMchid(request.getSubMchid());
     this.payService.postV3(url, request.toJson());
   }
 
@@ -254,7 +265,9 @@ public class PartnerPayScoreServiceImpl implements PartnerPayScoreService {
   public WxPartnerPayScoreResult syncServiceOrder(WxPartnerPayScoreRequest request) throws WxPayException {
     String outOrderNo = request.getOutOrderNo();
     String url = String.format("%s/v3/payscore/partner/serviceorder/%s/sync", this.payService.getPayBaseUrl(), outOrderNo);
-    request.setAppid(this.payService.getConfig().getAppId());
+    if (StringUtils.isBlank(request.getAppid())) {
+      request.setAppid(this.payService.getConfig().getAppId());
+    }
     request.setOutOrderNo(null);
     String result = payService.postV3(url, request.toJson());
     return WxPartnerPayScoreResult.fromJson(result);
@@ -284,7 +297,7 @@ public class PartnerPayScoreServiceImpl implements PartnerPayScoreService {
   }
 
   @Override
-  public UserAuthorizationStatusNotifyResult parseUserAuthorizationStatusNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
+  public WxPartnerUserAuthorizationStatusNotifyResult parseUserAuthorizationStatusNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
     PayScoreNotifyData response = parseNotifyData(notifyData, header);
     PayScoreNotifyData.Resource resource = response.getResource();
     String cipherText = resource.getCipherText();
@@ -293,7 +306,7 @@ public class PartnerPayScoreServiceImpl implements PartnerPayScoreService {
     String apiV3Key = this.payService.getConfig().getApiV3Key();
     try {
       String result = AesUtils.decryptToString(associatedData, nonce, cipherText, apiV3Key);
-      UserAuthorizationStatusNotifyResult notifyResult = GSON.fromJson(result, UserAuthorizationStatusNotifyResult.class);
+      WxPartnerUserAuthorizationStatusNotifyResult notifyResult = GSON.fromJson(result, WxPartnerUserAuthorizationStatusNotifyResult.class);
       notifyResult.setRawData(response);
       return notifyResult;
     } catch (GeneralSecurityException | IOException e) {

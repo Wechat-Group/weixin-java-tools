@@ -119,6 +119,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final TransferService transferService = new TransferServiceImpl(this);
 
   @Getter
+  private final PartnerPayScoreService partnerPayScoreService = new PartnerPayScoreServiceImpl(this);
+
+  @Getter
   private final MerchantTransferService merchantTransferService = new MerchantTransferServiceImpl(this);
 
   protected Map<String, WxPayConfig> configMap;

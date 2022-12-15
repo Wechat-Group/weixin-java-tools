@@ -1370,4 +1370,11 @@ public interface WxPayService {
    * @return the transfers service
    */
   TransferService getTransferService();
+
+  /**
+   * 获取服务商支付分服务类
+   * @return the partner pay score service
+   */
+  PartnerPayScoreService getPartnerPayScoreService();
+
 }
