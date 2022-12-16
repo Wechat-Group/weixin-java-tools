@@ -66,6 +66,11 @@ public class TransferBatchesRequest implements Serializable {
   @SerializedName("transfer_detail_list")
   private List<TransferDetail> transferDetailList;
 
+  /**
+   * 转账场景ID
+   */
+  @SerializedName("transfer_scene_id")
+  private String transferSceneId;
 
   @Data
   @Builder(builderMethodName = "newBuilder")
