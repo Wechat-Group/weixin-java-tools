@@ -213,6 +213,39 @@ public interface WxCpOaService {
    */
   WxCpTemplateResult getTemplateDetail(@NonNull String templateId) throws WxErrorException;
 
+  /**
+   * 创建审批模板
+   * <br>
+   * 可以调用此接口创建审批模板。创建新模板后，管理后台及审批应用内将生成对应模板，并生效默认流程和规则配置。
+   * <pre>
+   *  文档地址: <a href="https://developer.work.weixin.qq.com/document/path/97437">https://developer.work.weixin.qq.com/document/path/97437</a>
+   *  权限说明
+   * • 仅『审批』系统应用、自建应用和代开发自建应用可调用。
+   * </pre>
+   *
+   * @param wxCpTemplateCreate wxCpTemplateCreate
+   * @return templateId
+   * @throws WxErrorException .
+   */
+  String createTemplate(WxCpTemplateCreate wxCpTemplateCreate) throws WxErrorException;
+
+  /**
+   * 更新审批模板
+   * <br>
+   * 可调用本接口更新审批模板。更新模板后，管理后台及审批应用内将更新原模板的内容，已配置的审批流程和规则不变。
+   * <pre>
+   *  文档地址: <a href="https://developer.work.weixin.qq.com/document/path/97438">https://developer.work.weixin.qq.com/document/path/97438</a>
+   *  权限说明
+   * • 仅『审批』系统应用，自建应用和代开发自建应用可调用
+   * • 所有应用都可以通过本接口更新自己的模板
+   * • 『审批』系统应用可以修改管理员手动创建的模板
+   * • 自建应用和代开发自建应用不可通过本接口更新其他应用创建的模板
+   * </pre>
+   *
+   * @param wxCpTemplateUpdate wxCpTemplateUpdate
+   * @throws WxErrorException .
+   */
+  void updateTemplate(WxCpTemplateUpdate wxCpTemplateUpdate) throws WxErrorException;
 
   /**
    * 获取打卡日报数据

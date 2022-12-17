@@ -290,6 +290,14 @@ public interface WxCpApiPathConsts {
      */
     String GET_TEMPLATE_DETAIL = "/cgi-bin/oa/gettemplatedetail";
     /**
+     * The constant CREATE_TEMPLATE.
+     */
+    String CREATE_TEMPLATE = "/cgi-bin/oa/approval/create_template";
+    /**
+     * The constant CREATE_TEMPLATE.
+     */
+    String UPDATE_TEMPLATE = "/cgi-bin/oa/approval/update_template";
+    /**
      * The constant APPLY_EVENT.
      */
     String APPLY_EVENT = "/cgi-bin/oa/applyevent";

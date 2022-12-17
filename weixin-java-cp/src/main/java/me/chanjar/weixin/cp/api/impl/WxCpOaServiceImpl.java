@@ -260,6 +260,20 @@ public class WxCpOaServiceImpl implements WxCpOaService {
   }
 
   @Override
+  public String createTemplate(WxCpTemplateCreate wxCpTemplateCreate) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(CREATE_TEMPLATE);
+    String responseContent = this.mainService.post(url, WxCpGsonBuilder.create().toJson(wxCpTemplateCreate));
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("template_id").getAsString();
+  }
+
+  @Override
+  public void updateTemplate(WxCpTemplateUpdate wxCpTemplateUpdate) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_TEMPLATE);
+    this.mainService.post(url, WxCpGsonBuilder.create().toJson(wxCpTemplateUpdate));
+  }
+
+  @Override
   public List<WxCpCheckinDayData> getCheckinDayData(@NonNull Date startTime, @NonNull Date endTime,
                                                     List<String> userIdList)
     throws WxErrorException {
