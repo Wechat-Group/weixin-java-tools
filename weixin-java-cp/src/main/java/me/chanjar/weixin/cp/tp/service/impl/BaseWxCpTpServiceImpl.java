@@ -28,8 +28,6 @@ import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.tp.service.*;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -540,7 +538,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   }
 
   @Override
-  public WxTpCustomizedAuthUrl getCustomizedAuthUrl(@NotBlank String state, @NotEmpty List<String> templateIdList) throws WxErrorException {
+  public WxTpCustomizedAuthUrl getCustomizedAuthUrl(String state, List<String> templateIdList) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("state", state);
     jsonObject.add("templateid_list", WxGsonBuilder.create().toJsonTree(templateIdList).getAsJsonArray());

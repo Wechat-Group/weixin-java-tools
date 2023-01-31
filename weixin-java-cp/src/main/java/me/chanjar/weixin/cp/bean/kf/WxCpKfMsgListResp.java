@@ -63,6 +63,10 @@ public class WxCpKfMsgListResp extends WxCpBaseResp {
     @SerializedName("msgmenu")
     private WxCpKfMenuMsg msgMenu;
     private WxCpKfEventMsg event;
+    @SerializedName("channels_shop_product")
+    private WxCpKfChannelsShopProductMsg channelsShopProduct;
+    @SerializedName("channels_shop_order")
+    private WxCpKfChannelsShopOrderMsg channelsShopOrder;
   }
 
   /**

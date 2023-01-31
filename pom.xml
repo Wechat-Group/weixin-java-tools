@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>4.4.7.B</version>
+  <version>4.4.8.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -185,7 +185,7 @@
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
         <artifactId>xstream</artifactId>
-        <version>1.4.19</version>
+        <version>1.4.20</version>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
@@ -225,7 +225,7 @@
       <dependency>
         <groupId>org.testng</groupId>
         <artifactId>testng</artifactId>
-        <version>7.1.0</version>
+        <version>7.7.0</version>
         <scope>test</scope>
         <exclusions>
           <exclusion>
@@ -319,11 +319,6 @@
         <groupId>org.bouncycastle</groupId>
         <artifactId>bcpkix-jdk15on</artifactId>
         <version>1.68</version>
-      </dependency>
-      <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>2.0.1.Final</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

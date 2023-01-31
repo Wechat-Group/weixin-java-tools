@@ -846,6 +846,19 @@ public class WxMpXmlMessage implements Serializable {
   @JacksonXmlProperty(localName = "Encrypt")
   private String encrypt;
 
+  @XStreamAlias("SubscribeMsgPopupEvent")
+  @JacksonXmlProperty(localName = "SubscribeMsgPopupEvent")
+  private WxMpSubscribeMsgEvent.SubscribeMsgPopupEvent subscribeMsgPopupEvent;
+
+  @XStreamAlias("SubscribeMsgChangeEvent")
+  @JacksonXmlProperty(localName = "SubscribeMsgChangeEvent")
+  private WxMpSubscribeMsgEvent.SubscribeMsgChangeEvent subscribeMsgChangeEvent;
+
+  @XStreamAlias("SubscribeMsgSentEvent")
+  @JacksonXmlProperty(localName = "SubscribeMsgSentEvent")
+  private WxMpSubscribeMsgEvent.SubscribeMsgSentEvent subscribeMsgSentEvent;
+
+
   public static WxMpXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
     xml = xml.replace("</PicList><PicList>", "");

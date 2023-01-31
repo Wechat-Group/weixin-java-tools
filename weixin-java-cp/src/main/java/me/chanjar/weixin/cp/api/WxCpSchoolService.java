@@ -1,11 +1,9 @@
 package me.chanjar.weixin.cp.api;
 
-import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.living.WxCpLivingResult;
 import me.chanjar.weixin.cp.bean.school.*;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -30,7 +28,7 @@ public interface WxCpSchoolService {
    * @return teacher customize health info
    * @throws WxErrorException the wx error exception
    */
-  WxCpCustomizeHealthInfo getTeacherCustomizeHealthInfo(@NotNull String date, String nextKey, Integer limit) throws WxErrorException;
+  WxCpCustomizeHealthInfo getTeacherCustomizeHealthInfo(String date, String nextKey, Integer limit) throws WxErrorException;
 
   /**
    * 获取学生健康信息
@@ -43,7 +41,7 @@ public interface WxCpSchoolService {
    * @return student customize health info
    * @throws WxErrorException the wx error exception
    */
-  WxCpCustomizeHealthInfo getStudentCustomizeHealthInfo(@NotNull String date, String nextKey, Integer limit) throws WxErrorException;
+  WxCpCustomizeHealthInfo getStudentCustomizeHealthInfo(String date, String nextKey, Integer limit) throws WxErrorException;
 
   /**
    * 获取师生健康码
@@ -55,7 +53,7 @@ public interface WxCpSchoolService {
    * @return health qr code
    * @throws WxErrorException the wx error exception
    */
-  WxCpResultList getHealthQrCode(@NotNull List<String> userIds, @NotNull Integer type) throws WxErrorException;
+  WxCpResultList getHealthQrCode(List<String> userIds, Integer type) throws WxErrorException;
 
   /**
    * 获取学生付款结果
@@ -66,7 +64,7 @@ public interface WxCpSchoolService {
    * @return payment result
    * @throws WxErrorException the wx error exception
    */
-  WxCpPaymentResult getPaymentResult(@NotNull String paymentId) throws WxErrorException;
+  WxCpPaymentResult getPaymentResult(String paymentId) throws WxErrorException;
 
   /**
    * 获取订单详情
@@ -78,7 +76,7 @@ public interface WxCpSchoolService {
    * @return trade
    * @throws WxErrorException the wx error exception
    */
-  WxCpTrade getTrade(@NotNull String paymentId, @NotNull String tradeNo) throws WxErrorException;
+  WxCpTrade getTrade(String paymentId, String tradeNo) throws WxErrorException;
 
   /**
    * 获取直播详情
@@ -90,7 +88,7 @@ public interface WxCpSchoolService {
    * @return living info
    * @throws WxErrorException the wx error exception
    */
-  WxCpSchoolLivingInfo getLivingInfo(@NotNull String livingId) throws WxErrorException;
+  WxCpSchoolLivingInfo getLivingInfo(String livingId) throws WxErrorException;
 
   /**
    * 获取老师直播ID列表
@@ -105,7 +103,7 @@ public interface WxCpSchoolService {
    * @return user all living id
    * @throws WxErrorException the wx error exception
    */
-  WxCpLivingResult.LivingIdResult getUserAllLivingId(@NonNull String userId, String cursor, Integer limit) throws WxErrorException;
+  WxCpLivingResult.LivingIdResult getUserAllLivingId(String userId, String cursor, Integer limit) throws WxErrorException;
 
   /**
    * 获取观看直播统计
@@ -119,7 +117,7 @@ public interface WxCpSchoolService {
    * @return watch stat
    * @throws WxErrorException the wx error exception
    */
-  WxCpSchoolWatchStat getWatchStat(@NonNull String livingId, String nextKey) throws WxErrorException;
+  WxCpSchoolWatchStat getWatchStat(String livingId, String nextKey) throws WxErrorException;
 
   /**
    * 获取未观看直播统计
@@ -133,7 +131,7 @@ public interface WxCpSchoolService {
    * @return unwatch stat
    * @throws WxErrorException the wx error exception
    */
-  WxCpSchoolUnwatchStat getUnwatchStat(@NonNull String livingId, String nextKey) throws WxErrorException;
+  WxCpSchoolUnwatchStat getUnwatchStat(String livingId, String nextKey) throws WxErrorException;
 
   /**
    * 删除直播回放
@@ -144,6 +142,6 @@ public interface WxCpSchoolService {
    * @return wx cp living result
    * @throws WxErrorException the wx error exception
    */
-  WxCpLivingResult deleteReplayData(@NonNull String livingId) throws WxErrorException;
+  WxCpLivingResult deleteReplayData(String livingId) throws WxErrorException;
 
 }

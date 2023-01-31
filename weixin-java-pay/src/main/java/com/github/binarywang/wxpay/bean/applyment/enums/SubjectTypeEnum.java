@@ -7,6 +7,9 @@ package com.github.binarywang.wxpay.bean.applyment.enums;
  * </pre>
  *
  * @author zhouyongshen
+ * @author 狂龙骄子
+ * @since 2023.01.14 新增{@link #SUBJECT_TYPE_GOVERNMENT}
+ * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_1.shtml">服务商平台>>商户进件>>特约商户进件>>提交申请单>>请求参数>>主体资料>>主体类型</a>
  */
 public enum SubjectTypeEnum {
   /**
@@ -18,17 +21,20 @@ public enum SubjectTypeEnum {
    */
   SUBJECT_TYPE_ENTERPRISE,
   /**
-   * （党政、机关及事业单位）：包括国内各级、各类政府机构、事业单位等（如：公安、党团、司法、交通、旅游、工商税务、市政、医疗、教育、学校等机构）；
+   * （事业单位）：包括国内各类事业单位，如：医疗、教育、学校等单位；
    */
   SUBJECT_TYPE_INSTITUTIONS,
   /**
-   * （其他组织）：不属于企业、政府/事业单位的组织机构（如社会团体、民办非企业、基金会），要求机构已办理组织机构代码证。
+   * （政府机关）：包括各级、各类政府机关，如机关党委、税务、民政、人社、工商、商务、市监等；
+   */
+  SUBJECT_TYPE_GOVERNMENT,
+  /**
+   * （社会组织）：包括社会团体、民办非企业、基金会、基层群众性自治组织、农村集体经济组织等组织。
    */
   SUBJECT_TYPE_OTHERS,
   /**
    * (小微)：无营业执照、免办理工商注册登记的实体商户
    */
-  SUBJECT_TYPE_MICRO,
-  ;
+  SUBJECT_TYPE_MICRO;
 
 }

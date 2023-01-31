@@ -51,7 +51,7 @@ public class WxPayOrderNotifyResultConverter extends AbstractReflectionConverter
     super.marshal(original, writer, context);
     WxPayOrderNotifyResult obj = (WxPayOrderNotifyResult) original;
     List<WxPayOrderNotifyCoupon> list = obj.getCouponList();
-    if (list == null || list.size() == 0) {
+    if (list == null || list.isEmpty()) {
       return;
     }
     for (int i = 0; i < list.size(); i++) {

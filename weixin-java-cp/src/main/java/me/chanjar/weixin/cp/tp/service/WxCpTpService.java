@@ -10,8 +10,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.cp.bean.*;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -403,7 +401,7 @@ public interface WxCpTpService {
    * @return customized auth url
    * @throws WxErrorException the wx error exception
    */
-  WxTpCustomizedAuthUrl getCustomizedAuthUrl(@NotBlank String state, @NotEmpty List<String> templateIdList) throws WxErrorException;
+  WxTpCustomizedAuthUrl getCustomizedAuthUrl(String state, List<String> templateIdList) throws WxErrorException;
 
   /**
    * 获取服务商providerToken
