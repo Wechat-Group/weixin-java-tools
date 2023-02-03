@@ -70,6 +70,8 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
 
   private WxCpExportService exportService = new WxCpExportServiceImpl(this);
 
+  private final WxCpMeetingService meetingService = new WxCpMeetingServiceImpl(this);
+
   /**
    * 全局的是否正在刷新access token的锁.
    */
@@ -664,5 +666,10 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public void setExportService(WxCpExportService exportService) {
     this.exportService = exportService;
+  }
+
+  @Override
+  public WxCpMeetingService getMeetingService() {
+    return meetingService;
   }
 }

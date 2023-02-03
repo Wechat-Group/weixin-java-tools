@@ -374,6 +374,28 @@ public interface WxCpApiPathConsts {
 
     /**
      * 会议
+     * https://developer.work.weixin.qq.com/document/path/93626
+     */
+    String MEETING_ADD = "/cgi-bin/meeting/create";
+    /**
+     * The constant MEETING_UPDATE.
+     */
+    String MEETING_UPDATE = "/cgi-bin/meeting/update";
+    /**
+     * The constant MEETING_CANCEL.
+     */
+    String MEETING_CANCEL = "/cgi-bin/meeting/cancel";
+    /**
+     * The constant MEETING_DETAIL.
+     */
+    String MEETING_DETAIL = "/cgi-bin/meeting/get_info";
+    /**
+     * The constant GET_USER_MEETING_ID.
+     */
+    String GET_USER_MEETING_ID = "/cgi-bin/meeting/get_user_meetingid";
+
+    /**
+     * 会议室
      * https://developer.work.weixin.qq.com/document/path/93624
      */
     String MEETINGROOM_ADD = "/cgi-bin/oa/meetingroom/add";

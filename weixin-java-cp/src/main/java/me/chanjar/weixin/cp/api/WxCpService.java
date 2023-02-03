@@ -562,4 +562,11 @@ public interface WxCpService extends WxService {
    * @param exportService 异步导出服务
    */
   void setExportService(WxCpExportService exportService);
+
+  /**
+   * 相关接口的服务类对象
+   *
+   * @return  the meeting service
+   */
+  WxCpMeetingService getMeetingService();
 }
