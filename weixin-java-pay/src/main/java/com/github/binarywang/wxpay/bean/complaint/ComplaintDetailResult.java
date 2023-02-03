@@ -188,7 +188,7 @@ public class ComplaintDetailResult implements Serializable {
     private Integer amount;
 
   }
-  
+
     /**
    * <pre>
    * 字段名：投诉单关联服务单信息
@@ -198,7 +198,7 @@ public class ComplaintDetailResult implements Serializable {
    */
   @SerializedName("service_order_info")
   private List<ServiceOrder> serviceOrderInfo;
-  
+
   /**
   * <pre>
   * 服务单信息
@@ -207,10 +207,10 @@ public class ComplaintDetailResult implements Serializable {
   @Data
   public static class ServiceOrder implements Serializable {
     private static final long serialVersionUID = 4240983048700956805L;
-    
+
     /**
      * <pre>
-     * 字段名：微信支付服务订单号	
+     * 字段名：微信支付服务订单号
      * 是否必填：否
      * 描述：
      * 微信支付服务订单号，每个微信支付服务订单号与商户号下对应的商户服务订单号一一对应
@@ -244,9 +244,9 @@ public class ComplaintDetailResult implements Serializable {
      */
     @SerializedName("state")
     private String state;
-    
+
   }
-  
+
   /**
    * <pre>
    * 字段名：投诉单是否已全额退款
@@ -318,11 +318,10 @@ public class ComplaintDetailResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：用户投诉次数
+   * 字段名：用户标签列表
    * 是否必填：否
-   * 描述：用户标签列表
-   * TRUSTED：可信，此类用户满足极速退款条件
-   * OTHERS：其它，此类用户不满足极速退款条件
+   * 描述： TRUSTED：可信，此类用户满足极速退款条件
+   *       OTHERS：其它，此类用户不满足极速退款条件
    * 示例值：[TRUSTED]
    * </pre>
    */
