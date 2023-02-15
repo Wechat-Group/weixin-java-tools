@@ -3,6 +3,7 @@ package me.chanjar.weixin.qidian.api.impl;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.okhttp.DefaultOkHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
 import okhttp3.*;
@@ -76,11 +77,8 @@ public class WxQidianServiceOkHttpImpl extends BaseWxQidianServiceImpl<OkHttpCli
     // 设置代理
     if (wxMpConfigStorage.getHttpProxyHost() != null && wxMpConfigStorage.getHttpProxyPort() > 0) {
       httpProxy = OkHttpProxyInfo.httpProxy(wxMpConfigStorage.getHttpProxyHost(), wxMpConfigStorage.getHttpProxyPort(),
-          wxMpConfigStorage.getHttpProxyUsername(), wxMpConfigStorage.getHttpProxyPassword());
-    }
-
-    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-    if (httpProxy != null) {
+        wxMpConfigStorage.getHttpProxyUsername(), wxMpConfigStorage.getHttpProxyPassword());
+      OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
       clientBuilder.proxy(getRequestHttpProxy().getProxy());
 
       // 设置授权
@@ -91,8 +89,10 @@ public class WxQidianServiceOkHttpImpl extends BaseWxQidianServiceImpl<OkHttpCli
           return response.request().newBuilder().header("Authorization", credential).build();
         }
       });
+      httpClient = clientBuilder.build();
+    } else {
+      httpClient = DefaultOkHttpClientBuilder.get().build();
     }
-    httpClient = clientBuilder.build();
   }
 
 }
