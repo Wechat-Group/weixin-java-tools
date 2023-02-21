@@ -150,6 +150,31 @@ public class WxCpKfServiceImpl implements WxCpKfService {
   }
 
   @Override
+  public WxCpKfMsgListResp syncMsg(String cursor, String token, Integer limit, Integer voiceFormat, String openKfId) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(SYNC_MSG);
+
+    JsonObject json = new JsonObject();
+    if (cursor!=null) {
+      json.addProperty("cursor", cursor);
+    }
+    if (token!=null) {
+      json.addProperty("token", token);
+    }
+    if (limit!=null) {
+      json.addProperty("limit", limit);
+    }
+    if (voiceFormat!=null) {
+      json.addProperty("voice_format", voiceFormat);
+    }
+    if (openKfId != null) {
+      json.addProperty("open_kfid", openKfId);
+    }
+
+    String responseContent = cpService.post(url, json);
+    return WxCpKfMsgListResp.fromJson(responseContent);
+  }
+
+  @Override
   public WxCpKfMsgSendResp sendMsg(WxCpKfMsgSendRequest request) throws WxErrorException {
     String url = cpService.getWxCpConfigStorage().getApiUrl(SEND_MSG);
 

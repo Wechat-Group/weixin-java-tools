@@ -135,7 +135,11 @@ public interface WxCpKfService {
    * @return 微信消息 wx cp kf msg list resp
    * @throws WxErrorException 异常
    */
+  @Deprecated
   WxCpKfMsgListResp syncMsg(String cursor, String token, Integer limit, Integer voiceFormat)
+    throws WxErrorException;
+
+  WxCpKfMsgListResp syncMsg(String cursor, String token, Integer limit, Integer voiceFormat,String open_kfid)
     throws WxErrorException;
 
   /**
