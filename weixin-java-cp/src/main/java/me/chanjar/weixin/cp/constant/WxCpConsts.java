@@ -481,6 +481,11 @@ public class WxCpConsts {
      */
     public static final String FILE = "file";
 
+    /**
+     * 模版类型消息.
+     */
+    public static final String TEMPLATE_CARD = "template_card";
+
   }
 
   /**
