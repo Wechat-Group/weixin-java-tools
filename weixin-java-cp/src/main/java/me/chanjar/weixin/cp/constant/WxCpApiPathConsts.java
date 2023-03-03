@@ -73,12 +73,6 @@ public interface WxCpApiPathConsts {
     String GET_STATISTICS = "/cgi-bin/message/get_statistics";
 
     /**
-     * 互联企业发送应用消息
-     * https://developer.work.weixin.qq.com/document/path/90250
-     */
-    String LINKEDCORP_MESSAGE_SEND = "/cgi-bin/linkedcorp/message/send";
-
-    /**
      * 发送「学校通知」
      * https://developer.work.weixin.qq.com/document/path/92321
      */
@@ -89,6 +83,12 @@ public interface WxCpApiPathConsts {
      * https://developer.work.weixin.qq.com/document/path/94867
      */
     String MESSAGE_RECALL = "/cgi-bin/message/recall";
+
+    /**
+     * 互联企业发送应用消息
+     * https://developer.work.weixin.qq.com/document/path/90250
+     */
+    String LINKEDCORP_MESSAGE_SEND = "/cgi-bin/linkedcorp/message/send";
 
   }
 
@@ -826,12 +826,12 @@ public interface WxCpApiPathConsts {
      */
     String GET_ADMIN_LIST = "/cgi-bin/service/get_admin_list";
     /**
-     *  The constant GET_APP_QRCODE.
+     * The constant GET_APP_QRCODE.
      */
     String GET_APP_QRCODE = "/cgi-bin/service/get_app_qrcode";
 
     /**
-     *  The constant CORPID_TO_OPENCORPID.
+     * The constant CORPID_TO_OPENCORPID.
      */
     String CORPID_TO_OPENCORPID = "/cgi-bin/service/corpid_to_opencorpid";
 
@@ -1399,5 +1399,56 @@ public interface WxCpApiPathConsts {
      * The constant GET_RESULT.
      */
     String GET_RESULT = "/cgi-bin/export/get_result?jobid=%s";
+  }
+
+  interface CorpGroup {
+    /**
+     * 获取应用共享信息
+     * https://developer.work.weixin.qq.com/document/path/93403
+     */
+    String LIST_SHARE_APP_INFO = "/cgi-bin/corpgroup/corp/list_app_share_info";
+    /**
+     * 获取下级/下游企业的access_token
+     * https://developer.work.weixin.qq.com/document/path/93359
+     */
+    String CORP_GET_TOKEN = "/cgi-bin/corpgroup/corp/gettoken";
+    /**
+     * 获取下级/下游企业小程序session
+     * https://developer.work.weixin.qq.com/document/path/93355
+     */
+    String MA_TRANSFER_SESSION = "/cgi-bin/miniprogram/transfer_session";
+  }
+
+  interface LinkedCorp {
+    /**
+     * 获取应用的可见范围
+     * https://developer.work.weixin.qq.com/document/path/93172
+     */
+    String GET_PERM_LIST = "/cgi-bin/linkedcorp/agent/get_perm_list";
+    /**
+     * 获取互联企业成员详细信息
+     * https://developer.work.weixin.qq.com/document/path/93171
+     */
+    String GET_USER = "/cgi-bin/linkedcorp/user/get";
+    /**
+     * 获取互联企业部门成员
+     * https://developer.work.weixin.qq.com/document/path/93168
+     */
+    String GET_USER_SIMPLELIST = "/cgi-bin/linkedcorp/user/simplelist";
+    /**
+     * 获取互联企业部门成员详情
+     * https://developer.work.weixin.qq.com/document/path/93169
+     */
+    String GET_USER_LIST = "/cgi-bin/linkedcorp/user/list";
+    /**
+     * 获取互联企业部门列表
+     * https://developer.work.weixin.qq.com/document/path/93170
+     */
+    String GET_DEPARTMENT_LIST = "/cgi-bin/linkedcorp/department/list";
+    /**
+     * 发送应用消息
+     * https://developer.work.weixin.qq.com/document/path/90250
+     */
+    String SENG_MESSAGE="/cgi-bin/linkedcorp/message/send";
   }
 }

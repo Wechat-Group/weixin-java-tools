@@ -71,6 +71,8 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxCpExportService exportService = new WxCpExportServiceImpl(this);
 
   private final WxCpMeetingService meetingService = new WxCpMeetingServiceImpl(this);
+  private final WxCpCorpGroupService corpGroupService = new WxCpCorpGroupServiceImpl(this);
+  private final WxCpLinkedCorpService linkedCorpService = new WxCpLinkedCorpServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -671,5 +673,15 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public WxCpMeetingService getMeetingService() {
     return meetingService;
+  }
+
+  @Override
+  public WxCpCorpGroupService getCorpGroupService() {
+    return corpGroupService;
+  }
+
+  @Override
+  public WxCpLinkedCorpService getLinkedCorpService() {
+    return linkedCorpService;
   }
 }

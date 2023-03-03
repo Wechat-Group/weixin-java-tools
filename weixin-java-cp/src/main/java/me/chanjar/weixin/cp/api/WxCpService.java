@@ -569,4 +569,18 @@ public interface WxCpService extends WxService {
    * @return  the meeting service
    */
   WxCpMeetingService getMeetingService();
+
+  /**
+   * 企业互联的服务类对象
+   *
+   * @return
+   */
+  WxCpCorpGroupService getCorpGroupService();
+
+  /**
+   * 互联企业的服务类对象
+   *
+   * @return
+   */
+  WxCpLinkedCorpService getLinkedCorpService();
 }
