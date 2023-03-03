@@ -7,6 +7,7 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.corpgroup.WxCpCorpGroupCorpGetTokenReq;
+import me.chanjar.weixin.cp.bean.corpgroup.WxCpMaTransferSession;
 import me.chanjar.weixin.cp.config.WxCpCorpGroupConfigStorage;
 
 /**
@@ -144,6 +145,7 @@ public interface WxCpCgService {
 
   void setWxCpCorpGroupConfigStorage(WxCpCorpGroupConfigStorage wxCpCorpGroupConfigStorage);
 
+  WxCpCorpGroupConfigStorage getWxCpCorpGroupConfigStorage();
   /**
    * http请求对象.
    *
@@ -152,4 +154,21 @@ public interface WxCpCgService {
   RequestHttp<?, ?> getRequestHttp();
 
   void setWxCpService(WxCpService wxCpService);
+
+  /**
+   * 互联企业的服务类对象
+   *
+   * @return
+   */
+  WxCpLinkedCorpService getLinkedCorpService();
+
+  /**
+   * 获取下级/下游企业小程序session
+   * https://developer.work.weixin.qq.com/document/path/93355
+   * @param userId
+   * @param sessionKey
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpMaTransferSession getCorpTransferSession(String userId, String sessionKey,WxCpCorpGroupCorpGetTokenReq req) throws WxErrorException;
 }

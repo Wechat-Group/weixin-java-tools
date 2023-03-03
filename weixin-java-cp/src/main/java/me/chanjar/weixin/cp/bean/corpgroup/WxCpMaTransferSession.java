@@ -2,6 +2,8 @@ package me.chanjar.weixin.cp.bean.corpgroup;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import me.chanjar.weixin.cp.bean.WxCpAgent;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
 
@@ -14,11 +16,32 @@ import java.io.Serializable;
  * @Date: 27/2/2023 9:10 PM
  */
 @Data
-public class WxCpMaTransferSession implements Serializable{
+public class WxCpMaTransferSession implements Serializable {
 
   private static final long serialVersionUID = 4189407986285166516L;
   @SerializedName("userid")
   private String userId;
   @SerializedName("session_key")
   private String sessionKey;
+
+
+  /**
+   * From json WxCpMaTransferSession.
+   *
+   * @param json the json
+   * @return the WxCpMaTransferSession
+   */
+  public static WxCpMaTransferSession fromJson(String json) {
+    return WxCpGsonBuilder.create().fromJson(json, WxCpMaTransferSession.class);
+  }
+
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
+  public String toJson() {
+    return WxCpGsonBuilder.create().toJson(this);
+  }
+
 }

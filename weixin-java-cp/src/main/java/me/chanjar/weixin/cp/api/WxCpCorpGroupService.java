@@ -15,8 +15,4 @@ import java.util.List;
  */
 public interface WxCpCorpGroupService {
   List<WxCpCorpGroupCorp> listAppShareInfo(Integer agentId,Integer businessType,String corpId,Integer limit,String cursor) throws WxErrorException;
-
-  WxCpCorpGroupCorpToken getCorpToken(Integer agentId,Integer businessType,String corpId) throws WxErrorException;
-
-  WxCpMaTransferSession getCorpTransferSession(String userId,String sessionKey) throws WxErrorException;
 }

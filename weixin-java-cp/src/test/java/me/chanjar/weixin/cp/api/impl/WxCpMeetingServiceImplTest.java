@@ -79,7 +79,7 @@ public class WxCpMeetingServiceImplTest {
     wxCpMeeting.setTitle("修改会议");
     wxCpMeeting.setDescription("修改会议描述");
     WxCpMeetingUpdateResult wxCpMeetingUpdateResult = wxCpMeetingService.update(wxCpMeeting);
-    assertEquals(wxCpMeetingUpdateResult.getErrcode(), 0L);
+    assertEquals(wxCpMeetingUpdateResult.getErrcode().longValue(), 0L);
     /*
       测试 获取会议详情
      */

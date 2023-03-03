@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.bean.corpgroup;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
 
@@ -20,4 +21,18 @@ public class WxCpCorpGroupCorpToken implements Serializable {
   private String accessToken;
   @SerializedName("expires_in")
   private int expiresIn;
+
+  public static WxCpCorpGroupCorpToken fromJson(String json) {
+    return WxCpGsonBuilder.create().fromJson(json, WxCpCorpGroupCorpToken.class);
+  }
+
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
+  public String toJson() {
+    return WxCpGsonBuilder.create().toJson(this);
+  }
+
 }

@@ -15,9 +15,11 @@ import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.corpgroup.WxCpCorpGroupCorpGetTokenReq;
+import me.chanjar.weixin.cp.bean.corpgroup.WxCpMaTransferSession;
 import me.chanjar.weixin.cp.config.WxCpCorpGroupConfigStorage;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.corpgroup.service.WxCpCgService;
+import me.chanjar.weixin.cp.corpgroup.service.WxCpLinkedCorpService;
 
 import java.io.IOException;
 
@@ -34,7 +36,7 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.CorpGroup.*;
 @Slf4j
 public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, RequestHttp<H, P> {
 
-  WxCpService mainService;
+  WxCpService wxCpService;
   /**
    * The Config storage.
    */
@@ -42,6 +44,8 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
+
+  private final WxCpLinkedCorpService linkedCorpService = new WxCpLinkedCorpServiceImpl(this);
 
   @Override
   public void updateCorpAccessToken(String corpId, Integer agentId, String corpAccessToken, int expiresInSeconds) {
@@ -63,8 +67,8 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
       jsonObject.addProperty("corpid", corpId);
       jsonObject.addProperty("agentid", agentId);
       jsonObject.addProperty("business_type", businessType);
-      final String url = this.mainService.getWxCpConfigStorage().getApiUrl(CORP_GET_TOKEN);
-      String responseContent = this.mainService.post(url, jsonObject);
+      final String url = this.wxCpService.getWxCpConfigStorage().getApiUrl(CORP_GET_TOKEN);
+      String responseContent = this.wxCpService.post(url, jsonObject);
       WxAccessToken corpToken = WxAccessToken.fromJson(responseContent);
       this.configStorage.updateCorpAccessToken(corpId, agentId, corpToken.getAccessToken(), corpToken.getExpiresIn());
     }
@@ -230,7 +234,7 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
       if (error.getErrorCode() == WxCpErrorMsgEnum.CODE_42009.getCode()) {
         // 强制设置wxCpCorpGroupConfigStorage它的corp access token过期了，这样在下一次请求里就会刷新corp access token
         this.configStorage.expireCorpAccessToken(req.getCorpId(), req.getAgentId());
-        if (this.getConfigStorage().autoRefreshToken()) {
+        if (this.getWxCpCorpGroupConfigStorage().autoRefreshToken()) {
           log.warn("即将重新获取新的access_token，错误代码：{}，错误信息：{}", error.getErrorCode(), error.getErrorMsg());
           return this.execute(executor, uri, data, req);
         }
@@ -253,7 +257,8 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
     this.initHttp();
   }
 
-  public WxCpCorpGroupConfigStorage getConfigStorage() {
+  @Override
+  public WxCpCorpGroupConfigStorage getWxCpCorpGroupConfigStorage() {
     return configStorage;
   }
 
@@ -275,10 +280,21 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
 
   @Override
   public void setWxCpService(WxCpService wxCpService) {
-    this.mainService = wxCpService;
+    this.wxCpService = wxCpService;
   }
 
-  public WxCpService getMainService() {
-    return mainService;
+  @Override
+  public WxCpLinkedCorpService getLinkedCorpService() {
+    return linkedCorpService;
+  }
+
+  @Override
+  public WxCpMaTransferSession getCorpTransferSession(String userId, String sessionKey, WxCpCorpGroupCorpGetTokenReq req) throws WxErrorException {
+    final String url = this.wxCpService.getWxCpConfigStorage().getApiUrl(MA_TRANSFER_SESSION);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("userid", userId);
+    jsonObject.addProperty("session_key", sessionKey);
+    String result = this.post(url, jsonObject.toString(), req);
+    return WxCpMaTransferSession.fromJson(result);
   }
 }

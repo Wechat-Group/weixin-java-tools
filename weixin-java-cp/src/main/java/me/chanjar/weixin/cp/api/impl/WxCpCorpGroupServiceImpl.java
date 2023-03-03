@@ -45,25 +45,4 @@ public class WxCpCorpGroupServiceImpl implements WxCpCorpGroupService {
       }.getType()
     );
   }
-
-  @Override
-  public WxCpCorpGroupCorpToken getCorpToken(Integer agentId, Integer businessType, String corpId) throws WxErrorException {
-    final String url = this.cpService.getWxCpConfigStorage().getApiUrl(CORP_GET_TOKEN);
-    JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("agentid", agentId);
-    jsonObject.addProperty("corpid", corpId);
-    jsonObject.addProperty("business_type", businessType);
-    String result = this.cpService.post(url, jsonObject);
-    return WxCpGsonBuilder.create().fromJson(result, WxCpCorpGroupCorpToken.class);
-  }
-
-  @Override
-  public WxCpMaTransferSession getCorpTransferSession(String userId, String sessionKey) throws WxErrorException {
-    final String url = this.cpService.getWxCpConfigStorage().getApiUrl(MA_TRANSFER_SESSION);
-    JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("userid", userId);
-    jsonObject.addProperty("session_key", sessionKey);
-    String result = this.cpService.post(url, jsonObject);
-    return WxCpGsonBuilder.create().fromJson(result, WxCpMaTransferSession.class);
-  }
 }
