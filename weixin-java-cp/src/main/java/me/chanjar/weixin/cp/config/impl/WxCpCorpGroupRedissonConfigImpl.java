@@ -34,11 +34,11 @@ public class WxCpCorpGroupRedissonConfigImpl implements WxCpCorpGroupConfigStora
    */
   protected static final String LOCK_KEY = "wechat_cg_lock:";
   /**
-   * The constant LOCKER_ACCESS_TOKEN.
+   * The constant LOCKER_CORP_ACCESS_TOKEN.
    */
   protected static final String LOCKER_CORP_ACCESS_TOKEN = "corpAccessTokenLock";
   /**
-   * The constant CP_ACCESS_TOKEN_KEY.
+   * The constant CG_ACCESS_TOKEN_KEY.
    */
   protected static final String CG_ACCESS_TOKEN_KEY = "wechat_cg_access_token_key:";
   @NonNull
