@@ -135,7 +135,7 @@ public class ComplaintDetailResult implements Serializable {
      * </pre>
      */
     @SerializedName("media_url")
-    private String mediaUrl;
+    private List<String> mediaUrl;
 
   }
 
