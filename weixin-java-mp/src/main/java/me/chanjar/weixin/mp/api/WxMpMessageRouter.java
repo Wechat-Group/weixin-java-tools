@@ -14,10 +14,12 @@ import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.LogExceptionHandler;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.ws.Holder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -208,11 +210,14 @@ public class WxMpMessageRouter {
 
     WxMpXmlOutMessage res = null;
     final List<Future<?>> futures = new ArrayList<>();
+    String appId = WxMpConfigStorageHolder.get();
     for (final WxMpMessageRouterRule rule : matchRules) {
       // 返回最后一个非异步的rule的执行结果
       if (rule.isAsync()) {
         futures.add(
           this.executorService.submit(() -> {
+            //传入父线程的appId
+            this.wxMpService.switchoverTo(appId);
             rule.service(wxMessage, context, mpService, WxMpMessageRouter.this.sessionManager, WxMpMessageRouter.this.exceptionHandler);
           })
         );
