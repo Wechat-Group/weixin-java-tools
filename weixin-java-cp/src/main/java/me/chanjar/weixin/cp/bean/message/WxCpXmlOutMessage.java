@@ -6,7 +6,9 @@ import lombok.Data;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import me.chanjar.weixin.cp.bean.outxmlbuilder.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
+import me.chanjar.weixin.cp.util.crypto.WxCpTpCryptUtil;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 
 import java.io.Serializable;
@@ -139,6 +141,17 @@ public abstract class WxCpXmlOutMessage implements Serializable {
   public String toEncryptedXml(WxCpConfigStorage wxCpConfigStorage) {
     String plainXml = toXml();
     WxCpCryptUtil pc = new WxCpCryptUtil(wxCpConfigStorage);
+    return pc.encrypt(plainXml);
+  }
+
+  /**
+   * 企业微信服务商 转换加密的xml 格式
+   * @param wxCpTpConfigStorage th wx cp tp config storage
+   * @return the string
+   */
+  public String toEncryptedXml(WxCpTpConfigStorage wxCpTpConfigStorage) {
+    String plainXml = toXml();
+    WxCpTpCryptUtil pc = new WxCpTpCryptUtil(wxCpTpConfigStorage);
     return pc.encrypt(plainXml);
   }
 }
