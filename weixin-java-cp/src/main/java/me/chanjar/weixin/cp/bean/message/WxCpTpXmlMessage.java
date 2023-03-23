@@ -5,13 +5,22 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.converters.basic.IntConverter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.IntegerArrayConverter;
 import me.chanjar.weixin.common.util.xml.StringArrayConverter;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
+import me.chanjar.weixin.cp.util.crypto.WxCpTpCryptUtil;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +41,8 @@ public class WxCpTpXmlMessage implements Serializable {
    * 使用dom4j解析的存放所有xml属性和值的map.
    */
   private Map<String, Object> allFieldsMap;
+
+
 
   /**
    * The Suite id.
@@ -262,6 +273,9 @@ public class WxCpTpXmlMessage implements Serializable {
   @XStreamAlias("TemplateId")
   @XStreamConverter(value = XStreamCDataConverter.class)
   protected String templateId;
+
+  @XStreamAlias("AgentID")
+  private String agentId;
 
   /**
    * The Create time.
@@ -774,4 +788,38 @@ public class WxCpTpXmlMessage implements Serializable {
     return xmlPackage;
   }
 
+  /**
+   * 从加密字符串转换.
+   * @param encryptedXml              the encrypted xml
+   * @param wxCpTpConfigStorage       the wx cp tp config storage
+   * @param timestamp                 the timestamp
+   * @param nonce                     the nonce
+   * @param msgSignature              the msg signature
+   * @return                          the wx cp tp xml message
+   */
+  public static WxCpTpXmlMessage fromEncryptedXml(String encryptedXml, WxCpTpConfigStorage wxCpTpConfigStorage, String timestamp, String nonce, String msgSignature) {
+    WxCpTpCryptUtil cpTpCryptUtil = new WxCpTpCryptUtil(wxCpTpConfigStorage);
+    String plainText = cpTpCryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    log.debug("解密后的原始xml消息内容：{}", plainText);
+    return  fromXml(plainText);
+  }
+
+  /**
+   * From encrypted xml wx cp tp xml message.
+   * @param is                     the is
+   * @param wxCpTpConfigStorage    the wx cp tp config storage
+   * @param timestamp              the timestamp
+   * @param nonce                  the nonce
+   * @param msgSignature           the msg signature
+   * @return                       the wx cp tp xml message
+   */
+  public static WxCpTpXmlMessage fromEncryptedXml(InputStream is, WxCpTpConfigStorage wxCpTpConfigStorage,
+                                                String timestamp, String nonce, String msgSignature) {
+    try {
+      return fromEncryptedXml(IOUtils.toString(is, StandardCharsets.UTF_8), wxCpTpConfigStorage, timestamp, nonce,
+        msgSignature);
+    } catch (IOException e) {
+      throw new WxRuntimeException(e);
+    }
+  }
 }
