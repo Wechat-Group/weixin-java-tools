@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.message;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaMessage;
+import cn.binarywang.wx.miniapp.util.WxMaConfigHolder;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.Data;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
@@ -127,7 +128,7 @@ public class WxMaMessageRouter {
     if (matchRules.size() == 0) {
       return null;
     }
-
+    String miniAppId = WxMaConfigHolder.get();
     final List<Future<?>> futures = new ArrayList<>();
     WxMaXmlOutMessage result = null;
     for (final WxMaMessageRouterRule rule : matchRules) {
@@ -135,6 +136,7 @@ public class WxMaMessageRouter {
       if (rule.isAsync()) {
         futures.add(
           this.executorService.submit(() -> {
+            this.wxMaService.switchoverTo(miniAppId);
             rule.service(wxMessage, context, WxMaMessageRouter.this.wxMaService, WxMaMessageRouter.this.sessionManager, WxMaMessageRouter.this.exceptionHandler);
           })
         );
