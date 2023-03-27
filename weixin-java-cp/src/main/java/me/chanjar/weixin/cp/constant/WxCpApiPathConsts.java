@@ -1451,4 +1451,28 @@ public interface WxCpApiPathConsts {
      */
     String SENG_MESSAGE="/cgi-bin/linkedcorp/message/send";
   }
+
+  interface IdConvert {
+
+    /**
+     * 将企业主体下的客户标签ID转换成服务商主体下的客户标签ID。
+     */
+    String EXTERNAL_TAG_ID = "/cgi-bin/idconvert/external_tagid";
+
+    /**
+     * 将微信客户的unionid转为第三方主体的external_userid
+     * 该接口有调用频率限制，当subject_type为0时，按企业作如下的限制：10万次/小时、48万次/天、750万次/月
+     */
+    String UNION_ID_TO_EXTERNAL_USER_ID = "/cgi-bin/idconvert/unionid_to_external_userid";
+
+    /**
+     * 将企业主体下的微信客服ID转换成服务商主体下的微信客服ID
+     */
+    String OPEN_KF_ID = "/cgi-bin/idconvert/open_kfid";
+
+    /**
+     * 将应用获取的外部用户临时idtmp_external_userid，转换为external_userid。
+     */
+    String CONVERT_TMP_EXTERNAL_USER_ID = "/cgi-bin/idconvert/convert_tmp_external_userid";
+  }
 }
