@@ -10,6 +10,7 @@ import me.chanjar.weixin.cp.bean.external.*;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
 import me.chanjar.weixin.cp.bean.external.msg.Attachment;
+import me.chanjar.weixin.cp.bean.external.msg.AttachmentBuilder;
 import me.chanjar.weixin.cp.bean.external.msg.Image;
 import me.chanjar.weixin.cp.bean.external.msg.Video;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -17,7 +18,10 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 import org.testng.collections.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import static org.testng.Assert.assertNotNull;
 
@@ -419,6 +423,7 @@ public class WxCpExternalContactServiceImplTest {
     System.out.println(result);
     assertNotNull(result);
   }
+
   /**
    * Test get user behavior statistic.
    */
@@ -460,6 +465,33 @@ public class WxCpExternalContactServiceImplTest {
     List<Attachment> attachments = new ArrayList<>();
     attachments.add(attachment);
     attachments.add(attachment2);
+    this.wxCpService.getExternalContactService().sendWelcomeMsg(WxCpWelcomeMsg.builder()
+      .welcomeCode("abc")
+      .attachments(attachments)
+      .build());
+  }
+
+  /**
+   * Test send welcome msg. use AttachmentBuilder
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testSendWelcomeMsg2() throws WxErrorException {
+
+    Attachment imageAttachment = AttachmentBuilder.imageBuilder().mediaId("123123").build();
+    Attachment videoAttachment = AttachmentBuilder.videoBuilder().mediaId("video_media_id").build();
+    Attachment miniProgramAttachment = AttachmentBuilder.miniProgramBuilder()
+      .title("title")
+      .picMediaId("123123123")
+      .appId("wxcxxxxxxxxxxx")
+      .page("https://")
+      .build();
+
+    List<Attachment> attachments = new ArrayList<>();
+    attachments.add(imageAttachment);
+    attachments.add(videoAttachment);
+    attachments.add(miniProgramAttachment);
     this.wxCpService.getExternalContactService().sendWelcomeMsg(WxCpWelcomeMsg.builder()
       .welcomeCode("abc")
       .attachments(attachments)
