@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.api.*;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.util.WxMaConfigHolder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -350,6 +351,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
+  @JsonDeserialize
   public void setMultiConfigs(Map<String, WxMaConfig> configs, String defaultMiniappId) {
     this.configMap = Maps.newHashMap(configs);
     WxMaConfigHolder.set(defaultMiniappId);
