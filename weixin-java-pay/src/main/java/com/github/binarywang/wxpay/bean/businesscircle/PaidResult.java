@@ -54,7 +54,7 @@ public class PaidResult implements Serializable {
    * 示例值：123456
    */
   @SerializedName("shop_number")
-  private String shop_number;
+  private String shopNumber;
 
   /**
    * 小程序APPID
