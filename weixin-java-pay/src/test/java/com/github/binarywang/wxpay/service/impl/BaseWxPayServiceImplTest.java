@@ -2,8 +2,7 @@ package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.utils.qrcode.QrcodeUtils;
 import com.github.binarywang.wxpay.bean.coupon.*;
-import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
-import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResultTest;
+import com.github.binarywang.wxpay.bean.notify.*;
 import com.github.binarywang.wxpay.bean.order.WxPayAppOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayMpOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
@@ -11,6 +10,7 @@ import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.config.WxPayConfig;
+import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.constant.WxPayConstants.AccountType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.BillType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
@@ -19,6 +19,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
 import com.github.binarywang.wxpay.testbase.XmlWxPayConfig;
+import com.github.binarywang.wxpay.util.RequestUtils;
 import com.github.binarywang.wxpay.util.XmlConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,10 +30,14 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 import static com.github.binarywang.wxpay.constant.WxPayConstants.TarType;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -728,9 +733,9 @@ public class BaseWxPayServiceImplTest {
     //构建金额信息
     WxPayUnifiedOrderV3Request.Amount amount = new WxPayUnifiedOrderV3Request.Amount();
     //设置币种信息
-    amount.setCurrency("CNY");
+    amount.setCurrency(WxPayConstants.CurrencyType.CNY);
     //设置金额
-    amount.setTotal(1);
+    amount.setTotal(BaseWxPayRequest.yuan2Fen(BigDecimal.ONE));
     request.setAmount(amount);
 
     WxPayUnifiedOrderV3Result.JsapiResult result = this.payService.createOrderV3(TradeTypeEnum.JSAPI, request);
@@ -767,6 +772,63 @@ public class BaseWxPayServiceImplTest {
     System.out.println(GSON.toJson(result));
   }
 
+  /**
+   * 测试V3支付成功回调
+   * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_5.shtml
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testParseOrderNotifyV3Result(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+    String timestamp = request.getHeader("Wechatpay-Timestamp");
+    Optional.ofNullable(timestamp).orElseThrow(() -> new RuntimeException("时间戳不能为空"));
+
+    String nonce = request.getHeader("Wechatpay-Nonce");
+    Optional.ofNullable(nonce).orElseThrow(() -> new RuntimeException("nonce不能为空"));
+
+    String serialNo = request.getHeader("Wechatpay-Serial");
+    Optional.ofNullable(serialNo).orElseThrow(() -> new RuntimeException("serialNo不能为空"));
+
+    String signature = request.getHeader("Wechatpay-Signature");
+    Optional.ofNullable(signature).orElseThrow(() -> new RuntimeException("signature不能为空"));
+
+    log.info("请求头参数为：timestamp:{} nonce:{} serialNo:{} signature:{}", timestamp, nonce, serialNo, signature);
+
+    // V2版本请参考com.github.binarywang.wxpay.bean.notify.WxPayRefundNotifyResultTest里的单元测试
+    final WxPayOrderNotifyV3Result wxPayOrderNotifyV3Result = this.payService.parseOrderNotifyV3Result(RequestUtils.readData(request),
+      new SignatureHeader(timestamp, nonce, signature, serialNo));
+    log.info(GSON.toJson(wxPayOrderNotifyV3Result));
+  }
+
+  /**
+   * 测试V3退款成功回调
+   * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_11.shtml
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testParseRefundNotifyV3Result(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+    String timestamp = request.getHeader("Wechatpay-Timestamp");
+    Optional.ofNullable(timestamp).orElseThrow(() -> new RuntimeException("时间戳不能为空"));
+
+    String nonce = request.getHeader("Wechatpay-Nonce");
+    Optional.ofNullable(nonce).orElseThrow(() -> new RuntimeException("nonce不能为空"));
+
+    String serialNo = request.getHeader("Wechatpay-Serial");
+    Optional.ofNullable(serialNo).orElseThrow(() -> new RuntimeException("serialNo不能为空"));
+
+    String signature = request.getHeader("Wechatpay-Signature");
+    Optional.ofNullable(signature).orElseThrow(() -> new RuntimeException("signature不能为空"));
+
+    log.info("支付请求头参数为：timestamp:{} nonce:{} serialNo:{} signature:{}", timestamp, nonce, serialNo, signature);
+
+    final WxPayRefundNotifyV3Result wxPayRefundNotifyV3Result = this.payService.parseRefundNotifyV3Result(RequestUtils.readData(request),
+      new SignatureHeader(timestamp, nonce, signature, serialNo));
+    log.info(GSON.toJson(wxPayRefundNotifyV3Result));
+  }
+
   @Test
   public void testRefundQueryV3() throws WxPayException {
     WxPayRefundQueryV3Request request = new WxPayRefundQueryV3Request();
@@ -778,10 +840,11 @@ public class BaseWxPayServiceImplTest {
 
   /**
    * 测试包含正向代理的测试
+   *
    * @throws WxPayException
    */
   @Test
-  public void testQueryOrderV3WithProxy()  {
+  public void testQueryOrderV3WithProxy() {
     try {
       WxPayOrderQueryV3Request request = new WxPayOrderQueryV3Request();
       request.setOutTradeNo("n1ZvYqjAg3D3LUBa");

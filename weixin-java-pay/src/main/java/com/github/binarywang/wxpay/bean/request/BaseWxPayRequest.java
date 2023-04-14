@@ -22,6 +22,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.github.binarywang.wxpay.constant.WxPayConstants.SignType.ALL_SIGN_TYPES;
 
@@ -147,6 +148,13 @@ public abstract class BaseWxPayRequest implements Serializable {
    */
   public static Integer yuanToFen(String yuan) {
     return new BigDecimal(yuan).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).intValue();
+  }
+
+  /**
+   * 元转分
+   */
+  public static Integer yuan2Fen(BigDecimal yuan) {
+    return yuan.multiply(BigDecimal.valueOf(100)).setScale(2, BigDecimal.ROUND_HALF_UP).intValue();
   }
 
   /**
