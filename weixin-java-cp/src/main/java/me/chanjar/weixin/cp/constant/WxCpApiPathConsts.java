@@ -966,6 +966,10 @@ public interface WxCpApiPathConsts {
      */
     String GET_USER_ID = "/cgi-bin/user/getuserid";
     /**
+     * The constant GET_USER_ID_BY_EMAIL.
+     */
+    String GET_USER_ID_BY_EMAIL = "/cgi-bin/user/get_userid_by_email";
+    /**
      * The constant GET_EXTERNAL_CONTACT.
      */
     String GET_EXTERNAL_CONTACT = "/cgi-bin/crm/get_external_contact?external_userid=";
