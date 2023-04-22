@@ -165,8 +165,10 @@ public class WxCpMsgAuditTest {
     /*
      * 图片，语音，视频，表情，文件，音频存档消息,音频共享文档消息调用  获取媒体消息
      */
-    List<String> mediaType = Arrays.asList("image", "voice", "video", "emotion", "file",
-      "meeting_voice_call", "voip_doc_share");
+    List<String> mediaType = Arrays.asList(WxCpConsts.MsgAuditMediaType.IMAGE,
+      WxCpConsts.MsgAuditMediaType.VOICE, WxCpConsts.MsgAuditMediaType.VIDEO,
+      WxCpConsts.MsgAuditMediaType.EMOTION, WxCpConsts.MsgAuditMediaType.FILE,
+      WxCpConsts.MsgAuditMediaType.MEETING_VOICE_CALL, WxCpConsts.MsgAuditMediaType.VOIP_DOC_SHARE);
 
     // 模拟多次拉取数据，根据seq拉取
     for (int i = 0; i < 3; i++) {
@@ -214,43 +216,43 @@ public class WxCpMsgAuditTest {
             // sdkFileId
             String sdkFileId = "";
             switch (msgType) {
-              case "image":
-                suffix = ".jpg";
+              case WxCpConsts.MsgAuditMediaType.IMAGE:
+                suffix = WxCpConsts.MsgAuditMediaType.MsgAuditSuffix.JPG;
                 md5Sum = decryptData.getImage().getMd5Sum();
                 sdkFileId = decryptData.getImage().getSdkFileId();
                 break;
-              case "voice":
-                suffix = ".amr";
+              case WxCpConsts.MsgAuditMediaType.VOICE:
+                suffix = WxCpConsts.MsgAuditMediaType.MsgAuditSuffix.AMR;
                 md5Sum = decryptData.getVoice().getMd5Sum();
                 sdkFileId = decryptData.getVoice().getSdkFileId();
                 break;
-              case "video":
-                suffix = ".mp4";
+              case WxCpConsts.MsgAuditMediaType.VIDEO:
+                suffix = WxCpConsts.MsgAuditMediaType.MsgAuditSuffix.MP4;
                 md5Sum = decryptData.getVideo().getMd5Sum();
                 sdkFileId = decryptData.getVideo().getSdkFileId();
                 break;
-              case "emotion":
+              case WxCpConsts.MsgAuditMediaType.EMOTION:
                 md5Sum = decryptData.getEmotion().getMd5Sum();
                 sdkFileId = decryptData.getEmotion().getSdkFileId();
                 int type = decryptData.getEmotion().getType();
                 switch (type) {
                   case 1:
-                    suffix = ".gif";
+                    suffix = WxCpConsts.MsgAuditMediaType.MsgAuditSuffix.GIF;
                     break;
                   case 2:
-                    suffix = ".png";
+                    suffix = WxCpConsts.MsgAuditMediaType.MsgAuditSuffix.PNG;
                     break;
                   default:
                     return;
                 }
                 break;
-              case "file":
+              case WxCpConsts.MsgAuditMediaType.FILE:
                 md5Sum = decryptData.getFile().getMd5Sum();
                 suffix = "." + decryptData.getFile().getFileExt();
                 sdkFileId = decryptData.getFile().getSdkFileId();
                 break;
               // 音频存档消息
-              case "meeting_voice_call":
+              case WxCpConsts.MsgAuditMediaType.MEETING_VOICE_CALL:
 
                 md5Sum = decryptData.getVoiceId();
                 sdkFileId = decryptData.getMeetingVoiceCall().getSdkFileId();
@@ -262,7 +264,7 @@ public class WxCpMsgAuditTest {
 
                 break;
               // 音频共享文档消息
-              case "voip_doc_share":
+              case WxCpConsts.MsgAuditMediaType.VOIP_DOC_SHARE:
 
                 md5Sum = decryptData.getVoipId();
                 WxCpFileItem docShare = decryptData.getVoipDocShare();
