@@ -779,7 +779,7 @@ public class BaseWxPayServiceImplTest {
    * @throws Exception the exception
    */
   @Test
-  public void testParseOrderNotifyV3Result(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String testParseOrderNotifyV3Result(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     String timestamp = request.getHeader("Wechatpay-Timestamp");
     Optional.ofNullable(timestamp).orElseThrow(() -> new RuntimeException("时间戳不能为空"));
@@ -799,6 +799,8 @@ public class BaseWxPayServiceImplTest {
     final WxPayOrderNotifyV3Result wxPayOrderNotifyV3Result = this.payService.parseOrderNotifyV3Result(RequestUtils.readData(request),
       new SignatureHeader(timestamp, nonce, signature, serialNo));
     log.info(GSON.toJson(wxPayOrderNotifyV3Result));
+
+    return WxPayNotifyV3Response.success("成功");
   }
 
   /**
@@ -808,7 +810,7 @@ public class BaseWxPayServiceImplTest {
    * @throws Exception the exception
    */
   @Test
-  public void testParseRefundNotifyV3Result(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  public String testParseRefundNotifyV3Result(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     String timestamp = request.getHeader("Wechatpay-Timestamp");
     Optional.ofNullable(timestamp).orElseThrow(() -> new RuntimeException("时间戳不能为空"));
@@ -827,6 +829,21 @@ public class BaseWxPayServiceImplTest {
     final WxPayRefundNotifyV3Result wxPayRefundNotifyV3Result = this.payService.parseRefundNotifyV3Result(RequestUtils.readData(request),
       new SignatureHeader(timestamp, nonce, signature, serialNo));
     log.info(GSON.toJson(wxPayRefundNotifyV3Result));
+
+    // 退款金额
+    final WxPayRefundNotifyV3Result.DecryptNotifyResult result = wxPayRefundNotifyV3Result.getResult();
+    final BigDecimal total = BaseWxPayRequest.fen2Yuan(BigDecimal.valueOf(result.getAmount().getTotal()));
+    final BigDecimal payerRefund = BaseWxPayRequest.fen2Yuan(BigDecimal.valueOf(result.getAmount().getPayerRefund()));
+
+    // 处理业务逻辑 ...
+
+    return WxPayNotifyV3Response.success("成功");
+  }
+
+  @Test
+  public void testWxPayNotifyV3Response() {
+    System.out.println(WxPayNotifyV3Response.success("success"));
+    System.out.println(WxPayNotifyV3Response.fail("fail"));
   }
 
   @Test

@@ -158,6 +158,13 @@ public abstract class BaseWxPayRequest implements Serializable {
   }
 
   /**
+   * 分转元
+   */
+  public static BigDecimal fen2Yuan(BigDecimal fen) {
+    return fen.divide(BigDecimal.valueOf(100)).setScale(2, BigDecimal.ROUND_HALF_UP);
+  }
+
+  /**
    * 检查请求参数内容，包括必填参数以及特殊约束.
    */
   private void checkFields() throws WxPayException {
