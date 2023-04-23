@@ -3,11 +3,9 @@ package com.binarywang.spring.starter.wxjava.open.config.storage;
 import com.binarywang.spring.starter.wxjava.open.properties.RedisProperties;
 import com.binarywang.spring.starter.wxjava.open.properties.WxOpenProperties;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.redis.RedissonWxRedisOps;
-import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
-import me.chanjar.weixin.open.api.impl.WxOpenInRedisConfigStorage;
+import me.chanjar.weixin.open.api.impl.WxOpenInRedissonConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -40,7 +38,7 @@ public class WxOpenInRedissonConfigStorageConfiguration extends AbstractWxOpenCo
     return this.config(config, properties);
   }
 
-  private WxOpenInRedisConfigStorage getWxOpenInRedissonConfigStorage() {
+  private WxOpenInRedissonConfigStorage getWxOpenInRedissonConfigStorage() {
     RedisProperties redisProperties = properties.getConfigStorage().getRedis();
     RedissonClient redissonClient;
     if (redisProperties != null && StringUtils.isNotEmpty(redisProperties.getHost())) {
@@ -48,8 +46,7 @@ public class WxOpenInRedissonConfigStorageConfiguration extends AbstractWxOpenCo
     } else {
       redissonClient = applicationContext.getBean(RedissonClient.class);
     }
-    WxRedisOps redisOps = new RedissonWxRedisOps(redissonClient);
-    return new WxOpenInRedisConfigStorage(redisOps, properties.getConfigStorage().getKeyPrefix());
+    return new WxOpenInRedissonConfigStorage(redissonClient, properties.getConfigStorage().getKeyPrefix());
   }
 
   private RedissonClient getRedissonClient() {

@@ -3,8 +3,6 @@ package com.binarywang.spring.starter.wxjava.open.config.storage;
 import com.binarywang.spring.starter.wxjava.open.properties.RedisProperties;
 import com.binarywang.spring.starter.wxjava.open.properties.WxOpenProperties;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.redis.JedisWxRedisOps;
-import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
 import me.chanjar.weixin.open.api.impl.WxOpenInRedisConfigStorage;
@@ -46,8 +44,7 @@ public class WxOpenInJedisConfigStorageConfiguration extends AbstractWxOpenConfi
     } else {
       jedisPool = applicationContext.getBean(JedisPool.class);
     }
-    WxRedisOps redisOps = new JedisWxRedisOps(jedisPool);
-    return new WxOpenInRedisConfigStorage(redisOps, properties.getConfigStorage().getKeyPrefix());
+    return new WxOpenInRedisConfigStorage(jedisPool, properties.getConfigStorage().getKeyPrefix());
   }
 
   private JedisPool getJedisPool() {
