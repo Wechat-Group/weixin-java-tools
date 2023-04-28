@@ -631,4 +631,11 @@ public interface WxCpTpService {
 
   void setWxCpTpIdConverService(WxCpTpIdConvertService wxCpTpIdConvertService);
 
+  /**
+   * 构造第三方应用oauth2链接
+   */
+  WxCpTpOAuth2Service getWxCpTpOAuth2Service();
+
+  void setWxCpTpOAuth2Service(WxCpTpOAuth2Service wxCpTpOAuth2Service);
+
 }

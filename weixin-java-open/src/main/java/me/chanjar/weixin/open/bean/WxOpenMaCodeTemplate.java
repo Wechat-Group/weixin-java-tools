@@ -76,4 +76,10 @@ public class WxOpenMaCodeTemplate implements Serializable {
    */
   @SerializedName(value = "reason")
   private String reason;
+
+  /**
+   * 开发者
+   */
+  @SerializedName(value = "developer")
+  private String developer;
 }

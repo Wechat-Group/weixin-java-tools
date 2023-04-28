@@ -58,13 +58,13 @@ public class WxOpenProperties {
     /**
      * 指定key前缀.
      */
-    private String keyPrefix = "wx";
+    private String keyPrefix = "wx:open";
 
     /**
      * redis连接配置.
      */
     @NestedConfigurationProperty
-    private RedisProperties redis = new RedisProperties();
+    private WxOpenRedisProperties redis = new WxOpenRedisProperties();
 
     /**
      * http客户端类型.

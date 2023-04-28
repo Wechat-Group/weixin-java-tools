@@ -10,8 +10,8 @@ import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.constant.WxCpConsts;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
-import org.eclipse.jetty.util.ajax.JSON;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
@@ -67,7 +67,7 @@ public class WxCpLivingTest {
 
     final WxCpXmlMessage livingXmlMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, livingXml);
     livingXmlMsg.setAllFieldsMap(XmlUtils.xml2Map(livingXml));
-    log.info("livingXmlMsg:{}", JSON.toString(livingXmlMsg));
+    log.info("livingXmlMsg:{}", WxCpGsonBuilder.create().toJson(livingXmlMsg));
 
     /**
      * 直播回调事件常量
@@ -121,7 +121,7 @@ public class WxCpLivingTest {
      */
     String livingCode = wxCpService.getLivingService().getLivingCode("o50by5NezHciWnoexJsrI49ILNqI",
       "lvOQpTDwAAD2MYuOq9y_bmLNMJfbbdGw");
-    log.info(JSON.toString(livingCode));
+    log.info(WxCpGsonBuilder.create().toJson(livingCode));
 
     // 直播详情
     WxCpLivingInfo livingInfo = wxCpService.getLivingService().getLivingInfo("lvOQpTDwAAcP9wNOSSxTwpbni-TMPNSg");

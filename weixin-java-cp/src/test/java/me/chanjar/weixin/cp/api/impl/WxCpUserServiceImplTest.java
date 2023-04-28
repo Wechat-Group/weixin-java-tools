@@ -179,6 +179,18 @@ public class WxCpUserServiceImplTest {
   }
 
   /**
+   * Test get user id by email.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testGetUserIdByEmail() throws WxErrorException {
+    String result = this.wxCpService.getUserService().getUserIdByEmail("xxx",1);
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  /**
    * Test get external contact.
    */
   @Test

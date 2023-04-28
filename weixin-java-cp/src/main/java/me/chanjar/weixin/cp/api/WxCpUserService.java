@@ -175,6 +175,23 @@ public interface WxCpUserService {
   String getUserId(String mobile) throws WxErrorException;
 
   /**
+   * <pre>
+   *
+   * 通过邮箱获取其所对应的userid。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/user/get_userid_by_email?access_token=ACCESS_TOKEN
+   *
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/95895
+   * </pre>
+   *
+   * @param email 手机号码。长度为5~32个字节
+   * @return userid email对应的成员userid
+   * @throws WxErrorException .
+   */
+  String getUserIdByEmail(String email,int emailType) throws WxErrorException;
+
+  /**
    * 获取外部联系人详情.
    * <pre>
    *   企业可通过此接口，根据外部联系人的userid，拉取外部联系人详情。权限说明：

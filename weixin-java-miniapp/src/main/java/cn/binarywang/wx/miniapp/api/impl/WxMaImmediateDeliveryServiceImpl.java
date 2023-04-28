@@ -36,6 +36,8 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
+
 /**
  * 微信小程序即时配送服务.
  * <pre>
@@ -48,11 +50,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 @RequiredArgsConstructor
 public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliveryService {
-
-  /**
-   * 微信响应码.
-   */
-  public static final String ERR_CODE = "errcode";
 
   /**
    * 顺丰同城响应码.

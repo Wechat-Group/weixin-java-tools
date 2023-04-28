@@ -1,11 +1,10 @@
-package me.chanjar.weixin.open.bean.minishopGoods;
+package me.chanjar.weixin.open.bean.minishopgoods;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Data

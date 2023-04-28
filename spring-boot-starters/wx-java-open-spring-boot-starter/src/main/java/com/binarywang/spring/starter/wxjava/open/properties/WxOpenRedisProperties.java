@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author someone
  */
 @Data
-public class RedisProperties implements Serializable {
+public class WxOpenRedisProperties implements Serializable {
   private static final long serialVersionUID = -5924815351660074401L;
 
   /**

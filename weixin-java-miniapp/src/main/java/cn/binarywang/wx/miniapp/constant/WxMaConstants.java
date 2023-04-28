@@ -1,5 +1,7 @@
 package cn.binarywang.wx.miniapp.constant;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * <pre>
  *  小程序常量.
@@ -7,9 +9,8 @@ package cn.binarywang.wx.miniapp.constant;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public abstract class WxMaConstants {
-  private WxMaConstants() {
-  }
+@UtilityClass
+public class WxMaConstants {
 
   /**
    * 默认的env_version值
@@ -17,14 +18,10 @@ public abstract class WxMaConstants {
   public static final String DEFAULT_ENV_VERSION = "release";
 
   /**
-   * 微信接口返回的参数errcode.
-   */
-  public static final String ERRCODE = "errcode";
-
-  /**
    * 素材类型.
    */
-  public abstract static class MediaType {
+  @UtilityClass
+  public static class MediaType {
     /**
      * 图片.
      */
@@ -34,7 +31,8 @@ public abstract class WxMaConstants {
   /**
    * 消息格式.
    */
-  public abstract static class MsgDataFormat {
+  @UtilityClass
+  public static class MsgDataFormat {
     public static final String XML = "XML";
     public static final String JSON = "JSON";
   }
@@ -42,6 +40,7 @@ public abstract class WxMaConstants {
   /**
    * 客服消息的消息类型.
    */
+  @UtilityClass
   public static class KefuMsgType {
     /**
      * 文本消息.
@@ -64,8 +63,8 @@ public abstract class WxMaConstants {
   /**
    * 内容安全检测的媒体类型
    */
+  @UtilityClass
   public static final class SecCheckMediaType {
-
     /**
      * 音频
      */
@@ -80,6 +79,7 @@ public abstract class WxMaConstants {
   /**
    * 快递账号绑定类型
    */
+  @UtilityClass
   public static final class BindAccountType {
 
     /**
@@ -96,6 +96,7 @@ public abstract class WxMaConstants {
   /**
    * 快递下单订单来源
    */
+  @UtilityClass
   public static final class OrderAddSource {
 
     /**
@@ -112,11 +113,8 @@ public abstract class WxMaConstants {
   /**
    * 快递下单保价
    */
+  @UtilityClass
   public static final class OrderAddInsured {
-    private OrderAddInsured() {
-
-    }
-
     /**
      * 不保价
      */
@@ -138,10 +136,8 @@ public abstract class WxMaConstants {
    * <p>
    * developer为开发版；trial为体验版；formal为正式版；默认为正式版
    */
+  @UtilityClass
   public static final class MiniProgramState {
-    private MiniProgramState() {
-    }
-
     /**
      * 开发版
      */
@@ -163,10 +159,8 @@ public abstract class WxMaConstants {
    * 进入小程序查看的语言类型
    * 支持zh_CN(简体中文)、en_US(英文)、zh_HK(繁体中文)、zh_TW(繁体中文)，默认为zh_CN
    */
+  @UtilityClass
   public static final class MiniProgramLang {
-    private MiniProgramLang() {
-    }
-
     /**
      * 简体中文
      */

@@ -1,13 +1,11 @@
 package com.binarywang.spring.starter.wxjava.open.config.storage;
 
-import com.binarywang.spring.starter.wxjava.open.properties.RedisProperties;
 import com.binarywang.spring.starter.wxjava.open.properties.WxOpenProperties;
+import com.binarywang.spring.starter.wxjava.open.properties.WxOpenRedisProperties;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.redis.RedissonWxRedisOps;
-import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
-import me.chanjar.weixin.open.api.impl.WxOpenInRedisConfigStorage;
+import me.chanjar.weixin.open.api.impl.WxOpenInRedissonConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -40,21 +38,20 @@ public class WxOpenInRedissonConfigStorageConfiguration extends AbstractWxOpenCo
     return this.config(config, properties);
   }
 
-  private WxOpenInRedisConfigStorage getWxOpenInRedissonConfigStorage() {
-    RedisProperties redisProperties = properties.getConfigStorage().getRedis();
+  private WxOpenInRedissonConfigStorage getWxOpenInRedissonConfigStorage() {
+    WxOpenRedisProperties wxOpenRedisProperties = properties.getConfigStorage().getRedis();
     RedissonClient redissonClient;
-    if (redisProperties != null && StringUtils.isNotEmpty(redisProperties.getHost())) {
+    if (wxOpenRedisProperties != null && StringUtils.isNotEmpty(wxOpenRedisProperties.getHost())) {
       redissonClient = getRedissonClient();
     } else {
       redissonClient = applicationContext.getBean(RedissonClient.class);
     }
-    WxRedisOps redisOps = new RedissonWxRedisOps(redissonClient);
-    return new WxOpenInRedisConfigStorage(redisOps, properties.getConfigStorage().getKeyPrefix());
+    return new WxOpenInRedissonConfigStorage(redissonClient, properties.getConfigStorage().getKeyPrefix());
   }
 
   private RedissonClient getRedissonClient() {
     WxOpenProperties.ConfigStorage storage = properties.getConfigStorage();
-    RedisProperties redis = storage.getRedis();
+    WxOpenRedisProperties redis = storage.getRedis();
 
     Config config = new Config();
     config.useSingleServer()

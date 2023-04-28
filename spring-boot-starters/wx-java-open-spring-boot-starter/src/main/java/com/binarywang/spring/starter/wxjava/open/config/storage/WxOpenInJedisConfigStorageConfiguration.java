@@ -1,10 +1,8 @@
 package com.binarywang.spring.starter.wxjava.open.config.storage;
 
-import com.binarywang.spring.starter.wxjava.open.properties.RedisProperties;
 import com.binarywang.spring.starter.wxjava.open.properties.WxOpenProperties;
+import com.binarywang.spring.starter.wxjava.open.properties.WxOpenRedisProperties;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.redis.JedisWxRedisOps;
-import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
 import me.chanjar.weixin.open.api.impl.WxOpenInRedisConfigStorage;
@@ -39,20 +37,19 @@ public class WxOpenInJedisConfigStorageConfiguration extends AbstractWxOpenConfi
   }
 
   private WxOpenInRedisConfigStorage getWxOpenInRedisConfigStorage() {
-    RedisProperties redisProperties = properties.getConfigStorage().getRedis();
+    WxOpenRedisProperties wxOpenRedisProperties = properties.getConfigStorage().getRedis();
     JedisPool jedisPool;
-    if (redisProperties != null && StringUtils.isNotEmpty(redisProperties.getHost())) {
+    if (wxOpenRedisProperties != null && StringUtils.isNotEmpty(wxOpenRedisProperties.getHost())) {
       jedisPool = getJedisPool();
     } else {
       jedisPool = applicationContext.getBean(JedisPool.class);
     }
-    WxRedisOps redisOps = new JedisWxRedisOps(jedisPool);
-    return new WxOpenInRedisConfigStorage(redisOps, properties.getConfigStorage().getKeyPrefix());
+    return new WxOpenInRedisConfigStorage(jedisPool, properties.getConfigStorage().getKeyPrefix());
   }
 
   private JedisPool getJedisPool() {
     WxOpenProperties.ConfigStorage storage = properties.getConfigStorage();
-    RedisProperties redis = storage.getRedis();
+    WxOpenRedisProperties redis = storage.getRedis();
 
     JedisPoolConfig config = new JedisPoolConfig();
     if (redis.getMaxActive() != null) {

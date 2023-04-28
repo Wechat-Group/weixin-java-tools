@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.util.json;
 
 import com.google.gson.*;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
 
@@ -16,8 +17,8 @@ public class WxMpMassSendResultAdapter implements JsonDeserializer<WxMpMassSendR
     WxMpMassSendResult sendResult = new WxMpMassSendResult();
     JsonObject sendResultJsonObject = json.getAsJsonObject();
 
-    if (sendResultJsonObject.get("errcode") != null && !sendResultJsonObject.get("errcode").isJsonNull()) {
-      sendResult.setErrorCode(GsonHelper.getAsString(sendResultJsonObject.get("errcode")));
+    if (sendResultJsonObject.get(WxConsts.ERR_CODE) != null && !sendResultJsonObject.get(WxConsts.ERR_CODE).isJsonNull()) {
+      sendResult.setErrorCode(GsonHelper.getAsString(sendResultJsonObject.get(WxConsts.ERR_CODE)));
     }
     if (sendResultJsonObject.get("errmsg") != null && !sendResultJsonObject.get("errmsg").isJsonNull()) {
       sendResult.setErrorMsg(GsonHelper.getAsString(sendResultJsonObject.get("errmsg")));

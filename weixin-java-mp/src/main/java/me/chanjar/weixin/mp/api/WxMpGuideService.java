@@ -8,8 +8,7 @@ import java.util.List;
 /**
  * 微信导购助手（现在叫对话能力）接口.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * created on  2020 -10-06
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020 -10-06
  */
 public interface WxMpGuideService {
 
@@ -62,7 +61,7 @@ public interface WxMpGuideService {
    *
    * @param account 顾问微信号（guide_account和guide_openid二选一，若同时请求，默认为guide_account）
    * @param openid  顾问openid或者unionid（guide_account和guide_openid二选一）
-   * @return 顾问信息
+   * @return 顾问信息 guide
    * @throws WxErrorException .
    */
   WxMpGuideInfo getGuide(String account, String openid) throws WxErrorException;
@@ -91,7 +90,7 @@ public interface WxMpGuideService {
    *
    * @param page 分页页数，从0开始
    * @param num  每页数量
-   * @return 顾问信息列表
+   * @return 顾问信息列表 wx mp guide list
    * @throws WxErrorException .
    */
   WxMpGuideList listGuide(int page, int num) throws WxErrorException;
@@ -111,7 +110,7 @@ public interface WxMpGuideService {
    * @param account    顾问微信号（guide_account和guide_openid二选一，若同时请求，默认为guide_account）
    * @param openid     顾问openid或者unionid（guide_account和guide_openid二选一）
    * @param qrcodeInfo 额外参数，用于事件推送
-   * @return 二维码下载链接
+   * @return 二维码下载链接 string
    * @throws WxErrorException .
    */
   String createGuideQrCode(String account, String openid, String qrcodeInfo) throws WxErrorException;
@@ -133,7 +132,8 @@ public interface WxMpGuideService {
    * @param endTime      消息的截止UNIX时间戳，如果不填，默认当前时间。
    * @param page         分页页数，从0开始
    * @param num          每页数量
-   * @return 顾问聊天记录列表
+   * @return 顾问聊天记录列表 guide chat record
+   * @throws WxErrorException the wx error exception
    */
   WxMpGuideMsgList getGuideChatRecord(String account, String openid, String clientOpenid, Long beginTime, Long endTime, int page, int num) throws WxErrorException;
 
@@ -184,6 +184,7 @@ public interface WxMpGuideService {
    * @param account 顾问微信号（guide_account和guide_openid二选一，若同时请求，默认为guide_account）
    * @param openid  顾问openid或者unionid（guide_account和guide_openid二选一）
    * @return 顾问的 快捷回复，关注顾问自动回复
+   * @throws WxErrorException the wx error exception
    */
   WxMpGuideConfig getGuideConfig(String account, String openid) throws WxErrorException;
 
@@ -214,7 +215,7 @@ public interface WxMpGuideService {
    * 文档地址：https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideAcctConfig.html
    * </pre>
    *
-   * @return 离线自动回复与敏感词
+   * @return 离线自动回复与敏感词 guide acct config
    * @throws WxErrorException .
    */
   WxMpGuideAcctConfig getGuideAcctConfig() throws WxErrorException;
@@ -243,7 +244,7 @@ public interface WxMpGuideService {
    * </pre>
    *
    * @param groupName 顾问分组名称
-   * @return 顾问分组唯一id
+   * @return 顾问分组唯一id long
    * @throws WxErrorException .
    */
   Long newGuideGroup(String groupName) throws WxErrorException;
@@ -256,7 +257,7 @@ public interface WxMpGuideService {
    * 文档地址：https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideGroupList.html
    * </pre>
    *
-   * @return 顾问分组列表
+   * @return 顾问分组列表 guide group list
    * @throws WxErrorException .
    */
   List<WxMpGuideGroup> getGuideGroupList() throws WxErrorException;
@@ -272,7 +273,7 @@ public interface WxMpGuideService {
    * @param groupId 顾问群组id
    * @param page    分页页数，从0开始，用于组内顾问分页获取
    * @param num     每页数量
-   * @return 顾问分组内顾问信息
+   * @return 顾问分组内顾问信息 group info
    * @throws WxErrorException .
    */
   WxMpGuideGroupInfoList getGroupInfo(long groupId, int page, int num) throws WxErrorException;
@@ -314,7 +315,7 @@ public interface WxMpGuideService {
    * </pre>
    *
    * @param account 顾问微信号
-   * @return 顾问分组id列表
+   * @return 顾问分组id列表 group by guide
    * @throws WxErrorException .
    */
   List<Long> getGroupByGuide(String account) throws WxErrorException;

@@ -20,6 +20,7 @@ import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Spu.*;
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * @author boris
@@ -27,8 +28,6 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Spu.*;
 @RequiredArgsConstructor
 @Slf4j
 public class WxMaShopSpuServiceImpl implements WxMaShopSpuService {
-
-  private static final String ERR_CODE = "errcode";
   private final WxMaService wxMaService;
 
   @Override

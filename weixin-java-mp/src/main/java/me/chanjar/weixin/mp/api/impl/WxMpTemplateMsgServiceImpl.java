@@ -2,6 +2,7 @@ package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -25,15 +26,13 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.TemplateMsg.*;
  */
 @RequiredArgsConstructor
 public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
-
-
   private final WxMpService wxMpService;
 
   @Override
   public String sendTemplateMsg(WxMpTemplateMessage templateMessage) throws WxErrorException {
     String responseContent = this.wxMpService.post(MESSAGE_TEMPLATE_SEND, templateMessage.toJson());
     final JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get("errcode").getAsInt() == 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       return jsonObject.get("msgid").getAsString();
     }
     throw new WxErrorException(WxError.fromJson(responseContent, WxType.MP));
@@ -62,7 +61,7 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
     jsonObject.addProperty("template_id_short", shortTemplateId);
     String responseContent = this.wxMpService.post(TEMPLATE_API_ADD_TEMPLATE, jsonObject.toString());
     final JsonObject result = GsonParser.parse(responseContent);
-    if (result.get("errcode").getAsInt() == 0) {
+    if (result.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       return result.get("template_id").getAsString();
     }
 

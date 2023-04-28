@@ -11,7 +11,6 @@ import java.io.Serializable;
  */
 @Data
 public class TemplateTitle implements Serializable {
-
   private static final long serialVersionUID = -3229779834737051398L;
 
   private String text;

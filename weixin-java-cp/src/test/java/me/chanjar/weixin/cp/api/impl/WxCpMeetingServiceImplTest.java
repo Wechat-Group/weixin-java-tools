@@ -9,14 +9,10 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.oa.meeting.WxCpMeeting;
 import me.chanjar.weixin.cp.bean.oa.meeting.WxCpMeetingUpdateResult;
 import me.chanjar.weixin.cp.bean.oa.meeting.WxCpUserMeetingIdResult;
-import org.eclipse.jetty.util.ajax.JSON;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,7 +51,7 @@ public class WxCpMeetingServiceImplTest {
       测试 创建会议
      */
     long startTime = System.currentTimeMillis() / 1000 + 30 * 60L;
-    List<String> userIds = Lists.newArrayList(this.configStorage.getUserId(),  "lisi");
+    List<String> userIds = Lists.newArrayList(this.configStorage.getUserId(), "lisi");
     WxCpMeeting wxCpMeeting = new WxCpMeeting().setAdminUserId(this.configStorage.getUserId()).setTitle("新建会议")
       .setMeetingStart(startTime).setMeetingDuration(3600).setDescription("新建会议描述").setLocation("广州媒体港")
       .setAttendees(new WxCpMeeting.Attendees().setUserId(userIds))

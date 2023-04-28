@@ -11,6 +11,7 @@ import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -24,14 +25,13 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Account
 @RequiredArgsConstructor
 @Slf4j
 public class WxMaShopAccountServiceImpl implements WxMaShopAccountService {
-  private static final String ERR_CODE = "errcode";
   private final WxMaService wxMaService;
 
   @Override
   public WxMaShopAccountGetCategoryListResponse getCategoryList() throws WxErrorException {
     String responseContent = this.wxMaService.post(GET_CATEGORY_LIST, new JsonObject());
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopAccountGetCategoryListResponse.class);
@@ -41,7 +41,7 @@ public class WxMaShopAccountServiceImpl implements WxMaShopAccountService {
   public WxMaShopAccountGetBrandListResponse getBrandList() throws WxErrorException {
     String responseContent = this.wxMaService.post(GET_BRAND_LIST, new JsonObject());
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopAccountGetBrandListResponse.class);
@@ -51,7 +51,7 @@ public class WxMaShopAccountServiceImpl implements WxMaShopAccountService {
   public WxMaShopBaseResponse updateInfo(WxMaShopAccountUpdateInfoRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(UPDATE_INFO, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopBaseResponse.class);
@@ -61,7 +61,7 @@ public class WxMaShopAccountServiceImpl implements WxMaShopAccountService {
   public WxMaShopAccountGetInfoResponse getInfo() throws WxErrorException {
     String responseContent = this.wxMaService.post(GET_INFO, new JsonObject());
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopAccountGetInfoResponse.class);

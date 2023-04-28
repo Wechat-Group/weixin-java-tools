@@ -8,8 +8,7 @@ import me.chanjar.weixin.mp.bean.freepublish.WxMpFreePublishStatus;
 /**
  * 微信 发布能力 接口.
  *
- * @author dragon
- * created on  2021-10-23
+ * @author dragon created on  2021-10-23
  */
 public interface WxMpFreePublishService {
 
@@ -21,7 +20,8 @@ public interface WxMpFreePublishService {
    * 文档地址：https://developers.weixin.qq.com/doc/offiaccount/Publish/Publish.html
    * </pre>
    *
-   * @param mediaId        要发布的草稿的media_id
+   * @param mediaId 要发布的草稿的media_id
+   * @return the string
    * @throws WxErrorException .
    */
   String submit(String mediaId) throws WxErrorException;
@@ -35,6 +35,7 @@ public interface WxMpFreePublishService {
    * </pre>
    *
    * @param publishId 发布任务id
+   * @return the push status
    * @throws WxErrorException .
    */
   WxMpFreePublishStatus getPushStatus(String publishId) throws WxErrorException;
@@ -48,7 +49,8 @@ public interface WxMpFreePublishService {
    * </pre>
    *
    * @param articleId 成功发布时返回的 article_id
-   * @param index 要删除的文章在图文消息中的位置，第一篇编号为1，该字段不填或填0会删除全部文章
+   * @param index     要删除的文章在图文消息中的位置，第一篇编号为1，该字段不填或填0会删除全部文章
+   * @return the boolean
    * @throws WxErrorException .
    */
   Boolean deletePush(String articleId, Integer index) throws WxErrorException;
@@ -62,6 +64,7 @@ public interface WxMpFreePublishService {
    * </pre>
    *
    * @param articleId 成功发布时返回的 article_id
+   * @return the boolean
    * @throws WxErrorException .
    */
   Boolean deletePushAllArticle(String articleId) throws WxErrorException;
@@ -75,7 +78,7 @@ public interface WxMpFreePublishService {
    * </pre>
    *
    * @param articleId 要获取的草稿的article_id
-   * @return 已发布文章信息
+   * @return 已发布文章信息 article from id
    * @throws WxErrorException .
    */
   WxMpFreePublishInfo getArticleFromId(String articleId) throws WxErrorException;
@@ -91,7 +94,7 @@ public interface WxMpFreePublishService {
    * @param offset    分页页数，从0开始 从全部素材的该偏移位置开始返回，0表示从第一个素材返回
    * @param count     每页数量 返回素材的数量，取值在1到20之间
    * @param noContent 1 表示不返回 content 字段，0 表示正常返回，默认为 0
-   * @return 草稿信息列表
+   * @return 草稿信息列表 publication records
    * @throws WxErrorException .
    */
   WxMpFreePublishList getPublicationRecords(int offset, int count, int noContent) throws WxErrorException;
@@ -105,8 +108,8 @@ public interface WxMpFreePublishService {
    *
    * @param offset 分页页数，从0开始 从全部素材的该偏移位置开始返回，0表示从第一个素材返回
    * @param count  每页数量 返回素材的数量，取值在1到20之间
-   * @return
-   * @throws WxErrorException
+   * @return . publication records
+   * @throws WxErrorException the wx error exception
    */
   WxMpFreePublishList getPublicationRecords(int offset, int count) throws WxErrorException;
 

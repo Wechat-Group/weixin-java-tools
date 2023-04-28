@@ -1,5 +1,7 @@
 package me.chanjar.weixin.common.api;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,7 @@ import static me.chanjar.weixin.common.error.WxMpErrorMsgEnum.*;
  *
  * @author Daniel Qian & binarywang & Wang_Wong
  */
+@UtilityClass
 public class WxConsts {
   /**
    * access_token 相关错误代码
@@ -26,8 +29,14 @@ public class WxConsts {
     CODE_40014.getCode(), CODE_42001.getCode());
 
   /**
+   * 微信接口返回的参数errcode.
+   */
+  public static final String ERR_CODE = "errcode";
+
+  /**
    * 微信推送过来的消息的类型，和发送给微信xml格式消息的消息类型.
    */
+  @UtilityClass
   public static class XmlMsgType {
     public static final String TEXT = "text";
     public static final String IMAGE = "image";
@@ -51,6 +60,7 @@ public class WxConsts {
   /**
    * 主动发送消息(即客服消息)的消息类型.
    */
+  @UtilityClass
   public static class KefuMsgType {
     /**
      * 文本消息.
@@ -137,6 +147,7 @@ public class WxConsts {
    * 发送「学校通知」类型
    * https://developer.work.weixin.qq.com/document/path/92321
    */
+  @UtilityClass
   public static class SchoolContactMsgType {
 
     /**
@@ -184,6 +195,7 @@ public class WxConsts {
   /**
    * 企业微信模板卡片消息的卡片类型
    */
+  @UtilityClass
   public static class TemplateCardType {
     /**
      * 文本通知型卡片
@@ -210,6 +222,7 @@ public class WxConsts {
   /**
    * 表示是否是保密消息，0表示否，1表示是，默认0.
    */
+  @UtilityClass
   public static class KefuMsgSafe {
     public static final String NO = "0";
     public static final String YES = "1";
@@ -218,6 +231,7 @@ public class WxConsts {
   /**
    * 群发消息的消息类型.
    */
+  @UtilityClass
   public static class MassMsgType {
     public static final String MPNEWS = "mpnews";
     public static final String TEXT = "text";
@@ -230,6 +244,7 @@ public class WxConsts {
   /**
    * 群发消息后微信端推送给服务器的反馈消息.
    */
+  @UtilityClass
   public static class MassMsgStatus {
     public static final String SEND_SUCCESS = "send success";
     public static final String SEND_FAIL = "send fail";
@@ -277,6 +292,7 @@ public class WxConsts {
   /**
    * 微信端推送过来的事件类型.
    */
+  @UtilityClass
   public static class EventType {
     public static final String SUBSCRIBE = "subscribe";
     public static final String UNSUBSCRIBE = "unsubscribe";
@@ -417,7 +433,7 @@ public class WxConsts {
     /**
      * 小程序自定义交易组件支付通知
      */
-    public static final  String OPEN_PRODUCT_ORDER_PAY = "open_product_order_pay";
+    public static final String OPEN_PRODUCT_ORDER_PAY = "open_product_order_pay";
     /**
      * 点击菜单跳转小程序的事件推送
      */
@@ -453,6 +469,7 @@ public class WxConsts {
   /**
    * 自定义菜单的按钮类型.
    */
+  @UtilityClass
   public static class MenuButtonType {
     /**
      * 点击推事件.
@@ -503,6 +520,7 @@ public class WxConsts {
   /**
    * oauth2网页授权的scope.
    */
+  @UtilityClass
   public static class OAuth2Scope {
     /**
      * 不弹出授权页面，直接跳转，只能获取用户openid.
@@ -523,6 +541,7 @@ public class WxConsts {
   /**
    * 网页应用登录授权作用域.
    */
+  @UtilityClass
   public static class QrConnectScope {
     public static final String SNSAPI_LOGIN = "snsapi_login";
   }
@@ -530,6 +549,7 @@ public class WxConsts {
   /**
    * 永久素材类型.
    */
+  @UtilityClass
   public static class MaterialType {
     public static final String NEWS = "news";
     public static final String VOICE = "voice";
@@ -541,6 +561,7 @@ public class WxConsts {
   /**
    * 网络检测入参.
    */
+  @UtilityClass
   public static class NetCheckArgs {
     public static final String ACTIONDNS = "dns";
     public static final String ACTIONPING = "ping";
@@ -554,6 +575,7 @@ public class WxConsts {
   /**
    * appId 类型
    */
+  @UtilityClass
   public static class AppIdType {
     /**
      * 公众号appId类型

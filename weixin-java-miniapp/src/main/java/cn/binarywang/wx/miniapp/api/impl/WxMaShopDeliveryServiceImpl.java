@@ -16,7 +16,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonParser;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Delivery.*;
-import static cn.binarywang.wx.miniapp.constant.WxMaConstants.ERRCODE;
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * @author boris
@@ -37,7 +37,7 @@ public class WxMaShopDeliveryServiceImpl implements WxMaShopDeliveryService {
   public WxMaShopDeliveryGetCompanyListResponse getCompanyList() throws WxErrorException {
     String responseContent = this.wxMaService.post(GET_COMPANY_LIST, new JsonObject());
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopDeliveryGetCompanyListResponse.class);
@@ -54,7 +54,7 @@ public class WxMaShopDeliveryServiceImpl implements WxMaShopDeliveryService {
   public WxMaShopBaseResponse send(WxMaShopDeliverySendRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(DELIVERY_SEND, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopBaseResponse.class);
@@ -71,7 +71,7 @@ public class WxMaShopDeliveryServiceImpl implements WxMaShopDeliveryService {
   public WxMaShopBaseResponse receive(WxMaShopDeliveryRecieveRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(DELIVERY_RECEIVE, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopBaseResponse.class);

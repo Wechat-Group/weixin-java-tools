@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.scheme.WxMaGenerateSchemeRequest;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -18,14 +19,13 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Scheme.GENER
  */
 @AllArgsConstructor
 public class WxMaSchemeServiceImpl implements WxMaSchemeService {
-  private static final String ERR_CODE = "errcode";
   private final WxMaService wxMaService;
 
   @Override
   public String generate(WxMaGenerateSchemeRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(GENERATE_SCHEME_URL, request.toJson());
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return jsonObject.get("openlink").getAsString();

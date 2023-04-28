@@ -52,12 +52,6 @@ public class WxFastMaAccountBasicInfoResult extends WxOpenResult {
   private String nickname;
 
   /**
-   * 名称信息
-   */
-  @SerializedName("nickname_info")
-  private NicknameInfo nicknameInfo;
-
-  /**
    * 微信认证信息
    */
   @SerializedName("wx_verify_info")
@@ -72,6 +66,43 @@ public class WxFastMaAccountBasicInfoResult extends WxOpenResult {
    */
   @SerializedName("head_image_info")
   private HeadImageInfo headImageInfo;
+
+  /**
+   * 名称信息
+   */
+  @SerializedName("nickname_info")
+  private NicknameInfo nicknameInfo;
+
+  /**
+   * 注册国家
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/Mini_Program_Information_Settings.html#%E6%B3%A8%E5%86%8C%E5%9B%BD%E5%AE%B6">参考链接</a>
+   */
+  @SerializedName("registered_country")
+  private Integer registeredCountry;
+
+  /**
+   * 主体标识，非个人主体时返回的是企业或者政府或其他组织的代号
+   */
+  @SerializedName("credential")
+  private String credential;
+
+  /**
+   * 认证类型；如果未完成微信认证则返回0；不同枚举值对应的类型说明看下方
+   * 状态值	说明
+   * 1	企业
+   * 2	企业媒体
+   * 3	政府
+   * 4	非盈利组织
+   * 5	民营非企业
+   * 6	盈利组织
+   * 8	社会团体
+   * 9	事业媒体
+   * 11	事业单位
+   * 12	个体工商户
+   * 14	海外企业
+   */
+  @SerializedName("customer_type")
+  private Integer customerType;
 
   @Data
   public static class NicknameInfo {

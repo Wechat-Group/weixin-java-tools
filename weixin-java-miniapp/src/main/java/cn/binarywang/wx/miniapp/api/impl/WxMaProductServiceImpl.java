@@ -22,6 +22,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Spu.
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Spu.PRODUCT_SPU_GET_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Spu.PRODUCT_SPU_LISTING_URL;
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Product.Spu.PRODUCT_SPU_UPDATE_URL;
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 import cn.binarywang.wx.miniapp.api.WxMaProductService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
@@ -51,6 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
@@ -68,8 +70,6 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 @RequiredArgsConstructor
 @Slf4j
 public class WxMaProductServiceImpl implements WxMaProductService {
-
-  private static final String ERR_CODE = "errcode";
   private final WxMaService wxMaService;
 
   @Override
@@ -143,7 +143,7 @@ public class WxMaProductServiceImpl implements WxMaProductService {
       throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
     }
     WxMinishopResult result = new WxMinishopResult();
-    result.setErrcode(respObj.get("errcode").getAsInt());
+    result.setErrcode(respObj.get(ERR_CODE).getAsInt());
     JsonObject dataObj = respObj.get("data").getAsJsonObject();
     WxMinishopAddGoodsSpuData resultData = new WxMinishopAddGoodsSpuData();
     resultData.setProductId(dataObj.get("product_id").getAsLong());
@@ -201,7 +201,7 @@ public class WxMaProductServiceImpl implements WxMaProductService {
       throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
     }
     WxMinishopResult result = new WxMinishopResult();
-    result.setErrcode(respObj.get("errcode").getAsInt());
+    result.setErrcode(respObj.get(ERR_CODE).getAsInt());
     JsonObject dataObj = respObj.get("data").getAsJsonObject();
     WxMinishopAddGoodsSpuData resultData = new WxMinishopAddGoodsSpuData();
     resultData.setProductId(dataObj.get("product_id").getAsLong());
@@ -260,7 +260,7 @@ public class WxMaProductServiceImpl implements WxMaProductService {
       throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
     }
     WxMinishopResult result = new WxMinishopResult();
-    result.setErrcode(jsonObject.get("errcode").getAsInt());
+    result.setErrcode(jsonObject.get(ERR_CODE).getAsInt());
     JsonObject dataObj = jsonObject.get("data").getAsJsonObject();
     WxMinishopAddGoodsSkuData resultData = new WxMinishopAddGoodsSkuData();
     resultData.setSkuId(dataObj.get("sku_id").getAsLong());
@@ -280,7 +280,7 @@ public class WxMaProductServiceImpl implements WxMaProductService {
     }
 
     WxMinishopResult result = new WxMinishopResult();
-    result.setErrcode(jsonObject.get("errcode").getAsInt());
+    result.setErrcode(jsonObject.get(ERR_CODE).getAsInt());
     JsonArray jsonArray = jsonObject.get("data").getAsJsonArray();
     List<WxMinishopAddGoodsSkuData> skuData = new ArrayList<>();
     for (JsonElement jsonElement : jsonArray) {
@@ -318,7 +318,7 @@ public class WxMaProductServiceImpl implements WxMaProductService {
       throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
     }
     WxMinishopResult result = new WxMinishopResult();
-    result.setErrcode(jsonObject.get("errcode").getAsInt());
+    result.setErrcode(jsonObject.get(ERR_CODE).getAsInt());
     JsonObject dataObj = jsonObject.get("data").getAsJsonObject();
     WxMinishopUpdateGoodsSkuData resultData = new WxMinishopUpdateGoodsSkuData();
     resultData.setUpdateTime(dataObj.get("update_time").getAsString());
@@ -340,7 +340,7 @@ public class WxMaProductServiceImpl implements WxMaProductService {
     }
 
     WxMinishopResult result = new WxMinishopResult();
-    result.setErrcode(jsonObject.get("errcode").getAsInt());
+    result.setErrcode(jsonObject.get(ERR_CODE).getAsInt());
     JsonObject dataObj = jsonObject.get("data").getAsJsonObject();
     WxMinishopUpdateGoodsSkuData resultData = new WxMinishopUpdateGoodsSkuData();
     resultData.setUpdateTime(dataObj.get("update_time").getAsString());
@@ -362,7 +362,7 @@ public class WxMaProductServiceImpl implements WxMaProductService {
     }
 
     WxMinishopResult result = new WxMinishopResult();
-    result.setErrcode(jsonObject.get("errcode").getAsInt());
+    result.setErrcode(jsonObject.get(ERR_CODE).getAsInt());
     JsonObject dataObj = jsonObject.get("data").getAsJsonObject();
     WxMinishopUpdateGoodsSkuData resultData = new WxMinishopUpdateGoodsSkuData();
     resultData.setUpdateTime(dataObj.get("update_time").getAsString());

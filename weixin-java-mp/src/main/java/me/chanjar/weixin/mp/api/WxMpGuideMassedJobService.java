@@ -8,8 +8,9 @@ import me.chanjar.weixin.mp.bean.guide.WxMpGuideMaterialInfo;
 import java.util.List;
 
 /**
- * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a>
- * created on  2021/5/13/013
+ * The interface Wx mp guide massed job service.
+ *
+ * @author <a href="https://www.sacoc.cn">广州跨界-宋心成</a> created on  2021/5/13/013
  */
 public interface WxMpGuideMassedJobService {
 
@@ -28,7 +29,7 @@ public interface WxMpGuideMassedJobService {
    * @param pushTime      任务下发给顾问的时间, 秒级时间戳, 范围为当前时间开始到最近一个月内
    * @param userOpenIds   客户openid列表
    * @param materialInfos 不超过3个素材
-   * @return 群发任务id与客户openid列表
+   * @return 群发任务id与客户openid列表 wx mp guide massed
    * @throws WxErrorException 。
    */
   WxMpGuideMassed addGuideMassedJob(String account, String openid, String taskName, String taskRemark, Long pushTime, List<String> userOpenIds, List<WxMpGuideMaterialInfo> materialInfos) throws WxErrorException;
@@ -46,7 +47,7 @@ public interface WxMpGuideMassedJobService {
    * @param taskStatus 获取指定状态的任务（为空则表示拉取所有状态的任务）
    * @param offset     偏移位置(从什么位置开始拉取)
    * @param limit      条数（默认50）
-   * @return 群发任务列表
+   * @return 群发任务列表 guide massed job list
    * @throws WxErrorException 。
    */
   List<WxMpGuideMassedInfo> getGuideMassedJobList(String account, String openid, List<Integer> taskStatus, Integer offset, Integer limit) throws WxErrorException;
@@ -60,7 +61,7 @@ public interface WxMpGuideMassedJobService {
    * </pre>
    *
    * @param taskId 任务ID
-   * @return 群发任务信息
+   * @return 群发任务信息 guide massed job
    * @throws WxErrorException 。
    */
   WxMpGuideMassedInfo getGuideMassedJob(String taskId) throws WxErrorException;

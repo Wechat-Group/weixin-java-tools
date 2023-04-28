@@ -13,7 +13,6 @@ import java.io.Serializable;
  */
 @Data
 public class TemplateAttendance implements Serializable {
-
   private static final long serialVersionUID = 5800412600894589065L;
 
   @SerializedName("date_range")

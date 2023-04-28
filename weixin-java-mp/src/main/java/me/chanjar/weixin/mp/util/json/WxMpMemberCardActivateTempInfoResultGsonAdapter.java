@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.util.json;
 
 import com.google.gson.*;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.mp.bean.card.membercard.MemberCardUserInfo;
 import me.chanjar.weixin.mp.bean.card.membercard.NameValues;
@@ -22,7 +23,7 @@ public class WxMpMemberCardActivateTempInfoResultGsonAdapter implements JsonDese
 
     JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-    result.setErrorCode(GsonHelper.getString(jsonObject, "errcode"));
+    result.setErrorCode(GsonHelper.getString(jsonObject, WxConsts.ERR_CODE));
     result.setErrorMsg(GsonHelper.getString(jsonObject, "errmsg"));
 
     JsonObject userInfoJsonObject = jsonObject.getAsJsonObject("info");

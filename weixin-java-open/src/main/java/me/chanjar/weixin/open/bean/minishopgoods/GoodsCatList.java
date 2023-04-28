@@ -1,12 +1,16 @@
-package me.chanjar.weixin.open.bean.minishopGoods;
+package me.chanjar.weixin.open.bean.minishopgoods;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import me.chanjar.weixin.common.api.WxConsts;
 
 import java.util.List;
 
+/**
+ * @author kelvenlaw
+ */
 @Data
 @Accessors(chain = true)
 public class GoodsCatList {
@@ -26,7 +30,7 @@ public class GoodsCatList {
   public JsonObject toJsonObject() {
     Gson gson = new Gson();
     JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("errcode", errcode);
+    jsonObject.addProperty(WxConsts.ERR_CODE, errcode);
     jsonObject.addProperty("errmsg", errmsg);
     jsonObject.addProperty("cat_list", gson.toJson(catList));
     return jsonObject;

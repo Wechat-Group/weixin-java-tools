@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Data
 public class TemplateVacation implements Serializable {
+  private static final long serialVersionUID = 3442297114957906890L;
 
   private List<TemplateVacationItem> item;
 

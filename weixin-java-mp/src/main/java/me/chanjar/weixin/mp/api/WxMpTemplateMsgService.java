@@ -13,8 +13,7 @@ import java.util.List;
  * http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277&token=&lang=zh_CN
  * Created by Binary Wang on 2016-10-14.
  * @author miller.lin
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * </pre>
+ * @author  <a href="https://github.com/binarywang">Binary Wang</a> </pre>
  */
 public interface WxMpTemplateMsgService {
   /**
@@ -25,7 +24,7 @@ public interface WxMpTemplateMsgService {
    * </pre>
    *
    * @param wxMpIndustry 行业信息
-   * @return 是否成功
+   * @return 是否成功 industry
    * @throws WxErrorException .
    */
   boolean setIndustry(WxMpTemplateIndustry wxMpIndustry) throws WxErrorException;
@@ -36,7 +35,7 @@ public interface WxMpTemplateMsgService {
    * 详情请见：http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277&token=&lang=zh_CN
    * </pre>
    *
-   * @return wxMpIndustry
+   * @return wxMpIndustry industry
    * @throws WxErrorException .
    */
   WxMpTemplateIndustry getIndustry() throws WxErrorException;
@@ -48,7 +47,7 @@ public interface WxMpTemplateMsgService {
    * </pre>
    *
    * @param templateMessage 模板消息
-   * @return 消息Id
+   * @return 消息Id string
    * @throws WxErrorException .
    */
   String sendTemplateMsg(WxMpTemplateMessage templateMessage) throws WxErrorException;
@@ -89,7 +88,7 @@ public interface WxMpTemplateMsgService {
    * </pre>
    *
    * @param templateId 模板Id
-   * @return .
+   * @return . boolean
    * @throws WxErrorException .
    */
   boolean delPrivateTemplate(String templateId) throws WxErrorException;

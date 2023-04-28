@@ -1,4 +1,4 @@
-package me.chanjar.weixin.open.bean.minishopGoods;
+package me.chanjar.weixin.open.bean.minishopgoods;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

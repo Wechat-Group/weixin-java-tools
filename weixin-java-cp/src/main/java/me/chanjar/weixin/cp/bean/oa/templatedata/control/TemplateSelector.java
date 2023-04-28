@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Data
 public class TemplateSelector implements Serializable {
-
   private static final long serialVersionUID = 4995408101489736881L;
   /**
    * single-单选；multi-多选

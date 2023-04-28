@@ -1,10 +1,10 @@
 package com.github.binarywang.wxpay.bean.notify;
 
-import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
  * 微信支付订单和退款的异步通知，V3版本共用的响应类.
@@ -33,7 +33,7 @@ public class WxPayNotifyV3Response {
    */
   public static String success(String msg) {
     WxPayNotifyV3Response response = new WxPayNotifyV3Response(SUCCESS, msg);
-    return new Gson().toJson(response);
+    return WxGsonBuilder.create().toJson(response);
   }
 
   /**
@@ -44,7 +44,7 @@ public class WxPayNotifyV3Response {
    */
   public static String fail(String msg) {
     WxPayNotifyV3Response response = new WxPayNotifyV3Response(FAIL, msg);
-    return new Gson().toJson(response);
+    return WxGsonBuilder.create().toJson(response);
   }
 
 }

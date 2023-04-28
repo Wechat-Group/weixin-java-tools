@@ -1,6 +1,7 @@
 package me.chanjar.weixin.common.util.json;
 
 import com.google.gson.*;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxError;
 
 import java.lang.reflect.Type;
@@ -16,8 +17,8 @@ public class WxErrorAdapter implements JsonDeserializer<WxError> {
     WxError.WxErrorBuilder errorBuilder = WxError.builder();
     JsonObject wxErrorJsonObject = json.getAsJsonObject();
 
-    if (wxErrorJsonObject.get("errcode") != null && !wxErrorJsonObject.get("errcode").isJsonNull()) {
-      errorBuilder.errorCode(GsonHelper.getAsPrimitiveInt(wxErrorJsonObject.get("errcode")));
+    if (wxErrorJsonObject.get(WxConsts.ERR_CODE) != null && !wxErrorJsonObject.get(WxConsts.ERR_CODE).isJsonNull()) {
+      errorBuilder.errorCode(GsonHelper.getAsPrimitiveInt(wxErrorJsonObject.get(WxConsts.ERR_CODE)));
     }
     if (wxErrorJsonObject.get("errmsg") != null && !wxErrorJsonObject.get("errmsg").isJsonNull()) {
       errorBuilder.errorMsg(GsonHelper.getAsString(wxErrorJsonObject.get("errmsg")));

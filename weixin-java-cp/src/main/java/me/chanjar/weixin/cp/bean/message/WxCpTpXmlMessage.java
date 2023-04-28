@@ -9,6 +9,8 @@ import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.IntegerArrayConverter;
 import me.chanjar.weixin.common.util.xml.StringArrayConverter;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
+import me.chanjar.weixin.cp.util.crypto.WxCpTpCryptUtil;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 
 import java.io.Serializable;
@@ -774,4 +776,20 @@ public class WxCpTpXmlMessage implements Serializable {
     return xmlPackage;
   }
 
+  /**
+   *
+   * @param encryptedXml         the encrypted xml
+   * @param wxCpTpConfigStorage  the wx cp config storage
+   * @param timestamp            the timestamp
+   * @param nonce                the nonce
+   * @param msgSignature         the msg signature
+   * @return                     the wx cp tp xml message
+   */
+  public static WxCpTpXmlMessage fromEncryptedXml(String encryptedXml, WxCpTpConfigStorage wxCpTpConfigStorage,
+                                                  String timestamp, String nonce, String msgSignature) {
+    WxCpTpCryptUtil cryptUtil = new WxCpTpCryptUtil(wxCpTpConfigStorage);
+    String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    log.debug("解密后的原始xml消息内容：{}", plainText);
+    return fromXml(plainText);
+  }
 }

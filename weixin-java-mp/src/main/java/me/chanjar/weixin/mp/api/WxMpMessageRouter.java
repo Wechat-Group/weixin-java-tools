@@ -66,6 +66,11 @@ public class WxMpMessageRouter {
 
   private WxErrorExceptionHandler exceptionHandler;
 
+  /**
+   * Instantiates a new Wx mp message router.
+   *
+   * @param wxMpService the wx mp service
+   */
   public WxMpMessageRouter(WxMpService wxMpService) {
     this.wxMpService = wxMpService;
     ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxMpMessageRouter-pool-%d").build();
@@ -78,6 +83,9 @@ public class WxMpMessageRouter {
 
   /**
    * 使用自定义的 {@link ExecutorService}.
+   *
+   * @param wxMpService     the wx mp service
+   * @param executorService the executor service
    */
   public WxMpMessageRouter(WxMpService wxMpService, ExecutorService executorService) {
     this.wxMpService = wxMpService;
@@ -96,6 +104,8 @@ public class WxMpMessageRouter {
 
   /**
    * 系统退出前，应该调用该方法，增加了超时时间检测
+   *
+   * @param second the second
    */
   public void shutDownExecutorService(Integer second) {
     this.executorService.shutdown();
@@ -117,6 +127,8 @@ public class WxMpMessageRouter {
    * 设置自定义的 {@link ExecutorService}
    * 如果不调用该方法，默认使用 Executors.newFixedThreadPool(100)
    * </pre>
+   *
+   * @param executorService the executor service
    */
   public void setExecutorService(ExecutorService executorService) {
     this.executorService = executorService;
@@ -127,6 +139,8 @@ public class WxMpMessageRouter {
    * 设置自定义的 {@link me.chanjar.weixin.common.api.WxMessageDuplicateChecker}
    * 如果不调用该方法，默认使用 {@link me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker}
    * </pre>
+   *
+   * @param messageDuplicateChecker the message duplicate checker
    */
   public void setMessageDuplicateChecker(WxMessageDuplicateChecker messageDuplicateChecker) {
     this.messageDuplicateChecker = messageDuplicateChecker;
@@ -137,6 +151,8 @@ public class WxMpMessageRouter {
    * 设置自定义的{@link me.chanjar.weixin.common.session.WxSessionManager}
    * 如果不调用该方法，默认使用 {@link me.chanjar.weixin.common.session.StandardSessionManager}
    * </pre>
+   *
+   * @param sessionManager the session manager
    */
   public void setSessionManager(WxSessionManager sessionManager) {
     this.sessionManager = sessionManager;
@@ -147,17 +163,26 @@ public class WxMpMessageRouter {
    * 设置自定义的{@link me.chanjar.weixin.common.api.WxErrorExceptionHandler}
    * 如果不调用该方法，默认使用 {@link me.chanjar.weixin.common.util.LogExceptionHandler}
    * </pre>
+   *
+   * @param exceptionHandler the exception handler
    */
   public void setExceptionHandler(WxErrorExceptionHandler exceptionHandler) {
     this.exceptionHandler = exceptionHandler;
   }
 
+  /**
+   * Gets rules.
+   *
+   * @return the rules
+   */
   List<WxMpMessageRouterRule> getRules() {
     return this.rules;
   }
 
   /**
    * 开始一个新的Route规则.
+   *
+   * @return the wx mp message router rule
    */
   public WxMpMessageRouterRule rule() {
     return new WxMpMessageRouterRule(this);
@@ -165,6 +190,10 @@ public class WxMpMessageRouter {
 
   /**
    * 处理微信消息.
+   *
+   * @param wxMessage the wx message
+   * @param context   the context
+   * @return the wx mp xml out message
    */
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context) {
     return route(wxMessage, context, null);
@@ -172,6 +201,11 @@ public class WxMpMessageRouter {
 
   /**
    * 处理不同appid微信消息
+   *
+   * @param appid     the appid
+   * @param wxMessage the wx message
+   * @param context   the context
+   * @return the wx mp xml out message
    */
   public WxMpXmlOutMessage route(final String appid, final WxMpXmlMessage wxMessage,
                                  final Map<String, Object> context) {
@@ -180,6 +214,11 @@ public class WxMpMessageRouter {
 
   /**
    * 处理微信消息.
+   *
+   * @param wxMessage   the wx message
+   * @param context     the context
+   * @param wxMpService the wx mp service
+   * @return the wx mp xml out message
    */
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage, final Map<String, Object> context,
                                  WxMpService wxMpService) {
@@ -251,10 +290,23 @@ public class WxMpMessageRouter {
     return res;
   }
 
+  /**
+   * Route wx mp xml out message.
+   *
+   * @param wxMessage the wx message
+   * @return the wx mp xml out message
+   */
   public WxMpXmlOutMessage route(final WxMpXmlMessage wxMessage) {
     return this.route(wxMessage, new HashMap<>(2));
   }
 
+  /**
+   * Route wx mp xml out message.
+   *
+   * @param appid     the appid
+   * @param wxMessage the wx message
+   * @return the wx mp xml out message
+   */
   public WxMpXmlOutMessage route(String appid, final WxMpXmlMessage wxMessage) {
     return this.route(appid, wxMessage, new HashMap<>(2));
   }

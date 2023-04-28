@@ -70,7 +70,7 @@ public interface WxMpService extends WxService {
    *
    * @return token access token
    * @throws WxErrorException .
-   * @see #getAccessToken(boolean) #getAccessToken(boolean)#getAccessToken(boolean)
+   * @see #getAccessToken(boolean) #getAccessToken(boolean)#getAccessToken(boolean)#getAccessToken(boolean)
    */
   String getAccessToken() throws WxErrorException;
 
@@ -98,7 +98,7 @@ public interface WxMpService extends WxService {
    * @param type ticket 类型
    * @return ticket ticket
    * @throws WxErrorException .
-   * @see #getTicket(TicketType, boolean) #getTicket(TicketType, boolean)#getTicket(TicketType, boolean)
+   * @see #getTicket(TicketType, boolean) #getTicket(TicketType, boolean)#getTicket(TicketType, boolean)#getTicket(TicketType, boolean)
    */
   String getTicket(TicketType type) throws WxErrorException;
 
@@ -120,7 +120,7 @@ public interface WxMpService extends WxService {
    *
    * @return jsapi ticket
    * @throws WxErrorException .
-   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)
+   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)#getJsapiTicket(boolean)
    */
   String getJsapiTicket() throws WxErrorException;
 
@@ -570,14 +570,14 @@ public interface WxMpService extends WxService {
   /**
    * 返回草稿箱相关接口
    *
-   * @return WxMpDraftService
+   * @return WxMpDraftService draft service
    */
   WxMpDraftService getDraftService();
 
   /**
    * 返回发布能力接口
    *
-   * @return WxMpFreePublishService
+   * @return WxMpFreePublishService free publish service
    */
   WxMpFreePublishService getFreePublishService();
 

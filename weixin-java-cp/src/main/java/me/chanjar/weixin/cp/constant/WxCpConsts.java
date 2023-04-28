@@ -176,6 +176,61 @@ public class WxCpConsts {
   }
 
   /**
+   * 会话存档媒体类型
+   * https://developer.work.weixin.qq.com/document/path/91774
+   */
+  @UtilityClass
+  public static class MsgAuditMediaType {
+
+    /**
+     * 图片
+     */
+    public static final String IMAGE = "image";
+
+    /**
+     * 语音
+     */
+    public static final String VOICE = "voice";
+
+    /**
+     * 视频
+     */
+    public static final String VIDEO = "video";
+
+    /**
+     * 表情
+     */
+    public static final String EMOTION = "emotion";
+
+    /**
+     * 文件
+     */
+    public static final String FILE = "file";
+
+    /**
+     * 音频存档消息
+     */
+    public static final String MEETING_VOICE_CALL = "meeting_voice_call";
+
+    /**
+     * 音频共享文档消息
+     */
+    public static final String VOIP_DOC_SHARE = "voip_doc_share";
+
+    @UtilityClass
+    public static class MsgAuditSuffix {
+
+      public static final String JPG = ".jpg";
+      public static final String PNG = ".png";
+      public static final String GIF = ".gif";
+      public static final String MP4 = ".mp4";
+      public static final String AMR = ".amr";
+
+    }
+
+  }
+
+  /**
    * 家校通讯录变更事件CHANGE_TYPE
    */
   @UtilityClass
