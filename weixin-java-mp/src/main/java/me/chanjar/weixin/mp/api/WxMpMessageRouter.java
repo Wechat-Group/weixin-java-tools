@@ -248,16 +248,19 @@ public class WxMpMessageRouter {
 
     WxMpXmlOutMessage res = null;
     final List<Future<?>> futures = new ArrayList<>();
-    String appId = WxMpConfigStorageHolder.get();
+
     for (final WxMpMessageRouterRule rule : matchRules) {
       // 返回最后一个非异步的rule的执行结果
       if (rule.isAsync()) {
+        //获取当前线程使用的实际appId。兼容只有一个appId，且未显式设置当前使用的appId的情况
+        String appId = this.wxMpService.getWxMpConfigStorage().getAppId();
         futures.add(
           this.executorService.submit(() -> {
             //传入父线程的appId
             this.wxMpService.switchoverTo(appId);
             rule.service(wxMessage, context, mpService, WxMpMessageRouter.this.sessionManager,
               WxMpMessageRouter.this.exceptionHandler);
+            WxMpConfigStorageHolder.remove();
           })
         );
       } else {

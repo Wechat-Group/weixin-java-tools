@@ -128,16 +128,20 @@ public class WxMaMessageRouter {
     if (matchRules.size() == 0) {
       return null;
     }
-    String miniAppId = WxMaConfigHolder.get();
+
     final List<Future<?>> futures = new ArrayList<>();
     WxMaXmlOutMessage result = null;
     for (final WxMaMessageRouterRule rule : matchRules) {
       // 返回最后一个非异步的rule的执行结果
       if (rule.isAsync()) {
+        //获取当前线程使用的实际appId，兼容只有一个appId，且未显式设置当前使用的appId的情况
+        String miniAppId = this.wxMaService.getWxMaConfig().getAppid();
         futures.add(
           this.executorService.submit(() -> {
+            //子线程中设置实际的appId
             this.wxMaService.switchoverTo(miniAppId);
             rule.service(wxMessage, context, WxMaMessageRouter.this.wxMaService, WxMaMessageRouter.this.sessionManager, WxMaMessageRouter.this.exceptionHandler);
+            WxMaConfigHolder.remove();
           })
         );
       } else {
