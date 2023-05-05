@@ -324,7 +324,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       throw new WxErrorException(error);
     }
     WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
-    config.updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
+    config.updateAccessTokenProcessor(accessToken.getAccessToken(), accessToken.getExpiresIn());
     return accessToken.getAccessToken();
   }
 
