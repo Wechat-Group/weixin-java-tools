@@ -33,12 +33,24 @@ public class WxMaServiceImplTest {
 
   @Inject
   private WxMaService wxService;
+  @Inject
+  private WxMaServiceOkHttpImpl wxMaServiceOkHttp;
 
   public void testRefreshAccessToken() throws WxErrorException {
     WxMaConfig configStorage = this.wxService.getWxMaConfig();
     String before = configStorage.getAccessToken();
     this.wxService.getAccessToken(false);
 
+    String after = configStorage.getAccessToken();
+    assertNotEquals(before, after);
+    assertTrue(StringUtils.isNotBlank(after));
+  }
+
+  public void testStableRefreshAccessToken() throws WxErrorException {
+    WxMaConfig configStorage = this.wxMaServiceOkHttp.getWxMaConfig();
+    configStorage.useStableAccessToken(true);
+    String before = configStorage.getAccessToken();
+    this.wxMaServiceOkHttp.getAccessToken(false);
     String after = configStorage.getAccessToken();
     assertNotEquals(before, after);
     assertTrue(StringUtils.isNotBlank(after));
@@ -134,7 +146,7 @@ public class WxMaServiceImplTest {
     });
     try {
       Object execute = service.execute(re, "http://baidu.com", new HashMap<>());
-      Assert.assertTrue(false, "代码应该不会执行到这里");
+      Assert.fail("代码应该不会执行到这里");
     } catch (WxErrorException e) {
       Assert.assertEquals(WxMpErrorMsgEnum.CODE_40001.getCode(), e.getError().getErrorCode());
       Assert.assertEquals(2, counter.get());

@@ -19,6 +19,13 @@ public interface WxMaConfig {
    */
   String getAccessToken();
 
+  //region 稳定版access token
+  boolean isStableAccessToken();
+
+  void useStableAccessToken(boolean useStableAccessToken);
+  //endregion
+
+
   /**
    * Gets access token lock.
    *

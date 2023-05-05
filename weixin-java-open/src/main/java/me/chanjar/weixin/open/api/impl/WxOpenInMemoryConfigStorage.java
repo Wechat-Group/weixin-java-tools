@@ -2,7 +2,10 @@ package me.chanjar.weixin.open.api.impl;
 
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
@@ -258,6 +261,12 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     private WxMpHostConfig hostConfig;
     private String apiHostUrl;
     private String accessTokenUrl;
+    /**
+     * 是否使用稳定版获取accessToken接口
+     */
+    @Getter(value = AccessLevel.NONE)
+    @Setter(value = AccessLevel.NONE)
+    private boolean useStableAccessToken;
 
     /**
      * 小程序原始ID
@@ -282,6 +291,16 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     @Override
     public String getAccessToken() {
       return wxOpenConfigStorage.getAuthorizerAccessToken(appId);
+    }
+
+    @Override
+    public boolean isStableAccessToken() {
+      return this.useStableAccessToken;
+    }
+
+    @Override
+    public void useStableAccessToken(boolean useStableAccessToken) {
+      this.useStableAccessToken = useStableAccessToken;
     }
 
     @Override

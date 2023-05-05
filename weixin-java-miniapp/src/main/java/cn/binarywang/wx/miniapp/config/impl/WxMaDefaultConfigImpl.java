@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.config.impl;
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
+import lombok.AccessLevel;
 import lombok.Getter;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
@@ -19,6 +20,13 @@ import java.util.concurrent.locks.ReentrantLock;
 public class WxMaDefaultConfigImpl implements WxMaConfig {
   protected volatile String appid;
   protected volatile String token;
+
+  /**
+   * 是否使用稳定版获取accessToken接口
+   */
+  @Getter(value = AccessLevel.NONE)
+  private boolean useStableAccessToken;
+
   /**
    * 小程序原始ID
    */
@@ -80,6 +88,19 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   public void setAccessToken(String accessToken) {
     this.accessToken = accessToken;
   }
+
+  //region 使用稳定版接口获取accessToken
+  @Override
+  public boolean isStableAccessToken() {
+    return this.useStableAccessToken;
+  }
+
+  @Override
+  public void useStableAccessToken(boolean useStableAccessToken) {
+    this.useStableAccessToken = useStableAccessToken;
+  }
+  //endregion
+
 
   @Override
   public Lock getAccessTokenLock() {
