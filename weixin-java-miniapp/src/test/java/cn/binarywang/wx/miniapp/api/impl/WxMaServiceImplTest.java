@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
+import me.chanjar.weixin.common.bean.WxAccessTokenEntity;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxMpErrorMsgEnum;
@@ -44,14 +45,21 @@ public class WxMaServiceImplTest {
     assertTrue(StringUtils.isNotBlank(after));
   }
 
+  private void updateAccessTokenBefore(WxAccessTokenEntity wxAccessTokenEntity) {
+    System.out.println("token:" + wxAccessTokenEntity.toString());
+  }
+
   public void testTokenCallBack() throws WxErrorException {
     WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
     WxMaConfig configStorage = this.wxService.getWxMaConfig();
     config.setAppid(configStorage.getAppid());
     config.setSecret(configStorage.getSecret());
-    config.setUpdateAccessTokenBefore(e -> {
-      System.out.println("token:" + e.toString());
-    });
+//    //第一种方式
+//    config.setUpdateAccessTokenBefore(e -> {
+//      System.out.println("token:" + e.toString());
+//    });
+    //第二种方式
+    config.setUpdateAccessTokenBefore(this::updateAccessTokenBefore);
     this.wxService.setWxMaConfig(config);
 
     String before = config.getAccessToken();
