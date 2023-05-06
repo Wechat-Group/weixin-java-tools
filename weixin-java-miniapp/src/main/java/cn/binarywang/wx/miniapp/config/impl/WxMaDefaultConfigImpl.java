@@ -66,13 +66,15 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
    */
   @Setter
   private Consumer<WxAccessTokenEntity> updateAccessTokenBefore;
+
+  /**
+   * 开启回调
+   */
   @Getter(AccessLevel.NONE)
   private boolean enableUpdateAccessTokenBefore = true;
 
   /**
    * 可临时关闭更新token回调，主要用于其他介质初始化数据时，可不进行回调
-   *
-   * @param enableUpdateAccessTokenBefore
    */
   public void enableUpdateAccessTokenBefore(boolean enableUpdateAccessTokenBefore) {
     this.enableUpdateAccessTokenBefore = enableUpdateAccessTokenBefore;
