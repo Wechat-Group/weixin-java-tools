@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.bean.WxAccessTokenEntity;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 
 import java.util.concurrent.locks.Lock;
+import java.util.function.Consumer;
 
 /**
  * 小程序配置
@@ -12,6 +13,10 @@ import java.util.concurrent.locks.Lock;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMaConfig {
+
+  default void setUpdateAccessTokenBefore(Consumer<WxAccessTokenEntity> updateAccessTokenBefore) {
+
+  }
 
   /**
    * Gets access token.
