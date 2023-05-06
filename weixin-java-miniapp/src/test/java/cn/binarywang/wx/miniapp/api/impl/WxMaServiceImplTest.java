@@ -44,6 +44,26 @@ public class WxMaServiceImplTest {
     assertTrue(StringUtils.isNotBlank(after));
   }
 
+  public void testTokenCallBack() throws WxErrorException {
+    WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
+    WxMaConfig configStorage = this.wxService.getWxMaConfig();
+    config.setAppid(configStorage.getAppid());
+    config.setSecret(configStorage.getSecret());
+    config.setUpdateAccessTokenBefore(e -> {
+      System.out.println("token:" + e.toString());
+    });
+    this.wxService.setWxMaConfig(config);
+
+    String before = config.getAccessToken();
+    this.wxService.getAccessToken(true);
+    String after = config.getAccessToken();
+    assertNotEquals(before, after);
+    assertTrue(StringUtils.isNotBlank(after));
+    config.enableUpdateAccessTokenBefore(false);
+    this.wxService.getAccessToken(true);
+    after = config.getAccessToken();
+    System.out.println(after);
+  }
   @Test(expectedExceptions = {WxErrorException.class})
   public void testGetPaidUnionId() throws WxErrorException {
     final String unionId = this.wxService.getPaidUnionId("1", null, "3", "4");
@@ -134,7 +154,7 @@ public class WxMaServiceImplTest {
     });
     try {
       Object execute = service.execute(re, "http://baidu.com", new HashMap<>());
-      Assert.assertTrue(false, "代码应该不会执行到这里");
+      Assert.fail("代码应该不会执行到这里");
     } catch (WxErrorException e) {
       Assert.assertEquals(WxMpErrorMsgEnum.CODE_40001.getCode(), e.getError().getErrorCode());
       Assert.assertEquals(2, counter.get());
