@@ -34,6 +34,8 @@ public class WxMaServiceImplTest {
 
   @Inject
   private WxMaService wxService;
+  @Inject
+  private WxMaServiceOkHttpImpl wxMaServiceOkHttp;
 
   public void testRefreshAccessToken() throws WxErrorException {
     WxMaConfig configStorage = this.wxService.getWxMaConfig();
@@ -44,6 +46,7 @@ public class WxMaServiceImplTest {
     assertNotEquals(before, after);
     assertTrue(StringUtils.isNotBlank(after));
   }
+
 
   private void updateAccessTokenBefore(WxAccessTokenEntity wxAccessTokenEntity) {
     System.out.println("token:" + wxAccessTokenEntity.toString());
@@ -72,6 +75,18 @@ public class WxMaServiceImplTest {
     after = config.getAccessToken();
     System.out.println(after);
   }
+
+  public void testStableRefreshAccessToken() throws WxErrorException {
+    WxMaConfig configStorage = this.wxMaServiceOkHttp.getWxMaConfig();
+    configStorage.useStableAccessToken(true);
+    String before = configStorage.getAccessToken();
+    this.wxMaServiceOkHttp.getAccessToken(false);
+    String after = configStorage.getAccessToken();
+    assertNotEquals(before, after);
+    assertTrue(StringUtils.isNotBlank(after));
+  }
+
+
   @Test(expectedExceptions = {WxErrorException.class})
   public void testGetPaidUnionId() throws WxErrorException {
     final String unionId = this.wxService.getPaidUnionId("1", null, "3", "4");

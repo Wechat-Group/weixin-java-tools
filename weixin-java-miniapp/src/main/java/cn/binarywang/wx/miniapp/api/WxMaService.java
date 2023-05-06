@@ -22,6 +22,8 @@ public interface WxMaService extends WxService {
    * 获取access_token.
    */
   String GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
+  String GET_STABLE_ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/stable_token";
+
 
   /**
    * The constant JSCODE_TO_SESSION_URL.
