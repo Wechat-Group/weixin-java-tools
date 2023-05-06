@@ -6,10 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * token
+ *
  * @author cn
- * @version 1.0
- * @description
- * @date 2023/3/27 18:34
  */
 @Getter
 @Setter
