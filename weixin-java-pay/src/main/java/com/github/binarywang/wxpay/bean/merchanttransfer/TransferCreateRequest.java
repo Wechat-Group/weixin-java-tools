@@ -122,6 +122,20 @@ public class TransferCreateRequest implements Serializable {
   @SpecEncrypt
   private List<TransferDetailList> transferDetailList;
 
+  /**
+   * <pre>
+   * 字段名：转账场景ID
+   * 变量名：transfer_scene_id
+   * 是否必填：否
+   * 类型：string(36)
+   * 描述：
+   *  该批次转账使用的转账场景，如不填写则使用商家的默认场景，如无默认场景可为空，可前往“商家转账到零钱-前往功能”中申请。
+   * 示例值：1001
+   * </pre>
+   */
+  @SerializedName("transfer_scene_id")
+  private String transferSceneId;
+
 
   /**
    * The type Transfer detail list.
