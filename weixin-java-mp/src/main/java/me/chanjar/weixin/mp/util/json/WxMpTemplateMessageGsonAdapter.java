@@ -10,7 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
 
+
 /**
+ * 模板消息转Json类型转换器
  * @author chanjarster
  */
 public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTemplateMessage> {
