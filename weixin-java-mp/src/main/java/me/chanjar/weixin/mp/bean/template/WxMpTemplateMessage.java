@@ -53,6 +53,11 @@ public class WxMpTemplateMessage implements Serializable {
   private MiniProgram miniProgram;
 
   /**
+   * 防重入id.
+   */
+  private String clientMsgId;
+
+  /**
    * 模板数据.
    */
   @Builder.Default
