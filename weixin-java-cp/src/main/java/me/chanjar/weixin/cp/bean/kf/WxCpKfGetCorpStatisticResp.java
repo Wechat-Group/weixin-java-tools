@@ -86,14 +86,14 @@ public class WxCpKfGetCorpStatisticResp extends WxCpBaseResp {
      * 转人工率。一个自然日内，客户给智能助手发消息的会话中，转人工的会话的占比。
      */
     @SerializedName("ai_transfer_rate")
-    private Integer aiTransferRate;
+    private Float aiTransferRate;
 
     /**
      * 知识命中率。一个自然日内，客户给智能助手发送的消息中，命中知识库的占比。只有在开启了智能回复原生功能并配置了知识库的情况下，才会产生该项统计数据。当api
      * 托管了会话分配，智能回复原生功能失效。若不返回，代表没有向配置知识库的智能接待助手发送消息，该项无法计算
      */
     @SerializedName("ai_knowledge_hit_rate")
-    private Integer aiKnowledgeHitRate;
+    private Float aiKnowledgeHitRate;
 
     /**
      * 被拒收消息的客户数。被接待人员设置了“不再接收消息”的客户数
