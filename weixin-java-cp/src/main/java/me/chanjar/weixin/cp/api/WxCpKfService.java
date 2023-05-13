@@ -203,6 +203,22 @@ public interface WxCpKfService {
    */
   WxCpKfGetCorpStatisticResp getCorpStatistic(WxCpKfGetCorpStatisticRequest request) throws WxErrorException;
 
+  /**
+   * <pre>
+   * 获取「客户数据统计」接待人员明细数据
+   * 通过此接口，可获取接入人工会话数、咨询会话数等与接待人员相关的统计信息
+   * 请求方式：POST(HTTPS)
+   * 请求地址：
+   * <a href="https://qyapi.weixin.qq.com/cgi-bin/kf/get_servicer_statistic?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/kf/get_servicer_statistic?access_token=ACCESS_TOKEN</a>
+   * 文档地址：
+   * <a href="https://developer.work.weixin.qq.com/document/path/95490">https://developer.work.weixin.qq.com/document/path/95490</a>
+   * <pre>
+   * @param request 查询参数
+   * @return 客户数据统计 -企业汇总数据
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpKfGetServicerStatisticResp getServicerStatistic(WxCpKfGetServicerStatisticRequest request) throws WxErrorException;
+
   // 「升级服务」配置
 
   /**

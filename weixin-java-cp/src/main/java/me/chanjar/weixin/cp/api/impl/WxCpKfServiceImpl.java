@@ -271,4 +271,11 @@ public class WxCpKfServiceImpl implements WxCpKfService {
     return WxCpKfGetCorpStatisticResp.fromJson(responseContent);
   }
 
+  @Override
+  public WxCpKfGetServicerStatisticResp getServicerStatistic(WxCpKfGetServicerStatisticRequest request) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(GET_SERVICER_STATISTIC);
+    String responseContent = cpService.post(url, GSON.toJson(request));
+    return WxCpKfGetServicerStatisticResp.fromJson(responseContent);
+  }
+
 }

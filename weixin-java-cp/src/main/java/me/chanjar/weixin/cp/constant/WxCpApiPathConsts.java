@@ -1364,6 +1364,12 @@ public interface WxCpApiPathConsts {
      * The constant GET_CORP_STATISTIC.
      */
     String GET_CORP_STATISTIC = "/cgi-bin/kf/get_corp_statistic";
+
+    /**
+     * The constant GET_SERVICER_STATISTIC.
+     */
+    String GET_SERVICER_STATISTIC = "/cgi-bin/kf/get_servicer_statistic";
+
     /**
      * The constant CUSTOMER_GET_UPGRADE_SERVICE_CONFIG.
      */
