@@ -61,7 +61,7 @@ public class WxCpKfGetCorpStatisticResp extends WxCpBaseResp {
     /**
      * 咨询客户数。在会话中发送过消息的客户数量，若客户多次咨询只计算一个客户
      */
-    @SerializedName("user_cnt")
+    @SerializedName("customer_cnt")
     private Integer customerCnt;
 
     /**
@@ -79,7 +79,7 @@ public class WxCpKfGetCorpStatisticResp extends WxCpBaseResp {
     /**
      * 智能回复会话数。客户发过消息并分配给智能助手的咨询会话数。通过API发消息或者开启智能回复功能会将客户分配给智能助手
      */
-    @SerializedName("ai_transfer_rate")
+    @SerializedName("ai_session_reply_cnt")
     private Integer aiSessionReplyCnt;
 
     /**
@@ -94,6 +94,12 @@ public class WxCpKfGetCorpStatisticResp extends WxCpBaseResp {
      */
     @SerializedName("ai_knowledge_hit_rate")
     private Integer aiKnowledgeHitRate;
+
+    /**
+     * 被拒收消息的客户数。被接待人员设置了“不再接收消息”的客户数
+     */
+    @SerializedName("msg_rejected_customer_cnt")
+    private Integer msgRejectedCustomerCnt;
   }
 
   /**
