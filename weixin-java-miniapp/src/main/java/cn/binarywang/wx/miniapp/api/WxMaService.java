@@ -523,4 +523,10 @@ public interface WxMaService extends WxService {
    * @return getWxMaShopPayService
    */
   WxMaShopPayService getWxMaShopPayService();
+
+  /**
+   * 小程序发货信息管理服务
+   * @return getWxMaOrderShippingService
+   */
+  WxMaOrderShippingService getWxMaOrderShippingService();
 }

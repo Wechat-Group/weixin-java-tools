@@ -740,4 +740,29 @@ public class WxMaApiUrlConstants {
 
   }
 
+  /**
+   * 发货信息管理服务相关接口
+   * <pre>
+   * 文档地址： https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/order-shipping/order-shipping.html#%E4%B8%80%E3%80%81%E5%8F%91%E8%B4%A7%E4%BF%A1%E6%81%AF%E5%BD%95%E5%85%A5%E6%8E%A5%E5%8F%A3
+   * </pre>
+   */
+  public interface OrderShipping {
+
+    /**
+     * 查询小程序是否已开通发货信息管理服务.
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/order-shipping/order-shipping.html#%E4%B8%83%E3%80%81%E6%9F%A5%E8%AF%A2%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%98%AF%E5%90%A6%E5%B7%B2%E5%BC%80%E9%80%9A%E5%8F%91%E8%B4%A7%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1
+     * </pre>
+     */
+    String IS_TRADE_MANAGED = "https://api.weixin.qq.com/wxa/sec/order/is_trade_managed";
+
+    /**
+     * 发货信息录入接口.
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/order-shipping/order-shipping.html#%E4%B8%80%E3%80%81%E5%8F%91%E8%B4%A7%E4%BF%A1%E6%81%AF%E5%BD%95%E5%85%A5%E6%8E%A5%E5%8F%A3
+     * </pre>
+     */
+    String UPLOAD_SHIPPING_INFO = "https://api.weixin.qq.com/wxa/sec/order/upload_shipping_info";
+
+  }
 }

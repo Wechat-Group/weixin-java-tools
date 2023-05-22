@@ -85,6 +85,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaProductOrderService productOrderService = new WxMaProductOrderServiceImpl(this);
   private final WxMaShopCouponService wxMaShopCouponService = new WxMaShopCouponServiceImpl(this);
   private final WxMaShopPayService wxMaShopPayService = new WxMaShopPayServiceImpl(this);
+  private final WxMaOrderShippingService wxMaOrderShippingService = new WxMaOrderShippingServiceImpl(this);
   private Map<String, WxMaConfig> configMap;
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -601,10 +602,14 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
-  public WxMaDeviceSubscribeService getDeviceSubscribeService(){ return this.deviceSubscribeService; }
+  public WxMaDeviceSubscribeService getDeviceSubscribeService() {
+    return this.deviceSubscribeService;
+  }
 
   @Override
-  public WxMaMarketingService getMarketingService() {return  this.marketingService;  }
+  public WxMaMarketingService getMarketingService() {
+    return this.marketingService;
+  }
 
   @Override
   public WxMaImmediateDeliveryService getWxMaImmediateDeliveryService() {
@@ -612,13 +617,19 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
-  public WxMaSafetyRiskControlService getSafetyRiskControlService(){ return this.safetyRiskControlService; }
+  public WxMaSafetyRiskControlService getSafetyRiskControlService() {
+    return this.safetyRiskControlService;
+  }
 
   @Override
-  public WxMaShopSharerService getShopSharerService() {return this.shopSharerService; }
+  public WxMaShopSharerService getShopSharerService() {
+    return this.shopSharerService;
+  }
 
   @Override
-  public WxMaProductService getProductService() { return this.productService; }
+  public WxMaProductService getProductService() {
+    return this.productService;
+  }
 
   @Override
   public WxMaProductOrderService getProductOrderService() {
@@ -633,5 +644,15 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaShopPayService getWxMaShopPayService() {
     return this.wxMaShopPayService;
+  }
+
+  /**
+   * 小程序发货信息管理服务
+   *
+   * @return getWxMaOrderShippingService
+   */
+  @Override
+  public WxMaOrderShippingService getWxMaOrderShippingService() {
+    return this.wxMaOrderShippingService;
   }
 }
