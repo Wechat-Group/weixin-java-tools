@@ -100,6 +100,8 @@ public class WxMaCodeExtConfig implements Serializable {
    */
   @Data
   @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class PageConfig implements Serializable {
     private static final long serialVersionUID = -8615574764987479723L;
     /**
@@ -148,6 +150,8 @@ public class WxMaCodeExtConfig implements Serializable {
    */
   @Data
   @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class TabBar implements Serializable {
     private static final long serialVersionUID = -3037016532526129399L;
 
@@ -181,6 +185,8 @@ public class WxMaCodeExtConfig implements Serializable {
      */
     @Data
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Item implements Serializable {
       private static final long serialVersionUID = -5824322265161612460L;
       /**
@@ -207,6 +213,8 @@ public class WxMaCodeExtConfig implements Serializable {
    */
   @Data
   @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class NetworkTimeout implements Serializable {
     private static final long serialVersionUID = -9180176522015880991L;
 
