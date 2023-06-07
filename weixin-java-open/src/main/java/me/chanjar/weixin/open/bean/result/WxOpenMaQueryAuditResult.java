@@ -35,4 +35,19 @@ public class WxOpenMaQueryAuditResult extends WxOpenResult {
    */
   @SerializedName(value = "screenshot")
   private String screenShot;
+  /**
+   * 审核版本
+   */
+  @SerializedName("user_version")
+  private String userVersion;
+  /**
+   * 版本描述
+   */
+  @SerializedName("user_desc")
+  private String userDesc;
+  /**
+   * 时间戳，提交审核的时间
+   */
+  @SerializedName("submit_audit_time")
+  private Long submitAuditTime;
 }
