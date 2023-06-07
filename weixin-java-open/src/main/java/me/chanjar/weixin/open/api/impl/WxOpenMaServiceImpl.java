@@ -256,6 +256,12 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   @Override
+  public WxOpenMaVisitStatusResult getVisitStatus() throws WxErrorException {
+    String responseContent = post(API_GET_VISITSTATUS, "{}");
+    return WxOpenMaVisitStatusResult.fromJson(responseContent);
+  }
+
+  @Override
   public WxOpenResult revertCodeRelease() throws WxErrorException {
     String response = get(API_REVERT_CODE_RELEASE, null);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);

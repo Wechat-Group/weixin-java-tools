@@ -138,9 +138,14 @@ public interface WxOpenMaService extends WxMaService {
   String API_RELEASE = "https://api.weixin.qq.com/wxa/release";
 
   /**
-   * 10. 修改小程序线上代码的可见状态（仅供第三方代小程序调用)
+   * 10.1 修改小程序线上代码的可见状态（仅供第三方代小程序调用)
    */
   String API_CHANGE_VISITSTATUS = "https://api.weixin.qq.com/wxa/change_visitstatus";
+
+  /**
+   * 10.2 查询小程序线上代码的可见状态（仅供第三方代小程序调用)
+   */
+  String API_GET_VISITSTATUS = "https://api.weixin.qq.com/wxa/getvisitstatus";
 
   /**
    * 11.小程序版本回退（仅供第三方代小程序调用）
@@ -477,13 +482,21 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenResult releaseAudited() throws WxErrorException;
 
   /**
-   * 10. 修改小程序线上代码的可见状态（仅供第三方代小程序调用）
+   * 10.1 修改小程序线上代码的可见状态（仅供第三方代小程序调用）
    *
    * @param action the action
    * @return the wx open result
    * @throws WxErrorException the wx error exception
    */
   WxOpenResult changeVisitStatus(String action) throws WxErrorException;
+
+  /**
+   * 10.2 查询小程序服务状态（仅供第三方代小程序调用）
+   *
+   * @return 小程序服务状态
+   * @throws WxErrorException 查询失败时返回，具体错误码请看此接口的注释文档
+   */
+  WxOpenMaVisitStatusResult getVisitStatus() throws WxErrorException;
 
   /**
    * 11. 小程序版本回退（仅供第三方代小程序调用）
