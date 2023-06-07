@@ -3,6 +3,7 @@ package me.chanjar.weixin.open.bean.result;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.util.List;
 
@@ -17,16 +18,49 @@ import java.util.List;
 public class WxOpenMaDomainResult extends WxOpenResult {
   private static final long serialVersionUID = 3406315629639573330L;
 
+  /**
+   * request合法域名
+   */
   @SerializedName("requestdomain")
-  List<String> requestdomainList;
-
+  private List<String> requestDomain;
+  /**
+   * socket合法域名
+   */
   @SerializedName("wsrequestdomain")
-  List<String> wsrequestdomainList;
-
+  private List<String> wsRequestDomain;
+  /**
+   * uploadFile合法域名
+   */
   @SerializedName("uploaddomain")
-  List<String> uploaddomainList;
-
+  private List<String> uploadDomain;
+  /**
+   * downloadFile合法域名
+   */
   @SerializedName("downloaddomain")
-  List<String> downloaddomainList;
+  private List<String> downloadDomain;
+  /**
+   * request不合法域名
+   */
+  @SerializedName("invalid_requestdomain")
+  private List<String> invalidRequestDomain;
+  /**
+   * socket不合法域名
+   */
+  @SerializedName("invalid_wsrequestdomain")
+  private List<String> invalidWsRequestDomain;
+  /**
+   * uploadFile不合法域名
+   */
+  @SerializedName("invalid_uploaddomain")
+  private List<String> invalidUploadDomain;
+  /**
+   * downloadFile不合法域名
+   */
+  @SerializedName("invalid_downloaddomain")
+  private List<String> invalidDownloadDomain;
+
+  public static WxOpenMaDomainResult fromJson(String json) {
+    return WxGsonBuilder.create().fromJson(json, WxOpenMaDomainResult.class);
+  }
 
 }
