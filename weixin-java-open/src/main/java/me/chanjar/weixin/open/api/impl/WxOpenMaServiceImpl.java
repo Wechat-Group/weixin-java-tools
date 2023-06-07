@@ -120,6 +120,11 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaWebDomainResult.class);
   }
 
+  @Override
+  public WxOpenMaDomainConfirmFileResult getWebviewDomainConfirmFile() throws WxErrorException {
+    String responseContent = post(API_GET_WEBVIEW_DOMAIN_CONFIRM_FILE, "{}");
+    return WxOpenMaDomainConfirmFileResult.fromJson(responseContent);
+  }
 
   @Override
   public String getAccountBasicInfo() throws WxErrorException {

@@ -43,6 +43,11 @@ public interface WxOpenMaService extends WxMaService {
   String API_SET_WEBVIEW_DOMAIN = "https://api.weixin.qq.com/wxa/setwebviewdomain";
 
   /**
+   * 获取业务域名校验文件（仅供第三方代小程序调用）
+   */
+  String API_GET_WEBVIEW_DOMAIN_CONFIRM_FILE = "https://api.weixin.qq.com/wxa/get_webviewdomain_confirmfile";
+
+  /**
    * 获取帐号基本信息
    * <pre>
    * GET请求
@@ -319,6 +324,14 @@ public interface WxOpenMaService extends WxMaService {
    * @throws WxErrorException the wx error exception
    */
   WxOpenMaWebDomainResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException;
+
+  /**
+   * 获取业务域名校验文件
+   *
+   * @return 业务域名校验文件信息
+   * @throws WxErrorException 操作失败时抛出，具体错误码请看文档
+   */
+  WxOpenMaDomainConfirmFileResult getWebviewDomainConfirmFile() throws WxErrorException;
 
   /**
    * 获取小程序的信息
