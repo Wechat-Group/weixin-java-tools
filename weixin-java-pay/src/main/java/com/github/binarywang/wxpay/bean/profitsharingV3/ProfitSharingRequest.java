@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.bean.profitsharingV3;
 
+import com.github.binarywang.wxpay.v3.SpecEncrypt;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -70,6 +71,7 @@ public class ProfitSharingRequest implements Serializable {
    * 描述：分账接收方列表，可以设置出资商户作为分账接受方，最多可有50个分账接收方
    * </pre>
    */
+  @SpecEncrypt
   @SerializedName("receivers")
   private List<ProfitSharingReceiver> receivers;
 
