@@ -479,7 +479,7 @@ public class WxCpTpXmlMessage implements Serializable {
   private WxCpXmlMessage.SendLocationInfo sendLocationInfo = new WxCpXmlMessage.SendLocationInfo();
 
   @XStreamAlias("ApprovalInfo")
-  private ApprovalInfo approvalInfo = new ApprovalInfo();
+  private WxCpXmlApprovalInfo approvalInfo = new WxCpXmlApprovalInfo();
 
   @XStreamAlias("TaskId")
   @XStreamConverter(value = XStreamCDataConverter.class)
@@ -580,6 +580,7 @@ public class WxCpTpXmlMessage implements Serializable {
 
   /**
    * The type Approval info.
+   * @deprecated 无法同时适配不同回调下的实体字段，使用WxCpXmlApprovalInfo可完美适配
    */
   @Data
   @XStreamAlias("ApprovalInfo")
