@@ -796,7 +796,7 @@ public class BaseWxPayServiceImplTest {
     log.info("请求头参数为：timestamp:{} nonce:{} serialNo:{} signature:{}", timestamp, nonce, serialNo, signature);
 
     // V2版本请参考com.github.binarywang.wxpay.bean.notify.WxPayRefundNotifyResultTest里的单元测试
-    final WxPayOrderNotifyV3Result wxPayOrderNotifyV3Result = this.payService.parseOrderNotifyV3Result(RequestUtils.readData(request),
+    final WxPayNotifyV3Result wxPayOrderNotifyV3Result = this.payService.parseOrderNotifyV3Result(RequestUtils.readData(request),
       new SignatureHeader(timestamp, nonce, signature, serialNo));
     log.info(GSON.toJson(wxPayOrderNotifyV3Result));
 

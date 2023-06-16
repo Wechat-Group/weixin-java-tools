@@ -7,14 +7,16 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 退款结果通知.
- * 文档见：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_11.shtml
+ * 微信支付服务商退款回调
+ * 文档见：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_11.shtml
  *
- * @author thinsstar
+ * @author Guo Shuai
+ * @version 1.0
+ * @date 2023/3/2
  */
 @Data
 @NoArgsConstructor
-public class WxPayRefundNotifyV3Result implements Serializable, WxPayBaseNotifyV3Result<WxPayRefundNotifyV3Result.DecryptNotifyResult> {
+public class WxPayPartnerRefundNotifyV3Result implements Serializable, WxPayBaseNotifyV3Result<WxPayPartnerRefundNotifyV3Result.DecryptNotifyResult> {
   private static final long serialVersionUID = -1L;
   /**
    * 源数据
@@ -31,17 +33,30 @@ public class WxPayRefundNotifyV3Result implements Serializable, WxPayBaseNotifyV
     private static final long serialVersionUID = -1L;
     /**
      * <pre>
-     * 字段名：直连商户号
-     * 变量名：mchid
+     * 字段名：服务商的商户号
+     * 变量名：sub_mchid
      * 是否必填：是
-     * 类型：string[1,32]
+     * 类型：string[1, 32]
      * 描述：
-     *  直连商户的商户号，由微信支付生成并下发。
-     *  示例值：1900000100
+     *  服务商的商户号，由微信支付生成并下发。
+     *  示例值：1230000109
      * </pre>
      */
-    @SerializedName(value = "mchid")
-    private String mchid;
+    @SerializedName(value = "sp_mchid")
+    private String spMchId;
+    /**
+     * <pre>
+     * 字段名：子商户的商户号
+     * 变量名：sub_mchid
+     * 是否必填：是
+     * 类型：string[1, 32]
+     * 描述：
+     *  子商户商户号，由微信支付生成并下发。
+     *  示例值：1230000109
+     * </pre>
+     */
+    @SerializedName(value = "sub_mchid")
+    private String subMchId;
     /**
      * <pre>
      * 字段名：商户订单号
