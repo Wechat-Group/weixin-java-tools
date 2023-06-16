@@ -12,7 +12,6 @@ public interface WxPayBaseNotifyV3Result<T> {
    * 设置原始数据
    *
    * @param rawData 原始数据
-   * @return void
    * @author Pursuer
    * @date 2023/6/15
    * @since 1.0
@@ -22,8 +21,7 @@ public interface WxPayBaseNotifyV3Result<T> {
   /**
    * 解密后的数据
    *
-   * @param data
-   * @return void
+   * @param data 解密后的数据
    * @author Pursuer
    * @date 2023/6/15
    * @since 1.0
