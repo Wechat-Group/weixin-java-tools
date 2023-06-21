@@ -65,10 +65,10 @@ public class WxCpMeetingServiceImpl implements WxCpMeetingService {
     if (limit != null) {
       param.put("limit", limit);
     }
-    if (limit != null) {
+    if (beginTime != null) {
       param.put("begin_time", beginTime);
     }
-    if (limit != null) {
+    if (endTime != null) {
       param.put("end_time", endTime);
     }
     final String response = this.cpService.post(this.cpService.getWxCpConfigStorage().getApiUrl(GET_USER_MEETING_ID),

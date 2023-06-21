@@ -696,25 +696,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(PartnerTradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
-    if (StringUtils.isBlank(request.getSpAppid())) {
-      request.setSpAppid(this.getConfig().getAppId());
-    }
-    if (StringUtils.isBlank(request.getSpMchId())) {
-      request.setSpMchId(this.getConfig().getMchId());
-    }
-    if (StringUtils.isBlank(request.getNotifyUrl())) {
-      request.setNotifyUrl(this.getConfig().getNotifyUrl());
-    }
-    if (StringUtils.isBlank(request.getSubAppid())) {
-      request.setSubAppid(this.getConfig().getSubAppId());
-    }
-    if (StringUtils.isBlank(request.getSubMchId())) {
-      request.setSubMchId(this.getConfig().getSubMchId());
-    }
-
-    String url = this.getPayBaseUrl() + tradeType.getPartnerUrl();
-    String response = this.postV3(url, GSON.toJson(request));
-    return GSON.fromJson(response, WxPayUnifiedOrderV3Result.class);
+    WxPayUnifiedOrderV3Result result = this.unifiedPartnerOrderV3(tradeType, request);
+    //获取应用ID
+    String appId = StringUtils.isBlank(request.getSubAppid()) ? request.getSpAppid() : request.getSubAppid();
+    return result.getPartnerPayInfo(tradeType, appId, request.getSubMchId(), this.getConfig().getPrivateKey());
   }
 
   @Override
