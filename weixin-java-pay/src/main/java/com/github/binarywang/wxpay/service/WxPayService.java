@@ -5,6 +5,7 @@ import com.github.binarywang.wxpay.bean.coupon.*;
 import com.github.binarywang.wxpay.bean.notify.*;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
+import com.github.binarywang.wxpay.bean.result.enums.PartnerTradeTypeEnum;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
@@ -479,6 +480,23 @@ public interface WxPayService {
 
   /**
    * <pre>
+   * 服务商关闭订单
+   * 应用场景
+   * 以下情况需要调用关单接口：
+   * 1、商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；
+   * 2、系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
+   * 注意：关单没有时间限制，建议在订单生成后间隔几分钟（最短5分钟）再调用关单接口，避免出现订单状态同步不及时导致关单失败。
+   * 接口地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
+   * </pre>
+   *
+   * @param outTradeNo 商户系统内部的订单号
+   * @return the wx pay order close result
+   * @throws WxPayException the wx pay exception
+   */
+  void closePartnerOrderV3(String outTradeNo) throws WxPayException;
+
+  /**
+   * <pre>
    * 关闭订单
    * 应用场景
    * 以下情况需要调用关单接口：
@@ -493,6 +511,23 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   void closeOrderV3(WxPayOrderCloseV3Request request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 服务商关闭订单
+   * 应用场景
+   * 以下情况需要调用关单接口：
+   * 1、商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；
+   * 2、系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
+   * 注意：关单没有时间限制，建议在订单生成后间隔几分钟（最短5分钟）再调用关单接口，避免出现订单状态同步不及时导致关单失败。
+   * 接口地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
+   * </pre>
+   *
+   * @param request 关闭订单请求对象
+   * @return the wx pay order close result
+   * @throws WxPayException the wx pay exception
+   */
+  void closePartnerOrderV3(WxPayPartnerOrderCloseV3Request request) throws WxPayException;
 
   /**
    * <pre>
@@ -559,7 +594,7 @@ public interface WxPayService {
    * @return 返回 {@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
    * @throws WxPayException the wx pay exception
    */
-  <T> T createPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
+  <T> T createPartnerOrderV3(PartnerTradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
 
   /**
    * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"
@@ -569,7 +604,7 @@ public interface WxPayService {
    * @return the wx pay unified order result
    * @throws WxPayException the wx pay exception
    */
-  WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
+  WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(PartnerTradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
 
   /**
    * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"

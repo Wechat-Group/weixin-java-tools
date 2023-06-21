@@ -10,6 +10,7 @@ import com.github.binarywang.wxpay.bean.order.WxPayMwebOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
+import com.github.binarywang.wxpay.bean.result.enums.PartnerTradeTypeEnum;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.config.WxPayConfigHolder;
@@ -539,11 +540,33 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public void closePartnerOrderV3(String outTradeNo) throws WxPayException {
+    if (StringUtils.isBlank(outTradeNo)) {
+      throw new WxPayException("out_trade_no不能为空");
+    }
+    WxPayPartnerOrderCloseV3Request request = new WxPayPartnerOrderCloseV3Request();
+    request.setOutTradeNo(StringUtils.trimToNull(outTradeNo));
+    this.closePartnerOrderV3(request);
+  }
+
+  @Override
   public void closeOrderV3(WxPayOrderCloseV3Request request) throws WxPayException {
     if (StringUtils.isBlank(request.getMchid())) {
       request.setMchid(this.getConfig().getMchId());
     }
     String url = String.format("%s/v3/pay/transactions/out-trade-no/%s/close", this.getPayBaseUrl(), request.getOutTradeNo());
+    this.postV3(url, GSON.toJson(request));
+  }
+
+  @Override
+  public void closePartnerOrderV3(WxPayPartnerOrderCloseV3Request request) throws WxPayException {
+    if (StringUtils.isBlank(request.getSpMchId())) {
+      request.setSpMchId(this.getConfig().getMchId());
+    }
+    if (StringUtils.isBlank(request.getSubMchId())) {
+      request.setSubMchId(this.getConfig().getSubMchId());
+    }
+    String url = String.format("%s/v3/pay/partner/transactions/out-trade-no/%s/close", this.getPayBaseUrl(), request.getOutTradeNo());
     this.postV3(url, GSON.toJson(request));
   }
 
@@ -664,15 +687,15 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
-  public <T> T createPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
+  public <T> T createPartnerOrderV3(PartnerTradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
     WxPayUnifiedOrderV3Result result = this.unifiedPartnerOrderV3(tradeType, request);
     //获取应用ID
     String appId = StringUtils.isBlank(request.getSubAppid()) ? request.getSpAppid() : request.getSubAppid();
-    return result.getPayInfo(tradeType, appId, request.getSubMchId(), this.getConfig().getPrivateKey());
+    return result.getPartnerPayInfo(tradeType, appId, request.getSubMchId(), this.getConfig().getPrivateKey());
   }
 
   @Override
-  public WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
+  public WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(PartnerTradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
     if (StringUtils.isBlank(request.getSpAppid())) {
       request.setSpAppid(this.getConfig().getAppId());
     }

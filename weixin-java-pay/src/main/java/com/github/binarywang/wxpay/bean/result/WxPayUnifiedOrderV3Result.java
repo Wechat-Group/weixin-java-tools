@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.bean.result;
 
+import com.github.binarywang.wxpay.bean.result.enums.PartnerTradeTypeEnum;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.v3.util.SignUtils;
 import com.google.gson.annotations.SerializedName;
@@ -106,6 +107,34 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
   }
 
   public <T> T getPayInfo(TradeTypeEnum tradeType, String appId, String mchId, PrivateKey privateKey) {
+    String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+    String nonceStr = SignUtils.genRandomStr();
+    switch (tradeType) {
+      case JSAPI:
+        JsapiResult jsapiResult = new JsapiResult();
+        jsapiResult.setAppId(appId).setTimeStamp(timestamp)
+          .setPackageValue("prepay_id=" + this.prepayId).setNonceStr(nonceStr)
+          //签名类型，默认为RSA，仅支持RSA。
+          .setSignType("RSA").setPaySign(SignUtils.sign(jsapiResult.getSignStr(), privateKey));
+        return (T) jsapiResult;
+      case H5:
+        return (T) this.h5Url;
+      case APP:
+        AppResult appResult = new AppResult();
+        appResult.setAppid(appId).setPrepayId(this.prepayId).setPartnerId(mchId)
+          .setNoncestr(nonceStr).setTimestamp(timestamp)
+          //暂填写固定值Sign=WXPay
+          .setPackageValue("Sign=WXPay")
+          .setSign(SignUtils.sign(appResult.getSignStr(), privateKey));
+        return (T) appResult;
+      case NATIVE:
+        return (T) this.codeUrl;
+      default:
+        throw new WxRuntimeException("不支持的支付类型");
+    }
+  }
+
+  public <T> T getPartnerPayInfo(PartnerTradeTypeEnum tradeType, String appId, String mchId, PrivateKey privateKey) {
     String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
     String nonceStr = SignUtils.genRandomStr();
     switch (tradeType) {
