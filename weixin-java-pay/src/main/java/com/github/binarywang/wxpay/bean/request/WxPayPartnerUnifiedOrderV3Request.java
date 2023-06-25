@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 微信支付服务商下单请求对象
  *
- * @author Guo Shuai
+ * @author Pursuer
  * @version 1.0
  * @date 2023/3/2
  */

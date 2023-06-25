@@ -414,6 +414,53 @@ public interface WxPayService {
 
   /**
    * <pre>
+   * 服务商模式查询订单
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml</a>
+   * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。查询订单状态可通过微信支付订单号或商户订单号两种方式查询
+   * 注意：
+   *  查询订单可通过微信支付订单号和商户订单号两种方式查询，两种查询方式返回结果相同
+   * 需要调用查询接口的情况：
+   * ◆ 当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知。
+   * ◆ 调用支付接口后，返回系统错误或未知交易状态情况。
+   * ◆ 调用付款码支付API，返回USERPAYING的状态。
+   * ◆ 调用关单或撤销接口API之前，需确认支付状态。
+   * 接口地址：
+   *  https://api.mch.weixin.qq.com/v3/pay/partner/transactions/id/{transaction_id}
+   *  https://api.mch.weixin.qq.com/v3/pay/partner/transactions/out-trade-no/{out_trade_no}
+   * </pre>
+   *
+   * @param transactionId 微信订单号
+   * @param outTradeNo    商户系统内部的订单号，当没提供transactionId时需要传这个。
+   * @return the wx pay order query result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayPartnerOrderQueryV3Result queryPartnerOrderV3(String transactionId, String outTradeNo) throws WxPayException;
+
+  /**
+   * <pre>
+   * 服务商模式查询订单
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml</a>
+   * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。查询订单状态可通过微信支付订单号或商户订单号两种方式查询
+   * 注意：
+   *  查询订单可通过微信支付订单号和商户订单号两种方式查询，两种查询方式返回结果相同
+   * 需要调用查询接口的情况：
+   * ◆ 当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知。
+   * ◆ 调用支付接口后，返回系统错误或未知交易状态情况。
+   * ◆ 调用付款码支付API，返回USERPAYING的状态。
+   * ◆ 调用关单或撤销接口API之前，需确认支付状态。
+   * 接口地址：
+   *  https://api.mch.weixin.qq.com/v3/pay/partner/transactions/id/{transaction_id}
+   *  https://api.mch.weixin.qq.com/v3/pay/partner/transactions/out-trade-no/{out_trade_no}
+   * </pre>
+   *
+   * @param request 查询订单请求对象
+   * @return the wx pay order query result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayPartnerOrderQueryV3Result queryPartnerOrderV3(WxPayPartnerOrderQueryV3Request request) throws WxPayException;
+
+  /**
+   * <pre>
    * 合单查询订单API
    * 请求URL: https://api.mch.weixin.qq.com/v3/combine-transactions/out-trade-no/{combine_out_trade_no}
    * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_11.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_11.shtml</a>
@@ -602,7 +649,6 @@ public interface WxPayService {
    * @param tradeType the trade type
    * @param request   请求对象，注意一些参数如spAppid、spMchid等不用设置，方法内会自动从配置对象中获取到（前提是对应配置中已经设置）
    * @return the wx pay unified order result
-   * @throws WxPayException the wx pay exception
    */
   WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(PartnerTradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
 

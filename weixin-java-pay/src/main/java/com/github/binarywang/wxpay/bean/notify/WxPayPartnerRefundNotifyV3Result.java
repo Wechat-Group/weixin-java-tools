@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 微信支付服务商退款回调
  * 文档见：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_11.shtml
  *
- * @author Guo Shuai
+ * @author Pursuer
  * @version 1.0
  * @date 2023/3/2
  */
