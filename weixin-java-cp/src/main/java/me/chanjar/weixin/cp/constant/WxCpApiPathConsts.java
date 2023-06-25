@@ -1293,6 +1293,34 @@ public interface WxCpApiPathConsts {
      * The constant DEL_INTERCEPT_RULE.
      */
     String DEL_INTERCEPT_RULE = "/cgi-bin/externalcontact/del_intercept_rule";
+    /**
+     * 获取当前仍然有效的获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_LIST = "/cgi-bin/externalcontact/customer_acquisition/list_link";
+    /**
+     * 获取获客链接详情
+     */
+    String CUSTOMER_ACQUISITION_LINK_GET = "/cgi-bin/externalcontact/customer_acquisition/get";
+    /**
+     * 创建获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_CREATE = "/cgi-bin/externalcontact/customer_acquisition/create_link";
+    /**
+     * 编辑获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_UPDATE = "/cgi-bin/externalcontact/customer_acquisition/update_link";
+    /**
+     * 删除获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_DELETE = "/cgi-bin/externalcontact/customer_acquisition/delete_link";
+    /**
+     * 获取获客客户列表
+     */
+    String CUSTOMER_ACQUISITION_CUSTOMER = "/cgi-bin/externalcontact/customer_acquisition/customer";
+    /**
+     * 查询剩余使用量
+     */
+    String CUSTOMER_ACQUISITION_QUOTA = "/cgi-bin/externalcontact/customer_acquisition_quota";
 
   }
 
@@ -1459,7 +1487,7 @@ public interface WxCpApiPathConsts {
      * 发送应用消息
      * https://developer.work.weixin.qq.com/document/path/90250
      */
-    String SENG_MESSAGE="/cgi-bin/linkedcorp/message/send";
+    String SENG_MESSAGE = "/cgi-bin/linkedcorp/message/send";
   }
 
   interface IdConvert {

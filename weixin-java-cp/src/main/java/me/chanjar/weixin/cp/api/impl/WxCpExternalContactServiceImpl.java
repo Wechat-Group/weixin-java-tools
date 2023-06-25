@@ -16,6 +16,7 @@ import me.chanjar.weixin.cp.api.WxCpExternalContactService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
+import me.chanjar.weixin.cp.bean.external.acquisition.*;
 import me.chanjar.weixin.cp.bean.external.contact.*;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRule;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleAddRequest;
@@ -739,6 +740,63 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     o.addProperty("product_id", productId);
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(DELETE_PRODUCT_ALBUM);
     this.mainService.post(url, o.toString());
+  }
+
+  @Override
+  public WxCpCustomerAcquisitionList customerAcquisitionLinkList(Integer limit, String cursor) throws WxErrorException {
+    JsonObject o = new JsonObject();
+    o.addProperty("limit", limit);
+    o.addProperty("cursor", cursor);
+
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(CUSTOMER_ACQUISITION_LINK_LIST);
+    return WxCpCustomerAcquisitionList.fromJson(this.mainService.post(url, o));
+  }
+
+  @Override
+  public WxCpCustomerAcquisitionInfo customerAcquisitionLinkGet(String linkId) throws WxErrorException {
+    JsonObject o = new JsonObject();
+    o.addProperty("link_id", linkId);
+
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(CUSTOMER_ACQUISITION_LINK_GET);
+    return WxCpCustomerAcquisitionInfo.fromJson(this.mainService.post(url, o));
+  }
+
+  @Override
+  public WxCpCustomerAcquisitionCreateResult customerAcquisitionLinkCreate(WxCpCustomerAcquisitionRequest wxCpCustomerAcquisitionRequest) throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(CUSTOMER_ACQUISITION_LINK_CREATE);
+    return WxCpCustomerAcquisitionCreateResult.fromJson(this.mainService.post(url, wxCpCustomerAcquisitionRequest.toJson()));
+  }
+
+  @Override
+  public WxCpBaseResp customerAcquisitionUpdate(WxCpCustomerAcquisitionRequest wxCpCustomerAcquisitionRequest) throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(CUSTOMER_ACQUISITION_LINK_UPDATE);
+    return WxCpBaseResp.fromJson(this.mainService.post(url, wxCpCustomerAcquisitionRequest.toJson()));
+  }
+
+  @Override
+  public WxCpBaseResp customerAcquisitionLinkDelete(String linkId) throws WxErrorException {
+    JsonObject o = new JsonObject();
+    o.addProperty("link_id", linkId);
+
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(CUSTOMER_ACQUISITION_LINK_DELETE);
+    return WxCpBaseResp.fromJson(this.mainService.post(url, o));
+  }
+
+  @Override
+  public WxCpCustomerAcquisitionCustomerList customerAcquisitionCustomer(String linkId, Integer limit, String cursor) throws WxErrorException {
+    JsonObject o = new JsonObject();
+    o.addProperty("link_id", linkId);
+    o.addProperty("limit", limit);
+    o.addProperty("cursor", cursor);
+
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(CUSTOMER_ACQUISITION_CUSTOMER);
+    return WxCpCustomerAcquisitionCustomerList.fromJson(this.mainService.post(url, o));
+  }
+
+  @Override
+  public WxCpCustomerAcquisitionQuota customerAcquisitionQuota() throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(CUSTOMER_ACQUISITION_QUOTA);
+    return WxCpCustomerAcquisitionQuota.fromJson(this.mainService.get(url, null));
   }
 
   @Override
