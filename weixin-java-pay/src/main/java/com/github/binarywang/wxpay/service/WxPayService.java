@@ -5,14 +5,12 @@ import com.github.binarywang.wxpay.bean.coupon.*;
 import com.github.binarywang.wxpay.bean.notify.*;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
-import com.github.binarywang.wxpay.bean.result.enums.PartnerTradeTypeEnum;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
-
 import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
@@ -641,7 +639,7 @@ public interface WxPayService {
    * @return 返回 {@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
    * @throws WxPayException the wx pay exception
    */
-  <T> T createPartnerOrderV3(PartnerTradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
+  <T> T createPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
 
   /**
    * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"
@@ -649,8 +647,9 @@ public interface WxPayService {
    * @param tradeType the trade type
    * @param request   请求对象，注意一些参数如spAppid、spMchid等不用设置，方法内会自动从配置对象中获取到（前提是对应配置中已经设置）
    * @return the wx pay unified order result
+   * @throws WxPayException the wx pay exception
    */
-  WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(PartnerTradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
+  WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
 
   /**
    * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"

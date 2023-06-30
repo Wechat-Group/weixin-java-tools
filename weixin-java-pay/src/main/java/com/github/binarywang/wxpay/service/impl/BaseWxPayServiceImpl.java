@@ -10,7 +10,6 @@ import com.github.binarywang.wxpay.bean.order.WxPayMwebOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
-import com.github.binarywang.wxpay.bean.result.enums.PartnerTradeTypeEnum;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.config.WxPayConfigHolder;
@@ -712,15 +711,15 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
-  public <T> T createPartnerOrderV3(PartnerTradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
+  public <T> T createPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
     WxPayUnifiedOrderV3Result result = this.unifiedPartnerOrderV3(tradeType, request);
     //获取应用ID
     String appId = StringUtils.isBlank(request.getSubAppid()) ? request.getSpAppid() : request.getSubAppid();
-    return result.getPayInfo(tradeType.getDirectConnTrade(), appId, request.getSubMchId(), this.getConfig().getPrivateKey());
+    return result.getPayInfo(tradeType, appId, request.getSubMchId(), this.getConfig().getPrivateKey());
   }
 
   @Override
-  public WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(PartnerTradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
+  public WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
     if (StringUtils.isBlank(request.getSpAppid())) {
       request.setSpAppid(this.getConfig().getAppId());
     }
@@ -741,7 +740,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       request.setSubMchId(this.getConfig().getSubMchId());
     }
 
-    String url = this.getPayBaseUrl() + tradeType.getPartnerUrl();
+    String url = this.getPayBaseUrl() + tradeType.getBasePartnerUrl();
     String response = this.postV3(url, GSON.toJson(request));
     return GSON.fromJson(response, WxPayUnifiedOrderV3Result.class);
   }
