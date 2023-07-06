@@ -31,17 +31,17 @@
   <tr>
     <td align="left" valign="middle">
       <a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect" target="_blank">
-        <img height="120" src="https://gitee.com/public-res/wx-java-images/raw/main/qrcodes/mp.png" alt="mp qrcode">
+        <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png" alt="mp qrcode">
       </a>
     </td>
     <td valign="middle">
-      <a href="https://www.diboot.com/" target="_blank">
-        <img height="120" src="https://gitee.com/public-res/wx-java-images/raw/main/banners/diboot.png" alt="diboot低代码开发平台"/>
+      <a href="https://www.diboot.com?from=wxjava" target="_blank">
+        <img height="120" src="https://www.diboot.com/img/diboot_ad.png" alt="diboot低代码开发平台"/>
       </a>
     </td>
     <td align="right" valign="middle">
       <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=7makzf5h" target="_blank">
-        <img height="120" src="https://gitee.com/public-res/wx-java-images/raw/main/banners/aliyun.jpg" alt="aliyun ad">
+        <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/banners/aliyun.jpg" alt="aliyun ad">
       </a>
     </td>
   </tr>

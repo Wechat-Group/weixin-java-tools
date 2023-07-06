@@ -36,6 +36,12 @@ public class WxPartnerPayScoreRequest extends WxPayScoreRequest {
   private String subMchid;
 
   /**
+   * 子商户公众号下的用户表示sub_openid
+   */
+  @SerializedName("sub_openid")
+  private String subOpenid;
+
+  /**
    * [收付通子商户申请绑定支付分服务]的商户系统内部服务订单号
    */
   @SerializedName("out_apply_no")

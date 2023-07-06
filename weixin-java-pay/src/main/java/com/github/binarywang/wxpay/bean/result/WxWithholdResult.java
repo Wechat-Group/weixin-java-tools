@@ -20,6 +20,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@XStreamAlias("xml")
 public class WxWithholdResult extends BaseWxPayResult implements Serializable {
 
   private static final long serialVersionUID = 1L;

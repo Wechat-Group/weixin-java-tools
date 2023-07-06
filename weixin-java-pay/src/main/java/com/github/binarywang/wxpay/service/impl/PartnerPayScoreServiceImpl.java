@@ -105,7 +105,7 @@ public class PartnerPayScoreServiceImpl implements PartnerPayScoreService {
     if (StringUtils.isBlank(subMchid)) {
       throw new WxPayException("sub_mchid不允许都为空");
     }
-    String url = String.format("%s/v3/payscore/partner/permissions/openid/%s", this.payService.getPayBaseUrl(), openId);
+    String url = String.format("%s/v3/payscore/partner/permissions/search?", this.payService.getPayBaseUrl(), openId);
     URIBuilder uriBuilder;
     try {
       uriBuilder = new URIBuilder(url);
@@ -140,7 +140,7 @@ public class PartnerPayScoreServiceImpl implements PartnerPayScoreService {
     if (StringUtils.isAllEmpty(openId, subOpenid) || !StringUtils.isAnyEmpty(openId, subOpenid)) {
       throw new WxPayException("open_id,sub_openid不允许都填写或都不填写");
     }
-    String url = String.format("%s/v3/payscore/partner/permissions/openid/%s/terminate", this.payService.getPayBaseUrl(), openId);
+    String url = String.format("%s/v3/payscore/partner/permissions/terminate", this.payService.getPayBaseUrl(), openId);
     Map<String, Object> map = new HashMap<>(4);
     map.put("appid", appId);
     map.put("sub_appid", subAppid);
