@@ -26,7 +26,7 @@ public enum TradeTypeEnum {
   /**
    * H5
    */
-  H5("/v3/pay/transactions/h5", "/v3/combine-transactions/h5", "/v3/pay/partner/transactions/native");
+  H5("/v3/pay/transactions/h5", "/v3/combine-transactions/h5", "/v3/pay/partner/transactions/h5");
 
   /**
    * 单独下单url
