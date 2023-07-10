@@ -764,5 +764,12 @@ public class WxMaApiUrlConstants {
      */
     String UPLOAD_SHIPPING_INFO = "https://api.weixin.qq.com/wxa/sec/order/upload_shipping_info";
 
+    /**
+     * 发货信息合单录入接口.
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/order-shipping/order-shipping.html#%E4%BA%8C%E3%80%81%E5%8F%91%E8%B4%A7%E4%BF%A1%E6%81%AF%E5%90%88%E5%8D%95%E5%BD%95%E5%85%A5%E6%8E%A5%E5%8F%A3
+     * </pre>
+     */
+    String UPLOAD_COMBINED_SHIPPING_INFO = "https://api.weixin.qq.com/wxa/sec/order/upload_combined_shipping_info";
   }
 }

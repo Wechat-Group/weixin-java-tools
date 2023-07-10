@@ -1,7 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.shop.request.WxMaOrderShippingIsTradeManagedRequest;
-import cn.binarywang.wx.miniapp.bean.shop.request.WxMaOrderShippingUploadRequest;
+import cn.binarywang.wx.miniapp.bean.shop.request.shipping.WxMaOrderCombinedShippingInfoUploadRequest;
+import cn.binarywang.wx.miniapp.bean.shop.request.shipping.WxMaOrderShippingInfoUploadRequest;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingBaseResponse;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingIsTradeManagedResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -28,6 +28,17 @@ public interface WxMaOrderShippingService {
    * @return WxMaOrderShippingBaseResponse
    * @throws WxErrorException
    */
-  WxMaOrderShippingBaseResponse upload(WxMaOrderShippingUploadRequest request)
+  WxMaOrderShippingBaseResponse upload(WxMaOrderShippingInfoUploadRequest request)
+    throws WxErrorException;
+
+
+  /**
+   * 发货信息合单录入接口
+   *
+   * @param request 请求
+   * @return WxMaOrderShippingBaseResponse
+   * @throws WxErrorException
+   */
+  WxMaOrderShippingBaseResponse upload(WxMaOrderCombinedShippingInfoUploadRequest request)
     throws WxErrorException;
 }

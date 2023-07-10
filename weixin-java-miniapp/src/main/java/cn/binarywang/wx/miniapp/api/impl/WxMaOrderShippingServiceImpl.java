@@ -3,24 +3,22 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaOrderShippingService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.shop.request.WxMaOrderShippingIsTradeManagedRequest;
-import cn.binarywang.wx.miniapp.bean.shop.request.WxMaOrderShippingUploadRequest;
+import cn.binarywang.wx.miniapp.bean.shop.request.shipping.WxMaOrderCombinedShippingInfoUploadRequest;
+import cn.binarywang.wx.miniapp.bean.shop.request.shipping.WxMaOrderShippingInfoUploadRequest;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingBaseResponse;
 import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingIsTradeManagedResponse;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaShopBaseResponse;
-import cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonParser;
 
-import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.OrderShipping.IS_TRADE_MANAGED;
-import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.OrderShipping.UPLOAD_SHIPPING_INFO;
-import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Delivery.DELIVERY_SEND;
-import static cn.binarywang.wx.miniapp.constant.WxMaConstants.ERRCODE;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.OrderShipping.*;
+
 
 /**
  * @author xzh
@@ -53,14 +51,26 @@ public class WxMaOrderShippingServiceImpl implements WxMaOrderShippingService {
    * @throws WxErrorException
    */
   @Override
-  public WxMaOrderShippingBaseResponse upload(WxMaOrderShippingUploadRequest request) throws WxErrorException {
+  public WxMaOrderShippingBaseResponse upload(WxMaOrderShippingInfoUploadRequest request) throws WxErrorException {
     return request(UPLOAD_SHIPPING_INFO, request, WxMaOrderShippingBaseResponse.class);
+  }
+
+  /**
+   * 发货信息合单录入接口
+   *
+   * @param request 请求
+   * @return WxMaOrderShippingBaseResponse
+   * @throws WxErrorException
+   */
+  @Override
+  public WxMaOrderShippingBaseResponse upload(WxMaOrderCombinedShippingInfoUploadRequest request) throws WxErrorException {
+    return request(UPLOAD_COMBINED_SHIPPING_INFO, request, WxMaOrderShippingBaseResponse.class);
   }
 
   private <T> T request(String url, Object request, Class<T> resultT) throws WxErrorException {
     String responseContent = this.wxMaService.post(url, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, resultT);
