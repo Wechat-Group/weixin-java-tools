@@ -85,6 +85,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaProductOrderService productOrderService = new WxMaProductOrderServiceImpl(this);
   private final WxMaShopCouponService wxMaShopCouponService = new WxMaShopCouponServiceImpl(this);
   private final WxMaShopPayService wxMaShopPayService = new WxMaShopPayServiceImpl(this);
+  private final WxMaOpenApiService wxMaOpenApiService = new WxMaOpenApiServiceImpl(this);
   private Map<String, WxMaConfig> configMap;
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -633,5 +634,10 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaShopPayService getWxMaShopPayService() {
     return this.wxMaShopPayService;
+  }
+
+  @Override
+  public WxMaOpenApiService getWxMaOpenApiService() {
+    return this.wxMaOpenApiService;
   }
 }
