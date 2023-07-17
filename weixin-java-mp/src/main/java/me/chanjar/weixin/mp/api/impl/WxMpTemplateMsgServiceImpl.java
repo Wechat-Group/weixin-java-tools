@@ -15,6 +15,7 @@ import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateIndustry;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 
+import java.util.Collections;
 import java.util.List;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.TemplateMsg.*;
@@ -59,8 +60,15 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
 
   @Override
   public String addTemplate(String shortTemplateId) throws WxErrorException {
+    return this.addTemplate(shortTemplateId, Collections.emptyList());
+  }
+
+  @Override
+  public String addTemplate(String shortTemplateId, List<String> keywordNameList) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
+    Gson gson = new Gson();
     jsonObject.addProperty("template_id_short", shortTemplateId);
+    jsonObject.addProperty("keyword_name_list", gson.toJson(keywordNameList));
     String responseContent = this.wxMpService.post(TEMPLATE_API_ADD_TEMPLATE, jsonObject.toString());
     final JsonObject result = GsonParser.parse(responseContent);
     if (result.get(WxConsts.ERR_CODE).getAsInt() == 0) {

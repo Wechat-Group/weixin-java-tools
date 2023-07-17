@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenMaBasicService;
 import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
+import me.chanjar.weixin.open.bean.ma.WxOpenMaApplyOrderPathInfo;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
@@ -121,6 +122,21 @@ public class WxOpenMaBasicServiceImpl implements WxOpenMaBasicService {
   public WxOpenResult modifyCategory(WxFastMaCategory category) throws WxErrorException {
     String response = wxMaService.post(OPEN_MODIFY_CATEGORY, category);
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  /**
+   * 获取订单页Path信息
+   *
+   * @param infoType 0:线上版，1:审核版
+   * @return 订单页Path信息
+   * @throws WxErrorException .
+   */
+  @Override
+  public WxOpenMaGetOrderPathResult getOrderPathInfo(int infoType) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("info_type", infoType);
+    String response = wxMaService.post(OPEN_GET_ORDER_PATH_INFO, params);
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaGetOrderPathResult.class);
   }
 
   private JsonArray toJsonArray(List<String> strList) {

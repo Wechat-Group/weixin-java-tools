@@ -685,6 +685,12 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenMaPrivacyService getPrivacyService();
 
   /**
+   * 购物订单
+   * @return 购物订单服务
+   */
+  WxOpenMaShoppingOrdersService getShoppingOrdersService();
+
+  /**
    * 小程序审核 提审素材上传接口
    *
    * @return

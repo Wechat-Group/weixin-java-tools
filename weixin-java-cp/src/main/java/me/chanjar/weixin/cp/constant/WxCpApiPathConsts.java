@@ -1149,6 +1149,14 @@ public interface WxCpApiPathConsts {
      */
     String ADD_MSG_TEMPLATE = "/cgi-bin/externalcontact/add_msg_template";
     /**
+     * 提醒成员群发
+     */
+    String REMIND_GROUP_MSG_SEND = "/cgi-bin/externalcontact/remind_groupmsg_send";
+    /**
+     * 停止企业群发
+     */
+    String CANCEL_GROUP_MSG_SEND = "/cgi-bin/externalcontact/cancel_groupmsg_send";
+    /**
      * The constant SEND_WELCOME_MSG.
      */
     String SEND_WELCOME_MSG = "/cgi-bin/externalcontact/send_welcome_msg";

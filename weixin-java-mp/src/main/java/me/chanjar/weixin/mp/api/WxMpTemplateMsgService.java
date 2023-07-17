@@ -63,7 +63,9 @@ public interface WxMpTemplateMsgService {
    * @param shortTemplateId 模板库中模板的编号，有“TM**”和“OPENTMTM**”等形式
    * @return templateId 模板Id
    * @throws WxErrorException .
+   * @deprecated 请使用 addTemplate(java.lang.String, java.util.List)
    */
+  @Deprecated
   String addTemplate(String shortTemplateId) throws WxErrorException;
 
   /**

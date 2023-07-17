@@ -21,6 +21,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.open.api.*;
 import me.chanjar.weixin.open.bean.*;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
+import me.chanjar.weixin.open.bean.ma.WxOpenMaApplyOrderPathInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCoupon;
@@ -1237,7 +1238,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   public GetShareCloudBaseEnvResponse getShareCloudBaseEnv(List<String> appids) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     JsonArray jsonArray = new JsonArray();
-    for(String appId : appids) {
+    for (String appId : appids) {
       jsonArray.add(appId);
     }
     jsonObject.add("appids", jsonArray);
@@ -1274,5 +1275,20 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("appsecret", getWxOpenConfigStorage().getComponentAppSecret());
     String response = getWxOpenService().post(COMPONENT_CLEAR_QUOTA_URL, jsonObject.toString());
     return WxOpenResult.fromJson(response);
+  }
+
+  /**
+   * 申请设置订单页path信息
+   * 注意：一次提交不超过100个appid
+   *
+   * @param info 订单页path信息
+   * @return .
+   * @throws WxErrorException .
+   */
+  @Override
+  public WxOpenResult applySetOrderPathInfo(WxOpenMaApplyOrderPathInfo info) throws WxErrorException {
+    Gson gson = new Gson();
+    String response = post(OPEN_APPLY_SET_ORDER_PATH_INFO, gson.toJson(info));
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 }
