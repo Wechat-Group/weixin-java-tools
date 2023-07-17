@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public class WxPayOrderNotifyV3Result implements Serializable {
+public class WxPayNotifyV3Result implements Serializable, WxPayBaseNotifyV3Result<WxPayNotifyV3Result.DecryptNotifyResult> {
   private static final long serialVersionUID = -1L;
   /**
    * 源数据

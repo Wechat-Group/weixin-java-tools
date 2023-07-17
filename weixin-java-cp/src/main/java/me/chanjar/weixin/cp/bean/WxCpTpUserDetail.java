@@ -51,6 +51,30 @@ public class WxCpTpUserDetail extends WxCpBaseResp {
   private String qrCode;
 
   /**
+   * 手机，仅在用户同意snsapi_privateinfo授权时返回，第三方应用不可获取
+   */
+  @SerializedName("mobile")
+  private String mobile;
+
+  /**
+   * 邮箱，仅在用户同意snsapi_privateinfo授权时返回，第三方应用不可获取
+   */
+  @SerializedName("email")
+  private String email;
+
+  /**
+   * 企业邮箱，仅在用户同意snsapi_privateinfo授权时返回，第三方应用不可获取
+   */
+  @SerializedName("biz_mail")
+  private String bizMail;
+
+  /**
+   * 仅在用户同意snsapi_privateinfo授权时返回，第三方应用不可获取
+   */
+  @SerializedName("address")
+  private String address;
+
+  /**
    * From json wx cp tp user detail.
    *
    * @param json the json

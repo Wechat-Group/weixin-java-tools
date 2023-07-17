@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
 import com.google.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Guice;
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Test
 @Guice(modules = ApiTestModule.class)
+@Slf4j
 public class EntPayServiceImplTest {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -45,7 +47,7 @@ public class EntPayServiceImplTest {
       .description("描述信息")
       .build();
 
-    this.logger.info(this.payService.getEntPayService().entPay(request).toString());
+    log.info(this.payService.getEntPayService().entPay(request).toString());
   }
 
   /**
@@ -55,7 +57,7 @@ public class EntPayServiceImplTest {
    */
   @Test
   public void testQueryEntPay() throws WxPayException {
-    this.logger.info(this.payService.getEntPayService().queryEntPay("11212121").toString());
+    log.info(this.payService.getEntPayService().queryEntPay("11212121").toString());
   }
 
   /**
@@ -65,7 +67,7 @@ public class EntPayServiceImplTest {
    */
   @Test
   public void testGetPublicKey() throws Exception {
-    this.logger.info(this.payService.getEntPayService().getPublicKey());
+    log.info(this.payService.getEntPayService().getPublicKey());
   }
 
   /**
@@ -83,7 +85,7 @@ public class EntPayServiceImplTest {
       .partnerTradeNo("3")
       .description("11")
       .build());
-    this.logger.info(result.toString());
+    log.info(result.toString());
   }
 
   /**
@@ -93,13 +95,13 @@ public class EntPayServiceImplTest {
    */
   @Test
   public void testQueryPayBank() throws Exception {
-    this.logger.info(this.payService.getEntPayService().queryPayBank("123").toString());
+    log.info(this.payService.getEntPayService().queryPayBank("123").toString());
   }
-
 
 
   /**
    * 发送企业红包
+   *
    * @throws Exception the exception
    */
   @Test
@@ -107,7 +109,7 @@ public class EntPayServiceImplTest {
     EntPayRedpackRequest request = new EntPayRedpackRequest();
     request.setMchId("1");
     //商户单号
-    request.setMchBillNo(request.getMchId()+"20191202"+"1");
+    request.setMchBillNo(request.getMchId() + "20191202" + "1");
     //企业微信corpid即为此appId
     request.setWxAppId("1");
 //    request.setSenderName("1");
@@ -125,11 +127,12 @@ public class EntPayServiceImplTest {
       redpackResult = this.payService.getEntPayService().sendEnterpriseRedpack(request);
     } catch (WxPayException e) {
     }
-    this.logger.info(redpackResult.toString());
+    log.info(redpackResult.toString());
   }
 
   /**
    * 查询企业红包
+   *
    * @throws Exception
    */
   @Test
@@ -142,7 +145,7 @@ public class EntPayServiceImplTest {
 
       try {
         EntPayRedpackQueryResult result = this.payService.getEntPayService().queryEnterpriseRedpack(request);
-        this.logger.info(result.toString());
+        log.info(result.toString());
       } catch (Exception e) {
       }
       TimeUnit.SECONDS.sleep(3);

@@ -10,10 +10,10 @@ import me.chanjar.weixin.cp.bean.WxCpAgentWorkBench;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.WorkBench.*;
 
 /**
- * The type Wx cp agent work bench service.
+ * 工作台自定义展示实现
  *
- * @author songshiyu  created on  : create in 11:24 2020/9/28
- * @description: 工作台自定义展示实现
+ * @author songshiyu
+ * created at 11:24 2020/9/28
  */
 @RequiredArgsConstructor
 public class WxCpAgentWorkBenchServiceImpl implements WxCpAgentWorkBenchService {

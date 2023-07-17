@@ -4,6 +4,7 @@ import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
+import me.chanjar.weixin.cp.bean.external.acquisition.*;
 import me.chanjar.weixin.cp.bean.external.contact.*;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRule;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleAddRequest;
@@ -689,6 +690,39 @@ public interface WxCpExternalContactService {
    */
   WxCpMsgTemplateAddResult addMsgTemplate(WxCpMsgTemplate wxCpMsgTemplate) throws WxErrorException;
 
+
+  /**
+   * 提醒成员群发
+   * 企业和第三方应用可调用此接口，重新触发群发通知，提醒成员完成群发任务，24小时内每个群发最多触发三次提醒。
+   * <p>
+   * 请求方式: POST(HTTPS)
+   * <p>
+   * 请求地址:https://qyapi.weixin.qq.com/cgi-bin/externalcontact/remind_groupmsg_send?access_token=ACCESS_TOKEN
+   * <p>
+   * <a href="https://developer.work.weixin.qq.com/document/path/97610">文档地址</a>
+   *
+   * @param msgId 群发消息的id，通过获取群发记录列表接口返回
+   * @return the wx cp msg template add result
+   */
+  WxCpBaseResp remindGroupMsgSend(String msgId) throws WxErrorException;
+
+
+  /**
+   * 停止企业群发
+   * 企业和第三方应用可调用此接口，停止无需成员继续发送的企业群发
+   * <p>
+   * 请求方式: POST(HTTPS)
+   * <p>
+   * 请求地址:https://qyapi.weixin.qq.com/cgi-bin/externalcontact/cancel_groupmsg_send?access_token=ACCESS_TOKEN
+   * <p>
+   * <a href="https://developer.work.weixin.qq.com/document/path/97611">文档地址</a>
+   *
+   * @param msgId 群发消息的id，通过获取群发记录列表接口返回
+   * @return the wx cp msg template add result
+   */
+  WxCpBaseResp cancelGroupMsgSend(String msgId) throws WxErrorException;
+
+
   /**
    * 发送新客户欢迎语
    * <pre>
@@ -1144,4 +1178,117 @@ public interface WxCpExternalContactService {
    */
   void deleteProductAlbum(String productId) throws WxErrorException;
 
+  /**
+   * <pre>
+   * 获取获客链接列表
+   * 企业可通过此接口获取当前仍然有效的获客链接。
+   * 请求方式：POST(HTTPS)
+   * 请求地址：
+   * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/customer_acquisition/list_link?access_token=ACCESS_TOKEN">接口地址</a>
+   *
+   * <a href="https://developer.work.weixin.qq.com/document/path/97297#%E8%8E%B7%E5%8F%96%E8%8E%B7%E5%AE%A2%E9%93%BE%E6%8E%A5%E5%88%97%E8%A1%A8">文档地址</a>
+   * </pre>
+   * @param limit 商品id
+   * @param cursor 商品id
+   * @return 获客链接列表
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpCustomerAcquisitionList customerAcquisitionLinkList(Integer limit, String cursor) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取获客链接详情
+   * 企业可通过此接口根据获客链接id获取链接配置详情。。
+   * 请求方式：POST(HTTPS)
+   * 请求地址：
+   * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/customer_acquisition/get?access_token=ACCESS_TOKEN">接口地址</a>
+   *
+   * <a href="https://developer.work.weixin.qq.com/document/path/97297#%E8%8E%B7%E5%8F%96%E8%8E%B7%E5%AE%A2%E9%93%BE%E6%8E%A5%E8%AF%A6%E6%83%85">文档地址</a>
+   * </pre>
+   * @param linkId 获客链接ID
+   * @return 获客链接详情
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpCustomerAcquisitionInfo customerAcquisitionLinkGet(String linkId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 创建获客链接
+   * 企业可通过此接口创建新的获客链接。
+   * 请求方式：POST(HTTPS)
+   * 请求地址：
+   * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/customer_acquisition/create_link?access_token=ACCESS_TOKEN">接口地址</a>
+   * <a href="https://developer.work.weixin.qq.com/document/path/97297#%E5%88%9B%E5%BB%BA%E8%8E%B7%E5%AE%A2%E9%93%BE%E6%8E%A5">文档地址</a>
+   * </pre>
+   *
+   * @param wxCpCustomerAcquisitionRequest 创建链接请求
+   * @return 创建链接详情
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpCustomerAcquisitionCreateResult customerAcquisitionLinkCreate(WxCpCustomerAcquisitionRequest wxCpCustomerAcquisitionRequest) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 编辑获客链接
+   * 企业可通过此接口编辑获客链接，修改获客链接的关联范围或修改获客链接的名称。
+   * 请求方式：POST(HTTPS)
+   * 请求地址：
+   * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/customer_acquisition/update_link?access_token=ACCESS_TOKEN">接口地址</a>
+   * <a href="https://developer.work.weixin.qq.com/document/path/97297#%E7%BC%96%E8%BE%91%E8%8E%B7%E5%AE%A2%E9%93%BE%E6%8E%A5">文档地址</a>
+   * </pre>
+   *
+   * @param wxCpCustomerAcquisitionRequest 编辑链接请求
+   * @return 编辑链接详情
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp customerAcquisitionUpdate(WxCpCustomerAcquisitionRequest wxCpCustomerAcquisitionRequest) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 删除获客链接
+   * 企业可通过此接口删除获客链接，删除后的获客链接将无法继续使用。
+   * 请求方式：POST(HTTPS)
+   * 请求地址：
+   * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/customer_acquisition/delete_link?access_token=ACCESS_TOKEN">接口地址</a>
+   * <a href="https://developer.work.weixin.qq.com/document/path/97297#%E5%88%A0%E9%99%A4%E8%8E%B7%E5%AE%A2%E9%93%BE%E6%8E%A5">文档地址</a>
+   * </pre>
+   *
+   * @param linkId 获客链接的id
+   * @return 删除结果
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp customerAcquisitionLinkDelete(String linkId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取获客客户列表
+   * 企业可通过此接口获取到由指定的获客链接添加的客户列表。
+   * 请求方式：POST(HTTPS)
+   * 请求地址：
+   * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/customer_acquisition/customer?access_token=ACCESS_TOKEN">接口地址</a>
+   * <a href="https://developer.work.weixin.qq.com/document/path/97298">文档地址</a>
+   * </pre>
+   *
+   * @param linkId 获客链接id
+   * @param limit  返回的最大记录数，整型，最大值1000
+   * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   * @return 由获客链接添加的客户信息列表
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpCustomerAcquisitionCustomerList customerAcquisitionCustomer(String linkId, Integer limit, String cursor) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 查询剩余使用量
+   * 企业可通过此接口查询当前剩余的使用量。
+   * 请求方式：GET(HTTPS)
+   * 请求地址：
+   * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/customer_acquisition_quota?access_token=ACCESS_TOKEN">接口地址</a>
+   * <a href="https://developer.work.weixin.qq.com/document/path/97375">文档地址</a>
+   * </pre>
+   *
+   * @return 剩余使用量
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpCustomerAcquisitionQuota customerAcquisitionQuota() throws WxErrorException;
 }

@@ -393,7 +393,7 @@ public class WxCpMessage implements Serializable {
   }
 
   /**
-   * 获得任务卡片消息builder.
+   * 获得模板卡片消息builder.
    *
    * @return the template card builder
    */

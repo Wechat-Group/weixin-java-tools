@@ -21,12 +21,7 @@ import java.util.List;
 import static org.testng.Assert.assertNotNull;
 
 /**
- * @Project: WxJava
- * @Package: me.chanjar.weixin.cp.api.impl
- * @Description:
- * @Author: libo
- * @Email: 422423229@qq.com
- * @Date: 28/2/2023 7:06 PM
+ * @author libo
  */
 @Guice(modules = ApiTestModule.class)
 public class WxCpLinkedCorpServiceImplTest {

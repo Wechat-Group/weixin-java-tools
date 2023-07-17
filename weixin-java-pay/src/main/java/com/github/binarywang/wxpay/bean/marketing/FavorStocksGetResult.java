@@ -34,7 +34,7 @@ public class FavorStocksGetResult implements Serializable {
    * 示例值：123456
    */
   @SerializedName("stock_creator_mchid")
-  private String stockCreatorMchid;
+  private String stockCreatorMchId;
 
   /**
    * 批次名称
@@ -67,7 +67,7 @@ public class FavorStocksGetResult implements Serializable {
    * 示例值：2015-05-20T13:29:35.120+08:00
    */
   @SerializedName("create_time")
-  private String create_time;
+  private String createTime;
 
   /**
    * 使用说明
@@ -160,7 +160,7 @@ public class FavorStocksGetResult implements Serializable {
    * 示例值：true
    */
   @SerializedName("singleitem")
-  private Boolean singleitem;
+  private Boolean singleItem;
 
   /**
    * 批次类型
@@ -186,7 +186,7 @@ public class FavorStocksGetResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "single_price_max")
-    private Integer singlePriceMax;
+    private Long singlePriceMax;
 
     /**
      * 减至后的优惠单价
@@ -195,7 +195,7 @@ public class FavorStocksGetResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "cut_to_price")
-    private Integer cutToPrice;
+    private Long cutToPrice;
   }
 
   @Data
@@ -210,7 +210,7 @@ public class FavorStocksGetResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "max_coupons")
-    private Integer maxCoupons;
+    private Long maxCoupons;
 
     /**
      * 总预算
@@ -219,7 +219,7 @@ public class FavorStocksGetResult implements Serializable {
      * 示例值：5000
      */
     @SerializedName(value = "max_amount")
-    private Integer maxAmount;
+    private Long maxAmount;
 
     /**
      * 单天发放上限金额
@@ -228,7 +228,7 @@ public class FavorStocksGetResult implements Serializable {
      * 示例值：400
      */
     @SerializedName(value = "max_amount_by_day")
-    private Integer maxAmountByDay;
+    private Long maxAmountByDay;
 
     /**
      * 固定面额批次特定信息
@@ -245,7 +245,7 @@ public class FavorStocksGetResult implements Serializable {
      * 示例值：3
      */
     @SerializedName(value = "max_coupons_per_user")
-    private Integer maxCouponsPerUser;
+    private Long maxCouponsPerUser;
 
     /**
      * 券类型
@@ -308,7 +308,7 @@ public class FavorStocksGetResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "coupon_amount")
-    private Integer couponAmount;
+    private Long couponAmount;
 
     /**
      * 门槛
@@ -317,6 +317,6 @@ public class FavorStocksGetResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "transaction_minimum")
-    private Integer transactionMinimum;
+    private Long transactionMinimum;
   }
 }

@@ -1,18 +1,27 @@
 package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.cp.bean.corpgroup.*;
+import me.chanjar.weixin.cp.bean.corpgroup.WxCpCorpGroupCorp;
 
 import java.util.List;
 
 /**
- * @Project: WxJava
- * @Package: me.chanjar.weixin.cp.api
- * @Description: 企业互联相关接口
- * @Author: libo
- * @Email: 422423229@qq.com
- * @Date: 27/2/2023 9:57 PM
+ * 企业互联相关接口
+ *
+ * @author libo <422423229@qq.com>
+ * Created on 27/2/2023 9:57 PM
  */
 public interface WxCpCorpGroupService {
-  List<WxCpCorpGroupCorp> listAppShareInfo(Integer agentId,Integer businessType,String corpId,Integer limit,String cursor) throws WxErrorException;
+  /**
+   * List app share info list.
+   *
+   * @param agentId      the agent id
+   * @param businessType the business type
+   * @param corpId       the corp id
+   * @param limit        the limit
+   * @param cursor       the cursor
+   * @return the list
+   * @throws WxErrorException the wx error exception
+   */
+  List<WxCpCorpGroupCorp> listAppShareInfo(Integer agentId, Integer businessType, String corpId, Integer limit, String cursor) throws WxErrorException;
 }

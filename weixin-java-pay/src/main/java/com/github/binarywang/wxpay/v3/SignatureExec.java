@@ -1,22 +1,20 @@
 package com.github.binarywang.wxpay.v3;
 
-import java.io.IOException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpException;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpExecutionAware;
 import org.apache.http.client.methods.HttpRequestWrapper;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.execchain.ClientExecChain;
 import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
 
 public class SignatureExec implements ClientExecChain {
   final ClientExecChain mainExec;
@@ -81,8 +79,10 @@ public class SignatureExec implements ClientExecChain {
     StatusLine statusLine = response.getStatusLine();
     if (statusLine.getStatusCode() >= 200 && statusLine.getStatusCode() < 300) {
       convertToRepeatableResponseEntity(response);
-      if (!validator.validate(response)) {
-        throw new HttpException("应答的微信支付签名验证失败");
+      if (!(request.getOriginal() instanceof WxPayV3DownloadHttpGet)) {
+        if (!validator.validate(response)) {
+          throw new HttpException("应答的微信支付签名验证失败");
+        }
       }
     }
     return response;

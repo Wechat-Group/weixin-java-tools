@@ -6,16 +6,14 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
 import com.google.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 @Test
+@Slf4j
 @Guice(modules = ApiTestModule.class)
 public class ProfitSharingServiceImplTest {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
   @Inject
   private WxPayService payService;
 
@@ -33,7 +31,7 @@ public class ProfitSharingServiceImplTest {
       .transactionId("4200000431201910234736634272")
       .receivers(instance.toJSONString())
       .build();
-    this.logger.info(this.payService.getProfitSharingService().profitSharing(request).toString());
+    log.info(this.payService.getProfitSharingService().profitSharing(request).toString());
   }
 
   @Test
@@ -49,7 +47,7 @@ public class ProfitSharingServiceImplTest {
       .transactionId("4200000448201910238249687345")//order_id=30000102922019102310821824010
       .receivers(instance.toJSONString())
       .build();
-    this.logger.info(this.payService.getProfitSharingService().multiProfitSharing(request).toString());
+    log.info(this.payService.getProfitSharingService().multiProfitSharing(request).toString());
   }
 
   @Test
@@ -60,7 +58,7 @@ public class ProfitSharingServiceImplTest {
       .transactionId("4200000441201910238267278073")
       .description("分账完成")
       .build();
-    this.logger.info(this.payService.getProfitSharingService().profitSharingFinish(request).toString());
+    log.info(this.payService.getProfitSharingService().profitSharingFinish(request).toString());
   }
 
   @Test
@@ -74,7 +72,7 @@ public class ProfitSharingServiceImplTest {
       .newBuilder()
       .receiver(receiver.toJSONString())
       .build();
-    this.logger.info(this.payService.getProfitSharingService().addReceiver(request).toString());
+    log.info(this.payService.getProfitSharingService().addReceiver(request).toString());
   }
 
   @Test
@@ -85,7 +83,7 @@ public class ProfitSharingServiceImplTest {
       .newBuilder()
       .receiver(receiver.toJSONString())
       .build();
-    this.logger.info(this.payService.getProfitSharingService().removeReceiver(request).toString());
+    log.info(this.payService.getProfitSharingService().removeReceiver(request).toString());
   }
 
   @Test
@@ -96,8 +94,8 @@ public class ProfitSharingServiceImplTest {
       .transactionId("4200000431201910234736634272")
       .build();
     ProfitSharingQueryResult result = this.payService.getProfitSharingService().profitSharingQuery(request);
-    this.logger.info(result.formatReceivers().toString());
-    this.logger.info(result.toString());
+    log.info(result.formatReceivers().toString());
+    log.info(result.toString());
   }
 
   @Test
@@ -105,17 +103,17 @@ public class ProfitSharingServiceImplTest {
     final String subMchId = "subMchid";
     final ProfitSharingMerchantRatioQueryRequest request = new ProfitSharingMerchantRatioQueryRequest(subMchId);
     final ProfitSharingMerchantRatioQueryResult result = payService.getProfitSharingService().profitSharingMerchantRatioQuery(request);
-    logger.info(result.toString());
+    log.info(result.toString());
   }
 
   @Test
-    public void testProfitSharingOrderAmountQuery() throws WxPayException {
+  public void testProfitSharingOrderAmountQuery() throws WxPayException {
     final String transactionId = "4200000916202012281633853127";
     final ProfitSharingOrderAmountQueryRequest request = ProfitSharingOrderAmountQueryRequest.newBuilder()
       .transactionId(transactionId)
       .build();
     final ProfitSharingOrderAmountQueryResult result = payService.getProfitSharingService().profitSharingOrderAmountQuery(request);
-    logger.info(result.toString());
+    log.info(result.toString());
   }
 
   @Test
@@ -129,7 +127,7 @@ public class ProfitSharingServiceImplTest {
       .returnAmount(2)
       .description("用户退款")
       .build();
-    this.logger.info(this.payService.getProfitSharingService().profitSharingReturn(request).toString());
+    log.info(this.payService.getProfitSharingService().profitSharingReturn(request).toString());
   }
 
   @Test
@@ -139,7 +137,7 @@ public class ProfitSharingServiceImplTest {
       .outOrderNo("20191023154723316420060")
       .outReturnNo("R2019102315")
       .build();
-    this.logger.info(this.payService.getProfitSharingService().profitSharingReturnQuery(request).toString());
+    log.info(this.payService.getProfitSharingService().profitSharingReturnQuery(request).toString());
   }
 
 }

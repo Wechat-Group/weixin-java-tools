@@ -6,7 +6,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
  * @author freedom
- * @date 2022/10/20 16:36
+ * @since 2022/10/20 16:36
  */
 @Data
 public class WxTpCustomizedAuthUrl extends WxCpBaseResp {

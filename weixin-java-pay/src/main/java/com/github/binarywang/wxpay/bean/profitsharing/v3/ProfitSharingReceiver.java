@@ -1,4 +1,4 @@
-package com.github.binarywang.wxpay.bean.profitsharingV3;
+package com.github.binarywang.wxpay.bean.profitsharing.v3;
 
 import com.github.binarywang.wxpay.v3.SpecEncrypt;
 import com.google.gson.annotations.SerializedName;

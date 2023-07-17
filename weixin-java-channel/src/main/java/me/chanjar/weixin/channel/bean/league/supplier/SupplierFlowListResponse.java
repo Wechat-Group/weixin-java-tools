@@ -10,7 +10,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 资金流水列表 响应
  *
  * @author LiXiZe
- * @date 2023-04-16
+ * @since 2023-04-16
  */
 @Data
 @NoArgsConstructor

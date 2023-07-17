@@ -2,11 +2,9 @@ package me.chanjar.weixin.cp.config.impl;
 
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.config.WxCpCorpGroupConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,12 +13,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @Project: WxJava
- * @Package: me.chanjar.weixin.cp.config.impl
- * @Description: 基于内存的微信配置provider，在实际生产环境中应该将这些配置持久化.
- * @Author: libo
- * @Email: 422423229@qq.com
- * @Date: 1/3/2023 10:30 AM
+ * 基于内存的微信配置provider，在实际生产环境中应该将这些配置持久化.
+ *
+ * @author libo
  */
 public class WxCpCorpGroupDefaultConfigImpl implements WxCpCorpGroupConfigStorage, Serializable {
   private final transient Map<String, Lock> corpAccessTokenLocker = new ConcurrentHashMap<>();

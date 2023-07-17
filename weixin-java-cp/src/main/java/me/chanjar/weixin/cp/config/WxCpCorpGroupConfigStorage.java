@@ -2,18 +2,13 @@ package me.chanjar.weixin.cp.config;
 
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 
-import java.io.File;
 import java.util.concurrent.locks.Lock;
 
 /**
- * @Project: WxJava
- * @Package: me.chanjar.weixin.cp.config
- * @Description: 微信客户端（企业互联）配置
- * @or: libo
- * @Email: 422423229@qq.com
- * @Date: 1/3/2023 9:56 AM
+ * 微信客户端（企业互联）配置
+ *
+ * @author libo
  */
 public interface WxCpCorpGroupConfigStorage {
   /**

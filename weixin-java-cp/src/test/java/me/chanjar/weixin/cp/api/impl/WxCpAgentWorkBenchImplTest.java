@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Wx cp agent work bench impl test.
+ * 测试工作台服务
  *
- * @author songshiyu  created on  : create in 10:31 2020/9/29
- * @description: 测试工作台服务
+ * @author songshiyu
+ * created at 10:31 2020/9/29
  */
 @Guice(modules = ApiTestModule.class)
 public class WxCpAgentWorkBenchImplTest {

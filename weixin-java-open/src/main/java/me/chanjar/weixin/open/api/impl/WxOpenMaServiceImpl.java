@@ -120,6 +120,11 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaWebDomainResult.class);
   }
 
+  @Override
+  public WxOpenMaDomainConfirmFileResult getWebviewDomainConfirmFile() throws WxErrorException {
+    String responseContent = post(API_GET_WEBVIEW_DOMAIN_CONFIRM_FILE, "{}");
+    return WxOpenMaDomainConfirmFileResult.fromJson(responseContent);
+  }
 
   @Override
   public String getAccountBasicInfo() throws WxErrorException {
@@ -253,6 +258,12 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     params.addProperty("action", action);
     String response = post(API_CHANGE_VISITSTATUS, GSON.toJson(params));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenMaVisitStatusResult getVisitStatus() throws WxErrorException {
+    String responseContent = post(API_GET_VISITSTATUS, "{}");
+    return WxOpenMaVisitStatusResult.fromJson(responseContent);
   }
 
   @Override

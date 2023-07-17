@@ -11,19 +11,16 @@ import me.chanjar.weixin.cp.bean.corpgroup.WxCpMaTransferSession;
 import me.chanjar.weixin.cp.config.WxCpCorpGroupConfigStorage;
 
 /**
- * @Project: WxJava
- * @Package: me.chanjar.weixin.cp.corpgroup.service
- * @Description: 企业微信企业互联API的Service.
- * @Author: libo
- * @Email: 422423229@qq.com
- * @Date: 1/3/2023 5:37 PM
+ * 企业微信企业互联API的Service.
+ *
+ * @author libo
  */
 public interface WxCpCgService {
   /**
    * Update corp access token.
    *
-   * @param corpId
-   * @param agentId
+   * @param corpId .
+   * @param agentId .
    * @param corpAccessToken  the corp access token
    * @param expiresInSeconds the expires in seconds
    */
@@ -146,6 +143,7 @@ public interface WxCpCgService {
   void setWxCpCorpGroupConfigStorage(WxCpCorpGroupConfigStorage wxCpCorpGroupConfigStorage);
 
   WxCpCorpGroupConfigStorage getWxCpCorpGroupConfigStorage();
+
   /**
    * http请求对象.
    *
@@ -165,10 +163,11 @@ public interface WxCpCgService {
   /**
    * 获取下级/下游企业小程序session
    * https://developer.work.weixin.qq.com/document/path/93355
+   *
    * @param userId
    * @param sessionKey
    * @return
    * @throws WxErrorException
    */
-  WxCpMaTransferSession getCorpTransferSession(String userId, String sessionKey,WxCpCorpGroupCorpGetTokenReq req) throws WxErrorException;
+  WxCpMaTransferSession getCorpTransferSession(String userId, String sessionKey, WxCpCorpGroupCorpGetTokenReq req) throws WxErrorException;
 }

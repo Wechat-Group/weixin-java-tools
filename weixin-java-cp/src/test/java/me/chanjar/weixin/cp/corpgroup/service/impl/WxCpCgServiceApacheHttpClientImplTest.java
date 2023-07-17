@@ -26,12 +26,7 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.CorpGroup.MA_TRANS
 import static org.testng.Assert.assertNotNull;
 
 /**
- * @Project: WxJava
- * @Package: me.chanjar.weixin.cp.corpgroup.service.impl
- * @Description:
- * @Author: libo
- * @Email: 422423229@qq.com
- * @Date: 2/3/2023 4:00 PM
+ * @author libo
  */
 @Guice(modules = ApiTestModule.class)
 public class WxCpCgServiceApacheHttpClientImplTest {

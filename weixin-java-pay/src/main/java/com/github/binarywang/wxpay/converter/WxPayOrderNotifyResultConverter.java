@@ -1,17 +1,7 @@
 package com.github.binarywang.wxpay.converter;
 
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyCoupon;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -22,6 +12,14 @@ import com.thoughtworks.xstream.converters.reflection.ReflectionProvider;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.mapper.Mapper;
+import org.apache.commons.lang3.StringUtils;
+
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The type Wxpay order notify result converter.
@@ -63,7 +61,7 @@ public class WxPayOrderNotifyResultConverter extends AbstractReflectionConverter
       writer.setValue(coupon.getCouponType());
       writer.endNode();
       writer.startNode("coupon_fee_" + i);
-      writer.setValue(coupon.getCouponFee() + "");
+      writer.setValue(String.valueOf(coupon.getCouponFee()));
       writer.endNode();
     }
   }
@@ -112,8 +110,11 @@ public class WxPayOrderNotifyResultConverter extends AbstractReflectionConverter
     Object val = context.convertAnother(obj, field.getType());
     try {
       if (val != null) {
-    	//这里加一个看似多余的(String)强转可解决高jdk版本下的编译报错问题，详情见讨论https://github.com/vaadin/framework/issues/10737
-        PropertyDescriptor pd = new PropertyDescriptor((String)field.getName(), obj.getClass());
+        /*
+        这里加一个看似多余的(String)强转可解决高jdk版本下的编译报错问题，
+        详情见讨论https://github.com/vaadin/framework/issues/10737
+        */
+        PropertyDescriptor pd = new PropertyDescriptor((String) field.getName(), obj.getClass());
         pd.getWriteMethod().invoke(obj, val);
       }
     } catch (Exception ignored) {
@@ -121,22 +122,17 @@ public class WxPayOrderNotifyResultConverter extends AbstractReflectionConverter
   }
 
   private Map<String, Field> getFieldMap(List<Field> fields) {
-    return Maps.uniqueIndex(fields, new Function<Field, String>() {
-      @Override
-      public String apply(Field field) {
-        if (field.isAnnotationPresent(XStreamAlias.class)) {
-          return field.getAnnotation(XStreamAlias.class).value();
-        }
-        return field.getName();
+    return Maps.uniqueIndex(fields, field -> {
+      if (field.isAnnotationPresent(XStreamAlias.class)) {
+        return field.getAnnotation(XStreamAlias.class).value();
       }
+      return field.getName();
     });
   }
 
   private WxPayOrderNotifyCoupon getElement(Map<Integer, WxPayOrderNotifyCoupon> coupons, String nodeName) {
     Integer index = Integer.valueOf(StringUtils.substringAfterLast(nodeName, "_"));
-    if (coupons.get(index) == null) {
-      coupons.put(index, new WxPayOrderNotifyCoupon());
-    }
+    coupons.computeIfAbsent(index, k -> new WxPayOrderNotifyCoupon());
 
     return coupons.get(index);
   }

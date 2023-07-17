@@ -20,7 +20,7 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Department.*;
  * The type Wx cp tp department service.
  *
  * @author uianz
- * @description corp from {@link WxCpDepartmentServiceImpl )} 唯一不同在于获取部门列表时需要传对应企业的accessToken
+ * copy from {@link WxCpDepartmentServiceImpl )} 唯一不同在于获取部门列表时需要传对应企业的accessToken
  * @since 2020 /12/23 下午 02:39
  */
 @RequiredArgsConstructor

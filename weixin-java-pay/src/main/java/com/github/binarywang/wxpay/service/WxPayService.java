@@ -11,7 +11,6 @@ import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
-
 import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
@@ -169,7 +168,7 @@ public interface WxPayService {
    * <p>
    * 部分字段会包含敏感信息，所以在提交前需要在请求头中会包含"Wechatpay-Serial"信息
    *
-   * @param url        请求地址
+   * @param url 请求地址
    * @return 返回请求结果字符串 string
    * @throws WxPayException the wx pay exception
    */
@@ -413,6 +412,53 @@ public interface WxPayService {
 
   /**
    * <pre>
+   * 服务商模式查询订单
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml</a>
+   * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。查询订单状态可通过微信支付订单号或商户订单号两种方式查询
+   * 注意：
+   *  查询订单可通过微信支付订单号和商户订单号两种方式查询，两种查询方式返回结果相同
+   * 需要调用查询接口的情况：
+   * ◆ 当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知。
+   * ◆ 调用支付接口后，返回系统错误或未知交易状态情况。
+   * ◆ 调用付款码支付API，返回USERPAYING的状态。
+   * ◆ 调用关单或撤销接口API之前，需确认支付状态。
+   * 接口地址：
+   *  https://api.mch.weixin.qq.com/v3/pay/partner/transactions/id/{transaction_id}
+   *  https://api.mch.weixin.qq.com/v3/pay/partner/transactions/out-trade-no/{out_trade_no}
+   * </pre>
+   *
+   * @param transactionId 微信订单号
+   * @param outTradeNo    商户系统内部的订单号，当没提供transactionId时需要传这个。
+   * @return the wx pay order query result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayPartnerOrderQueryV3Result queryPartnerOrderV3(String transactionId, String outTradeNo) throws WxPayException;
+
+  /**
+   * <pre>
+   * 服务商模式查询订单
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml</a>
+   * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。查询订单状态可通过微信支付订单号或商户订单号两种方式查询
+   * 注意：
+   *  查询订单可通过微信支付订单号和商户订单号两种方式查询，两种查询方式返回结果相同
+   * 需要调用查询接口的情况：
+   * ◆ 当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知。
+   * ◆ 调用支付接口后，返回系统错误或未知交易状态情况。
+   * ◆ 调用付款码支付API，返回USERPAYING的状态。
+   * ◆ 调用关单或撤销接口API之前，需确认支付状态。
+   * 接口地址：
+   *  https://api.mch.weixin.qq.com/v3/pay/partner/transactions/id/{transaction_id}
+   *  https://api.mch.weixin.qq.com/v3/pay/partner/transactions/out-trade-no/{out_trade_no}
+   * </pre>
+   *
+   * @param request 查询订单请求对象
+   * @return the wx pay order query result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayPartnerOrderQueryV3Result queryPartnerOrderV3(WxPayPartnerOrderQueryV3Request request) throws WxPayException;
+
+  /**
+   * <pre>
    * 合单查询订单API
    * 请求URL: https://api.mch.weixin.qq.com/v3/combine-transactions/out-trade-no/{combine_out_trade_no}
    * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_11.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_11.shtml</a>
@@ -479,6 +525,23 @@ public interface WxPayService {
 
   /**
    * <pre>
+   * 服务商关闭订单
+   * 应用场景
+   * 以下情况需要调用关单接口：
+   * 1、商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；
+   * 2、系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
+   * 注意：关单没有时间限制，建议在订单生成后间隔几分钟（最短5分钟）再调用关单接口，避免出现订单状态同步不及时导致关单失败。
+   * 接口地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
+   * </pre>
+   *
+   * @param outTradeNo 商户系统内部的订单号
+   * @return the wx pay order close result
+   * @throws WxPayException the wx pay exception
+   */
+  void closePartnerOrderV3(String outTradeNo) throws WxPayException;
+
+  /**
+   * <pre>
    * 关闭订单
    * 应用场景
    * 以下情况需要调用关单接口：
@@ -493,6 +556,23 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   void closeOrderV3(WxPayOrderCloseV3Request request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 服务商关闭订单
+   * 应用场景
+   * 以下情况需要调用关单接口：
+   * 1、商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；
+   * 2、系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
+   * 注意：关单没有时间限制，建议在订单生成后间隔几分钟（最短5分钟）再调用关单接口，避免出现订单状态同步不及时导致关单失败。
+   * 接口地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
+   * </pre>
+   *
+   * @param request 关闭订单请求对象
+   * @return the wx pay order close result
+   * @throws WxPayException the wx pay exception
+   */
+  void closePartnerOrderV3(WxPayPartnerOrderCloseV3Request request) throws WxPayException;
 
   /**
    * <pre>
@@ -549,6 +629,27 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   <T> T createOrderV3(TradeTypeEnum tradeType, WxPayUnifiedOrderV3Request request) throws WxPayException;
+
+  /**
+   * 服务商模式调用统一下单接口，并组装生成支付所需参数对象.
+   *
+   * @param <T>       请使用{@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @param tradeType the trade type
+   * @param request   统一下单请求参数
+   * @return 返回 {@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @throws WxPayException the wx pay exception
+   */
+  <T> T createPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
+
+  /**
+   * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"
+   *
+   * @param tradeType the trade type
+   * @param request   请求对象，注意一些参数如spAppid、spMchid等不用设置，方法内会自动从配置对象中获取到（前提是对应配置中已经设置）
+   * @return the wx pay unified order result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
 
   /**
    * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"
@@ -802,7 +903,7 @@ public interface WxPayService {
   WxPayOrderNotifyResult parseOrderNotifyResult(String xmlData, String signType) throws WxPayException;
 
   /**
-   * 解析支付结果v3通知.
+   * 解析支付结果v3通知. 直连商户模式
    * 详见https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_5.shtml
    *
    * @param notifyData 通知数据
@@ -810,7 +911,31 @@ public interface WxPayService {
    * @return the wx pay order notify result
    * @throws WxPayException the wx pay exception
    */
-  WxPayOrderNotifyV3Result parseOrderNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
+  WxPayNotifyV3Result parseOrderNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * 服务商模式解析支付结果v3通知.
+   * 详见https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_5.shtml
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return the wx pay order notify result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayPartnerNotifyV3Result parsePartnerOrderNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * 支付服务商和直连商户两种模式
+   * 详见https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_5.shtml
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @param resultType 结果类型
+   * @param dataType   结果数据类型
+   * @return the wx pay order notify result
+   * @throws WxPayException the wx pay exception
+   */
+  <T extends WxPayBaseNotifyV3Result<E>, E> T baseParseOrderNotifyV3Result(String notifyData, SignatureHeader header, Class<T> resultType, Class<E> dataType) throws WxPayException;
 
   /**
    * <pre>
@@ -836,7 +961,7 @@ public interface WxPayService {
   WxPayRefundNotifyResult parseRefundNotifyResult(String xmlData) throws WxPayException;
 
   /**
-   * 解析退款结果通知
+   * 解析直连商户退款结果通知
    * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_16&index=9
    *
    * @param notifyData 通知数据
@@ -845,6 +970,17 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayRefundNotifyV3Result parseRefundNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * 解析服务商模式退款结果通知
+   * 详见https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_11.shtml
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return the wx pay refund notify result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayPartnerRefundNotifyV3Result parsePartnerRefundNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * 解析扫码支付回调通知
@@ -1380,6 +1516,7 @@ public interface WxPayService {
 
   /**
    * 获取服务商支付分服务类
+   *
    * @return the partner pay score service
    */
   PartnerPayScoreService getPartnerPayScoreService();

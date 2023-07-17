@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 微信接口地址域名部分的自定义设置信息.
  *
@@ -15,10 +17,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WxMpHostConfig {
+public class WxMpHostConfig implements Serializable {
   public static final String API_DEFAULT_HOST_URL = "https://api.weixin.qq.com";
   public static final String MP_DEFAULT_HOST_URL = "https://mp.weixin.qq.com";
   public static final String OPEN_DEFAULT_HOST_URL = "https://open.weixin.qq.com";
+  private static final long serialVersionUID = 6998547464242356375L;
+
 
   /**
    * 对应于：https://api.weixin.qq.com

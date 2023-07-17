@@ -43,13 +43,19 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    */
   @Override
   public PartnerTransferResult batchTransfer(PartnerTransferRequest request) throws WxPayException {
-    request.getTransferDetailList().stream().forEach(p -> {
+    request.getTransferDetailList().forEach(p -> {
       try {
         String userName = RsaCryptoUtil.encryptOAEP(p.getUserName(),
           this.payService.getConfig().getVerifier().getValidCertificate());
         p.setUserName(userName);
+
+        if (StringUtil.isNotBlank(p.getUserIdCard())) {
+          String userIdCard = RsaCryptoUtil.encryptOAEP(p.getUserIdCard(),
+            this.payService.getConfig().getVerifier().getValidCertificate());
+          p.setUserIdCard(userIdCard);
+        }
       } catch (IllegalBlockSizeException e) {
-        throw new RuntimeException("姓名转换异常!", e);
+        throw new RuntimeException("姓名或身份证转换异常!", e);
       }
     });
     String url = String.format("%s/v3/partner-transfer/batches", this.payService.getPayBaseUrl());
@@ -81,11 +87,10 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
     if (request.getLimit() == null || request.getLimit() <= 0) {
       request.setLimit(20);
     }
-    String query = String.format("?need_query_detail=%s&detail_status=ALL&offset=%s&limit=%s",
-      request.getNeedQueryDetail(), request.getOffset(), request.getLimit());
-    if (StringUtil.isNotBlank(request.getDetailStatus())) {
-      query += "&detail_status=" + request.getDetailStatus();
-    }
+    String detailStatus = StringUtil.isNotBlank(request.getDetailStatus()) ? request.getDetailStatus() : "ALL";
+
+    String query = String.format("?need_query_detail=%s&detail_status=%s&offset=%s&limit=%s",
+      request.getNeedQueryDetail(), detailStatus, request.getOffset(), request.getLimit());
     String response = this.payService.getV3(url + query);
     return GSON.fromJson(response, BatchNumberResult.class);
   }

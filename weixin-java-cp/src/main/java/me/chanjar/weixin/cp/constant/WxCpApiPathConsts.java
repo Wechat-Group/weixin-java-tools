@@ -801,11 +801,11 @@ public interface WxCpApiPathConsts {
     /**
      * The constant GET_USERINFO3RD.
      */
-    String GET_USERINFO3RD = "/cgi-bin/service/getuserinfo3rd";
+    String GET_USERINFO3RD = "/cgi-bin/service/auth/getuserinfo3rd";
     /**
      * The constant GET_USERDETAIL3RD.
      */
-    String GET_USERDETAIL3RD = "/cgi-bin/service/getuserdetail3rd";
+    String GET_USERDETAIL3RD = "/cgi-bin/service/auth/getuserdetail3rd";
     /**
      * The constant GET_LOGIN_INFO.
      */
@@ -1149,6 +1149,14 @@ public interface WxCpApiPathConsts {
      */
     String ADD_MSG_TEMPLATE = "/cgi-bin/externalcontact/add_msg_template";
     /**
+     * 提醒成员群发
+     */
+    String REMIND_GROUP_MSG_SEND = "/cgi-bin/externalcontact/remind_groupmsg_send";
+    /**
+     * 停止企业群发
+     */
+    String CANCEL_GROUP_MSG_SEND = "/cgi-bin/externalcontact/cancel_groupmsg_send";
+    /**
      * The constant SEND_WELCOME_MSG.
      */
     String SEND_WELCOME_MSG = "/cgi-bin/externalcontact/send_welcome_msg";
@@ -1293,6 +1301,34 @@ public interface WxCpApiPathConsts {
      * The constant DEL_INTERCEPT_RULE.
      */
     String DEL_INTERCEPT_RULE = "/cgi-bin/externalcontact/del_intercept_rule";
+    /**
+     * 获取当前仍然有效的获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_LIST = "/cgi-bin/externalcontact/customer_acquisition/list_link";
+    /**
+     * 获取获客链接详情
+     */
+    String CUSTOMER_ACQUISITION_LINK_GET = "/cgi-bin/externalcontact/customer_acquisition/get";
+    /**
+     * 创建获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_CREATE = "/cgi-bin/externalcontact/customer_acquisition/create_link";
+    /**
+     * 编辑获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_UPDATE = "/cgi-bin/externalcontact/customer_acquisition/update_link";
+    /**
+     * 删除获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_DELETE = "/cgi-bin/externalcontact/customer_acquisition/delete_link";
+    /**
+     * 获取获客客户列表
+     */
+    String CUSTOMER_ACQUISITION_CUSTOMER = "/cgi-bin/externalcontact/customer_acquisition/customer";
+    /**
+     * 查询剩余使用量
+     */
+    String CUSTOMER_ACQUISITION_QUOTA = "/cgi-bin/externalcontact/customer_acquisition_quota";
 
   }
 
@@ -1459,7 +1495,7 @@ public interface WxCpApiPathConsts {
      * 发送应用消息
      * https://developer.work.weixin.qq.com/document/path/90250
      */
-    String SENG_MESSAGE="/cgi-bin/linkedcorp/message/send";
+    String SENG_MESSAGE = "/cgi-bin/linkedcorp/message/send";
   }
 
   interface IdConvert {

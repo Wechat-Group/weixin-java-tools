@@ -26,12 +26,8 @@ import java.io.IOException;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.CorpGroup.*;
 
 /**
- * @Project: WxJava
- * @Package: me.chanjar.weixin.cp.corpgroup.service.impl
- * @Description:
- * @Author: libo
- * @Email: 422423229@qq.com
- * @Date: 1/3/2023 5:45 PM
+ * @author libo Email: 422423229@qq.com
+ * @since  1/3/2023 5:45 PM
  */
 @Slf4j
 public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, RequestHttp<H, P> {

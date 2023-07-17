@@ -10,6 +10,30 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class WxMaApiUrlConstants {
+
+  /**
+   * openApi管理
+   */
+  public interface OpenApi {
+    /**
+     * 重置API调用次数
+     */
+    String CLEAR_QUOTA = "https://api.weixin.qq.com/cgi-bin/clear_quota";
+    /**
+     * 查询API调用额度
+     */
+    String GET_API_QUOTA = "https://api.weixin.qq.com/cgi-bin/openapi/quota/get";
+    /**
+     * 查询rid信息
+     */
+    String GET_RID_INFO = "https://api.weixin.qq.com/cgi-bin/openapi/rid/get";
+    /**
+     * 使用AppSecret重置 API 调用次数
+     */
+    String CLEAR_QUOTA_BY_APP_SECRET = "https://api.weixin.qq.com/cgi-bin/clear_quota/v2?appid=%s&appsecret=%s";
+
+  }
+
   public interface Analysis {
     String GET_DAILY_SUMMARY_TREND_URL = "https://api.weixin.qq.com/datacube/getweanalysisappiddailysummarytrend";
     String GET_DAILY_VISIT_TREND_URL = "https://api.weixin.qq.com/datacube/getweanalysisappiddailyvisittrend";

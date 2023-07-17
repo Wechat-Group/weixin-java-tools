@@ -69,6 +69,7 @@ public class CombineTransactionsResult implements Serializable {
   @Data
   @Accessors(chain = true)
   public static class JsapiResult implements Serializable {
+    private static final long serialVersionUID = -3485718620283251481L;
     private String appId;
     private String timeStamp;
     private String nonceStr;
@@ -84,6 +85,7 @@ public class CombineTransactionsResult implements Serializable {
   @Data
   @Accessors(chain = true)
   public static class AppResult implements Serializable {
+    private static final long serialVersionUID = -4462225641904225011L;
     private String appid;
     private String partnerid;
     private String prepayid;
@@ -95,6 +97,7 @@ public class CombineTransactionsResult implements Serializable {
   public <T> T getPayInfo(TradeTypeEnum tradeType, String appId, String mchId, PrivateKey privateKey) {
     String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
     String nonceStr = SignUtils.genRandomStr();
+
     switch (tradeType) {
       case JSAPI:
         JsapiResult jsapiResult = new JsapiResult();
@@ -114,7 +117,8 @@ public class CombineTransactionsResult implements Serializable {
         return (T) appResult;
       case NATIVE:
         return (T) this.codeUrl;
+      default:
+        throw new IllegalStateException("Unexpected value: " + tradeType);
     }
-    return null;
   }
 }

@@ -6,7 +6,7 @@ import me.chanjar.weixin.cp.bean.message.WxCpXmlOutEventMessage;
  * The type Event builder.
  *
  * @author eYoung
- * @description: created  on  create at 2021/12/3 16:34
+ * created at 2021/12/3 16:34
  */
 public class EventBuilder extends BaseBuilder<EventBuilder, WxCpXmlOutEventMessage> {
 

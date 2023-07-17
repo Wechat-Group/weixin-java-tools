@@ -8,12 +8,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Project: WxJava
- * @Package: me.chanjar.weixin.cp.bean.corpgroup
- * @Description: 获取应用共享信息返回类
- * @Author: libo
- * @Email: 422423229@qq.com
- * @Date: 27/2/2023 9:02 PM
+ * 获取应用共享信息返回类
+ * @author libo
  */
 @Data
 public class WxCpCorpGroupCorpListAppShareInfoResp implements Serializable {

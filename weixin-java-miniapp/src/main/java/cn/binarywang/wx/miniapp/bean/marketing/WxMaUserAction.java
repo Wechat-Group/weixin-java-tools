@@ -11,7 +11,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Description :微信营销接口
+ * 微信营销接口
+ *
  * @author <a href="https://github.com/184759547">184759547</a>
  * @since : 2021/12/28
  */

@@ -1,9 +1,10 @@
 package me.chanjar.weixin.channel.bean.delivery;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * 包裹中商品信息
@@ -13,17 +14,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class FreightProductInfo implements Serializable {
-
   private static final long serialVersionUID = -3751269707150372172L;
-  /** 商品id */
+
+  /**
+   * 商品id
+   */
   @JsonProperty("product_id")
   private String productId;
 
-  /** sku_id */
+  /**
+   * sku_id
+   */
   @JsonProperty("sku_id")
   private String skuId;
 
-  /** 商品数量 */
+  /**
+   * 商品数量
+   */
   @JsonProperty("product_cnt")
-  private String productCnt;
+  private Integer productCnt;
 }

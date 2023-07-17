@@ -6,7 +6,6 @@ import lombok.Setter;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.redis.WxRedisOps;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpCorpGroupConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,15 +14,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @Project: WxJava
- * @Package: me.chanjar.weixin.cp.config.impl
- * @Description: 企业微信企业互联各种固定、授权配置的Redisson存储实现
- * @Author: libo
- * @Email: 422423229@qq.com
- * @Date: 1/3/2023 10:48 AM
+ * 企业微信企业互联各种固定、授权配置的Redisson存储实现
+ *
+ * @author libo Email: 422423229@qq.com
+ * @since 1/3/2023 10:48 AM
  */
 @Builder
 public class WxCpCorpGroupRedissonConfigImpl implements WxCpCorpGroupConfigStorage, Serializable {

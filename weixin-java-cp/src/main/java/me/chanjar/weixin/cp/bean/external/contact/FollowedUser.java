@@ -53,6 +53,12 @@ public class FollowedUser implements Serializable {
   private String operatorUserId;
 
   /**
+   * 该成员添加此客户的来源add_way为10时，对应的视频号信息
+   */
+  @SerializedName("wechat_channels")
+  private WechatChannels wechatChannels;
+
+  /**
    * The type Tag.
    */
   @Data
@@ -81,5 +87,23 @@ public class FollowedUser implements Serializable {
      * 该成员添加此外部联系人所打标签类型, 1-企业设置, 2-用户自定义
      */
     private int type;
+  }
+
+  /**
+   * The type WechatChannels.
+   */
+  @Data
+  public static class WechatChannels implements Serializable {
+    private static final long serialVersionUID = -7940080094561469369L;
+
+    /**
+     * 视频号名称
+     */
+    private String nickname;
+
+    /**
+     * 视频号添加场景，0-未知 1-视频号主页 2-视频号直播间 3-视频号留资服务（微信版本要求：iOS ≥ 8.0.20，Android ≥ 8.0.21，且添加时间不早于2022年4月21日。否则添加场景值为0）
+     */
+    private Integer source;
   }
 }
