@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.api.WxConsts;
@@ -72,9 +73,12 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
   @Override
   public String addTemplate(String shortTemplateId, List<String> keywordNameList) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
-    Gson gson = new Gson();
+    JsonArray jsonArray = new JsonArray();
+    for(String val: keywordNameList) {
+      jsonArray.add(val);
+    }
     jsonObject.addProperty("template_id_short", shortTemplateId);
-    jsonObject.addProperty("keyword_name_list",gson.toJson(keywordNameList));
+    jsonObject.add("keyword_name_list",jsonArray);
     String responseContent = this.wxMpService.post(TEMPLATE_API_ADD_TEMPLATE, jsonObject.toString());
     final JsonObject result = GsonParser.parse(responseContent);
     if (result.get(WxConsts.ERR_CODE).getAsInt() == 0) {
