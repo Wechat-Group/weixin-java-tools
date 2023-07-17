@@ -10,17 +10,13 @@ import java.io.Serializable;
  * created on  2023/5/17 17:01
  */
 @Data
-public class WxMaOrderShippingBaseResponse implements Serializable {
+public class WxMaOrderShippingInfoGetResponse extends WxMaOrderShippingInfoBaseResponse implements Serializable {
   private static final long serialVersionUID = -5414031943436195493L;
-  /**
-   * 错误码
-   */
-  @SerializedName("errcode")
-  private Integer errCode;
 
   /**
-   * 错误原因
+   * 支付单信息
    */
-  @SerializedName("errmsg")
-  private String errMsg;
+  @SerializedName("order")
+  private Order order;
+
 }
