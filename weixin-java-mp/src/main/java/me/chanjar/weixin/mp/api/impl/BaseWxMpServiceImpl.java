@@ -39,6 +39,7 @@ import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -155,7 +156,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Setter
   private WxMpFreePublishService freePublishService = new WxMpFreePublishServiceImpl(this);
 
-  private Map<String, WxMpConfigStorage> configStorageMap;
+  private Map<String, WxMpConfigStorage> configStorageMap = new HashMap<>();
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
