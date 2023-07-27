@@ -1095,6 +1095,18 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
     private String activitiesRate;
 
     /**
+     * 非信用卡活动费率值
+     */
+    @SerializedName("debit_activities_rate")
+    private String debitActivitiesRate;
+
+    /**
+     * 信用卡活动费率值
+     */
+    @SerializedName("credit_activities_rate")
+    private String creditActivitiesRate;
+
+    /**
      * 优惠费率活动补充材料
      */
     @SerializedName("activities_additions")
