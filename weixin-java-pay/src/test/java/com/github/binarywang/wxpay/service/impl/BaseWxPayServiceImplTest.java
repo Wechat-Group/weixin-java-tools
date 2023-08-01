@@ -38,6 +38,7 @@ import java.nio.file.Path;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.github.binarywang.wxpay.constant.WxPayConstants.TarType;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -157,16 +158,16 @@ public class BaseWxPayServiceImplTest {
     // Won't compile
     // WxPayMpOrderResult result = payService.createOrder(TradeType.Specific.APP, new WxPayUnifiedOrderRequest());
     payService.createOrder(
-      TradeType.Specific.JSAPI,
-      WxPayUnifiedOrderRequest.newBuilder()
-        .body("我去")
-        .totalFee(1)
-        .productId("aaa")
-        .spbillCreateIp("11.1.11.1")
-        .notifyUrl("111111")
-        .outTradeNo("111111290")
-        .build()
-    )
+        TradeType.Specific.JSAPI,
+        WxPayUnifiedOrderRequest.newBuilder()
+          .body("我去")
+          .totalFee(1)
+          .productId("aaa")
+          .spbillCreateIp("11.1.11.1")
+          .notifyUrl("111111")
+          .outTradeNo("111111290")
+          .build()
+      )
       .getAppId();
   }
 
@@ -876,4 +877,34 @@ public class BaseWxPayServiceImplTest {
 
   }
 
+  @Test
+  public void testCreatePartnerOrderV3() throws WxPayException {
+    WxPayConfig wxPayConfig = new WxPayConfig();
+    //服务商的参数
+    wxPayConfig.setMchId("xxx");
+    wxPayConfig.setApiV3Key("xxx");
+    wxPayConfig.setPrivateKeyPath("xxx");
+    wxPayConfig.setPrivateCertPath("xxx");
+    wxPayConfig.setKeyPath("xxx");
+    wxPayConfig.setAppId("xxx");
+    wxPayConfig.setKeyPath("xxx");
+    //如果有子商户的appId则配置
+//    wxPayConfig.setSubAppId("xxx");
+    //创建支付服务
+    WxPayService wxPayService = new WxPayServiceImpl();
+    wxPayService.setConfig(wxPayConfig);
+    //子商户的参数
+    wxPayConfig.setSubMchId("xxx");
+
+    //构建请求
+    WxPayPartnerUnifiedOrderV3Request request = new WxPayPartnerUnifiedOrderV3Request();
+    request.setAmount(new WxPayPartnerUnifiedOrderV3Request.Amount().setTotal(1));
+    request.setPayer(new WxPayPartnerUnifiedOrderV3Request.Payer().setSpOpenid("xxx"));
+    //如果有子商户的appId则配置
+//    request.setPayer(new WxPayPartnerUnifiedOrderV3Request.Payer().setSubOpenid("xxx"));
+    request.setOutTradeNo(UUID.randomUUID().toString());
+
+    WxPayUnifiedOrderV3Result.JsapiResult result = payService.createPartnerOrderV3(TradeTypeEnum.JSAPI, request);
+    System.out.println(result);
+  }
 }
