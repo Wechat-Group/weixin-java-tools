@@ -128,7 +128,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Getter
   private final BrandMerchantTransferService brandMerchantTransferService = new BrandMerchantTransferServiceImpl(this);
 
-  protected Map<String, WxPayConfig> configMap;
+  protected Map<String, WxPayConfig> configMap = new HashMap<>();
 
   @Override
   public WxPayConfig getConfig() {
@@ -209,9 +209,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public String getPayBaseUrl() {
     if (this.getConfig().isUseSandboxEnv()) {
+      if (StringUtils.isNotBlank(this.getConfig().getApiV3Key())) {
+        throw new WxRuntimeException("微信支付V3 目前不支持沙箱模式！");
+      }
       return this.getConfig().getPayBaseUrl() + "/xdc/apiv2sandbox";
     }
-
     return this.getConfig().getPayBaseUrl();
   }
 

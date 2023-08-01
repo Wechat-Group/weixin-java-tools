@@ -70,11 +70,10 @@ public enum WxMaErrorMsgEnum {
    * appid不正确，或者不符合绑定关系要求.
    * 对应操作：<code>sendUniformMessage</code>
    * 对应地址：
-   * POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/uniform_send?access_token=ACCESS_TOKEN
-   * 参考文档地址： https://developers.weixin.qq.com/miniprogram/dev/api/open-api/uniform-message/sendUniformMessage.html
+   * 参考文档地址： https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/clearQuota.html
    * </pre>
    */
-  CODE_40013(40013, "appid不正确，或者不符合绑定关系要求"),
+  CODE_40013(40013, "appid不正确/不合法(避免异常字符,注意大小写)，或者不符合绑定关系要求"),
   /**
    * <pre>
    * template_id 不正确.
@@ -268,6 +267,50 @@ public enum WxMaErrorMsgEnum {
    */
   CODE_47504(47504, "activity_id 过期"),
   /**
+   * api 禁止清零调用次数，因为清零次数达到上限
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/clearQuota.html">参考文档</a>
+   */
+  CODE_48006(48006, "api 禁止清零调用次数，因为清零次数达到上限"),
+
+  /**
+   * rid不存在
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/getRidInfo.html">参考文档</a>
+   */
+  CODE_76001(76001, "rid不存在"),
+  /**
+   * rid为空或者格式错误
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/getRidInfo.html">参考文档</a>
+   */
+  CODE_76002(76002, "rid为空或者格式错误"),
+  /**
+   * 当前账号无权查询该rid，该rid属于其他账号调用所产生
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/getRidInfo.html">参考文档</a>
+   */
+  CODE_76003(76003, "当前账号无权查询该rid，该rid属于其他账号调用所产生"),
+  /**
+   * rid过期
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/getRidInfo.html">参考文档</a>
+   */
+  CODE_76004(76004, "rid过期，仅支持持续7天内的rid"),
+  /**
+   * cgi_path填错了
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/getApiQuota.html">参考文档</a>
+   */
+  CODE_76021(76021, "cgi_path填错了"),
+  /**
+   * 当前调用接口使用的token与api所属账号不符
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/getApiQuota.html">参考文档</a>
+   */
+  CODE_76022(76022, "当前调用接口使用的token与api所属账号不符，详情可看注意事项的说明"),
+
+  /**
    * 没有绑定开放平台帐号.
    */
   CODE_89002(89002, "没有绑定开放平台帐号"),
@@ -343,6 +386,17 @@ public enum WxMaErrorMsgEnum {
   CODE_91017(91017, "+号规则 不同类型关联名主体不一致"),
 
   CODE_40097(40097, "参数错误"),
+  /**
+   * 缺少 appid 参数
+   * <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/clearQuotaByAppSecret.html">参考文档</a>
+   */
+  CODE_41002(41002, "缺少 appid 参数"),
+  /**
+   * 缺少 secret 参数
+   * <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/clearQuotaByAppSecret.html">参考文档</a>
+   */
+  CODE_41004(41004, "缺少 secret 参数"),
+
 
   CODE_41006(41006, "media_id 不能为空"),
 

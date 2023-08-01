@@ -1,16 +1,19 @@
 package com.github.binarywang.wxpay.bean.profitsharing;
 
 import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,17 +68,19 @@ public class ProfitSharingResult extends BaseWxPayResult implements Serializable
   /**
    * 获取分账接收方列表方法
    *
-   * @return
    */
   public List<Receiver> getReceiverList() {
-    if (receiverList == null && receivers != null && receivers.length() > 0) {
-      List<String> tempList = GSON.fromJson(receivers, List.class);
-      for (String str : tempList) {
-        Receiver receiver = GSON.fromJson(str, Receiver.class);
-        receiverList.add(receiver);
-      }
+    if (receiverList != null) {
+      return receiverList;
     }
-    return receiverList;
+
+    if (StringUtils.isNotEmpty(receivers)) {
+      this.receiverList = GSON.fromJson(receivers, new TypeToken<List<Receiver>>() {
+      }.getType());
+      return receiverList;
+    }
+
+    return Collections.emptyList();
   }
 
   @Override

@@ -10,6 +10,8 @@ import java.io.Serializable;
 /**
  * 微信通知接口头部信息，需要做签名验证
  * 文档地址: https://wechatpay-api.gitbook.io/wechatpay-api-v3/qian-ming-zhi-nan-1/qian-ming-yan-zheng
+ *
+ * @author cloudX
  */
 @Data
 @Builder

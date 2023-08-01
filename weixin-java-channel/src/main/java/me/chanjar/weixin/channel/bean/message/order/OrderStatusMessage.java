@@ -40,7 +40,7 @@ public class OrderStatusMessage extends WxChannelMessage {
     Object obj = null;
     obj = map.get("order_id");
     if (obj != null) {
-      this.orderId = (String) obj;
+      this.orderId = obj.toString();
     }
     obj = map.get("status");
     if (obj != null) {

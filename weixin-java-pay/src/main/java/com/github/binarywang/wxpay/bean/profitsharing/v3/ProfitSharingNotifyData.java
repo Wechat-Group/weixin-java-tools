@@ -1,4 +1,4 @@
-package com.github.binarywang.wxpay.bean.profitsharingV3;
+package com.github.binarywang.wxpay.bean.profitsharing.v3;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
@@ -12,13 +12,11 @@ import java.io.Serializable;
  * 通用通知实体
  *
  * @author yuanbo
- * @create 2022-04-26-21:33 PM
+ * @since 2022-04-26-21:33 PM
  */
 @Data
 @NoArgsConstructor
 public class ProfitSharingNotifyData implements Serializable{
-
-
   private static final long serialVersionUID = 4242383310854692441L;
 
   /**

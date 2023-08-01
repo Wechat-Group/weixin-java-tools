@@ -35,4 +35,8 @@ public class AfterSaleDetail implements Serializable {
   /** 联系电话 */
   @JsonProperty("tel_number")
   private String telNumber;
+
+  /** 举证图片media_id列表，根据mediaid获取文件内容接口 */
+  @JsonProperty("media_id_list")
+  private List<String> mediaIdList;
 }

@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.scheme.WxMaGenerateNfcSchemeRequest;
 import cn.binarywang.wx.miniapp.bean.scheme.WxMaGenerateSchemeRequest;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
@@ -33,6 +34,23 @@ public class WxMaSchemeServiceImplTest {
         .build())
       .isExpire(true) // 到期失效
       .expireTime(expireTime) // 失效时间
+      .build());
+    System.out.println("generate:");
+    System.out.println(generate);
+  }
+
+  @Test
+  public void testGenerateNfc() throws WxErrorException {
+    final Date date = DateUtils.addMinutes(new Date(), 20);  //  20分钟后失效
+    final long expireTime = date.getTime() / 1000;
+    final String generate = this.wxService.getWxMaSchemeService().generateNFC(WxMaGenerateNfcSchemeRequest.newBuilder()
+      .jumpWxa(WxMaGenerateNfcSchemeRequest.JumpWxa.newBuilder()
+//        .path("/pages/productView/editPhone/editPhone") // 都可以
+        .path("pages/productView/editPhone/editPhone") //
+        .query("")
+        .build())
+      .modelId("") // 到期失效
+      .sn("") // 失效时间
       .build());
     System.out.println("generate:");
     System.out.println(generate);

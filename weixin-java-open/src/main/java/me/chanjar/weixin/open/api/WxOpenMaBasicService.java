@@ -2,6 +2,7 @@ package me.chanjar.weixin.open.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
+import me.chanjar.weixin.open.bean.ma.WxOpenMaApplyOrderPathInfo;
 import me.chanjar.weixin.open.bean.result.*;
 
 import java.util.List;
@@ -68,6 +69,11 @@ public interface WxOpenMaBasicService {
    * 8.5 修改类目
    */
   String OPEN_MODIFY_CATEGORY = "https://api.weixin.qq.com/cgi-bin/wxopen/modifycategory";
+
+  /**
+   * 获取订单页path信息
+   */
+  String OPEN_GET_ORDER_PATH_INFO = "https://api.weixin.qq.com/wxa/security/getorderpathinfo";
 
 
   /**
@@ -196,4 +202,13 @@ public interface WxOpenMaBasicService {
    * @throws WxErrorException .
    */
   WxOpenResult modifyCategory(WxFastMaCategory category) throws WxErrorException;
+
+  /**
+   * 获取订单页Path信息
+   *
+   * @param infoType 0:线上版，1:审核版
+   * @return 订单页Path信息
+   * @throws WxErrorException .
+   */
+  WxOpenMaGetOrderPathResult getOrderPathInfo(int infoType) throws WxErrorException;
 }

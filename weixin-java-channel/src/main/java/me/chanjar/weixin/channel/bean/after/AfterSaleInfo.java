@@ -57,15 +57,19 @@ public class AfterSaleInfo implements Serializable {
 
   /** 创建时间 时间戳 秒 */
   @JsonProperty("create_time")
-  private String createTime;
+  private Long createTime;
 
   /** 更新时间 时间戳 秒 */
   @JsonProperty("update_time")
-  private String updateTime;
+  private Long updateTime;
 
-  /** 退款原因 */
+  /** 退款原因（后续新增的原因将不再有字面含义，请参考reason_text） */
   @JsonProperty("reason")
   private String reason;
+
+  /** 退款原因解释 */
+  @JsonProperty("reason_text")
+  private String reasonText;
 
   /** 退款结果 */
   @JsonProperty("refund_resp")
