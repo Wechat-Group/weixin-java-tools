@@ -1,7 +1,7 @@
 package com.github.binarywang.wxpay.service;
 
-import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
-import com.github.binarywang.wxpay.bean.profitsharingV3.*;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
+import com.github.binarywang.wxpay.bean.profitsharing.v3.*;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 /**
@@ -238,7 +238,7 @@ public interface ProfitSharingV3Service {
    * @throws WxPayException the wx pay exception
    * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_10.shtml">微信文档</a>
    */
-  ProfitSharingNotifyData getProfitSharingNotifyData(String notifyData, SignatureHeader header) throws WxPayException;
+  ProfitSharingNotifyResult getProfitSharingNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * <pre>

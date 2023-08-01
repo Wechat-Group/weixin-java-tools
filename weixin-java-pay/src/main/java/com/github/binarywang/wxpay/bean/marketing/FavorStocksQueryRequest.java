@@ -73,8 +73,9 @@ public class FavorStocksQueryRequest implements Serializable {
    * 是否必填：否
    * 类型：string[1,64]
    * 描述：
-   *  起始创建时间，遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss.sss+TIMEZONE，YYYY-MM-DD表示年月日，T出现在字符串中，表示time元素的开头，HH:mm:ss.sss表示时分秒毫秒，TIMEZONE表示时区（+08:00表示东八区时间，领先UTC 8小时，即北京时间）。例如：2015-05-20T13:29:35.120+08:00表示，北京时间2015年5月20日 13点29分35秒。
-   *  示例值：2015-05-20T13:29:35.120+08:00
+   *  起始创建时间，起始创建时间，遵循rfc3339标准格式，格式为yyyy-MM-DDTHH:mm:ss+TIMEZONE，yyyy-MM-DD表示年月日，T出现在字符串中，表示time元素的开头，HH:mm:ss表示时分秒，TIMEZONE表示时区（+08:00表示东八区时间，领先UTC 8小时，即北京时间）。例如：2015-05-20T13:29:35+08:00表示，北京时间2015年5月20日 13点29分35秒。
+   *  校验规则：get请求，参数在 url中，需要进行 url 编码传递
+   *  示例值：2015-05-20T13:29:35+08:00
    * </pre>
    */
   @SerializedName(value = "create_start_time")
@@ -87,8 +88,9 @@ public class FavorStocksQueryRequest implements Serializable {
    * 是否必填：否
    * 类型：string[1,64]
    * 描述：
-   *  终止创建时间，遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss.sss+TIMEZONE，YYYY-MM-DD表示年月日，T出现在字符串中，表示time元素的开头，HH:mm:ss.sss表示时分秒毫秒，TIMEZONE表示时区（+08:00表示东八区时间，领先UTC 8小时，即北京时间）。例如：2015-05-20T13:29:35.120+08:00表示，北京时间2015年5月20日 13点29分35秒。
-   *  示例值：2015-05-20T13:29:35.120+08:00
+   *  终止创建时间，遵循rfc3339标准格式，格式为yyyy-MM-DDTHH:mm:ss+TIMEZONE，yyyy-MM-DD表示年月日，T出现在字符串中，表示time元素的开头，HH:mm:ss表示时分秒，TIMEZONE表示时区（+08:00表示东八区时间，领先UTC 8小时，即北京时间）。例如：2015-05-20T13:29:35+08:00表示，北京时间2015年5月20日 13点29分35秒。
+   *  校验规则：get请求，参数在 url中，需要进行 url 编码传递
+   *  示例值：2015-05-20T13:29:35+08:00
    * </pre>
    */
   @SerializedName(value = "create_end_time")

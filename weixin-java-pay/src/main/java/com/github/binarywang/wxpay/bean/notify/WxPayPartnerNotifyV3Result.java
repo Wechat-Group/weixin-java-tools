@@ -8,8 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 微信支付服务商下单回调
- * 文档见：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_5.shtml
+ * 微信支付服务商下单回调，文档：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_5.shtml">文档</a>
  *
  * @author Pursuer
  * @version 1.0
@@ -250,6 +249,7 @@ public class WxPayPartnerNotifyV3Result implements Serializable, WxPayBaseNotify
     @SerializedName(value = "promotion_detail")
     private List<PromotionDetail> promotionDetails;
   }
+
   @Data
   @NoArgsConstructor
   public static class Payer implements Serializable {
@@ -267,6 +267,34 @@ public class WxPayPartnerNotifyV3Result implements Serializable, WxPayBaseNotify
      */
     @SerializedName(value = "openid")
     private String openid;
+
+    /**
+     * <pre>
+     * 字段名：用户服务标识
+     * 变量名：sp_openid
+     * 是否必填：是
+     * 类型：string[1,128]
+     * 描述：
+     *  用户在服务商appid下的唯一标识。
+     *  示例值：oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
+     * </pre>
+     */
+    @SerializedName(value = "sp_openid")
+    private String spOpenid;
+
+    /**
+     * <pre>
+     * 字段名：用户子标识
+     * 变量名：sub_openid
+     * 是否必填：否
+     * 类型：string[1,128]
+     * 描述：
+     * 用户在子商户appid下的唯一标识。
+     *  示例值：oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
+     * </pre>
+     */
+    @SerializedName(value = "sub_openid")
+    private String subOpenid;
   }
 
   @Data

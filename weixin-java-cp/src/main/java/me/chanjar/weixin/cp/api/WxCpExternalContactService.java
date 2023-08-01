@@ -690,6 +690,39 @@ public interface WxCpExternalContactService {
    */
   WxCpMsgTemplateAddResult addMsgTemplate(WxCpMsgTemplate wxCpMsgTemplate) throws WxErrorException;
 
+
+  /**
+   * 提醒成员群发
+   * 企业和第三方应用可调用此接口，重新触发群发通知，提醒成员完成群发任务，24小时内每个群发最多触发三次提醒。
+   * <p>
+   * 请求方式: POST(HTTPS)
+   * <p>
+   * 请求地址:https://qyapi.weixin.qq.com/cgi-bin/externalcontact/remind_groupmsg_send?access_token=ACCESS_TOKEN
+   * <p>
+   * <a href="https://developer.work.weixin.qq.com/document/path/97610">文档地址</a>
+   *
+   * @param msgId 群发消息的id，通过获取群发记录列表接口返回
+   * @return the wx cp msg template add result
+   */
+  WxCpBaseResp remindGroupMsgSend(String msgId) throws WxErrorException;
+
+
+  /**
+   * 停止企业群发
+   * 企业和第三方应用可调用此接口，停止无需成员继续发送的企业群发
+   * <p>
+   * 请求方式: POST(HTTPS)
+   * <p>
+   * 请求地址:https://qyapi.weixin.qq.com/cgi-bin/externalcontact/cancel_groupmsg_send?access_token=ACCESS_TOKEN
+   * <p>
+   * <a href="https://developer.work.weixin.qq.com/document/path/97611">文档地址</a>
+   *
+   * @param msgId 群发消息的id，通过获取群发记录列表接口返回
+   * @return the wx cp msg template add result
+   */
+  WxCpBaseResp cancelGroupMsgSend(String msgId) throws WxErrorException;
+
+
   /**
    * 发送新客户欢迎语
    * <pre>

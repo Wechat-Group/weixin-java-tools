@@ -615,4 +615,26 @@ public class WxCpExternalContactServiceImplTest {
 
     this.wxCpService.getExternalContactService().getJoinWay(configId);
   }
+
+  /**
+   * 提醒成员群发
+   *
+   * @throws WxErrorException
+   */
+  @Test
+  public void testRemindGroupMsgSend() throws WxErrorException {
+    this.wxCpService.getExternalContactService()
+                    .remindGroupMsgSend("msgGCAAAXtWyujaWJHDDGi0mACAAAA");
+  }
+
+  /**
+   * 测试取消提醒成员群发
+   *
+   * @throws WxErrorException
+   */
+  @Test
+  public void testCancelGroupMsgSend() throws WxErrorException {
+    this.wxCpService.getExternalContactService()
+                    .cancelGroupMsgSend("msgGCAAAXtWyujaWJHDDGi0mACAAAA");
+  }
 }

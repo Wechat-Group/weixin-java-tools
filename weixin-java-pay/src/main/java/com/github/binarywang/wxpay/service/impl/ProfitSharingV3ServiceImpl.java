@@ -1,7 +1,7 @@
 package com.github.binarywang.wxpay.service.impl;
 
-import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
-import com.github.binarywang.wxpay.bean.profitsharingV3.*;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
+import com.github.binarywang.wxpay.bean.profitsharing.v3.*;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.ProfitSharingV3Service;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -48,14 +48,17 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
 
   @Override
   public ProfitSharingResult getProfitSharingResult(String outOrderNo, String transactionId) throws WxPayException {
-    String url = String.format("%s/v3/profitsharing/orders/%s?transaction_id=%s", this.payService.getPayBaseUrl(), outOrderNo, transactionId);
+    String url = String.format("%s/v3/profitsharing/orders/%s?transaction_id=%s", this.payService.getPayBaseUrl(),
+      outOrderNo, transactionId);
     String result = this.payService.getV3(url);
     return GSON.fromJson(result, ProfitSharingResult.class);
   }
 
   @Override
-  public ProfitSharingResult getProfitSharingResult(String outOrderNo, String transactionId, String subMchId) throws WxPayException {
-    String url = String.format("%s/v3/profitsharing/orders/%s?sub_mchid=%s&transaction_id=%s", this.payService.getPayBaseUrl(), outOrderNo, subMchId, transactionId);
+  public ProfitSharingResult getProfitSharingResult(String outOrderNo, String transactionId, String subMchId)
+    throws WxPayException {
+    String url = String.format("%s/v3/profitsharing/orders/%s?sub_mchid=%s&transaction_id=%s",
+      this.payService.getPayBaseUrl(), outOrderNo, subMchId, transactionId);
     String result = this.payService.getV3(url);
     return GSON.fromJson(result, ProfitSharingResult.class);
   }
@@ -70,14 +73,17 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
 
   @Override
   public ProfitSharingReturnResult getProfitSharingReturnResult(String outOrderNo, String outReturnNo) throws WxPayException {
-    String url = String.format("%s/v3/profitsharing/return-orders/%s?out_order_no=%s", this.payService.getPayBaseUrl(), outReturnNo, outOrderNo);
+    String url = String.format("%s/v3/profitsharing/return-orders/%s?out_order_no=%s", this.payService.getPayBaseUrl(),
+      outReturnNo, outOrderNo);
     String result = this.payService.getV3(url);
     return GSON.fromJson(result, ProfitSharingReturnResult.class);
   }
 
   @Override
-  public ProfitSharingReturnResult getProfitSharingReturnResult(String outOrderNo, String outReturnNo, String subMchId) throws WxPayException {
-    String url = String.format("%s/v3/profitsharing/return-orders/%s?sub_mchid=%s&out_order_no=%s", this.payService.getPayBaseUrl(), outReturnNo, subMchId, outOrderNo);
+  public ProfitSharingReturnResult getProfitSharingReturnResult(String outOrderNo, String outReturnNo, String subMchId)
+    throws WxPayException {
+    String url = String.format("%s/v3/profitsharing/return-orders/%s?sub_mchid=%s&out_order_no=%s",
+      this.payService.getPayBaseUrl(), outReturnNo, subMchId, outOrderNo);
     String result = this.payService.getV3(url);
     return GSON.fromJson(result, ProfitSharingReturnResult.class);
   }
@@ -114,7 +120,7 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
   }
 
   @Override
-  public ProfitSharingNotifyData getProfitSharingNotifyData(String notifyData, SignatureHeader header) throws WxPayException {
+  public ProfitSharingNotifyResult getProfitSharingNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
     ProfitSharingNotifyData response = parseNotifyData(notifyData, header);
     ProfitSharingNotifyData.Resource resource = response.getResource();
     String cipherText = resource.getCipherText();
@@ -123,8 +129,7 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
     String apiV3Key = this.payService.getConfig().getApiV3Key();
     try {
       String result = AesUtils.decryptToString(associatedData, nonce, cipherText, apiV3Key);
-      ProfitSharingNotifyData notifyResult = GSON.fromJson(result, ProfitSharingNotifyData.class);
-      return notifyResult;
+      return GSON.fromJson(result, ProfitSharingNotifyResult.class);
     } catch (GeneralSecurityException | IOException e) {
       throw new WxPayException("解析报文异常！", e);
     }
@@ -132,7 +137,9 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
 
   @Override
   public ProfitSharingBillResult getProfitSharingBill(ProfitSharingBillRequest request) throws WxPayException {
-    String url = String.format("%s/v3/profitsharing/bills?bill_date=%s", this.payService.getPayBaseUrl(), request.getBillDate());
+    String url = String.format("%s/v3/profitsharing/bills?bill_date=%s", this.payService.getPayBaseUrl(),
+      request.getBillDate());
+
     if (StringUtils.isNotBlank(request.getSubMchId())) {
       url = String.format("%s&sub_mchid=%s", url, request.getSubMchId());
     }
@@ -158,15 +165,12 @@ public class ProfitSharingV3ServiceImpl implements ProfitSharingV3Service {
    * @return true:校验通过 false:校验不通过
    */
   private boolean verifyNotifySign(SignatureHeader header, String data) throws WxPayException {
-    String beforeSign = String.format("%s\n%s\n%s\n",
-      header.getTimeStamp(),
-      header.getNonce(),
-      data);
+    String beforeSign = String.format("%s%n%s%n%s%n", header.getTimeStamp(), header.getNonce(), data);
     Verifier verifier = this.payService.getConfig().getVerifier();
     if (verifier == null) {
       throw new WxPayException("证书检验对象为空");
     }
-    return verifier.verify(header.getSerialNo(),
-      beforeSign.getBytes(StandardCharsets.UTF_8), header.getSigned());
+    return verifier.verify(header.getSerial(),
+      beforeSign.getBytes(StandardCharsets.UTF_8), header.getSignature());
   }
 }

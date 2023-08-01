@@ -81,7 +81,9 @@ public class BatchesQueryResult implements Serializable {
    */
   @Data
   @Accessors(chain = true)
-  public class TransferBatch implements Serializable {
+  public static class TransferBatch implements Serializable {
+    private static final long serialVersionUID = -5889662087155073442L;
+
     /**
      * <pre>
      * 字段名：商户号
@@ -94,7 +96,7 @@ public class BatchesQueryResult implements Serializable {
      * </pre>
      */
     @SerializedName("mchid")
-    private String mchid;
+    private String mchId;
 
     /**
      * <pre>
@@ -335,7 +337,9 @@ public class BatchesQueryResult implements Serializable {
    */
   @Data
   @Accessors(chain = true)
-  public class TransferDetail implements Serializable {
+  public static class TransferDetail implements Serializable {
+    private static final long serialVersionUID = 172904924437448719L;
+
     /**
      * <pre>
      * 字段名：微信明细单号

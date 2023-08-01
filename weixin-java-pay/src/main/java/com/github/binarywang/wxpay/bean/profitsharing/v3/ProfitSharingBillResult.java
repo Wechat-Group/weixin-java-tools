@@ -1,4 +1,4 @@
-package com.github.binarywang.wxpay.bean.profitsharingV3;
+package com.github.binarywang.wxpay.bean.profitsharing.v3;
 
 import java.io.Serializable;
 

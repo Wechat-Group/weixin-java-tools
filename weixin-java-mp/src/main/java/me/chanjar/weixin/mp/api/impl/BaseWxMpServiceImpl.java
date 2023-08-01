@@ -39,7 +39,9 @@ import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.*;
@@ -154,7 +156,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Setter
   private WxMpFreePublishService freePublishService = new WxMpFreePublishServiceImpl(this);
 
-  private Map<String, WxMpConfigStorage> configStorageMap;
+  private Map<String, WxMpConfigStorage> configStorageMap = new HashMap<>();
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -250,6 +252,55 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   public String getAccessToken() throws WxErrorException {
     return getAccessToken(false);
   }
+
+  @Override
+  public String getAccessToken(boolean forceRefresh) throws WxErrorException {
+    if (!forceRefresh && !this.getWxMpConfigStorage().isAccessTokenExpired()) {
+      return this.getWxMpConfigStorage().getAccessToken();
+    }
+
+    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+    boolean locked = false;
+    try {
+      do {
+        locked = lock.tryLock(100, TimeUnit.MILLISECONDS);
+        if (!forceRefresh && !this.getWxMpConfigStorage().isAccessTokenExpired()) {
+          return this.getWxMpConfigStorage().getAccessToken();
+        }
+      } while (!locked);
+
+      String response;
+      if (getWxMpConfigStorage().isStableAccessToken()) {
+        response = doGetStableAccessTokenRequest(forceRefresh);
+      } else {
+        response = doGetAccessTokenRequest();
+      }
+      return extractAccessToken(response);
+    } catch (IOException | InterruptedException e) {
+      throw new WxRuntimeException(e);
+    } finally {
+      if (locked) {
+        lock.unlock();
+      }
+    }
+  }
+
+  /**
+   * 通过网络请求获取AccessToken
+   *
+   * @return .
+   * @throws IOException .
+   */
+  protected abstract String doGetAccessTokenRequest() throws IOException;
+
+
+  /**
+   * 通过网络请求获取稳定版接口调用凭据
+   *
+   * @return .
+   * @throws IOException .
+   */
+  protected abstract String doGetStableAccessTokenRequest(boolean forceRefresh) throws IOException;
 
   @Override
   public String shortUrl(String longUrl) throws WxErrorException {

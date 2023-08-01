@@ -1,4 +1,4 @@
-package com.github.binarywang.wxpay.bean.profitsharingV3;
+package com.github.binarywang.wxpay.bean.profitsharing.v3;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
@@ -16,6 +16,16 @@ import java.util.List;
 @Data
 public class ProfitSharingUnfreezeResult implements Serializable {
   private static final long serialVersionUID = 5053171678880645337L;
+
+  /**
+   * <pre>
+   * 字段名：子商户号
+   * 是否必填：是
+   * 描述：微信支付分配的子商户号，即分账的出资商户号
+   * </pre>
+   */
+  @SerializedName("sub_mchid")
+  private String subMchid;
 
   /**
    * <pre>
@@ -164,5 +174,15 @@ public class ProfitSharingUnfreezeResult implements Serializable {
      */
     @SerializedName("finish_time")
     private String finishTime;
+
+    /**
+     * <pre>
+     * 字段名：分账明细单号
+     * 是否必填：是
+     * 描述：微信分账明细单号，每笔分账业务执行的明细单号，可与资金账单对账使用
+     * </pre>
+     */
+    @SerializedName("detail_id")
+    private String detailId;
   }
 }

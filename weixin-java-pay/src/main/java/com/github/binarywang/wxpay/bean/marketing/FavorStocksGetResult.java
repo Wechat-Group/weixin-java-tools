@@ -112,7 +112,7 @@ public class FavorStocksGetResult implements Serializable {
    * 示例值：100
    */
   @SerializedName("distributed_coupons")
-  private Integer distributedCoupons;
+  private Long distributedCoupons;
 
   /**
    * 是否无资金流

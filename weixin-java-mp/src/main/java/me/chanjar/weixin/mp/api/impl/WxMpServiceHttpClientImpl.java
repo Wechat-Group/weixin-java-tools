@@ -1,23 +1,24 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
+import me.chanjar.weixin.mp.bean.WxMpStableAccessTokenRequest;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_ACCESS_TOKEN_URL;
+import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.GET_STABLE_ACCESS_TOKEN_URL;
 
 /**
  * apache http client方式实现.
@@ -64,42 +65,62 @@ public class WxMpServiceHttpClientImpl extends BaseWxMpServiceImpl<CloseableHttp
   }
 
   @Override
-  public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    final WxMpConfigStorage config = this.getWxMpConfigStorage();
-    if (!config.isAccessTokenExpired() && !forceRefresh) {
-      return config.getAccessToken();
-    }
+  protected String doGetAccessTokenRequest() throws IOException {
+    String url = String.format(GET_ACCESS_TOKEN_URL.getUrl(getWxMpConfigStorage()), getWxMpConfigStorage().getAppId(), getWxMpConfigStorage().getSecret());
 
-    Lock lock = config.getAccessTokenLock();
-    boolean locked = false;
+    HttpGet httpGet = null;
+    CloseableHttpResponse response = null;
     try {
-      do {
-        locked = lock.tryLock(100, TimeUnit.MILLISECONDS);
-        if (!forceRefresh && !config.isAccessTokenExpired()) {
-          return config.getAccessToken();
-        }
-      } while (!locked);
-
-      String url = String.format(GET_ACCESS_TOKEN_URL.getUrl(config), config.getAppId(), config.getSecret());
-      try {
-        HttpGet httpGet = new HttpGet(url);
-        if (this.getRequestHttpProxy() != null) {
-          RequestConfig requestConfig = RequestConfig.custom().setProxy(this.getRequestHttpProxy()).build();
-          httpGet.setConfig(requestConfig);
-        }
-        try (CloseableHttpResponse response = getRequestHttpClient().execute(httpGet)) {
-          return this.extractAccessToken(new BasicResponseHandler().handleResponse(response));
-        } finally {
-          httpGet.releaseConnection();
-        }
-      } catch (IOException e) {
-        throw new WxRuntimeException(e);
+      httpGet = new HttpGet(url);
+      if (this.getRequestHttpProxy() != null) {
+        RequestConfig config = RequestConfig.custom().setProxy(this.getRequestHttpProxy()).build();
+        httpGet.setConfig(config);
       }
-    } catch (InterruptedException e) {
-      throw new WxRuntimeException(e);
+      response = getRequestHttpClient().execute(httpGet);
+      return new BasicResponseHandler().handleResponse(response);
     } finally {
-      if (locked) {
-        lock.unlock();
+      if (httpGet != null) {
+        httpGet.releaseConnection();
+      }
+      if (response != null) {
+        try {
+          response.close();
+        } catch (IOException e) {
+        }
+      }
+    }
+  }
+
+  @Override
+  protected String doGetStableAccessTokenRequest(boolean forceRefresh) throws IOException {
+    String url = GET_STABLE_ACCESS_TOKEN_URL.getUrl(getWxMpConfigStorage());
+
+    HttpPost httpPost = null;
+    CloseableHttpResponse response = null;
+    try {
+      httpPost = new HttpPost(url);
+      if (this.getRequestHttpProxy() != null) {
+        RequestConfig config = RequestConfig.custom().setProxy(this.getRequestHttpProxy()).build();
+        httpPost.setConfig(config);
+      }
+      WxMpStableAccessTokenRequest wxMaAccessTokenRequest = new WxMpStableAccessTokenRequest();
+      wxMaAccessTokenRequest.setAppid(this.getWxMpConfigStorage().getAppId());
+      wxMaAccessTokenRequest.setSecret(this.getWxMpConfigStorage().getSecret());
+      wxMaAccessTokenRequest.setGrantType("client_credential");
+      wxMaAccessTokenRequest.setForceRefresh(forceRefresh);
+
+      httpPost.setEntity(new StringEntity(wxMaAccessTokenRequest.toJson(), ContentType.APPLICATION_JSON));
+      response = getRequestHttpClient().execute(httpPost);
+      return new BasicResponseHandler().handleResponse(response);
+    } finally {
+      if (httpPost != null) {
+        httpPost.releaseConnection();
+      }
+      if (response != null) {
+        try {
+          response.close();
+        } catch (IOException e) {
+        }
       }
     }
   }

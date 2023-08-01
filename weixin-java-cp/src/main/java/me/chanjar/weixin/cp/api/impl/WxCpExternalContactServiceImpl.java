@@ -419,6 +419,24 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpBaseResp remindGroupMsgSend(String msgId) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("msgid", msgId);
+    final String url = this.mainService.getWxCpConfigStorage()
+                                       .getApiUrl(REMIND_GROUP_MSG_SEND);
+    return WxCpBaseResp.fromJson(this.mainService.post(url, params.toString()));
+  }
+
+  @Override
+  public WxCpBaseResp cancelGroupMsgSend(String msgId) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("msgid", msgId);
+    final String url = this.mainService.getWxCpConfigStorage()
+                                       .getApiUrl(CANCEL_GROUP_MSG_SEND);
+    return WxCpBaseResp.fromJson(this.mainService.post(url, params.toString()));
+  }
+
+  @Override
   public void sendWelcomeMsg(WxCpWelcomeMsg msg) throws WxErrorException {
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(SEND_WELCOME_MSG);
     this.mainService.post(url, msg.toJson());

@@ -13,10 +13,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.open.api.WxOpenComponentService;
-import me.chanjar.weixin.open.api.WxOpenMaBasicService;
-import me.chanjar.weixin.open.api.WxOpenMaPrivacyService;
-import me.chanjar.weixin.open.api.WxOpenMaService;
+import me.chanjar.weixin.open.api.*;
 import me.chanjar.weixin.open.bean.ma.WxMaPrefetchDomain;
 import me.chanjar.weixin.open.bean.ma.WxMaQrcodeParam;
 import me.chanjar.weixin.open.bean.ma.WxMaScheme;
@@ -46,6 +43,8 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   private final WxOpenMaBasicService basicService;
   @Getter
   private final WxOpenMaPrivacyService privacyService;
+  @Getter
+  private final WxOpenMaShoppingOrdersService shoppingOrdersService;
 
   public WxOpenMaServiceImpl(WxOpenComponentService wxOpenComponentService, String appId, WxMaConfig wxMaConfig) {
     this.wxOpenComponentService = wxOpenComponentService;
@@ -53,6 +52,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     this.wxMaConfig = wxMaConfig;
     this.basicService = new WxOpenMaBasicServiceImpl(this);
     this.privacyService = new WxOpenMaPrivacyServiceImpl(this);
+    this.shoppingOrdersService = new WxOpenMaShoppingOrdersServiceImpl(this);
     initHttp();
   }
 
@@ -450,8 +450,8 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   @Override
   public WxOpenMaApplyLiveInfoResult applyLiveInfo() throws WxErrorException {
     JsonObject params = new JsonObject();
-    params.addProperty("action","apply");
+    params.addProperty("action", "apply");
     String response = post(API_WX_APPLY_LIVE_INFO, GSON.toJson(params));
-    return WxMaGsonBuilder.create().fromJson(response,WxOpenMaApplyLiveInfoResult.class);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaApplyLiveInfoResult.class);
   }
 }

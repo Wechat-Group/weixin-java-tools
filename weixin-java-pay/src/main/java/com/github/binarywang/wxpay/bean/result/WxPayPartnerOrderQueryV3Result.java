@@ -157,7 +157,8 @@ public class WxPayPartnerOrderQueryV3Result implements Serializable {
    * 是否必填：否
    * 类型：string[1,16]
    * 描述：
-   *  银行类型，采用字符串类型的银行标识。银行标识请参考《银行类型对照表》https://pay.weixin.qq.com/wiki/doc/apiv3/terms_definition/chapter1_1_3.shtml#part-6
+   *  银行类型，采用字符串类型的银行标识。
+   *  <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/terms_definition/chapter1_1_3.shtml#part-6">银行标识请参考《银行类型对照表》</a>
    *  示例值：CMC
    * </pre>
    */
@@ -243,17 +244,32 @@ public class WxPayPartnerOrderQueryV3Result implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
      * <pre>
-     * 字段名：用户标识
-     * 变量名：openid
+     * 字段名：用户服务标识
+     * 变量名：sp_openid
      * 是否必填：是
      * 类型：string[1,128]
      * 描述：
-     *  用户在直连商户appid下的唯一标识。
+     *  用户在服务商appid下的唯一标识。
      *  示例值：oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
      * </pre>
      */
-    @SerializedName(value = "openid")
-    private String openid;
+    @SerializedName(value = "sp_openid")
+    private String spOpenid;
+
+    /**
+     * <pre>
+     * 字段名：用户子标识
+     * 变量名：sub_openid
+     * 是否必填：是
+     * 类型：string[1,128]
+     * 描述：
+     *  用户在子商户appid下的唯一标识。如果返回sub_appid，那么sub_openid一定会返回。
+     *  示例值：oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
+     * </pre>
+     */
+    @SerializedName(value = "sub_openid")
+    private String subOpenid;
+
   }
 
   @Data
@@ -336,6 +352,7 @@ public class WxPayPartnerOrderQueryV3Result implements Serializable {
   @Data
   @NoArgsConstructor
   public static class PromotionDetail implements Serializable {
+    private static final long serialVersionUID = -1953741394970145754L;
     /**
      * <pre>
      * 字段名：券ID

@@ -372,6 +372,7 @@ public interface WxCpTpService {
   /**
    * <pre>
    * 获取访问用户敏感信息
+   * <a href="https://developer.work.weixin.qq.com/document/path/95833">文档地址</a>
    * </pre>
    *
    * @param userTicket the user ticket
