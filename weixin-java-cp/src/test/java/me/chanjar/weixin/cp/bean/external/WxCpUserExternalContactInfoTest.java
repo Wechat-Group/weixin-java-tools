@@ -1,9 +1,14 @@
 package me.chanjar.weixin.cp.bean.external;
 
+import com.google.gson.reflect.TypeToken;
+import lombok.val;
+import me.chanjar.weixin.common.util.json.GsonParser;
+import me.chanjar.weixin.cp.bean.WxCpDepart;
 import me.chanjar.weixin.cp.bean.external.contact.ExternalContact;
 import me.chanjar.weixin.cp.bean.external.contact.FollowedUser;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
-import org.testng.annotations.*;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
@@ -19,6 +24,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class WxCpUserExternalContactInfoTest {
 
+  /**
+   * Test from json.
+   */
   @Test
   public void testFromJson() {
     final String json = "{\n" +
@@ -68,7 +76,11 @@ public class WxCpUserExternalContactInfoTest {
       "      \"userid\": \"rocky\",\n" +
       "      \"remark\": \"李部长\",\n" +
       "      \"description\": \"对接采购事物\",\n" +
-      "      \"createtime\": 1525779812\n" +
+      "      \"createtime\": 1525779812,\n" +
+      "      \"wechat_channels\": {\n" +
+      "         \"nickname\": \"视频号名称\",\n" +
+      "         \"source\": 1\n" +
+      "       }" +
       "    },\n" +
       "    {\n" +
       "      \"userid\": \"tommy\",\n" +
@@ -79,13 +91,53 @@ public class WxCpUserExternalContactInfoTest {
       "  ]\n" +
       "}";
 
+    final String testJson = "{\n" +
+      "   \"errcode\": 0,\n" +
+      "   \"errmsg\": \"ok\",\n" +
+      "   \"department\": [\n" +
+      "       {\n" +
+      "           \"id\": 2,\n" +
+      "           \"name\": \"广州研发中心\",\n" +
+      "           \"name_en\": \"RDGZ\",\n" +
+      "           \"department_leader\":[\"zhangsan\",\"lisi\"],\n" +
+      "           \"parentid\": 1,\n" +
+      "           \"order\": 10\n" +
+      "       },\n" +
+      "       {\n" +
+      "           \"id\": 3,\n" +
+      "           \"name\": \"邮箱产品部\",\n" +
+      "           \"name_en\": \"mail\",\n" +
+      "           \"department_leader\":[\"lisi\",\"wangwu\"],\n" +
+      "           \"parentid\": 2,\n" +
+      "           \"order\": 40\n" +
+      "       }\n" +
+      "   ]\n" +
+      "}\n";
+
+    // 测试序列化
+    val depart = new WxCpDepart();
+    depart.setId(8L);
+    depart.setName("name");
+    depart.setEnName("enName");
+    depart.setDepartmentLeader(new String[]{"zhangsan", "lisi"});
+    depart.setParentId(88L);
+    depart.setOrder(99L);
+
+    String toJson = depart.toJson();
+
+    // 测试企业微信字段返回
+    List<WxCpDepart> department = WxCpGsonBuilder.create().fromJson(GsonParser.parse(testJson).get("department"),
+      new TypeToken<List<WxCpDepart>>() {
+    }.getType());
+
     final WxCpExternalContactInfo contactInfo = WxCpExternalContactInfo.fromJson(json);
     assertThat(contactInfo).isNotNull();
     assertThat(contactInfo.getExternalContact()).isNotNull();
 
     assertThat(contactInfo.getExternalContact().getExternalUserId()).isEqualTo("woAJ2GCAAAXtWyujaWJHDDGi0mACH71w");
     assertThat(contactInfo.getExternalContact().getPosition()).isEqualTo("Mangaer");
-    assertThat(contactInfo.getExternalContact().getAvatar()).isEqualTo("http://p.qlogo.cn/bizmail/IcsdgagqefergqerhewSdage/0");
+    assertThat(contactInfo.getExternalContact().getAvatar()).isEqualTo("http://p.qlogo" +
+      ".cn/bizmail/IcsdgagqefergqerhewSdage/0");
     assertThat(contactInfo.getExternalContact().getCorpName()).isEqualTo("腾讯");
     assertThat(contactInfo.getExternalContact().getCorpFullName()).isEqualTo("腾讯科技有限公司");
     assertThat(contactInfo.getExternalContact().getType()).isEqualTo(2);
@@ -95,7 +147,8 @@ public class WxCpUserExternalContactInfoTest {
 
     assertThat(contactInfo.getExternalContact().getExternalProfile()).isNotNull();
 
-    final List<ExternalContact.ExternalAttribute> externalAttrs = contactInfo.getExternalContact().getExternalProfile().getExternalAttrs();
+    final List<ExternalContact.ExternalAttribute> externalAttrs =
+      contactInfo.getExternalContact().getExternalProfile().getExternalAttrs();
     assertThat(externalAttrs).isNotEmpty();
 
     final ExternalContact.ExternalAttribute externalAttr1 = externalAttrs.get(0);
@@ -123,6 +176,8 @@ public class WxCpUserExternalContactInfoTest {
     assertThat(followedUsers.get(0).getRemark()).isEqualTo("李部长");
     assertThat(followedUsers.get(0).getDescription()).isEqualTo("对接采购事物");
     assertThat(followedUsers.get(0).getCreateTime()).isEqualTo(1525779812);
+    assertThat(followedUsers.get(0).getWechatChannels().getNickname()).isEqualTo("视频号名称");
+    assertThat(followedUsers.get(0).getWechatChannels().getSource()).isEqualTo(1);
 
     assertThat(followedUsers.get(1).getUserId()).isEqualTo("tommy");
     assertThat(followedUsers.get(1).getRemark()).isEqualTo("李总");

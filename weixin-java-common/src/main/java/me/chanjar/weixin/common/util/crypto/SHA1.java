@@ -8,7 +8,7 @@ import java.util.Arrays;
 /**
  *
  * @author Daniel Qian
- * @date 14/10/19
+ * created on  14/10/19
  */
 public class SHA1 {
 

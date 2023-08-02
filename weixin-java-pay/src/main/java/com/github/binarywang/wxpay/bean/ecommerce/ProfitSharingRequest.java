@@ -1,18 +1,21 @@
 package com.github.binarywang.wxpay.bean.ecommerce;
 
+import com.github.binarywang.wxpay.v3.SpecEncrypt;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 请求分账 对象
  * <pre>
  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_1.shtml
  * </pre>
- * @author: f00lish
- * @date: 2020/09/12
+ *
+ * @author f00lish
+ * created on  2020/09/12
  */
 @Data
 @NoArgsConstructor
@@ -86,7 +89,8 @@ public class ProfitSharingRequest implements Serializable {
    * </pre>
    */
   @SerializedName(value = "receivers")
-  private Receiver[] receivers;
+  @SpecEncrypt
+  private List<Receiver> receivers;
 
   /**
    * <pre>
@@ -186,6 +190,7 @@ public class ProfitSharingRequest implements Serializable {
      * </pre>
      */
     @SerializedName(value = "receiver_name")
+    @SpecEncrypt
     private String receiverName;
 
   }

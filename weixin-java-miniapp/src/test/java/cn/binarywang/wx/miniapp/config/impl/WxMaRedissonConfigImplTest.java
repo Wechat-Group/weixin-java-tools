@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 /**
  * @author yqx
- * @date 2020/5/3
+ * created on  2020/5/3
  */
 public class WxMaRedissonConfigImplTest {
 

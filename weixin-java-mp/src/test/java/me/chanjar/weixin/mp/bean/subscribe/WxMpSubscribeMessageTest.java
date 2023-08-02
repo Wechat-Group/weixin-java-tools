@@ -6,7 +6,7 @@ import static org.testng.AssertJUnit.*;
 
 /**
  * @author Mklaus
- * @date 2018-01-22 下午1:41
+ * created on  2018-01-22 下午1:41
  */
 public class WxMpSubscribeMessageTest {
   @Test

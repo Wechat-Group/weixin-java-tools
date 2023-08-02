@@ -1,6 +1,8 @@
 package com.github.binarywang.wxpay.bean.ecommerce;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,13 +13,15 @@ import java.util.List;
 /**
  * 普通支付（电商收付通）API
  * <pre>
- * 文档地址:https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/e_transactions.shtml
+ * 文档地址:<a href="https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/e_transactions.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/e_transactions.shtml</a>
  * </pre>
  *
  * @author cloudX
  */
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class PartnerTransactionsRequest implements Serializable {
   private static final long serialVersionUID = -1550405819444680465L;
 
@@ -34,7 +38,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "sp_appid")
   private String spAppid;
-
   /**
    * <pre>
    * 字段名：服务商户号
@@ -48,7 +51,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "sp_mchid")
   private String spMchid;
-
   /**
    * <pre>
    * 字段名：子商户公众号ID
@@ -75,7 +77,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "sub_mchid")
   private String subMchid;
-
   /**
    * <pre>
    * 字段名：商品描述
@@ -89,7 +90,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "description")
   private String description;
-
   /**
    * <pre>
    * 字段名：商户订单号
@@ -104,7 +104,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "out_trade_no")
   private String outTradeNo;
-
   /**
    * <pre>
    * 字段名：交易结束时间
@@ -118,7 +117,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "time_expire")
   private String timeExpire;
-
   /**
    * <pre>
    * 字段名：附加数据
@@ -132,7 +130,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "attach")
   private String attach;
-
   /**
    * <pre>
    * 字段名：通知地址
@@ -146,7 +143,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "notify_url")
   private String notifyUrl;
-
   /**
    * <pre>
    * 字段名：订单优惠标记
@@ -160,7 +156,17 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "goods_tag")
   private String goodsTag;
-
+  /**
+   * <pre>
+   * 字段名：电子发票入口开放标识
+   * 变量名：support_fapiao
+   * 是否必填：否
+   * 类型：boolean
+   * 描述：传入true时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效。
+   * </pre>
+   */
+  @SerializedName(value = "support_fapiao")
+  private Boolean supportFapiao;
   /**
    * <pre>
    * 字段名：+结算信息
@@ -172,7 +178,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "settle_info")
   private SettleInfo settleInfo;
-
   /**
    * <pre>
    * 字段名：订单金额
@@ -185,7 +190,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "amount")
   private Amount amount;
-
   /**
    * <pre>
    * 字段名：优惠功能
@@ -198,7 +202,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "detail")
   private Discount detail;
-
   /**
    * <pre>
    * 字段名：支付者
@@ -211,7 +214,6 @@ public class PartnerTransactionsRequest implements Serializable {
    */
   @SerializedName(value = "payer")
   private Payer payer;
-
   /**
    * <pre>
    * 字段名：场景信息
@@ -245,7 +247,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "cost_price")
     private Integer costPrice;
-
     /**
      * <pre>
      * 字段名：商品小票ID
@@ -259,7 +260,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "invoice_id")
     private String invoiceId;
-
     /**
      * <pre>
      * 字段名：单品列表
@@ -277,6 +277,7 @@ public class PartnerTransactionsRequest implements Serializable {
 
   @Data
   @NoArgsConstructor
+  @AllArgsConstructor
   public static class Amount implements Serializable {
     private static final long serialVersionUID = -4967636398225864273L;
 
@@ -293,7 +294,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "total")
     private Integer total;
-
     /**
      * <pre>
      * 字段名：币类型
@@ -307,11 +307,11 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "currency")
     private String currency;
-
   }
 
   @Data
   @NoArgsConstructor
+  @AllArgsConstructor
   public static class Payer implements Serializable {
     private static final long serialVersionUID = -3946401119476159971L;
 
@@ -328,7 +328,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "sp_openid")
     private String spOpenid;
-
     /**
      * <pre>
      * 字段名：用户子标识
@@ -342,7 +341,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "sub_openid")
     private String subOpenid;
-
   }
 
   @Data
@@ -365,7 +363,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "profit_sharing")
     private Boolean profitSharing;
-
     /**
      * <pre>
      * 字段名：补差金额
@@ -380,7 +377,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "subsidy_amount")
     private BigDecimal subsidyAmount;
-
   }
 
   @Data
@@ -401,7 +397,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "merchant_goods_id")
     private String merchantGoodsId;
-
     /**
      * <pre>
      * 字段名：微信侧商品编码
@@ -415,7 +410,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "wechatpay_goods_id")
     private String wechatpayGoodsId;
-
     /**
      * <pre>
      * 字段名：商品名称
@@ -429,7 +423,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "goods_name")
     private String goodsName;
-
     /**
      * <pre>
      * 字段名：商品数量
@@ -443,7 +436,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "quantity")
     private Integer quantity;
-
     /**
      * <pre>
      * 字段名：商品单价
@@ -478,7 +470,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "device_id")
     private String deviceId;
-
     /**
      * <pre>
      * 字段名：用户终端IP
@@ -493,7 +484,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "payer_client_ip")
     private String payerClientIp;
-
     /**
      * <pre>
      * 字段名：H5场景信息
@@ -506,7 +496,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "h5_info")
     private H5Info h5Info;
-
     /**
      * <pre>
      * 字段名：商户门店信息
@@ -519,7 +508,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "store_info")
     private StoreInfo storeInfo;
-
   }
 
   @Data
@@ -543,7 +531,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "type")
     private String type;
-
     /**
      * <pre>
      * 字段名：应用名称
@@ -557,7 +544,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "app_name")
     private String appName;
-
     /**
      * <pre>
      * 字段名：网站URL
@@ -571,7 +557,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "app_url")
     private String appUrl;
-
     /**
      * <pre>
      * 字段名：iOS平台BundleID
@@ -585,7 +570,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "bundle_id")
     private String bundleId;
-
     /**
      * <pre>
      * 字段名：Android平台PackageName
@@ -599,7 +583,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "package_name")
     private String packageName;
-
   }
 
   @Data
@@ -620,7 +603,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "id")
     private String id;
-
     /**
      * <pre>
      * 字段名：门店名称
@@ -634,7 +616,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "name")
     private String name;
-
     /**
      * <pre>
      * 字段名：地区编码
@@ -648,7 +629,6 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "area_code")
     private String areaCode;
-
     /**
      * <pre>
      * 字段名：详细地址
@@ -662,6 +642,5 @@ public class PartnerTransactionsRequest implements Serializable {
      */
     @SerializedName(value = "address")
     private String address;
-
   }
 }

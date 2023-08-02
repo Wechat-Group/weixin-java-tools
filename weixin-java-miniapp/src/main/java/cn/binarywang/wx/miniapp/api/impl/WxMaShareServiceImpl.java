@@ -4,14 +4,14 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaShareService;
 import cn.binarywang.wx.miniapp.bean.WxMaShareInfo;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author zhfish
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WxMaShareServiceImpl implements WxMaShareService {
-  private WxMaService service;
+  private final WxMaService service;
 
   @Override
   public WxMaShareInfo getShareInfo(String sessionKey, String encryptedData, String ivStr) {

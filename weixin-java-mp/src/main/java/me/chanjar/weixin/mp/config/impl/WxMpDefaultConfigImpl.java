@@ -4,8 +4,8 @@ import lombok.Data;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-import me.chanjar.weixin.mp.bean.WxMpHostConfig;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
+import me.chanjar.weixin.mp.config.WxMpHostConfig;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.File;
@@ -24,6 +24,10 @@ public class WxMpDefaultConfigImpl implements WxMpConfigStorage, Serializable {
 
   protected volatile String appId;
   protected volatile String secret;
+  /**
+   * 是否使用稳定版 Access Token
+   */
+  private boolean useStableAccessToken;
   protected volatile String token;
   protected volatile String templateId;
   protected volatile String accessToken;
@@ -36,6 +40,9 @@ public class WxMpDefaultConfigImpl implements WxMpConfigStorage, Serializable {
   protected volatile int httpProxyPort;
   protected volatile String httpProxyUsername;
   protected volatile String httpProxyPassword;
+
+  protected volatile int retrySleepMillis = 1000;
+  protected volatile int maxRetryTimes = 5;
 
   protected volatile String jsapiTicket;
   protected volatile long jsapiTicketExpiresTime;
@@ -56,6 +63,16 @@ public class WxMpDefaultConfigImpl implements WxMpConfigStorage, Serializable {
   protected volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
 
   private WxMpHostConfig hostConfig = null;
+
+  @Override
+  public boolean isStableAccessToken() {
+    return this.useStableAccessToken;
+  }
+
+  @Override
+  public void useStableAccessToken(boolean useStableAccessToken) {
+    this.useStableAccessToken = useStableAccessToken;
+  }
 
   @Override
   public boolean isAccessTokenExpired() {

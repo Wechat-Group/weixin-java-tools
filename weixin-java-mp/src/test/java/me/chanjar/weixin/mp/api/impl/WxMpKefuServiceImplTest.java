@@ -1,9 +1,10 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import java.io.File;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-import org.joda.time.DateTime;
 import org.testng.annotations.*;
 
 import com.google.inject.Inject;
@@ -169,8 +170,11 @@ public class WxMpKefuServiceImplTest {
 
   @Test
   public void testKfMsgList() throws WxErrorException {
-    Date startTime = DateTime.now().minusDays(1).toDate();
-    Date endTime = DateTime.now().minusDays(0).toDate();
+    // Date startTime = DateTime.now().minusDays(1).toDate();
+    // Date endTime = DateTime.now().minusDays(0).toDate();
+    Date startTime = Date.from(Instant.now().minus(1, ChronoUnit.DAYS));
+    Date endTime = Date.from(Instant.now());
+
     WxMpKfMsgList result = this.wxService.getKefuService().kfMsgList(startTime, endTime, 1L, 50);
     assertThat(result).isNotNull();
     System.err.println(result);
@@ -178,8 +182,11 @@ public class WxMpKefuServiceImplTest {
 
   @Test
   public void testKfMsgListAll() throws WxErrorException {
-    Date startTime = DateTime.now().minusDays(1).toDate();
-    Date endTime = DateTime.now().minusDays(0).toDate();
+    // Date startTime = DateTime.now().minusDays(1).toDate();
+    // Date endTime = DateTime.now().minusDays(0).toDate();
+    Date startTime = Date.from(Instant.now().minus(1, ChronoUnit.DAYS));
+    Date endTime = Date.from(Instant.now());
+
     WxMpKfMsgList result = this.wxService.getKefuService().kfMsgList(startTime, endTime);
     assertThat(result).isNotNull();
     System.err.println(result);

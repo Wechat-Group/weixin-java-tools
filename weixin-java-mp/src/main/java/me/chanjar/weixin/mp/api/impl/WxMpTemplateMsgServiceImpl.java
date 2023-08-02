@@ -1,7 +1,9 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -12,6 +14,7 @@ import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateIndustry;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 
+import java.util.Collections;
 import java.util.List;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.TemplateMsg.*;
@@ -25,15 +28,13 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.TemplateMsg.*;
  */
 @RequiredArgsConstructor
 public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
-
-
   private final WxMpService wxMpService;
 
   @Override
   public String sendTemplateMsg(WxMpTemplateMessage templateMessage) throws WxErrorException {
     String responseContent = this.wxMpService.post(MESSAGE_TEMPLATE_SEND, templateMessage.toJson());
     final JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get("errcode").getAsInt() == 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       return jsonObject.get("msgid").getAsString();
     }
     throw new WxErrorException(WxError.fromJson(responseContent, WxType.MP));
@@ -58,11 +59,22 @@ public class WxMpTemplateMsgServiceImpl implements WxMpTemplateMsgService {
 
   @Override
   public String addTemplate(String shortTemplateId) throws WxErrorException {
+    return this.addTemplate(shortTemplateId, Collections.emptyList());
+  }
+
+  @Override
+  public String addTemplate(String shortTemplateId, List<String> keywordNameList) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
+
+    JsonArray jsonArray = new JsonArray();
+    keywordNameList.forEach(jsonArray::add);
+
     jsonObject.addProperty("template_id_short", shortTemplateId);
+    jsonObject.add("keyword_name_list", jsonArray);
+
     String responseContent = this.wxMpService.post(TEMPLATE_API_ADD_TEMPLATE, jsonObject.toString());
     final JsonObject result = GsonParser.parse(responseContent);
-    if (result.get("errcode").getAsInt() == 0) {
+    if (result.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       return result.get("template_id").getAsString();
     }
 

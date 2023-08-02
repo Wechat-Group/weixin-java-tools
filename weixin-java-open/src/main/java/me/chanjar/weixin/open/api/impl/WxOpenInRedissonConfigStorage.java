@@ -10,7 +10,7 @@ import java.util.concurrent.locks.Lock;
 
 /**
  * @author yangyidian
- * @date 2020/01/06
+ * created on  2020/01/06
  **/
 public class WxOpenInRedissonConfigStorage extends AbstractWxOpenInRedisConfigStorage {
 

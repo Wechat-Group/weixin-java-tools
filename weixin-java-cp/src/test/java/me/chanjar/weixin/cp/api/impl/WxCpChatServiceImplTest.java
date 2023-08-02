@@ -1,20 +1,23 @@
 package me.chanjar.weixin.cp.api.impl;
 
-import java.util.Arrays;
-
-import org.testng.*;
-import org.testng.annotations.*;
-
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.cp.constant.WxCpConsts.AppChatMsgType;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.bean.WxCpChat;
 import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
+import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
+import me.chanjar.weixin.cp.constant.WxCpConsts.AppChatMsgType;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,12 +34,20 @@ public class WxCpChatServiceImplTest {
   @Inject
   private WxCpService cpService;
 
+  /**
+   * Init.
+   */
   @BeforeTest
   public void init() {
     this.chatId = "mychatid";
     this.userId = ((ApiTestModule.WxXmlCpInMemoryConfigStorage) this.cpService.getWxCpConfigStorage()).getUserId();
   }
 
+  /**
+   * Test create.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testCreate() throws Exception {
     final String result = cpService.getChatService().create("测试群聊", userId,
@@ -45,6 +56,11 @@ public class WxCpChatServiceImplTest {
     assertThat(result).isEqualTo(chatId);
   }
 
+  /**
+   * Test get.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testGet() throws Exception {
     WxCpChat chat = this.cpService.getChatService().get(chatId);
@@ -52,14 +68,24 @@ public class WxCpChatServiceImplTest {
     Assert.assertEquals(chat.getName(), "测试群聊");
   }
 
+  /**
+   * Test update.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testUpdate() throws Exception {
-    this.cpService.getChatService().update(chatId, "", "", Arrays.asList("ZhengWuYao"), null);
+    this.cpService.getChatService().update(chatId, "", "", Collections.singletonList("ZhengWuYao"), null);
     WxCpChat chat = this.cpService.getChatService().get(chatId);
     System.out.println(chat);
     Assert.assertEquals(chat.getUsers().size(), 3);
   }
 
+  /**
+   * Messages object [ ] [ ].
+   *
+   * @return the object [ ] [ ]
+   */
   @DataProvider
   public Object[][] messages() {
     return new Object[][]{
@@ -101,7 +127,8 @@ public class WxCpChatServiceImplTest {
         .btnTxt("更多")
         .title("领奖通知")
         .url("https://zhidao.baidu.com/question/2073647112026042748.html")
-        .description("<div class=\"gray\">2016年9月26日</div> <div class=\"normal\"> 恭喜你抽中iPhone 7一台，领奖码:520258</div><div class=\"highlight\">请于2016年10月10日前联系行 政同事领取</div>")
+        .description("<div class=\"gray\">2016年9月26日</div> <div class=\"normal\"> 恭喜你抽中iPhone " +
+          "7一台，领奖码:520258</div><div class=\"highlight\">请于2016年10月10日前联系行 政同事领取</div>")
         .build()
       },
       {WxCpAppChatMessage.builder()
@@ -151,6 +178,12 @@ public class WxCpChatServiceImplTest {
     };
   }
 
+  /**
+   * Test send msg.
+   *
+   * @param message the message
+   * @throws WxErrorException the wx error exception
+   */
   @Test(dataProvider = "messages")
   public void testSendMsg(WxCpAppChatMessage message) throws WxErrorException {
     this.cpService.getChatService().sendMsg(message);

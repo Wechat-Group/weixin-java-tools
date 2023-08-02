@@ -1,16 +1,16 @@
 package me.chanjar.weixin.mp.util.json;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import me.chanjar.weixin.mp.bean.subscribe.WxMpSubscribeMessage;
 
+import java.lang.reflect.Type;
+
 /**
  * @author Mklaus
- * @date 2018-01-22 下午12:31
+ * created on  2018-01-22 下午12:31
  */
 public class WxMpSubscribeMessageGsonAdapter implements JsonSerializer<WxMpSubscribeMessage> {
 
@@ -22,6 +22,10 @@ public class WxMpSubscribeMessageGsonAdapter implements JsonSerializer<WxMpSubsc
 
     if (message.getUrl() != null) {
       messageJson.addProperty("url", message.getUrl());
+    }
+
+    if (message.getPage() != null) {
+      messageJson.addProperty("page", message.getPage());
     }
 
     final WxMpSubscribeMessage.MiniProgram miniProgram = message.getMiniProgram();
@@ -39,18 +43,29 @@ public class WxMpSubscribeMessageGsonAdapter implements JsonSerializer<WxMpSubsc
     messageJson.addProperty("scene", message.getScene());
     messageJson.addProperty("title", message.getTitle());
 
-    JsonObject data = new JsonObject();
-    messageJson.add("data", data);
+    if (message.getDataMap() == null) {
+      JsonObject data = new JsonObject();
+      messageJson.add("data", data);
 
-    JsonObject content = new JsonObject();
-    data.add("content", content);
+      JsonObject content = new JsonObject();
+      data.add("content", content);
 
-    if (message.getContentValue() != null) {
-      content.addProperty("value", message.getContentValue());
-    }
+      if (message.getContentValue() != null) {
+        content.addProperty("value", message.getContentValue());
+      }
 
-    if (message.getContentColor() != null) {
-      content.addProperty("color", message.getContentColor());
+      if (message.getContentColor() != null) {
+        content.addProperty("color", message.getContentColor());
+      }
+    } else {
+      JsonObject data = new JsonObject();
+      messageJson.add("data", data);
+      message.getDataMap().forEach((key, value) -> {
+        JsonObject content = new JsonObject();
+        content.addProperty("value", value);
+        data.add(key, content);
+      });
+
     }
 
     return messageJson;

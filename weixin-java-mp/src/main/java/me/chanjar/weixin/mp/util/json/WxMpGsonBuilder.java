@@ -1,21 +1,26 @@
 package me.chanjar.weixin.mp.util.json;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.chanjar.weixin.mp.bean.*;
 import me.chanjar.weixin.mp.bean.card.WxMpCard;
 import me.chanjar.weixin.mp.bean.card.WxMpCardResult;
+import me.chanjar.weixin.mp.bean.card.membercard.WxMpMemberCardActivateTempInfoResult;
+import me.chanjar.weixin.mp.bean.card.membercard.WxMpMemberCardUpdateResult;
+import me.chanjar.weixin.mp.bean.card.membercard.WxMpMemberCardUserInfoResult;
 import me.chanjar.weixin.mp.bean.datacube.WxDataCubeUserCumulate;
 import me.chanjar.weixin.mp.bean.datacube.WxDataCubeUserSummary;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.material.*;
-import me.chanjar.weixin.mp.bean.card.membercard.WxMpMemberCardActivateTempInfoResult;
-import me.chanjar.weixin.mp.bean.card.membercard.WxMpMemberCardUpdateResult;
-import me.chanjar.weixin.mp.bean.card.membercard.WxMpMemberCardUserInfoResult;
 import me.chanjar.weixin.mp.bean.result.*;
 import me.chanjar.weixin.mp.bean.subscribe.WxMpSubscribeMessage;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateIndustry;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
+
+import java.io.File;
+import java.util.Objects;
 
 /**
  * @author someone
@@ -23,6 +28,7 @@ import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 public class WxMpGsonBuilder {
 
   private static final GsonBuilder INSTANCE = new GsonBuilder();
+  private static volatile Gson GSON_INSTANCE;
 
   static {
     INSTANCE.disableHtmlEscaping();
@@ -61,10 +67,33 @@ public class WxMpGsonBuilder {
     INSTANCE.registerTypeAdapter(WxMpMemberCardUserInfoResult.class, new WxMpMemberCardUserInfoResultGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpMemberCardUpdateResult.class, new WxMpMemberCardUpdateResultGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpMemberCardActivateTempInfoResult.class, new WxMpMemberCardActivateTempInfoResultGsonAdapter());
+
+    INSTANCE.setExclusionStrategies(new ExclusionStrategy() {
+      @Override
+      public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+        return false;
+      }
+
+      @Override
+      public boolean shouldSkipClass(Class<?> aClass) {
+        if (aClass == File.class) {
+          return true;
+        }
+
+        return false;
+      }
+    });
   }
 
   public static Gson create() {
-    return INSTANCE.create();
+    if (Objects.isNull(GSON_INSTANCE)) {
+      synchronized (INSTANCE) {
+        if (Objects.isNull(GSON_INSTANCE)) {
+          GSON_INSTANCE = INSTANCE.create();
+        }
+      }
+    }
+    return GSON_INSTANCE;
   }
 
 }

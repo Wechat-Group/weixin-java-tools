@@ -1,7 +1,9 @@
 package me.chanjar.weixin.common.error;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -11,12 +13,14 @@ import java.io.Serializable;
 /**
  * 微信错误码.
  * 请阅读：
- * 公众平台：<a href="http://mp.weixin.qq.com/wiki/10/6380dc743053a91c544ffd2b7c959166.html">全局返回码说明</a>
+ * 公众平台：<a href="https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Global_Return_Code.html">全局返回码说明</a>
  * 企业微信：<a href="https://work.weixin.qq.com/api/doc#10649">全局错误码</a>
  *
  * @author Daniel Qian & Binary Wang
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class WxError implements Serializable {
   private static final long serialVersionUID = 7869786563361406291L;
@@ -38,6 +42,11 @@ public class WxError implements Serializable {
   private String errorMsgEn;
 
   private String json;
+
+  public WxError(int errorCode, String errorMsg) {
+    this.errorCode = errorCode;
+    this.errorMsg = errorMsg;
+  }
 
   public static WxError fromJson(String json) {
     return fromJson(json, null);
@@ -70,6 +79,13 @@ public class WxError implements Serializable {
       }
       case MiniApp: {
         final String msg = WxMaErrorMsgEnum.findMsgByCode(wxError.getErrorCode());
+        if (msg != null) {
+          wxError.setErrorMsg(msg);
+        }
+        break;
+      }
+      case Open: {
+        final String msg = WxOpenErrorMsgEnum.findMsgByCode(wxError.getErrorCode());
         if (msg != null) {
           wxError.setErrorMsg(msg);
         }

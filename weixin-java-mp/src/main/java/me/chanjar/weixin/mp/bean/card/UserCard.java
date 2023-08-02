@@ -7,7 +7,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 /**
  * 用户已领卡圈对象
  * @author yang229
- * @date 2019/12/22
+ * created on  2019/12/22
  */
 @Data
 public class UserCard implements java.io.Serializable {

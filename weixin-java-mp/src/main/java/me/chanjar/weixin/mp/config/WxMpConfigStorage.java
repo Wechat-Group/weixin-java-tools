@@ -3,7 +3,6 @@ package me.chanjar.weixin.mp.config;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-import me.chanjar.weixin.mp.bean.WxMpHostConfig;
 
 import java.io.File;
 import java.util.concurrent.locks.Lock;
@@ -20,6 +19,19 @@ public interface WxMpConfigStorage {
    * @return the access token
    */
   String getAccessToken();
+
+  /**
+   * Is use stable access token api
+   * @Link https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/getStableAccessToken.html
+   * @return the boolean
+   */
+  boolean isStableAccessToken();
+
+  /**
+   * Set use stable access token api
+   * @param useStableAccessToken true is use, false is not
+   */
+  void useStableAccessToken(boolean useStableAccessToken);
 
   /**
    * Gets access token lock.
@@ -172,6 +184,22 @@ public interface WxMpConfigStorage {
    * @return the http proxy password
    */
   String getHttpProxyPassword();
+
+  /**
+   * http 请求重试间隔
+   * <pre>
+   *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setRetrySleepMillis(int)}
+   * </pre>
+   */
+  int getRetrySleepMillis();
+
+  /**
+   * http 请求最大重试次数
+   * <pre>
+   *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setMaxRetryTimes(int)}
+   * </pre>
+   */
+  int getMaxRetryTimes();
 
   /**
    * Gets tmp dir file.

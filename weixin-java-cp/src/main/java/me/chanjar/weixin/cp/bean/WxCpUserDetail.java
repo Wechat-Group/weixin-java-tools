@@ -3,16 +3,20 @@ package me.chanjar.weixin.cp.bean;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  *  使用user_ticket获取成员详情接口返回类.
  *  Created by BinaryWang on 2018/4/22.
+ *  官方文档：https://developer.work.weixin.qq.com/document/path/91122
  * </pre>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Data
-public class WxCpUserDetail {
+public class WxCpUserDetail implements Serializable {
+  private static final long serialVersionUID = -4301684507150486556L;
 
   /**
    * 成员UserID
@@ -21,7 +25,7 @@ public class WxCpUserDetail {
   private String userId;
 
   /**
-   * 成员姓名
+   * 成员姓名，2022年6月20号后的新应用将不再返回此字段，旧应用正常返回
    */
   private String name;
 
@@ -50,5 +54,16 @@ public class WxCpUserDetail {
    */
   @SerializedName("qr_code")
   private String qrCode;
+
+  /**
+   * 企业邮箱，仅在用户同意snsapi_privateinfo授权时返回，2022年6月20号后的新应用将返回
+   */
+  @SerializedName("biz_mail")
+  private String bizMail;
+
+  /**
+   * 地址，仅在用户同意snsapi_privateinfo授权时返回，2022年6月20号后的新应用将返回
+   */
+  private String address;
 
 }

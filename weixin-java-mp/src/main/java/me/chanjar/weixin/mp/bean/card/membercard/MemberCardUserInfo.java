@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * @author YuJian
- * @date 2017/7/11
+ * created on  2017/7/11
  */
 @Data
 public class MemberCardUserInfo implements Serializable {

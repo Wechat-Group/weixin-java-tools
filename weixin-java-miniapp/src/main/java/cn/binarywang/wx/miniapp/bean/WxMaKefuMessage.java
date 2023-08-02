@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -41,6 +42,7 @@ public class WxMaKefuMessage implements Serializable {
 
   @Data
   @AllArgsConstructor
+  @NoArgsConstructor
   public static class KfText implements Serializable {
     private static final long serialVersionUID = 151122958720941270L;
 
@@ -49,6 +51,7 @@ public class WxMaKefuMessage implements Serializable {
 
   @Data
   @AllArgsConstructor
+  @NoArgsConstructor
   public static class KfImage implements Serializable {
     private static final long serialVersionUID = -5409342945117300782L;
 
@@ -58,6 +61,8 @@ public class WxMaKefuMessage implements Serializable {
 
   @Data
   @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class KfLink implements Serializable {
     private static final long serialVersionUID = -6728776817556127413L;
 
@@ -71,6 +76,8 @@ public class WxMaKefuMessage implements Serializable {
 
   @Data
   @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
   public static class KfMaPage implements Serializable {
     private static final long serialVersionUID = -5633492281871634466L;
 

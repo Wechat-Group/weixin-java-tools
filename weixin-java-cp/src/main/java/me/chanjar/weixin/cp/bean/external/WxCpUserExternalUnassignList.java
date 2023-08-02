@@ -6,12 +6,13 @@ import lombok.Setter;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 离职员工外部联系人列表
- * @author yqx
- * @date 2020/3/15
+ *
+ * @author yqx & Wang_Wong created on  2020/3/15
  */
 @Getter
 @Setter
@@ -23,9 +24,16 @@ public class WxCpUserExternalUnassignList extends WxCpBaseResp {
   @SerializedName("is_last")
   private boolean isLast;
 
+  @SerializedName("next_cursor")
+  private String nextCursor;
+
+  /**
+   * The type Unassign info.
+   */
   @Getter
   @Setter
-  public static class UnassignInfo {
+  public static class UnassignInfo implements Serializable {
+    private static final long serialVersionUID = -4301684507150486556L;
 
     /**
      * 离职成员userid
@@ -46,7 +54,18 @@ public class WxCpUserExternalUnassignList extends WxCpBaseResp {
     private Long dimissionTime;
   }
 
+  /**
+   * From json wx cp user external unassign list.
+   *
+   * @param json the json
+   * @return the wx cp user external unassign list
+   */
   public static WxCpUserExternalUnassignList fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUserExternalUnassignList.class);
   }
+
+  public String toJson() {
+    return WxCpGsonBuilder.create().toJson(this);
+  }
+
 }

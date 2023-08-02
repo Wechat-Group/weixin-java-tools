@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.service.WxImgProcService;
-import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
@@ -19,7 +17,9 @@ import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.service.WxOAuth2Service;
+import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.common.util.DataUtils;
@@ -32,13 +32,16 @@ import me.chanjar.weixin.mp.api.*;
 import me.chanjar.weixin.mp.bean.WxMpSemanticQuery;
 import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
 import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
+import me.chanjar.weixin.mp.bean.result.WxMpShortKeyResult;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.*;
@@ -86,7 +89,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpTemplateMsgService templateMsgService = new WxMpTemplateMsgServiceImpl(this);
   @Getter
   @Setter
-  private final WxMpSubscribeMsgService subscribeMsgService = new WxMpSubscribeMsgServiceImpl(this);
+  private WxMpSubscribeMsgService subscribeMsgService = new WxMpSubscribeMsgServiceImpl(this);
   @Getter
   @Setter
   private WxMpDeviceService deviceService = new WxMpDeviceServiceImpl(this);
@@ -104,7 +107,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   private WxMpAiOpenService aiOpenService = new WxMpAiOpenServiceImpl(this);
   @Getter
   @Setter
-  private final WxMpWifiService wifiService = new WxMpWifiServiceImpl(this);
+  private WxMpWifiService wifiService = new WxMpWifiServiceImpl(this);
   @Getter
   @Setter
   private WxMpMarketingService marketingService = new WxMpMarketingServiceImpl(this);
@@ -124,15 +127,57 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Getter
   @Setter
   private WxMpGuideService guideService = new WxMpGuideServiceImpl(this);
+  @Getter
+  @Setter
+  private WxMpGuideBuyerService guideBuyerService = new WxMpGuideBuyerServiceImpl(this);
+  @Getter
+  @Setter
+  private WxMpGuideTagService guideTagService = new WxMpGuideTagServiceImpl(this);
+  @Getter
+  @Setter
+  private WxMpGuideMassedJobService guideMassedJobService = new WxMpGuideMassedJobServiceImpl(this);
+  @Getter
+  @Setter
+  private WxMpGuideMaterialService guideMaterialService = new WxMpGuideMaterialServiceImpl(this);
 
   @Getter
   @Setter
   private WxOAuth2Service oAuth2Service = new WxMpOAuth2ServiceImpl(this);
 
-  private Map<String, WxMpConfigStorage> configStorageMap;
+  @Getter
+  @Setter
+  private WxMpReimburseInvoiceService reimburseInvoiceService = new WxMpReimburseInvoiceServiceImpl(this);
+
+  @Getter
+  @Setter
+  private WxMpDraftService draftService = new WxMpDraftServiceImpl(this);
+
+  @Getter
+  @Setter
+  private WxMpFreePublishService freePublishService = new WxMpFreePublishServiceImpl(this);
+
+  private Map<String, WxMpConfigStorage> configStorageMap = new HashMap<>();
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
+
+  @Override
+  public String genShorten(String longData, Integer expireSeconds) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("long_data", longData);
+    param.addProperty("expire_seconds", expireSeconds);
+    String responseContent = this.post(GEN_SHORTEN_URL, param.toString());
+    JsonObject tmpJsonObject = GsonParser.parse(responseContent);
+    return tmpJsonObject.get("short_key").getAsString();
+  }
+
+  @Override
+  public WxMpShortKeyResult fetchShorten(String shortKey) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("short_key", shortKey);
+    String responseContent = this.post(FETCH_SHORTEN_URL, param.toString());
+    return WxMpShortKeyResult.fromJson(responseContent);
+  }
 
   @Override
   public boolean checkSignature(String timestamp, String nonce, String signature) {
@@ -207,6 +252,55 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   public String getAccessToken() throws WxErrorException {
     return getAccessToken(false);
   }
+
+  @Override
+  public String getAccessToken(boolean forceRefresh) throws WxErrorException {
+    if (!forceRefresh && !this.getWxMpConfigStorage().isAccessTokenExpired()) {
+      return this.getWxMpConfigStorage().getAccessToken();
+    }
+
+    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+    boolean locked = false;
+    try {
+      do {
+        locked = lock.tryLock(100, TimeUnit.MILLISECONDS);
+        if (!forceRefresh && !this.getWxMpConfigStorage().isAccessTokenExpired()) {
+          return this.getWxMpConfigStorage().getAccessToken();
+        }
+      } while (!locked);
+
+      String response;
+      if (getWxMpConfigStorage().isStableAccessToken()) {
+        response = doGetStableAccessTokenRequest(forceRefresh);
+      } else {
+        response = doGetAccessTokenRequest();
+      }
+      return extractAccessToken(response);
+    } catch (IOException | InterruptedException e) {
+      throw new WxRuntimeException(e);
+    } finally {
+      if (locked) {
+        lock.unlock();
+      }
+    }
+  }
+
+  /**
+   * 通过网络请求获取AccessToken
+   *
+   * @return .
+   * @throws IOException .
+   */
+  protected abstract String doGetAccessTokenRequest() throws IOException;
+
+
+  /**
+   * 通过网络请求获取稳定版接口调用凭据
+   *
+   * @return .
+   * @throws IOException .
+   */
+  protected abstract String doGetStableAccessTokenRequest(boolean forceRefresh) throws IOException;
 
   @Override
   public String shortUrl(String longUrl) throws WxErrorException {
@@ -288,6 +382,11 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   }
 
   @Override
+  public String post(WxMpApiUrl url, Object obj) throws WxErrorException {
+    return this.execute(SimplePostRequestExecutor.create(this), url, WxGsonBuilder.create().toJson(obj));
+  }
+
+  @Override
   public String post(WxMpApiUrl url, JsonObject jsonObject) throws WxErrorException {
     return this.post(url.getUrl(this.getWxMpConfigStorage()), jsonObject.toString());
   }
@@ -320,17 +419,18 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
     int retryTimes = 0;
     do {
       try {
-        return this.executeInternal(executor, uri, data);
+        return this.executeInternal(executor, uri, data, false);
       } catch (WxErrorException e) {
-        if (retryTimes + 1 > this.maxRetryTimes) {
-          log.warn("重试达到最大次数【{}】", maxRetryTimes);
-          //最后一次重试失败后，直接抛出异常，不再等待
-          throw new WxRuntimeException("微信服务端异常，超出重试次数");
-        }
-
         WxError error = e.getError();
         // -1 系统繁忙, 1000ms后重试
         if (error.getErrorCode() == -1) {
+          // 判断是否已经超了最大重试次数
+          if (retryTimes + 1 > this.maxRetryTimes) {
+            log.warn("重试达到最大次数【{}】", maxRetryTimes);
+            //最后一次重试失败后，直接抛出异常，不再等待
+            throw new WxRuntimeException("微信服务端异常，超出重试次数");
+          }
+
           int sleepMillis = this.retrySleepMillis * (1 << retryTimes);
           try {
             log.warn("微信系统繁忙，{} ms 后重试(第{}次)", sleepMillis, retryTimes + 1);
@@ -348,7 +448,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
     throw new WxRuntimeException("微信服务端异常，超出重试次数");
   }
 
-  protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+  protected <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data, boolean doNotAutoRefresh) throws WxErrorException {
     E dataForLog = DataUtils.handleDataWithSecret(data);
 
     if (uri.contains("access_token=")) {
@@ -377,19 +477,21 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
         } finally {
           lock.unlock();
         }
-        if (this.getWxMpConfigStorage().autoRefreshToken()) {
+        if (this.getWxMpConfigStorage().autoRefreshToken() && !doNotAutoRefresh) {
           log.warn("即将重新获取新的access_token，错误代码：{}，错误信息：{}", error.getErrorCode(), error.getErrorMsg());
-          return this.execute(executor, uri, data);
+          //下一次不再自动重试
+          //当小程序误调用第三方平台专属接口时,第三方无法使用小程序的access token,如果可以继续自动获取token会导致无限循环重试,直到栈溢出
+          return this.executeInternal(executor, uri, data, true);
         }
       }
 
       if (error.getErrorCode() != 0) {
-        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
       throw new WxErrorException(e);
     }
   }
@@ -418,6 +520,10 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void setWxMpConfigStorage(WxMpConfigStorage wxConfigProvider) {
     final String defaultMpId = wxConfigProvider.getAppId();
+    if (defaultMpId == null) {
+      throw new WxRuntimeException("appid不能设置为null");
+    }
+
     this.setMultiConfigStorages(ImmutableMap.of(defaultMpId, wxConfigProvider), defaultMpId);
   }
 
@@ -439,6 +545,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       if (this.configStorageMap == null) {
         this.setWxMpConfigStorage(configStorages);
       } else {
+        WxMpConfigStorageHolder.set(mpId);
         this.configStorageMap.put(mpId, configStorages);
       }
     }

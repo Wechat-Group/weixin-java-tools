@@ -7,11 +7,12 @@ import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateDateRange;
 import java.io.Serializable;
 
 /**
- * @author gyv12345@163.com
+ * The type Template attendance.
+ *
+ * @author gyv12345 @163.com
  */
 @Data
 public class TemplateAttendance implements Serializable {
-
   private static final long serialVersionUID = 5800412600894589065L;
 
   @SerializedName("date_range")

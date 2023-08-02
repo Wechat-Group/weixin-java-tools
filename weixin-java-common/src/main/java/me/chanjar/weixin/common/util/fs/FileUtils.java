@@ -11,6 +11,9 @@ import java.util.Base64;
 
 import static org.apache.commons.io.FileUtils.openOutputStream;
 
+/**
+ * @author Daniel Qian
+ */
 public class FileUtils {
 
   /**
@@ -21,7 +24,8 @@ public class FileUtils {
    * @param ext         扩展名
    * @param tmpDirFile  临时文件夹目录
    */
-  public static File createTmpFile(InputStream inputStream, String name, String ext, File tmpDirFile) throws IOException {
+  public static File createTmpFile(InputStream inputStream, String name, String ext, File tmpDirFile)
+    throws IOException {
     File resultFile = File.createTempFile(name, '.' + ext, tmpDirFile);
 
     resultFile.deleteOnExit();
@@ -43,7 +47,7 @@ public class FileUtils {
    * @param ext         扩展名
    */
   public static File createTmpFile(InputStream inputStream, String name, String ext) throws IOException {
-    return createTmpFile(inputStream, name, ext, Files.createTempDirectory("weixin-java-tools-temp").toFile());
+    return createTmpFile(inputStream, name, ext, Files.createTempDirectory("wxjava-temp").toFile());
   }
 
   /**

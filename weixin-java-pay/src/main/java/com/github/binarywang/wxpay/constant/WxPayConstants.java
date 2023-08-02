@@ -27,6 +27,17 @@ public class WxPayConstants {
   public static final Format QUERY_COMMENT_DATE_FORMAT = FastDateFormat.getInstance("yyyyMMddHHmmss");
 
   /**
+   * 币种类型.
+   */
+  public static class CurrencyType {
+    /**
+     * 人民币.
+     */
+    public static final String CNY = "CNY";
+
+  }
+
+  /**
    * 校验用户姓名选项，企业付款时使用.
    */
   public static class CheckNameOption {
@@ -311,6 +322,7 @@ public class WxPayConstants {
     public static final String SUCCESS = "SUCCESS";
 
     /**
+     * v2
      * 退款关闭.
      */
     public static final String REFUND_CLOSE = "REFUNDCLOSE";
@@ -321,10 +333,23 @@ public class WxPayConstants {
     public static final String PROCESSING = "PROCESSING";
 
     /**
+     * v2
      * 退款异常.
      * 退款到银行发现用户的卡作废或者冻结了，导致原路退款银行卡失败，可前往商户平台（pay.weixin.qq.com）-交易中心，手动处理此笔退款。
      */
     public static final String CHANGE = "CHANGE";
+
+    /**
+     * v3
+     * 退款关闭
+     */
+    public static final String CLOSED = "CLOSED";
+
+    /**
+     * v3
+     * 退款异常
+     */
+    public static final String ABNORMAL = "ABNORMAL";
   }
 
   public static class ReceiverType {
@@ -345,4 +370,5 @@ public class WxPayConstants {
      */
     public static final String PERSONAL_SUB_OPENID = "PERSONAL_SUB_OPENID";
   }
+
 }

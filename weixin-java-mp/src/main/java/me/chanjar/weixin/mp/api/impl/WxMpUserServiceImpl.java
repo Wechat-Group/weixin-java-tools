@@ -10,6 +10,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpChangeOpenid;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUserList;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +51,25 @@ public class WxMpUserServiceImpl implements WxMpUserService {
   public WxMpUserList userList(String nextOpenid) throws WxErrorException {
     String responseContent = this.wxMpService.get(USER_GET_URL, nextOpenid == null ? null : "next_openid=" + nextOpenid);
     return WxMpUserList.fromJson(responseContent);
+  }
+
+  @Override
+  public WxMpUserList userList() throws WxErrorException {
+    String responseContent = this.wxMpService.get(USER_GET_URL, null);
+    WxMpUserList mergeList = new WxMpUserList();
+
+    WxMpUserList wxMpUserList = WxMpUserList.fromJson(responseContent);
+    mergeList.getOpenids().addAll(wxMpUserList.getOpenids());
+    mergeList.setCount(wxMpUserList.getCount());
+    mergeList.setTotal(wxMpUserList.getTotal());
+
+    while (StringUtils.isNotEmpty(wxMpUserList.getNextOpenid())) {
+      WxMpUserList nextReqUserList = userList(wxMpUserList.getNextOpenid());
+      mergeList.getOpenids().addAll(nextReqUserList.getOpenids());
+      mergeList.setCount(mergeList.getCount() + nextReqUserList.getCount());
+      wxMpUserList = nextReqUserList;
+    }
+    return mergeList;
   }
 
   @Override

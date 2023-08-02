@@ -22,6 +22,7 @@ import java.io.Serializable;
 @XStreamAlias("xml")
 public class WxPaySendRedpackResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = -4837415036337132073L;
+
   private static final String PROCESSING = "PROCESSING";
 
   @XStreamAlias("mch_billno")

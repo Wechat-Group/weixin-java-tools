@@ -1,15 +1,14 @@
 package me.chanjar.weixin.cp.bean.message;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.common.base.Splitter;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 消息发送结果对象类.
@@ -26,6 +25,12 @@ public class WxCpMessageSendResult implements Serializable {
     return WxCpGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * From json wx cp message send result.
+   *
+   * @param json the json
+   * @return the wx cp message send result
+   */
   public static WxCpMessageSendResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpMessageSendResult.class);
   }
@@ -45,7 +50,20 @@ public class WxCpMessageSendResult implements Serializable {
   @SerializedName("invalidtag")
   private String invalidTag;
 
+  @SerializedName("msgid")
+  private String msgId;
 
+  /**
+   * 仅消息类型为“按钮交互型”，“投票选择型”和“多项选择型”的模板卡片消息返回，应用可使用response_code调用更新模版卡片消息接口，24小时内有效，且只能使用一次
+   */
+  @SerializedName("response_code")
+  private String responseCode;
+
+  /**
+   * Gets invalid user list.
+   *
+   * @return the invalid user list
+   */
   public List<String> getInvalidUserList() {
     return this.content2List(this.invalidUser);
   }
@@ -58,10 +76,20 @@ public class WxCpMessageSendResult implements Serializable {
     return Splitter.on("|").splitToList(content);
   }
 
+  /**
+   * Gets invalid party list.
+   *
+   * @return the invalid party list
+   */
   public List<String> getInvalidPartyList() {
     return this.content2List(this.invalidParty);
   }
 
+  /**
+   * Gets invalid tag list.
+   *
+   * @return the invalid tag list
+   */
   public List<String> getInvalidTagList() {
     return this.content2List(this.invalidTag);
   }

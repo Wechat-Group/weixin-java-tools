@@ -6,7 +6,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author gyv123@163.com
+ * The type Template options.
+ *
+ * @author gyv123 @163.com
  */
 @Data
 public class TemplateOptions implements Serializable {

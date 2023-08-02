@@ -2,6 +2,8 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import java.io.File;
 
+import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckRequest;
+import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckResponse;
 import org.testng.annotations.*;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
@@ -48,5 +50,17 @@ public class WxMaSecCheckServiceImplTest {
     assertThat(this.wxService.getSecCheckService()
       .checkMessage(msg))
       .isEqualTo(result);
+  }
+
+  @Test(dataProvider = "secData")
+  public void testCheckMessage2(String msg, boolean result) throws WxErrorException {
+    WxMaMsgSecCheckCheckRequest request = WxMaMsgSecCheckCheckRequest.builder()
+      .content(msg)
+      .scene(1)
+      .version("2")
+      .openid("xxx")
+      .build();
+    WxMaMsgSecCheckCheckResponse response = this.wxService.getSecCheckService().checkMessage(request);
+    assertThat(response).isNotNull();
   }
 }

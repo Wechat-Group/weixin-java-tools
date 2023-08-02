@@ -10,7 +10,7 @@ import java.util.List;
  * 云开发新增索引的请求对象.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-01-26
+ * created on  2020-01-26
  */
 @Accessors(chain = true)
 @Data

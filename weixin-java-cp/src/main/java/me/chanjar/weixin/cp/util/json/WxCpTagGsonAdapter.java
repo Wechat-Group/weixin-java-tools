@@ -15,6 +15,8 @@ import me.chanjar.weixin.cp.bean.WxCpTag;
 import java.lang.reflect.Type;
 
 /**
+ * The type Wx cp tag gson adapter.
+ *
  * @author Daniel Qian
  */
 public class WxCpTagGsonAdapter implements JsonSerializer<WxCpTag>, JsonDeserializer<WxCpTag> {

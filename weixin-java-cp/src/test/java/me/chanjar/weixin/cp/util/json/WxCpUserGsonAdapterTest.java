@@ -15,6 +15,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class WxCpUserGsonAdapterTest {
 
+  /**
+   * Test deserialize.
+   */
   @Test
   public void testDeserialize() {
     final String userJson = "{\n" +
@@ -29,7 +32,8 @@ public class WxCpUserGsonAdapterTest {
       "    \"gender\": \"1\",\n" +
       "    \"email\": \"zhangsan@gzdev.com\",\n" +
       "    \"isleader\": 1,\n" +
-      "    \"avatar\": \"http://wx.qlogo.cn/mmopen/ajNVdqHZLLA3WJ6DSZUfiakYe37PKnQhBIeOQBO4czqrnZDS79FH5Wm5m4X69TBicnHFlhiafvDwklOpZeXYQQ2icg/0\",\n" +
+      "    \"avatar\": \"http://wx.qlogo" +
+      ".cn/mmopen/ajNVdqHZLLA3WJ6DSZUfiakYe37PKnQhBIeOQBO4czqrnZDS79FH5Wm5m4X69TBicnHFlhiafvDwklOpZeXYQQ2icg/0\",\n" +
       "    \"telephone\": \"020-123456\",\n" +
       "    \"address\": \"广州市海珠区新港中路\"," +
       "    \"enable\": 1,\n" +
@@ -136,6 +140,9 @@ public class WxCpUserGsonAdapterTest {
 
   }
 
+  /**
+   * Test serialize.
+   */
   @Test
   public void testSerialize() {
     WxCpUser user = new WxCpUser();

@@ -4,6 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.live.WxMaCreateRoomResult;
 import cn.binarywang.wx.miniapp.bean.live.WxMaLiveResult;
 import cn.binarywang.wx.miniapp.bean.live.WxMaLiveRoomInfo;
+import cn.binarywang.wx.miniapp.bean.live.WxMaLiveSharedCode;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
@@ -39,14 +40,14 @@ public class WxMaLiveServiceImplTest {
     roomInfo.setName("订阅通知直播间");
     roomInfo.setCoverImg(mediaUpload.getMediaId());
     Calendar c = Calendar.getInstance();
-    c.set(2020, Calendar.DECEMBER, 10, 8, 0);
+    c.set(2023, Calendar.FEBRUARY, 10, 8, 0);
     roomInfo.setStartTime(c.getTimeInMillis() / 1000);
-    c.set(2020, Calendar.DECEMBER, 10, 12, 0);
+    c.set(2023, Calendar.FEBRUARY, 10, 12, 0);
     roomInfo.setEndTime(c.getTimeInMillis() / 1000);
     roomInfo.setAnchorName("鹏军_专业小程序开发");
     roomInfo.setAnchorWechat("pengjun939961241");
-    roomInfo.setCreaterWechat("pengjun939961241");
     roomInfo.setShareImg(mediaUpload.getMediaId());
+    roomInfo.setFeedsImg(mediaUpload.getMediaId());
     roomInfo.setType(1);
     roomInfo.setScreenType(1);
     roomInfo.setCloseLike(0);
@@ -95,7 +96,7 @@ public class WxMaLiveServiceImplTest {
 
   @Test
   public void getSharedCode() throws Exception {
-    String result = this.wxService.getLiveService().getSharedCode(39, null);
+    WxMaLiveSharedCode result = this.wxService.getLiveService().getSharedCode(39, null);
     System.out.println(result);
   }
 

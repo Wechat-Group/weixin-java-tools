@@ -4,7 +4,7 @@ package me.chanjar.weixin.mp.bean.card.enums;
  * 微信卡券激活字段类型
  *
  * @author yuanqixun
- * @date 2018-08-30
+ * created on  2018-08-30
  */
 public enum CardWechatFieldType {
   USER_FORM_INFO_FLAG_MOBILE("手机号"),

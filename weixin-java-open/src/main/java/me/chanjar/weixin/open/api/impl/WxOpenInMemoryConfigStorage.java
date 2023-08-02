@@ -2,12 +2,15 @@ package me.chanjar.weixin.open.api.impl;
 
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-import me.chanjar.weixin.mp.bean.WxMpHostConfig;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
+import me.chanjar.weixin.mp.config.WxMpHostConfig;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
@@ -38,6 +41,22 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
   private int httpProxyPort;
   private String httpProxyUsername;
   private String httpProxyPassword;
+  /**
+   * http 请求重试间隔
+   * <pre>
+   *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setRetrySleepMillis(int)}
+   *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setRetrySleepMillis(int)}
+   * </pre>
+   */
+  private int retrySleepMillis = 1000;
+  /**
+   * http 请求最大重试次数
+   * <pre>
+   *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setMaxRetryTimes(int)}
+   *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setMaxRetryTimes(int)}
+   * </pre>
+   */
+  private int maxRetryTimes = 5;
   private ApacheHttpClientBuilder apacheHttpClientBuilder;
 
   private Map<String, Token> authorizerRefreshTokens = new ConcurrentHashMap<>();
@@ -229,15 +248,25 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     updateToken(cardApiTickets, appId, cardApiTicket, expiresInSeconds);
   }
 
+  @Data
   private static class Token {
     private String token;
     private Long expiresTime;
   }
 
+  @Data
   private static class WxOpenInnerConfigStorage implements WxMpConfigStorage, WxMaConfig {
     private final WxOpenConfigStorage wxOpenConfigStorage;
     private final String appId;
     private WxMpHostConfig hostConfig;
+    private String apiHostUrl;
+    private String accessTokenUrl;
+    /**
+     * 是否使用稳定版获取accessToken接口
+     */
+    @Getter(value = AccessLevel.NONE)
+    @Setter(value = AccessLevel.NONE)
+    private boolean useStableAccessToken;
 
     /**
      * 小程序原始ID
@@ -262,6 +291,16 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     @Override
     public String getAccessToken() {
       return wxOpenConfigStorage.getAuthorizerAccessToken(appId);
+    }
+
+    @Override
+    public boolean isStableAccessToken() {
+      return this.useStableAccessToken;
+    }
+
+    @Override
+    public void useStableAccessToken(boolean useStableAccessToken) {
+      this.useStableAccessToken = useStableAccessToken;
     }
 
     @Override
@@ -505,6 +544,16 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     @Override
     public String getHttpProxyPassword() {
       return this.wxOpenConfigStorage.getHttpProxyPassword();
+    }
+
+    @Override
+    public int getRetrySleepMillis() {
+      return this.wxOpenConfigStorage.getRetrySleepMillis();
+    }
+
+    @Override
+    public int getMaxRetryTimes() {
+      return this.wxOpenConfigStorage.getMaxRetryTimes();
     }
 
     @Override

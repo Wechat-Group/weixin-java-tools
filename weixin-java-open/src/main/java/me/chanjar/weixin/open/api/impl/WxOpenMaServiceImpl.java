@@ -2,16 +2,21 @@ package me.chanjar.weixin.open.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
+import cn.binarywang.wx.miniapp.bean.WxMaAuditMediaUploadResult;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.executor.AuditMediaUploadRequestExecutor;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import lombok.Getter;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.open.api.WxOpenComponentService;
-import me.chanjar.weixin.open.api.WxOpenMaService;
-import me.chanjar.weixin.open.bean.ma.WxMaOpenCommitExtInfo;
+import me.chanjar.weixin.open.api.*;
+import me.chanjar.weixin.open.bean.ma.WxMaPrefetchDomain;
 import me.chanjar.weixin.open.bean.ma.WxMaQrcodeParam;
+import me.chanjar.weixin.open.bean.ma.WxMaScheme;
 import me.chanjar.weixin.open.bean.message.WxOpenMaSubmitAuditMessage;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.executor.MaQrCodeRequestExecutor;
@@ -28,17 +33,26 @@ import java.util.Map;
  *
  * @author <a href="https://github.com/007gzs">007</a>
  * @author yqx
- * @date 2018-09-12
+ * created on  2018-09-12
  */
 public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaService {
   private final WxOpenComponentService wxOpenComponentService;
   private final WxMaConfig wxMaConfig;
   private final String appId;
+  @Getter
+  private final WxOpenMaBasicService basicService;
+  @Getter
+  private final WxOpenMaPrivacyService privacyService;
+  @Getter
+  private final WxOpenMaShoppingOrdersService shoppingOrdersService;
 
   public WxOpenMaServiceImpl(WxOpenComponentService wxOpenComponentService, String appId, WxMaConfig wxMaConfig) {
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMaConfig = wxMaConfig;
+    this.basicService = new WxOpenMaBasicServiceImpl(this);
+    this.privacyService = new WxOpenMaPrivacyServiceImpl(this);
+    this.shoppingOrdersService = new WxOpenMaShoppingOrdersServiceImpl(this);
     initHttp();
   }
 
@@ -106,6 +120,11 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaWebDomainResult.class);
   }
 
+  @Override
+  public WxOpenMaDomainConfirmFileResult getWebviewDomainConfirmFile() throws WxErrorException {
+    String responseContent = post(API_GET_WEBVIEW_DOMAIN_CONFIRM_FILE, "{}");
+    return WxOpenMaDomainConfirmFileResult.fromJson(responseContent);
+  }
 
   @Override
   public String getAccountBasicInfo() throws WxErrorException {
@@ -175,13 +194,13 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   @Override
-  public WxOpenResult codeCommit(Long templateId, String userVersion, String userDesc, WxMaOpenCommitExtInfo extInfo) throws WxErrorException {
+  public WxOpenResult codeCommit(Long templateId, String userVersion, String userDesc, Object extJsonObject) throws WxErrorException {
     JsonObject params = new JsonObject();
     params.addProperty("template_id", templateId);
     params.addProperty("user_version", userVersion);
     params.addProperty("user_desc", userDesc);
     //注意：ext_json必须是字符串类型
-    params.addProperty("ext_json", GSON.toJson(extInfo));
+    params.addProperty("ext_json", GSON.toJson(extJsonObject));
     String response = post(API_CODE_COMMIT, GSON.toJson(params));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
@@ -242,9 +261,21 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   @Override
+  public WxOpenMaVisitStatusResult getVisitStatus() throws WxErrorException {
+    String responseContent = post(API_GET_VISITSTATUS, "{}");
+    return WxOpenMaVisitStatusResult.fromJson(responseContent);
+  }
+
+  @Override
   public WxOpenResult revertCodeRelease() throws WxErrorException {
     String response = get(API_REVERT_CODE_RELEASE, null);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenMaHistoryVersionResult getHistoryVersion() throws WxErrorException {
+    String response = get(API_REVERT_CODE_RELEASE, "action=get_history_version");
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaHistoryVersionResult.class);
   }
 
   @Override
@@ -348,6 +379,45 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
+  @Override
+  public WxMaScheme generateMaScheme(String jumpWxaPath, String jumpWxaQuery, Boolean isExpire, Long expireTime) throws WxErrorException {
+    JsonObject jumpWxa = null;
+    if (jumpWxaPath != null && jumpWxaQuery != null) {
+      jumpWxa = new JsonObject();
+      jumpWxa.addProperty("path", jumpWxaPath);
+      jumpWxa.addProperty("query", jumpWxaQuery);
+    }
+
+    JsonObject params = new JsonObject();
+    if (jumpWxa != null) {
+      params.add("jump_wxa", jumpWxa);
+    }
+    if (isExpire != null) {
+      params.addProperty("is_expire", isExpire);
+    }
+    if (expireTime != null) {
+      params.addProperty("expire_time", expireTime);
+    }
+
+    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+
+    String response = post(API_GENERATE_SCHEME, gson.toJson(params));
+
+    return WxMaGsonBuilder.create().fromJson(response, WxMaScheme.class);
+  }
+
+  @Override
+  public WxOpenResult registerShopComponent() throws WxErrorException {
+    JsonObject params = new JsonObject();
+    String response = post(API_REGISTER_SHOP_COMPONENT, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxMaAuditMediaUploadResult uploadMedia(File file) throws WxErrorException {
+    return (WxMaAuditMediaUploadResult) this.execute(AuditMediaUploadRequestExecutor.create(getRequestHttp()), API_AUDIT_UPLOAD_MEDIA, file);
+  }
+
   private JsonArray toJsonArray(List<String> strList) {
     JsonArray jsonArray = new JsonArray();
     if (strList != null && !strList.isEmpty()) {
@@ -356,5 +426,32 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
       }
     }
     return jsonArray;
+  }
+
+  @Override
+  public WxOpenVersioninfoResult getVersionInfo() throws WxErrorException {
+    JsonObject params = new JsonObject();
+    String response = post(API_GET_VERSION_INFO, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenVersioninfoResult.class);
+  }
+
+  @Override
+  public WxOpenResult setPrefetchDomain(WxMaPrefetchDomain domain) throws WxErrorException {
+    String response = post(API_WX_SET_PREFETCH_DOMAIN, GSON.toJson(domain));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenMaPrefetchDomainResult getPrefetchDomain() throws WxErrorException {
+    String response = get(API_GET_PREFETCH_DOMAIN, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaPrefetchDomainResult.class);
+  }
+
+  @Override
+  public WxOpenMaApplyLiveInfoResult applyLiveInfo() throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("action", "apply");
+    String response = post(API_WX_APPLY_LIVE_INFO, GSON.toJson(params));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaApplyLiveInfoResult.class);
   }
 }

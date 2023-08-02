@@ -6,9 +6,12 @@ import java.io.Serializable;
 
 /**
  * 获取授权链接返回结果DTO
+ *
+ * @author Mario Luo
  */
 @Data
 public class InvoiceAuthPageResult implements Serializable {
+  private static final long serialVersionUID = 2922797121045894425L;
 
   /**
    * 授权页地址

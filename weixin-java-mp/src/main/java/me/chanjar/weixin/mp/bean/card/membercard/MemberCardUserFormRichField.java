@@ -12,7 +12,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
  * 富文本字段.
  *
  * @author yuanqixun
- * @date 2018-08-30
+ * created on  2018-08-30
  */
 @Data
 public class MemberCardUserFormRichField {

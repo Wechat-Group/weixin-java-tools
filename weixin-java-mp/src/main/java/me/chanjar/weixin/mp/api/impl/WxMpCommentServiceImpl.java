@@ -11,7 +11,7 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Comment.*;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-06-16
+ * created on  2019-06-16
  */
 @RequiredArgsConstructor
 public class WxMpCommentServiceImpl implements WxMpCommentService {

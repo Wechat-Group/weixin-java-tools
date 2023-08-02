@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 明细.
  *
  * @author doger.wang
- * @date 2020-05-19
+ * created on  2020-05-19
  */
 @Data
 @NoArgsConstructor

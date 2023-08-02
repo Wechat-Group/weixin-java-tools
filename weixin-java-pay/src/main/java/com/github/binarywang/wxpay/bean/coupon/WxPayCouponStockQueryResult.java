@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.w3c.dom.Document;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  * 查询代金券批次响应结果类.
@@ -21,7 +23,7 @@ import org.w3c.dom.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @XStreamAlias("xml")
-public class WxPayCouponStockQueryResult extends BaseWxPayResult {
+public class WxPayCouponStockQueryResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = 4644274730788451926L;
   /**
    * <pre>

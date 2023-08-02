@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * .
  * @author leeis
- * @Date 2018/12/29
+ * created on  2018/12/29
  */
 @Data
 public final class GiftCard extends Card implements Serializable {

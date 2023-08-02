@@ -71,4 +71,14 @@ public class WxMaUserServiceImplTest {
     this.wxService.getUserService().setUserStorage(ImmutableMap.of("1","2"),
       "r7BXXKkLb8qrSNn05n0qiA",((TestConfig)this.wxService.getWxMaConfig()).getOpenid());
   }
+
+  @Test
+  public void testGetNewPhoneNoInfo() throws Exception{
+    assertNotNull(wxService.getUserService().getNewPhoneNoInfo("test"));
+  }
+
+  @Test
+  public void testGetAccessToken() throws Exception{
+    assertNotNull(wxService.getAccessToken(true));
+  }
 }

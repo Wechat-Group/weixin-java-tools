@@ -59,4 +59,15 @@ public class WxMpServiceImplTest {
     Assert.assertNotEquals(before, after);
     Assert.assertTrue(StringUtils.isNotBlank(after));
   }
+
+  public void testStableRefreshAccessToken() throws WxErrorException {
+    WxMpConfigStorage configStorage = this.wxService.getWxMpConfigStorage();
+    configStorage.useStableAccessToken(true);
+    String before = configStorage.getAccessToken();
+    this.wxService.getAccessToken(false);
+
+    String after = configStorage.getAccessToken();
+    Assert.assertNotEquals(before, after);
+    Assert.assertTrue(StringUtils.isNotBlank(after));
+  }
 }

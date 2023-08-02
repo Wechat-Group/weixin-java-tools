@@ -99,7 +99,7 @@ public class CombineTransactionsResult implements Serializable {
 
   @Data
   @NoArgsConstructor
-  public static class SubOrders implements  Serializable {
+  public static class SubOrders implements Serializable {
     /**
      * <pre>
      * 字段名：子单商户号

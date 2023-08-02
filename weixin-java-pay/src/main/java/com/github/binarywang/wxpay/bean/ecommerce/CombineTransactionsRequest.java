@@ -344,7 +344,7 @@ public class CombineTransactionsRequest implements Serializable {
 
   @Data
   @NoArgsConstructor
-  public static class SettleInfo implements Serializable{
+  public static class SettleInfo implements Serializable {
     /**
      * <pre>
      * 字段名：是否指定分账

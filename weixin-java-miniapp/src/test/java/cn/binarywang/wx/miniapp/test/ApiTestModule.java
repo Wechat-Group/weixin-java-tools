@@ -1,17 +1,17 @@
 package cn.binarywang.wx.miniapp.test;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.concurrent.locks.ReentrantLock;
-
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceOkHttpImpl;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import com.google.inject.Binder;
+import com.google.inject.Module;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.config.WxMaConfig;
-import com.google.inject.Binder;
-import com.google.inject.Module;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -34,6 +34,11 @@ public class ApiTestModule implements Module {
 
       binder.bind(WxMaService.class).toInstance(wxService);
       binder.bind(WxMaConfig.class).toInstance(config);
+
+      WxMaServiceOkHttpImpl wxMaServiceOkHttp = new cn.binarywang.wx.miniapp.api.impl.WxMaServiceOkHttpImpl();
+      wxMaServiceOkHttp.setWxMaConfig(config);
+      binder.bind(WxMaServiceOkHttpImpl.class).toInstance(wxMaServiceOkHttp);
+
     } catch (IOException e) {
       this.log.error(e.getMessage(), e);
     }

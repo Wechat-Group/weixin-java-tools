@@ -6,22 +6,28 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.SignUtils;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.Map;
 
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.User.GET_PHONE_NUMBER_URL;
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.User.SET_USER_STORAGE;
+
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WxMaUserServiceImpl implements WxMaUserService {
-  private WxMaService service;
+  private static final String PHONE_INFO = "phone_info";
+  private final WxMaService service;
 
   @Override
   public WxMaJscode2SessionResult getSessionInfo(String jsCode) throws WxErrorException {
@@ -54,6 +60,25 @@ public class WxMaUserServiceImpl implements WxMaUserService {
   @Override
   public WxMaPhoneNumberInfo getPhoneNoInfo(String sessionKey, String encryptedData, String ivStr) {
     return WxMaPhoneNumberInfo.fromJson(WxMaCryptUtils.decrypt(sessionKey, encryptedData, ivStr));
+  }
+
+  @Override
+  public WxMaPhoneNumberInfo getPhoneNoInfo(String code) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("code", code);
+    String responseContent = this.service.post(GET_PHONE_NUMBER_URL, param.toString());
+    JsonObject response = GsonParser.parse(responseContent);
+    if (response.has(PHONE_INFO)) {
+      return WxMaGsonBuilder.create().fromJson(response.getAsJsonObject(PHONE_INFO),
+        WxMaPhoneNumberInfo.class);
+    }
+
+    return null;
+  }
+
+  @Override
+  public WxMaPhoneNumberInfo getNewPhoneNoInfo(String code) throws WxErrorException {
+    return this.getPhoneNoInfo(code);
   }
 
   @Override

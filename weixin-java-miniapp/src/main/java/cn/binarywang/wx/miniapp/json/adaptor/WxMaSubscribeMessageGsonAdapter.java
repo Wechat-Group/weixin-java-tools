@@ -38,7 +38,7 @@ public class WxMaSubscribeMessageGsonAdapter implements JsonSerializer<WxMaSubsc
       return messageJson;
     }
 
-    for (WxMaSubscribeMessage.Data datum : message.getData()) {
+    for (WxMaSubscribeMessage.MsgData datum : message.getData()) {
       JsonObject dataJson = new JsonObject();
       dataJson.addProperty("value", datum.getValue());
       data.add(datum.getName(), dataJson);

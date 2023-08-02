@@ -1,13 +1,13 @@
 package me.chanjar.weixin.mp.api;
 
 import com.google.gson.JsonObject;
-import me.chanjar.weixin.common.service.WxImgProcService;
-import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.bean.WxNetCheckResult;
 import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.service.WxOAuth2Service;
+import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.service.WxService;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -15,6 +15,7 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.mp.bean.WxMpSemanticQuery;
 import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
 import me.chanjar.weixin.mp.bean.result.WxMpSemanticQueryResult;
+import me.chanjar.weixin.mp.bean.result.WxMpShortKeyResult;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 
@@ -26,6 +27,31 @@ import java.util.Map;
  * @author chanjarster
  */
 public interface WxMpService extends WxService {
+  /**
+   * <pre>
+   * 短key托管 类似于短链API.
+   * 详情请见: https://developers.weixin.qq.com/doc/offiaccount/Account_Management/KEY_Shortener.html
+   * </pre>
+   *
+   * @param longData      需要转换的长信息，不超过4KB
+   * @param expireSeconds 短key有效期(单位秒)，最大值为2592000（即30天），默认为2592000(30天)
+   * @return shortKey 短key，15字节，base62编码(0-9/a-z/A-Z)
+   * @throws WxErrorException .
+   */
+  String genShorten(String longData, Integer expireSeconds) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 短key解析 将短key还原为长信息。
+   * 详情请见: https://developers.weixin.qq.com/doc/offiaccount/Account_Management/KEY_Shortener.html
+   * </pre>
+   *
+   * @param shortKey 短key
+   * @return WxMpShortKeyResult 解析结果
+   * @throws WxErrorException .
+   */
+  WxMpShortKeyResult fetchShorten(String shortKey) throws WxErrorException;
+
   /**
    * <pre>
    * 验证消息的确来自微信服务器.
@@ -44,7 +70,7 @@ public interface WxMpService extends WxService {
    *
    * @return token access token
    * @throws WxErrorException .
-   * @see #getAccessToken(boolean) #getAccessToken(boolean)
+   * @see #getAccessToken(boolean) #getAccessToken(boolean)#getAccessToken(boolean)#getAccessToken(boolean)
    */
   String getAccessToken() throws WxErrorException;
 
@@ -72,7 +98,7 @@ public interface WxMpService extends WxService {
    * @param type ticket 类型
    * @return ticket ticket
    * @throws WxErrorException .
-   * @see #getTicket(TicketType, boolean) #getTicket(TicketType, boolean)
+   * @see #getTicket(TicketType, boolean) #getTicket(TicketType, boolean)#getTicket(TicketType, boolean)#getTicket(TicketType, boolean)
    */
   String getTicket(TicketType type) throws WxErrorException;
 
@@ -94,7 +120,7 @@ public interface WxMpService extends WxService {
    *
    * @return jsapi ticket
    * @throws WxErrorException .
-   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)
+   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)#getJsapiTicket(boolean)
    */
   String getJsapiTicket() throws WxErrorException;
 
@@ -135,6 +161,7 @@ public interface WxMpService extends WxService {
    * @return 生成的短地址 string
    * @throws WxErrorException .
    */
+  @Deprecated
   String shortUrl(String longUrl) throws WxErrorException;
 
   /**
@@ -258,6 +285,16 @@ public interface WxMpService extends WxService {
    * @throws WxErrorException 异常
    */
   String post(WxMpApiUrl url, String postData) throws WxErrorException;
+
+  /**
+   * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的POST请求.
+   *
+   * @param url 请求接口地址
+   * @param obj 请求参数
+   * @return 接口响应字符串 string
+   * @throws WxErrorException 异常
+   */
+  String post(WxMpApiUrl url, Object obj) throws WxErrorException;
 
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的POST请求.
@@ -524,6 +561,34 @@ public interface WxMpService extends WxService {
   WxImgProcService getImgProcService();
 
   /**
+   * 返回电子发票报销方相关接口
+   *
+   * @return WxMpReimburseInvoiceService reimburse invoice service
+   */
+  WxMpReimburseInvoiceService getReimburseInvoiceService();
+
+  /**
+   * 返回草稿箱相关接口
+   *
+   * @return WxMpDraftService draft service
+   */
+  WxMpDraftService getDraftService();
+
+  /**
+   * 返回发布能力接口
+   *
+   * @return WxMpFreePublishService free publish service
+   */
+  WxMpFreePublishService getFreePublishService();
+
+  /**
+   * .
+   *
+   * @param reimburseInvoiceService .
+   */
+  void setReimburseInvoiceService(WxMpReimburseInvoiceService reimburseInvoiceService);
+
+  /**
    * .
    *
    * @param kefuService .
@@ -697,4 +762,88 @@ public interface WxMpService extends WxService {
    * @param guideService the guide service
    */
   void setGuideService(WxMpGuideService guideService);
+
+  /**
+   * Gets guideBuyer service.
+   *
+   * @return the guideBuyer service
+   */
+  WxMpGuideBuyerService getGuideBuyerService();
+
+  /**
+   * Sets guideBuyer service.
+   *
+   * @param guideBuyerService the guideBuyer service
+   */
+  void setGuideBuyerService(WxMpGuideBuyerService guideBuyerService);
+
+  /**
+   * Gets guideTag service.
+   *
+   * @return the guide service
+   */
+  WxMpGuideTagService getGuideTagService();
+
+  /**
+   * Sets guideTag service.
+   *
+   * @param guideTagService the guideTag service
+   */
+  void setGuideTagService(WxMpGuideTagService guideTagService);
+
+  /**
+   * Gets guideMaterial service.
+   *
+   * @return the guideMaterial service
+   */
+  WxMpGuideMaterialService getGuideMaterialService();
+
+  /**
+   * Sets guideMaterial service.
+   *
+   * @param guideMaterialService the guideMaterial service
+   */
+  void setGuideMaterialService(WxMpGuideMaterialService guideMaterialService);
+
+  /**
+   * Gets guideMassedJob service.
+   *
+   * @return the guideMassedJob service
+   */
+  WxMpGuideMassedJobService getGuideMassedJobService();
+
+  /**
+   * Sets guide service.
+   *
+   * @param guideMassedJobService the guide service
+   */
+  void setGuideMassedJobService(WxMpGuideMassedJobService guideMassedJobService);
+
+  /**
+   * Gets merchant invoice service.
+   *
+   * @return the merchant invoice service
+   */
+  WxMpMerchantInvoiceService getMerchantInvoiceService();
+
+  /**
+   * Sets merchant invoice service.
+   *
+   * @param merchantInvoiceService the merchant invoice service
+   */
+  void setMerchantInvoiceService(WxMpMerchantInvoiceService merchantInvoiceService);
+
+  /**
+   * Sets draft service.
+   *
+   * @param draftService the draft service
+   */
+  void setDraftService(WxMpDraftService draftService);
+
+  /**
+   * Sets free publish service.
+   *
+   * @param freePublishService the free publish service
+   */
+  void setFreePublishService(WxMpFreePublishService freePublishService);
 }

@@ -3,6 +3,8 @@ package com.github.binarywang.wxpay.bean.applyment.enums;
 /**
  * 个体户/企业/党政、机关及事业单位/其他组织：可选择任一证件类型。
  * 枚举值
+ * 
+ * @author 叶枫
  */
 public enum IdTypeEnum {
   /**
@@ -25,5 +27,17 @@ public enum IdTypeEnum {
    * 中国台湾居民-来往大陆通行证
    */
   IDENTIFICATION_TYPE_TAIWAN_PASSPORT,
+  /**
+   * 外国人居留证
+   */
+  IDENTIFICATION_TYPE_FOREIGN_RESIDENT,
+  /**
+   * 港澳居民证
+   */
+  IDENTIFICATION_TYPE_HONGKONG_MACAO_RESIDENT,
+  /**
+   * 台湾居民证
+   */
+  IDENTIFICATION_TYPE_TAIWAN_RESIDENT,
   ;
 }

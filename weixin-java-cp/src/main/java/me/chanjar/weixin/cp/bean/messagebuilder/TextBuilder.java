@@ -14,10 +14,19 @@ import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 public final class TextBuilder extends BaseBuilder<TextBuilder> {
   private String content;
 
+  /**
+   * Instantiates a new Text builder.
+   */
   public TextBuilder() {
     this.msgType = WxConsts.KefuMsgType.TEXT;
   }
 
+  /**
+   * Content text builder.
+   *
+   * @param content the content
+   * @return the text builder
+   */
   public TextBuilder content(String content) {
     this.content = content;
     return this;

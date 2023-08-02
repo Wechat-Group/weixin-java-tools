@@ -12,10 +12,12 @@ import java.util.List;
  * <pre>
  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/e_transactions/chapter3_5.shtml
  * </pre>
+ * @author cloudX
  */
 @Data
 @NoArgsConstructor
 public class PartnerTransactionsResult implements Serializable {
+  private static final long serialVersionUID = 2371448241965534820L;
 
   /**
    * <pre>
@@ -195,11 +197,22 @@ public class PartnerTransactionsResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：+支付者
+   * 字段名：支付者信息
+   * 变量名：payer
+   * 是否必填：是
+   * 类型：object
+   * 描述：基础支付支付者信息
+   * </pre>
+   */
+  private CombinePayerInfo payer;
+
+  /**
+   * <pre>
+   * 字段名：支付者
    * 变量名：combine_payer_info
    * 是否必填：否
    * 类型：object
-   * 描述：示例值：见请求示例
+   * 描述：合单支付支付者信息，示例值：见请求示例
    * </pre>
    */
   @SerializedName(value = "combine_payer_info")

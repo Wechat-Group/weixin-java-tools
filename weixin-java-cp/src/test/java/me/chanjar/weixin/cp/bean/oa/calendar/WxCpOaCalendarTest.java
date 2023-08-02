@@ -10,11 +10,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * 单元测试.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-09-20
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-09-20
  */
 public class WxCpOaCalendarTest {
 
+  /**
+   * Test to json.
+   */
   @Test
   public void testToJson() {
     String json = "{\n" +

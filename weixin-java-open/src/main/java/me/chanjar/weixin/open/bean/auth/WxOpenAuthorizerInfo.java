@@ -24,6 +24,16 @@ public class WxOpenAuthorizerInfo implements Serializable {
   private String alias;
   private String qrcodeUrl;
   /**
+   * 帐号状态
+   * 类型	说明
+   * 1	正常
+   * 14	已注销
+   * 16	已封禁
+   * 18	已告警
+   * 19	已冻结
+   */
+  private Integer accountStatus;
+  /**
    * 账号介绍
    */
   private String signature;
@@ -33,8 +43,30 @@ public class WxOpenAuthorizerInfo implements Serializable {
    */
   private MiniProgramInfo miniProgramInfo;
 
+  /**
+   * 小程序注册方式
+   * 类型	说明
+   * 0	普通方式注册
+   * 2	通过复用公众号创建小程序 api 注册
+   * 6	通过法人扫脸创建企业小程序 api 注册
+   * 13	通过创建试用小程序 api 注册
+   * 15	通过联盟控制台注册
+   * 16	通过创建个人小程序 api 注册
+   * 17	通过创建个人交易小程序 api 注册
+   * 19	通过试用小程序转正 api 注册
+   * 22	通过复用商户号创建企业小程序 api 注册
+   * 23	通过复用商户号转正 api 注册
+   */
+  private Integer registerType;
+
+  /**
+   * 小程序基础配置信息
+   */
+  private BasicConfig basicConfig;
+
   @Data
-  public class MiniProgramInfo {
+  public static class MiniProgramInfo implements Serializable {
+    private static final long serialVersionUID = 8857028017332191988L;
     @SerializedName("visit_status")
     private Integer visitStatus;
     /**
@@ -44,13 +76,15 @@ public class WxOpenAuthorizerInfo implements Serializable {
     private List<Category> categories;
 
     @Data
-    public class Category {
+    public static class Category implements Serializable {
+      private static final long serialVersionUID = -5771529867281696141L;
       private String first;
       private String second;
     }
 
     @Data
-    public class Network {
+    public static class Network implements Serializable {
+      private static final long serialVersionUID = -18932624803859857L;
       @SerializedName("RequestDomain")
       private List<String> requestDomain;
       @SerializedName("WsRequestDomain")
@@ -62,5 +96,14 @@ public class WxOpenAuthorizerInfo implements Serializable {
       @SerializedName("BizDomain")
       private List<String> bizDomain;
     }
+  }
+
+  @Data
+  public static class BasicConfig implements Serializable {
+    private static final long serialVersionUID = -8857028017332191989L;
+    @SerializedName("is_phone_configured")
+    private Boolean isPhoneConfigured;
+    @SerializedName("is_email_configured")
+    private Boolean isEmailConfigured;
   }
 }

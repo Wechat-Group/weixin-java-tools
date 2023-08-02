@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
  * 单元测试.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-10-19
+ * created on  2020-10-19
  */
 public class WxOpenOAuth2ServiceImplTest {
   private final WxOpenOAuth2ServiceImpl service = new WxOpenOAuth2ServiceImpl("123", "");

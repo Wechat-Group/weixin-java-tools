@@ -5,6 +5,7 @@ import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenService;
 import me.chanjar.weixin.open.api.impl.WxOpenMessageRouter;
 import me.chanjar.weixin.open.api.impl.WxOpenServiceImpl;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +20,10 @@ public class WxOpenServiceAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public WxOpenService wxOpenService(WxOpenConfigStorage configStorage) {
+  @ConditionalOnBean(WxOpenConfigStorage.class)
+  public WxOpenService wxOpenService(WxOpenConfigStorage wxOpenConfigStorage) {
     WxOpenService wxOpenService = new WxOpenServiceImpl();
-    wxOpenService.setWxOpenConfigStorage(configStorage);
+    wxOpenService.setWxOpenConfigStorage(wxOpenConfigStorage);
     return wxOpenService;
   }
 
@@ -34,6 +36,4 @@ public class WxOpenServiceAutoConfiguration {
   public WxOpenComponentService wxOpenComponentService(WxOpenService wxOpenService) {
     return wxOpenService.getWxOpenComponentService();
   }
-
-
 }

@@ -1,7 +1,10 @@
 <xml>
   <componentAppId>第三方平台appID</componentAppId>
   <componentSecret>第三方平台appsecret</componentSecret>
+  <componentAppSecret>第三方平台appsecret</componentAppSecret>
+  <componentVerifyTicket>微信服务器推送过来的ticket</componentVerifyTicket>
   <componentToken>第三方平台Token</componentToken>
   <componentAesKey>第三方平台EncodingAESKey</componentAesKey>
-  <appId>测试APPID</appId>
+  <testMpAppId>测试公众号</testMpAppId>
+  <testMaAppId>测试小程序</testMaAppId>
 </xml>

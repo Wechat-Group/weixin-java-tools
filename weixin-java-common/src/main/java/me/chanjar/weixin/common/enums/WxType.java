@@ -28,5 +28,10 @@ public enum WxType {
   /**
    * 微信支付.
    */
-  Pay;
+  Pay,
+  /**
+   * 微信视频号
+   */
+  Channel,
+  ;
 }

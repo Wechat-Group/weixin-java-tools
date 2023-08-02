@@ -21,35 +21,74 @@ public class MiniProgramNoticeMsgBuilder extends BaseBuilder<MiniProgramNoticeMs
   private Boolean emphasisFirstItem;
   private Map<String, String> contentItems;
 
+  /**
+   * Instantiates a new Mini program notice msg builder.
+   */
   public MiniProgramNoticeMsgBuilder() {
     this.msgType = WxConsts.KefuMsgType.MINIPROGRAM_NOTICE;
   }
 
+  /**
+   * App id mini program notice msg builder.
+   *
+   * @param appId the app id
+   * @return the mini program notice msg builder
+   */
   public MiniProgramNoticeMsgBuilder appId(String appId) {
     this.appId = appId;
     return this;
   }
 
+  /**
+   * Page mini program notice msg builder.
+   *
+   * @param page the page
+   * @return the mini program notice msg builder
+   */
   public MiniProgramNoticeMsgBuilder page(String page) {
     this.page = page;
     return this;
   }
 
+  /**
+   * Title mini program notice msg builder.
+   *
+   * @param title the title
+   * @return the mini program notice msg builder
+   */
   public MiniProgramNoticeMsgBuilder title(String title) {
     this.title = title;
     return this;
   }
 
+  /**
+   * Description mini program notice msg builder.
+   *
+   * @param description the description
+   * @return the mini program notice msg builder
+   */
   public MiniProgramNoticeMsgBuilder description(String description) {
     this.description = description;
     return this;
   }
 
+  /**
+   * Content items mini program notice msg builder.
+   *
+   * @param contentItems the content items
+   * @return the mini program notice msg builder
+   */
   public MiniProgramNoticeMsgBuilder contentItems(Map<String, String> contentItems) {
     this.contentItems = contentItems;
     return this;
   }
 
+  /**
+   * Emphasis first item mini program notice msg builder.
+   *
+   * @param emphasisFirstItem the emphasis first item
+   * @return the mini program notice msg builder
+   */
   public MiniProgramNoticeMsgBuilder emphasisFirstItem(Boolean emphasisFirstItem) {
     this.emphasisFirstItem = emphasisFirstItem;
     return this;

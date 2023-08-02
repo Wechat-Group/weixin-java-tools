@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * .
  * @author leeis
- * @date 2018/12/29
+ * created on  2018/12/29
  */
 @Data
 public class Card implements Serializable {

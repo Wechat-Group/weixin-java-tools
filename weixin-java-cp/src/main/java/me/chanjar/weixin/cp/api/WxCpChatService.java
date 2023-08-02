@@ -1,8 +1,8 @@
 package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
 import me.chanjar.weixin.cp.bean.WxCpChat;
+import me.chanjar.weixin.cp.bean.message.WxCpAppChatMessage;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface WxCpChatService {
    * @param owner  指定群主的id。如果不指定，系统会随机从userlist中选一人作为群主
    * @param users  群成员id列表。至少2人，至多500人
    * @param chatId 群聊的唯一标志，不能与已有的群重复；字符串类型，最长32个字符。只允许字符0-9及字母a-zA-Z。如果不填，系统会随机生成群id
-   * @return 创建的群聊会话chatId
+   * @return 创建的群聊会话chatId string
    * @throws WxErrorException 异常
    */
   String create(String name, String owner, List<String> users, String chatId) throws WxErrorException;
@@ -40,7 +40,7 @@ public interface WxCpChatService {
    * 获取群聊会话.
    *
    * @param chatId 群聊编号
-   * @return 群聊会话
+   * @return 群聊会话 wx cp chat
    * @throws WxErrorException 异常
    */
   WxCpChat get(String chatId) throws WxErrorException;
@@ -49,7 +49,7 @@ public interface WxCpChatService {
    * 应用支持推送文本、图片、视频、文件、图文等类型.
    * 请求方式： POST（HTTPS）
    * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/appchat/send?access_token=ACCESS_TOKEN
-   * 文档地址：https://work.weixin.qq.com/api/doc#90000/90135/90248
+   * 文档地址：<a href="https://work.weixin.qq.com/api/doc#90000/90135/90248">...</a>
    *
    * @param message 要发送的消息内容对象
    * @throws WxErrorException 异常

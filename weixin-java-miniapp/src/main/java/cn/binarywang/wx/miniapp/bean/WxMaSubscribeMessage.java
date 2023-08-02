@@ -60,7 +60,7 @@ public class WxMaSubscribeMessage implements Serializable {
    * 描述： 模板内容，不填则下发空模板
    * </pre>
    */
-  private List<Data> data;
+  private List<MsgData> data;
 
   /**
    * 跳转小程序类型：developer为开发版；trial为体验版；formal为正式版；默认为正式版
@@ -72,7 +72,7 @@ public class WxMaSubscribeMessage implements Serializable {
    */
   private String lang = WxMaConstants.MiniProgramLang.ZH_CN;
 
-  public WxMaSubscribeMessage addData(Data datum) {
+  public WxMaSubscribeMessage addData(MsgData datum) {
     if (this.data == null) {
       this.data = new ArrayList<>();
     }
@@ -86,10 +86,10 @@ public class WxMaSubscribeMessage implements Serializable {
     return WxMaGsonBuilder.create().toJson(this);
   }
 
-  @lombok.Data
+  @Data
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class Data implements Serializable {
+  public static class MsgData implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String name;

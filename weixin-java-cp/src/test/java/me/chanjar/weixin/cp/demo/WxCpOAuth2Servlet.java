@@ -9,11 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type Wx cp o auth 2 servlet.
+ */
 public class WxCpOAuth2Servlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
+  /**
+   * The Wx cp service.
+   */
   protected WxCpService wxCpService;
 
+  /**
+   * Instantiates a new Wx cp o auth 2 servlet.
+   *
+   * @param wxCpService the wx cp service
+   */
   public WxCpOAuth2Servlet(WxCpService wxCpService) {
     this.wxCpService = wxCpService;
   }

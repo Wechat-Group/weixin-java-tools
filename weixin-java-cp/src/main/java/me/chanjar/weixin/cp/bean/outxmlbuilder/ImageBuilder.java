@@ -11,6 +11,12 @@ public final class ImageBuilder extends BaseBuilder<ImageBuilder, WxCpXmlOutImag
 
   private String mediaId;
 
+  /**
+   * Media id image builder.
+   *
+   * @param media_id the media id
+   * @return the image builder
+   */
   public ImageBuilder mediaId(String media_id) {
     this.mediaId = media_id;
     return this;

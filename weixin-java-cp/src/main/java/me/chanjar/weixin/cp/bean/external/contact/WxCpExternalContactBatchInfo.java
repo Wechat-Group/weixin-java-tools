@@ -28,6 +28,9 @@ public class WxCpExternalContactBatchInfo extends WxCpBaseResp implements Serial
   @SerializedName("next_cursor")
   private String nextCursor;
 
+  /**
+   * The type External contact info.
+   */
   @Getter
   @Setter
   public static class ExternalContactInfo implements Serializable {
@@ -41,6 +44,12 @@ public class WxCpExternalContactBatchInfo extends WxCpBaseResp implements Serial
   }
 
 
+  /**
+   * From json wx cp external contact batch info.
+   *
+   * @param json the json
+   * @return the wx cp external contact batch info
+   */
   public static WxCpExternalContactBatchInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpExternalContactBatchInfo.class);
   }

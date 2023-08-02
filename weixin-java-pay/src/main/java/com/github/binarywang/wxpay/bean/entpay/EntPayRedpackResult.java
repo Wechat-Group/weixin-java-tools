@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 企业微信红包返回
  *
  * @author wuyong
- * @date 2019-12-01 11:31
+ * created on  2019-12-01 11:31
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -55,14 +55,14 @@ public class EntPayRedpackResult extends BaseWxPayResult implements Serializable
    * 付款金额
    * 付款金额，单位分
    */
-  @XStreamAlias("totalAmount")
+  @XStreamAlias("total_amount")
   private String totalAmount;
 
   /**
    * 微信单号
    * 红包订单的微信单号
    */
-  @XStreamAlias("sendListid")
+  @XStreamAlias("send_listid")
   private String sendListId;
 
   /**
@@ -85,8 +85,8 @@ public class EntPayRedpackResult extends BaseWxPayResult implements Serializable
     mchId = readXmlString(d, "mch_id");
     wxAppId = readXmlString(d, "wxappid");
     reOpenid = readXmlString(d, "re_openid");
-    totalAmount = readXmlString(d, "totalAmount");
-    sendListId = readXmlString(d, "sendListid");
+    totalAmount = readXmlString(d, "total_amount");
+    sendListId = readXmlString(d, "send_listid");
     senderName = readXmlString(d, "sender_name");
     senderHeaderMediaId = readXmlString(d, "sender_header_media_id");
   }

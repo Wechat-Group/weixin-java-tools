@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.w3c.dom.Document;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class ProfitSharingQueryResult extends BaseWxPayResult {
+public class ProfitSharingQueryResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = 2548673608075775067L;
   /**
    * 微信订单号

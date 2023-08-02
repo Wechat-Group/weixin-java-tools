@@ -9,6 +9,7 @@ import lombok.Setter;
 import me.chanjar.weixin.cp.util.json.WxCpConclusionAdapter;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,14 +19,20 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-public class WxCpContactWayInfo {
+public class WxCpContactWayInfo implements Serializable {
+  private static final long serialVersionUID = -8697184659526210472L;
 
   @SerializedName("contact_way")
   private ContactWay contactWay;
 
+  /**
+   * The type Contact way.
+   */
   @Getter
   @Setter
-  public static class ContactWay {
+  public static class ContactWay implements Serializable {
+    private static final long serialVersionUID = -8697184659526210472L;
+
     /**
      * 联系方式的配置id
      */
@@ -153,10 +160,21 @@ public class WxCpContactWayInfo {
      */
     private Conclusion conclusions;
 
+    /**
+     * From json wx cp contact way info . contact way.
+     *
+     * @param json the json
+     * @return the wx cp contact way info . contact way
+     */
     public static WxCpContactWayInfo.ContactWay fromJson(String json) {
       return WxCpGsonBuilder.create().fromJson(json, WxCpContactWayInfo.ContactWay.class);
     }
 
+    /**
+     * To json string.
+     *
+     * @return the string
+     */
     public String toJson() {
       return WxCpGsonBuilder.create().toJson(this);
     }
@@ -166,7 +184,9 @@ public class WxCpContactWayInfo {
      */
     @Data
     @JsonAdapter(WxCpConclusionAdapter.class)
-    public static class Conclusion {
+    public static class Conclusion implements Serializable {
+      private static final long serialVersionUID = -8697184659526210472L;
+
       private String textContent;
       private String imgMediaId;
       private String imgPicUrl;
@@ -183,14 +203,28 @@ public class WxCpContactWayInfo {
   }
 
 
+  /**
+   * From json wx cp contact way info.
+   *
+   * @param json the json
+   * @return the wx cp contact way info
+   */
   public static WxCpContactWayInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpContactWayInfo.class);
   }
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * The enum Type.
+   */
   public enum TYPE {
     /**
      * 单人
@@ -202,10 +236,13 @@ public class WxCpContactWayInfo {
      * 多人
      */
     @SerializedName("2")
-    MULTI;
+    MULTI
 
   }
 
+  /**
+   * The enum Scene.
+   */
   public enum SCENE {
 
     /**
@@ -218,7 +255,7 @@ public class WxCpContactWayInfo {
      * 通过二维码联系
      */
     @SerializedName("2")
-    QRCODE;
+    QRCODE
 
   }
 

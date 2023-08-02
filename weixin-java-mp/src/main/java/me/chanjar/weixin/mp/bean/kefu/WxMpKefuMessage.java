@@ -3,7 +3,6 @@ package me.chanjar.weixin.mp.bean.kefu;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.builder.kefu.*;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -37,6 +36,7 @@ public class WxMpKefuMessage implements Serializable {
   private String headContent;
   private String tailContent;
   private List<WxArticle> articles = new ArrayList<>();
+  private String mpNewsArticleId;
 
   /**
    * 菜单消息里的菜单内容.
@@ -114,19 +114,27 @@ public class WxMpKefuMessage implements Serializable {
   }
 
   /**
+   * 发送图文消息（点击跳转到图文消息页面）使用通过 “发布” 系列接口得到的 article_id(草稿箱功能上线后不再支持客服接口中带 media_id 的 mpnews 类型的图文消息)
+   */
+  public static MpNewsArticleBuilder MPNEWSARTICLE() {
+    return new MpNewsArticleBuilder();
+  }
+
+  /**
    * <pre>
    * 请使用
-   * {@link WxConsts.KefuMsgType#TEXT}
-   * {@link WxConsts.KefuMsgType#IMAGE}
-   * {@link WxConsts.KefuMsgType#VOICE}
-   * {@link WxConsts.KefuMsgType#MUSIC}
-   * {@link WxConsts.KefuMsgType#VIDEO}
-   * {@link WxConsts.KefuMsgType#NEWS}
-   * {@link WxConsts.KefuMsgType#MPNEWS}
-   * {@link WxConsts.KefuMsgType#WXCARD}
-   * {@link WxConsts.KefuMsgType#MINIPROGRAMPAGE}
-   * {@link WxConsts.KefuMsgType#TASKCARD}
-   * {@link WxConsts.KefuMsgType#MSGMENU}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#TEXT}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#IMAGE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#VOICE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MUSIC}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#VIDEO}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#NEWS}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MPNEWS}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#WXCARD}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MINIPROGRAMPAGE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#TASKCARD}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MSGMENU}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MP_NEWS_ARTICLE}
    * </pre>
    */
   public void setMsgType(String msgType) {

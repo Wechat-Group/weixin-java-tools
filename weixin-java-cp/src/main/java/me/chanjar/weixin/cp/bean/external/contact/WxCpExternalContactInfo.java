@@ -1,7 +1,7 @@
 package me.chanjar.weixin.cp.bean.external.contact;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.*;
+import lombok.Data;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
@@ -26,6 +26,15 @@ public class WxCpExternalContactInfo implements Serializable {
   @SerializedName("follow_user")
   private List<FollowedUser> followedUsers;
 
+  @SerializedName("next_cursor")
+  private String nextCursor;
+
+  /**
+   * From json wx cp external contact info.
+   *
+   * @param json the json
+   * @return the wx cp external contact info
+   */
   public static WxCpExternalContactInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpExternalContactInfo.class);
   }

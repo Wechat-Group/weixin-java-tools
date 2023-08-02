@@ -3,11 +3,11 @@ package me.chanjar.weixin.cp.api;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import me.chanjar.weixin.cp.message.WxCpMessageHandler;
 import me.chanjar.weixin.cp.message.WxCpMessageMatcher;
 import me.chanjar.weixin.cp.message.WxCpMessageRouter;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -22,6 +22,13 @@ import java.util.Map;
 @Test
 public class WxCpMessageRouterTest {
 
+  /**
+   * Prepare.
+   *
+   * @param async  the async
+   * @param sb     the sb
+   * @param router the router
+   */
   @Test(enabled = false)
   public void prepare(boolean async, StringBuffer sb, WxCpMessageRouter router) {
     router
@@ -40,20 +47,28 @@ public class WxCpMessageRouterTest {
       .msgType(WxConsts.XmlMsgType.TEXT).event(WxConsts.EventType.CLICK)
       .handler(new WxEchoCpMessageHandler(sb, "COMBINE_2"))
       .end()
-      .rule().async(async).msgType(WxConsts.XmlMsgType.TEXT).handler(new WxEchoCpMessageHandler(sb, WxConsts.XmlMsgType.TEXT)).end()
-      .rule().async(async).event(WxConsts.EventType.CLICK).handler(new WxEchoCpMessageHandler(sb, WxConsts.EventType.CLICK)).end()
+      .rule().async(async).msgType(WxConsts.XmlMsgType.TEXT).handler(new WxEchoCpMessageHandler(sb,
+        WxConsts.XmlMsgType.TEXT)).end()
+      .rule().async(async).event(WxConsts.EventType.CLICK).handler(new WxEchoCpMessageHandler(sb,
+        WxConsts.EventType.CLICK)).end()
       .rule().async(async).eventKey("KEY_1").handler(new WxEchoCpMessageHandler(sb, "KEY_1")).end()
       .rule().async(async).content("CONTENT_1").handler(new WxEchoCpMessageHandler(sb, "CONTENT_1")).end()
       .rule().async(async).rContent(".*bc.*").handler(new WxEchoCpMessageHandler(sb, "abcd")).end()
       .rule().async(async).matcher(new WxCpMessageMatcher() {
-      @Override
-      public boolean match(WxCpXmlMessage message) {
-        return "strangeformat".equals(message.getFormat());
-      }
-    }).handler(new WxEchoCpMessageHandler(sb, "matcher")).end()
+        @Override
+        public boolean match(WxCpXmlMessage message) {
+          return "strangeformat".equals(message.getFormat());
+        }
+      }).handler(new WxEchoCpMessageHandler(sb, "matcher")).end()
       .rule().async(async).handler(new WxEchoCpMessageHandler(sb, "ALL")).end();
   }
 
+  /**
+   * Test sync.
+   *
+   * @param message  the message
+   * @param expected the expected
+   */
   @Test(dataProvider = "messages-1")
   public void testSync(WxCpXmlMessage message, String expected) {
     StringBuffer sb = new StringBuffer();
@@ -63,6 +78,13 @@ public class WxCpMessageRouterTest {
     Assert.assertEquals(sb.toString(), expected);
   }
 
+  /**
+   * Test async.
+   *
+   * @param message  the message
+   * @param expected the expected
+   * @throws InterruptedException the interrupted exception
+   */
   @Test(dataProvider = "messages-1")
   public void testAsync(WxCpXmlMessage message, String expected) throws InterruptedException {
     StringBuffer sb = new StringBuffer();
@@ -73,6 +95,11 @@ public class WxCpMessageRouterTest {
     Assert.assertEquals(sb.toString(), expected);
   }
 
+  /**
+   * Test concurrency.
+   *
+   * @throws InterruptedException the interrupted exception
+   */
   public void testConcurrency() throws InterruptedException {
     final WxCpMessageRouter router = new WxCpMessageRouter(null);
     router.rule().handler(new WxCpMessageHandler() {
@@ -98,6 +125,11 @@ public class WxCpMessageRouterTest {
     Thread.sleep(2000);
   }
 
+  /**
+   * Messages 2 object [ ] [ ].
+   *
+   * @return the object [ ] [ ]
+   */
   @DataProvider(name = "messages-1")
   public Object[][] messages2() {
     WxCpXmlMessage message1 = new WxCpXmlMessage();
@@ -152,6 +184,11 @@ public class WxCpMessageRouterTest {
 
   }
 
+  /**
+   * Standard session manager object [ ] [ ].
+   *
+   * @return the object [ ] [ ]
+   */
   @DataProvider
   public Object[][] standardSessionManager() {
 
@@ -167,6 +204,12 @@ public class WxCpMessageRouterTest {
 
   }
 
+  /**
+   * Test session clean 1.
+   *
+   * @param ism the ism
+   * @throws InterruptedException the interrupted exception
+   */
   @Test(dataProvider = "standardSessionManager")
   public void testSessionClean1(StandardSessionManager ism) throws InterruptedException {
 
@@ -186,6 +229,12 @@ public class WxCpMessageRouterTest {
 
   }
 
+  /**
+   * Test session clean 2.
+   *
+   * @param ism the ism
+   * @throws InterruptedException the interrupted exception
+   */
   @Test(dataProvider = "standardSessionManager")
   public void testSessionClean2(StandardSessionManager ism) throws InterruptedException {
 
@@ -221,6 +270,12 @@ public class WxCpMessageRouterTest {
 
   }
 
+  /**
+   * Test session clean 3.
+   *
+   * @param ism the ism
+   * @throws InterruptedException the interrupted exception
+   */
   @Test(dataProvider = "standardSessionManager")
   public void testSessionClean3(StandardSessionManager ism) throws InterruptedException {
 
@@ -240,6 +295,12 @@ public class WxCpMessageRouterTest {
 
   }
 
+  /**
+   * Test session clean 4.
+   *
+   * @param ism the ism
+   * @throws InterruptedException the interrupted exception
+   */
   @Test(dataProvider = "standardSessionManager")
   public void testSessionClean4(StandardSessionManager ism) throws InterruptedException {
 
@@ -273,11 +334,20 @@ public class WxCpMessageRouterTest {
     }
   }
 
+  /**
+   * The type Wx echo cp message handler.
+   */
   public static class WxEchoCpMessageHandler implements WxCpMessageHandler {
 
-    private StringBuffer sb;
-    private String echoStr;
+    private final StringBuffer sb;
+    private final String echoStr;
 
+    /**
+     * Instantiates a new Wx echo cp message handler.
+     *
+     * @param sb      the sb
+     * @param echoStr the echo str
+     */
     public WxEchoCpMessageHandler(StringBuffer sb, String echoStr) {
       this.sb = sb;
       this.echoStr = echoStr;
@@ -292,6 +362,9 @@ public class WxCpMessageRouterTest {
 
   }
 
+  /**
+   * The type Wx session message handler.
+   */
   public static class WxSessionMessageHandler implements WxCpMessageHandler {
 
     @Override

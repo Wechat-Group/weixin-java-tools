@@ -22,6 +22,9 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Menu.*;
 @Slf4j
 @RequiredArgsConstructor
 public class WxMpMenuServiceImpl implements WxMpMenuService {
+  private static final String MENU_ID = "menuid";
+  private static final String MATCH_RULE = "matchrule";
+
   private final WxMpService wxMpService;
 
   @Override
@@ -38,7 +41,7 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
     log.debug("创建菜单：{},结果：{}", menuJson, result);
 
     if (menu.getMatchRule() != null) {
-      return GsonParser.parse(result).get("menuid").getAsString();
+      return GsonParser.parse(result).get(MENU_ID).getAsString();
     }
 
     return null;
@@ -48,13 +51,13 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
   public String menuCreate(String json) throws WxErrorException {
     JsonObject jsonObject = GsonParser.parse(json);
     WxMpApiUrl.Menu url = MENU_CREATE;
-    if (jsonObject.get("matchrule") != null) {
+    if (jsonObject.get(MATCH_RULE) != null) {
       url = MENU_ADDCONDITIONAL;
     }
 
     String result = this.wxMpService.post(url, json);
-    if (jsonObject.get("matchrule") != null) {
-      return GsonParser.parse(result).get("menuid").getAsString();
+    if (jsonObject.get(MATCH_RULE) != null) {
+      return GsonParser.parse(result).get(MENU_ID).getAsString();
     }
 
     return null;
@@ -69,9 +72,9 @@ public class WxMpMenuServiceImpl implements WxMpMenuService {
   @Override
   public void menuDelete(String menuId) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("menuid", menuId);
+    jsonObject.addProperty(MENU_ID, menuId);
     String result = this.wxMpService.post(MENU_DELCONDITIONAL, jsonObject.toString());
-    log.debug("根据MeunId({})删除个性化菜单结果：{}", menuId, result);
+    log.debug("根据MenuId({})删除个性化菜单结果：{}", menuId, result);
   }
 
   @Override

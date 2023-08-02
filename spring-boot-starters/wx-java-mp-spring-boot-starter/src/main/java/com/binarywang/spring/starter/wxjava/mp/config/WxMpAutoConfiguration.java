@@ -12,6 +12,6 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @EnableConfigurationProperties(WxMpProperties.class)
-@Import({WxMpStorageAutoConfiguration.class, WxMpServiceAutoConfiguration.class})
+@Import({ WxMpStorageAutoConfiguration.class, WxMpServiceAutoConfiguration.class })
 public class WxMpAutoConfiguration {
 }

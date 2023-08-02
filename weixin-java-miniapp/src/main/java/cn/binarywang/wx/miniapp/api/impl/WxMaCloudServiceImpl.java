@@ -3,9 +3,9 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaCloudService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.cloud.*;
-import cn.binarywang.wx.miniapp.constant.WxMaConstants;
-import cn.binarywang.wx.miniapp.util.JoinerUtils;
+import cn.binarywang.wx.miniapp.bean.cloud.request.WxCloudSendSmsV2Request;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
+import cn.binarywang.wx.miniapp.util.JoinerUtils;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
@@ -13,6 +13,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonParser;
@@ -20,18 +21,22 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Cloud.*;
 
 /**
  * 云开发相关接口实现类.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-01-22
+ * created on  2020-01-22
  */
 @Slf4j
 @RequiredArgsConstructor
 public class WxMaCloudServiceImpl implements WxMaCloudService {
-
   private final WxMaService wxMaService;
 
   @Override
@@ -60,7 +65,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
 
     String responseContent = wxMaService.post(DATABASE_ADD_URL, params.toString());
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(WxMaConstants.ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent));
     }
     JsonArray idArray = jsonObject.getAsJsonArray("id_list");
@@ -84,7 +89,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
 
     String responseContent = wxMaService.post(DATABASE_ADD_URL, params.toString());
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(WxMaConstants.ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent));
     }
     JsonArray idArray = jsonObject.getAsJsonArray("id_list");
@@ -115,7 +120,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
 
     String responseContent = wxMaService.post(DATABASE_DELETE_URL, params.toString());
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(WxMaConstants.ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent));
     }
     return jsonObject.get("deleted").getAsInt();
@@ -405,5 +410,16 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
 
     String response = this.wxMaService.post(DATABASE_COLLECTION_GET_URL, params);
     return WxGsonBuilder.create().fromJson(response, WxCloudDatabaseCollectionGetResult.class);
+  }
+
+  @Override
+  public WxCloudSendSmsV2Result sendSmsV2(WxCloudSendSmsV2Request request) throws WxErrorException {
+    // 如果没有指定云环境ID，取默认云环境ID
+    if (request.getEnv() == null){
+      String cloudEnv = this.wxMaService.getWxMaConfig().getCloudEnv();
+      request.setEnv(cloudEnv);
+    }
+    String response = this.wxMaService.post(SEND_SMS_V2_URL, request);
+    return WxGsonBuilder.create().fromJson(response, WxCloudSendSmsV2Result.class);
   }
 }

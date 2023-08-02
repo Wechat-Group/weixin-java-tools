@@ -14,14 +14,14 @@ import java.util.concurrent.locks.Lock;
  * 基于Redisson的实现
  *
  * @author yuanqixun
- * @date 2020/5/3
+ * created on  2020/5/3
  */
 public class WxMaRedissonConfigImpl extends WxMaDefaultConfigImpl {
 
-  protected final static String LOCK_KEY = "wechat_ma_lock:";
-  protected final static String MA_ACCESS_TOKEN_KEY = "wechat_ma_access_token_key:";
-  protected final static String MA_JSAPI_TICKET_KEY = "wechat_ma_jsapi_ticket_key:";
-  protected final static String MA_CARD_API_TICKET_KEY = "wechat_ma_card_api_ticket_key:";
+  protected static final String LOCK_KEY = "wechat_ma_lock:";
+  protected static final String MA_ACCESS_TOKEN_KEY = "wechat_ma_access_token_key:";
+  protected static final String MA_JSAPI_TICKET_KEY = "wechat_ma_jsapi_ticket_key:";
+  protected static final String MA_CARD_API_TICKET_KEY = "wechat_ma_card_api_ticket_key:";
 
   /**
    * redis 存储的 key 的前缀，可为空
@@ -91,7 +91,7 @@ public class WxMaRedissonConfigImpl extends WxMaDefaultConfigImpl {
 
   @Override
   public void updateAccessToken(WxAccessToken accessToken) {
-    redisOps.setValue(this.accessTokenKey, accessToken.getAccessToken(), accessToken.getExpiresIn(), TimeUnit.SECONDS);
+    updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
   }
 
   @Override

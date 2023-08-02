@@ -75,9 +75,32 @@ public class WxCpTpMessageRouterRule {
   }
 
   /**
+   * 如果msgType等于某值
+   *
+   * @param msgType the msg type
+   * @return the wx cp tp message router rule
+   */
+  public WxCpTpMessageRouterRule msgType(String msgType) {
+    this.msgType = msgType;
+    return this;
+  }
+
+  /**
+   * 如果event等于某值
+   *
+   * @param event the event
+   * @return the wx cp tp message router rule
+   */
+  public WxCpTpMessageRouterRule event(String event) {
+    this.event = event;
+    return this;
+  }
+
+  /**
    * 匹配 Message infoType
    *
    * @param infoType info
+   * @return the wx cp tp message router rule
    */
   public WxCpTpMessageRouterRule infoType(String infoType) {
     this.infoType = infoType;
@@ -86,8 +109,9 @@ public class WxCpTpMessageRouterRule {
 
   /**
    * 如果changeType等于这个type，符合rule的条件之一
-   * @param changeType
-   * @return
+   *
+   * @param changeType the change type
+   * @return wx cp tp message router rule
    */
   public WxCpTpMessageRouterRule changeType(String changeType) {
     this.changeType = changeType;
@@ -123,7 +147,8 @@ public class WxCpTpMessageRouterRule {
    * @param otherInterceptors the other interceptors
    * @return the wx cp message router rule
    */
-  public WxCpTpMessageRouterRule interceptor(WxCpTpMessageInterceptor interceptor, WxCpTpMessageInterceptor... otherInterceptors) {
+  public WxCpTpMessageRouterRule interceptor(WxCpTpMessageInterceptor interceptor,
+                                             WxCpTpMessageInterceptor... otherInterceptors) {
     this.interceptors.add(interceptor);
     if (otherInterceptors != null && otherInterceptors.length > 0) {
       Collections.addAll(this.interceptors, otherInterceptors);
@@ -192,11 +217,14 @@ public class WxCpTpMessageRouterRule {
         &&
         (this.msgType == null || this.msgType.equalsIgnoreCase(wxMessage.getMsgType()))
         &&
+        (this.event == null || this.event.equalsIgnoreCase(wxMessage.getEvent()))
+        &&
         (this.infoType == null || this.infoType.equals(wxMessage.getInfoType()))
         &&
         (this.suiteTicket == null || this.suiteTicket.equalsIgnoreCase(wxMessage.getSuiteTicket()))
         &&
-        (this.eventKeyRegex == null || Pattern.matches(this.eventKeyRegex, StringUtils.trimToEmpty(wxMessage.getEventKey())))
+        (this.eventKeyRegex == null || Pattern.matches(this.eventKeyRegex,
+          StringUtils.trimToEmpty(wxMessage.getEventKey())))
         &&
         (this.content == null || this.content.equals(StringUtils.trimToNull(wxMessage.getContent())))
         &&

@@ -1,11 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.analysis.WxMaRetainInfo;
-import cn.binarywang.wx.miniapp.bean.analysis.WxMaSummaryTrend;
-import cn.binarywang.wx.miniapp.bean.analysis.WxMaUserPortrait;
-import cn.binarywang.wx.miniapp.bean.analysis.WxMaVisitDistribution;
-import cn.binarywang.wx.miniapp.bean.analysis.WxMaVisitPage;
-import cn.binarywang.wx.miniapp.bean.analysis.WxMaVisitTrend;
+import cn.binarywang.wx.miniapp.bean.analysis.*;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 import java.util.Date;
@@ -19,16 +14,6 @@ import java.util.List;
  * @since 2018-04-28
  */
 public interface WxMaAnalysisService {
-  String GET_DAILY_SUMMARY_TREND_URL = "https://api.weixin.qq.com/datacube/getweanalysisappiddailysummarytrend";
-  String GET_DAILY_VISIT_TREND_URL = "https://api.weixin.qq.com/datacube/getweanalysisappiddailyvisittrend";
-  String GET_WEEKLY_VISIT_TREND_URL = "https://api.weixin.qq.com/datacube/getweanalysisappidweeklyvisittrend";
-  String GET_MONTHLY_VISIT_TREND_URL = "https://api.weixin.qq.com/datacube/getweanalysisappidmonthlyvisittrend";
-  String GET_VISIT_DISTRIBUTION_URL = "https://api.weixin.qq.com/datacube/getweanalysisappidvisitdistribution";
-  String GET_DAILY_RETAIN_INFO_URL = "https://api.weixin.qq.com/datacube/getweanalysisappiddailyretaininfo";
-  String GET_WEEKLY_RETAIN_INFO_URL = "https://api.weixin.qq.com/datacube/getweanalysisappidweeklyretaininfo";
-  String GET_MONTHLY_RETAIN_INFO_URL = "https://api.weixin.qq.com/datacube/getweanalysisappidmonthlyretaininfo";
-  String GET_VISIT_PAGE_URL = "https://api.weixin.qq.com/datacube/getweanalysisappidvisitpage";
-  String GET_USER_PORTRAIT_URL = "https://api.weixin.qq.com/datacube/getweanalysisappiduserportrait";
 
   /**
    * 查询概况趋势

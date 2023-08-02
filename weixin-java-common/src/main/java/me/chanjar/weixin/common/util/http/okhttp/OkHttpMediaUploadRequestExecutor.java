@@ -15,7 +15,7 @@ import java.io.IOException;
  * .
  *
  * @author ecoolper
- * @date 2017/5/5
+ * created on  2017/5/5
  */
 public class OkHttpMediaUploadRequestExecutor extends MediaUploadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
   public OkHttpMediaUploadRequestExecutor(RequestHttp requestHttp) {

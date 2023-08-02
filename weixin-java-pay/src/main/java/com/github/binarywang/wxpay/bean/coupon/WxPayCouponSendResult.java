@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.w3c.dom.Document;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  * 发送代金券响应结果类
@@ -19,7 +21,9 @@ import org.w3c.dom.Document;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @XStreamAlias("xml")
-public class WxPayCouponSendResult extends BaseWxPayResult {
+public class WxPayCouponSendResult extends BaseWxPayResult implements Serializable {
+  private static final long serialVersionUID = -3596288305333090962L;
+
   /**
    * <pre>
    * 字段名：设备号

@@ -1,9 +1,9 @@
 package me.chanjar.weixin.open.bean.message;
 
+import cn.binarywang.wx.miniapp.bean.code.WxMaCodeSubmitAuditItem;
+import cn.binarywang.wx.miniapp.bean.code.WxMaCodeSubmitAuditPreviewInfo;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.open.bean.ma.WxOpenMaPreviewInfo;
-import me.chanjar.weixin.open.bean.ma.WxOpenMaSubmitAudit;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,22 +12,23 @@ import java.util.List;
  * 微信小程序代码包提交审核(仅供第三方开发者代小程序调用)
  *
  * @author yqx
- * @date 2018/9/13
+ * created on  2018/9/13
  */
 @Data
 public class WxOpenMaSubmitAuditMessage implements Serializable {
+  private static final long serialVersionUID = 8881103449144288927L;
 
   /**
    * 提交审核项的一个列表（至少填写1项，至多填写5项）
    */
   @SerializedName("item_list")
-  private List<WxOpenMaSubmitAudit> itemList;
+  private List<WxMaCodeSubmitAuditItem> itemList;
 
   /**
    * 预览信息（小程序页面截图和操作录屏）
    */
   @SerializedName("preview_info")
-  private List<WxOpenMaPreviewInfo> previewInfo;
+  private WxMaCodeSubmitAuditPreviewInfo previewInfo;
 
   /**
    * 小程序版本说明和功能解释
@@ -46,4 +47,16 @@ public class WxOpenMaSubmitAuditMessage implements Serializable {
    */
   @SerializedName("feedback_stuff")
   private String feedbackStuff;
+
+  /**
+   * 用于声明是否不使用“代码中检测出但是未配置的隐私相关接口”
+   */
+  @SerializedName("privacy_api_not_use")
+  private Boolean privacyApiNotUse;
+
+  /**
+   * 订单中心path
+   */
+  @SerializedName("order_path")
+  private String orderPath;
 }

@@ -7,21 +7,26 @@ import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
 import me.chanjar.weixin.cp.tp.message.WxCpTpMessageHandler;
 import me.chanjar.weixin.cp.tp.message.WxCpTpMessageRouter;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
-import me.chanjar.weixin.cp.tp.service.impl.WxCpTpServiceImpl;
+import me.chanjar.weixin.cp.tp.service.impl.WxCpTpServiceApacheHttpClientImpl;
 import org.testng.annotations.Test;
 
 import java.util.Map;
 
 import static org.testng.Assert.assertNotNull;
-import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertNull;
 
+/**
+ * The type Wx cp tp message router test.
+ */
 public class WxCpTpMessageRouterTest {
 
 
+  /**
+   * Test message router.
+   */
   @Test
   public void testMessageRouter() {
-    WxCpTpService service = new WxCpTpServiceImpl();
+    WxCpTpService service = new WxCpTpServiceApacheHttpClientImpl();
     WxCpTpMessageRouter router = new WxCpTpMessageRouter(service);
 
     String xml = "<xml>\n" +
@@ -41,7 +46,8 @@ public class WxCpTpMessageRouterTest {
 
     router.rule().infoType("change_contact").changeType("update_tag").handler(new WxCpTpMessageHandler() {
       @Override
-      public WxCpXmlOutMessage handle(WxCpTpXmlMessage wxMessage, Map<String, Object> context, WxCpTpService wxCpService, WxSessionManager sessionManager) throws WxErrorException {
+      public WxCpXmlOutMessage handle(WxCpTpXmlMessage wxMessage, Map<String, Object> context,
+                                      WxCpTpService wxCpService, WxSessionManager sessionManager) throws WxErrorException {
         System.out.println("handler enter");
         assertNotNull(wxCpService);
         return null;
@@ -49,7 +55,6 @@ public class WxCpTpMessageRouterTest {
     }).end();
 
     assertNull(router.route(wxXmlMessage));
-
 
     System.out.println("over");
   }

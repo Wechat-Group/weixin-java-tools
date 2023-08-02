@@ -6,22 +6,31 @@ import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
-import org.testng.annotations.*;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertNotNull;
 
 /**
  * <pre>
  *
  * Created by Binary Wang on 2017-6-25.
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * </pre>
+ * @author  <a href="https://github.com/binarywang">Binary Wang</a> </pre>
  */
 @Guice(modules = ApiTestModule.class)
 public class WxCpMenuServiceImplTest {
+  /**
+   * The Wx service.
+   */
   @Inject
   protected WxCpService wxService;
 
+  /**
+   * Menu data object [ ] [ ].
+   *
+   * @return the object [ ] [ ]
+   */
   @DataProvider
   public Object[][] menuData() {
     WxMenu menu = new WxMenu();
@@ -69,11 +78,22 @@ public class WxCpMenuServiceImplTest {
 
   }
 
+  /**
+   * Test create.
+   *
+   * @param wxMenu the wx menu
+   * @throws Exception the exception
+   */
   @Test(dataProvider = "menuData")
   public void testCreate(WxMenu wxMenu) throws Exception {
     this.wxService.getMenuService().create(wxMenu);
   }
 
+  /**
+   * Test get.
+   *
+   * @throws Exception the exception
+   */
   @Test(dependsOnMethods = "testCreate")
   public void testGet() throws Exception {
     WxMenu menu = this.wxService.getMenuService().get();
@@ -81,6 +101,11 @@ public class WxCpMenuServiceImplTest {
     System.out.println(menu.toJson());
   }
 
+  /**
+   * Test delete.
+   *
+   * @throws Exception the exception
+   */
   @Test(dependsOnMethods = {"testGet", "testCreate"})
   public void testDelete() throws Exception {
     this.wxService.getMenuService().delete();

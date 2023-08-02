@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @EnableConfigurationProperties(WxOpenProperties.class)
-@Import({WxOpenStorageAutoConfiguration.class, WxOpenServiceAutoConfiguration.class})
+@Import({
+  WxOpenStorageAutoConfiguration.class,
+  WxOpenServiceAutoConfiguration.class
+})
 public class WxOpenAutoConfiguration {
 }

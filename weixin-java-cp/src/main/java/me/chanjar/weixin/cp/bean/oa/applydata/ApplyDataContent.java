@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * The type Apply data content.
+ *
  * @author element
  */
 @Data

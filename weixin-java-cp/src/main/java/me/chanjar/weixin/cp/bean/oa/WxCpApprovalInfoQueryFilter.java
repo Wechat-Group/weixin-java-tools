@@ -25,11 +25,19 @@ public class WxCpApprovalInfoQueryFilter implements Serializable {
 
   private Object value;
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxGsonBuilder.create().toJson(this);
   }
 
-  public static enum KEY {
+  /**
+   * The enum Key.
+   */
+  public enum KEY {
 
     /**
      * template_id - 模板类型/模板id；
@@ -52,9 +60,9 @@ public class WxCpApprovalInfoQueryFilter implements Serializable {
     @SerializedName("sp_status")
     SP_STATUS("sp_status");
 
-    private String value;
+    private final String value;
 
-    private KEY(String value) {
+    KEY(String value) {
       this.value = value;
     }
   }

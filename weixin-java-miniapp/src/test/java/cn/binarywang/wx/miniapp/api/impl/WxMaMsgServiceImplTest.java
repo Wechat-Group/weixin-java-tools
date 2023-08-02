@@ -46,9 +46,9 @@ public class WxMaMsgServiceImplTest {
     message.setToUser(config.getOpenid());
     message.setLang(WxMaConstants.MiniProgramLang.ZH_CN);
     message.setMiniprogramState(WxMaConstants.MiniProgramState.FORMAL);
-    message.addData(new WxMaSubscribeMessage.Data("thing1", "苹果到货啦"));
-    message.addData(new WxMaSubscribeMessage.Data("amount3", "¥5"));
-    message.addData(new WxMaSubscribeMessage.Data("thing5", "记得领取哦"));
+    message.addData(new WxMaSubscribeMessage.MsgData("thing1", "苹果到货啦"));
+    message.addData(new WxMaSubscribeMessage.MsgData("amount3", "¥5"));
+    message.addData(new WxMaSubscribeMessage.MsgData("thing5", "记得领取哦"));
     this.wxService.getMsgService().sendSubscribeMsg(message);
   }
 

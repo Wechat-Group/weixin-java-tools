@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ import java.util.List;
 public class WxMaLiveResult implements Serializable {
   private static final long serialVersionUID = 1L;
   private Integer total;
-  private Integer auditId;
+  private Long auditId;
   private Integer goodsId;
   private List<Goods> goods;
 
@@ -66,13 +67,18 @@ public class WxMaLiveResult implements Serializable {
      */
     @SerializedName("audit_status")
     private Integer auditStatus;
-    private String price;
-    private String price2;
+    private BigDecimal price;
+    private BigDecimal price2;
     /**
      * 1, 2：表示是为api添加商品，否则是在MP添加商品
      */
     @SerializedName("third_party_tag")
     private String thirdPartyTag;
+
+    /**
+     * 当商品为第三方小程序的商品则填写为对应第三方小程序的appid，自身小程序商品则为''
+     */
+    private String thirdPartyAppid;
   }
 
   /**
@@ -100,15 +106,26 @@ public class WxMaLiveResult implements Serializable {
     private String anchorWechat;
     @SerializedName("anchor_img")
     private String anchorImg;
+    @SerializedName("live_type")
     private Integer type;
     @SerializedName("screen_type")
     private Integer screenType;
     @SerializedName("close_like")
     private Integer closeLike;
-    @SerializedName("closeGoods")
+    @SerializedName("close_goods")
     private Integer closeGoods;
     @SerializedName("close_comment")
     private Integer closeComment;
+    @SerializedName("close_kf")
+    private Integer closeKf;
+    @SerializedName("close_replay")
+    private Integer closeReplay;
+    @SerializedName("is_feeds_public")
+    private Integer isFeedsPublic;
+    @SerializedName("creater_openid")
+    private String createrOpenid;
+    @SerializedName("feeds_img")
+    private String feedsImg;
     private List<Goods> goods;
   }
 

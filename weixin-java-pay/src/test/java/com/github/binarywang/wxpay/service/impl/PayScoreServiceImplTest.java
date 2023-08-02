@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
  * 测试代码，待补充完善.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-05-19
+ * created on  2020-05-19
  */
 @Test
 @Guice(modules = ApiTestModule.class)

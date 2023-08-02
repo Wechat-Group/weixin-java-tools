@@ -1,27 +1,31 @@
 package me.chanjar.weixin.cp.util.xml;
 
+import com.thoughtworks.xstream.XStream;
+import me.chanjar.weixin.common.util.xml.XStreamInitializer;
+import me.chanjar.weixin.cp.bean.WxCpTpXmlPackage;
+import me.chanjar.weixin.cp.bean.message.*;
+
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.thoughtworks.xstream.XStream;
-import me.chanjar.weixin.common.util.xml.XStreamInitializer;
-import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
-import me.chanjar.weixin.cp.bean.WxCpTpXmlPackage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutImageMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutNewsMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutTextMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutVideoMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutVoiceMessage;
-
+/**
+ * The type X stream transformer.
+ */
 public class XStreamTransformer {
 
+  /**
+   * The constant CLASS_2_XSTREAM_INSTANCE.
+   */
   protected static final Map<Class, XStream> CLASS_2_XSTREAM_INSTANCE = configXStreamInstance();
 
   /**
    * xml -> pojo
+   *
+   * @param <T>   the type parameter
+   * @param clazz the clazz
+   * @param xml   the xml
+   * @return the t
    */
   @SuppressWarnings("unchecked")
   public static <T> T fromXml(Class<T> clazz, String xml) {
@@ -29,6 +33,14 @@ public class XStreamTransformer {
     return object;
   }
 
+  /**
+   * From xml t.
+   *
+   * @param <T>   the type parameter
+   * @param clazz the clazz
+   * @param is    the is
+   * @return the t
+   */
   @SuppressWarnings("unchecked")
   public static <T> T fromXml(Class<T> clazz, InputStream is) {
     T object = (T) CLASS_2_XSTREAM_INSTANCE.get(clazz).fromXML(is);
@@ -47,6 +59,11 @@ public class XStreamTransformer {
 
   /**
    * pojo -> xml.
+   *
+   * @param <T>    the type parameter
+   * @param clazz  the clazz
+   * @param object the object
+   * @return the string
    */
   public static <T> String toXml(Class<T> clazz, T object) {
     return CLASS_2_XSTREAM_INSTANCE.get(clazz).toXML(object);
@@ -60,8 +77,11 @@ public class XStreamTransformer {
     map.put(WxCpXmlOutImageMessage.class, configWxCpXmlOutImageMessage());
     map.put(WxCpXmlOutVideoMessage.class, configWxCpXmlOutVideoMessage());
     map.put(WxCpXmlOutVoiceMessage.class, configWxCpXmlOutVoiceMessage());
+    map.put(WxCpXmlOutTaskCardMessage.class, configWxCpXmlOutTaskCardMessage());
+    map.put(WxCpXmlOutUpdateBtnMessage.class, configWxCpXmlOutUpdateBtnMessage());
     map.put(WxCpTpXmlPackage.class, configWxCpTpXmlPackage());
     map.put(WxCpTpXmlMessage.class, configWxCpTpXmlMessage());
+    map.put(WxCpXmlOutEventMessage.class, configWxCpXmlOutEventMessage());
     return map;
   }
 
@@ -118,6 +138,21 @@ public class XStreamTransformer {
     return xstream;
   }
 
+  private static XStream configWxCpXmlOutTaskCardMessage() {
+    XStream xstream = XStreamInitializer.getInstance();
+
+    xstream.processAnnotations(WxCpXmlOutMessage.class);
+    xstream.processAnnotations(WxCpXmlOutTaskCardMessage.class);
+    return xstream;
+  }
+
+  private static XStream configWxCpXmlOutUpdateBtnMessage() {
+    XStream xstream = XStreamInitializer.getInstance();
+    xstream.processAnnotations(WxCpXmlOutMessage.class);
+    xstream.processAnnotations(WxCpXmlOutUpdateBtnMessage.class);
+    return xstream;
+  }
+
   private static XStream configWxCpTpXmlPackage() {
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(WxCpTpXmlPackage.class);
@@ -129,6 +164,13 @@ public class XStreamTransformer {
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(WxCpTpXmlMessage.class);
 
+    return xstream;
+  }
+
+  private static XStream configWxCpXmlOutEventMessage() {
+    XStream xstream = XStreamInitializer.getInstance();
+    xstream.processAnnotations(WxCpXmlOutMessage.class);
+    xstream.processAnnotations(WxCpXmlOutEventMessage.class);
     return xstream;
   }
 

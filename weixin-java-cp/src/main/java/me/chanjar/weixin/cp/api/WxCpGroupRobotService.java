@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
+import me.chanjar.weixin.cp.bean.message.WxCpGroupRobotMessage;
 
 import java.util.List;
 
@@ -10,8 +11,7 @@ import java.util.List;
  * 文档地址：https://work.weixin.qq.com/help?doc_id=13376
  * 调用地址：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=
  *
- * @author yr
- * @date 2020-8-20
+ * @author yr  created on  2020-8-20
  */
 public interface WxCpGroupRobotService {
 
@@ -88,4 +88,22 @@ public interface WxCpGroupRobotService {
    * @throws WxErrorException 异常
    */
   void sendNews(String webhookUrl, List<NewArticle> articleList) throws WxErrorException;
+
+  /**
+   * 发送文件类型的消息
+   *
+   * @param webhookUrl webhook地址
+   * @param mediaId    文件id
+   * @throws WxErrorException 异常
+   */
+  void sendFile(String webhookUrl, String mediaId) throws WxErrorException;
+
+  /**
+   * 发送模板卡片消息
+   * @param webhookUrl
+   * @param wxCpGroupRobotMessage
+   * @throws WxErrorException
+   */
+  void sendTemplateCardMessage(String webhookUrl, WxCpGroupRobotMessage wxCpGroupRobotMessage) throws WxErrorException;
+
 }

@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
-import org.apache.http.annotation.NotThreadSafe;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -13,6 +12,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.config.SocketConfig;
+import org.apache.http.conn.ConnectionKeepAliveStrategy;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
@@ -26,6 +26,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContexts;
 
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -92,12 +93,18 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
    */
   private String userAgent;
 
-  private final HttpRequestRetryHandler httpRequestRetryHandler = new HttpRequestRetryHandler() {
-    @Override
-    public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
-      return false;
-    }
-  };
+  /**
+   * 自定义重试策略
+   */
+  private HttpRequestRetryHandler httpRequestRetryHandler;
+
+  /**
+   * 自定义KeepAlive策略
+   */
+  private ConnectionKeepAliveStrategy connectionKeepAliveStrategy;
+
+  private final HttpRequestRetryHandler defaultHttpRequestRetryHandler = (exception, executionCount, context) -> false;
+
   private SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactory.getSocketFactory();
   private final PlainConnectionSocketFactory plainConnectionSocketFactory = PlainConnectionSocketFactory.getSocketFactory();
   private String httpProxyHost;
@@ -145,6 +152,18 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
   }
 
   @Override
+  public ApacheHttpClientBuilder httpRequestRetryHandler(HttpRequestRetryHandler httpRequestRetryHandler) {
+    this.httpRequestRetryHandler = httpRequestRetryHandler;
+    return this;
+  }
+
+  @Override
+  public ApacheHttpClientBuilder keepAliveStrategy(ConnectionKeepAliveStrategy keepAliveStrategy) {
+    this.connectionKeepAliveStrategy = keepAliveStrategy;
+    return this;
+  }
+
+  @Override
   public ApacheHttpClientBuilder sslConnectionSocketFactory(SSLConnectionSocketFactory sslConnectionSocketFactory) {
     this.sslConnectionSocketFactory = sslConnectionSocketFactory;
     return this;
@@ -163,7 +182,6 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
       .register("https", this.sslConnectionSocketFactory)
       .build();
 
-    @SuppressWarnings("resource")
     PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(registry);
     connectionManager.setMaxTotal(this.maxTotalConn);
     connectionManager.setDefaultMaxPerRoute(this.maxConnPerHost);
@@ -187,7 +205,16 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
         .setConnectTimeout(this.connectionTimeout)
         .setConnectionRequestTimeout(this.connectionRequestTimeout)
         .build()
-      ).setRetryHandler(this.httpRequestRetryHandler);
+      );
+
+    // 设置重试策略，没有则使用默认
+    httpRequestRetryHandler = httpRequestRetryHandler == null ? defaultHttpRequestRetryHandler : httpRequestRetryHandler;
+    httpClientBuilder.setRetryHandler(httpRequestRetryHandler);
+
+    // 设置KeepAliveStrategy，没有使用默认
+    if (connectionKeepAliveStrategy != null) {
+      httpClientBuilder.setKeepAliveStrategy(connectionKeepAliveStrategy);
+    }
 
     if (StringUtils.isNotBlank(this.httpProxyHost) && StringUtils.isNotBlank(this.httpProxyUsername)) {
       // 使用代理服务器 需要用户认证的代理服务器
@@ -210,12 +237,7 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     try {
       SSLContext sslcontext = SSLContexts.custom()
         //忽略掉对服务器端证书的校验
-        .loadTrustMaterial(new TrustStrategy() {
-          @Override
-          public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-            return true;
-          }
-        }).build();
+        .loadTrustMaterial((TrustStrategy) (chain, authType) -> true).build();
 
       return new SSLConnectionSocketFactory(
         sslcontext,

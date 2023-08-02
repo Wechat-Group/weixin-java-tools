@@ -11,9 +11,11 @@ import java.lang.reflect.Type;
  *
  * @author element
  */
-public class WxCpConclusionAdapter implements JsonSerializer<WxCpContactWayInfo.ContactWay.Conclusion>, JsonDeserializer<WxCpContactWayInfo.ContactWay.Conclusion> {
+public class WxCpConclusionAdapter implements JsonSerializer<WxCpContactWayInfo.ContactWay.Conclusion>,
+  JsonDeserializer<WxCpContactWayInfo.ContactWay.Conclusion> {
   @Override
-  public WxCpContactWayInfo.ContactWay.Conclusion deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+  public WxCpContactWayInfo.ContactWay.Conclusion deserialize(JsonElement json, Type typeOfT,
+                                                              JsonDeserializationContext context) throws JsonParseException {
     JsonObject jsonObject = json.getAsJsonObject();
 
     WxCpContactWayInfo.ContactWay.Conclusion conclusion = new WxCpContactWayInfo.ContactWay.Conclusion();
@@ -77,7 +79,8 @@ public class WxCpConclusionAdapter implements JsonSerializer<WxCpContactWayInfo.
   }
 
   @Override
-  public JsonElement serialize(WxCpContactWayInfo.ContactWay.Conclusion src, Type typeOfSrc, JsonSerializationContext context) {
+  public JsonElement serialize(WxCpContactWayInfo.ContactWay.Conclusion src, Type typeOfSrc,
+                               JsonSerializationContext context) {
     JsonObject json = new JsonObject();
     if (StringUtils.isNotBlank(src.getTextContent())) {
       JsonObject jsonText = new JsonObject();

@@ -13,10 +13,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * 测试.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-07-18
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-07-18
  */
 public class WxCpOaApplyEventRequestTest {
+  /**
+   * Test to json.
+   */
   @Test
   public void testToJson() {
     String json = "{\n" +
@@ -72,7 +74,8 @@ public class WxCpOaApplyEventRequestTest {
     request.setCreatorUserId("WangXiaoMing")
       .setTemplateId("3Tka1eD6v6JfzhDMqPd3aMkFdxqtJMc2ZRioeFXkaaa")
       .setUseTemplateApprover(0)
-      .setApprovers(Arrays.asList(new WxCpOaApplyEventRequest.Approver().setAttr(2).setUserIds(new String[]{"WuJunJie", "WangXiaoMing"}),
+      .setApprovers(Arrays.asList(new WxCpOaApplyEventRequest.Approver().setAttr(2).setUserIds(new String[]{"WuJunJie"
+          , "WangXiaoMing"}),
         new WxCpOaApplyEventRequest.Approver().setAttr(1).setUserIds(new String[]{"LiuXiaoGang"})))
       .setNotifiers(new String[]{"WuJunJie", "WangXiaoMing"})
       .setNotifyType(1)
@@ -80,11 +83,14 @@ public class WxCpOaApplyEventRequestTest {
         .setContents(Collections.singletonList(new ApplyDataContent()
           .setControl("Text").setId("Text-15111111111").setValue(new ContentValue().setText("文本填写的内容")))))
       .setSummaryList(Arrays.asList(new SummaryInfo()
-          .setSummaryInfoData(Collections.singletonList(new SummaryInfo.SummaryInfoData().setLang("zh_CN").setText("摘要第1行"))),
+          .setSummaryInfoData(Collections.singletonList(new SummaryInfo.SummaryInfoData().setLang("zh_CN").setText(
+            "摘要第1行"))),
         new SummaryInfo()
-          .setSummaryInfoData(Collections.singletonList(new SummaryInfo.SummaryInfoData().setLang("zh_CN").setText("摘要第2行"))),
+          .setSummaryInfoData(Collections.singletonList(new SummaryInfo.SummaryInfoData().setLang("zh_CN").setText(
+            "摘要第2行"))),
         new SummaryInfo()
-          .setSummaryInfoData(Collections.singletonList(new SummaryInfo.SummaryInfoData().setLang("zh_CN").setText("摘要第3行")))))
+          .setSummaryInfoData(Collections.singletonList(new SummaryInfo.SummaryInfoData().setLang("zh_CN").setText(
+            "摘要第3行")))))
     ;
 
     assertThat(request.toJson()).isEqualTo(GsonParser.parse(json).toString());

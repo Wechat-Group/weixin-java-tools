@@ -12,7 +12,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
  * 红包相关接口.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2019-12-26
+ * created on  2019-12-26
  */
 public interface RedpackService {
   /**

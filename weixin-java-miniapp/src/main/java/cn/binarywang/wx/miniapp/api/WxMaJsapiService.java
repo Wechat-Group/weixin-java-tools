@@ -13,14 +13,11 @@ import me.chanjar.weixin.common.error.WxErrorException;
  */
 public interface WxMaJsapiService {
   /**
-   * 获得jsapi_ticket的url
-   */
-  String GET_JSAPI_TICKET_URL = "https://api.weixin.qq.com/cgi-bin/ticket/getticket";
-
-  /**
    * 获得卡券api_ticket,不强制刷新api_ticket
    *
-   * @see #getJsapiTicket(boolean)
+   * @return the card api ticket
+   * @throws WxErrorException the wx error exception
+   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)
    */
   String getCardApiTicket() throws WxErrorException;
 
@@ -33,13 +30,17 @@ public interface WxMaJsapiService {
    * </pre>
    *
    * @param forceRefresh 强制刷新
+   * @return the card api ticket
+   * @throws WxErrorException the wx error exception
    */
   String getCardApiTicket(boolean forceRefresh) throws WxErrorException;
 
   /**
    * 获得jsapi_ticket,不强制刷新jsapi_ticket
    *
-   * @see #getJsapiTicket(boolean)
+   * @return the jsapi ticket
+   * @throws WxErrorException the wx error exception
+   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)
    */
   String getJsapiTicket() throws WxErrorException;
 
@@ -52,6 +53,8 @@ public interface WxMaJsapiService {
    * </pre>
    *
    * @param forceRefresh 强制刷新
+   * @return the jsapi ticket
+   * @throws WxErrorException the wx error exception
    */
   String getJsapiTicket(boolean forceRefresh) throws WxErrorException;
 
@@ -61,6 +64,10 @@ public interface WxMaJsapiService {
    *
    * 详情请见：http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115&token=&lang=zh_CN
    * </pre>
+   *
+   * @param url the url
+   * @return the wx jsapi signature
+   * @throws WxErrorException the wx error exception
    */
   WxJsapiSignature createJsapiSignature(String url) throws WxErrorException;
 

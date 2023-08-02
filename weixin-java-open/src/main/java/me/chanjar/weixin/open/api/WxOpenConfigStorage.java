@@ -140,6 +140,24 @@ public interface WxOpenConfigStorage {
   String getHttpProxyPassword();
 
   /**
+   * http 请求重试间隔
+   * <pre>
+   *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setRetrySleepMillis(int)}
+   *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setRetrySleepMillis(int)}
+   * </pre>
+   */
+  int getRetrySleepMillis();
+
+  /**
+   * http 请求最大重试次数
+   * <pre>
+   *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setMaxRetryTimes(int)}
+   *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setMaxRetryTimes(int)}
+   * </pre>
+   */
+  int getMaxRetryTimes();
+
+  /**
    * Gets apache http client builder.
    *
    * @return the apache http client builder
@@ -210,6 +228,7 @@ public interface WxOpenConfigStorage {
 
   /**
    * setAuthorizerRefreshToken(String appId, String authorizerRefreshToken) 方法重载方法
+   *
    * @param appId                  the app id
    * @param authorizerRefreshToken the authorizer refresh token
    */

@@ -47,7 +47,7 @@ public class PemUtils {
 
   public static X509Certificate loadCertificate(InputStream inputStream) {
     try {
-      CertificateFactory cf = CertificateFactory.getInstance("X509");
+      CertificateFactory cf = CertificateFactory.getInstance("X.509");
       X509Certificate cert = (X509Certificate) cf.generateCertificate(inputStream);
       cert.checkValidity();
       return cert;

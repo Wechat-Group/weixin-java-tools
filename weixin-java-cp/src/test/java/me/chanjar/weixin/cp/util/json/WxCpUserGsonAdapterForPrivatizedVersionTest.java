@@ -11,10 +11,13 @@ import static org.assertj.core.api.Assertions.assertThat;
  * </pre>
  *
  * @author 庄壮壮
- * @since 2020-06-16 09:36
+ * @since 2020 -06-16 09:36
  */
 public class WxCpUserGsonAdapterForPrivatizedVersionTest {
 
+  /**
+   * Test deserialize.
+   */
   @Test
   public void testDeserialize() {
     final String userJson = "{\n" +
@@ -31,13 +34,15 @@ public class WxCpUserGsonAdapterForPrivatizedVersionTest {
       "   \"gender\": \"1\",\n" +
       "   \"email\": \"zhangsan@gzdev.com\",\n" +
       "   \"is_leader_in_dept\": [1, 0],\n" +
-      "   \"avatar\": \"http://wx.qlogo.cn/mmopen/ajNVdqHZLLA3WJ6DSZUfiakYe37PKnQhBIeOQBO4czqrnZDS79FH5Wm5m4X69TBicnHFlhiafvDwklOpZeXYQQ2icg/0\",\n" +
+      "   \"avatar\": \"http://wx.qlogo" +
+      ".cn/mmopen/ajNVdqHZLLA3WJ6DSZUfiakYe37PKnQhBIeOQBO4czqrnZDS79FH5Wm5m4X69TBicnHFlhiafvDwklOpZeXYQQ2icg/0\",\n" +
       "   \"telephone\": \"020-123456\",\n" +
       "   \"english_name\": \"jackzhang\",\n" +
       "   \"extattr\": {\"attrs\":[{\"name\":\"爱好\",\"value\":\"旅游\"},{\"name\":\"卡号\",\"value\":\"1234567234\"}]},\n" +
       "   \"status\": 1,\n" +
       "   \"enable\": 0,\n" +
-      "   \"qr_code\": \"https://wwlocal.qq.com/wework_admin/userQRCode?vcode=vc2140a8b3c6207c74&lvc=vcf6f1acfdc4b45088\"\n" +
+      "   \"qr_code\": \"https://wwlocal.qq.com/wework_admin/userQRCode?vcode=vc2140a8b3c6207c74&lvc" +
+      "=vcf6f1acfdc4b45088\"\n" +
       "}";
 
     final WxCpUser user = WxCpUser.fromJson(userJson);
@@ -70,6 +75,9 @@ public class WxCpUserGsonAdapterForPrivatizedVersionTest {
     assertThat(user.getPositions()[1]).isEqualTo("后台工程师2");
   }
 
+  /**
+   * Test serialize.
+   */
   @Test
   public void testSerialize() {
     WxCpUser user = new WxCpUser();
@@ -84,6 +92,8 @@ public class WxCpUserGsonAdapterForPrivatizedVersionTest {
     user.addExtAttr(attr1);
     user.addExtAttr(attr2);
 
-    assertThat(user.toJson()).isEqualTo("{\"order\":[1,2],\"positions\":[\"后台工程师1\",\"后台工程师2\"],\"english_name\":\"jackson\",\"extattr\":{\"attrs\":[{\"name\":\"爱好\",\"value\":\"旅游\"},{\"name\":\"卡号\",\"value\":\"1234567234\"}]},\"external_profile\":{}}");
+    assertThat(user.toJson()).isEqualTo("{\"order\":[1,2],\"positions\":[\"后台工程师1\",\"后台工程师2\"]," +
+      "\"english_name\":\"jackson\",\"extattr\":{\"attrs\":[{\"name\":\"爱好\",\"value\":\"旅游\"},{\"name\":\"卡号\"," +
+      "\"value\":\"1234567234\"}]},\"external_profile\":{}}");
   }
 }

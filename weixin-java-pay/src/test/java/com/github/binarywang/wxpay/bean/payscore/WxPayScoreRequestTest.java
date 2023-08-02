@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-07-11
+ * created on  2020-07-11
  */
 public class WxPayScoreRequestTest {
   @Test

@@ -7,11 +7,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author gyv12345@163.com
+ * The type Template selector.
+ *
+ * @author gyv12345 @163.com
  */
 @Data
 public class TemplateSelector implements Serializable {
-
   private static final long serialVersionUID = 4995408101489736881L;
   /**
    * single-单选；multi-多选

@@ -9,6 +9,7 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,17 +17,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * 单元测试.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-09-20
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-09-20
  */
-
 @Test
 @Guice(modules = ApiTestModule.class)
 public class WxCpOaCalendarServiceImplTest {
+  /**
+   * The Wx service.
+   */
   @Inject
   protected WxCpService wxService;
   private final String calId = "wcbBJNCQAARipW967iE8DKPAp5Kb96qQ";
 
+  /**
+   * Test add.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testAdd() throws WxErrorException {
     this.wxService.getOaCalendarService().add(WxCpOaCalendar.builder()
@@ -41,6 +48,11 @@ public class WxCpOaCalendarServiceImplTest {
       .build());
   }
 
+  /**
+   * Test update.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testUpdate() throws WxErrorException {
     this.wxService.getOaCalendarService().update(WxCpOaCalendar.builder()
@@ -56,12 +68,22 @@ public class WxCpOaCalendarServiceImplTest {
       .build());
   }
 
+  /**
+   * Test get.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testGet() throws WxErrorException {
-    final List<WxCpOaCalendar> calendars = this.wxService.getOaCalendarService().get(Arrays.asList(calId));
+    final List<WxCpOaCalendar> calendars = this.wxService.getOaCalendarService().get(Collections.singletonList(calId));
     assertThat(calendars).isNotEmpty();
   }
 
+  /**
+   * Test delete.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testDelete() throws WxErrorException {
     this.wxService.getOaCalendarService().delete(calId);

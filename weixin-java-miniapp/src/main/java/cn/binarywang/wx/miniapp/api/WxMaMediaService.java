@@ -15,8 +15,6 @@ import java.io.InputStream;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMaMediaService {
-  String MEDIA_UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?type=%s";
-  String MEDIA_GET_URL = "https://api.weixin.qq.com/cgi-bin/media/get";
 
   /**
    * <pre>

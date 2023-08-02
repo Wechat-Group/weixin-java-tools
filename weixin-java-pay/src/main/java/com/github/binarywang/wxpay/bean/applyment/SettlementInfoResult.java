@@ -11,6 +11,8 @@ import java.io.Serializable;
 
 /**
  * 查询结算账户返回对象信息
+ *
+ * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_4.shtml">查询结算账户</a>
  */
 @Data
 @Builder
@@ -51,4 +53,12 @@ public class SettlementInfoResult implements Serializable {
    */
   @SerializedName("verify_result")
   private String verifyResult;
+  /**
+   * 汇款验证失败原因
+   *
+   * @since 4.4.0
+   * @date 2022.12.09
+   */
+  @SerializedName("verify_fail_reason")
+  private String verifyFailReason;
 }

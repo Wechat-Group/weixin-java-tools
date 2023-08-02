@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * 直播间小助手用户信息
+ *
+ * @author GaoMinZhu
  */
 @Data
 public class WxMaAssistantResult implements Serializable {
@@ -22,6 +24,7 @@ public class WxMaAssistantResult implements Serializable {
   public static WxMaAssistantResult fromJson(String json) {
     return WxMaGsonBuilder.create().fromJson(json, WxMaAssistantResult.class);
   }
+
   @Data
   public static class Assistant implements Serializable {
     private static final long serialVersionUID = 6362128855371134033L;

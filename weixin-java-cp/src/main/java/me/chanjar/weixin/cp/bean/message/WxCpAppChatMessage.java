@@ -75,6 +75,11 @@ public class WxCpAppChatMessage implements Serializable {
 
   /**
    * 构建文本消息.
+   *
+   * @param chatId  the chat id
+   * @param content the content
+   * @param safe    the safe
+   * @return the wx cp app chat message
    */
   public static WxCpAppChatMessage buildTextMsg(String chatId, String content, boolean safe) {
     final WxCpAppChatMessage message = new WxCpAppChatMessage();
@@ -87,6 +92,8 @@ public class WxCpAppChatMessage implements Serializable {
 
   /**
    * 生成json字符串.
+   *
+   * @return the string
    */
   public String toJson() {
     JsonObject messageJson = new JsonObject();

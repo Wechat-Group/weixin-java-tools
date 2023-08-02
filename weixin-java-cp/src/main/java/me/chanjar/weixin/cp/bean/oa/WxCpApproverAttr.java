@@ -19,9 +19,9 @@ public enum WxCpApproverAttr {
   @SerializedName("2")
   ALL_SIGN(2);
 
-  private Integer attr;
+  private final Integer attr;
 
-  private WxCpApproverAttr(Integer attr) {
+  WxCpApproverAttr(Integer attr) {
     this.attr = attr;
   }
 

@@ -7,7 +7,6 @@ import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
-import me.chanjar.weixin.cp.api.ApiTestModuleWithMockServer;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.message.WxCpLinkedCorpMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
@@ -27,19 +26,26 @@ import static org.testng.Assert.assertNotNull;
 /**
  * 测试类.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-08-30
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-08-30
  */
 @Test
 //@Guice(modules = ApiTestModuleWithMockServer.class)
 @Guice(modules = ApiTestModule.class)
 public class WxCpMessageServiceImplTest {
+  /**
+   * The Wx service.
+   */
   @Inject
   protected WxCpService wxService;
 
   private Runner mockRunner;
   private ApiTestModule.WxXmlCpInMemoryConfigStorage configStorage;
 
+  private WxCpMessageSendResult wxCpMessageSendResult;
+
+  /**
+   * Sets .
+   */
   @BeforeTest
   public void setup() {
     HttpServer mockServer = jsonHttpServer(mockServerPort, file("src/test/resources/moco/message.json"));
@@ -48,11 +54,19 @@ public class WxCpMessageServiceImplTest {
     this.configStorage = (ApiTestModule.WxXmlCpInMemoryConfigStorage) this.wxService.getWxCpConfigStorage();
   }
 
+  /**
+   * Stop mock server.
+   */
   @AfterTest
   public void stopMockServer() {
     this.mockRunner.stop();
   }
 
+  /**
+   * Test send message.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   public void testSendMessage() throws WxErrorException {
     WxCpMessage message = new WxCpMessage();
 //    message.setAgentId(configStorage.getAgentId());
@@ -68,6 +82,11 @@ public class WxCpMessageServiceImplTest {
     System.out.println(messageSendResult.getInvalidTagList());
   }
 
+  /**
+   * Test send message 1.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSendMessage1() throws WxErrorException {
     WxCpMessage message = WxCpMessage
@@ -79,12 +98,18 @@ public class WxCpMessageServiceImplTest {
 
     WxCpMessageSendResult messageSendResult = this.wxService.getMessageService().send(message);
     assertNotNull(messageSendResult);
+    wxCpMessageSendResult = messageSendResult;
     System.out.println(messageSendResult);
     System.out.println(messageSendResult.getInvalidPartyList());
     System.out.println(messageSendResult.getInvalidUserList());
     System.out.println(messageSendResult.getInvalidTagList());
   }
 
+  /**
+   * Test send message markdown.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSendMessage_markdown() throws WxErrorException {
     WxCpMessage message = WxCpMessage
@@ -113,13 +138,19 @@ public class WxCpMessageServiceImplTest {
     System.out.println(messageSendResult.getInvalidTagList());
   }
 
+  /**
+   * Test send message text card.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSendMessage_textCard() throws WxErrorException {
     WxCpMessage message = WxCpMessage
       .TEXTCARD()
       .toUser(configStorage.getUserId())
       .btnTxt("更多")
-      .description("<div class=\"gray\">2016年9月26日</div> <div class=\"normal\">恭喜你抽中iPhone 7一台，领奖码：xxxx</div><div class=\"highlight\">请于2016年10月10日前联系行政同事领取</div>")
+      .description("<div class=\"gray\">2016年9月26日</div> <div class=\"normal\">恭喜你抽中iPhone 7一台，领奖码：xxxx</div><div " +
+        "class=\"highlight\">请于2016年10月10日前联系行政同事领取</div>")
       .url("URL")
       .title("领奖通知")
       .build();
@@ -132,6 +163,11 @@ public class WxCpMessageServiceImplTest {
     System.out.println(messageSendResult.getInvalidTagList());
   }
 
+  /**
+   * Test send message mini program notice.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSendMessage_miniProgram_notice() throws WxErrorException {
     WxCpMessage message = WxCpMessage
@@ -155,6 +191,11 @@ public class WxCpMessageServiceImplTest {
     System.out.println(messageSendResult.getInvalidTagList());
   }
 
+  /**
+   * Test send linked corp message.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSendLinkedCorpMessage() throws WxErrorException {
     this.wxService.getMessageService().sendLinkedCorpMessage(WxCpLinkedCorpMessage.builder()
@@ -164,16 +205,33 @@ public class WxCpMessageServiceImplTest {
       .build());
   }
 
+  /**
+   * Test send.
+   */
   @Test
   public void testSend() {
     // see other test methods
   }
 
+  /**
+   * Test get statistics.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testGetStatistics() throws WxErrorException {
     final WxCpMessageSendStatistics statistics = this.wxService.getMessageService().getStatistics(1);
     assertNotNull(statistics);
     assertThat(statistics.getStatistics()).isNotNull();
+  }
+
+  /**
+   * Test message recall
+   * @throws WxErrorException
+   */
+  @Test(dependsOnMethods = "testSendMessage1")
+  public void testRecall() throws WxErrorException {
+    this.wxService.getMessageService().recall(wxCpMessageSendResult.getMsgId());
   }
 
 }

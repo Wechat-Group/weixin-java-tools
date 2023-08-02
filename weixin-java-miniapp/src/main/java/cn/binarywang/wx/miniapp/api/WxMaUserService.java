@@ -13,7 +13,6 @@ import java.util.Map;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public interface WxMaUserService {
-  String SET_USER_STORAGE = "https://api.weixin.qq.com/wxa/set_user_storage?appid=%s&signature=%s&openid=%s&sig_method=%s";
 
   /**
    * 获取登录后的session信息.
@@ -52,8 +51,30 @@ public interface WxMaUserService {
    * @param encryptedData 消息密文
    * @param ivStr         加密算法的初始向量
    * @return .
+   * @deprecated 请使用替代方法 {@link #getPhoneNoInfo(String)}
    */
+  @Deprecated
   WxMaPhoneNumberInfo getPhoneNoInfo(String sessionKey, String encryptedData, String ivStr);
+
+  /**
+   * 获取手机号信息,基础库:2.21.2及以上
+   *
+   * @param code 动态令牌
+   * @return .
+   * @throws WxErrorException .
+   */
+  WxMaPhoneNumberInfo getPhoneNoInfo(String code) throws WxErrorException;
+
+  /**
+   * 获取手机号信息,基础库:2.21.2及以上
+   *
+   * @param code 动态令牌
+   * @return .
+   * @throws WxErrorException .
+   * @deprecated 命名有些复杂，请使用替代方法 {@link #getPhoneNoInfo(String)}
+   */
+  @Deprecated
+  WxMaPhoneNumberInfo getNewPhoneNoInfo(String code) throws WxErrorException;
 
   /**
    * 验证用户信息完整性.

@@ -1,12 +1,12 @@
 package me.chanjar.weixin.mp.api;
 
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceHttpClientImpl;
-import org.testng.annotations.*;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -23,7 +23,7 @@ public class WxMpBusyRetryTest {
 
       @Override
       public synchronized <T, E> T executeInternal(
-        RequestExecutor<T, E> executor, String uri, E data)
+        RequestExecutor<T, E> executor, String uri, E data, boolean doNotAutoRefresh)
         throws WxErrorException {
         log.info("Executed");
         throw new WxErrorException("something");
@@ -37,7 +37,7 @@ public class WxMpBusyRetryTest {
 
   @Test(dataProvider = "getService", expectedExceptions = RuntimeException.class)
   public void testRetry(WxMpService service) throws WxErrorException {
-    service.execute(null, (String)null, null);
+    service.execute(null, (String) null, null);
   }
 
   @Test(dataProvider = "getService")
@@ -48,7 +48,7 @@ public class WxMpBusyRetryTest {
       try {
         System.out.println("=====================");
         System.out.println(Thread.currentThread().getName() + ": testRetry");
-        service.execute(null, (String)null, null);
+        service.execute(null, (String) null, null);
       } catch (WxErrorException e) {
         throw new WxRuntimeException(e);
       } catch (RuntimeException e) {

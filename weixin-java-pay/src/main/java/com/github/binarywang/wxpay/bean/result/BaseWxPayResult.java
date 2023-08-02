@@ -27,6 +27,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,7 @@ public abstract class BaseWxPayResult {
    */
   @XStreamAlias("result_code")
   private String resultCode;
+
   /**
    * 错误代码.
    */
@@ -69,6 +71,18 @@ public abstract class BaseWxPayResult {
    */
   @XStreamAlias("err_code_des")
   private String errCodeDes;
+
+  /**
+   * 错误代码.
+   */
+  @XStreamAlias("error_code")
+  private String errorCode;
+  /**
+   * 错误代码描述.
+   */
+  @XStreamAlias("error_message")
+  private String errorMessage;
+
   /**
    * 公众账号ID.
    */
@@ -119,7 +133,7 @@ public abstract class BaseWxPayResult {
    * @return the string
    */
   public static String fenToYuan(Integer fen) {
-    return BigDecimal.valueOf(Double.valueOf(fen) / 100).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+    return BigDecimal.valueOf(Double.valueOf(fen) / 100).setScale(2, RoundingMode.HALF_UP).toPlainString();
   }
 
   /**
@@ -145,6 +159,7 @@ public abstract class BaseWxPayResult {
     }
     XStream xstream = XStreamInitializer.getInstance();
     xstream.processAnnotations(clz);
+    xstream.setClassLoader(BaseWxPayResult.class.getClassLoader());
     T result = (T) xstream.fromXML(xmlString);
     result.setXmlString(xmlString);
     return result;
@@ -167,6 +182,7 @@ public abstract class BaseWxPayResult {
     returnMsg = readXmlString(d, "return_msg");
     resultCode = readXmlString(d, "result_code");
     errCode = readXmlString(d, "err_code");
+    errorCode = readXmlString(d, "error_code");
     errCodeDes = readXmlString(d, "err_code_des");
     appid = readXmlString(d, "appid");
     mchId = readXmlString(d, "mch_id");
@@ -221,6 +237,15 @@ public abstract class BaseWxPayResult {
     }
 
     return Integer.parseInt(content);
+  }
+
+  protected static Long readXmlLong(Document d, String tagName) {
+    String content = readXmlString(d, tagName);
+    if (content == null || content.trim().length() == 0) {
+      return null;
+    }
+
+    return Long.parseLong(content);
   }
 
   /**
@@ -356,11 +381,14 @@ public abstract class BaseWxPayResult {
         if (getErrCode() != null) {
           errorMsg.append("，错误代码：").append(getErrCode());
         }
+        if (getErrorCode() != null) {
+          errorMsg.append("，错误代码：").append(getErrorCode());
+        }
         if (getErrCodeDes() != null) {
           errorMsg.append("，错误详情：").append(getErrCodeDes());
         }
 
-        this.getLogger().error("\n结果业务代码异常，返回结果：{},\n{}", map, errorMsg.toString());
+        this.getLogger().error("\n结果业务代码异常，返回结果：{},\n{}", map, errorMsg);
         throw WxPayException.from(this);
       }
     }

@@ -22,7 +22,8 @@ public interface WxCpMenuService {
    * </pre>
    *
    * @param menu 菜单对象
-   * @see #create(Integer, WxMenu)
+   * @throws WxErrorException the wx error exception
+   * @see #create(Integer, WxMenu) #create(Integer, WxMenu)
    */
   void create(WxMenu menu) throws WxErrorException;
 
@@ -36,7 +37,8 @@ public interface WxCpMenuService {
    *
    * @param agentId 企业号应用的id
    * @param menu    菜单对象
-   * @see #create(me.chanjar.weixin.common.bean.menu.WxMenu)
+   * @throws WxErrorException the wx error exception
+   * @see #create(me.chanjar.weixin.common.bean.menu.WxMenu) #create(me.chanjar.weixin.common.bean.menu.WxMenu)
    */
   void create(Integer agentId, WxMenu menu) throws WxErrorException;
 
@@ -48,7 +50,8 @@ public interface WxCpMenuService {
    * 注意: 这个方法使用WxCpConfigStorage里的agentId
    * </pre>
    *
-   * @see #delete(Integer)
+   * @throws WxErrorException the wx error exception
+   * @see #delete(Integer) #delete(Integer)
    */
   void delete() throws WxErrorException;
 
@@ -61,7 +64,8 @@ public interface WxCpMenuService {
    * </pre>
    *
    * @param agentId 企业号应用的id
-   * @see #delete()
+   * @throws WxErrorException the wx error exception
+   * @see #delete() #delete()
    */
   void delete(Integer agentId) throws WxErrorException;
 
@@ -73,7 +77,9 @@ public interface WxCpMenuService {
    * 注意: 这个方法使用WxCpConfigStorage里的agentId
    * </pre>
    *
-   * @see #get(Integer)
+   * @return the wx menu
+   * @throws WxErrorException the wx error exception
+   * @see #get(Integer) #get(Integer)
    */
   WxMenu get() throws WxErrorException;
 
@@ -86,7 +92,9 @@ public interface WxCpMenuService {
    * </pre>
    *
    * @param agentId 企业号应用的id
-   * @see #get()
+   * @return the wx menu
+   * @throws WxErrorException the wx error exception
+   * @see #get() #get()
    */
   WxMenu get(Integer agentId) throws WxErrorException;
 }

@@ -22,6 +22,7 @@ import java.io.Serializable;
 @XStreamAlias("xml")
 public class WxPayShorturlResult extends BaseWxPayResult implements Serializable {
   private static final long serialVersionUID = -2121902492357304418L;
+
   /**
    * <pre>
    * URL链接

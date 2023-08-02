@@ -3,17 +3,26 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaSecCheckService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaMediaAsyncCheckResult;
+import cn.binarywang.wx.miniapp.bean.security.WxMaMediaSecCheckCheckRequest;
+import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckRequest;
+import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckResponse;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
+import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+
+import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.SecCheck.*;
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * <pre>
@@ -23,9 +32,9 @@ import java.net.URL;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
-  private WxMaService service;
+  private final WxMaService service;
 
   @Override
   public boolean checkImage(File file) throws WxErrorException {
@@ -43,7 +52,7 @@ public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorCode(-1).errorMsg("文件地址读取异常").build(), e);
     }
-    
+
     return this.checkImage(file);
   }
 
@@ -58,6 +67,13 @@ public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
   }
 
   @Override
+  public WxMaMsgSecCheckCheckResponse checkMessage(WxMaMsgSecCheckCheckRequest msgRequest) throws WxErrorException {
+    String response = this.service.post(MSG_SEC_CHECK_URL, msgRequest);
+    parseErrorResponse(response);
+    return WxMaGsonBuilder.create().fromJson(response, WxMaMsgSecCheckCheckResponse.class);
+  }
+
+  @Override
   public WxMaMediaAsyncCheckResult mediaCheckAsync(String mediaUrl, int mediaType)
     throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
@@ -68,4 +84,17 @@ public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
       .fromJson(this.service.post(MEDIA_CHECK_ASYNC_URL, jsonObject.toString()));
   }
 
+  @Override
+  public WxMaMediaAsyncCheckResult mediaCheckAsync(WxMaMediaSecCheckCheckRequest request) throws WxErrorException {
+    String response = this.service.post(MEDIA_CHECK_ASYNC_URL, request);
+    parseErrorResponse(response);
+    return WxMaGsonBuilder.create().fromJson(response,WxMaMediaAsyncCheckResult.class);
+  }
+
+  private void parseErrorResponse(String response) throws WxErrorException {
+    JsonObject jsonObject = GsonParser.parse(response);
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(response, WxType.MiniApp));
+    }
+  }
 }

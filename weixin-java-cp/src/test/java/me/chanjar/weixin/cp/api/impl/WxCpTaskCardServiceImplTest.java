@@ -17,8 +17,7 @@ import static org.testng.Assert.assertNotNull;
 /**
  * 测试任务卡片服务
  *
- * @author <a href="https://github.com/domainname">Jeff</a>
- * @date 2019-05-16
+ * @author <a href="https://github.com/domainname">Jeff</a> created on  2019-05-16
  */
 @Guice(modules = ApiTestModule.class)
 public class WxCpTaskCardServiceImplTest {
@@ -26,6 +25,11 @@ public class WxCpTaskCardServiceImplTest {
   @Inject
   private WxCpService wxCpService;
 
+  /**
+   * Test send task card.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSendTaskCard() throws WxErrorException {
     TaskCardButton btn1 = TaskCardButton.builder()
@@ -57,6 +61,11 @@ public class WxCpTaskCardServiceImplTest {
     System.out.println(messageSendResult.getInvalidTagList());
   }
 
+  /**
+   * Test update.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testUpdate() throws Exception {
     wxCpService.getTaskCardService().update(Arrays.asList("jeff", "mr.t"), "task_1", "key1");

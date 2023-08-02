@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 云开发文件上传接口响应结果.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-01-27
+ * created on  2020-01-27
  */
 @Data
 public class WxCloudUploadFileResult implements Serializable {

@@ -1,14 +1,14 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -70,36 +70,64 @@ public class WxCpAgent implements Serializable {
   @SerializedName("home_url")
   private String homeUrl;
 
+  @SerializedName("customized_publish_status")
+  private Integer customizedPublishStatus;
+
+  /**
+   * From json wx cp agent.
+   *
+   * @param json the json
+   * @return the wx cp agent
+   */
   public static WxCpAgent fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpAgent.class);
   }
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * The type Users.
+   */
   @Data
   public static class Users implements Serializable {
     private static final long serialVersionUID = 8801100463558788565L;
+
     @SerializedName("user")
     private List<User> users;
   }
 
+  /**
+   * The type User.
+   */
   @Data
-  public class User implements Serializable {
+  public static class User implements Serializable {
     private static final long serialVersionUID = 7287632514385508024L;
+
     @SerializedName("userid")
     private String userId;
   }
 
+  /**
+   * The type Parties.
+   */
   @Data
-  public class Parties {
+  public static class Parties {
     @SerializedName("partyid")
-    private List<Integer> partyIds = null;
+    private List<Long> partyIds = null;
   }
 
+  /**
+   * The type Tags.
+   */
   @Data
-  public class Tags {
+  public static class Tags {
     @SerializedName("tagid")
     private List<Integer> tagIds = null;
   }

@@ -1,5 +1,5 @@
 # 代码贡献指南
-1. 首先非常欢迎和感谢对本项目发起`Pull Request`的同学。
+1. 首先非常欢迎和感谢对本项目发起 `Pull Request` 的热心小伙伴们。
 1. **特别提示：请务必在 `develop` 分支提交 `PR`，`release` 分支目前仅是正式版的代码，即发布正式版本后才会从 `develop` 分支进行合并。**
 1. 本项目代码风格为使用2个空格代表一个Tab，因此在提交代码时请注意一下，否则很容易在IDE格式化代码后与原代码产生大量diff，这样会给其他人阅读代码带来极大的困扰。
 1. 为了便于设置，本项目引入`editorconfig`支持，请使用Eclipse的同学在贡献代码前安装相关插件，而`IntelliJ IDEA`新版本自带支持，如果没有可自行安装插件。
@@ -24,7 +24,7 @@ $ #do some change on the content
 $ git commit -am "Fix issue #1: change something"
 $ git push
 ```
-* 在 GitHub 网站上提交 Pull Request。
+* 在 `GitHub` 或 `Gitee` 网站上提交 `Pull Request`。
 * 定期使用项目仓库内容更新自己仓库内容。
 
 ```bash

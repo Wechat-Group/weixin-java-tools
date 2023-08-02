@@ -13,8 +13,7 @@ import java.io.Serializable;
 /**
  * 修改客户备注信息请求.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-09-19
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-09-19
  */
 @Data
 @Builder
@@ -24,6 +23,11 @@ import java.io.Serializable;
 public class WxCpUpdateRemarkRequest implements Serializable {
   private static final long serialVersionUID = -4960239393895754138L;
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }

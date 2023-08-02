@@ -1,11 +1,14 @@
 package me.chanjar.weixin.common.error;
 
+import com.google.common.collect.Maps;
 import lombok.Getter;
+
+import java.util.Map;
 
 /**
  * <pre>
  * 微信公众平台全局返回码.
- * 参考文档：<a href="http://mp.weixin.qq.com/wiki/10/6380dc743053a91c544ffd2b7c959166.html">公众平台全局返回码</a>
+ * 参考文档：<a href="https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Global_Return_Code.html">公众平台全局返回码</a>
  * Created by Binary Wang on 2018/5/13.
  * </pre>
  *
@@ -210,6 +213,10 @@ public enum WxMpErrorMsgEnum {
    */
   CODE_40155(40155, "请勿添加其他公众号的主页链接"),
   /**
+   * oauth_code已使用
+   */
+  CODE_40163(40163, "oauth_code已使用"),
+  /**
    * 缺少 access_token 参数.
    */
   CODE_41001(41001, "缺少 access_token 参数"),
@@ -369,6 +376,18 @@ public enum WxMpErrorMsgEnum {
    * 非法的tag_id.
    */
   CODE_45159(45159, "非法的tag_id"),
+  /**
+   * 相同 clientmsgid 已存在群发记录，返回数据中带有已存在的群发任务的 msgid
+   */
+  CODE_45065(45065, "相同 clientmsgid 已存在群发记录，返回数据中带有已存在的群发任务的 msgid"),
+  /**
+   * 相同 clientmsgid 重试速度过快，请间隔1分钟重试
+   */
+  CODE_45066(45066, "相同 clientmsgid 重试速度过快，请间隔1分钟重试"),
+  /**
+   * clientmsgid 长度超过限制
+   */
+  CODE_45067(45067, "clientmsgid 长度超过限制"),
   /**
    * 不存在媒体数据.
    */
@@ -644,24 +663,26 @@ public enum WxMpErrorMsgEnum {
    */
   CODE_45084(45084, "没有设置 speed 参数");
 
-  private int code;
-  private String msg;
+  private final int code;
+  private final String msg;
 
   WxMpErrorMsgEnum(int code, String msg) {
     this.code = code;
     this.msg = msg;
   }
 
+  static final Map<Integer, String> valueMap = Maps.newHashMap();
+
+  static {
+    for (WxMpErrorMsgEnum value : WxMpErrorMsgEnum.values()) {
+      valueMap.put(value.code, value.msg);
+    }
+  }
+
   /**
    * 通过错误代码查找其中文含义..
    */
   public static String findMsgByCode(int code) {
-    for (WxMpErrorMsgEnum value : WxMpErrorMsgEnum.values()) {
-      if (value.code == code) {
-        return value.msg;
-      }
-    }
-
-    return null;
+    return valueMap.getOrDefault(code, null);
   }
 }

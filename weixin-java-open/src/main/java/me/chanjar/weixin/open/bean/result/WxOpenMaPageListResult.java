@@ -11,7 +11,7 @@ import java.util.List;
  * 微信开放平台小程序第三方提交代码的页面配置列表.
  *
  * @author yqx
- * @date 2018/9/12
+ * created on  2018/9/12
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

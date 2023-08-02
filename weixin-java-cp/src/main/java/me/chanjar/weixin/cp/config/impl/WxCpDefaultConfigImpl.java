@@ -18,30 +18,45 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   private static final long serialVersionUID = 1154541446729462780L;
-
+  /**
+   * The Access token.
+   */
+  protected volatile String accessToken;
+  /**
+   * The Access token lock.
+   */
+  protected transient Lock accessTokenLock = new ReentrantLock();
+  /**
+   * The Agent id.
+   */
+  protected volatile Integer agentId;
+  /**
+   * The Jsapi ticket lock.
+   */
+  protected transient Lock jsapiTicketLock = new ReentrantLock();
+  /**
+   * The Agent jsapi ticket lock.
+   */
+  protected transient Lock agentJsapiTicketLock = new ReentrantLock();
   private volatile String corpId;
   private volatile String corpSecret;
-
   private volatile String token;
-  protected volatile String accessToken;
-  protected transient Lock accessTokenLock = new ReentrantLock();
   private volatile String aesKey;
-  protected volatile Integer agentId;
   private volatile long expiresTime;
-
+  /**
+   * 会话存档私钥以及sdk路径
+   */
+  private volatile String msgAuditSecret;
+  private volatile String msgAuditPriKey;
+  private volatile String msgAuditLibPath;
   private volatile String oauth2redirectUri;
-
   private volatile String httpProxyHost;
   private volatile int httpProxyPort;
   private volatile String httpProxyUsername;
   private volatile String httpProxyPassword;
-
   private volatile String jsapiTicket;
-  protected transient Lock jsapiTicketLock = new ReentrantLock();
   private volatile long jsapiTicketExpiresTime;
-
   private volatile String agentJsapiTicket;
-  protected transient Lock agentJsapiTicketLock = new ReentrantLock();
   private volatile long agentJsapiTicketExpiresTime;
 
   private volatile File tmpDirFile;
@@ -70,13 +85,18 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.accessToken;
   }
 
+  /**
+   * Sets access token.
+   *
+   * @param accessToken the access token
+   */
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
+  }
+
   @Override
   public Lock getAccessTokenLock() {
     return this.accessTokenLock;
-  }
-
-  public void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
   }
 
   @Override
@@ -105,19 +125,34 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.jsapiTicket;
   }
 
+  /**
+   * Sets jsapi ticket.
+   *
+   * @param jsapiTicket the jsapi ticket
+   */
+  public void setJsapiTicket(String jsapiTicket) {
+    this.jsapiTicket = jsapiTicket;
+  }
+
   @Override
   public Lock getJsapiTicketLock() {
     return this.jsapiTicketLock;
   }
 
-  public void setJsapiTicket(String jsapiTicket) {
-    this.jsapiTicket = jsapiTicket;
-  }
-
+  /**
+   * Gets jsapi ticket expires time.
+   *
+   * @return the jsapi ticket expires time
+   */
   public long getJsapiTicketExpiresTime() {
     return this.jsapiTicketExpiresTime;
   }
 
+  /**
+   * Sets jsapi ticket expires time.
+   *
+   * @param jsapiTicketExpiresTime the jsapi ticket expires time
+   */
   public void setJsapiTicketExpiresTime(long jsapiTicketExpiresTime) {
     this.jsapiTicketExpiresTime = jsapiTicketExpiresTime;
   }
@@ -171,6 +206,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.corpId;
   }
 
+  /**
+   * Sets corp id.
+   *
+   * @param corpId the corp id
+   */
   public void setCorpId(String corpId) {
     this.corpId = corpId;
   }
@@ -180,6 +220,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.corpSecret;
   }
 
+  /**
+   * Sets corp secret.
+   *
+   * @param corpSecret the corp secret
+   */
   public void setCorpSecret(String corpSecret) {
     this.corpSecret = corpSecret;
   }
@@ -189,6 +234,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.token;
   }
 
+  /**
+   * Sets token.
+   *
+   * @param token the token
+   */
   public void setToken(String token) {
     this.token = token;
   }
@@ -198,6 +248,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.expiresTime;
   }
 
+  /**
+   * Sets expires time.
+   *
+   * @param expiresTime the expires time
+   */
   public void setExpiresTime(long expiresTime) {
     this.expiresTime = expiresTime;
   }
@@ -207,6 +262,21 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.aesKey;
   }
 
+  @Override
+  public String getMsgAuditPriKey() {
+    return this.msgAuditPriKey;
+  }
+
+  @Override
+  public String getMsgAuditLibPath() {
+    return this.msgAuditLibPath;
+  }
+
+  /**
+   * Sets aes key.
+   *
+   * @param aesKey the aes key
+   */
   public void setAesKey(String aesKey) {
     this.aesKey = aesKey;
   }
@@ -216,8 +286,31 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.agentId;
   }
 
+  /**
+   * Sets agent id.
+   *
+   * @param agentId the agent id
+   */
   public void setAgentId(Integer agentId) {
     this.agentId = agentId;
+  }
+
+  /**
+   * 设置企微会话存档路径.
+   *
+   * @param msgAuditLibPath 会话存档具体路径
+   */
+  public void setMsgAuditLibPath(String msgAuditLibPath) {
+    this.msgAuditLibPath = msgAuditLibPath;
+  }
+
+  /**
+   * 设置会话存档私钥
+   *
+   * @param msgAuditPriKey 会话存档私钥
+   */
+  public void setMsgAuditPriKey(String msgAuditPriKey) {
+    this.msgAuditPriKey = msgAuditPriKey;
   }
 
   @Override
@@ -225,6 +318,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.oauth2redirectUri;
   }
 
+  /**
+   * Sets oauth 2 redirect uri.
+   *
+   * @param oauth2redirectUri the oauth 2 redirect uri
+   */
   public void setOauth2redirectUri(String oauth2redirectUri) {
     this.oauth2redirectUri = oauth2redirectUri;
   }
@@ -234,6 +332,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.httpProxyHost;
   }
 
+  /**
+   * Sets http proxy host.
+   *
+   * @param httpProxyHost the http proxy host
+   */
   public void setHttpProxyHost(String httpProxyHost) {
     this.httpProxyHost = httpProxyHost;
   }
@@ -243,6 +346,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.httpProxyPort;
   }
 
+  /**
+   * Sets http proxy port.
+   *
+   * @param httpProxyPort the http proxy port
+   */
   public void setHttpProxyPort(int httpProxyPort) {
     this.httpProxyPort = httpProxyPort;
   }
@@ -252,6 +360,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.httpProxyUsername;
   }
 
+  /**
+   * Sets http proxy username.
+   *
+   * @param httpProxyUsername the http proxy username
+   */
   public void setHttpProxyUsername(String httpProxyUsername) {
     this.httpProxyUsername = httpProxyUsername;
   }
@@ -261,6 +374,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.httpProxyPassword;
   }
 
+  /**
+   * Sets http proxy password.
+   *
+   * @param httpProxyPassword the http proxy password
+   */
   public void setHttpProxyPassword(String httpProxyPassword) {
     this.httpProxyPassword = httpProxyPassword;
   }
@@ -275,6 +393,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.tmpDirFile;
   }
 
+  /**
+   * Sets tmp dir file.
+   *
+   * @param tmpDirFile the tmp dir file
+   */
   public void setTmpDirFile(File tmpDirFile) {
     this.tmpDirFile = tmpDirFile;
   }
@@ -282,6 +405,15 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   @Override
   public ApacheHttpClientBuilder getApacheHttpClientBuilder() {
     return this.apacheHttpClientBuilder;
+  }
+
+  /**
+   * Sets apache http client builder.
+   *
+   * @param apacheHttpClientBuilder the apache http client builder
+   */
+  public void setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
+    this.apacheHttpClientBuilder = apacheHttpClientBuilder;
   }
 
   @Override
@@ -294,12 +426,28 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
     return this.webhookKey;
   }
 
-  public void setApacheHttpClientBuilder(ApacheHttpClientBuilder apacheHttpClientBuilder) {
-    this.apacheHttpClientBuilder = apacheHttpClientBuilder;
-  }
-
+  /**
+   * Sets webhook key.
+   *
+   * @param webhookKey the webhook key
+   * @return the webhook key
+   */
   public WxCpDefaultConfigImpl setWebhookKey(String webhookKey) {
     this.webhookKey = webhookKey;
+    return this;
+  }
+
+  @Override
+  public String getMsgAuditSecret() {
+    return this.msgAuditSecret;
+  }
+
+  /**
+   * 设置会话存档secret
+   * @param msgAuditSecret
+   */
+  public WxCpDefaultConfigImpl setMsgAuditSecret(String msgAuditSecret) {
+    this.msgAuditSecret = msgAuditSecret;
     return this;
   }
 }

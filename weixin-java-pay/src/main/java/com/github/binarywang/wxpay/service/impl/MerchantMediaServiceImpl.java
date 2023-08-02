@@ -19,7 +19,6 @@ import java.net.URI;
 @Slf4j
 @RequiredArgsConstructor
 public class MerchantMediaServiceImpl implements MerchantMediaService {
-
   private final WxPayService payService;
 
   @Override

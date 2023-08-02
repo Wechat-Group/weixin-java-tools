@@ -1,8 +1,8 @@
 package com.github.binarywang.wxpay.bean.ecommerce;
 
 /**
- * @author: f00lish
- * @date: 2020/09/17
+ * @author f00lish
+ * created on  2020/09/17
  */
 
 import com.google.gson.annotations.SerializedName;
@@ -14,11 +14,12 @@ import java.util.Date;
 
 /**
  * 退款结果
- *  * <pre>
+ * * <pre>
  *  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/refunds/chapter3_1.shtml
  *  * </pre>
- * @author: f00lish
- * @date: 2020/09/14
+ *
+ * @author f00lish
+ * created on  2020/09/14
  */
 @Data
 @NoArgsConstructor
@@ -65,7 +66,7 @@ public class RefundsResult implements Serializable {
    * </pre>
    */
   @SerializedName(value = "create_time")
-  private Date createTime;
+  private String createTime;
 
   /**
    * <pre>

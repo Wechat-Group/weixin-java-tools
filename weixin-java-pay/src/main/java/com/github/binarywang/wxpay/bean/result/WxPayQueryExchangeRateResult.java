@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 汇率查询响应.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-05-23
+ * created on  2020-05-23
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

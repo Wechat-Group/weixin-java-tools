@@ -200,25 +200,25 @@ public class WxDataCubeArticleTotalDetail implements Serializable {
 
 
   /**
-   * intpagefromkanyikanreaduser 看一看来源阅读人数
+   * 看一看来源阅读人数
    */
   @SerializedName("int_page_from_kanyikan_read_user")
   private Integer intPageFromKanyikanReadUser;
 
   /**
-   * intpagefromkanyikanreadcount 看一看来源阅读次数
+   * 看一看来源阅读次数
    */
   @SerializedName("int_page_from_kanyikan_read_count")
   private Integer intPageFromKanyikanReadCount;
 
   /**
-   * intpagefromsouyisoureaduser 搜一搜来源阅读人数
+   * 搜一搜来源阅读人数
    */
   @SerializedName("int_page_from_souyisou_read_user")
   private Integer intPageFromSouyisouReadUser;
 
   /**
-   * intpagefromsouyisoureadcount 搜一搜来源阅读次数
+   *  搜一搜来源阅读次数
    */
   @SerializedName("int_page_from_souyisou_read_count")
   private Integer intPageFromSouyisouReadCount;

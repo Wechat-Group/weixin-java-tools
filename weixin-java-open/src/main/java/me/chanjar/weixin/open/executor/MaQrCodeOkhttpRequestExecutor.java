@@ -20,7 +20,7 @@ import java.util.UUID;
 
 /**
  * @author yqx
- * @date 2018-09-13
+ * created on  2018-09-13
  */
 public class MaQrCodeOkhttpRequestExecutor extends MaQrCodeRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
   public MaQrCodeOkhttpRequestExecutor(RequestHttp requestHttp) {

@@ -1,13 +1,17 @@
 package me.chanjar.weixin.cp.bean.message;
 
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
-import me.chanjar.weixin.cp.bean.message.WxCpXmlOutTextMessage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+/**
+ * The type Wx cp xml out text message test.
+ */
 @Test
 public class WxCpXmlOutTextMessageTest {
 
+  /**
+   * Test.
+   */
   public void test() {
     WxCpXmlOutTextMessage m = new WxCpXmlOutTextMessage();
     m.setContent("content");
@@ -26,6 +30,9 @@ public class WxCpXmlOutTextMessageTest {
     Assert.assertEquals(m.toXml().replaceAll("\\s", ""), expected.replaceAll("\\s", ""));
   }
 
+  /**
+   * Test build.
+   */
   public void testBuild() {
     WxCpXmlOutTextMessage m = WxCpXmlOutMessage.TEXT().content("content").fromUser("from").toUser("to").build();
     String expected = "<xml>"

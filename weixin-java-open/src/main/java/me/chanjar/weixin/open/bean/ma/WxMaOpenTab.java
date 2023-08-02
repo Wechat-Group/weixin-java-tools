@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author yqx
- * @date 2018/9/13
+ * created on  2018/9/13
  */
 @Data
 public class WxMaOpenTab implements Serializable {

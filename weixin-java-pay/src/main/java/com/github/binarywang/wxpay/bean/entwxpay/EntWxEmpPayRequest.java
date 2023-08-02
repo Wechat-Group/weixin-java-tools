@@ -20,6 +20,7 @@ import java.util.Map;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class EntWxEmpPayRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = -3677217123742740648L;
 
   /**
    * <pre>
@@ -225,5 +226,10 @@ public class EntWxEmpPayRequest extends BaseWxPayRequest {
     map.put("approval_number", approvalNumber);
     map.put("approval_type", approvalType.toString());
     map.put("agentid", agentId.toString());
+  }
+
+  @Override
+  protected String[] getIgnoredParamsForSign() {
+    return new String[]{"sign_type"};
   }
 }

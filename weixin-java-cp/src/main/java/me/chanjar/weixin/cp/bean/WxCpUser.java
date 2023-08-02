@@ -22,14 +22,31 @@ public class WxCpUser implements Serializable {
   private static final long serialVersionUID = -5696099236344075582L;
 
   private String userId;
+  private String newUserId;
   private String name;
   private Long[] departIds;
   private Integer[] orders;
   private String position;
   private String[] positions;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private String mobile;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private Gender gender;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private String email;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
+  private String bizMail;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private String avatar;
   private String thumbAvatar;
   private String mainDepartment;
@@ -39,7 +56,7 @@ public class WxCpUser implements Serializable {
   private String openUserId;
 
   /**
-   * 地址。长度最大128个字符
+   * 地址。长度最大128个字符，代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
    */
   private String address;
   private String avatarMediaId;
@@ -59,6 +76,9 @@ public class WxCpUser implements Serializable {
   private Integer hideMobile;
   private String englishName;
   private String telephone;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private String qrCode;
   private Boolean toInvite;
   /**
@@ -67,33 +87,69 @@ public class WxCpUser implements Serializable {
   private List<ExternalAttribute> externalAttrs = new ArrayList<>();
   private String externalPosition;
   private String externalCorpName;
+  private WechatChannels wechatChannels;
 
+  private String[] directLeader;
+
+
+  /**
+   * Add external attr.
+   *
+   * @param externalAttr the external attr
+   */
   public void addExternalAttr(ExternalAttribute externalAttr) {
     this.externalAttrs.add(externalAttr);
   }
 
+  /**
+   * Add ext attr.
+   *
+   * @param name  the name
+   * @param value the value
+   */
   public void addExtAttr(String name, String value) {
     this.extAttrs.add(new Attr().setType(0).setName(name).setTextValue(value));
   }
 
+  /**
+   * Add ext attr.
+   *
+   * @param attr the attr
+   */
   public void addExtAttr(Attr attr) {
     this.extAttrs.add(attr);
   }
 
+  /**
+   * From json wx cp user.
+   *
+   * @param json the json
+   * @return the wx cp user
+   */
   public static WxCpUser fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpUser.class);
   }
 
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * The type Attr.
+   */
   @Data
   @Accessors(chain = true)
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class Attr {
+  public static class Attr implements Serializable {
+    private static final long serialVersionUID = -5696099236344075582L;
+
     /**
      * 属性类型: 0-文本 1-网页
      */
@@ -104,11 +160,16 @@ public class WxCpUser implements Serializable {
     private String webTitle;
   }
 
+  /**
+   * The type External attribute.
+   */
   @Data
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class ExternalAttribute {
+  public static class ExternalAttribute implements Serializable {
+    private static final long serialVersionUID = -5696099236344075582L;
+
     /**
      * 属性类型: 0-本文 1-网页 2-小程序.
      */
@@ -138,5 +199,22 @@ public class WxCpUser implements Serializable {
      * 小程序的页面路径.
      */
     private String pagePath;
+  }
+
+
+  /**
+   * The type Wechat channels.
+   */
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class WechatChannels implements Serializable {
+    private static final long serialVersionUID = -5696099236344075582L;
+
+    private String nickname;
+
+    private Integer status;
+
   }
 }

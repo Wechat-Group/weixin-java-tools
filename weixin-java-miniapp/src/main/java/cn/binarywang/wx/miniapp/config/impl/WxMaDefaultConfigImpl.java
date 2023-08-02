@@ -2,21 +2,33 @@ package cn.binarywang.wx.miniapp.config.impl;
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
-import me.chanjar.weixin.common.bean.WxAccessToken;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import me.chanjar.weixin.common.bean.WxAccessTokenEntity;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 
 import java.io.File;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Consumer;
 
 /**
  * 基于内存的微信配置provider，在实际生产环境中应该将这些配置持久化
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Getter
 public class WxMaDefaultConfigImpl implements WxMaConfig {
   protected volatile String appid;
   protected volatile String token;
+
+  /**
+   * 是否使用稳定版获取accessToken接口
+   */
+  @Getter(value = AccessLevel.NONE)
+  private boolean useStableAccessToken;
+
   /**
    * 小程序原始ID
    */
@@ -39,6 +51,10 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   private volatile int httpProxyPort;
   private volatile String httpProxyUsername;
   private volatile String httpProxyPassword;
+
+  private volatile int retrySleepMillis = 1000;
+  private volatile int maxRetryTimes = 5;
+
   private volatile String jsapiTicket;
   private volatile long jsapiTicketExpiresTime;
   /**
@@ -49,6 +65,27 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   protected volatile Lock jsapiTicketLock = new ReentrantLock();
   protected volatile Lock cardApiTicketLock = new ReentrantLock();
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
+  private String apiHostUrl;
+  private String accessTokenUrl;
+
+  /**
+   * 自定义配置token的消费者
+   */
+  @Setter
+  private Consumer<WxAccessTokenEntity> updateAccessTokenBefore;
+
+  /**
+   * 开启回调
+   */
+  @Getter(AccessLevel.NONE)
+  private boolean enableUpdateAccessTokenBefore = true;
+
+  /**
+   * 可临时关闭更新token回调，主要用于其他介质初始化数据时，可不进行回调
+   */
+  public void enableUpdateAccessTokenBefore(boolean enableUpdateAccessTokenBefore) {
+    this.enableUpdateAccessTokenBefore = enableUpdateAccessTokenBefore;
+  }
 
   /**
    * 会过期的数据提前过期时间，默认预留200秒的时间
@@ -73,6 +110,19 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
     this.accessToken = accessToken;
   }
 
+  //region 使用稳定版接口获取accessToken
+  @Override
+  public boolean isStableAccessToken() {
+    return this.useStableAccessToken;
+  }
+
+  @Override
+  public void useStableAccessToken(boolean useStableAccessToken) {
+    this.useStableAccessToken = useStableAccessToken;
+  }
+  //endregion
+
+
   @Override
   public Lock getAccessTokenLock() {
     return this.accessTokenLock;
@@ -87,15 +137,22 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
     return isExpired(this.expiresTime);
   }
 
-  @Override
-  public synchronized void updateAccessToken(WxAccessToken accessToken) {
-    updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
-  }
+//  @Override
+//  public synchronized void updateAccessToken(WxAccessToken accessToken) {
+//    updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
+//  }
 
   @Override
   public synchronized void updateAccessToken(String accessToken, int expiresInSeconds) {
     setAccessToken(accessToken);
     setExpiresTime(expiresAheadInMillis(expiresInSeconds));
+  }
+
+  @Override
+  public void updateAccessTokenBefore(WxAccessTokenEntity wxAccessTokenEntity) {
+    if (updateAccessTokenBefore != null && enableUpdateAccessTokenBefore) {
+      updateAccessTokenBefore.accept(wxAccessTokenEntity);
+    }
   }
 
   @Override
@@ -123,7 +180,6 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
     this.jsapiTicket = jsapiTicket;
     this.jsapiTicketExpiresTime = expiresAheadInMillis(expiresInSeconds);
   }
-
 
   @Override
   public String getCardApiTicket() {
@@ -256,6 +312,24 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   }
 
   @Override
+  public int getRetrySleepMillis() {
+    return this.retrySleepMillis;
+  }
+
+  public void setRetrySleepMillis(int retrySleepMillis) {
+    this.retrySleepMillis = retrySleepMillis;
+  }
+
+  @Override
+  public int getMaxRetryTimes() {
+    return this.maxRetryTimes;
+  }
+
+  public void setMaxRetryTimes(int maxRetryTimes) {
+    this.maxRetryTimes = maxRetryTimes;
+  }
+
+  @Override
   public String toString() {
     return WxMaGsonBuilder.create().toJson(this);
   }
@@ -272,6 +346,16 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   @Override
   public boolean autoRefreshToken() {
     return true;
+  }
+
+  @Override
+  public void setApiHostUrl(String apiHostUrl) {
+    this.apiHostUrl = apiHostUrl;
+  }
+
+  @Override
+  public void setAccessTokenUrl(String accessTokenUrl) {
+    this.accessTokenUrl = accessTokenUrl;
   }
 
   @Override

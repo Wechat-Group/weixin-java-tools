@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 /**
  * 直播间小助手用户信息
+ *
+ * @author GaoMinZhu
  */
 @Data
 public class WxMaLiveAssistantInfo implements Serializable {

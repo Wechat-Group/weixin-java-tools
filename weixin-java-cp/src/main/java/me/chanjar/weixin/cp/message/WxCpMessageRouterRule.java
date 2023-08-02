@@ -183,7 +183,8 @@ public class WxCpMessageRouterRule {
    * @param otherInterceptors the other interceptors
    * @return the wx cp message router rule
    */
-  public WxCpMessageRouterRule interceptor(WxCpMessageInterceptor interceptor, WxCpMessageInterceptor... otherInterceptors) {
+  public WxCpMessageRouterRule interceptor(WxCpMessageInterceptor interceptor,
+                                           WxCpMessageInterceptor... otherInterceptors) {
     this.interceptors.add(interceptor);
     if (otherInterceptors != null && otherInterceptors.length > 0) {
       Collections.addAll(this.interceptors, otherInterceptors);
@@ -246,7 +247,7 @@ public class WxCpMessageRouterRule {
     return
       (this.fromUser == null || this.fromUser.equals(wxMessage.getFromUserName()))
         &&
-        (this.agentId == null || this.agentId.equals(wxMessage.getAgentId()))
+        (this.agentId == null || this.agentId.equals(Integer.valueOf(wxMessage.getAgentId())))
         &&
         (this.msgType == null || this.msgType.equalsIgnoreCase(wxMessage.getMsgType()))
         &&
@@ -254,7 +255,8 @@ public class WxCpMessageRouterRule {
         &&
         (this.eventKey == null || this.eventKey.equalsIgnoreCase(wxMessage.getEventKey()))
         &&
-        (this.eventKeyRegex == null || Pattern.matches(this.eventKeyRegex, StringUtils.trimToEmpty(wxMessage.getEventKey())))
+        (this.eventKeyRegex == null || Pattern.matches(this.eventKeyRegex,
+          StringUtils.trimToEmpty(wxMessage.getEventKey())))
         &&
         (this.content == null || this.content.equals(StringUtils.trimToNull(wxMessage.getContent())))
         &&

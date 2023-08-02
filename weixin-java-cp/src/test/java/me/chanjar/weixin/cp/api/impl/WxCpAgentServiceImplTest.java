@@ -33,6 +33,11 @@ public class WxCpAgentServiceImplTest {
   @Inject
   private WxCpService wxCpService;
 
+  /**
+   * Test get.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testGet() throws Exception {
     final Integer agentId = this.wxCpService.getWxCpConfigStorage().getAgentId();
@@ -45,6 +50,11 @@ public class WxCpAgentServiceImplTest {
     assertThat(wxCpAgent.getAllowTags().getTagIds().toArray()).isNotEmpty();
   }
 
+  /**
+   * Test set.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testSet() throws WxErrorException {
     final Integer agentId = this.wxCpService.getWxCpConfigStorage().getAgentId();
@@ -56,6 +66,11 @@ public class WxCpAgentServiceImplTest {
       .build());
   }
 
+  /**
+   * Test list.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testList() throws WxErrorException {
     List<WxCpAgent> list = this.wxCpService.getAgentService().list();
@@ -67,12 +82,25 @@ public class WxCpAgentServiceImplTest {
     assertThat(list.get(0).getSquareLogoUrl()).isNotEmpty();
   }
 
+  /**
+   * The type Mock test.
+   */
   public static class MockTest {
-    private WxCpService wxService = mock(WxCpService.class);
+    private final WxCpService wxService = mock(WxCpService.class);
 
+    /**
+     * Test get.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGet() throws Exception {
-      String returnJson = "{\"errcode\": 0,\"errmsg\": \"ok\",\"agentid\": 9,\"name\": \"测试应用\",\"square_logo_url\": \"http://wx.qlogo.cn/mmhead/alksjf;lasdjf;lasjfuodiuj3rj2o34j/0\",\"description\": \"这是一个企业号应用\",\"allow_userinfos\": {\"user\": [{\"userid\": \"0009854\"}, {\"userid\": \"1723\"}, {\"userid\": \"5625\"}]},\"allow_partys\": {\"partyid\": [42762742]},\"allow_tags\": {\"tagid\": [23, 22, 35, 19, 32, 125, 133, 46, 150, 38, 183, 9, 7]},\"close\": 0,\"redirect_domain\": \"weixin.com.cn\",\"report_location_flag\": 0,\"isreportenter\": 0,\"home_url\": \"\"}";
+      String returnJson = "{\"errcode\": 0,\"errmsg\": \"ok\",\"agentid\": 9,\"name\": \"测试应用\",\"square_logo_url\": " +
+        "\"http://wx.qlogo.cn/mmhead/alksjf;lasdjf;lasjfuodiuj3rj2o34j/0\",\"description\": \"这是一个企业号应用\"," +
+        "\"allow_userinfos\": {\"user\": [{\"userid\": \"0009854\"}, {\"userid\": \"1723\"}, {\"userid\": " +
+        "\"5625\"}]},\"allow_partys\": {\"partyid\": [42762742]},\"allow_tags\": {\"tagid\": [23, 22, 35, 19, 32, " +
+        "125, 133, 46, 150, 38, 183, 9, 7]},\"close\": 0,\"redirect_domain\": \"weixin.com.cn\"," +
+        "\"report_location_flag\": 0,\"isreportenter\": 0,\"home_url\": \"\"}";
       final WxCpConfigStorage configStorage = new WxCpDefaultConfigImpl();
       when(wxService.getWxCpConfigStorage()).thenReturn(configStorage);
       when(wxService.get(String.format(configStorage.getApiUrl(WxCpApiPathConsts.Agent.AGENT_GET), 9), null)).thenReturn(returnJson);
@@ -85,7 +113,8 @@ public class WxCpAgentServiceImplTest {
 
       assertEquals(new Integer[]{42762742}, wxCpAgent.getAllowParties().getPartyIds().toArray());
 
-      assertEquals(new Integer[]{23, 22, 35, 19, 32, 125, 133, 46, 150, 38, 183, 9, 7}, wxCpAgent.getAllowTags().getTagIds().toArray());
+      assertEquals(new Integer[]{23, 22, 35, 19, 32, 125, 133, 46, 150, 38, 183, 9, 7},
+        wxCpAgent.getAllowTags().getTagIds().toArray());
 
     }
 

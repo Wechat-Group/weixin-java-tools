@@ -7,14 +7,13 @@ import me.chanjar.weixin.cp.api.WxCpAgentWorkBenchService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpAgentWorkBench;
 
-import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.WorkBench.WORKBENCH_DATA_SET;
-import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.WorkBench.WORKBENCH_TEMPLATE_GET;
-import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.WorkBench.WORKBENCH_TEMPLATE_SET;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.WorkBench.*;
 
 /**
+ * 工作台自定义展示实现
+ *
  * @author songshiyu
- * @date : create in 11:24 2020/9/28
- * @description: 工作台自定义展示实现
+ * created at 11:24 2020/9/28
  */
 @RequiredArgsConstructor
 public class WxCpAgentWorkBenchServiceImpl implements WxCpAgentWorkBenchService {

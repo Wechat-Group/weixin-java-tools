@@ -16,6 +16,7 @@ import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +52,7 @@ public class WxCpXmlMessage implements Serializable {
   ///////////////////////
 
   @XStreamAlias("AgentID")
-  private Integer agentId;
+  private String agentId;
 
   @XStreamAlias("ToUserName")
   @XStreamConverter(value = XStreamCDataConverter.class)
@@ -138,6 +139,29 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String event;
 
+  @XStreamAlias("UpdateDetail")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String updateDetail;
+
+  @XStreamAlias("JoinScene")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String joinScene;
+
+  @XStreamAlias("QuitScene")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String quitScene;
+
+  @XStreamAlias("MemChangeCnt")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String memChangeCnt;
+
+  @XStreamAlias("Source")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String source;
+
+  @XStreamAlias("StrategyId")
+  private String strategyId;
+
   @XStreamAlias("EventKey")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String eventKey;
@@ -221,6 +245,12 @@ public class WxCpXmlMessage implements Serializable {
   private Long[] departments;
 
   /**
+   * 主部门
+   */
+  @XStreamAlias("MainDepartment")
+  private Long mainDepartment;
+
+  /**
    * 手机号码.
    */
   @XStreamAlias("Mobile")
@@ -253,6 +283,16 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamAlias("Email")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String email;
+
+  /**
+   * 企业邮箱;代开发自建应用不返回该字段。
+   * ISSUE#2584
+   *
+   * @see <a href="https://developer.work.weixin.qq.com/document/path/90970">Link</a>
+   */
+  @XStreamAlias("BizMail")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String bizMail;
 
   /**
    * 头像url。注：如果要获取小图将url最后的”/0”改成”/100”即可.
@@ -317,9 +357,11 @@ public class WxCpXmlMessage implements Serializable {
 
   /**
    * 部门Id.
+   * 或者客户联系回调标签/标签组id
    */
   @XStreamAlias("Id")
-  private Long id;
+  @XStreamConverter(XStreamCDataConverter.class)
+  private String id;
 
   /**
    * 父部门id.
@@ -370,6 +412,20 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String delPartyItems;
 
+  /**
+   * 客户联系回调: 客户接替失败的原因
+   */
+  @XStreamAlias("FailReason")
+  @XStreamConverter(XStreamCDataConverter.class)
+  private String failReason;
+
+  /**
+   * 客户联系回调: 标签类型
+   */
+  @XStreamAlias("TagType")
+  @XStreamConverter(XStreamCDataConverter.class)
+  private String tagType;
+
 
   ///////////////////////////////////////
   // 群发消息返回的结果
@@ -379,10 +435,19 @@ public class WxCpXmlMessage implements Serializable {
    * 1. 群发的结果.
    * 2. 通讯录变更事件
    * 激活状态：1=已激活 2=已禁用 4=未激活 已激活代表已激活企业微信或已关注微工作台（原企业号）.
+   * 3. 直播回调事件
+   * 直播状态 ，0：预约中，1：直播中，2：已结束，4：已取消 （已过期状态目前没有回调）
    */
   @XStreamAlias("Status")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String status;
+
+  /**
+   * 直播ID
+   */
+  @XStreamAlias("LivingId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String livingId;
 
   /**
    * group_id下粉丝数；或者openid_list中的粉丝数.
@@ -419,10 +484,25 @@ public class WxCpXmlMessage implements Serializable {
   private SendLocationInfo sendLocationInfo = new SendLocationInfo();
 
 
+  /**
+   * 审批消息
+   * <p>
+   * 审批申请状态变化回调通知
+   * https://developer.work.weixin.qq.com/document/path/91815
+   * <p>
+   * 自建应用审批状态变化通知回调
+   * https://developer.work.weixin.qq.com/document/path/90269
+   */
   @XStreamAlias("ApprovalInfo")
-  private ApprovalInfo approvalInfo = new ApprovalInfo();
+  private WxCpXmlApprovalInfo approvalInfo = new WxCpXmlApprovalInfo();
 
 
+  /**
+   * From xml wx cp xml message.
+   *
+   * @param xml the xml
+   * @return the wx cp xml message
+   */
   protected static WxCpXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
     xml = xml.replace("</PicList><PicList>", "");
@@ -431,25 +511,70 @@ public class WxCpXmlMessage implements Serializable {
     return xmlMessage;
   }
 
+  /**
+   * From xml wx cp xml message.
+   *
+   * @param xml     the xml
+   * @param agentId the agent id
+   * @return the wx cp xml message
+   */
+  public static WxCpXmlMessage fromXml(String xml, String agentId) {
+    //修改微信变态的消息内容格式，方便解析
+    xml = xml.replace("</PicList><PicList>", "");
+    final WxCpXmlMessage xmlMessage = fromXml(xml);
+    xmlMessage.setAgentId(agentId);
+    return xmlMessage;
+  }
+
+  /**
+   * From xml wx cp xml message.
+   *
+   * @param is the is
+   * @return the wx cp xml message
+   */
   protected static WxCpXmlMessage fromXml(InputStream is) {
     return XStreamTransformer.fromXml(WxCpXmlMessage.class, is);
   }
 
   /**
    * 从加密字符串转换.
+   *
+   * @param encryptedXml      the encrypted xml
+   * @param wxCpConfigStorage the wx cp config storage
+   * @param timestamp         the timestamp
+   * @param nonce             the nonce
+   * @param msgSignature      the msg signature
+   * @return the wx cp xml message
    */
   public static WxCpXmlMessage fromEncryptedXml(String encryptedXml, WxCpConfigStorage wxCpConfigStorage,
                                                 String timestamp, String nonce, String msgSignature) {
     WxCpCryptUtil cryptUtil = new WxCpCryptUtil(wxCpConfigStorage);
+    WxCpXmlMessage wxCpXmlMessage = fromXml(encryptedXml);
     String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedXml);
     log.debug("解密后的原始xml消息内容：{}", plainText);
-    return fromXml(plainText);
+    if (StringUtils.isNotEmpty(wxCpXmlMessage.getAgentId())) {
+      return fromXml(plainText, wxCpXmlMessage.getAgentId());
+    } else {
+      return fromXml(plainText);
+    }
+
   }
 
+  /**
+   * From encrypted xml wx cp xml message.
+   *
+   * @param is                the is
+   * @param wxCpConfigStorage the wx cp config storage
+   * @param timestamp         the timestamp
+   * @param nonce             the nonce
+   * @param msgSignature      the msg signature
+   * @return the wx cp xml message
+   */
   public static WxCpXmlMessage fromEncryptedXml(InputStream is, WxCpConfigStorage wxCpConfigStorage,
                                                 String timestamp, String nonce, String msgSignature) {
     try {
-      return fromEncryptedXml(IOUtils.toString(is, StandardCharsets.UTF_8), wxCpConfigStorage, timestamp, nonce, msgSignature);
+      return fromEncryptedXml(IOUtils.toString(is, StandardCharsets.UTF_8), wxCpConfigStorage, timestamp, nonce,
+        msgSignature);
     } catch (IOException e) {
       throw new WxRuntimeException(e);
     }
@@ -460,6 +585,9 @@ public class WxCpXmlMessage implements Serializable {
     return WxCpGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * The type Scan code info.
+   */
   @Data
   @XStreamAlias("ScanCodeInfo")
   public static class ScanCodeInfo implements Serializable {
@@ -480,16 +608,27 @@ public class WxCpXmlMessage implements Serializable {
     private String scanResult;
   }
 
+  /**
+   * The type Ext attr.
+   */
   @Data
   public static class ExtAttr implements Serializable {
     private static final long serialVersionUID = -3418685294606228837L;
 
+    /**
+     * The Items.
+     */
     @XStreamImplicit(itemFieldName = "Item")
     protected final List<Item> items = new ArrayList<>();
 
+    /**
+     * The type Item.
+     */
     @XStreamAlias("Item")
     @Data
-    public static class Item {
+    public static class Item implements Serializable {
+      private static final long serialVersionUID = -3418685294606228837L;
+
       @XStreamAlias("Name")
       @XStreamConverter(value = XStreamCDataConverter.class)
       private String name;
@@ -500,26 +639,40 @@ public class WxCpXmlMessage implements Serializable {
     }
   }
 
+  /**
+   * The type Send pics info.
+   */
   @Data
   @XStreamAlias("SendPicsInfo")
   public static class SendPicsInfo implements Serializable {
     private static final long serialVersionUID = -6549728838848064881L;
 
+    /**
+     * The Pic list.
+     */
     @XStreamAlias("PicList")
     protected final List<Item> picList = new ArrayList<>();
 
     @XStreamAlias("Count")
     private Long count;
 
+    /**
+     * The type Item.
+     */
     @XStreamAlias("item")
     @Data
-    public static class Item {
+    public static class Item implements Serializable {
+      private static final long serialVersionUID = -6549728838848064881L;
+
       @XStreamAlias("PicMd5Sum")
       @XStreamConverter(value = XStreamCDataConverter.class)
       private String picMd5Sum;
     }
   }
 
+  /**
+   * The type Send location info.
+   */
   @Data
   @XStreamAlias("SendLocationInfo")
   public static class SendLocationInfo implements Serializable {
@@ -545,247 +698,6 @@ public class WxCpXmlMessage implements Serializable {
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String poiName;
 
-  }
-
-  /**
-   * 审批信息
-   */
-  @XStreamAlias("ApprovalInfo")
-  @Data
-  public static class ApprovalInfo implements Serializable {
-    private static final long serialVersionUID = 8136329462880646091L;
-
-    /**
-     * 审批编号
-     */
-    @XStreamAlias("SpNo")
-    private String spNo;
-
-    /**
-     * 审批申请类型名称（审批模板名称）
-     */
-    @XStreamAlias("SpName")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String spName;
-
-    /**
-     * 申请单状态：1-审批中；2-已通过；3-已驳回；4-已撤销；6-通过后撤销；7-已删除；10-已支付
-     */
-    @XStreamAlias("SpStatus")
-    private Integer spStatus;
-
-    /**
-     * 审批模板id。
-     */
-    @XStreamAlias("TemplateId")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String templateId;
-    /**
-     * 审批申请提交时间,Unix时间戳
-     */
-    @XStreamAlias("ApplyTime")
-    private Long applyTime;
-
-    /**
-     * 申请人信息
-     */
-    @XStreamAlias("Applyer")
-    private Applier applier;
-
-    /**
-     * 审批流程信息，可能有多个审批节点。
-     */
-    @XStreamImplicit(itemFieldName="SpRecord")
-    private List<SpRecord> spRecords;
-
-    /**
-     * 抄送信息，可能有多个抄送节点
-     * 这回查字典，notifier通知人，Notifyer这不知道是什么
-     */
-    @XStreamImplicit(itemFieldName="Notifyer")
-    private List<Notifier> notifier;
-
-    /**
-     * 审批申请备注信息，可能有多个备注节点
-     */
-    @XStreamImplicit(itemFieldName="Comments")
-    private List<Comment> comments;
-
-    /**
-     * 审批申请单变化类型
-     */
-    @XStreamAlias("StatuChangeEvent")
-    private Integer statusChangeEvent;
-
-    /**
-     * 申请人信息
-     */
-    @XStreamAlias("Applyer")
-    @Data
-    public static class Applier implements Serializable {
-      private static final long serialVersionUID = -979255011922209018L;
-
-      /**
-       * 申请人userid
-       */
-      @XStreamAlias("UserId")
-      private String userId;
-
-      /**
-       * 申请人所在部门pid
-       */
-      @XStreamAlias("Party")
-      private String party;
-    }
-
-    /**
-     * 审批流程信息
-     */
-    @XStreamAlias("SpRecord")
-    @Data
-    public static class SpRecord implements Serializable{
-
-      private static final long serialVersionUID = 1247535623941881764L;
-
-      /**
-       * 审批节点状态：1-审批中；2-已同意；3-已驳回；4-已转审
-       */
-      @XStreamAlias("SpStatus")
-      private String spStatus;
-
-      /**
-       * 节点审批方式：1-或签；2-会签
-       */
-      @XStreamAlias("ApproverAttr")
-      private String approverAttr;
-
-      /**
-       * 审批节点详情。当节点为标签或上级时，一个节点可能有多个分支
-       */
-      @XStreamImplicit(itemFieldName="Details")
-      private List<Detail> details;
-
-    }
-
-    /**
-     * 审批节点详情
-     */
-    @XStreamAlias("Details")
-    @Data
-    public static class Detail implements Serializable{
-
-      private static final long serialVersionUID = -8446107461495047603L;
-
-      /**
-       * 分支审批人
-       */
-      @XStreamAlias("Approver")
-      private Approver approver;
-
-      /**
-       * 审批意见字段
-       */
-      @XStreamAlias("Speech")
-      private String speech;
-
-      /**
-       * 分支审批人审批状态：1-审批中；2-已同意；3-已驳回；4-已转审
-       */
-      @XStreamAlias("SpStatus")
-      private String spStatus;
-
-      /**
-       * 节点分支审批人审批操作时间，0为尚未操作
-       */
-      @XStreamAlias("SpTime")
-      private Long spTime;
-
-      /**
-       * 节点分支审批人审批意见附件，赋值为media_id具体使用请参考：文档-获取临时素材
-       */
-      @XStreamAlias("Attach")
-      private String attach;
-    }
-
-    /**
-     * 分支审批人
-     */
-    @Data
-    @XStreamAlias("Approver")
-    public static class Approver implements  Serializable{
-
-      private static final long serialVersionUID = 7360442444186683191L;
-
-      /**
-       * 分支审批人userid
-       */
-      @XStreamAlias("UserId")
-      private String userId;
-    }
-
-    /**
-     * 抄送信息
-     */
-    @Data
-    @XStreamAlias("Notifyer")
-    public static class Notifier implements Serializable{
-
-      private static final long serialVersionUID = -4524071522890013920L;
-
-      /**
-       * 节点抄送人userid
-       */
-      @XStreamAlias("UserId")
-      private String userId;
-    }
-
-    /**
-     * 审批申请备注信息
-     */
-    @Data
-    @XStreamAlias("Comments")
-    public static class Comment implements Serializable{
-
-      private static final long serialVersionUID = 6912156206252719485L;
-
-      /**
-       * 备注人信息
-       */
-      @XStreamAlias("CommentUserInfo")
-      private CommentUserInfo commentUserInfo;
-
-      /**
-       * 备注提交时间
-       */
-      @XStreamAlias("CommentTime")
-      private String commentTime;
-
-      /**
-       * 备注文本内容
-       */
-      @XStreamAlias("CommentContent")
-      private String commentContent;
-
-      /**
-       * 备注id
-       */
-      @XStreamAlias("CommentId")
-      private String commentId;
-
-    }
-
-    @Data
-    @XStreamAlias("CommentUserInfo")
-    private static class CommentUserInfo implements Serializable{
-
-      private static final long serialVersionUID = 5031739716823000947L;
-
-      /**
-       * 备注人userid
-       */
-      @XStreamAlias("UserId")
-      private String userId;
-    }
   }
 
 }

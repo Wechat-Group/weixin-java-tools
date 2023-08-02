@@ -4,24 +4,37 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 应用消息发送统计信息.
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-09-13
+ * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2020-09-13
  */
 @Data
-public class WxCpMessageSendStatistics {
+public class WxCpMessageSendStatistics implements Serializable {
+  private static final long serialVersionUID = 6031833682211475786L;
+
+  /**
+   * From json wx cp message send statistics.
+   *
+   * @param json the json
+   * @return the wx cp message send statistics
+   */
   public static WxCpMessageSendStatistics fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpMessageSendStatistics.class);
   }
 
   private List<StatisticItem> statistics;
 
+  /**
+   * The type Statistic item.
+   */
   @Data
-  public static class StatisticItem {
+  public static class StatisticItem implements Serializable {
+    private static final long serialVersionUID = 6031833682211475786L;
+
     /**
      * 应用名
      */

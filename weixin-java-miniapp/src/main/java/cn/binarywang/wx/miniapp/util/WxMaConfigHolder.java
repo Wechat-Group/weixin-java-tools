@@ -4,10 +4,10 @@ package cn.binarywang.wx.miniapp.util;
  * 小程序存储值存放类.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-08-16
+ * created on  2020-08-16
  */
 public class WxMaConfigHolder {
-  private final static ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<String>() {
+  private static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<String>() {
     @Override
     protected String initialValue() {
       return "default";

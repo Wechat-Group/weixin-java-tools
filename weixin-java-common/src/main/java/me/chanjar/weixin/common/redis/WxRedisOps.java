@@ -8,6 +8,7 @@ import java.util.concurrent.locks.Lock;
  * <p>
  * 该接口不承诺稳定, 外部实现请继承{@link BaseWxRedisOps}
  *
+ * @author Mario Luo
  * @see BaseWxRedisOps 实现需要继承该类
  * @see JedisWxRedisOps jedis实现
  * @see RedissonWxRedisOps redisson实现

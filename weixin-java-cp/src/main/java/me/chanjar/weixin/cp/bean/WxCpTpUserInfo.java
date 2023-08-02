@@ -2,12 +2,16 @@ package me.chanjar.weixin.cp.bean;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
+ * The type Wx cp tp user info.
+ *
  * @author huangxiaoming
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class WxCpTpUserInfo extends WxCpBaseResp {
 
   private static final long serialVersionUID = -5028321625140879571L;
@@ -50,6 +54,12 @@ public class WxCpTpUserInfo extends WxCpBaseResp {
   @SerializedName("open_userid")
   private String openUserId;
 
+  /**
+   * From json wx cp tp user info.
+   *
+   * @param json the json
+   * @return the wx cp tp user info
+   */
   public static WxCpTpUserInfo fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpTpUserInfo.class);
   }

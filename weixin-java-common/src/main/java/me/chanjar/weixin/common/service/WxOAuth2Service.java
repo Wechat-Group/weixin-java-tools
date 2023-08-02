@@ -8,17 +8,17 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * oauth2 相关接口.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
- * @date 2020-08-08
+ * created on  2020-08-08
  */
 public interface WxOAuth2Service {
   /**
    * <pre>
    * 构造oauth2授权的url连接.
-   * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=网页授权获取用户基本信息
+   * 详情请见: <a href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html">网页授权</a>
    * </pre>
    *
    * @param redirectUri 用户授权完成后的重定向链接，无需urlencode, 方法内会进行encode
-   * @param scope       scope
+   * @param scope       scope,静默:snsapi_base, 带信息授权:snsapi_userinfo
    * @param state       state
    * @return url
    */
@@ -27,7 +27,7 @@ public interface WxOAuth2Service {
   /**
    * <pre>
    * 用code换取oauth2的access token.
-   * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=网页授权获取用户基本信息
+   * 详情请见: <a href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html">网页授权获取用户基本信息</a>
    * </pre>
    *
    * @param code code

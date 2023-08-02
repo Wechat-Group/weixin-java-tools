@@ -30,31 +30,57 @@ import static org.testng.Assert.assertNotEquals;
  */
 @Guice(modules = ApiTestModule.class)
 public class WxCpTagServiceImplTest {
+  /**
+   * The Wx service.
+   */
   @Inject
   protected WxCpService wxService;
 
+  /**
+   * The Config storage.
+   */
   @Inject
   protected ApiTestModule.WxXmlCpInMemoryConfigStorage configStorage;
 
   private String tagId;
 
+  /**
+   * Test create.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testCreate() throws Exception {
     this.tagId = this.wxService.getTagService().create("测试标签" + System.currentTimeMillis(), null);
     System.out.println(this.tagId);
   }
 
+  /**
+   * Test update.
+   *
+   * @throws Exception the exception
+   */
   @Test(dependsOnMethods = "testCreate")
   public void testUpdate() throws Exception {
     this.wxService.getTagService().update(this.tagId, "测试标签-改名" + System.currentTimeMillis());
   }
 
+  /**
+   * Test list all.
+   *
+   * @throws Exception the exception
+   */
   @Test(dependsOnMethods = {"testUpdate", "testCreate"})
   public void testListAll() throws Exception {
     List<WxCpTag> tags = this.wxService.getTagService().listAll();
     assertNotEquals(tags.size(), 0);
   }
 
+  /**
+   * Test add users 2 tag.
+   *
+   * @throws Exception the exception
+   */
   @Test(dependsOnMethods = {"testListAll", "testUpdate", "testCreate"})
   public void testAddUsers2Tag() throws Exception {
     List<String> userIds = Splitter.on("|").splitToList(this.configStorage.getUserId());
@@ -62,12 +88,22 @@ public class WxCpTagServiceImplTest {
     assertEquals(result.getErrCode(), Integer.valueOf(0));
   }
 
+  /**
+   * Test list users by tag id.
+   *
+   * @throws Exception the exception
+   */
   @Test(dependsOnMethods = {"testAddUsers2Tag", "testListAll", "testUpdate", "testCreate"})
   public void testListUsersByTagId() throws Exception {
     List<WxCpUser> users = this.wxService.getTagService().listUsersByTagId(this.tagId);
     assertNotEquals(users.size(), 0);
   }
 
+  /**
+   * Test remove users from tag.
+   *
+   * @throws Exception the exception
+   */
   @Test(dependsOnMethods = {"testListUsersByTagId", "testAddUsers2Tag", "testListAll", "testUpdate", "testCreate"})
   public void testRemoveUsersFromTag() throws Exception {
     List<String> userIds = Splitter.on("|").splitToList(this.configStorage.getUserId());
@@ -75,16 +111,29 @@ public class WxCpTagServiceImplTest {
     assertEquals(result.getErrCode(), Integer.valueOf(0));
   }
 
-  @Test(dependsOnMethods = {"testRemoveUsersFromTag", "testListUsersByTagId", "testAddUsers2Tag", "testListAll", "testUpdate", "testCreate"})
+  /**
+   * Test delete.
+   *
+   * @throws Exception the exception
+   */
+  @Test(dependsOnMethods = {"testRemoveUsersFromTag", "testListUsersByTagId", "testAddUsers2Tag", "testListAll",
+    "testUpdate", "testCreate"})
   public void testDelete() throws Exception {
     this.wxService.getTagService().delete(this.tagId);
   }
 
+  /**
+   * Test get.
+   *
+   * @throws WxErrorException the wx error exception
+   */
   @Test
   public void testGet() throws WxErrorException {
-    String apiResultJson = "{\"errcode\": 0,\"errmsg\": \"ok\",\"userlist\": [{\"userid\": \"0124035\",\"name\": \"王五\"},{\"userid\": \"0114035\",\"name\": \"梦雪\"}],\"partylist\": [9576,9567,9566],\"tagname\": \"测试标签-001\"}";
+    String apiResultJson = "{\"errcode\": 0,\"errmsg\": \"ok\",\"userlist\": [{\"userid\": \"0124035\",\"name\": " +
+      "\"王五\"},{\"userid\": \"0114035\",\"name\": \"梦雪\"}],\"partylist\": [9576,9567,9566],\"tagname\": \"测试标签-001\"}";
     WxCpService wxService = mock(WxCpService.class);
-    when(wxService.get(String.format(wxService.getWxCpConfigStorage().getApiUrl(WxCpApiPathConsts.Tag.TAG_GET), 150), null)).thenReturn(apiResultJson);
+    when(wxService.get(String.format(wxService.getWxCpConfigStorage().getApiUrl(WxCpApiPathConsts.Tag.TAG_GET), 150),
+      null)).thenReturn(apiResultJson);
     when(wxService.getTagService()).thenReturn(new WxCpTagServiceImpl(wxService));
 
     WxCpTagService wxCpTagService = wxService.getTagService();

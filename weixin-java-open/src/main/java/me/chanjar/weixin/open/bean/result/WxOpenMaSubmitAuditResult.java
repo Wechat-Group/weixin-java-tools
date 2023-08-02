@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
  * 微信开放平台小程序发布代码审核结果.
  *
  * @author yqx
- * @date 2018/9/12
+ * created on  2018/9/12
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

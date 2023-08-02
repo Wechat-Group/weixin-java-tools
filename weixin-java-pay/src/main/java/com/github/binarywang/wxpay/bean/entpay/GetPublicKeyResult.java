@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.w3c.dom.Document;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  *  企业付款获取RSA加密公钥接口返回结果类
@@ -17,7 +19,9 @@ import org.w3c.dom.Document;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @XStreamAlias("xml")
-public class GetPublicKeyResult extends BaseWxPayResult {
+public class GetPublicKeyResult extends BaseWxPayResult  implements Serializable {
+  private static final long serialVersionUID = -9150517427082709997L;
+
   /**
    * 商户号.
    */

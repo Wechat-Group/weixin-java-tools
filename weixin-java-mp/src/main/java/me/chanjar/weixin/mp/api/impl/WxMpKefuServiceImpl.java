@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.mp.api.WxMpKefuService;
@@ -29,8 +28,12 @@ public class WxMpKefuServiceImpl implements WxMpKefuService {
 
   @Override
   public boolean sendKefuMessage(WxMpKefuMessage message) throws WxErrorException {
-    String responseContent = this.wxMpService.post(MESSAGE_CUSTOM_SEND, message.toJson());
-    return responseContent != null;
+    return this.sendKefuMessageWithResponse(message) != null;
+  }
+
+  @Override
+  public String sendKefuMessageWithResponse(WxMpKefuMessage message) throws WxErrorException {
+    return this.wxMpService.post(MESSAGE_CUSTOM_SEND, message.toJson());
   }
 
   @Override

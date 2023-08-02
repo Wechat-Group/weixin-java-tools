@@ -6,7 +6,7 @@ import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
  * 删除卡券结果.
  *
  * @author fanxl
- * @date 2019/1/22 0022 10:24
+ * created on  2019/1/22 0022 10:24
  */
 public class WxMpCardDeleteResult extends BaseWxMpCardResult {
   private static final long serialVersionUID = -4367717540650523290L;

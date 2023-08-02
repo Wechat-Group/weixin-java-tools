@@ -228,7 +228,8 @@ public class WxPayRefundQueryResult extends BaseWxPayResult implements Serializa
   @Builder(builderMethodName = "newBuilder")
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class RefundRecord {
+  public static class RefundRecord  implements Serializable {
+    private static final long serialVersionUID=1L;
     /**
      * <pre>
      * 字段名：商户退款单号.

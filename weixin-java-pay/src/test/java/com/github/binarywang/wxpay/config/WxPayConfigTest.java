@@ -37,4 +37,11 @@ public class WxPayConfigTest {
   public void testHashCode() {
     payConfig.hashCode();
   }
+
+  @Test
+  public void testInitSSLContext_base64() throws Exception {
+    payConfig.setMchId("123");
+    payConfig.setKeyString("MIIKmgIBAzCCCmQGCS...");
+    payConfig.initSSLContext();
+  }
 }

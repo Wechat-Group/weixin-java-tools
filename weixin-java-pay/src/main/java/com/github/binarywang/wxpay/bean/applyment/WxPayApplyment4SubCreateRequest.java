@@ -64,7 +64,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   private BankAccountInfo bankAccountInfo;
 
   /**
-   * 结算银行账户
+   * 补充材料
    */
   @SerializedName("addition_info")
   private AdditionInfo additionInfo;
@@ -81,11 +81,38 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 超级管理员类型
+     * 1、主体为“个体工商户/企业/政府机关/事业单位/社会组织”，可选择：LEGAL：经营者/法人，SUPER：经办人 。（经办人：经商户授权办理微信支付业务的人员）。
+     * 枚举值：
+     * LEGAL：经营者/法人
+     * SUPER：经办人
+     * 示例值：LEGAL
+     */
+    @SerializedName("contact_type")
+    private String contactType;
+
+    /**
      * 超级管理员姓名
      */
     @SerializedName("contact_name")
     @SpecEncrypt
     private String contactName;
+
+    /**
+     * 超级管理员证件类型
+     * 当超级管理员类型是经办人时，请上传超级管理员证件类型。
+     * IDENTIFICATION_TYPE_IDCARD：中国大陆居民-身份证
+     * IDENTIFICATION_TYPE_OVERSEA_PASSPORT：其他国家或地区居民-护照
+     * IDENTIFICATION_TYPE_HONGKONG_PASSPORT：中国香港居民-来往内地通行证
+     * IDENTIFICATION_TYPE_MACAO_PASSPORT：中国澳门居民-来往内地通行证
+     * IDENTIFICATION_TYPE_TAIWAN_PASSPORT：中国台湾居民-来往大陆通行证
+     * IDENTIFICATION_TYPE_FOREIGN_RESIDENT：外国人居留证
+     * IDENTIFICATION_TYPE_HONGKONG_MACAO_RESIDENT：港澳居民证
+     * IDENTIFICATION_TYPE_TAIWAN_RESIDENT：台湾居民证
+     * 示例值：IDENTIFICATION_TYPE_IDCARD
+     */
+    @SerializedName("contact_id_doc_type")
+    private String contactIdDocType;
 
     /**
      * 超级管理员身份证件号码
@@ -96,6 +123,58 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
     @SerializedName("contact_id_number")
     @SpecEncrypt
     private String contactIdNumber;
+
+    /**
+     * 超级管理员证件正面照片
+     * 1、当超级管理员类型是经办人时，请上传超级管理员证件的正面照片。
+     * 2、若证件类型为身份证，请上传人像面照片。
+     * 3、可上传1张图片，请填写通过图片上传API预先上传图片生成好的MediaID。
+     * 4、请上传彩色照片or彩色扫描件or复印件（需加盖公章鲜章），可添加“微信支付”相关水印（如微信支付认证）。
+     * 示例值：jTpGmxUXqRTvDujqhThn4ReFxikqJ5YW6zFQ
+     */
+    @SerializedName("contact_id_doc_copy")
+    private String contactIdDocCopy;
+
+    /**
+     * 超级管理员证件反面照片
+     * 1、当超级管理员类型是经办人时，请上传超级管理员证件的反面照片。
+     * 2、若证件类型为护照，无需上传反面照片。
+     * 3、可上传1张图片，请填写通过图片上传API预先上传图片生成好的MediaID。
+     * 4、请上传彩色照片or彩色扫描件or复印件（需加盖公章鲜章），可添加“微信支付”相关水印（如微信支付认证）。
+     * 示例值：jTpGmxUX3FBWVQ5NJTZvvDujqhThn4ReFxikqJ5YW6zFQ
+     */
+    @SerializedName("contact_id_doc_copy_back")
+    private String contactIdDocCopyBack;
+
+    /**
+     * 超级管理员证件有效期开始时间
+     * 1、当超级管理员类型是经办人时，请上传证件有效期开始时间。
+     * 2、请按照示例值填写。
+     * 3、结束时间大于开始时间。
+     * 示例值：2019-06-06
+     */
+    @SerializedName("contact_period_begin")
+    private String contactPeriodBegin;
+
+    /**
+     * 超级管理员证件有效期结束时间
+     * 1、当超级管理员类型是经办人时，请上传证件有效期结束时间。
+     * 2、请按照示例值填写，若证件有效期为长期，请填写：长期。
+     * 3、结束时间大于开始时间。
+     * 示例值：2026-06-06
+     */
+    @SerializedName("contact_period_end")
+    private String contactPeriodEnd;
+
+    /**
+     * 业务办理授权函
+     * 1、当超级管理员类型是经办人时，请上传业务办理授权函。
+     * 2、请参照[示例图]打印业务办理授权函，全部信息需打印，不支持手写商户信息，并加盖公章。
+     * 3、可上传1张图片，请填写通过图片上传API预先上传图片生成好的MediaID。
+     * 示例值：47ZC6GC-vnrbEny_Ie_An5-tCpqxucuxi-vByf3Gjm7KEIUv0OF4wFNIO4kqg05InE4d2I6_H7I4
+     */
+    @SerializedName("business_authorization_letter")
+    private String businessAuthorizationLetter;
 
     /**
      * 超级管理员微信openid
@@ -141,6 +220,12 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
     private SubjectTypeEnum subjectType;
 
     /**
+     * 是否是金融机构
+     */
+    @SerializedName("finance_institution")
+    private Boolean financeInstitution;
+
+    /**
      * 营业执照
      */
     @SerializedName("business_license_info")
@@ -171,12 +256,17 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
     private IdentityInfo identityInfo;
 
     /**
-     * 最终受益人信息(UBO]
+     * 最终受益人信息列表(UBO)
      */
-    @SerializedName("ubo_info")
+    @SerializedName("ubo_info_list")
     @SpecEncrypt
-    private UboInfo uboInfo;
+    private List<UboInfo> uboInfoList;
 
+    /**
+     * 小微辅助证明材料（subjectType为小微商户时必填）
+     */
+    @SerializedName("micro_biz_info")
+    private MicroBizInfo microBizInfo;
 
     @Data
     @Builder
@@ -205,6 +295,21 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
        */
       @SerializedName("legal_person")
       private String legalPerson;
+      /**
+       * 注册地址
+       */
+      @SerializedName("license_address")
+      private String licenseAddress;
+      /**
+       * 有效期限开始日期
+       */
+      @SerializedName("period_begin")
+      private String periodBegin;
+      /**
+       * 有效期限结束日期
+       */
+      @SerializedName("period_end")
+      private String periodEnd;
     }
 
     @Data
@@ -250,7 +355,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
 
 
       /**
-       * 法人姓名
+       * 法定代表人
        */
       @SerializedName("legal_person")
       private String legalPerson;
@@ -310,10 +415,26 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
       private static final long serialVersionUID = 1683704338370383827L;
 
       /**
+       * 证件持有人类型
+       * LEGAL：法人
+       * SUPER：经办人
+       * 示例值：LEGAL
+       * @see com.github.binarywang.wxpay.bean.ecommerce.ApplymentsRequest 字段idHolderType
+       */
+      @SerializedName("id_holder_type")
+      private String idHolderType;
+
+      /**
        * 证件类型
        */
       @SerializedName("id_doc_type")
       private IdTypeEnum idDocType;
+
+      /**
+       * 法定代表人说明函
+       */
+      @SerializedName("authorize_letter_copy")
+      private String authorizeLetterCopy;
 
       /**
        * 身份证信息
@@ -333,7 +454,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
        * 经营者/法人是否为受益人
        */
       @SerializedName("owner")
-      private boolean owner;
+      private Boolean owner;
 
       @Data
       @Builder
@@ -352,7 +473,6 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
          */
         @SerializedName("id_card_national")
         private String idCardNational;
-
         /**
          * 身份证姓名
          */
@@ -365,6 +485,12 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
         @SerializedName("id_card_number")
         @SpecEncrypt
         private String idCardNumber;
+        /**
+         * 身份证居住地址
+         */
+        @SerializedName("id_card_address")
+        @SpecEncrypt
+        private String idCardAddress;
         /**
          * 身份证有效期开始时间
          */
@@ -386,10 +512,15 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
       public static class IdDocInfo implements Serializable {
         private static final long serialVersionUID = 7335589815924447719L;
         /**
-         * 证件照片
+         * 证件正面照片
          */
         @SerializedName("id_doc_copy")
         private String idDocCopy;
+        /**
+         * 证件反面照片
+         */
+        @SerializedName("id_doc_copy_back")
+        private String idDocCopyBack;
 
         /**
          * 证件姓名
@@ -404,6 +535,12 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
         @SerializedName("id_doc_number")
         @SpecEncrypt
         private String idDocNumber;
+        /**
+         * 证件居住地址
+         */
+        @SerializedName("id_doc_address")
+        @SpecEncrypt
+        private String idDocAddress;
         /**
          * 证件有效期开始时间
          */
@@ -427,47 +564,220 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
       /**
        * 证件类型
        */
-      @SerializedName("id_type")
-      private IdTypeEnum idType;
+      @SerializedName("ubo_id_doc_type")
+      private IdTypeEnum uboIdDocType;
       /**
-       * 身份证人像面照片
+       * 证件正面照片
        */
-      @SerializedName("id_card_copy")
-      private String idCardCopy;
+      @SerializedName("ubo_id_doc_copy")
+      private String uboIdDocCopy;
       /**
-       * 身份证国徽面照片
+       * 证件反面照片
        */
-      @SerializedName("id_card_national")
-      private String idCardNational;
+      @SerializedName("ubo_id_doc_copy_back")
+      private String uboIdDocCopyBack;
       /**
-       * 证件照片
+       * 证件姓名
        */
-      @SerializedName("id_doc_copy")
-      private String idDocCopy;
-      /**
-       * 受益人姓名
-       */
-      @SerializedName("name")
+      @SerializedName("ubo_id_doc_name")
       @SpecEncrypt
-      private String name;
+      private String uboIdDocName;
       /**
        * 证件号码
        */
-      @SerializedName("id_number")
+      @SerializedName("ubo_id_doc_number")
       @SpecEncrypt
-      private String idNumber;
+      private String uboIdDocNumber;
+      /**
+       * 证件居住地址
+       */
+      @SerializedName("ubo_id_doc_address")
+      @SpecEncrypt
+      private String uboIdDocAddress;
       /**
        * 证件有效期开始时间
        */
-      @SerializedName("id_period_begin")
-      private String idPeriodBegin;
+      @SerializedName("ubo_period_begin")
+      private String uboPeriodBegin;
       /**
        * 证件有效期结束时间
        */
-      @SerializedName("id_period_end")
-      private String idPeriodEnd;
+      @SerializedName("ubo_period_end")
+      private String uboPeriodEnd;
     }
 
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Accessors(chain = true)
+    public static class MicroBizInfo implements Serializable {
+      private static final long serialVersionUID = -5679477993681265764L;
+      /**
+       * 小微经营类型
+       */
+      @SerializedName("micro_biz_type")
+      private MicroBizTypeEnum microBizType;
+
+      /**
+       * 门店场所---经营类型为“门店场所”时填写
+       */
+      @SerializedName("micro_store_info")
+      private MicroStoreInfo microStoreInfo;
+
+      /**
+       * 经营类型为“流动经营/便民服务”时填写
+       */
+      @SerializedName("micro_mobile_info")
+      private MicroMobileInfo microMobileInfo;
+
+      /**
+       * 经营类型为“线上商品/服务交易”时填写
+       */
+      @SerializedName("micro_online_info")
+      private MicroOnlineInfo microOnlineInfo;
+
+      /**
+       * 门店场所
+       */
+      @Data
+      @Builder
+      @NoArgsConstructor
+      @AllArgsConstructor
+      @Accessors(chain = true)
+      public static class MicroStoreInfo implements Serializable {
+        private static final long serialVersionUID = 5277440587305558389L;
+        /**
+         * 门店名称
+         */
+        @SerializedName("micro_name")
+        private String microName;
+        /**
+         * 门店省市编码 填写门店省市编码，只能由数字组成，详细参见《微信支付提供的省市对照表》
+         *
+         * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/download/%E7%9C%81%E5%B8%82%E5%8C%BA%E7%BC%96%E5%8F%B7%E5%AF%B9%E7%85%A7%E8%A1%A8.xlsx'>下载微信支付提供的省市对照表</a>
+         */
+        @SerializedName("micro_address_code")
+        private String microAddressCode;
+        /**
+         * 门店地址(填写店铺详细地址，具体区/县及街道门牌号或大厦楼层)
+         */
+        @SerializedName("micro_address")
+        private String microAddress;
+        /**
+         * 门店门头照片
+         * <per>
+         * 1、提交门店门口照片，要求招牌清晰可见
+         * 2、可上传1张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
+         * </per>
+         *
+         * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
+         */
+        @SerializedName("store_entrance_pic")
+        private String storeEntrancePic;
+        /**
+         * 店内环境照片
+         * <per>
+         * 1、提交店内环境照片
+         * 2、可上传1张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
+         * </per>
+         *
+         * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
+         */
+        @SerializedName("micro_indoor_copy")
+        private String microIndoorCopy;
+        /**
+         * 门店经度
+         */
+        @SerializedName("store_longitude")
+        private String storeLongitude;
+        /**
+         * 门店纬度
+         */
+        @SerializedName("store_latitude")
+        private String storeLatitude;
+      }
+
+      /**
+       * 流动经营/便民服务
+       */
+      @Data
+      @Builder
+      @NoArgsConstructor
+      @AllArgsConstructor
+      @Accessors(chain = true)
+      public static class MicroMobileInfo implements Serializable {
+        private static final long serialVersionUID = -1308090894511066935L;
+        /**
+         * 经营/服务名称
+         */
+        @SerializedName("micro_mobile_name")
+        private String microMobileName;
+        /**
+         * 经营/服务所在地省市
+         */
+        @SerializedName("micro_mobile_city")
+        private String microMobileCity;
+        /**
+         * 经营/服务所在地（不含省市) 填写“无"
+         */
+        @SerializedName("micro_mobile_address")
+        private String microMobileAddress;
+        /**
+         * 经营/服务现场照片
+         * <per>
+         * 1、提交经营/服务现场照片
+         * 2、可上传多张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
+         * </per>
+         *
+         * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
+         */
+        @SerializedName("micro_mobile_pics")
+        private String microMobilePics;
+      }
+
+      /**
+       * 线上商品/服务交易
+       */
+      @Data
+      @Builder
+      @NoArgsConstructor
+      @AllArgsConstructor
+      @Accessors(chain = true)
+      public static class MicroOnlineInfo implements Serializable {
+        private static final long serialVersionUID = 9029168841403055743L;
+        /**
+         * 线上店铺名称
+         */
+        @SerializedName("micro_online_store")
+        private String microOnlineStore;
+        /**
+         * 电商平台名称
+         */
+        @SerializedName("micro_ec_name")
+        private String microEcName;
+        /**
+         * 店铺二维码
+         * <per>
+         * 1、店铺二维码或店铺链接二选一必填
+         * 2、可上传多张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
+         * </per>
+         *
+         * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
+         */
+        @SerializedName("micro_qrcode")
+        private String microQrcode;
+        /**
+         * 店铺二维码
+         * <per>
+         * 1、店铺二维码或店铺链接二选一必填
+         * 2、请填写店铺主页链接，需符合网站规范
+         * </per>
+         */
+        @SerializedName("micro_link")
+        private String microLink;
+      }
+    }
   }
 
   /**
@@ -783,6 +1093,18 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
      */
     @SerializedName("activities_rate")
     private String activitiesRate;
+
+    /**
+     * 非信用卡活动费率值
+     */
+    @SerializedName("debit_activities_rate")
+    private String debitActivitiesRate;
+
+    /**
+     * 信用卡活动费率值
+     */
+    @SerializedName("credit_activities_rate")
+    private String creditActivitiesRate;
 
     /**
      * 优惠费率活动补充材料
