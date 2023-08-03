@@ -175,17 +175,17 @@ public class WxPayConstants {
    */
   public static class AccountType {
     /**
-     * 基本账户
+     * BASIC：基本账户
      */
-    public static final String BASIC = "Basic";
+    public static final String BASIC = "BASIC";
     /**
-     * 运营账户
+     * OPERATION：运营账户
      */
-    public static final String OPERATION = "Operation";
+    public static final String OPERATION = "OPERATION";
     /**
-     * Fees
+     * FEES：手续费账户
      */
-    public static final String FEES = "Fees";
+    public static final String FEES = "FEES";
   }
 
   /**
