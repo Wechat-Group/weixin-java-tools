@@ -529,6 +529,9 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public void setMultiConfigStorages(Map<String, WxMpConfigStorage> configStorages) {
+    if (configStorages.isEmpty()) {
+      return;
+    }
     this.setMultiConfigStorages(configStorages, configStorages.keySet().iterator().next());
   }
 
