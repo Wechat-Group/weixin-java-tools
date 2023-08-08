@@ -110,13 +110,13 @@ public interface WxCpExternalContactService {
    * 第三方应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
    * </pre>
    *
-   * @param userId 外部联系人的userid
+   * @param externalUserId 外部联系人的userid
    * @return . external contact
    * @throws WxErrorException the wx error exception
    * @deprecated 建议使用 {@link #getContactDetail(String, String)}
    */
   @Deprecated
-  WxCpExternalContactInfo getExternalContact(String userId) throws WxErrorException;
+  WxCpExternalContactInfo getExternalContact(String externalUserId) throws WxErrorException;
 
   /**
    * 获取客户详情.
@@ -133,12 +133,12 @@ public interface WxCpExternalContactService {
    * 第三方/自建应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
    * </pre>
    *
-   * @param userId 外部联系人的userid，注意不是企业成员的帐号
+   * @param externalUserId 外部联系人的userid，注意不是企业成员的帐号
    * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
    * @return . contact detail
    * @throws WxErrorException .
    */
-  WxCpExternalContactInfo getContactDetail(String userId, String cursor) throws WxErrorException;
+  WxCpExternalContactInfo getContactDetail(String externalUserId, String cursor) throws WxErrorException;
 
   /**
    * 企业和服务商可通过此接口，将微信外部联系人的userid转为微信openid，用于调用支付相关接口。暂不支持企业微信外部联系人（ExternalUserid为wo开头）的userid转openid。
