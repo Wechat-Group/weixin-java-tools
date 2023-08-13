@@ -46,6 +46,16 @@ public class ProfitSharingRequest implements Serializable {
 
   /**
    * <pre>
+   * 字段名：子商户应用ID
+   * 是否必填：否
+   * 描述：子商户的公众账号ID，分账接收方类型包含PERSONAL_SUB_OPENID时必填
+   * </pre>
+   */
+  @SerializedName("sub_appid")
+  private String subAppid;
+
+  /**
+   * <pre>
    * 字段名：微信订单号
    * 是否必填：是
    * 描述：微信支付订单号
