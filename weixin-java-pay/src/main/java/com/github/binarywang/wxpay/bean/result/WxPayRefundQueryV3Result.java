@@ -311,6 +311,20 @@ public class WxPayRefundQueryV3Result implements Serializable {
      */
     @SerializedName(value = "currency")
     private String currency;
+
+    /**
+     * <pre>
+     * 字段名：手续费退款金额
+     * 变量名：refund_fee
+     * 是否必填：否
+     * 类型：int
+     * 描述：
+     *  手续费退款金额，单位为分。
+     *  示例值：10
+     * </pre>
+     */
+    @SerializedName(value = "refund_fee")
+    private Integer refundFee;
   }
 
   @Data
