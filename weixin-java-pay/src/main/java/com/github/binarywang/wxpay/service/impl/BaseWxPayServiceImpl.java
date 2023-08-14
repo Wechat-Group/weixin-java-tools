@@ -300,7 +300,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public WxPayRefundQueryV3Result partnerRefundQueryV3(WxPayPartnerRefundQueryV3Request request) throws WxPayException {
-    String url = String.format("%s/v3/refund/domestic/refunds/%s?sub_mchid=", this.getPayBaseUrl(), request.getOutRefundNo(),request.getSubMchid());
+    String url = String.format("%s/v3/refund/domestic/refunds/%s?sub_mchid=%s", this.getPayBaseUrl(), request.getOutRefundNo(),request.getSubMchid());
     String response = this.getV3(url);
     return GSON.fromJson(response, WxPayRefundQueryV3Result.class);
   }
