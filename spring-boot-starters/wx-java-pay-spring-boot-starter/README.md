@@ -15,8 +15,6 @@ wx:
     appId: 
     mchId: 
     mchKey: 
-    subAppId:
-    subMchId:
     keyPath:
 ```
 ###### 2）V3版本
@@ -30,10 +28,16 @@ wx:
     privateKeyPath: classpath:cert/apiclient_key.pem #apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径
     privateCertPath: classpath:cert/apiclient_cert.pem #apiclient_cert.pem证书文件的绝对路径或者以classpath:开头的类路径
 ```
-
-
-
-
-
-
-
+###### 3）V3服务商版本
+```yml
+wx:
+  pay: #微信服务商支付
+    configs:
+    - appId: wxe97b2x9c2b3d #spAppId
+      mchId: 16486610 #服务商商户
+      subAppId: wx118cexxe3c07679 #子appId
+      subMchId: 16496705 #子商户
+      apiV3Key: Dc1DBwSc094jAKDGR5aqqb7PTHr #apiV3密钥
+      privateKeyPath: classpath:cert/apiclient_key.pem #服务商证书文件，apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径（可以配置绝对路径）
+      privateCertPath: classpath:cert/apiclient_cert.pem #apiclient_cert.pem证书文件的绝对路径或者以classpath:开头的类路径
+```
