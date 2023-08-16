@@ -262,12 +262,12 @@ public class WxPayConfig {
 
     InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
       this.privateKeyContent, "privateKeyPath");
-    InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
-      this.privateCertContent, "privateCertPath");
     try {
       PrivateKey merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
-      X509Certificate certificate = PemUtils.loadCertificate(certInputStream);
       if (StringUtils.isBlank(this.getCertSerialNo())) {
+        InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
+          this.privateCertContent, "privateCertPath");
+        X509Certificate certificate = PemUtils.loadCertificate(certInputStream);
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
       //构造Http Proxy正向代理
@@ -290,6 +290,8 @@ public class WxPayConfig {
       this.privateKey = merchantPrivateKey;
 
       return httpClient;
+    } catch (WxPayException e) {
+      throw e;
     } catch (Exception e) {
       throw new WxPayException("v3请求构造异常！", e);
     }
