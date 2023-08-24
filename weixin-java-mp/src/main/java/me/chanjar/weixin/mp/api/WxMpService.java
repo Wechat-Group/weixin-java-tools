@@ -20,6 +20,7 @@ import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * 微信公众号API的Service.
@@ -393,6 +394,8 @@ public interface WxMpService extends WxService {
    */
   boolean switchover(String mpId);
 
+  boolean switchover(String mpId, Function<String, WxMpConfigStorage> func);
+
   /**
    * 进行相应的公众号切换.
    *
@@ -400,6 +403,8 @@ public interface WxMpService extends WxService {
    * @return 切换成功 ，则返回当前对象，方便链式调用，否则抛出异常
    */
   WxMpService switchoverTo(String mpId);
+
+  WxMpService switchoverTo(String mpId, Function<String, WxMpConfigStorage> func);
 
   /**
    * 返回客服接口方法实现类，以方便调用其各个接口.

@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
+import java.util.function.Function;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.*;
 
@@ -155,6 +156,10 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Getter
   @Setter
   private WxMpFreePublishService freePublishService = new WxMpFreePublishServiceImpl(this);
+
+  @Getter
+  @Setter
+  private Function<String, WxMpConfigStorage> configStorageFunction;
 
   private Map<String, WxMpConfigStorage> configStorageMap = new HashMap<>();
 
@@ -575,21 +580,43 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public WxMpService switchoverTo(String mpId) {
+    return switchoverTo(mpId, configStorageFunction);
+  }
+
+  @Override
+  public WxMpService switchoverTo(String mpId, Function<String, WxMpConfigStorage> func) {
     if (this.configStorageMap.containsKey(mpId)) {
       WxMpConfigStorageHolder.set(mpId);
       return this;
     }
-
+    if (func != null) {
+      WxMpConfigStorage storage = func.apply(mpId);
+      if (storage != null) {
+        this.addConfigStorage(mpId, storage);
+        return this;
+      }
+    }
     throw new WxRuntimeException(String.format("无法找到对应【%s】的公众号配置信息，请核实！", mpId));
   }
 
   @Override
   public boolean switchover(String mpId) {
+    return switchover(mpId, configStorageFunction);
+  }
+
+  @Override
+  public boolean switchover(String mpId, Function<String, WxMpConfigStorage> func) {
     if (this.configStorageMap.containsKey(mpId)) {
       WxMpConfigStorageHolder.set(mpId);
       return true;
     }
-
+    if (func != null) {
+      WxMpConfigStorage storage = func.apply(mpId);
+      if (storage != null) {
+        this.addConfigStorage(mpId, storage);
+        return true;
+      }
+    }
     log.error("无法找到对应【{}】的公众号配置信息，请核实！", mpId);
     return false;
   }
