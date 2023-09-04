@@ -46,11 +46,6 @@ public class WxPayV3HttpClientBuilder extends HttpClientBuilder {
     return this;
   }
 
-  public WxPayV3HttpClientBuilder withWechatpay(List<X509Certificate> certificates) {
-    this.validator = new WxPayValidator(new CertificatesVerifier(certificates));
-    return this;
-  }
-
   public WxPayV3HttpClientBuilder withValidator(Validator validator) {
     this.validator = validator;
     return this;

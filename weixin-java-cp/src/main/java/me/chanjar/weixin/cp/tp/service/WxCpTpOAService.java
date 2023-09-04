@@ -4,7 +4,7 @@ import lombok.NonNull;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.oa.WxCpApprovalDetailResult;
 import me.chanjar.weixin.cp.bean.oa.WxCpOaApplyEventRequest;
-import me.chanjar.weixin.cp.bean.oa.WxCpTemplateResult;
+import me.chanjar.weixin.cp.bean.oa.WxCpOaApprovalTemplateResult;
 
 /**
  * 企业微信OA相关接口.
@@ -38,7 +38,7 @@ public interface WxCpTpOAService {
    * @return . template detail
    * @throws WxErrorException .
    */
-  WxCpTemplateResult getTemplateDetail(@NonNull String templateId, String corpId) throws WxErrorException;
+  WxCpOaApprovalTemplateResult getTemplateDetail(@NonNull String templateId, String corpId) throws WxErrorException;
 
   /**
    * 复制/更新模板到企业

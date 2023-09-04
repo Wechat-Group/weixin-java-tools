@@ -9,6 +9,8 @@ import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.IntegerArrayConverter;
 import me.chanjar.weixin.common.util.xml.StringArrayConverter;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
+import me.chanjar.weixin.cp.util.crypto.WxCpTpCryptUtil;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 
 import java.io.Serializable;
@@ -477,7 +479,7 @@ public class WxCpTpXmlMessage implements Serializable {
   private WxCpXmlMessage.SendLocationInfo sendLocationInfo = new WxCpXmlMessage.SendLocationInfo();
 
   @XStreamAlias("ApprovalInfo")
-  private ApprovalInfo approvalInfo = new ApprovalInfo();
+  private WxCpXmlApprovalInfo approvalInfo = new WxCpXmlApprovalInfo();
 
   @XStreamAlias("TaskId")
   @XStreamConverter(value = XStreamCDataConverter.class)
@@ -578,6 +580,7 @@ public class WxCpTpXmlMessage implements Serializable {
 
   /**
    * The type Approval info.
+   * @deprecated 无法同时适配不同回调下的实体字段，使用WxCpXmlApprovalInfo可完美适配
    */
   @Data
   @XStreamAlias("ApprovalInfo")
@@ -774,4 +777,20 @@ public class WxCpTpXmlMessage implements Serializable {
     return xmlPackage;
   }
 
+  /**
+   *
+   * @param encryptedXml         the encrypted xml
+   * @param wxCpTpConfigStorage  the wx cp config storage
+   * @param timestamp            the timestamp
+   * @param nonce                the nonce
+   * @param msgSignature         the msg signature
+   * @return                     the wx cp tp xml message
+   */
+  public static WxCpTpXmlMessage fromEncryptedXml(String encryptedXml, WxCpTpConfigStorage wxCpTpConfigStorage,
+                                                  String timestamp, String nonce, String msgSignature) {
+    WxCpTpCryptUtil cryptUtil = new WxCpTpCryptUtil(wxCpTpConfigStorage);
+    String plainText = cryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedXml);
+    log.debug("解密后的原始xml消息内容：{}", plainText);
+    return fromXml(plainText);
+  }
 }

@@ -1,6 +1,7 @@
 package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.cp.bean.message.TemplateCardMessage;
 
 import java.util.List;
 
@@ -48,4 +49,5 @@ public interface WxCpTaskCardService {
                                 List<Integer> tagIds, Integer atAll, String responseCode,
                                 String replaceName) throws WxErrorException;
 
+  void updateTemplateCardButton(TemplateCardMessage templateCardMessage) throws WxErrorException;
 }

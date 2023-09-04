@@ -5,7 +5,7 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutDeviceMessage;
 /**
  * 设备消息 Builder
  * @author biggates
- * @see https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-2
+ * @see <a href="https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-2">文档</a>
  */
 public final class DeviceBuilder extends BaseBuilder<DeviceBuilder, WxMpXmlOutDeviceMessage> {
 

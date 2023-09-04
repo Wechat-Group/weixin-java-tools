@@ -22,6 +22,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@XStreamAlias("xml")
 public class WxSignQueryResult extends BaseWxPayResult implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -29,7 +30,7 @@ public class WxSignQueryResult extends BaseWxPayResult implements Serializable {
   /**
    * 委托代扣协议ID
    */
-  @XStreamAlias("contractId")
+  @XStreamAlias("contract_id")
   private String contractId;
 
   /**

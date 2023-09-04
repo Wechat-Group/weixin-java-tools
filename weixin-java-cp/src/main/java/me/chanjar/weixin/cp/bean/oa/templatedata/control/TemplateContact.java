@@ -11,7 +11,6 @@ import java.io.Serializable;
  */
 @Data
 public class TemplateContact implements Serializable {
-
   private static final long serialVersionUID = -7840088884653172851L;
   /**
    * 选择方式：single-单选；multi-多选

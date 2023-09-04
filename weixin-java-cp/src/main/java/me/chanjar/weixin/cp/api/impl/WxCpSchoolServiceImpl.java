@@ -1,7 +1,6 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.gson.JsonObject;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -11,7 +10,6 @@ import me.chanjar.weixin.cp.bean.living.WxCpLivingResult;
 import me.chanjar.weixin.cp.bean.school.*;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +28,7 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
   private final WxCpService cpService;
 
   @Override
-  public WxCpCustomizeHealthInfo getTeacherCustomizeHealthInfo(@NotNull String date, String nextKey, Integer limit) throws WxErrorException {
+  public WxCpCustomizeHealthInfo getTeacherCustomizeHealthInfo(String date, String nextKey, Integer limit) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_TEACHER_CUSTOMIZE_HEALTH_INFO);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("date", date);
@@ -43,7 +41,7 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
   }
 
   @Override
-  public WxCpCustomizeHealthInfo getStudentCustomizeHealthInfo(@NotNull String date, String nextKey, Integer limit) throws WxErrorException {
+  public WxCpCustomizeHealthInfo getStudentCustomizeHealthInfo(String date, String nextKey, Integer limit) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_STUDENT_CUSTOMIZE_HEALTH_INFO);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("date", date);
@@ -56,7 +54,7 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
   }
 
   @Override
-  public WxCpResultList getHealthQrCode(@NotNull List<String> userIds, @NotNull Integer type) throws WxErrorException {
+  public WxCpResultList getHealthQrCode(List<String> userIds, Integer type) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_HEALTH_QRCODE);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("type", type);
@@ -66,7 +64,7 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
   }
 
   @Override
-  public WxCpPaymentResult getPaymentResult(@NotNull String paymentId) throws WxErrorException {
+  public WxCpPaymentResult getPaymentResult(String paymentId) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_PAYMENT_RESULT);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("payment_id", paymentId);
@@ -75,7 +73,7 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
   }
 
   @Override
-  public WxCpTrade getTrade(@NotNull String paymentId, @NotNull String tradeNo) throws WxErrorException {
+  public WxCpTrade getTrade(String paymentId, String tradeNo) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_TRADE);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("payment_id", paymentId);
@@ -85,19 +83,19 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
   }
 
   @Override
-  public WxCpSchoolLivingInfo getLivingInfo(@NotNull String livingId) throws WxErrorException {
+  public WxCpSchoolLivingInfo getLivingInfo(String livingId) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_LIVING_INFO) + livingId;
     String responseContent = this.cpService.get(apiUrl, null);
     return WxCpSchoolLivingInfo.fromJson(responseContent);
   }
 
   @Override
-  public WxCpLivingResult.LivingIdResult getUserAllLivingId(@NonNull String userId, String cursor, Integer limit) throws WxErrorException {
+  public WxCpLivingResult.LivingIdResult getUserAllLivingId(String userId, String cursor, Integer limit) throws WxErrorException {
     return this.cpService.getLivingService().getUserAllLivingId(userId, cursor, limit);
   }
 
   @Override
-  public WxCpSchoolWatchStat getWatchStat(@NonNull String livingId, String nextKey) throws WxErrorException {
+  public WxCpSchoolWatchStat getWatchStat(String livingId, String nextKey) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_WATCH_STAT);
     JsonObject jsonObject = new JsonObject();
     if (StringUtils.isNotBlank(nextKey)) {
@@ -109,7 +107,7 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
   }
 
   @Override
-  public WxCpSchoolUnwatchStat getUnwatchStat(@NonNull String livingId, String nextKey) throws WxErrorException {
+  public WxCpSchoolUnwatchStat getUnwatchStat(String livingId, String nextKey) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_UNWATCH_STAT);
     JsonObject jsonObject = new JsonObject();
     if (StringUtils.isNotBlank(nextKey)) {
@@ -121,7 +119,7 @@ public class WxCpSchoolServiceImpl implements WxCpSchoolService {
   }
 
   @Override
-  public WxCpLivingResult deleteReplayData(@NonNull String livingId) throws WxErrorException {
+  public WxCpLivingResult deleteReplayData(String livingId) throws WxErrorException {
     return cpService.getLivingService().deleteReplayData(livingId);
   }
 

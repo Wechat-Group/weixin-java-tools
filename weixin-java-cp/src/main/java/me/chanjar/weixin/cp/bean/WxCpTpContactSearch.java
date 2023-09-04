@@ -11,7 +11,6 @@ import java.io.Serializable;
  * The type Wx cp tp contact search.
  *
  * @author uianz
- * @description
  * @since 2020 /12/23 下午 02:43
  */
 @Data

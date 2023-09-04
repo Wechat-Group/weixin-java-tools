@@ -4,7 +4,6 @@ import jodd.http.HttpConnectionProvider;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
 import jodd.http.ProxyInfo;
-import jodd.util.StringPool;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
@@ -35,6 +34,7 @@ public class JoddHttpSimplePostRequestExecutor extends SimplePostRequestExecutor
     }
     request.withConnectionProvider(provider);
     if (postEntity != null) {
+      request.contentType("application/json", "utf-8");
       request.bodyText(postEntity);
     }
     HttpResponse response = request.send();

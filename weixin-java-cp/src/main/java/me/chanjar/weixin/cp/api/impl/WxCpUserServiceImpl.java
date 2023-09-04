@@ -204,6 +204,17 @@ public class WxCpUserServiceImpl implements WxCpUserService {
   }
 
   @Override
+  public String getUserIdByEmail(String email, int emailType) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("email", email);
+    jsonObject.addProperty("email_type", emailType);
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_USER_ID_BY_EMAIL);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("userid").getAsString();
+  }
+
+  @Override
   public WxCpExternalContactInfo getExternalContact(String userId) throws WxErrorException {
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_EXTERNAL_CONTACT + userId);
     String responseContent = this.mainService.get(url, null);

@@ -8,7 +8,6 @@ import me.chanjar.weixin.cp.bean.WxCpTpContactSearchResp;
  * The interface Wx cp tp contact service.
  *
  * @author uianz
- * @description
  * @since 2020 /12/23 下午 02:39
  */
 public interface WxCpTpContactService {

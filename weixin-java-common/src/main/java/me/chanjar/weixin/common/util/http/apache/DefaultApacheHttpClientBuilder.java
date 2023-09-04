@@ -182,7 +182,6 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
       .register("https", this.sslConnectionSocketFactory)
       .build();
 
-    @SuppressWarnings("resource")
     PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(registry);
     connectionManager.setMaxTotal(this.maxTotalConn);
     connectionManager.setDefaultMaxPerRoute(this.maxConnPerHost);
@@ -238,12 +237,7 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     try {
       SSLContext sslcontext = SSLContexts.custom()
         //忽略掉对服务器端证书的校验
-        .loadTrustMaterial(new TrustStrategy() {
-          @Override
-          public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-            return true;
-          }
-        }).build();
+        .loadTrustMaterial((TrustStrategy) (chain, authType) -> true).build();
 
       return new SSLConnectionSocketFactory(
         sslcontext,

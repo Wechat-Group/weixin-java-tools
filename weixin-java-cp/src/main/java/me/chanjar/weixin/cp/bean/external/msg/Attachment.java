@@ -34,9 +34,10 @@ public class Attachment implements Serializable {
    *
    * @param image the image
    */
-  public void setImage(Image image) {
+  public Attachment setImage(Image image) {
     this.image = image;
     this.msgType = WxCpConsts.WelcomeMsgType.IMAGE;
+    return this;
   }
 
   /**
@@ -44,9 +45,10 @@ public class Attachment implements Serializable {
    *
    * @param link the link
    */
-  public void setLink(Link link) {
+  public Attachment setLink(Link link) {
     this.link = link;
     this.msgType = WxCpConsts.WelcomeMsgType.LINK;
+    return this;
   }
 
   /**
@@ -54,9 +56,10 @@ public class Attachment implements Serializable {
    *
    * @param miniProgram the mini program
    */
-  public void setMiniProgram(MiniProgram miniProgram) {
+  public Attachment setMiniProgram(MiniProgram miniProgram) {
     this.miniProgram = miniProgram;
     this.msgType = WxCpConsts.WelcomeMsgType.MINIPROGRAM;
+    return this;
   }
 
   /**
@@ -64,9 +67,10 @@ public class Attachment implements Serializable {
    *
    * @param video the video
    */
-  public void setVideo(Video video) {
+  public Attachment setVideo(Video video) {
     this.video = video;
     this.msgType = WxCpConsts.WelcomeMsgType.VIDEO;
+    return this;
   }
 
   /**
@@ -74,8 +78,9 @@ public class Attachment implements Serializable {
    *
    * @param file the file
    */
-  public void setFile(File file) {
+  public Attachment setFile(File file) {
     this.file = file;
     this.msgType = WxCpConsts.WelcomeMsgType.FILE;
+    return this;
   }
 }

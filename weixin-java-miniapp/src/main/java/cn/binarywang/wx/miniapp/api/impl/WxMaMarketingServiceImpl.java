@@ -3,7 +3,6 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaMarketingService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.marketing.WxMaUserAction;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,7 @@ import java.util.List;
 
 /**
  * @author <a href="https://github.com/184759547">184759547</a>
- * @Description :微信营销接口
+ * 微信营销接口
  * @since : 2021/12/28
  */
 @Slf4j

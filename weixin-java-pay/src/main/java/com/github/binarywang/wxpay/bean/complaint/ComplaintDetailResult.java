@@ -135,7 +135,7 @@ public class ComplaintDetailResult implements Serializable {
      * </pre>
      */
     @SerializedName("media_url")
-    private String mediaUrl;
+    private List<String> mediaUrl;
 
   }
 
@@ -186,6 +186,64 @@ public class ComplaintDetailResult implements Serializable {
      */
     @SerializedName("amount")
     private Integer amount;
+
+  }
+
+    /**
+   * <pre>
+   * 字段名：投诉单关联服务单信息
+   * 是否必填：否
+   * 投诉单关联服务单信息, 支付分服务单投诉时可能存在
+   * </pre>
+   */
+  @SerializedName("service_order_info")
+  private List<ServiceOrder> serviceOrderInfo;
+
+  /**
+  * <pre>
+  * 服务单信息
+  * </pre>
+  */
+  @Data
+  public static class ServiceOrder implements Serializable {
+    private static final long serialVersionUID = 4240983048700956805L;
+
+    /**
+     * <pre>
+     * 字段名：微信支付服务订单号
+     * 是否必填：否
+     * 描述：
+     * 微信支付服务订单号，每个微信支付服务订单号与商户号下对应的商户服务订单号一一对应
+     * </pre>
+     */
+    @SerializedName("order_id")
+    private String orderId;
+
+    /**
+     * <pre>
+     * 字段名：商户服务订单号
+     * 是否必填：否
+     * 描述：
+     * 商户系统内部服务订单号（不是交易单号），与创建订单时一致
+     * </pre>
+     */
+    @SerializedName("out_order_no")
+    private String outOrderNo;
+
+    /**
+     * <pre>
+     * 字段名：支付分服务单状态
+     * 是否必填：否
+     * 描述：
+     * 此处上传的是用户发起投诉时的服务单状态，不会实时更新
+     * DOING：服务订单进行中
+     * REVOKED：商户取消服务订单
+     * WAITPAY：服务订单待支付
+     * DONE：服务订单已完成
+     * </pre>
+     */
+    @SerializedName("state")
+    private String state;
 
   }
 
@@ -260,11 +318,10 @@ public class ComplaintDetailResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：用户投诉次数
+   * 字段名：用户标签列表
    * 是否必填：否
-   * 描述：用户标签列表
-   * TRUSTED：可信，此类用户满足极速退款条件
-   * OTHERS：其它，此类用户不满足极速退款条件
+   * 描述： TRUSTED：可信，此类用户满足极速退款条件
+   *       OTHERS：其它，此类用户不满足极速退款条件
    * 示例值：[TRUSTED]
    * </pre>
    */

@@ -22,6 +22,8 @@ public interface WxMaService extends WxService {
    * 获取access_token.
    */
   String GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
+  String GET_STABLE_ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/stable_token";
+
 
   /**
    * The constant JSCODE_TO_SESSION_URL.
@@ -494,31 +496,62 @@ public interface WxMaService extends WxService {
 
   /**
    * 分享人接口
+   *
    * @return WxMaShopSharerService
    */
   WxMaShopSharerService getShopSharerService();
 
   /**
    * 标准交易组件接口
+   *
    * @return WxMaProductService
    */
   WxMaProductService getProductService();
 
   /**
    * 小商店-标准交易组件-订单服务
+   *
    * @return getProductOrderService
    */
   WxMaProductOrderService getProductOrderService();
 
   /**
    * 小商店-标准交易组件-优惠券
+   *
    * @return getWxMaShopCouponService
    */
   WxMaShopCouponService getWxMaShopCouponService();
 
   /**
    * 小程序支付管理-订单支付
+   *
    * @return getWxMaShopPayService
    */
   WxMaShopPayService getWxMaShopPayService();
+
+  /**
+   * 小程序发货信息管理服务
+   *
+   * @return getWxMaOrderShippingService
+   */
+  WxMaOrderShippingService getWxMaOrderShippingService();
+
+  /**
+   * 小程序openApi管理
+   *
+   * @return getWxMaOpenApiService
+   */
+  WxMaOpenApiService getWxMaOpenApiService();
+  /**
+   * 小程序短剧管理
+   *
+   * @return getWxMaVodService
+   */
+  WxMaVodService getWxMaVodService();
+  /**
+   * 小程序虚拟支付
+   *
+   * @return getWxMaXPayService
+   */
+  WxMaXPayService getWxMaXPayService();
 }

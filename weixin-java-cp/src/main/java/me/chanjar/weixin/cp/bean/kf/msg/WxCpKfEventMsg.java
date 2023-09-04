@@ -38,4 +38,6 @@ public class WxCpKfEventMsg {
   private Integer changeType;
   @SerializedName("msg_code")
   private String msgCode;
+  @SerializedName("recall_msgid")
+  private String recallMsgId;
 }

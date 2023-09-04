@@ -43,12 +43,19 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    */
   @Override
   public PartnerTransferResult batchTransfer(PartnerTransferRequest request) throws WxPayException {
-    request.getTransferDetailList().stream().forEach(p -> {
+    request.getTransferDetailList().forEach(p -> {
       try {
-        String userName = RsaCryptoUtil.encryptOAEP(p.getUserName(), this.payService.getConfig().getVerifier().getValidCertificate());
+        String userName = RsaCryptoUtil.encryptOAEP(p.getUserName(),
+          this.payService.getConfig().getVerifier().getValidCertificate());
         p.setUserName(userName);
+
+        if (StringUtil.isNotBlank(p.getUserIdCard())) {
+          String userIdCard = RsaCryptoUtil.encryptOAEP(p.getUserIdCard(),
+            this.payService.getConfig().getVerifier().getValidCertificate());
+          p.setUserIdCard(userIdCard);
+        }
       } catch (IllegalBlockSizeException e) {
-        throw new RuntimeException("姓名转换异常!", e);
+        throw new RuntimeException("姓名或身份证转换异常!", e);
       }
     });
     String url = String.format("%s/v3/partner-transfer/batches", this.payService.getPayBaseUrl());
@@ -61,7 +68,8 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    * 接口说明
    * 适用对象：服务商
    * 请求URL：https://api.mch.weixin.qq.com/v3/partner-transfer/batches/batch-id/{batch_id}
-   * https://api.mch.weixin.qq.com/v3/partner-transfer/batches/batch-id/1030000071100999991182020050700019480001?need_query_detail=true&offset=1
+   * https://api.mch.weixin.qq.com/v3/partner-transfer/batches/batch-id/1030000071100999991182020050700019480001
+   * ?need_query_detail=true&offset=1
    * 请求方式：GET
    * 接口限频：单个服务商 50QPS，如果超过频率限制，会报错FREQUENCY_LIMITED，请降低频率请求。
    *
@@ -71,17 +79,18 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    */
   @Override
   public BatchNumberResult queryBatchByBatchId(BatchNumberRequest request) throws WxPayException {
-    String url = String.format("%s/v3/partner-transfer/batches/batch-id/%s", this.payService.getPayBaseUrl(), request.getBatchId());
+    String url = String.format("%s/v3/partner-transfer/batches/batch-id/%s", this.payService.getPayBaseUrl(),
+      request.getBatchId());
     if (request.getOffset() == null) {
       request.setOffset(0);
     }
     if (request.getLimit() == null || request.getLimit() <= 0) {
       request.setLimit(20);
     }
-    String query = String.format("?need_query_detail=%s&detail_status=ALL&offset=%s&limit=%s", request.getNeedQueryDetail(), request.getOffset(), request.getLimit());
-    if (StringUtil.isNotBlank(request.getDetailStatus())){
-      query += "&detail_status="+request.getDetailStatus();
-    }
+    String detailStatus = StringUtil.isNotBlank(request.getDetailStatus()) ? request.getDetailStatus() : "ALL";
+
+    String query = String.format("?need_query_detail=%s&detail_status=%s&offset=%s&limit=%s",
+      request.getNeedQueryDetail(), detailStatus, request.getOffset(), request.getLimit());
     String response = this.payService.getV3(url + query);
     return GSON.fromJson(response, BatchNumberResult.class);
   }
@@ -100,16 +109,18 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    */
   @Override
   public BatchNumberResult queryBatchByOutBatchNo(MerchantBatchRequest request) throws WxPayException {
-    String url = String.format("%s/v3/partner-transfer/batches/out-batch-no/%s", this.payService.getPayBaseUrl(), request.getOutBatchNo());
+    String url = String.format("%s/v3/partner-transfer/batches/out-batch-no/%s", this.payService.getPayBaseUrl(),
+      request.getOutBatchNo());
     if (request.getOffset() == null) {
       request.setOffset(0);
     }
     if (request.getLimit() == null || request.getLimit() <= 0) {
       request.setLimit(20);
     }
-    String query = String.format("?need_query_detail=%s&offset=%s&limit=%s", request.getNeedQueryDetail(), request.getOffset(), request.getLimit());
-    if (StringUtil.isNotBlank(request.getDetailStatus())){
-      query += "&detail_status="+request.getDetailStatus();
+    String query = String.format("?need_query_detail=%s&offset=%s&limit=%s", request.getNeedQueryDetail(),
+      request.getOffset(), request.getLimit());
+    if (StringUtil.isNotBlank(request.getDetailStatus())) {
+      query += "&detail_status=" + request.getDetailStatus();
     }
     String response = this.payService.getV3(url + query);
     return GSON.fromJson(response, BatchNumberResult.class);
@@ -130,11 +141,14 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    * @throws BadPaddingException the wx decrypt exception
    */
   @Override
-  public BatchDetailsResult queryBatchDetailByWeChat(String batchId, String detailId) throws WxPayException, BadPaddingException {
-    String url = String.format("%s/v3/partner-transfer/batches/batch-id/%s/details/detail-id/%s", this.payService.getPayBaseUrl(), batchId, detailId);
+  public BatchDetailsResult queryBatchDetailByWeChat(String batchId, String detailId) throws WxPayException,
+    BadPaddingException {
+    String url = String.format("%s/v3/partner-transfer/batches/batch-id/%s/details/detail-id/%s",
+      this.payService.getPayBaseUrl(), batchId, detailId);
     String response = this.payService.getV3(url);
     BatchDetailsResult batchDetailsResult = GSON.fromJson(response, BatchDetailsResult.class);
-    String userName = RsaCryptoUtil.decryptOAEP(batchDetailsResult.getUserName(), this.payService.getConfig().getPrivateKey());
+    String userName = RsaCryptoUtil.decryptOAEP(batchDetailsResult.getUserName(),
+      this.payService.getConfig().getPrivateKey());
     batchDetailsResult.setUserName(userName);
     return batchDetailsResult;
   }
@@ -143,7 +157,8 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    * 商家明细单号查询明细单API
    * 接口说明
    * 适用对象：服务商
-   * 请求URL：https://api.mch.weixin.qq.com/v3/partner-transfer/batches/out-batch-no/{out_batch_no}/details/out-detail-no/{out_detail_no}
+   * 请求URL：https://api.mch.weixin.qq.com/v3/partner-transfer/batches/out-batch-no/{out_batch_no}/details/out-detail
+   * -no/{out_detail_no}
    * 请求方式：GET
    * 接口限频：单个服务商 50QPS，如果超过频率限制，会报错FREQUENCY_LIMITED，请降低频率请求。
    *
@@ -154,11 +169,14 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    * @throws BadPaddingException the wx decrypt exception
    */
   @Override
-  public BatchDetailsResult queryBatchDetailByMch(String outBatchNo, String outDetailNo) throws WxPayException, BadPaddingException {
-    String url = String.format("%s/v3/partner-transfer/batches/out-batch-no/%s/details/out-detail-no/%s", this.payService.getPayBaseUrl(), outBatchNo, outDetailNo);
+  public BatchDetailsResult queryBatchDetailByMch(String outBatchNo, String outDetailNo) throws WxPayException,
+    BadPaddingException {
+    String url = String.format("%s/v3/partner-transfer/batches/out-batch-no/%s/details/out-detail-no/%s",
+      this.payService.getPayBaseUrl(), outBatchNo, outDetailNo);
     String response = this.payService.getV3(url);
     BatchDetailsResult batchDetailsResult = GSON.fromJson(response, BatchDetailsResult.class);
-    String userName = RsaCryptoUtil.decryptOAEP(batchDetailsResult.getUserName(), this.payService.getConfig().getPrivateKey());
+    String userName = RsaCryptoUtil.decryptOAEP(batchDetailsResult.getUserName(),
+      this.payService.getConfig().getPrivateKey());
     batchDetailsResult.setUserName(userName);
     return batchDetailsResult;
   }
@@ -240,7 +258,8 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
   @Override
   public ElectronicReceiptsResult queryTransferElectronicResult(ElectronicReceiptsRequest request) throws WxPayException {
     String url = String.format("%s/v3/transfer-detail/electronic-receipts", this.payService.getPayBaseUrl());
-    String query = String.format("?accept_type=%s&out_batch_no=%s&out_detail_no=%s", request.getAcceptType(), request.getOutBatchNo(), request.getOutDetailNo());
+    String query = String.format("?accept_type=%s&out_batch_no=%s&out_detail_no=%s", request.getAcceptType(),
+      request.getOutBatchNo(), request.getOutDetailNo());
     String response = this.payService.getV3(url + query);
     return GSON.fromJson(response, ElectronicReceiptsResult.class);
   }

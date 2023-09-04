@@ -4,6 +4,7 @@ import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.redis.RedissonWxRedisOps;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
+import me.chanjar.weixin.cp.bean.WxCpTpCorpId2OpenCorpId;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.config.impl.WxCpTpRedissonConfigImpl;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
@@ -177,5 +178,11 @@ public class WxCpTpServiceApacheHttpClientImplTest {
     System.out.println("suiteJsApiTicket:" + suiteJsApiTicket);
     suiteJsApiTicket = wxCpTpService.getSuiteJsApiTicket(AUTH_CORP_ID);
     System.out.println("suiteJsApiTicket:" + suiteJsApiTicket);
+  }
+
+  @Test
+  public void testCorpId2OpenCorpId() throws WxErrorException {
+    WxCpTpCorpId2OpenCorpId openCorpId = wxCpTpService.corpId2OpenCorpId("wpVIkfEAAAu2wGiOEeNMQ69afwLM6BbA");
+    System.out.println("openCorpId:" + openCorpId);
   }
 }

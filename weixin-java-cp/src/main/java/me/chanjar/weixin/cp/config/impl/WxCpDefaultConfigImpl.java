@@ -46,6 +46,7 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   /**
    * 会话存档私钥以及sdk路径
    */
+  private volatile String msgAuditSecret;
   private volatile String msgAuditPriKey;
   private volatile String msgAuditLibPath;
   private volatile String oauth2redirectUri;
@@ -433,6 +434,20 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
    */
   public WxCpDefaultConfigImpl setWebhookKey(String webhookKey) {
     this.webhookKey = webhookKey;
+    return this;
+  }
+
+  @Override
+  public String getMsgAuditSecret() {
+    return this.msgAuditSecret;
+  }
+
+  /**
+   * 设置会话存档secret
+   * @param msgAuditSecret
+   */
+  public WxCpDefaultConfigImpl setMsgAuditSecret(String msgAuditSecret) {
+    this.msgAuditSecret = msgAuditSecret;
     return this;
   }
 }

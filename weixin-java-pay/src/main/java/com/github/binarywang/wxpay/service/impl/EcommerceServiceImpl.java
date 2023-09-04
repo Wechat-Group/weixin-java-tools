@@ -26,11 +26,7 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.LinkedHashMap;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class EcommerceServiceImpl implements EcommerceService {
@@ -184,6 +180,16 @@ public class EcommerceServiceImpl implements EcommerceService {
   @Override
   public FundBalanceResult subNowBalance(String subMchid) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/fund/balance/%s", this.payService.getPayBaseUrl(), subMchid);
+    String response = this.payService.getV3(url);
+    return GSON.fromJson(response, FundBalanceResult.class);
+  }
+
+  @Override
+  public FundBalanceResult subNowBalance(String subMchid, SpAccountTypeEnum accountType) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/fund/balance/%s", this.payService.getPayBaseUrl(), subMchid);
+    if (Objects.nonNull(accountType)) {
+      url += "?account_type=" + accountType.getValue();
+    }
     String response = this.payService.getV3(url);
     return GSON.fromJson(response, FundBalanceResult.class);
   }

@@ -17,6 +17,7 @@ import java.util.Base64;
 
 /**
  * The type Wx cp crypt util.
+ * @author qian
  */
 public class WxCpCryptUtil extends WxCryptUtil {
   /**
@@ -53,7 +54,7 @@ public class WxCpCryptUtil extends WxCryptUtil {
       throw new WxErrorException("请配置会话存档解密方式");
     }
 
-    if (pkcs1.intValue() == 1) {
+    if (pkcs1 == 1) {
       return decryptPriKeyByPKCS1(encryptRandomKey, msgAuditPriKey);
     }
 
@@ -72,7 +73,7 @@ public class WxCpCryptUtil extends WxCryptUtil {
     String privateKey = msgAuditPriKey.replaceAll("(\r\n|\r|\n|\n\r)", "")
       .replace("-----BEGIN PRIVATE KEY-----", "")
       .replace("-----END PRIVATE KEY-----", "")
-      .replaceAll(" ", "");
+      .replace(" ", "");
 
     byte[] keyBytes = Base64.getDecoder().decode(privateKey);
     PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
@@ -99,7 +100,7 @@ public class WxCpCryptUtil extends WxCryptUtil {
     String privateKey = msgAuditPriKey.replaceAll("(\r\n|\r|\n|\n\r)", "")
       .replace("-----BEGIN RSA PRIVATE KEY-----", "")
       .replace("-----END RSA PRIVATE KEY-----", "")
-      .replaceAll(" ", "");
+      .replace(" ", "");
 
     byte[] keyBytes = Base64.getDecoder().decode(privateKey);
     DerValue[] seq = new DerInputStream(keyBytes).getSequence(0);

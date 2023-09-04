@@ -73,16 +73,22 @@ public interface WxCpApiPathConsts {
     String GET_STATISTICS = "/cgi-bin/message/get_statistics";
 
     /**
-     * 互联企业发送应用消息
-     * https://developer.work.weixin.qq.com/document/path/90250
-     */
-    String LINKEDCORP_MESSAGE_SEND = "/cgi-bin/linkedcorp/message/send";
-
-    /**
      * 发送「学校通知」
      * https://developer.work.weixin.qq.com/document/path/92321
      */
     String EXTERNAL_CONTACT_MESSAGE_SEND = "/cgi-bin/externalcontact/message/send";
+
+    /**
+     * 撤回应用消息
+     * https://developer.work.weixin.qq.com/document/path/94867
+     */
+    String MESSAGE_RECALL = "/cgi-bin/message/recall";
+
+    /**
+     * 互联企业发送应用消息
+     * https://developer.work.weixin.qq.com/document/path/90250
+     */
+    String LINKEDCORP_MESSAGE_SEND = "/cgi-bin/linkedcorp/message/send";
 
   }
 
@@ -284,6 +290,14 @@ public interface WxCpApiPathConsts {
      */
     String GET_TEMPLATE_DETAIL = "/cgi-bin/oa/gettemplatedetail";
     /**
+     * The constant CREATE_TEMPLATE.
+     */
+    String CREATE_TEMPLATE = "/cgi-bin/oa/approval/create_template";
+    /**
+     * The constant CREATE_TEMPLATE.
+     */
+    String UPDATE_TEMPLATE = "/cgi-bin/oa/approval/update_template";
+    /**
      * The constant APPLY_EVENT.
      */
     String APPLY_EVENT = "/cgi-bin/oa/applyevent";
@@ -360,6 +374,28 @@ public interface WxCpApiPathConsts {
 
     /**
      * 会议
+     * https://developer.work.weixin.qq.com/document/path/93626
+     */
+    String MEETING_ADD = "/cgi-bin/meeting/create";
+    /**
+     * The constant MEETING_UPDATE.
+     */
+    String MEETING_UPDATE = "/cgi-bin/meeting/update";
+    /**
+     * The constant MEETING_CANCEL.
+     */
+    String MEETING_CANCEL = "/cgi-bin/meeting/cancel";
+    /**
+     * The constant MEETING_DETAIL.
+     */
+    String MEETING_DETAIL = "/cgi-bin/meeting/get_info";
+    /**
+     * The constant GET_USER_MEETING_ID.
+     */
+    String GET_USER_MEETING_ID = "/cgi-bin/meeting/get_user_meetingid";
+
+    /**
+     * 会议室
      * https://developer.work.weixin.qq.com/document/path/93624
      */
     String MEETINGROOM_ADD = "/cgi-bin/oa/meetingroom/add";
@@ -765,15 +801,20 @@ public interface WxCpApiPathConsts {
     /**
      * The constant GET_USERINFO3RD.
      */
-    String GET_USERINFO3RD = "/cgi-bin/service/getuserinfo3rd";
+    String GET_USERINFO3RD = "/cgi-bin/service/auth/getuserinfo3rd";
     /**
      * The constant GET_USERDETAIL3RD.
      */
-    String GET_USERDETAIL3RD = "/cgi-bin/service/getuserdetail3rd";
+    String GET_USERDETAIL3RD = "/cgi-bin/service/auth/getuserdetail3rd";
     /**
      * The constant GET_LOGIN_INFO.
      */
     String GET_LOGIN_INFO = "/cgi-bin/service/get_login_info";
+
+    /**
+     * The constant GET_CUSTOMIZED_AUTH_URL.
+     */
+    String GET_CUSTOMIZED_AUTH_URL = "/cgi-bin/service/get_customized_auth_url";
 
 
     /**
@@ -784,6 +825,15 @@ public interface WxCpApiPathConsts {
      * The constant GET_ADMIN_LIST.
      */
     String GET_ADMIN_LIST = "/cgi-bin/service/get_admin_list";
+    /**
+     * The constant GET_APP_QRCODE.
+     */
+    String GET_APP_QRCODE = "/cgi-bin/service/get_app_qrcode";
+
+    /**
+     * The constant CORPID_TO_OPENCORPID.
+     */
+    String CORPID_TO_OPENCORPID = "/cgi-bin/service/corpid_to_opencorpid";
 
     /**
      * The constant GET_ORDER.
@@ -915,6 +965,10 @@ public interface WxCpApiPathConsts {
      * The constant GET_USER_ID.
      */
     String GET_USER_ID = "/cgi-bin/user/getuserid";
+    /**
+     * The constant GET_USER_ID_BY_EMAIL.
+     */
+    String GET_USER_ID_BY_EMAIL = "/cgi-bin/user/get_userid_by_email";
     /**
      * The constant GET_EXTERNAL_CONTACT.
      */
@@ -1095,6 +1149,14 @@ public interface WxCpApiPathConsts {
      */
     String ADD_MSG_TEMPLATE = "/cgi-bin/externalcontact/add_msg_template";
     /**
+     * 提醒成员群发
+     */
+    String REMIND_GROUP_MSG_SEND = "/cgi-bin/externalcontact/remind_groupmsg_send";
+    /**
+     * 停止企业群发
+     */
+    String CANCEL_GROUP_MSG_SEND = "/cgi-bin/externalcontact/cancel_groupmsg_send";
+    /**
      * The constant SEND_WELCOME_MSG.
      */
     String SEND_WELCOME_MSG = "/cgi-bin/externalcontact/send_welcome_msg";
@@ -1239,6 +1301,34 @@ public interface WxCpApiPathConsts {
      * The constant DEL_INTERCEPT_RULE.
      */
     String DEL_INTERCEPT_RULE = "/cgi-bin/externalcontact/del_intercept_rule";
+    /**
+     * 获取当前仍然有效的获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_LIST = "/cgi-bin/externalcontact/customer_acquisition/list_link";
+    /**
+     * 获取获客链接详情
+     */
+    String CUSTOMER_ACQUISITION_LINK_GET = "/cgi-bin/externalcontact/customer_acquisition/get";
+    /**
+     * 创建获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_CREATE = "/cgi-bin/externalcontact/customer_acquisition/create_link";
+    /**
+     * 编辑获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_UPDATE = "/cgi-bin/externalcontact/customer_acquisition/update_link";
+    /**
+     * 删除获客链接
+     */
+    String CUSTOMER_ACQUISITION_LINK_DELETE = "/cgi-bin/externalcontact/customer_acquisition/delete_link";
+    /**
+     * 获取获客客户列表
+     */
+    String CUSTOMER_ACQUISITION_CUSTOMER = "/cgi-bin/externalcontact/customer_acquisition/customer";
+    /**
+     * 查询剩余使用量
+     */
+    String CUSTOMER_ACQUISITION_QUOTA = "/cgi-bin/externalcontact/customer_acquisition_quota";
 
   }
 
@@ -1310,6 +1400,12 @@ public interface WxCpApiPathConsts {
      * The constant GET_CORP_STATISTIC.
      */
     String GET_CORP_STATISTIC = "/cgi-bin/kf/get_corp_statistic";
+
+    /**
+     * The constant GET_SERVICER_STATISTIC.
+     */
+    String GET_SERVICER_STATISTIC = "/cgi-bin/kf/get_servicer_statistic";
+
     /**
      * The constant CUSTOMER_GET_UPGRADE_SERVICE_CONFIG.
      */
@@ -1349,5 +1445,80 @@ public interface WxCpApiPathConsts {
      * The constant GET_RESULT.
      */
     String GET_RESULT = "/cgi-bin/export/get_result?jobid=%s";
+  }
+
+  interface CorpGroup {
+    /**
+     * 获取应用共享信息
+     * https://developer.work.weixin.qq.com/document/path/93403
+     */
+    String LIST_SHARE_APP_INFO = "/cgi-bin/corpgroup/corp/list_app_share_info";
+    /**
+     * 获取下级/下游企业的access_token
+     * https://developer.work.weixin.qq.com/document/path/93359
+     */
+    String CORP_GET_TOKEN = "/cgi-bin/corpgroup/corp/gettoken";
+    /**
+     * 获取下级/下游企业小程序session
+     * https://developer.work.weixin.qq.com/document/path/93355
+     */
+    String MA_TRANSFER_SESSION = "/cgi-bin/miniprogram/transfer_session";
+  }
+
+  interface LinkedCorp {
+    /**
+     * 获取应用的可见范围
+     * https://developer.work.weixin.qq.com/document/path/93172
+     */
+    String GET_PERM_LIST = "/cgi-bin/linkedcorp/agent/get_perm_list";
+    /**
+     * 获取互联企业成员详细信息
+     * https://developer.work.weixin.qq.com/document/path/93171
+     */
+    String GET_USER = "/cgi-bin/linkedcorp/user/get";
+    /**
+     * 获取互联企业部门成员
+     * https://developer.work.weixin.qq.com/document/path/93168
+     */
+    String GET_USER_SIMPLELIST = "/cgi-bin/linkedcorp/user/simplelist";
+    /**
+     * 获取互联企业部门成员详情
+     * https://developer.work.weixin.qq.com/document/path/93169
+     */
+    String GET_USER_LIST = "/cgi-bin/linkedcorp/user/list";
+    /**
+     * 获取互联企业部门列表
+     * https://developer.work.weixin.qq.com/document/path/93170
+     */
+    String GET_DEPARTMENT_LIST = "/cgi-bin/linkedcorp/department/list";
+    /**
+     * 发送应用消息
+     * https://developer.work.weixin.qq.com/document/path/90250
+     */
+    String SENG_MESSAGE = "/cgi-bin/linkedcorp/message/send";
+  }
+
+  interface IdConvert {
+
+    /**
+     * 将企业主体下的客户标签ID转换成服务商主体下的客户标签ID。
+     */
+    String EXTERNAL_TAG_ID = "/cgi-bin/idconvert/external_tagid";
+
+    /**
+     * 将微信客户的unionid转为第三方主体的external_userid
+     * 该接口有调用频率限制，当subject_type为0时，按企业作如下的限制：10万次/小时、48万次/天、750万次/月
+     */
+    String UNION_ID_TO_EXTERNAL_USER_ID = "/cgi-bin/idconvert/unionid_to_external_userid";
+
+    /**
+     * 将企业主体下的微信客服ID转换成服务商主体下的微信客服ID
+     */
+    String OPEN_KF_ID = "/cgi-bin/idconvert/open_kfid";
+
+    /**
+     * 将应用获取的外部用户临时idtmp_external_userid，转换为external_userid。
+     */
+    String CONVERT_TMP_EXTERNAL_USER_ID = "/cgi-bin/idconvert/convert_tmp_external_userid";
   }
 }

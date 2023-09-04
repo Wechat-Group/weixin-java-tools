@@ -1,17 +1,17 @@
 package cn.binarywang.wx.miniapp.bean.code;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 上传代码需要用到的第三方自定义的配置
- * 详细文档，参考：https://developers.weixin.qq.com/miniprogram/dev/framework/config.html
+ * 详细文档，参考：<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/config.html">文档</a>
  *
  * @author <a href="https://github.com/charmingoh">Charming</a>
  * @since 2018-04-26 19:44
@@ -76,12 +76,34 @@ public class WxMaCodeExtConfig implements Serializable {
   private TabBar tabBar;
 
   /**
+   * 关于新增 requiredPrivateInfos 说明
+   * 关于地理位置接口新增与相关流程调整可以查看社区公告：
+   * <a href="https://developers.weixin.qq.com/community/develop/doc/000a02f2c5026891650e7f40351c01">...</a>
+   * 7.14后，在代码中使用的地理位置相关接口（共计 8 个，见表1），第三方开发者均需要在 ext_json 参数中 requiredPrivateInfos 配置项中声明
+   * 在ext_json参数中配置requiredPrivateInfos，其规则为「整体替换」。即如果在 app.json 里也配置了，那么最终会是ext_json的配置会覆盖 app.json
+   * 配置的requiredPrivateInfos。其余规则可查看下方的「ext_json补充说明」
+   * 在ext_json参数中配置 requiredPrivateInfos 示例如下
+   * {
+   *   "template_id": "95",
+   *   "ext_json": "{\"requiredPrivateInfos\":[\"onLocationChange\",\"startLocationUpdate\"]}",
+   *   "user_version": "V1.0",
+   *   "user_desc": "test"
+   * }
+   * requiredPrivateInfos主要会检查格式是否正确，填入的 api 名称是否正确，填入的 api 名称是否有权限，填入的 api 名称是否互斥。对应的错误码可查看文档末尾的错误码文档。
+   * requiredPrivateInfos在2022.7.14后才会生效，文档提前更新是为了方便开发者可以提前了解接口的参数变更规则，提前进行调整。
+   */
+  private String[] requiredPrivateInfos;
+
+  /**
    * page.json 配置，页面配置
-   * 文档：https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html
+   * <a href="https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html">文档</a>
    */
   @Data
   @Builder
-  public static class PageConfig {
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class PageConfig implements Serializable {
+    private static final long serialVersionUID = -8615574764987479723L;
     /**
      * 导航栏背景颜色，如"#000000" HexColor.
      * 默认：#000000
@@ -128,7 +150,11 @@ public class WxMaCodeExtConfig implements Serializable {
    */
   @Data
   @Builder
-  public static class TabBar {
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class TabBar implements Serializable {
+    private static final long serialVersionUID = -3037016532526129399L;
+
     /**
      * HexColor, tab 上的文字默认颜色.
      */
@@ -159,7 +185,10 @@ public class WxMaCodeExtConfig implements Serializable {
      */
     @Data
     @Builder
-    public static class Item {
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Item implements Serializable {
+      private static final long serialVersionUID = -5824322265161612460L;
       /**
        * 页面路径，必须在 pages 中先定义.
        */
@@ -184,7 +213,11 @@ public class WxMaCodeExtConfig implements Serializable {
    */
   @Data
   @Builder
-  public static class NetworkTimeout {
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class NetworkTimeout implements Serializable {
+    private static final long serialVersionUID = -9180176522015880991L;
+
     /**
      * wx.request的超时时间，单位毫秒，默认为：60000.
      * 必填：否

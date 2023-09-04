@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import lombok.AllArgsConstructor;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
@@ -24,7 +25,6 @@ public class WxMpFreePublishServiceImpl implements WxMpFreePublishService {
   private static final String PUBLISH_ID = "publish_id";
   private static final String ARTICLE_ID = "article_id";
   private static final String ERRCODE_SUCCESS = "0";
-  private static final String ERRCODE = "errcode";
   private final WxMpService mpService;
 
   @Override
@@ -44,7 +44,7 @@ public class WxMpFreePublishServiceImpl implements WxMpFreePublishService {
   public Boolean deletePush(String articleId, Integer index) throws WxErrorException {
     String json = this.mpService.post(WxMpApiUrl.FreePublish.DEL_PUSH,
       GsonHelper.buildJsonObject(ARTICLE_ID, articleId, "index", index));
-    return GsonParser.parse(json).get(ERRCODE).toString().equals(ERRCODE_SUCCESS);
+    return GsonParser.parse(json).get(WxConsts.ERR_CODE).toString().equals(ERRCODE_SUCCESS);
   }
 
   @Override

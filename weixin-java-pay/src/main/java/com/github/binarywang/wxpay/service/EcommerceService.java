@@ -217,6 +217,19 @@ public interface EcommerceService {
 
   /**
    * <pre>
+   * 二级商户号账户实时余额
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter4_3_11.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @param accountType 账户类型
+   * @return 返回数据 fund balance result
+   * @throws WxPayException the wx pay exception
+   */
+  FundBalanceResult subNowBalance(String subMchid, SpAccountTypeEnum accountType) throws WxPayException;
+
+  /**
+   * <pre>
    * 二级商户号账户日终余额
    * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
    * </pre>

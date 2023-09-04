@@ -14,7 +14,6 @@ import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -213,7 +212,7 @@ public class WxCpOaServiceImplTest {
   @Test
   public void testGetTemplateDetail() throws WxErrorException {
     String templateId = "3TkZjxugodbqpEMk9j7X6h6zKqYkc7MxQrrFmT7H";
-    WxCpTemplateResult result = wxService.getOaService().getTemplateDetail(templateId);
+    WxCpOaApprovalTemplateResult result = wxService.getOaService().getTemplateDetail(templateId);
     assertThat(result).isNotNull();
     System.out.println("result ");
     System.out.println(gson.toJson(result));

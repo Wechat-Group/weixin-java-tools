@@ -1,6 +1,7 @@
 package me.chanjar.weixin.cp.bean.kf.msg;
 
 import com.google.gson.annotations.SerializedName;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -64,6 +65,10 @@ public class WxCpKfMenuMsg {
      */
     @SerializedName("miniprogram")
     private MiniProgram miniProgram;
+    /**
+     * type为text的菜单项
+     */
+    private MenuText text;
   }
 
   /**
@@ -135,6 +140,23 @@ public class WxCpKfMenuMsg {
     /**
      * <pre>
      *   菜单显示内容。不多于1024字节
+     * </pre>
+     */
+    private String content;
+  }
+  
+  /**
+   * 
+   * The type Menu text.
+   *
+   */
+  @Getter
+  @Setter
+  public static class MenuText {
+    /**
+     * <pre>
+     *   是否必须：是
+     *   说明：文本内容，支持\n（\和n两个字符）换行。不少于1字节 不多于256字节
      * </pre>
      */
     private String content;

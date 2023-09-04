@@ -38,7 +38,7 @@ public class WxCpGroupChat implements Serializable {
    */
   @Getter
   @Setter
-  public class Member implements Serializable {
+  public static class Member implements Serializable {
     private static final long serialVersionUID = -5028321625140879571L;
 
     @SerializedName("memberid")

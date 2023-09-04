@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.msgaudit.*;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * 会话内容存档接口.
@@ -71,6 +72,22 @@ public interface WxCpMsgAuditService {
    */
   void getMediaFile(@NonNull long sdk, @NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout,
                     @NonNull String targetFilePath) throws WxErrorException;
+
+  /**
+   * 获取媒体文件 传入一个lambda，each所有的数据分片byte[]，更加灵活
+   * 针对图片、文件等媒体数据，提供sdk接口拉取数据内容。
+   * 详情可以看官方文档，亦可阅读此接口源码。
+   *
+   * @param sdk            getChatDatas()获取到的sdk，注意，每次获取的sdk会不一样
+   * @param sdkfileid      消息体内容中的sdkfileid信息
+   * @param proxy          使用代理的请求，需要传入代理的链接。如：socks5://10.0.0.1:8081 或者 http://10.0.0.1:8081，如果没有传null
+   * @param passwd         代理账号密码，需要传入代理的账号密码。如 user_name:passwd_123，如果没有传null
+   * @param timeout        超时时间，分片数据需累加到文件存储。单次最大返回512K字节，如果文件比较大，自行设置长一点，比如timeout=10000
+   * @param action         传入一个lambda，each所有的数据分片
+   * @throws WxErrorException the wx error exception
+   */
+  void getMediaFile(@NonNull long sdk, @NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout,
+                    @NonNull Consumer<byte[]> action) throws WxErrorException;
 
   /**
    * 获取会话内容存档开启成员列表

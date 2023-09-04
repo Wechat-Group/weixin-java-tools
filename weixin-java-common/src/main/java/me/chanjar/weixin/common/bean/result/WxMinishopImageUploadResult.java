@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Data;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.io.Serializable;
@@ -22,7 +23,7 @@ public class WxMinishopImageUploadResult  implements Serializable {
   public static WxMinishopImageUploadResult fromJson(String json) {
     JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
     WxMinishopImageUploadResult result = new WxMinishopImageUploadResult();
-    result.setErrcode(jsonObject.get("errcode").getAsNumber().toString());
+    result.setErrcode(jsonObject.get(WxConsts.ERR_CODE).getAsNumber().toString());
     if (result.getErrcode().equals("0")) {
       WxMinishopPicFileResult picFileResult = new WxMinishopPicFileResult();
       JsonObject picObject = jsonObject.get("pic_file").getAsJsonObject();

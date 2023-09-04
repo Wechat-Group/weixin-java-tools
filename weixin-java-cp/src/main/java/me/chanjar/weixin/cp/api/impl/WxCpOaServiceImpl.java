@@ -251,12 +251,26 @@ public class WxCpOaServiceImpl implements WxCpOaService {
   }
 
   @Override
-  public WxCpTemplateResult getTemplateDetail(@NonNull String templateId) throws WxErrorException {
+  public WxCpOaApprovalTemplateResult getTemplateDetail(@NonNull String templateId) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("template_id", templateId);
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_TEMPLATE_DETAIL);
     String responseContent = this.mainService.post(url, jsonObject.toString());
-    return WxCpGsonBuilder.create().fromJson(responseContent, WxCpTemplateResult.class);
+    return WxCpGsonBuilder.create().fromJson(responseContent, WxCpOaApprovalTemplateResult.class);
+  }
+
+  @Override
+  public String createOaApprovalTemplate(WxCpOaApprovalTemplate cpTemplate) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(CREATE_TEMPLATE);
+    String responseContent = this.mainService.post(url, WxCpGsonBuilder.create().toJson(cpTemplate));
+    JsonObject tmpJson = GsonParser.parse(responseContent);
+    return tmpJson.get("template_id").getAsString();
+  }
+
+  @Override
+  public void updateOaApprovalTemplate(WxCpOaApprovalTemplate wxCpTemplate) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_TEMPLATE);
+    this.mainService.post(url, WxCpGsonBuilder.create().toJson(wxCpTemplate));
   }
 
   @Override

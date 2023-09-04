@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.bean.external.msg;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @author pg  created on  2021-6-21
  */
 @Data
+@Accessors(chain = true)
 public class Video implements Serializable {
   private static final long serialVersionUID = -6048642921382867138L;
   @SerializedName("media_id")

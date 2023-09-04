@@ -70,6 +70,9 @@ public class WxCpAgent implements Serializable {
   @SerializedName("home_url")
   private String homeUrl;
 
+  @SerializedName("customized_publish_status")
+  private Integer customizedPublishStatus;
+
   /**
    * From json wx cp agent.
    *

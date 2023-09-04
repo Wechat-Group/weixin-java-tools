@@ -102,6 +102,16 @@ public class WxEntrustPapServiceImpl implements WxEntrustPapService {
   }
 
   @Override
+  public WxPayCommonResult withholdPartner(WxWithholdRequest wxWithholdRequest) throws WxPayException {
+    wxWithholdRequest.checkAndSign(payService.getConfig());
+    String url = payService.getPayBaseUrl() + "/pay/partner/pappayapply";
+    String responseContent = payService.post(url, wxWithholdRequest.toXML(), false);
+    WxPayCommonResult result = BaseWxPayResult.fromXML(responseContent, WxPayCommonResult.class);
+    result.checkResult(payService, wxWithholdRequest.getSignType(), true);
+    return result;
+  }
+
+  @Override
   public String preWithhold(WxPreWithholdRequest wxPreWithholdRequest) throws WxPayException {
     String requestParam = WxGsonBuilder.create().toJson(wxPreWithholdRequest);
     String url = payService.getPayBaseUrl() + "/v3/papay/contracts/%s/notify";  // %s为{contract_id}

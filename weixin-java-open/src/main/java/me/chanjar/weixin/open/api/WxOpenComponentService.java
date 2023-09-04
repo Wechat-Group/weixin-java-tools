@@ -8,6 +8,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.open.bean.WxOpenCreateResult;
 import me.chanjar.weixin.open.bean.WxOpenGetResult;
 import me.chanjar.weixin.open.bean.WxOpenMaCodeTemplate;
+import me.chanjar.weixin.open.bean.ma.WxOpenMaApplyOrderPathInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCoupon;
@@ -200,6 +201,7 @@ public interface WxOpenComponentService {
 
   String BATCH_SHARE_ENV = "https://api.weixin.qq.com/componenttcb/batchshareenv";
 
+  String COMPONENT_CLEAR_QUOTA_URL = "https://api.weixin.qq.com/cgi-bin/component/clear_quota/v2";
   /**
    * Gets wx mp service by appid.
    *
@@ -1085,4 +1087,31 @@ public interface WxOpenComponentService {
    * @throws WxErrorException
    */
   ShareCloudBaseEnvResponse shareCloudBaseEnv(ShareCloudBaseEnvRequest request) throws WxErrorException;
+
+  /**
+   * 使用 AppSecret 重置第三方平台 API 调用次数
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/openapi/clearComponentQuotaByAppSecret.html
+   *
+   * @param appid  授权用户appid
+   * @return
+   * @throws WxErrorException
+   */
+  WxOpenResult clearQuotaV2(String appid) throws WxErrorException;
+
+  //////////////////////////////////////////////////////////////
+  /**
+   * 申请设置订单页path信息
+   */
+  String OPEN_APPLY_SET_ORDER_PATH_INFO = "https://api.weixin.qq.com/wxa/security/applysetorderpathinfo";
+
+  /**
+   * 申请设置订单页path信息
+   * 注意：一次提交不超过100个appid
+   *
+   * @param info 订单页path信息
+   * @return .
+   * @throws WxErrorException .
+   */
+  WxOpenResult applySetOrderPathInfo(WxOpenMaApplyOrderPathInfo info) throws WxErrorException;
+
 }

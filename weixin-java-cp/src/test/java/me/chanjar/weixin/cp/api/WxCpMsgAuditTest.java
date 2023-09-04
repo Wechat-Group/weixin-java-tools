@@ -10,10 +10,13 @@ import me.chanjar.weixin.cp.bean.msgaudit.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.constant.WxCpConsts;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
-import org.eclipse.jetty.util.ajax.JSON;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,9 +25,10 @@ import java.util.List;
 
 /**
  * 企业微信会话内容存档测试类.
- * 官方文档：https://developer.work.weixin.qq.com/document/path/91360
+ * <a href="https://developer.work.weixin.qq.com/document/path/91360">官方文档</a>
  *
- * @author <a href="https://github.com/0katekate0">Wang_Wong</a> created on  2022-01-17
+ * @author <a href="https://github.com/0katekate0">Wang_Wong</a>
+ * created on  2022-01-17
  */
 @Slf4j
 public class WxCpMsgAuditTest {
@@ -34,23 +38,22 @@ public class WxCpMsgAuditTest {
 
   /**
    * Test.
-   *
-   * @throws Exception the exception
    */
 // com.binarywang.spring.starter.wxjava.cp.config.WxCpServiceAutoConfiguration
   // WxCpServiceImpl.getAccessToken()
+  @BeforeTest
+  private void initCpService() {
+    if (cpService == null) {
+      InputStream inputStream = ClassLoader.getSystemResourceAsStream("test-config.xml");
+      wxCpConfigStorage = WxCpDemoInMemoryConfigStorage.fromXml(inputStream);
+      cpService = new WxCpServiceImpl();
+      cpService.setWxCpConfigStorage(this.wxCpConfigStorage);
+    }
+  }
+
   @Test
   public void test() throws Exception {
-
-    InputStream inputStream = ClassLoader.getSystemResourceAsStream("test-config.xml");
-    WxCpDemoInMemoryConfigStorage config = WxCpDemoInMemoryConfigStorage.fromXml(inputStream);
-
-    wxCpConfigStorage = config;
-    cpService = new WxCpServiceImpl();
-    cpService.setWxCpConfigStorage(config);
-
-
-    /**
+    /*
      * 客户同意进行聊天内容存档事件回调
      * 配置了客户联系功能的成员添加外部联系人同意进行聊天内容存档时，回调该事件。
      *
@@ -70,9 +73,9 @@ public class WxCpMsgAuditTest {
 
     final WxCpXmlMessage msgAuditApprovedXmlMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, msgAuditApprovedXml);
     msgAuditApprovedXmlMsg.setAllFieldsMap(XmlUtils.xml2Map(msgAuditApprovedXml));
-    log.info("msgAuditApprovedXmlMsg:{}", JSON.toString(msgAuditApprovedXmlMsg));
+    log.info("msgAuditApprovedXmlMsg:{}", WxCpGsonBuilder.create().toJson(msgAuditApprovedXmlMsg));
 
-    /**
+    /*
      * 产生会话回调事件
      * 为了提升企业会话存档的使用性能，降低无效的轮询次数。
      * 当企业收到或发送新消息时，企业微信可以以事件的形式推送到企业指定的url。回调间隔为15秒，在15秒内若有消息则触发回调，若无消息则不会触发回调。
@@ -90,15 +93,15 @@ public class WxCpMsgAuditTest {
 
     final WxCpXmlMessage msgAuditNotifyXmlMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, msgAuditNotifyXml);
     msgAuditNotifyXmlMsg.setAllFieldsMap(XmlUtils.xml2Map(msgAuditNotifyXml));
-    log.info("msgAuditNotifyXmlMsg:{}", JSON.toString(msgAuditNotifyXmlMsg));
+    log.info("msgAuditNotifyXmlMsg:{}", WxCpGsonBuilder.create().toJson(msgAuditNotifyXmlMsg));
 
-    /**
+    /*
      * 增加变更事件类型：产生会话回调事件
      */
     String msgauditNotify = WxCpConsts.EventType.MSGAUDIT_NOTIFY;
 
 
-    /**
+    /*
      * 仔细配置：
      * <xml>
      * <corpId>ww45xxx88865xxx</corpId>
@@ -154,16 +157,18 @@ public class WxCpMsgAuditTest {
      * openssl rsa -in private_key.pem -pubout -out public_key.pem
      * /
 
-     /**
+     /*
      * 建议放到redis，本次请求获取消息记录开始的seq值。首次访问填写0，非首次使用上次企业微信返回的最大seq。允许从任意seq重入拉取。
      */
     long seq = 0L;
 
-    /**
+    /*
      * 图片，语音，视频，表情，文件，音频存档消息,音频共享文档消息调用  获取媒体消息
      */
-    List<String> mediaType = Arrays.asList("image", "voice", "video", "emotion", "file",
-      "meeting_voice_call", "voip_doc_share");
+    List<String> mediaType = Arrays.asList(WxCpConsts.MsgAuditMediaType.IMAGE,
+      WxCpConsts.MsgAuditMediaType.VOICE, WxCpConsts.MsgAuditMediaType.VIDEO,
+      WxCpConsts.MsgAuditMediaType.EMOTION, WxCpConsts.MsgAuditMediaType.FILE,
+      WxCpConsts.MsgAuditMediaType.MEETING_VOICE_CALL, WxCpConsts.MsgAuditMediaType.VOIP_DOC_SHARE);
 
     // 模拟多次拉取数据，根据seq拉取
     for (int i = 0; i < 3; i++) {
@@ -194,7 +199,7 @@ public class WxCpMsgAuditTest {
             chatData, 2);
           log.info("获取消息数据为：{}", decryptData.toJson());
 
-          /**
+          /*
            * 注意：
            * 根据上面返回的文件类型来获取媒体文件，
            * 不同的文件类型，拼接好存放文件的绝对路径，写入文件流，获取媒体文件。（拼接绝对文件路径的原因，以便上传到腾讯云或阿里云对象存储）
@@ -211,43 +216,43 @@ public class WxCpMsgAuditTest {
             // sdkFileId
             String sdkFileId = "";
             switch (msgType) {
-              case "image":
-                suffix = ".jpg";
+              case WxCpConsts.MsgAuditMediaType.IMAGE:
+                suffix = WxCpConsts.MsgAuditMediaType.MsgAuditSuffix.JPG;
                 md5Sum = decryptData.getImage().getMd5Sum();
                 sdkFileId = decryptData.getImage().getSdkFileId();
                 break;
-              case "voice":
-                suffix = ".amr";
+              case WxCpConsts.MsgAuditMediaType.VOICE:
+                suffix = WxCpConsts.MsgAuditMediaType.MsgAuditSuffix.AMR;
                 md5Sum = decryptData.getVoice().getMd5Sum();
                 sdkFileId = decryptData.getVoice().getSdkFileId();
                 break;
-              case "video":
-                suffix = ".mp4";
+              case WxCpConsts.MsgAuditMediaType.VIDEO:
+                suffix = WxCpConsts.MsgAuditMediaType.MsgAuditSuffix.MP4;
                 md5Sum = decryptData.getVideo().getMd5Sum();
                 sdkFileId = decryptData.getVideo().getSdkFileId();
                 break;
-              case "emotion":
+              case WxCpConsts.MsgAuditMediaType.EMOTION:
                 md5Sum = decryptData.getEmotion().getMd5Sum();
                 sdkFileId = decryptData.getEmotion().getSdkFileId();
                 int type = decryptData.getEmotion().getType();
                 switch (type) {
                   case 1:
-                    suffix = ".gif";
+                    suffix = WxCpConsts.MsgAuditMediaType.MsgAuditSuffix.GIF;
                     break;
                   case 2:
-                    suffix = ".png";
+                    suffix = WxCpConsts.MsgAuditMediaType.MsgAuditSuffix.PNG;
                     break;
                   default:
                     return;
                 }
                 break;
-              case "file":
+              case WxCpConsts.MsgAuditMediaType.FILE:
                 md5Sum = decryptData.getFile().getMd5Sum();
                 suffix = "." + decryptData.getFile().getFileExt();
                 sdkFileId = decryptData.getFile().getSdkFileId();
                 break;
               // 音频存档消息
-              case "meeting_voice_call":
+              case WxCpConsts.MsgAuditMediaType.MEETING_VOICE_CALL:
 
                 md5Sum = decryptData.getVoiceId();
                 sdkFileId = decryptData.getMeetingVoiceCall().getSdkFileId();
@@ -259,7 +264,7 @@ public class WxCpMsgAuditTest {
 
                 break;
               // 音频共享文档消息
-              case "voip_doc_share":
+              case WxCpConsts.MsgAuditMediaType.VOIP_DOC_SHARE:
 
                 md5Sum = decryptData.getVoipId();
                 WxCpFileItem docShare = decryptData.getVoipDocShare();
@@ -271,7 +276,7 @@ public class WxCpMsgAuditTest {
                 return;
             }
 
-            /**
+            /*
              * 拉取媒体文件
              *
              * 注意：
@@ -293,7 +298,7 @@ public class WxCpMsgAuditTest {
     }
 
 
-    /**
+    /*
      * 文本
      */
 //    String text = "{\"msgid\":\"CAQQluDa4QUY0On2rYSAgAMgzPrShAE=\",\"action\":\"send\",\"from\":\"XuJinSheng\",
@@ -306,7 +311,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelText.toJson());
 
 
-    /**
+    /*
      * 图片
      */
     String image = "{\"msgid\":\"CAQQvPnc4QUY0On2rYSAgAMgooLa0Q8=\",\"action\":\"send\",\"from\":\"XuJinSheng\"," +
@@ -318,7 +323,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelImage.toJson());
 
 
-    /**
+    /*
      * 撤回消息
      */
     String revoke = "{\"msgid\":\"15775510700152506326_1603875615\",\"action\":\"recall\",\"from\":\"kenshin\"," +
@@ -328,7 +333,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelRevoke.toJson());
 
 
-    /**
+    /*
      * 同意会话聊天内容
      */
     String agree = "{\"msgid\":\"8891446340739254950_1603875826\",\"action\":\"send\"," +
@@ -345,7 +350,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelDisagree.toJson());
 
 
-    /**
+    /*
      * 语音
      */
     String voice = "{\"msgid\":\"10958372969718811103_1603875609\",\"action\":\"send\"," +
@@ -358,7 +363,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelVoice.toJson());
 
 
-    /**
+    /*
      * 视频
      */
     String video = "{\"msgid\":\"17955920891003447432_1603875627\",\"action\":\"send\",\"from\":\"kenshin\"," +
@@ -371,7 +376,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelVideo.toJson());
 
 
-    /**
+    /*
      * 名片
      */
     String card = "{\"msgid\":\"13714216591700685558_1603875680\",\"action\":\"send\",\"from\":\"kenshin\"," +
@@ -381,7 +386,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelCard.toJson());
 
 
-    /**
+    /*
      * 位置
      */
     String location = "{\"msgid\":\"2641513858500683770_1603876152\",\"action\":\"send\",\"from\":\"icefog\"," +
@@ -392,7 +397,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelLocation.toJson());
 
 
-    /**
+    /*
      * 表情
      */
     String emotion = "{\"msgid\":\"6623217619416669654_1603875612\",\"action\":\"send\",\"from\":\"icef\"," +
@@ -404,7 +409,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelEmotion.toJson());
 
 
-    /**
+    /*
      * 文件
      */
     String file = "{\"msgid\":\"18039699423706571225_1603875608\",\"action\":\"send\",\"from\":\"kens\"," +
@@ -417,7 +422,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelFile.toJson());
 
 
-    /**
+    /*
      * 链接
      */
     String link = "{\"msgid\":\"11788441727514772650_1603875624\",\"action\":\"send\",\"from\":\"kenshin\"," +
@@ -428,7 +433,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelLink.toJson());
 
 
-    /**
+    /*
      * 小程序消息
      */
     String weapp = "{\"msgid\":\"11930598857592605935_1603875608\",\"action\":\"send\",\"from\":\"kens\"," +
@@ -439,7 +444,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelWeapp.toJson());
 
 
-    /**
+    /*
      * 会话记录消息
      */
     String chatrecord = "{\"msgid\":\"11354299838102555191_1603875658\",\"action\":\"send\",\"from\":\"ken\"," +
@@ -451,7 +456,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelChatRecord.toJson());
 
 
-    /**
+    /*
      * 填表消息
      */
     String collect = "{\"msgid\":\"2500536226619379797_1576034482\",\"action\":\"send\",\"from\":\"nick\"," +
@@ -464,7 +469,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelCollect.toJson());
 
 
-    /**
+    /*
      * 红包消息
      */
     String redpacket = "{\"msgid\":\"333590477316965370_1603877439\",\"action\":\"send\",\"from\":\"kens\"," +
@@ -474,7 +479,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelRedpacket.toJson());
 
 
-    /**
+    /*
      * 会议邀请信息
      */
     String meeting = "{\"msgid\":\"5935786683775673543_1603877328\",\"action\":\"send\",\"from\":\"ken\"," +
@@ -485,7 +490,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelMeeting.toJson());
 
 
-    /**
+    /*
      * 切换企业日志
      */
     String switchlog = "{\"msgid\":\"125289002219525886280\",\"action\":\"switch\",\"time\":1554119421840," +
@@ -494,7 +499,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelSwitchLog.toJson());
 
 
-    /**
+    /*
      * 在线文档消息
      */
     String docMsg = "{\"msgid\":\"9732089160923053207_1603877765\",\"action\":\"send\",\"from\":\"ken\"," +
@@ -505,7 +510,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelDocMsg.toJson());
 
 
-    /**
+    /*
      * MarkDown格式消息
      */
     String markDown = "{\"msgid\":\"7546287934688259248_1603875715\",\"action\":\"send\",\"from\":\"ken\"," +
@@ -515,7 +520,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelMarkDown.toJson());
 
 
-    /**
+    /*
      * 图文消息
      */
     String news = "{\"msgid\":\"118732825779547782215\",\"action\":\"send\",\"from\":\"kens\",\"tolist\":[\"icef\"," +
@@ -526,7 +531,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelNews.toJson());
 
 
-    /**
+    /*
      * 日程消息
      */
     String calendar = "{\"msgid\":\"2345881211604379705_1603877680\",\"action\":\"send\",\"from\":\"ken\"," +
@@ -538,7 +543,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelCalendar.toJson());
 
 
-    /**
+    /*
      * 混合消息
      */
     String mixed = "{\"msgid\":\"DAQQluDa4QUY0On4kYSABAMgzPrShAE=\",\"action\":\"send\",\"from\":\"HeMiao\"," +
@@ -557,7 +562,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelMixed.toJson());
 
 
-    /**
+    /*
      * 音频存档消息
      */
     String meetingVoiceCall = "{\"msgid\":\"17952229780246929345_1594197637\",\"action\":\"send\"," +
@@ -570,7 +575,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelMeetingVoiceCall.toJson());
 
 
-    /**
+    /*
      * 音频共享文档消息
      */
     String voipDocShare = "{\"msgid\":\"16527954622422422847_1594199256\",\"action\":\"send\"," +
@@ -584,7 +589,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelVoipDocShare.toJson());
 
 
-    /**
+    /*
      * 互通红包消息
      */
     String externalRedpacket = "{\"msgid\":\"8632214264349267353_1603786184\",\"action\":\"send\"," +
@@ -596,7 +601,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelExternalRedpacket.toJson());
 
 
-    /**
+    /*
      * 视频号消息
      */
     String sphfeed = "{\"msgid\":\"5702551662099334532_1619511584_external\",\"action\":\"send\"," +
@@ -607,7 +612,7 @@ public class WxCpMsgAuditTest {
     log.info("数据为：" + modelSphFeed.toJson());
 
 
-    /**
+    /*
      * 获取会话内容存档开启成员列表
      */
     List<String> permitUserList = cpService.getMsgAuditService().getPermitUserList(null);
@@ -616,7 +621,7 @@ public class WxCpMsgAuditTest {
 
     ArrayList<WxCpCheckAgreeRequest.Info> userList = Lists.newArrayList();
     WxCpCheckAgreeRequest checkAgreeRequest = new WxCpCheckAgreeRequest();
-    /**
+    /*
      * 获取会话同意情况
      */
     WxCpCheckAgreeRequest.Info info = new WxCpCheckAgreeRequest.Info();
@@ -631,22 +636,123 @@ public class WxCpMsgAuditTest {
     log.info(wxCpAgreeInfo.toJson());
 
 
-    /**
+    /*
      * 获取会话内容存档内部群信息
      */
     WxCpGroupChat room = cpService.getMsgAuditService().getGroupChat("wrOQpTDwAAyPl84GBJ40W5eWxWtixSCA");
     log.info(room.toJson());
 
 
-    /**
+    /*
      * 获取access_token
      * https://developer.work.weixin.qq.com/document/path/91039
      * https://www.jianshu.com/p/dde171887d63
      */
     String getUrl = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
-    String data = cpService.get(String.format(getUrl, config.getCorpId(), config.getCorpSecret()), null);
+    String data = cpService.get(String.format(getUrl, wxCpConfigStorage.getCorpId(),
+      wxCpConfigStorage.getCorpSecret()), null);
 
 
   }
 
+  @Test
+  public void testGetMediaFile() throws Exception {
+    WxCpMsgAuditService msgAuditService = cpService.getMsgAuditService();
+    WxCpChatDatas chatDatas = msgAuditService.getChatDatas(0L, 100L, null, null, 10);
+    for (WxCpChatDatas.WxCpChatData chatDatum : chatDatas.getChatData()) {
+      WxCpChatModel decryptData = msgAuditService.getDecryptData(chatDatas.getSdk(), chatDatum, 2);
+      // 文件后缀
+      String suffix = "";
+      // 文件名md5
+      String md5Sum = "";
+      // sdkFileId
+      String sdkFileId = "";
+      String msgType = decryptData.getMsgType();
+      if (msgType == null) msgType = "";
+      switch (msgType) {
+        case "image":
+          suffix = ".jpg";
+          md5Sum = decryptData.getImage().getMd5Sum();
+          sdkFileId = decryptData.getImage().getSdkFileId();
+          break;
+        case "voice":
+          suffix = ".amr";
+          md5Sum = decryptData.getVoice().getMd5Sum();
+          sdkFileId = decryptData.getVoice().getSdkFileId();
+          break;
+        case "video":
+          suffix = ".mp4";
+          md5Sum = decryptData.getVideo().getMd5Sum();
+          sdkFileId = decryptData.getVideo().getSdkFileId();
+          break;
+        case "emotion":
+          md5Sum = decryptData.getEmotion().getMd5Sum();
+          sdkFileId = decryptData.getEmotion().getSdkFileId();
+          int type = decryptData.getEmotion().getType();
+          switch (type) {
+            case 1:
+              suffix = ".gif";
+              break;
+            case 2:
+              suffix = ".png";
+              break;
+            default:
+              return;
+          }
+          break;
+        case "file":
+          md5Sum = decryptData.getFile().getMd5Sum();
+          suffix = "." + decryptData.getFile().getFileExt();
+          sdkFileId = decryptData.getFile().getSdkFileId();
+          break;
+        // 音频存档消息
+        case "meeting_voice_call":
+
+          md5Sum = decryptData.getVoiceId();
+          sdkFileId = decryptData.getMeetingVoiceCall().getSdkFileId();
+          for (WxCpChatModel.MeetingVoiceCall.DemoFileData demofiledata :
+            decryptData.getMeetingVoiceCall().getDemoFileData()) {
+            String demoFileDataFileName = demofiledata.getFileName();
+            suffix = demoFileDataFileName.substring(demoFileDataFileName.lastIndexOf(".") + 1);
+          }
+
+          break;
+        // 音频共享文档消息
+        case "voip_doc_share":
+
+          md5Sum = decryptData.getVoipId();
+          WxCpFileItem docShare = decryptData.getVoipDocShare();
+          String fileName = docShare.getFileName();
+          suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+          break;
+        default:
+          continue;
+      }
+
+      /*
+       * 拉取媒体文件
+       *
+       * 传入一个each函数，用于遍历每个分片的数据
+       */
+      String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+      String targetPath = path + "testfile/" + md5Sum + suffix;
+      File file = new File(targetPath);
+      if (!file.getParentFile().exists()) {
+        file.getParentFile().mkdirs();
+      } else {
+        file.delete();
+      }
+      cpService.getMsgAuditService().getMediaFile(chatDatas.getSdk(), sdkFileId, null, null, 1000L, data -> {
+        try {
+          // 大于512k的文件会分片拉取，此处需要使用追加写，避免后面的分片覆盖之前的数据。
+          FileOutputStream outputStream = new FileOutputStream(targetPath, true);
+          outputStream.write(data);
+          outputStream.close();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      });
+    }
+    Finance.DestroySdk(chatDatas.getSdk());
+  }
 }

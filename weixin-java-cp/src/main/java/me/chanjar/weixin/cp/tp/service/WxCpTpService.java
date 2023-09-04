@@ -10,6 +10,8 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.cp.bean.*;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 
+import java.util.List;
+
 /**
  * 企业微信第三方应用API的Service.
  *
@@ -370,6 +372,7 @@ public interface WxCpTpService {
   /**
    * <pre>
    * 获取访问用户敏感信息
+   * <a href="https://developer.work.weixin.qq.com/document/path/95833">文档地址</a>
    * </pre>
    *
    * @param userTicket the user ticket
@@ -388,6 +391,18 @@ public interface WxCpTpService {
    * @throws WxErrorException the wx error exception
    */
   WxTpLoginInfo getLoginInfo(String authCode) throws WxErrorException;
+
+  /**
+   * 获取带参授权链接
+   * <p>
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/95436
+   *
+   * @param state state
+   * @param templateIdList 代开发自建应用模版ID列表，数量不能超过9个
+   * @return customized auth url
+   * @throws WxErrorException the wx error exception
+   */
+  WxTpCustomizedAuthUrl getCustomizedAuthUrl(String state, List<String> templateIdList) throws WxErrorException;
 
   /**
    * 获取服务商providerToken
@@ -510,6 +525,28 @@ public interface WxCpTpService {
   WxCpTpAdmin getAdminList(String authCorpId, Integer agentId) throws WxErrorException;
 
   /**
+   * 获取应用二维码
+   * @param suiteId 第三方应用id（即ww或wx开头的suiteid）
+   * @param appId 第三方应用id，单应用不需要该参数，多应用旧套件才需要传该参数。若不传默认为1
+   * @param state state值，用于区分不同的安装渠道
+   * @param style 二维码样式选项，默认为不带说明外框小尺寸。0：带说明外框的二维码，适合于实体物料，1：带说明外框的二维码，适合于屏幕类，2：不带说明外框（小尺寸），3：不带说明外框（中尺寸），4：不带说明外框（大尺寸）。具体样式与服务商管理端获取到的应用二维码样式一一对应，参见下文二维码样式说明
+   * @param resultType 结果返回方式，默认为返回二维码图片buffer。1：二维码图片buffer，2：二维码图片url
+   * @return 二维码
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpTpAppQrcode getAppQrcode(String suiteId, String appId, String state, Integer style, Integer resultType) throws WxErrorException ;
+
+  /**
+   *
+   * 明文corpid转换为加密corpid 为更好地保护企业与用户的数据，第三方应用获取的corpid不再是明文的corpid，将升级为第三方服务商级别的加密corpid。<a href="https://developer.work.weixin.qq.com/document/path/95327">文档说明</a>
+   * 第三方可以将已有的明文corpid转换为第三方的加密corpid。
+   * @param corpId
+   * @return
+   * @throws WxErrorException
+   */
+  WxCpTpCorpId2OpenCorpId corpId2OpenCorpId(String corpId) throws WxErrorException;
+
+  /**
    * 创建机构级jsApiTicket签名
    * 详情参见企业微信第三方应用开发文档：https://work.weixin.qq.com/api/doc/90001/90144/90539
    *
@@ -589,4 +626,17 @@ public interface WxCpTpService {
    * @param wxCpTpEditionService the wx cp tp edition service
    */
   void setWxCpTpOrderService(WxCpTpEditionService wxCpTpEditionService);
+
+
+  WxCpTpIdConvertService getWxCpTpIdConverService();
+
+  void setWxCpTpIdConverService(WxCpTpIdConvertService wxCpTpIdConvertService);
+
+  /**
+   * 构造第三方应用oauth2链接
+   */
+  WxCpTpOAuth2Service getWxCpTpOAuth2Service();
+
+  void setWxCpTpOAuth2Service(WxCpTpOAuth2Service wxCpTpOAuth2Service);
+
 }

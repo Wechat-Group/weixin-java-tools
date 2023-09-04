@@ -38,6 +38,12 @@ public class WxCpOaApplyEventRequest implements Serializable {
   private Integer useTemplateApprover;
 
   /**
+   * 提单者提单部门id，不填默认为主部门
+   */
+  @SerializedName("choose_department")
+  private Integer chooseDepartment;
+
+  /**
    * 审批流程信息，用于指定审批申请的审批流程，支持单人审批、多人会签、多人或签，可能有多个审批节点，仅use_template_approver为0时生效。
    */
   @SerializedName("approver")

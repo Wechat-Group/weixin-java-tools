@@ -6,8 +6,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
 import com.google.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
@@ -23,11 +22,9 @@ import java.io.IOException;
  * @author <a href="https://gitee.com/jeequan/jeepay">jmdhappy</a>
  */
 @Test
+@Slf4j
 @Guice(modules = ApiTestModule.class)
 public class ComplaintServiceImplTest {
-
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
   @Inject
   private WxPayService payService;
 
@@ -35,6 +32,7 @@ public class ComplaintServiceImplTest {
 
   /**
    * 查询投诉单列表API
+   *
    * @throws WxPayException
    */
   @Test
@@ -47,11 +45,12 @@ public class ComplaintServiceImplTest {
       .endDate("2022-03-20")
       .complaintedMchid(this.payService.getConfig().getMchId())
       .build();
-    this.logger.info(this.payService.getComplaintsService().queryComplaints(request).toString());
+    log.info(this.payService.getComplaintsService().queryComplaints(request).toString());
   }
 
   /**
    * 查询投诉单详情API
+   *
    * @throws WxPayException
    */
   @Test
@@ -60,11 +59,12 @@ public class ComplaintServiceImplTest {
       .newBuilder()
       .complaintId(complaintId)
       .build();
-    this.logger.info(this.payService.getComplaintsService().getComplaint(request).toString());
+    log.info(this.payService.getComplaintsService().getComplaint(request).toString());
   }
 
   /**
    * 查询投诉协商历史API
+   *
    * @throws WxPayException
    */
   @Test
@@ -75,11 +75,12 @@ public class ComplaintServiceImplTest {
       .offset(0)
       .limit(20)
       .build();
-    this.logger.info(this.payService.getComplaintsService().queryNegotiationHistorys(request).toString());
+    log.info(this.payService.getComplaintsService().queryNegotiationHistorys(request).toString());
   }
 
   /**
    * 创建投诉通知回调地址API
+   *
    * @throws WxPayException
    */
   @Test
@@ -88,20 +89,22 @@ public class ComplaintServiceImplTest {
       .newBuilder()
       .url("https://jeepay.natapp4.cc")
       .build();
-    this.logger.info(this.payService.getComplaintsService().addComplaintNotifyUrl(request).toString());
+    log.info(this.payService.getComplaintsService().addComplaintNotifyUrl(request).toString());
   }
 
   /**
    * 查询投诉通知回调地址API
+   *
    * @throws WxPayException
    */
   @Test
   public void testGetComplaintNotifyUrl() throws WxPayException {
-    this.logger.info(this.payService.getComplaintsService().getComplaintNotifyUrl().toString());
+    log.info(this.payService.getComplaintsService().getComplaintNotifyUrl().toString());
   }
 
   /**
    * 更新投诉通知回调地址API
+   *
    * @throws WxPayException
    */
   @Test
@@ -110,11 +113,12 @@ public class ComplaintServiceImplTest {
       .newBuilder()
       .url("https://jeepay1.natapp4.cc")
       .build();
-    this.logger.info(this.payService.getComplaintsService().updateComplaintNotifyUrl(request).toString());
+    log.info(this.payService.getComplaintsService().updateComplaintNotifyUrl(request).toString());
   }
 
   /**
    * 删除投诉通知回调地址API
+   *
    * @throws WxPayException
    */
   @Test
@@ -124,6 +128,7 @@ public class ComplaintServiceImplTest {
 
   /**
    * 提交回复API
+   *
    * @throws WxPayException
    */
   @Test
@@ -141,6 +146,7 @@ public class ComplaintServiceImplTest {
 
   /**
    * 反馈处理完成API
+   *
    * @throws WxPayException
    */
   @Test
@@ -154,13 +160,14 @@ public class ComplaintServiceImplTest {
   }
 
   /**
-   *  商户上传反馈图片API
+   * 商户上传反馈图片API
+   *
    * @throws WxPayException
    * @throws IOException
    */
   @Test
-  public  void testUploadResponseImage() throws WxPayException, IOException {
-    String filePath="你的图片文件的路径地址";
+  public void testUploadResponseImage() throws WxPayException, IOException {
+    String filePath = "你的图片文件的路径地址";
 //    String filePath="WxJava/images/banners/wiki.jpg";
 
     File file = new File(filePath);

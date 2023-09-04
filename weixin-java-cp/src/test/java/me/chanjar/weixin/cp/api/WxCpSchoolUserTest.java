@@ -13,8 +13,8 @@ import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.school.user.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
-import org.eclipse.jetty.util.ajax.JSON;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
@@ -530,20 +530,20 @@ public class WxCpSchoolUserTest {
     final WxCpXmlMessage createStudentMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, createStudentXml);
     Map<String, Object> map1 = XmlUtils.xml2Map(createStudentXml);
     createStudentMsg.setAllFieldsMap(map1);
-    log.info("createStudentMsg:{}", JSON.toString(createStudentMsg));
+    log.info("createStudentMsg:{}", WxCpGsonBuilder.create().toJson(createStudentMsg));
 
     final WxCpXmlMessage unSubscribeMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, unSubscribeXml);
     Map<String, Object> map2 = XmlUtils.xml2Map(unSubscribeXml);
     unSubscribeMsg.setAllFieldsMap(map2);
-    log.info("unSubscribeMsg:{}", JSON.toString(unSubscribeMsg));
+    log.info("unSubscribeMsg:{}", WxCpGsonBuilder.create().toJson(unSubscribeMsg));
 
     final WxCpXmlMessage createDepartmentMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, createDepartmentXml);
     createDepartmentMsg.setAllFieldsMap(XmlUtils.xml2Map(createDepartmentXml));
-    log.info("createDepartmentMsg:{}", JSON.toString(createDepartmentMsg));
+    log.info("createDepartmentMsg:{}", WxCpGsonBuilder.create().toJson(createDepartmentMsg));
 
     final WxCpXmlMessage deleteDepartmentMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, deleteDepartmentXml);
     deleteDepartmentMsg.setAllFieldsMap(XmlUtils.xml2Map(deleteDepartmentXml));
-    log.info("deleteDepartmentMsg:{}", JSON.toString(deleteDepartmentMsg));
+    log.info("deleteDepartmentMsg:{}", WxCpGsonBuilder.create().toJson(deleteDepartmentMsg));
 
 
     /**

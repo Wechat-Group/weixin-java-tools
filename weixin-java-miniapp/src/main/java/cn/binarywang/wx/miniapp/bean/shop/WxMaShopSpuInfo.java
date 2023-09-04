@@ -102,4 +102,22 @@ public class WxMaShopSpuInfo implements Serializable {
    */
   @SerializedName("skus")
   private List<WxMaShopSkuInfo> skus;
+
+  /**
+   * 商品使用场景
+   * <pre>
+   * 是否必填： 是
+   * </pre>
+   */
+  @SerializedName("scene_group_list")
+  private Integer[] sceneGroupList;
+
+  /**
+   * 商品类型
+   * <pre>
+   * 是否必填： 是
+   * </pre>
+   */
+  @SerializedName("item_type")
+  private Integer itemType;
 }

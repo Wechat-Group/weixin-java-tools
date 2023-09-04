@@ -11,9 +11,12 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
+/**
+ * @author spvycf & F00lish
+ */
 @Slf4j
 public class WxPayValidator implements Validator {
-  private Verifier verifier;
+  private final Verifier verifier;
 
   public WxPayValidator(Verifier verifier) {
     this.verifier = verifier;
@@ -21,7 +24,8 @@ public class WxPayValidator implements Validator {
 
   @Override
   public final boolean validate(CloseableHttpResponse response) throws IOException {
-    if (!ContentType.APPLICATION_JSON.getMimeType().equals(ContentType.parse(String.valueOf(response.getFirstHeader("Content-Type").getValue())).getMimeType())) {
+    if (!ContentType.APPLICATION_JSON.getMimeType().equals(ContentType.parse(String.valueOf(response.getFirstHeader(
+      "Content-Type").getValue())).getMimeType())) {
       return true;
     }
     Header serialNo = response.getFirstHeader("Wechatpay-Serial");
@@ -44,8 +48,8 @@ public class WxPayValidator implements Validator {
 
     String body = getResponseBody(response);
     return timestamp + "\n"
-          + nonce + "\n"
-          + body + "\n";
+      + nonce + "\n"
+      + body + "\n";
   }
 
   protected final String getResponseBody(CloseableHttpResponse response) throws IOException {

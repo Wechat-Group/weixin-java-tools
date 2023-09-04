@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.util.requestexecuter.material;
 
 import com.google.common.collect.ImmutableMap;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -15,8 +16,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -26,9 +25,9 @@ import java.io.IOException;
  * @author ecoolper
  * created on  2017/5/5
  */
+@Slf4j
 public class MaterialNewsInfoApacheHttpRequestExecutor
-    extends MaterialNewsInfoRequestExecutor<CloseableHttpClient, HttpHost> {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+  extends MaterialNewsInfoRequestExecutor<CloseableHttpClient, HttpHost> {
 
   public MaterialNewsInfoApacheHttpRequestExecutor(RequestHttp requestHttp) {
     super(requestHttp);
@@ -45,7 +44,7 @@ public class MaterialNewsInfoApacheHttpRequestExecutor
     httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(ImmutableMap.of("media_id", materialId))));
     try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
       String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      this.logger.debug("响应原始数据：{}", responseContent);
+      log.debug("响应原始数据：{}", responseContent);
       WxError error = WxError.fromJson(responseContent, WxType.MP);
       if (error.getErrorCode() != 0) {
         throw new WxErrorException(error);

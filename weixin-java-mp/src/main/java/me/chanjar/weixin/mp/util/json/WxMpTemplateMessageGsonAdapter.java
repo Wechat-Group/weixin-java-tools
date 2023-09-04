@@ -1,15 +1,18 @@
 package me.chanjar.weixin.mp.util.json;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
+import org.apache.commons.lang3.StringUtils;
+
+import java.lang.reflect.Type;
+
 
 /**
+ * 模板消息转Json类型转换器
  * @author chanjarster
  */
 public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTemplateMessage> {
@@ -19,6 +22,9 @@ public class WxMpTemplateMessageGsonAdapter implements JsonSerializer<WxMpTempla
     JsonObject messageJson = new JsonObject();
     messageJson.addProperty("touser", message.getToUser());
     messageJson.addProperty("template_id", message.getTemplateId());
+    if (StringUtils.isNotBlank(message.getClientMsgId())) {
+      messageJson.addProperty("client_msg_id", message.getClientMsgId());
+    }
     if (message.getUrl() != null) {
       messageJson.addProperty("url", message.getUrl());
     }

@@ -20,6 +20,7 @@ import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * 微信公众号API的Service.
@@ -70,7 +71,7 @@ public interface WxMpService extends WxService {
    *
    * @return token access token
    * @throws WxErrorException .
-   * @see #getAccessToken(boolean) #getAccessToken(boolean)#getAccessToken(boolean)
+   * @see #getAccessToken(boolean) #getAccessToken(boolean)#getAccessToken(boolean)#getAccessToken(boolean)
    */
   String getAccessToken() throws WxErrorException;
 
@@ -98,7 +99,7 @@ public interface WxMpService extends WxService {
    * @param type ticket 类型
    * @return ticket ticket
    * @throws WxErrorException .
-   * @see #getTicket(TicketType, boolean) #getTicket(TicketType, boolean)#getTicket(TicketType, boolean)
+   * @see #getTicket(TicketType, boolean) #getTicket(TicketType, boolean)#getTicket(TicketType, boolean)#getTicket(TicketType, boolean)
    */
   String getTicket(TicketType type) throws WxErrorException;
 
@@ -120,7 +121,7 @@ public interface WxMpService extends WxService {
    *
    * @return jsapi ticket
    * @throws WxErrorException .
-   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)
+   * @see #getJsapiTicket(boolean) #getJsapiTicket(boolean)#getJsapiTicket(boolean)#getJsapiTicket(boolean)
    */
   String getJsapiTicket() throws WxErrorException;
 
@@ -393,6 +394,8 @@ public interface WxMpService extends WxService {
    */
   boolean switchover(String mpId);
 
+  boolean switchover(String mpId, Function<String, WxMpConfigStorage> func);
+
   /**
    * 进行相应的公众号切换.
    *
@@ -400,6 +403,8 @@ public interface WxMpService extends WxService {
    * @return 切换成功 ，则返回当前对象，方便链式调用，否则抛出异常
    */
   WxMpService switchoverTo(String mpId);
+
+  WxMpService switchoverTo(String mpId, Function<String, WxMpConfigStorage> func);
 
   /**
    * 返回客服接口方法实现类，以方便调用其各个接口.
@@ -570,14 +575,14 @@ public interface WxMpService extends WxService {
   /**
    * 返回草稿箱相关接口
    *
-   * @return WxMpDraftService
+   * @return WxMpDraftService draft service
    */
   WxMpDraftService getDraftService();
 
   /**
    * 返回发布能力接口
    *
-   * @return WxMpFreePublishService
+   * @return WxMpFreePublishService free publish service
    */
   WxMpFreePublishService getFreePublishService();
 

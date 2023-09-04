@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.Room;
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * <pre>
@@ -30,7 +31,6 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.Ro
 @Slf4j
 @RequiredArgsConstructor
 public class WxMaLiveServiceImpl implements WxMaLiveService {
-  private static final String ERR_CODE = "errcode";
   private static final String ROOM_ID = "roomId";
   private final WxMaService wxMaService;
 

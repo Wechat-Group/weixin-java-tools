@@ -65,4 +65,16 @@ public interface WxCpMessageService {
    */
   WxCpSchoolContactMessageSendResult sendSchoolContactMessage(WxCpSchoolContactMessage message) throws WxErrorException;
 
+  /**
+   * <pre>
+   * 撤回应用消息
+   *
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/message/recall?access_token=ACCESS_TOKEN
+   * 文档地址: https://developer.work.weixin.qq.com/document/path/94867
+   * </pre>
+   * @param msgId 消息id
+   * @throws WxErrorException
+   */
+  void recall(String msgId) throws WxErrorException;
+
 }

@@ -49,8 +49,8 @@ public interface Applyment4SubService {
   ApplymentStateQueryResult queryApplyStatusByApplymentId(String applymentId) throws WxPayException;
 
   /**
-   * 通过申请单号查询申请状态
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/applyment4sub/chapter3_4.shtml
+   * 根据特约子商户ID查询结算账户
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_4.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/apply4sub/sub_merchants/{sub_mchid}/settlement
    *
    * @param subMchid 本服务商进件、已签约的特约商户号。
@@ -61,7 +61,7 @@ public interface Applyment4SubService {
 
   /**
    * 修改结算帐号
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/applyment4sub/chapter3_3.shtml
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_3.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/apply4sub/sub_merchants/{sub_mchid}/modify-settlement
    *
    * @param subMchid 特约商户号

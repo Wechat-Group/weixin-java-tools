@@ -18,7 +18,7 @@ import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Audit.*;
-import static cn.binarywang.wx.miniapp.constant.WxMaConstants.ERRCODE;
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * 小程序交易组件-接入商品前必需接口(审核相关接口)
@@ -42,7 +42,7 @@ public class WxMaShopAuditServiceImpl implements WxMaShopAuditService {
   public WxMaShopAuditBrandResponse auditBrand(WxMaShopAuditBrandRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(AUDIT_BRAND, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopAuditBrandResponse.class);
@@ -59,7 +59,7 @@ public class WxMaShopAuditServiceImpl implements WxMaShopAuditService {
   public WxMaShopAuditCategoryResponse auditCategory(WxMaShopAuditCategoryRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(AUDIT_CATEGORY, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopAuditCategoryResponse.class);
@@ -76,7 +76,7 @@ public class WxMaShopAuditServiceImpl implements WxMaShopAuditService {
   public WxMaShopAuditResultResponse getAuditResult(String auditId) throws WxErrorException {
     String responseContent = this.wxMaService.post(AUDIT_RESULT, GsonHelper.buildJsonObject("audit_id", auditId));
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopAuditResultResponse.class);
@@ -93,7 +93,7 @@ public class WxMaShopAuditServiceImpl implements WxMaShopAuditService {
   public JsonObject getMiniappCertificate(int reqType) throws WxErrorException {
     String responseContent = this.wxMaService.post(GET_MINIAPP_CERTIFICATE, GsonHelper.buildJsonObject("req_type", reqType));
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, JsonObject.class);

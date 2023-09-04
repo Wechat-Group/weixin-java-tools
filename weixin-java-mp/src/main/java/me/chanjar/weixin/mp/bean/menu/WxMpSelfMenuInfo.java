@@ -81,6 +81,22 @@ public class WxMpSelfMenuInfo implements Serializable {
     private String value;
 
     /**
+     * 调用新增永久素材接口返回的合法media_id
+     * <p>
+     * media_id类型和view_limited类型必须
+     */
+    @SerializedName("media_id")
+    private String mediaId;
+
+    /**
+     * 发布后获得的合法article_id
+     * <p>
+     * article_id类型和article_view_limited类型必须
+     */
+    @SerializedName("article_id")
+    private String articleId;
+
+    /**
      * <pre>
      * 小程序的appid.
      * miniprogram类型必须

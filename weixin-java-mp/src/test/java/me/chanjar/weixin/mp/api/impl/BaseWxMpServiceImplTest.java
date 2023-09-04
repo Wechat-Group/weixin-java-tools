@@ -212,6 +212,16 @@ public class BaseWxMpServiceImplTest {
       }
 
       @Override
+      protected String doGetAccessTokenRequest() throws IOException {
+        return null;
+      }
+
+      @Override
+      protected String doGetStableAccessTokenRequest(boolean forceRefresh) throws IOException {
+        return null;
+      }
+
+      @Override
       public void initHttp() {
 
       }

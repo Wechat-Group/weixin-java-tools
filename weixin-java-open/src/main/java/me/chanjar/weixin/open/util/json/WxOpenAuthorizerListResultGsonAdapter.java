@@ -8,8 +8,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 /**
- * @author robgao
- * @Email 315789501@qq.com
+ * @author robgao Email 315789501@qq.com
  */
 public class WxOpenAuthorizerListResultGsonAdapter implements JsonDeserializer<WxOpenAuthorizerListResult> {
 

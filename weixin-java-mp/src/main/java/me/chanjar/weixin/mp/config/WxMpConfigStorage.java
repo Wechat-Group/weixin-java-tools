@@ -21,6 +21,19 @@ public interface WxMpConfigStorage {
   String getAccessToken();
 
   /**
+   * Is use stable access token api
+   * @Link https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/getStableAccessToken.html
+   * @return the boolean
+   */
+  boolean isStableAccessToken();
+
+  /**
+   * Set use stable access token api
+   * @param useStableAccessToken true is use, false is not
+   */
+  void useStableAccessToken(boolean useStableAccessToken);
+
+  /**
    * Gets access token lock.
    *
    * @return the access token lock

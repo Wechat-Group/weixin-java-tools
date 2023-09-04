@@ -1,9 +1,11 @@
 package cn.binarywang.wx.miniapp.config;
 
 import me.chanjar.weixin.common.bean.WxAccessToken;
+import me.chanjar.weixin.common.bean.WxAccessTokenEntity;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 
 import java.util.concurrent.locks.Lock;
+import java.util.function.Consumer;
 
 /**
  * 小程序配置
@@ -12,12 +14,23 @@ import java.util.concurrent.locks.Lock;
  */
 public interface WxMaConfig {
 
+  default void setUpdateAccessTokenBefore(Consumer<WxAccessTokenEntity> updateAccessTokenBefore) {
+
+  }
+
   /**
    * Gets access token.
    *
    * @return the access token
    */
   String getAccessToken();
+
+  //region 稳定版access token
+  boolean isStableAccessToken();
+
+  void useStableAccessToken(boolean useStableAccessToken);
+  //endregion
+
 
   /**
    * Gets access token lock.
@@ -43,7 +56,9 @@ public interface WxMaConfig {
    *
    * @param accessToken 要更新的WxAccessToken对象
    */
-  void updateAccessToken(WxAccessToken accessToken);
+  default void updateAccessToken(WxAccessToken accessToken) {
+    updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
+  }
 
   /**
    * 应该是线程安全的
@@ -52,6 +67,20 @@ public interface WxMaConfig {
    * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateAccessToken(String accessToken, int expiresInSeconds);
+
+  default void updateAccessTokenProcessor(String accessToken, int expiresInSeconds) {
+    WxAccessTokenEntity wxAccessTokenEntity = new WxAccessTokenEntity();
+    wxAccessTokenEntity.setAppid(getAppid());
+    wxAccessTokenEntity.setAccessToken(accessToken);
+    wxAccessTokenEntity.setExpiresIn(expiresInSeconds);
+    updateAccessTokenBefore(wxAccessTokenEntity);
+    updateAccessToken(accessToken, expiresInSeconds);
+  }
+
+  default void updateAccessTokenBefore(WxAccessTokenEntity wxAccessTokenEntity) {
+
+  }
+
 
   /**
    * Gets jsapi ticket.

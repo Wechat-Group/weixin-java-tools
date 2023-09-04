@@ -12,6 +12,8 @@
   <oauth2redirectUri>网页授权获取用户信息回调地址</oauth2redirectUri>
   <webhookKey>webhook链接地址的key值</webhookKey>
   <!-- 企业微信会话存档，私钥，windows以及linux环境sdk路径 -->
+  <msgAuditSecret>会话存档的secret</msgAuditSecret>
+  <msgAuditLibPath>会话存档的lib path</msgAuditLibPath>
   <msgAuditPriKey>-----BEGIN RSA PRIVATE KEY-----
     MIICXAIBAAKBgQCTfm5cxqfglfOV7b/Z7OtTZZoZpk2EPTvVhn/ngsfKR899xRdR
     25s4h8HkK0XhxqYdOGoAdG3Gms+DvCSY/vu3UtImf0eZSNXpKZJBUnvUVjX4ivnr

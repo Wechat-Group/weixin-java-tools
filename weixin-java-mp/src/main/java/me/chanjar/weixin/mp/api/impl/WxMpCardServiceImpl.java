@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -161,7 +162,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
 
     // 判断返回值
     JsonObject json = GsonParser.parse(responseContent);
-    String errcode = json.get("errcode").getAsString();
+    String errcode = json.get(WxConsts.ERR_CODE).getAsString();
     if (!"0".equals(errcode)) {
       String errmsg = json.get("errmsg").getAsString();
       throw new WxErrorException(WxError.builder()

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.MsgAudit.*;
 
@@ -78,9 +79,12 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
     Finance.loadingLibraries(osLib, prefixPath);
     long sdk = Finance.NewSdk();
-
-    long ret = Finance.Init(sdk, cpService.getWxCpConfigStorage().getCorpId(),
-      cpService.getWxCpConfigStorage().getCorpSecret());
+    //因为会话存档单独有个secret,优先使用会话存档的secret
+    String msgAuditSecret = cpService.getWxCpConfigStorage().getMsgAuditSecret();
+    if (StringUtils.isEmpty(msgAuditSecret)) {
+      msgAuditSecret = cpService.getWxCpConfigStorage().getCorpSecret();
+    }
+    long ret = Finance.Init(sdk, cpService.getWxCpConfigStorage().getCorpId(), msgAuditSecret);
     if (ret != 0) {
       Finance.DestroySdk(sdk);
       throw new WxErrorException("init sdk err ret " + ret);
@@ -178,7 +182,26 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     if (!targetFile.getParentFile().exists()) {
       targetFile.getParentFile().mkdirs();
     }
+    this.getMediaFile(sdk, sdkfileid, proxy, passwd, timeout, i -> {
+      try {
+        // 大于512k的文件会分片拉取，此处需要使用追加写，避免后面的分片覆盖之前的数据。
+        FileOutputStream outputStream = new FileOutputStream(targetFile, true);
+        outputStream.write(i);
+        outputStream.close();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    });
+  }
 
+  @Override
+  public void getMediaFile(@NonNull long sdk, @NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout, @NonNull Consumer<byte[]> action) throws WxErrorException {
+/**
+ * 1、媒体文件每次拉取的最大size为512k，因此超过512k的文件需要分片拉取。
+ * 2、若该文件未拉取完整，sdk的IsMediaDataFinish接口会返回0，同时通过GetOutIndexBuf接口返回下次拉取需要传入GetMediaData的indexbuf。
+ * 3、indexbuf一般格式如右侧所示，”Range:bytes=524288-1048575“:表示这次拉取的是从524288到1048575的分片。单个文件首次拉取填写的indexbuf
+ * 为空字符串，拉取后续分片时直接填入上次返回的indexbuf即可。
+ */
     String indexbuf = "";
     int ret, data_len = 0;
     log.debug("正在分片拉取媒体文件 sdkFileId为{}", sdkfileid);
@@ -197,9 +220,7 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
       try {
         // 大于512k的文件会分片拉取，此处需要使用追加写，避免后面的分片覆盖之前的数据。
-        FileOutputStream outputStream = new FileOutputStream(new File(targetFilePath), true);
-        outputStream.write(Finance.GetData(mediaData));
-        outputStream.close();
+        action.accept(Finance.GetData(mediaData));
       } catch (Exception e) {
         e.printStackTrace();
       }

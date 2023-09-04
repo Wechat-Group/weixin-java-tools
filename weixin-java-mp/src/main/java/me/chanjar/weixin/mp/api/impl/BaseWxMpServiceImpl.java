@@ -39,8 +39,11 @@ import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
+import java.util.function.Function;
 
 import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.*;
 
@@ -154,7 +157,11 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Setter
   private WxMpFreePublishService freePublishService = new WxMpFreePublishServiceImpl(this);
 
-  private Map<String, WxMpConfigStorage> configStorageMap;
+  @Getter
+  @Setter
+  private Function<String, WxMpConfigStorage> configStorageFunction;
+
+  private Map<String, WxMpConfigStorage> configStorageMap = new HashMap<>();
 
   private int retrySleepMillis = 1000;
   private int maxRetryTimes = 5;
@@ -250,6 +257,55 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   public String getAccessToken() throws WxErrorException {
     return getAccessToken(false);
   }
+
+  @Override
+  public String getAccessToken(boolean forceRefresh) throws WxErrorException {
+    if (!forceRefresh && !this.getWxMpConfigStorage().isAccessTokenExpired()) {
+      return this.getWxMpConfigStorage().getAccessToken();
+    }
+
+    Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
+    boolean locked = false;
+    try {
+      do {
+        locked = lock.tryLock(100, TimeUnit.MILLISECONDS);
+        if (!forceRefresh && !this.getWxMpConfigStorage().isAccessTokenExpired()) {
+          return this.getWxMpConfigStorage().getAccessToken();
+        }
+      } while (!locked);
+
+      String response;
+      if (getWxMpConfigStorage().isStableAccessToken()) {
+        response = doGetStableAccessTokenRequest(forceRefresh);
+      } else {
+        response = doGetAccessTokenRequest();
+      }
+      return extractAccessToken(response);
+    } catch (IOException | InterruptedException e) {
+      throw new WxRuntimeException(e);
+    } finally {
+      if (locked) {
+        lock.unlock();
+      }
+    }
+  }
+
+  /**
+   * 通过网络请求获取AccessToken
+   *
+   * @return .
+   * @throws IOException .
+   */
+  protected abstract String doGetAccessTokenRequest() throws IOException;
+
+
+  /**
+   * 通过网络请求获取稳定版接口调用凭据
+   *
+   * @return .
+   * @throws IOException .
+   */
+  protected abstract String doGetStableAccessTokenRequest(boolean forceRefresh) throws IOException;
 
   @Override
   public String shortUrl(String longUrl) throws WxErrorException {
@@ -478,6 +534,9 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public void setMultiConfigStorages(Map<String, WxMpConfigStorage> configStorages) {
+    if (configStorages.isEmpty()) {
+      return;
+    }
     this.setMultiConfigStorages(configStorages, configStorages.keySet().iterator().next());
   }
 
@@ -521,21 +580,43 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public WxMpService switchoverTo(String mpId) {
+    return switchoverTo(mpId, configStorageFunction);
+  }
+
+  @Override
+  public WxMpService switchoverTo(String mpId, Function<String, WxMpConfigStorage> func) {
     if (this.configStorageMap.containsKey(mpId)) {
       WxMpConfigStorageHolder.set(mpId);
       return this;
     }
-
+    if (func != null) {
+      WxMpConfigStorage storage = func.apply(mpId);
+      if (storage != null) {
+        this.addConfigStorage(mpId, storage);
+        return this;
+      }
+    }
     throw new WxRuntimeException(String.format("无法找到对应【%s】的公众号配置信息，请核实！", mpId));
   }
 
   @Override
   public boolean switchover(String mpId) {
+    return switchover(mpId, configStorageFunction);
+  }
+
+  @Override
+  public boolean switchover(String mpId, Function<String, WxMpConfigStorage> func) {
     if (this.configStorageMap.containsKey(mpId)) {
       WxMpConfigStorageHolder.set(mpId);
       return true;
     }
-
+    if (func != null) {
+      WxMpConfigStorage storage = func.apply(mpId);
+      if (storage != null) {
+        this.addConfigStorage(mpId, storage);
+        return true;
+      }
+    }
     log.error("无法找到对应【{}】的公众号配置信息，请核实！", mpId);
     return false;
   }

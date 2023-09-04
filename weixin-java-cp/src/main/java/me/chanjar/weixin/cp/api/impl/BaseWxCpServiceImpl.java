@@ -24,6 +24,8 @@ import me.chanjar.weixin.cp.bean.WxCpAgentJsapiSignature;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import me.chanjar.weixin.cp.corpgroup.service.WxCpLinkedCorpService;
+import me.chanjar.weixin.cp.corpgroup.service.impl.WxCpLinkedCorpServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -69,6 +71,9 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private WxCpKfService kfService = new WxCpKfServiceImpl(this);
 
   private WxCpExportService exportService = new WxCpExportServiceImpl(this);
+
+  private final WxCpMeetingService meetingService = new WxCpMeetingServiceImpl(this);
+  private final WxCpCorpGroupService corpGroupService = new WxCpCorpGroupServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -664,5 +669,15 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public void setExportService(WxCpExportService exportService) {
     this.exportService = exportService;
+  }
+
+  @Override
+  public WxCpMeetingService getMeetingService() {
+    return meetingService;
+  }
+
+  @Override
+  public WxCpCorpGroupService getCorpGroupService() {
+    return corpGroupService;
   }
 }

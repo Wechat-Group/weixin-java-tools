@@ -1,6 +1,9 @@
 package com.binarywang.spring.starter.wxjava.cp.config;
 
+import com.binarywang.spring.starter.wxjava.cp.storage.WxCpInJedisConfigStorageConfiguration;
 import com.binarywang.spring.starter.wxjava.cp.storage.WxCpInMemoryConfigStorageConfiguration;
+import com.binarywang.spring.starter.wxjava.cp.storage.WxCpInRedisTemplateConfigStorageConfiguration;
+import com.binarywang.spring.starter.wxjava.cp.storage.WxCpInRedissonConfigStorageConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -12,7 +15,10 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({
-  WxCpInMemoryConfigStorageConfiguration.class
+  WxCpInMemoryConfigStorageConfiguration.class,
+  WxCpInJedisConfigStorageConfiguration.class,
+  WxCpInRedissonConfigStorageConfiguration.class,
+  WxCpInRedisTemplateConfigStorageConfiguration.class
 })
 public class WxCpStorageAutoConfiguration {
 }

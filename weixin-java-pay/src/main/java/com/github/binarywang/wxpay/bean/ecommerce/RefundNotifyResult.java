@@ -199,7 +199,7 @@ public class RefundNotifyResult implements Serializable {
      * </pre>
      */
     @SerializedName(value = "refund")
-    private String refund;
+    private Integer refund;
 
     /**
      * <pre>
@@ -227,7 +227,7 @@ public class RefundNotifyResult implements Serializable {
      * </pre>
      */
     @SerializedName(value = "payer_refund")
-    private String payerRefund;
+    private Integer payerRefund;
   }
 
 }

@@ -20,6 +20,7 @@ import java.text.Format;
 import java.util.Date;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Order.*;
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * @author boris
@@ -30,7 +31,6 @@ public class WxMaShopOrderServiceImpl implements WxMaShopOrderService {
 
   private final Format dateFormat = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss");
 
-  private static final String ERR_CODE = "errcode";
   private static final String MATCH_KEY = "is_matched";
   private final WxMaService wxMaService;
 

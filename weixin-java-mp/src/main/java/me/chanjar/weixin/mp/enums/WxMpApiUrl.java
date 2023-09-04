@@ -130,6 +130,10 @@ public interface WxMpApiUrl {
      */
     GET_ACCESS_TOKEN_URL(API_DEFAULT_HOST_URL, "/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"),
     /**
+     * 获取稳定版 access_token.
+     */
+    GET_STABLE_ACCESS_TOKEN_URL(API_DEFAULT_HOST_URL, "/cgi-bin/stable_token"),
+    /**
      * 获得各种类型的ticket.
      */
     GET_TICKET_URL(API_DEFAULT_HOST_URL, "/cgi-bin/ticket/getticket?type="),

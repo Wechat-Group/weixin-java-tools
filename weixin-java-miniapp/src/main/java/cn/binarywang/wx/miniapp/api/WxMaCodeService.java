@@ -39,7 +39,7 @@ public interface WxMaCodeService {
    * @return List<WxMaCategory>
    * @throws WxErrorException 获取失败时返回，具体错误码请看此接口的注释文档
    */
-  List<WxMaCategory> getCategory() throws WxErrorException;
+  List<WxMaCodeSubmitAuditItem> getCategory() throws WxErrorException;
 
   /**
    * 获取小程序的第三方提交代码的页面配置（仅供第三方开发者代小程序调用）.

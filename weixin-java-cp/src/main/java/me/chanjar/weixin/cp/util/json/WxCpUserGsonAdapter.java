@@ -260,6 +260,13 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     }
     this.addProperty(o, "main_department", user.getMainDepartment());
 
+    if (user.getDirectLeader() != null && user.getDirectLeader().length > 0) {
+      JsonArray ary = new JsonArray();
+      for (String item : user.getDirectLeader()) {
+        ary.add(item);
+      }
+      o.add("direct_leader", ary);
+    }
     if (!user.getExtAttrs().isEmpty()) {
       JsonArray attrsJsonArray = new JsonArray();
       for (Attr attr : user.getExtAttrs()) {

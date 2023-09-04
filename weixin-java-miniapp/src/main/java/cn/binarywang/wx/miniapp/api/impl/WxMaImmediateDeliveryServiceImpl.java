@@ -2,32 +2,12 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaImmediateDeliveryService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.delivery.AbnormalConfirmRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.AbnormalConfirmResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.AddOrderRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.AddOrderResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.BindAccountResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.CancelOrderRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.CancelOrderResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.FollowWaybillRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.FollowWaybillResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.GetOrderRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.GetOrderResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.MockUpdateOrderRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.MockUpdateOrderResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.QueryFollowTraceRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.QueryFollowTraceResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.QueryWaybillTraceRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.QueryWaybillTraceResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.TraceWaybillRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.TraceWaybillResponse;
+import cn.binarywang.wx.miniapp.bean.delivery.*;
 import cn.binarywang.wx.miniapp.bean.delivery.base.WxMaDeliveryBaseResponse;
 import cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants;
 import cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.InstantDelivery;
-import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import javassist.bytecode.ConstPool;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
@@ -35,6 +15,8 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * 微信小程序即时配送服务.
@@ -48,11 +30,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 @RequiredArgsConstructor
 public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliveryService {
-
-  /**
-   * 微信响应码.
-   */
-  public static final String ERR_CODE = "errcode";
 
   /**
    * 顺丰同城响应码.
@@ -207,7 +184,7 @@ public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliverySe
 
   @Override
   public QueryFollowTraceResponse queryFollowTrace(
-    QueryFollowTraceRequest request) throws WxErrorException  {
+    QueryFollowTraceRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(InstantDelivery.QUERY_FOLLOW_TRACE_URL, request);
     QueryFollowTraceResponse response = QueryFollowTraceResponse.fromJson(responseContent);
     if (response.getErrcode() == -1) {

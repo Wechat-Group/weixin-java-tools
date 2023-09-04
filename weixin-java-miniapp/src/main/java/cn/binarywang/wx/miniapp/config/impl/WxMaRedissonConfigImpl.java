@@ -91,7 +91,7 @@ public class WxMaRedissonConfigImpl extends WxMaDefaultConfigImpl {
 
   @Override
   public void updateAccessToken(WxAccessToken accessToken) {
-    redisOps.setValue(this.accessTokenKey, accessToken.getAccessToken(), accessToken.getExpiresIn(), TimeUnit.SECONDS);
+    updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
   }
 
   @Override

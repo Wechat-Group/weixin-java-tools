@@ -26,7 +26,7 @@ public class WxMaLiveGoodInfo implements Serializable {
    */
   private String thirdPartyTag;
   /**
-   * https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/liveplayer/pendant.html
+   * <a href="https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/liveplayer/pendant.html">see here</a>
    */
   private List<String> goodsKey;
 

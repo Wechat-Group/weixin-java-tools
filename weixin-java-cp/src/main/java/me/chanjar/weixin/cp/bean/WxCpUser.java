@@ -28,10 +28,25 @@ public class WxCpUser implements Serializable {
   private Integer[] orders;
   private String position;
   private String[] positions;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private String mobile;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private Gender gender;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private String email;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private String bizMail;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private String avatar;
   private String thumbAvatar;
   private String mainDepartment;
@@ -41,7 +56,7 @@ public class WxCpUser implements Serializable {
   private String openUserId;
 
   /**
-   * 地址。长度最大128个字符
+   * 地址。长度最大128个字符，代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
    */
   private String address;
   private String avatarMediaId;
@@ -61,6 +76,9 @@ public class WxCpUser implements Serializable {
   private Integer hideMobile;
   private String englishName;
   private String telephone;
+  /**
+   * 代开发自建应用类型于2022年6月20号后的新建应用将不再返回此字段，需要在【获取访问用户敏感信息】接口中获取
+   */
   private String qrCode;
   private Boolean toInvite;
   /**

@@ -1,6 +1,5 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import static cn.binarywang.wx.miniapp.api.impl.WxMaImmediateDeliveryServiceImpl.ERR_CODE;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaShopCouponService;
@@ -19,6 +18,8 @@ import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
+
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * @author leiin
@@ -100,7 +101,7 @@ public class WxMaShopCouponServiceImpl implements WxMaShopCouponService {
 
   @Override
   public WxMaShopBaseResponse addUserCoupon(String openid, String outUserCouponId,
-    String outCouponId, Integer status, Long recvTime) throws WxErrorException {
+                                            String outCouponId, Integer status, Long recvTime) throws WxErrorException {
     JsonObject userCoupon = GsonHelper.buildJsonObject("out_user_coupon_id", outUserCouponId,
       "out_coupon_id", outCouponId,
       "status", status);
@@ -129,7 +130,7 @@ public class WxMaShopCouponServiceImpl implements WxMaShopCouponService {
 
   @Override
   public WxMaShopBaseResponse updateUserCoupon(String openid, String outUserCouponId,
-    String outCouponId, Long useTime, Long recvTime) throws WxErrorException {
+                                               String outCouponId, Long useTime, Long recvTime) throws WxErrorException {
     JsonObject extInfo = GsonHelper.buildJsonObject("use_time", useTime);
 
     JsonObject userCoupon = GsonHelper.buildJsonObject("out_user_coupon_id", outUserCouponId,
@@ -148,7 +149,7 @@ public class WxMaShopCouponServiceImpl implements WxMaShopCouponService {
 
   @Override
   public WxMaShopBaseResponse updateUserCouponStatus(String openid, String outUserCouponId,
-    String outCouponId, Integer status) throws WxErrorException {
+                                                     String outCouponId, Integer status) throws WxErrorException {
 
     JsonObject json = GsonHelper.buildJsonObject("openid", openid,
       "out_user_coupon_id", outUserCouponId,

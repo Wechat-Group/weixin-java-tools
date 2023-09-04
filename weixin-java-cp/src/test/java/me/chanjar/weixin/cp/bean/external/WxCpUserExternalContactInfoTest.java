@@ -76,7 +76,11 @@ public class WxCpUserExternalContactInfoTest {
       "      \"userid\": \"rocky\",\n" +
       "      \"remark\": \"李部长\",\n" +
       "      \"description\": \"对接采购事物\",\n" +
-      "      \"createtime\": 1525779812\n" +
+      "      \"createtime\": 1525779812,\n" +
+      "      \"wechat_channels\": {\n" +
+      "         \"nickname\": \"视频号名称\",\n" +
+      "         \"source\": 1\n" +
+      "       }" +
       "    },\n" +
       "    {\n" +
       "      \"userid\": \"tommy\",\n" +
@@ -172,6 +176,8 @@ public class WxCpUserExternalContactInfoTest {
     assertThat(followedUsers.get(0).getRemark()).isEqualTo("李部长");
     assertThat(followedUsers.get(0).getDescription()).isEqualTo("对接采购事物");
     assertThat(followedUsers.get(0).getCreateTime()).isEqualTo(1525779812);
+    assertThat(followedUsers.get(0).getWechatChannels().getNickname()).isEqualTo("视频号名称");
+    assertThat(followedUsers.get(0).getWechatChannels().getSource()).isEqualTo(1);
 
     assertThat(followedUsers.get(1).getUserId()).isEqualTo("tommy");
     assertThat(followedUsers.get(1).getRemark()).isEqualTo("李总");

@@ -55,6 +55,12 @@ public class WxMaDeviceSubscribeMessageRequest implements Serializable {
   private String miniprogramState;
 
   /**
+   * 设备型号 id ，通过注册设备获得。
+   */
+  @SerializedName("modelId")
+  private String modelId;
+
+  /**
    * 进入小程序查看”的语言类型，支持zh_CN(简体中文)、en_US(英文)、zh_HK(繁体中文)、zh_TW(繁体中文)，默认为zh_CN.
    */
   @SerializedName("lang")

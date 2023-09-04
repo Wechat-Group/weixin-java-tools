@@ -89,7 +89,7 @@ public class WxPayException extends Exception {
    * @return the wx pay exception
    */
   public static WxPayException from(BaseWxPayResult payBaseResult) {
-    return WxPayException.newBuilder()
+    WxPayException exception = WxPayException.newBuilder()
       .xmlString(payBaseResult.getXmlString())
       .returnMsg(payBaseResult.getReturnMsg())
       .returnCode(payBaseResult.getReturnCode())
@@ -97,6 +97,16 @@ public class WxPayException extends Exception {
       .errCode(payBaseResult.getErrCode())
       .errCodeDes(payBaseResult.getErrCodeDes())
       .build();
+
+    if (payBaseResult.getErrorCode() != null) {
+      exception.setErrCode(payBaseResult.getErrorCode());
+    }
+
+    if (payBaseResult.getErrorMessage() != null) {
+      exception.setErrCodeDes(payBaseResult.getErrorMessage());
+    }
+
+    return exception;
   }
 
   /**

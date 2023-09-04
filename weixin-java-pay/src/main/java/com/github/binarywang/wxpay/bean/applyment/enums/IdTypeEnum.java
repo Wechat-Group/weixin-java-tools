@@ -3,6 +3,8 @@ package com.github.binarywang.wxpay.bean.applyment.enums;
 /**
  * 个体户/企业/党政、机关及事业单位/其他组织：可选择任一证件类型。
  * 枚举值
+ * 
+ * @author 叶枫
  */
 public enum IdTypeEnum {
   /**

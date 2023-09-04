@@ -13,7 +13,6 @@ import me.chanjar.weixin.cp.constant.WxCpConsts;
 import me.chanjar.weixin.cp.demo.WxCpDemoInMemoryConfigStorage;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
-import org.eclipse.jetty.util.ajax.JSON;
 import org.testng.annotations.Test;
 
 import java.io.InputStream;
@@ -98,7 +97,7 @@ public class WxCpOaAgentTest {
       "</xml>\n";
     final WxCpXmlMessage mess2 = XStreamTransformer.fromXml(WxCpXmlMessage.class, testXml2);
     mess2.setAllFieldsMap(XmlUtils.xml2Map(testXml2));
-    log.info("xmlJson: {}", JSON.toString(mess2));
+    log.info("xmlJson: {}", WxCpGsonBuilder.create().toJson(mess2));
 
 
     /**
@@ -123,7 +122,7 @@ public class WxCpOaAgentTest {
 
     final WxCpXmlMessage mess = XStreamTransformer.fromXml(WxCpXmlMessage.class, testXml);
     mess.setAllFieldsMap(XmlUtils.xml2Map(testXml));
-    log.info("xmlJson: {}", JSON.toString(mess));
+    log.info("xmlJson: {}", WxCpGsonBuilder.create().toJson(mess));
 
 
     /**
@@ -181,7 +180,7 @@ public class WxCpOaAgentTest {
 
     final WxCpXmlMessage msg = XStreamTransformer.fromXml(WxCpXmlMessage.class, approvalInfoXml);
     msg.setAllFieldsMap(XmlUtils.xml2Map(approvalInfoXml));
-    log.info("xmlJson: {}", JSON.toString(msg));
+    log.info("xmlJson: {}", WxCpGsonBuilder.create().toJson(msg));
 
     /**
      * 增加

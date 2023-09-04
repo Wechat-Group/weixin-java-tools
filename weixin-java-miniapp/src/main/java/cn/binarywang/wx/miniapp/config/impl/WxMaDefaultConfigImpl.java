@@ -2,13 +2,16 @@ package cn.binarywang.wx.miniapp.config.impl;
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
+import lombok.AccessLevel;
 import lombok.Getter;
-import me.chanjar.weixin.common.bean.WxAccessToken;
+import lombok.Setter;
+import me.chanjar.weixin.common.bean.WxAccessTokenEntity;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 
 import java.io.File;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Consumer;
 
 /**
  * 基于内存的微信配置provider，在实际生产环境中应该将这些配置持久化
@@ -19,6 +22,13 @@ import java.util.concurrent.locks.ReentrantLock;
 public class WxMaDefaultConfigImpl implements WxMaConfig {
   protected volatile String appid;
   protected volatile String token;
+
+  /**
+   * 是否使用稳定版获取accessToken接口
+   */
+  @Getter(value = AccessLevel.NONE)
+  private boolean useStableAccessToken;
+
   /**
    * 小程序原始ID
    */
@@ -59,6 +69,25 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   private String accessTokenUrl;
 
   /**
+   * 自定义配置token的消费者
+   */
+  @Setter
+  private Consumer<WxAccessTokenEntity> updateAccessTokenBefore;
+
+  /**
+   * 开启回调
+   */
+  @Getter(AccessLevel.NONE)
+  private boolean enableUpdateAccessTokenBefore = true;
+
+  /**
+   * 可临时关闭更新token回调，主要用于其他介质初始化数据时，可不进行回调
+   */
+  public void enableUpdateAccessTokenBefore(boolean enableUpdateAccessTokenBefore) {
+    this.enableUpdateAccessTokenBefore = enableUpdateAccessTokenBefore;
+  }
+
+  /**
    * 会过期的数据提前过期时间，默认预留200秒的时间
    */
   protected long expiresAheadInMillis(int expiresInSeconds) {
@@ -81,6 +110,19 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
     this.accessToken = accessToken;
   }
 
+  //region 使用稳定版接口获取accessToken
+  @Override
+  public boolean isStableAccessToken() {
+    return this.useStableAccessToken;
+  }
+
+  @Override
+  public void useStableAccessToken(boolean useStableAccessToken) {
+    this.useStableAccessToken = useStableAccessToken;
+  }
+  //endregion
+
+
   @Override
   public Lock getAccessTokenLock() {
     return this.accessTokenLock;
@@ -95,15 +137,22 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
     return isExpired(this.expiresTime);
   }
 
-  @Override
-  public synchronized void updateAccessToken(WxAccessToken accessToken) {
-    updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
-  }
+//  @Override
+//  public synchronized void updateAccessToken(WxAccessToken accessToken) {
+//    updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
+//  }
 
   @Override
   public synchronized void updateAccessToken(String accessToken, int expiresInSeconds) {
     setAccessToken(accessToken);
     setExpiresTime(expiresAheadInMillis(expiresInSeconds));
+  }
+
+  @Override
+  public void updateAccessTokenBefore(WxAccessTokenEntity wxAccessTokenEntity) {
+    if (updateAccessTokenBefore != null && enableUpdateAccessTokenBefore) {
+      updateAccessTokenBefore.accept(wxAccessTokenEntity);
+    }
   }
 
   @Override

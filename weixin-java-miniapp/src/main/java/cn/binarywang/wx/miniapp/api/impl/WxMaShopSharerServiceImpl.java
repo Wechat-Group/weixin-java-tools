@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Sharer;
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaShopSharerService;
@@ -28,7 +29,6 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 @RequiredArgsConstructor
 @Slf4j
 public class WxMaShopSharerServiceImpl implements WxMaShopSharerService {
-  private static final String ERR_CODE = "errcode";
   private final WxMaService wxMaService;
 
   @Override

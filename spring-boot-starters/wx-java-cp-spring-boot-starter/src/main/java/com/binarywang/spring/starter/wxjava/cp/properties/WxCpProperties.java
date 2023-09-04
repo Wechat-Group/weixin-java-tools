@@ -3,6 +3,7 @@ package com.binarywang.spring.starter.wxjava.cp.properties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
 
@@ -62,6 +63,17 @@ public class WxCpProperties {
     private StorageType type = StorageType.memory;
 
     /**
+     * 指定key前缀
+     */
+    private String keyPrefix = "wx:cp";
+
+    /**
+     * redis连接配置
+     */
+    @NestedConfigurationProperty
+    private WxCpRedisProperties redis = new WxCpRedisProperties();
+
+    /**
      * http代理主机
      */
     private String httpProxyHost;
@@ -104,6 +116,18 @@ public class WxCpProperties {
     /**
      * 内存
      */
-    memory
+    memory,
+    /**
+     * jedis
+     */
+    jedis,
+    /**
+     * redisson
+     */
+    redisson,
+    /**
+     * redistemplate
+     */
+    redistemplate
   }
 }

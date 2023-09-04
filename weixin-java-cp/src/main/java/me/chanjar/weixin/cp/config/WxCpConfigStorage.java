@@ -257,4 +257,10 @@ public interface WxCpConfigStorage {
    * @return key webhook key
    */
   String getWebhookKey();
+
+  /**
+   * 获取会话存档的secret
+   * @return msg audit secret
+   */
+  String getMsgAuditSecret();
 }

@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
+import me.chanjar.weixin.common.bean.WxAccessTokenEntity;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxMpErrorMsgEnum;
@@ -33,6 +34,8 @@ public class WxMaServiceImplTest {
 
   @Inject
   private WxMaService wxService;
+  @Inject
+  private WxMaServiceOkHttpImpl wxMaServiceOkHttp;
 
   public void testRefreshAccessToken() throws WxErrorException {
     WxMaConfig configStorage = this.wxService.getWxMaConfig();
@@ -43,6 +46,46 @@ public class WxMaServiceImplTest {
     assertNotEquals(before, after);
     assertTrue(StringUtils.isNotBlank(after));
   }
+
+
+  private void updateAccessTokenBefore(WxAccessTokenEntity wxAccessTokenEntity) {
+    System.out.println("token:" + wxAccessTokenEntity.toString());
+  }
+
+  public void testTokenCallBack() throws WxErrorException {
+    WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
+    WxMaConfig configStorage = this.wxService.getWxMaConfig();
+    config.setAppid(configStorage.getAppid());
+    config.setSecret(configStorage.getSecret());
+//    //第一种方式
+//    config.setUpdateAccessTokenBefore(e -> {
+//      System.out.println("token:" + e.toString());
+//    });
+    //第二种方式
+    config.setUpdateAccessTokenBefore(this::updateAccessTokenBefore);
+    this.wxService.setWxMaConfig(config);
+
+    String before = config.getAccessToken();
+    this.wxService.getAccessToken(true);
+    String after = config.getAccessToken();
+    assertNotEquals(before, after);
+    assertTrue(StringUtils.isNotBlank(after));
+    config.enableUpdateAccessTokenBefore(false);
+    this.wxService.getAccessToken(true);
+    after = config.getAccessToken();
+    System.out.println(after);
+  }
+
+  public void testStableRefreshAccessToken() throws WxErrorException {
+    WxMaConfig configStorage = this.wxMaServiceOkHttp.getWxMaConfig();
+    configStorage.useStableAccessToken(true);
+    String before = configStorage.getAccessToken();
+    this.wxMaServiceOkHttp.getAccessToken(false);
+    String after = configStorage.getAccessToken();
+    assertNotEquals(before, after);
+    assertTrue(StringUtils.isNotBlank(after));
+  }
+
 
   @Test(expectedExceptions = {WxErrorException.class})
   public void testGetPaidUnionId() throws WxErrorException {
@@ -134,7 +177,7 @@ public class WxMaServiceImplTest {
     });
     try {
       Object execute = service.execute(re, "http://baidu.com", new HashMap<>());
-      Assert.assertTrue(false, "代码应该不会执行到这里");
+      Assert.fail("代码应该不会执行到这里");
     } catch (WxErrorException e) {
       Assert.assertEquals(WxMpErrorMsgEnum.CODE_40001.getCode(), e.getError().getErrorCode());
       Assert.assertEquals(2, counter.get());

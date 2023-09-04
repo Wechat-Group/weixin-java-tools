@@ -31,7 +31,7 @@ public class WxMaCodeServiceImplTest {
 
   @Test
   public void testGetCategory() throws Exception {
-    List<WxMaCategory> categories = wxService.getCodeService().getCategory();
+    List<WxMaCodeSubmitAuditItem> categories = wxService.getCodeService().getCategory();
     System.out.println(String.valueOf(categories));
   }
 
@@ -87,7 +87,7 @@ public class WxMaCodeServiceImplTest {
     WxMaCodeSubmitAuditRequest auditRequest = WxMaCodeSubmitAuditRequest
       .builder()
       .itemList(Arrays.asList(
-        WxMaCategory
+        WxMaCodeSubmitAuditItem
           .builder()
           .address("pages/logs/logs")
           .tag("工具 效率")

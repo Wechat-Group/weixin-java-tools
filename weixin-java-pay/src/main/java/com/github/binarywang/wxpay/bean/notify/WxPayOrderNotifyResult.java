@@ -121,7 +121,7 @@ public class WxPayOrderNotifyResult extends BaseWxPayResult implements Serializa
    * 是否必填：是
    * 类型：String(16)
    * 示例值：JSAPI
-   * JSA描述：PI、NATIVE、APP
+   * 描述：JSAPI、NATIVE、APP
    * </pre>
    */
   @XStreamAlias("trade_type")

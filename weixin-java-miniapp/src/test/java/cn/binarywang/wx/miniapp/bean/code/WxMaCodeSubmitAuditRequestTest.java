@@ -16,7 +16,7 @@ public class WxMaCodeSubmitAuditRequestTest {
   public void testToJson() {
     WxMaCodeSubmitAuditRequest request = WxMaCodeSubmitAuditRequest.builder()
       .itemList(Arrays.asList(
-        WxMaCategory.builder()
+        WxMaCodeSubmitAuditItem.builder()
           .address("index")
           .tag("学习 生活")
           .firstClass("文娱")
@@ -25,7 +25,7 @@ public class WxMaCodeSubmitAuditRequestTest {
           .secondId(2L)
           .title("首页")
           .build(),
-        WxMaCategory.builder()
+        WxMaCodeSubmitAuditItem.builder()
           .address("page/logs/logs")
           .tag("学习 工作")
           .firstClass("教育")
@@ -39,10 +39,10 @@ public class WxMaCodeSubmitAuditRequestTest {
       ))
       .feedbackInfo("blablabla")
       .feedbackStuff("xx|yy|zz")
-      .previewInfo(new WxMaCodeSubmitAuditRequest.PreviewInfo().setVideoIdList(Arrays.asList("xxxx"))
+      .previewInfo(new WxMaCodeSubmitAuditPreviewInfo().setVideoIdList(Arrays.asList("xxxx"))
         .setPicIdList(Arrays.asList("xxxx", "yyyy", "zzzz")))
       .versionDesc("blablabla")
-      .ugcDeclare(new WxMaCodeSubmitAuditRequest.UgcDeclare()
+      .ugcDeclare(new WxMaCodeSubmitAuditUgcDeclare()
         .setAuditDesc("blablabla")
         .setHasAuditTeam(1)
         .setMethod(new Integer[]{1})

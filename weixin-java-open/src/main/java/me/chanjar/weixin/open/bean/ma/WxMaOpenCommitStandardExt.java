@@ -8,8 +8,9 @@ import java.util.Map;
 
 /**
  * 微信第三方平台上传代码到小程序代码标准模板时的参数
- * ext_json补充说明
- * 文档地址:https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/commit.html
+ * <pre>
+ * ext_json 补充说明
+ * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/commit.html">文档</a>
  * 为了便于第三方平台使用同一个小程序模板为不同的小程序提供服务，第三方可以将自定义信息放置在 ext_json 中，在模板小程序中，可以使用 wx.getExtConfigSync 接口获取自定义信息，从而区分不同的小程序。详见：小程序模板开发
  * ext_json 中的参数可选，参数详见小程序配置;但是，如果是模板id为标准模板库的模板id，则ext_json可支持的参数为：{"extAppid":'', "ext": {}, "window": {}}
  * ext_json 中有限支持 pages，支持配置模板页面的子集（ext_json 中不可新增页面）。
@@ -28,7 +29,7 @@ import java.util.Map;
  * subPackages整体替换
  * navigateToMiniProgaramAppIdList：整体替换
  * plugins整体替换
- * </p>
+ * </pre>
  *
  * @author <a href="https://www.sacoc.cn">广州跨界</a>
  * @since 2021/08/12

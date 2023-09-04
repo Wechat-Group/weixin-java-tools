@@ -22,12 +22,15 @@ public class StatisticListAdapter implements JsonDeserializer<WxCpKfGetCorpStati
     JsonElement statistic = asJsonObject.get("statistic");
     if (GsonHelper.isNotNull(statistic)) {
       WxCpKfGetCorpStatisticResp.Statistic statisticObj = new WxCpKfGetCorpStatisticResp.Statistic();
-      statisticObj.setSessionCnt(statistic.getAsJsonObject().get("session_cnt").getAsInt());
-      statisticObj.setCustomerCnt(statistic.getAsJsonObject().get("customer_cnt").getAsInt());
-      statisticObj.setCustomerMsgCnt(statistic.getAsJsonObject().get("customer_msg_cnt").getAsInt());
-      statisticObj.setUpgradeServiceCustomerCnt(statistic.getAsJsonObject().get("upgrade_service_customer_cnt").getAsInt());
-      statisticObj.setAiTransferRate(statistic.getAsJsonObject().get("ai_transfer_rate").getAsInt());
-      statisticObj.setAiKnowledgeHitRate(statistic.getAsJsonObject().get("ai_knowledge_hit_rate").getAsInt());
+      statisticObj.setSessionCnt(GsonHelper.isNull(statistic.getAsJsonObject().get("session_cnt")) ? null : statistic.getAsJsonObject().get("session_cnt").getAsInt());
+      statisticObj.setCustomerCnt(GsonHelper.isNull(statistic.getAsJsonObject().get("customer_cnt")) ? null : statistic.getAsJsonObject().get("customer_cnt").getAsInt());
+      statisticObj.setCustomerMsgCnt(GsonHelper.isNull(statistic.getAsJsonObject().get("customer_msg_cnt")) ? null : statistic.getAsJsonObject().get("customer_msg_cnt").getAsInt());
+      statisticObj.setUpgradeServiceCustomerCnt(GsonHelper.isNull(statistic.getAsJsonObject().get("upgrade_service_customer_cnt")) ? null : statistic.getAsJsonObject().get("upgrade_service_customer_cnt").getAsInt());
+      statisticObj.setAiSessionReplyCnt(GsonHelper.isNull(statistic.getAsJsonObject().get("ai_session_reply_cnt")) ? null : statistic.getAsJsonObject().get("ai_session_reply_cnt").getAsInt());
+      statisticObj.setAiTransferRate(GsonHelper.isNull(statistic.getAsJsonObject().get("ai_transfer_rate")) ? null : statistic.getAsJsonObject().get("ai_transfer_rate").getAsFloat());
+      statisticObj.setAiKnowledgeHitRate(GsonHelper.isNull(statistic.getAsJsonObject().get("ai_knowledge_hit_rate")) ? null : statistic.getAsJsonObject().get("ai_knowledge_hit_rate").getAsFloat());
+      statisticObj.setMsgRejectedCustomerCnt(GsonHelper.isNull(statistic.getAsJsonObject().get("msg_rejected_customer_cnt")) ? null : statistic.getAsJsonObject().get("msg_rejected_customer_cnt").getAsInt());
+      statisticList.setStatistic(statisticObj);
     }
     return statisticList;
   }

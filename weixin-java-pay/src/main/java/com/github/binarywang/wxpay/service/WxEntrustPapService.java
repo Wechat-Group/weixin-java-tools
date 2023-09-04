@@ -87,6 +87,24 @@ public interface WxEntrustPapService {
   WxWithholdResult withhold(WxWithholdRequest wxWithholdRequest) throws WxPayException;
 
   /**
+   * 服务商模式的申请扣款
+   * <pre>
+   *   申请扣款
+   *   详见：<a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay_v2/papay/chapter5_8.shtml">https://pay.weixin.qq.com/wiki/doc/api/wxpay_v2/papay/chapter5_8.shtml</a>
+   *   请求微信发起委托扣款，扣款额度和次数由使用的签约模板限制，
+   *   该扣款接口是立即扣款 无延时 扣款前无消息通知。
+   *
+   *   • 特殊情况：周期扣费为通知后24小时扣费方式情况下，如果用户为首次签约（包含解约后重新签约），
+   *   从用户签约成功时间开始算，商户在12小时内发起的扣款，会被立即执行，无延迟。商户超过12小时以后发起的扣款，都按24小时扣费规则执行
+   * </pre>
+   *
+   * @param wxWithholdRequest the wx withhold request
+   * @return wx withhold result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayCommonResult withholdPartner(WxWithholdRequest wxWithholdRequest) throws WxPayException;
+
+  /**
    * 预扣费通知
    * <pre>
    *   预扣费接口

@@ -26,6 +26,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.User.SET_USE
  */
 @RequiredArgsConstructor
 public class WxMaUserServiceImpl implements WxMaUserService {
+  private static final String PHONE_INFO = "phone_info";
   private final WxMaService service;
 
   @Override
@@ -62,17 +63,22 @@ public class WxMaUserServiceImpl implements WxMaUserService {
   }
 
   @Override
-  public WxMaPhoneNumberInfo getNewPhoneNoInfo(String code) throws WxErrorException {
+  public WxMaPhoneNumberInfo getPhoneNoInfo(String code) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("code", code);
     String responseContent = this.service.post(GET_PHONE_NUMBER_URL, param.toString());
     JsonObject response = GsonParser.parse(responseContent);
-    boolean hasPhoneInfo = response.has("phone_info");
-    if (hasPhoneInfo) {
-      return WxMaGsonBuilder.create().fromJson(response.getAsJsonObject("phone_info"), WxMaPhoneNumberInfo.class);
-    } else {
-      return null;
+    if (response.has(PHONE_INFO)) {
+      return WxMaGsonBuilder.create().fromJson(response.getAsJsonObject(PHONE_INFO),
+        WxMaPhoneNumberInfo.class);
     }
+
+    return null;
+  }
+
+  @Override
+  public WxMaPhoneNumberInfo getNewPhoneNoInfo(String code) throws WxErrorException {
+    return this.getPhoneNoInfo(code);
   }
 
   @Override

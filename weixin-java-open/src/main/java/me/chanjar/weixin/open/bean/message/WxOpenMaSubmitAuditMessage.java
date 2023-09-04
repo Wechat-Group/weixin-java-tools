@@ -1,9 +1,9 @@
 package me.chanjar.weixin.open.bean.message;
 
+import cn.binarywang.wx.miniapp.bean.code.WxMaCodeSubmitAuditItem;
+import cn.binarywang.wx.miniapp.bean.code.WxMaCodeSubmitAuditPreviewInfo;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.open.bean.ma.WxOpenMaPreviewInfo;
-import me.chanjar.weixin.open.bean.ma.WxOpenMaSubmitAudit;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,13 +22,13 @@ public class WxOpenMaSubmitAuditMessage implements Serializable {
    * 提交审核项的一个列表（至少填写1项，至多填写5项）
    */
   @SerializedName("item_list")
-  private List<WxOpenMaSubmitAudit> itemList;
+  private List<WxMaCodeSubmitAuditItem> itemList;
 
   /**
    * 预览信息（小程序页面截图和操作录屏）
    */
   @SerializedName("preview_info")
-  private WxOpenMaPreviewInfo previewInfo;
+  private WxMaCodeSubmitAuditPreviewInfo previewInfo;
 
   /**
    * 小程序版本说明和功能解释
@@ -53,4 +53,10 @@ public class WxOpenMaSubmitAuditMessage implements Serializable {
    */
   @SerializedName("privacy_api_not_use")
   private Boolean privacyApiNotUse;
+
+  /**
+   * 订单中心path
+   */
+  @SerializedName("order_path")
+  private String orderPath;
 }

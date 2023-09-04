@@ -29,7 +29,7 @@ public class WxMaCodeSubmitAuditRequest implements Serializable {
    * 提交审核项的一个列表（至少填写1项，至多填写5项）
    */
   @SerializedName("item_list")
-  private List<WxMaCategory> itemList;
+  private List<WxMaCodeSubmitAuditItem> itemList;
 
   /**
    * feedback_info	String	否	反馈内容，至多 200 字
@@ -47,75 +47,40 @@ public class WxMaCodeSubmitAuditRequest implements Serializable {
    * preview_info	Object	否	预览信息（小程序页面截图和操作录屏）
    */
   @SerializedName("preview_info")
-  private PreviewInfo previewInfo;
+  private WxMaCodeSubmitAuditPreviewInfo previewInfo;
 
   /**
-   * version_desc	String	否	小程序版本说明和功能解释
+   * version_desc
+   * String
+   * 否
+   * 小程序版本说明和功能解释
    */
   @SerializedName("version_desc")
   private String versionDesc;
 
   /**
-   * ugc_declare	Object	否	用户生成内容场景（UGC）信息安全声明
+   * ugc_declare
+   * Object
+   * 否
+   * 用户生成内容场景（UGC）信息安全声明
    */
   @SerializedName("ugc_declare")
-  private UgcDeclare ugcDeclare;
+  private WxMaCodeSubmitAuditUgcDeclare ugcDeclare;
+
+  /**
+   * 用于声明是否不使用“代码中检测出但是未配置的隐私相关接口”
+   */
+  @SerializedName("privacy_api_not_use")
+  private Boolean privacyApiNotUse;
+
+  /**
+   * 订单中心path
+   */
+  @SerializedName("order_path")
+  private String orderPath;
 
   public String toJson() {
     return WxMaGsonBuilder.create().toJson(this);
   }
 
-  @Data
-  @Accessors(chain = true)
-  public static class PreviewInfo implements Serializable {
-    private static final long serialVersionUID = -3391652096859063951L;
-
-    /**
-     * video_id_list	String Array	否	录屏mediaid列表，可以通过提审素材上传接口获得
-     */
-    @SerializedName("video_id_list")
-    private List<String> videoIdList;
-
-    /**
-     * pic_id_list	String Array	否	截屏mediaid列表，可以通过提审素材上传接口获得
-     */
-    @SerializedName("pic_id_list")
-    private List<String> picIdList;
-  }
-
-  @Data
-  @Accessors(chain = true)
-  public static class UgcDeclare implements Serializable {
-    private static final long serialVersionUID = 201470564426848261L;
-
-    /**
-     * scene	Number Array	否	UGC场景 0,不涉及用户生成内容, 1.用户资料,2.图片,3.视频,4.文本,5其他, 可多选,当scene填0时无需填写下列字段
-     */
-    @SerializedName("scene")
-    private Integer[] scene;
-
-    /**
-     * other_scene_desc	String	否	当scene选其他时的说明,不超时256字
-     */
-    @SerializedName("other_scene_desc")
-    private String otherSceneDesc;
-
-    /**
-     * method	Number Array	否	内容安全机制 1.使用平台建议的内容安全API,2.使用其他的内容审核产品,3.通过人工审核把关,4.未做内容审核把关
-     */
-    @SerializedName("method")
-    private Integer[] method;
-
-    /**
-     * has_audit_team	Number	否	是否有审核团队, 0.无,1.有,默认0
-     */
-    @SerializedName("has_audit_team")
-    private Integer hasAuditTeam;
-
-    /**
-     * audit_desc	String	否	说明当前对UGC内容的审核机制,不超过256字
-     */
-    @SerializedName("audit_desc")
-    private String auditDesc;
-  }
 }

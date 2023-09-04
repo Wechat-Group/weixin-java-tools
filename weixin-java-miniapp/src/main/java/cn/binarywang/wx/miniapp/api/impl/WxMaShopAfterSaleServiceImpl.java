@@ -15,7 +15,7 @@ import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Aftersale.*;
-import static cn.binarywang.wx.miniapp.constant.WxMaConstants.ERRCODE;
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * @author boris
@@ -38,7 +38,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
   public WxMaShopAfterSaleAddResponse add(WxMaShopAfterSaleAddRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(AFTERSALE_ADD, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopAfterSaleAddResponse.class);
@@ -55,7 +55,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
   public WxMaShopAfterSaleGetResponse get(WxMaShopAfterSaleGetRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(AFTERSALE_GET, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopAfterSaleGetResponse.class);
@@ -72,7 +72,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
   public WxMaShopEcAfterSaleGetResponse get(WxMaShopEcAfterSaleGetRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(ECAFTERSALE_GET, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopEcAfterSaleGetResponse.class);
@@ -89,7 +89,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
   public WxMaShopBaseResponse update(WxMaShopAfterSaleUpdateRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(AFTERSALE_UPDATE, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopBaseResponse.class);
@@ -99,7 +99,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
   public WxMaShopBaseResponse update(WxMaShopEcAfterSaleUpdateRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(EC_AFTERSALE_UPDATE, request);
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopBaseResponse.class);
@@ -120,7 +120,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
       "aftersale_id", afterSaleId, "openid", openId);
     String resp = this.wxMaService.post(AFTERSALE_CANCEL, request);
     JsonObject jsonObject = GsonParser.parse(resp);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(resp, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(resp, WxMaShopBaseResponse.class);
@@ -137,7 +137,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
     throws WxErrorException {
     String resp = this.wxMaService.post(AFTERSALE_UPLOAD_RETURN_INFO, request);
     JsonObject jsonObject = GsonParser.parse(resp);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(resp, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(resp, WxMaShopBaseResponse.class);
@@ -157,7 +157,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
       "aftersale_id", afterSaleId);
     String resp = this.wxMaService.post(AFTERSALE_ACCEPT_REFUND, request);
     JsonObject jsonObject = GsonParser.parse(resp);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(resp, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(resp, WxMaShopBaseResponse.class);
@@ -174,7 +174,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
     throws WxErrorException {
     String resp = this.wxMaService.post(AFTERSALE_ACCEPT_RETURN, request);
     JsonObject jsonObject = GsonParser.parse(resp);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(resp, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(resp, WxMaShopBaseResponse.class);
@@ -194,7 +194,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
       "aftersale_id", afterSaleId);
     String resp = this.wxMaService.post(AFTERSALE_REJECT, request);
     JsonObject jsonObject = GsonParser.parse(resp);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(resp, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(resp, WxMaShopBaseResponse.class);
@@ -211,7 +211,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
     throws WxErrorException {
     String resp = this.wxMaService.post(AFTERSALE_UPLOAD_CERTIFICATES, request);
     JsonObject jsonObject = GsonParser.parse(resp);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(resp, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(resp, WxMaShopBaseResponse.class);
@@ -233,7 +233,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
       "order_id", orderId, "openid", openid, "after_sale_deadline", afterSaleDeadline);
     String resp = this.wxMaService.post(AFTERSALE_UPLOAD_DEADLINE, request);
     JsonObject jsonObject = GsonParser.parse(resp);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(resp, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(resp, WxMaShopBaseResponse.class);
@@ -249,7 +249,7 @@ public class WxMaShopAfterSaleServiceImpl implements WxMaShopAfterSaleService {
   public WxMaShopAfterSaleListResponse list(WxMaShopAfterSaleListRequest request) throws WxErrorException {
     String resp = this.wxMaService.post(AFTERSALE_GET_LIST, request);
     JsonObject jsonObject = GsonParser.parse(resp);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(resp, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(resp, WxMaShopAfterSaleListResponse.class);

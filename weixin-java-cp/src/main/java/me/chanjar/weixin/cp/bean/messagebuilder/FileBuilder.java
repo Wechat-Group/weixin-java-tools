@@ -24,11 +24,11 @@ public final class FileBuilder extends BaseBuilder<FileBuilder> {
   /**
    * Media id file builder.
    *
-   * @param media_id the media id
+   * @param mediaId the media id
    * @return the file builder
    */
-  public FileBuilder mediaId(String media_id) {
-    this.mediaId = media_id;
+  public FileBuilder mediaId(String mediaId) {
+    this.mediaId = mediaId;
     return this;
   }
 

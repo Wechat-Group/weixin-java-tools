@@ -273,7 +273,8 @@ public class WxCpTpMessageRouter {
         .append("-").append(StringUtils.trimToEmpty(wxMessage.getAuthCorpId()))
         .append("-").append(StringUtils.trimToEmpty(wxMessage.getUserID()))
         .append("-").append(StringUtils.trimToEmpty(wxMessage.getChangeType()))
-        .append("-").append(StringUtils.trimToEmpty(wxMessage.getServiceCorpId()));
+        .append("-").append(StringUtils.trimToEmpty(wxMessage.getServiceCorpId()))
+        .append("-").append(StringUtils.trimToEmpty(wxMessage.getExternalUserID()));
     }
 
     if (wxMessage.getMsgType() != null) {

@@ -3,7 +3,6 @@ package me.chanjar.weixin.mp.bean.kefu;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.builder.kefu.*;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
@@ -124,18 +123,18 @@ public class WxMpKefuMessage implements Serializable {
   /**
    * <pre>
    * 请使用
-   * {@link WxConsts.KefuMsgType#TEXT}
-   * {@link WxConsts.KefuMsgType#IMAGE}
-   * {@link WxConsts.KefuMsgType#VOICE}
-   * {@link WxConsts.KefuMsgType#MUSIC}
-   * {@link WxConsts.KefuMsgType#VIDEO}
-   * {@link WxConsts.KefuMsgType#NEWS}
-   * {@link WxConsts.KefuMsgType#MPNEWS}
-   * {@link WxConsts.KefuMsgType#WXCARD}
-   * {@link WxConsts.KefuMsgType#MINIPROGRAMPAGE}
-   * {@link WxConsts.KefuMsgType#TASKCARD}
-   * {@link WxConsts.KefuMsgType#MSGMENU}
-   * {@link WxConsts.KefuMsgType#MP_NEWS_ARTICLE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#TEXT}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#IMAGE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#VOICE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MUSIC}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#VIDEO}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#NEWS}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MPNEWS}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#WXCARD}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MINIPROGRAMPAGE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#TASKCARD}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MSGMENU}
+   * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MP_NEWS_ARTICLE}
    * </pre>
    */
   public void setMsgType(String msgType) {

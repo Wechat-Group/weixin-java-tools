@@ -7,6 +7,7 @@ import com.github.binarywang.wxpay.bean.ecommerce.ProfitSharingReceiverRequest;
 import com.github.binarywang.wxpay.bean.ecommerce.ProfitSharingReceiverResult;
 import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
 import com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult;
+import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -123,6 +124,12 @@ public class EcommerceServiceImplTest {
   public void testSubNowBalance() throws WxPayException {
     String subMchid = "";
     wxPayService.getEcommerceService().subNowBalance(subMchid);
+  }
+
+  @Test
+  public void testSubNowBalanceWithAccountType() throws WxPayException {
+    String subMchid = "";
+    wxPayService.getEcommerceService().subNowBalance(subMchid, SpAccountTypeEnum.BASIC);
   }
 
   @Test

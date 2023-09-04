@@ -7,7 +7,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.bean.oa.WxCpApprovalDetailResult;
 import me.chanjar.weixin.cp.bean.oa.WxCpOaApplyEventRequest;
-import me.chanjar.weixin.cp.bean.oa.WxCpTemplateResult;
+import me.chanjar.weixin.cp.bean.oa.WxCpOaApprovalTemplateResult;
 import me.chanjar.weixin.cp.tp.service.WxCpTpOAService;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
@@ -34,13 +34,13 @@ public class WxCpTpOAServiceImpl implements WxCpTpOAService {
   }
 
   @Override
-  public WxCpTemplateResult getTemplateDetail(@NonNull String templateId, String corpId) throws WxErrorException {
+  public WxCpOaApprovalTemplateResult getTemplateDetail(@NonNull String templateId, String corpId) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("template_id", templateId);
     String url = mainService.getWxCpTpConfigStorage().getApiUrl(GET_TEMPLATE_DETAIL) +
       "?access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
     String responseContent = this.mainService.post(url, jsonObject.toString());
-    return WxCpGsonBuilder.create().fromJson(responseContent, WxCpTemplateResult.class);
+    return WxCpGsonBuilder.create().fromJson(responseContent, WxCpOaApprovalTemplateResult.class);
   }
 
   @Override

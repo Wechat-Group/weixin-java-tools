@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.enums.WxType;
@@ -22,6 +23,7 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.json.GsonParser;
+import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.cp.bean.*;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.tp.service.*;
@@ -31,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.*;
@@ -53,7 +56,8 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   private WxCpTpOrderService wxCpTpOrderService = new WxCpTpOrderServiceImpl(this);
   private WxCpTpEditionService wxCpTpEditionService = new WxCpTpEditionServiceImpl(this);
   private WxCpTpLicenseService wxCpTpLicenseService = new WxCpTpLicenseServiceImpl(this);
-
+  private WxCpTpIdConvertService wxCpTpIdConvertService = new WxCpTpIdConvertServiceImpl(this);
+  private WxCpTpOAuth2Service wxCpTpOAuth2Service = new WxCpTpOAuth2ServiceImpl(this);
   /**
    * 全局的是否正在刷新access token的锁.
    */
@@ -125,7 +129,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   public String getSuiteTicket() throws WxErrorException {
     if (this.configStorage.isSuiteTicketExpired()) {
       // 本地suite ticket 不存在或者过期
-      WxError wxError = WxError.fromJson("{\"errcode\":40085, \"errmsg\":\"invaild suite ticket\"}", WxType.CP);
+      WxError wxError = WxError.fromJson("{\"errcode\":40085, \"errmsg\":\"invalid suite ticket\"}", WxType.CP);
       throw new WxErrorException(wxError);
     }
     return this.configStorage.getSuiteTicket();
@@ -160,7 +164,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
         "type=agent_config&access_token=" + this.configStorage.getAccessToken(authCorpId), true);
 
       JsonObject jsonObject = GsonParser.parse(resp);
-      if (jsonObject.get("errcode").getAsInt() == 0) {
+      if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() == 0) {
         String jsApiTicket = jsonObject.get("ticket").getAsString();
         int expiredInSeconds = jsonObject.get("expires_in").getAsInt();
         synchronized (globalJsApiTicketRefreshLock) {
@@ -190,7 +194,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
         "access_token=" + this.configStorage.getAccessToken(authCorpId), true);
 
       JsonObject jsonObject = GsonParser.parse(resp);
-      if (jsonObject.get("errcode").getAsInt() == 0) {
+      if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() == 0) {
         String jsApiTicket = jsonObject.get("ticket").getAsString();
         int expiredInSeconds = jsonObject.get("expires_in").getAsInt();
 
@@ -535,6 +539,16 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   }
 
   @Override
+  public WxTpCustomizedAuthUrl getCustomizedAuthUrl(String state, List<String> templateIdList) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("state", state);
+    jsonObject.add("templateid_list", WxGsonBuilder.create().toJsonTree(templateIdList).getAsJsonArray());
+
+    String responseText = post(configStorage.getApiUrl(GET_CUSTOMIZED_AUTH_URL) + "?provider_access_token=" + getWxCpProviderToken(), jsonObject.toString(), true);
+    return WxTpCustomizedAuthUrl.fromJson(responseText);
+  }
+
+  @Override
   public String getWxCpProviderToken() throws WxErrorException {
     if (this.configStorage.isProviderTokenExpired()) {
 
@@ -640,6 +654,24 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     return WxCpTpAdmin.fromJson(result);
   }
 
+  public WxCpTpAppQrcode getAppQrcode(String suiteId, String appId, String state, Integer style, Integer resultType) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("suite_id", suiteId);
+    jsonObject.addProperty("appid", appId);
+    jsonObject.addProperty("state", state);
+    jsonObject.addProperty("style", style);
+    jsonObject.addProperty("result_type", resultType);
+    String result = post(configStorage.getApiUrl(GET_APP_QRCODE), jsonObject.toString());
+    return WxCpTpAppQrcode.fromJson(result);
+  }
+
+  public WxCpTpCorpId2OpenCorpId corpId2OpenCorpId(String corpId) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("corpid", corpId);
+    String result = post(configStorage.getApiUrl(CORPID_TO_OPENCORPID) +"?provider_access_token=" + getWxCpProviderToken(), jsonObject.toString());
+    return WxCpTpCorpId2OpenCorpId.fromJson(result);
+  }
+
   @Override
   public WxJsapiSignature createAuthCorpJsApiTicketSignature(String url, String authCorpId) throws WxErrorException {
     return doCreateWxJsapiSignature(url, authCorpId, this.getAuthCorpJsApiTicket(authCorpId));
@@ -711,4 +743,24 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
     return jsapiSignature;
   }
 
+  @Override
+  public WxCpTpIdConvertService getWxCpTpIdConverService() {
+    return wxCpTpIdConvertService;
+  }
+
+  @Override
+  public void setWxCpTpIdConverService(WxCpTpIdConvertService wxCpTpIdConvertService) {
+    this.wxCpTpIdConvertService = wxCpTpIdConvertService;
+  }
+
+
+  @Override
+  public WxCpTpOAuth2Service getWxCpTpOAuth2Service() {
+    return wxCpTpOAuth2Service;
+  }
+
+  @Override
+  public void setWxCpTpOAuth2Service(WxCpTpOAuth2Service wxCpTpOAuth2Service) {
+    this.wxCpTpOAuth2Service = wxCpTpOAuth2Service;
+  }
 }

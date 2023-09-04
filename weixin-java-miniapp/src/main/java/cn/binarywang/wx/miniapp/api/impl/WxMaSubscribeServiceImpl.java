@@ -3,6 +3,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaSubscribeService;
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.subscribemsg.CategoryData;
 import me.chanjar.weixin.common.bean.subscribemsg.PubTemplateKeyword;
 import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
@@ -85,7 +86,7 @@ public class WxMaSubscribeServiceImpl implements WxMaSubscribeService {
   public void sendSubscribeMsg(WxMaSubscribeMessage subscribeMessage) throws WxErrorException {
     String responseContent = this.service.post(SUBSCRIBE_MSG_SEND_URL, subscribeMessage.toJson());
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(WxMaConstants.ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
   }

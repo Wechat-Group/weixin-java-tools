@@ -13,8 +13,6 @@ import java.util.List;
  */
 @Data
 public class TemplateTable implements Serializable {
-
-
   private static final long serialVersionUID = -8181588935694605858L;
 
   private List<TemplateControls> children;

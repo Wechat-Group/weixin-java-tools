@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.bean.profitsharing;
 
+import com.github.binarywang.wxpay.bean.profitsharing.result.ProfitSharingQueryResult;
 import org.testng.annotations.Test;
 
 import java.util.List;

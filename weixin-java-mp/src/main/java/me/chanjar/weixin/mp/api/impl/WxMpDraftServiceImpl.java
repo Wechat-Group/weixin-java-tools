@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import lombok.AllArgsConstructor;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.common.util.json.GsonParser;
@@ -27,7 +28,6 @@ public class WxMpDraftServiceImpl implements WxMpDraftService {
 
   private static final String MEDIA_ID = "media_id";
   private static final String ERRCODE_SUCCESS = "0";
-  private static final String ERRCODE = "errcode";
   private final WxMpService mpService;
 
   @Override
@@ -49,7 +49,7 @@ public class WxMpDraftServiceImpl implements WxMpDraftService {
   @Override
   public Boolean updateDraft(WxMpUpdateDraft updateDraftInfo) throws WxErrorException {
     String json = this.mpService.post(WxMpApiUrl.Draft.UPDATE_DRAFT, updateDraftInfo);
-    return GsonParser.parse(json).get(ERRCODE).getAsString().equals(ERRCODE_SUCCESS);
+    return GsonParser.parse(json).get(WxConsts.ERR_CODE).getAsString().equals(ERRCODE_SUCCESS);
   }
 
   @Override
@@ -62,7 +62,7 @@ public class WxMpDraftServiceImpl implements WxMpDraftService {
   public Boolean delDraft(String mediaId) throws WxErrorException {
     String json = this.mpService.post(WxMpApiUrl.Draft.DEL_DRAFT,
       GsonHelper.buildJsonObject(MEDIA_ID, mediaId));
-    return GsonParser.parse(json).get(ERRCODE).getAsString().equals(ERRCODE_SUCCESS);
+    return GsonParser.parse(json).get(WxConsts.ERR_CODE).getAsString().equals(ERRCODE_SUCCESS);
   }
 
   @Override

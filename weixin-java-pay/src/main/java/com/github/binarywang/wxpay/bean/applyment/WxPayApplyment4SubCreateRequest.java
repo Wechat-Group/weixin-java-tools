@@ -416,9 +416,13 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
 
       /**
        * 证件持有人类型
+       * LEGAL：法人
+       * SUPER：经办人
+       * 示例值：LEGAL
+       * @see com.github.binarywang.wxpay.bean.ecommerce.ApplymentsRequest 字段idHolderType
        */
       @SerializedName("id_holder_type")
-      private IdTypeEnum idHolderType;
+      private String idHolderType;
 
       /**
        * 证件类型
@@ -430,7 +434,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
        * 法定代表人说明函
        */
       @SerializedName("authorize_letter_copy")
-      private IdTypeEnum authorizeLetterCopy;
+      private String authorizeLetterCopy;
 
       /**
        * 身份证信息
@@ -532,11 +536,11 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
         @SpecEncrypt
         private String idDocNumber;
         /**
-         * 身份证居住地址
+         * 证件居住地址
          */
-        @SerializedName("id_card_address")
+        @SerializedName("id_doc_address")
         @SpecEncrypt
-        private String idCardAddress;
+        private String idDocAddress;
         /**
          * 证件有效期开始时间
          */
@@ -1089,6 +1093,18 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
      */
     @SerializedName("activities_rate")
     private String activitiesRate;
+
+    /**
+     * 非信用卡活动费率值
+     */
+    @SerializedName("debit_activities_rate")
+    private String debitActivitiesRate;
+
+    /**
+     * 信用卡活动费率值
+     */
+    @SerializedName("credit_activities_rate")
+    private String creditActivitiesRate;
 
     /**
      * 优惠费率活动补充材料

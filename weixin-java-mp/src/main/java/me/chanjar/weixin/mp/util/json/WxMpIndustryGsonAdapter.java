@@ -10,7 +10,8 @@ import java.lang.reflect.Type;
 /**
  * @author miller
  */
-public class WxMpIndustryGsonAdapter implements JsonSerializer<WxMpTemplateIndustry>, JsonDeserializer<WxMpTemplateIndustry> {
+public class WxMpIndustryGsonAdapter implements JsonSerializer<WxMpTemplateIndustry>,
+  JsonDeserializer<WxMpTemplateIndustry> {
   @Override
   public JsonElement serialize(WxMpTemplateIndustry wxMpIndustry, Type type, JsonSerializationContext context) {
     JsonObject json = new JsonObject();
@@ -29,6 +30,10 @@ public class WxMpIndustryGsonAdapter implements JsonSerializer<WxMpTemplateIndus
 
   private WxMpTemplateIndustryEnum convertFromJson(JsonObject json) {
     String firstClass = GsonHelper.getString(json, "first_class");
+    // 兼容微信接口实际返回跟官方文档不符的文字
+    if (firstClass != null) {
+      firstClass = firstClass.replace("医疗护理", "医药护理");
+    }
     String secondClass = GsonHelper.getString(json, "second_class");
     final WxMpTemplateIndustryEnum industryEnum = WxMpTemplateIndustryEnum.findByClass(firstClass, secondClass);
     if (industryEnum != null) {

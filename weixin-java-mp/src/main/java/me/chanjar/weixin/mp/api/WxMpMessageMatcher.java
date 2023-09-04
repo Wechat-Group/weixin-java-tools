@@ -7,11 +7,12 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
  */
 public interface WxMpMessageMatcher {
 
-  /**
-   * 消息是否匹配某种模式
-   *
-   * @param message
-   */
-  boolean match(WxMpXmlMessage message);
+    /**
+     * 消息是否匹配某种模式
+     *
+     * @param message the message
+     * @return the boolean
+     */
+    boolean match(WxMpXmlMessage message);
 
 }

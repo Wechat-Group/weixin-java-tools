@@ -81,6 +81,45 @@ public class WxPayRefundQueryResult extends BaseWxPayResult implements Serializa
 
   /**
    * <pre>
+   * 字段名：退款总金额.
+   * 变量名：refund_fee
+   * 是否必填：是
+   * 类型：Int
+   * 示例值：100
+   * 描述：各退款单的退款金额累加，单位为分，只能为整数，
+   * </pre>
+   */
+  @XStreamAlias("refund_fee")
+  private Integer refundFee;
+
+  /**
+   * <pre>
+   * 字段名：代金券退款总金额.
+   * 变量名：coupon_refund_fee
+   * 是否必填：是
+   * 类型：Int
+   * 示例值：100
+   * 描述：各退款单的代金券退款金额累加，单位为分，只能为整数，
+   * </pre>
+   */
+  @XStreamAlias("coupon_refund_fee")
+  private Integer couponRefundFee;
+
+  /**
+   * <pre>
+   * 字段名：用户退款金额.
+   * 变量名：cash_refund_fee
+   * 是否必填：是
+   * 类型：Int
+   * 示例值：100
+   * 描述：退款给用户的金额，不包含所有优惠券金额，单位为分，只能为整数，
+   * </pre>
+   */
+  @XStreamAlias("cash_refund_fee")
+  private Integer cashRefundFee;
+
+  /**
+   * <pre>
    * 字段名：应结订单金额.
    * 变量名：settlement_total_fee
    * 是否必填：否
@@ -228,7 +267,8 @@ public class WxPayRefundQueryResult extends BaseWxPayResult implements Serializa
   @Builder(builderMethodName = "newBuilder")
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class RefundRecord {
+  public static class RefundRecord  implements Serializable {
+    private static final long serialVersionUID=1L;
     /**
      * <pre>
      * 字段名：商户退款单号.

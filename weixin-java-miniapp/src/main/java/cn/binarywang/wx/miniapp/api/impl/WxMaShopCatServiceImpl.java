@@ -13,7 +13,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonParser;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Shop.Cat.GET_CAT;
-import static cn.binarywang.wx.miniapp.constant.WxMaConstants.ERRCODE;
+import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * @author liming1019
@@ -27,7 +27,7 @@ public class WxMaShopCatServiceImpl implements WxMaShopCatService {
   public WxMaShopCatGetResponse getCat() throws WxErrorException {
     String responseContent = this.wxMaService.post(GET_CAT, new JsonObject());
     JsonObject jsonObject = GsonParser.parse(responseContent);
-    if (jsonObject.get(ERRCODE).getAsInt() != 0) {
+    if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
     return WxMaGsonBuilder.create().fromJson(responseContent, WxMaShopCatGetResponse.class);

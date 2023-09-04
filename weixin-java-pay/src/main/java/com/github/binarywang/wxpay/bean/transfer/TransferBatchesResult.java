@@ -34,4 +34,10 @@ public class TransferBatchesResult implements Serializable {
    */
   @SerializedName("create_time")
   private String createTime;
+
+  /**
+   * 批次状态
+   */
+  @SerializedName("batch_status")
+  private String batchStatus;
 }

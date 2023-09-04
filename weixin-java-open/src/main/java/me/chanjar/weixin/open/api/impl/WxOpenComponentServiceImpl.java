@@ -21,6 +21,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.open.api.*;
 import me.chanjar.weixin.open.bean.*;
 import me.chanjar.weixin.open.bean.auth.WxOpenAuthorizationInfo;
+import me.chanjar.weixin.open.bean.ma.WxOpenMaApplyOrderPathInfo;
 import me.chanjar.weixin.open.bean.message.WxOpenXmlMessage;
 import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.minishop.coupon.WxMinishopCoupon;
@@ -756,7 +757,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     log.info("response: " + response);
     JsonObject respJson = GsonParser.parse(response);
     MinishopCategories categories = new MinishopCategories();
-    categories.setErrcode(respJson.get("errcode").getAsInt());
+    categories.setErrcode(respJson.get(WxConsts.ERR_CODE).getAsInt());
     if (categories.getErrcode() == 0) {
       JsonArray catListJson = respJson.getAsJsonArray("cat_list");
       if (catListJson != null || catListJson.size() > 0) {
@@ -786,7 +787,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
     JsonObject respJson = GsonParser.parse(response);
     MinishopBrandList brandList = new MinishopBrandList();
-    brandList.setErrcode(respJson.get("errcode").getAsInt());
+    brandList.setErrcode(respJson.get(WxConsts.ERR_CODE).getAsInt());
     if (brandList.getErrcode() == 0) {
       JsonArray brandArrayJson = respJson.get("brands").getAsJsonArray();
       if (brandArrayJson.size() > 0) {
@@ -823,7 +824,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
     JsonObject respJson = GsonParser.parse(response);
     MinishopDeliveryTemplateResult templateResult = new MinishopDeliveryTemplateResult();
-    templateResult.setErrCode(respJson.get("errcode").getAsInt());
+    templateResult.setErrCode(respJson.get(WxConsts.ERR_CODE).getAsInt());
     if (templateResult.getErrCode() == 0) {
       JsonArray templateArrayJson = respJson.get("template_list").getAsJsonArray();
       if (templateArrayJson.size() > 0) {
@@ -856,7 +857,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
     JsonObject respJson = GsonParser.parse(response);
     MinishopShopCatList shopCatList = new MinishopShopCatList();
-    shopCatList.setErrcode(respJson.get("errcode").getAsInt());
+    shopCatList.setErrcode(respJson.get(WxConsts.ERR_CODE).getAsInt());
     if (shopCatList.getErrcode() == 0) {
       JsonArray shopcatArrayJson = respJson.get("shopcat_list").getAsJsonArray();
       if (shopcatArrayJson.size() > 0) {
@@ -890,7 +891,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
     JsonObject respObj = GsonParser.parse(response);
     WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
-    result.setErrcode(respObj.get("errcode").getAsInt());
+    result.setErrcode(respObj.get(WxConsts.ERR_CODE).getAsInt());
     if (result.getErrcode() == 0) {
       JsonArray companyArray = respObj.get("company_list").getAsJsonArray();
       List<WxMinishopDeliveryCompany> companies = new ArrayList<>();
@@ -915,7 +916,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
     JsonObject respJson = GsonParser.parse(response);
     Integer couponId = -1;
-    if (respJson.get("errcode").getAsInt() == 0) {
+    if (respJson.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       JsonObject dataJson = respJson.get("data").getAsJsonObject();
       couponId = dataJson.get("coupon_id").getAsInt();
     }
@@ -949,7 +950,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
     JsonObject respJson = GsonParser.parse(response);
     Integer couponId = -1;
-    if (respJson.get("errcode").getAsInt() == 0) {
+    if (respJson.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       JsonObject dataJson = respJson.get("data").getAsJsonObject();
       couponId = dataJson.get("coupon_id").getAsInt();
     }
@@ -978,7 +979,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
     JsonObject respObj = GsonParser.parse(response);
     WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
-    result.setErrcode(respObj.get("errcode").getAsInt());
+    result.setErrcode(respObj.get(WxConsts.ERR_CODE).getAsInt());
 
     if (result.getErrcode() == 0) {
       JsonObject dataObj = respObj.get("data").getAsJsonObject();
@@ -1016,7 +1017,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
     JsonObject respObj = GsonParser.parse(response);
     WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
-    result.setErrcode(respObj.get("errcode").getAsInt());
+    result.setErrcode(respObj.get(WxConsts.ERR_CODE).getAsInt());
     if (result.getErrcode() == 0) {
       JsonObject dataObj = respObj.get("data").getAsJsonObject();
       WxMinishopAddGoodsSpuData resultData = new WxMinishopAddGoodsSpuData();
@@ -1066,7 +1067,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
     JsonObject respObj = GsonParser.parse(response);
     WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
-    result.setErrcode(respObj.get("errcode").getAsInt());
+    result.setErrcode(respObj.get(WxConsts.ERR_CODE).getAsInt());
     if (result.getErrcode() == 0) {
       JsonObject dataObj = respObj.get("data").getAsJsonObject();
       WxMinishopAddGoodsSkuData resultData = new WxMinishopAddGoodsSkuData();
@@ -1171,7 +1172,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
     JsonObject respObj = GsonParser.parse(response);
     Integer taskId = 0;
-    if (respObj.get("errcode").getAsInt() == 0) {
+    if (respObj.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       taskId = respObj.get("task_id").getAsInt();
     }
     return taskId;
@@ -1187,7 +1188,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
     JsonObject respObj = GsonParser.parse(response);
     List<LimitDiscountGoods> limitDiscountGoodsList = new ArrayList<>();
-    if (respObj.get("errcode").getAsInt() == 0) {
+    if (respObj.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       //成功获取到秒杀活动列表
 
       JsonArray jsonArray = respObj.get("limited_discount_list").getAsJsonArray();
@@ -1237,7 +1238,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   public GetShareCloudBaseEnvResponse getShareCloudBaseEnv(List<String> appids) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     JsonArray jsonArray = new JsonArray();
-    for(String appId : appids) {
+    for (String appId : appids) {
       jsonArray.add(appId);
     }
     jsonObject.add("appids", jsonArray);
@@ -1264,5 +1265,30 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     Gson gson = new Gson();
     String response = post(BATCH_SHARE_ENV, gson.toJson(request));
     return WxOpenGsonBuilder.create().fromJson(response, ShareCloudBaseEnvResponse.class);
+  }
+
+  @Override
+  public WxOpenResult clearQuotaV2(String appid) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("appid", appid);
+    jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
+    jsonObject.addProperty("appsecret", getWxOpenConfigStorage().getComponentAppSecret());
+    String response = getWxOpenService().post(COMPONENT_CLEAR_QUOTA_URL, jsonObject.toString());
+    return WxOpenResult.fromJson(response);
+  }
+
+  /**
+   * 申请设置订单页path信息
+   * 注意：一次提交不超过100个appid
+   *
+   * @param info 订单页path信息
+   * @return .
+   * @throws WxErrorException .
+   */
+  @Override
+  public WxOpenResult applySetOrderPathInfo(WxOpenMaApplyOrderPathInfo info) throws WxErrorException {
+    Gson gson = new Gson();
+    String response = post(OPEN_APPLY_SET_ORDER_PATH_INFO, gson.toJson(info));
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 }

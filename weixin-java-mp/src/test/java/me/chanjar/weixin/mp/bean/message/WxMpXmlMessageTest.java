@@ -276,4 +276,85 @@ public class WxMpXmlMessageTest {
     assertThat(resultList.get(1).get("NeedReplaceContent")).isEqualTo("1");
     assertThat(resultList.get(1).get("NeedShowReprintSource")).isEqualTo("1");
   }
+
+  public void testSubMsgPopupFromXml() {
+
+    String xml = "<xml>"
+      + "<ToUserName><![CDATA[gh_123456789abc]]></ToUserName>"
+      + "<FromUserName><![CDATA[otFpruAK8D-E6EfStSYonYSBZ8_4]]></FromUserName>"
+      + "<CreateTime>1610969440</CreateTime>"
+      + "<MsgType><![CDATA[event]]></MsgType>"
+      + "<Event><![CDATA[subscribe_msg_popup_event]]></Event>"
+      + "<SubscribeMsgPopupEvent>"
+      + "<List>"
+      + "<TemplateId><![CDATA[VRR0UEO9VJOLs0MHlU0OilqX6MVFDwH3_3gz3Oc0NIc]]></TemplateId>"
+      + "<SubscribeStatusString><![CDATA[accept]]></SubscribeStatusString>"
+      + "<PopupScene>2</PopupScene>"
+      + "</List>"
+      + "<List>"
+      + "<TemplateId><![CDATA[9nLIlbOQZC5Y89AZteFEux3WCXRRRG5Wfzkpssu4bLI]]></TemplateId>"
+      + "<SubscribeStatusString><![CDATA[reject]]></SubscribeStatusString>"
+      + "<PopupScene>2</PopupScene>"
+      + "</List>"
+      + "</SubscribeMsgPopupEvent>"
+      + "</xml>";
+
+    WxMpXmlMessage wxMessage = WxMpXmlMessage.fromXml(xml);
+    WxMpSubscribeMsgEvent.PopupEvent popupEvent = wxMessage.getSubscribeMsgPopupEvent().getList().get(0);
+    assertEquals(popupEvent.getTemplateId(), "VRR0UEO9VJOLs0MHlU0OilqX6MVFDwH3_3gz3Oc0NIc");
+    assertEquals(popupEvent.getSubscribeStatusString(), "accept");
+    assertEquals(popupEvent.getPopupScene(), "2");
+    WxMpSubscribeMsgEvent.PopupEvent popupEvent2 = wxMessage.getSubscribeMsgPopupEvent().getList().get(1);
+    assertEquals(popupEvent2.getTemplateId(), "9nLIlbOQZC5Y89AZteFEux3WCXRRRG5Wfzkpssu4bLI");
+    assertEquals(popupEvent2.getSubscribeStatusString(), "reject");
+    assertEquals(popupEvent2.getPopupScene(), "2");
+  }
+
+  public void testSubMsgChangeFromXml() {
+
+    String xml = "<xml>"
+      + "<ToUserName><![CDATA[gh_123456789abc]]></ToUserName>"
+      + "<FromUserName><![CDATA[otFpruAK8D-E6EfStSYonYSBZ8_4]]></FromUserName>"
+      + "<CreateTime>1610969440</CreateTime>"
+      + "<MsgType><![CDATA[event]]></MsgType>"
+      + "<Event><![CDATA[subscribe_msg_change_event]]></Event>"
+      + "<SubscribeMsgChangeEvent>"
+      + "<List>"
+      + "<TemplateId><![CDATA[VRR0UEO9VJOLs0MHlU0OilqX6MVFDwH3_3gz3Oc0NIc]]></TemplateId>"
+      + "<SubscribeStatusString><![CDATA[reject]]></SubscribeStatusString>"
+      + "</List>"
+      + "</SubscribeMsgChangeEvent>"
+      + "</xml>";
+
+    WxMpXmlMessage wxMessage = WxMpXmlMessage.fromXml(xml);
+    WxMpSubscribeMsgEvent.ChangeEvent changeEvent = wxMessage.getSubscribeMsgChangeEvent().getList().get(0);
+    assertEquals(changeEvent.getTemplateId(), "VRR0UEO9VJOLs0MHlU0OilqX6MVFDwH3_3gz3Oc0NIc");
+    assertEquals(changeEvent.getSubscribeStatusString(), "reject");
+  }
+
+  public void testSubMsgSentFromXml() {
+
+    String xml = "<xml>"
+      + "<ToUserName><![CDATA[gh_123456789abc]]></ToUserName>"
+      + "<FromUserName><![CDATA[otFpruAK8D-E6EfStSYonYSBZ8_4]]></FromUserName>"
+      + "<CreateTime>1610969440</CreateTime>"
+      + "<MsgType><![CDATA[event]]></MsgType>"
+      + "<Event><![CDATA[subscribe_msg_sent_event]]></Event>"
+      + "<SubscribeMsgSentEvent>"
+      + "<List>"
+      + "<TemplateId><![CDATA[VRR0UEO9VJOLs0MHlU0OilqX6MVFDwH3_3gz3Oc0NIc]]></TemplateId>"
+      + "<MsgID>1700827132819554304</MsgID>"
+      + "<ErrorCode>0</ErrorCode>"
+      + "<ErrorStatus><![CDATA[success]]></ErrorStatus>"
+      + "</List>"
+      + "</SubscribeMsgSentEvent>"
+      + "</xml>";
+
+    WxMpXmlMessage wxMessage = WxMpXmlMessage.fromXml(xml);
+    WxMpSubscribeMsgEvent.SentEvent sentEvent = wxMessage.getSubscribeMsgSentEvent().getList().get(0);
+    assertEquals(sentEvent.getTemplateId(), "VRR0UEO9VJOLs0MHlU0OilqX6MVFDwH3_3gz3Oc0NIc");
+    assertEquals(sentEvent.getMsgId(), "1700827132819554304");
+    assertEquals(sentEvent.getErrorCode(), "0");
+    assertEquals(sentEvent.getErrorStatus(), "success");
+  }
 }

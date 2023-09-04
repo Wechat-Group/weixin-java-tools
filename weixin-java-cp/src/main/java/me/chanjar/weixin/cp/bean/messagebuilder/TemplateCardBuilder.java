@@ -100,6 +100,11 @@ public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
   private List<TemplateCardJump> jumps;
 
   /**
+   * 左图右文样式，news_notice类型的卡片，card_image 和 image_text_area 两者必填一个字段，不可都不填
+   */
+  private TemplateCardImageTextArea imageTextArea;
+
+  /**
    * 整体卡片的点击跳转事件，text_notice必填本字段
    * 跳转事件类型，1 代表跳转url，2 代表打开小程序。text_notice卡片模版中该字段取值范围为[1,2]
    */
@@ -123,6 +128,12 @@ public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
    * 任务id，同一个应用任务id不能重复，只能由数字、字母和“_-@”组成，最长128字节
    */
   private String taskId;
+
+  /**
+   * 按钮交互型卡片需指定。
+   * button_selection
+   */
+  private TemplateCardButtonSelection buttonSelection;
 
   /**
    * 按钮交互型卡片需指定。
@@ -351,6 +362,17 @@ public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
   }
 
   /**
+   * image_text_area template card builder.
+   *
+   * @param imageTextArea the card image_text_area
+   * @return the template card builder
+   */
+  public TemplateCardBuilder imageTextArea(TemplateCardImageTextArea imageTextArea) {
+    this.imageTextArea = imageTextArea;
+    return this;
+  }
+
+  /**
    * Card action type template card builder.
    *
    * @param cardActionType the card action type
@@ -505,6 +527,7 @@ public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
     m.setActionMenuActionList(this.actionMenuActionList);
     m.setMainTitleTitle(this.mainTitleTitle);
     m.setMainTitleDesc(this.mainTitleDesc);
+    m.setImageTextArea(this.imageTextArea);
     m.setCardImageUrl(this.cardImageUrl);
     m.setCardImageAspectRatio(this.cardImageAspectRatio);
     m.setEmphasisContentTitle(this.emphasisContentTitle);
@@ -518,6 +541,7 @@ public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
     m.setCardActionPagepath(this.cardActionPagepath);
     m.setCardActionUrl(this.cardActionUrl);
     m.setTaskId(this.taskId);
+    m.setButtonSelection(this.buttonSelection);
     m.setButtons(this.buttons);
     m.setCheckboxMode(this.checkboxMode);
     m.setCheckboxQuestionKey(this.checkboxQuestionKey);

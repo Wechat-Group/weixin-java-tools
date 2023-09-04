@@ -4,7 +4,7 @@
   <parent>
     <artifactId>wx-java-spring-boot-starters</artifactId>
     <groupId>com.github.binarywang</groupId>
-    <version>4.4.2.B</version>
+    <version>4.5.5.B</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -17,6 +17,18 @@
       <groupId>com.github.binarywang</groupId>
       <artifactId>weixin-java-cp</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.redisson</groupId>
+      <artifactId>redisson</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
     </dependency>
   </dependencies>
 

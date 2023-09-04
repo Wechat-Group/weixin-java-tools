@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpTaskCardService;
+import me.chanjar.weixin.cp.bean.message.TemplateCardMessage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,8 @@ public class WxCpTaskCardServiceImpl implements WxCpTaskCardService {
     data.put("userids", userIds);
     data.put("agentid", agentId);
     data.put("task_id", taskId);
-    data.put("replace_name", replaceName);
+    // 文档地址：https://open.work.weixin.qq.com/wwopen/devtool/interface?doc_id=16386
+    data.put("clicked_key", replaceName);
 
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_TASK_CARD);
     this.mainService.post(url, WxGsonBuilder.create().toJson(data));
@@ -58,5 +60,11 @@ public class WxCpTaskCardServiceImpl implements WxCpTaskCardService {
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_TEMPLATE_CARD);
     this.mainService.post(url, WxGsonBuilder.create().toJson(data));
 
+  }
+
+  @Override
+  public void updateTemplateCardButton(TemplateCardMessage templateCardMessage) throws WxErrorException {
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_TEMPLATE_CARD);
+    this.mainService.post(url, WxGsonBuilder.create().toJson(templateCardMessage));
   }
 }
