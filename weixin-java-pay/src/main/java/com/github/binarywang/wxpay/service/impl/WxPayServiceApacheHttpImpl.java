@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <pre>
@@ -335,6 +336,12 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       httpClientBuilder.setDefaultCredentialsProvider(provider)
         .setProxy(new HttpHost(this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort()));
     }
+
+    // 提供自定义httpClientBuilder的能力
+    Optional.ofNullable(getConfig().getHttpClientBuilderCustomizer()).ifPresent(e -> {
+      e.customize(httpClientBuilder);
+    });
+
     return httpClientBuilder;
   }
 
