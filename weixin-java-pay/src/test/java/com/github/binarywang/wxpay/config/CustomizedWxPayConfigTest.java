@@ -9,11 +9,7 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 /**
- * <pre>
- *  Created by BinaryWang on 2017/6/18.
- * </pre>
- *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
+ * @author <a href="https://github.com/ifcute">dagewang</a>
  */
 @Slf4j
 @Test

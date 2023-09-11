@@ -3,7 +3,7 @@ package com.github.binarywang.wxpay.config;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 /**
- * @author wangn <15124178@qq.com> 2023/9/8
+ * @author <a href="https://github.com/ifcute">dagewang</a>
  */
 @FunctionalInterface
 public interface HttpClientBuilderCustomizer {
