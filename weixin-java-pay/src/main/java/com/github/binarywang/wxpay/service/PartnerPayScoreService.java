@@ -1,7 +1,10 @@
 package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
-import com.github.binarywang.wxpay.bean.payscore.*;
+import com.github.binarywang.wxpay.bean.payscore.PayScoreNotifyData;
+import com.github.binarywang.wxpay.bean.payscore.WxPartnerPayScoreRequest;
+import com.github.binarywang.wxpay.bean.payscore.WxPartnerPayScoreResult;
+import com.github.binarywang.wxpay.bean.payscore.WxPartnerUserAuthorizationStatusNotifyResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 /**
@@ -18,29 +21,26 @@ public interface PartnerPayScoreService {
 
 
   /**
-   * <pre>
-   * 支付分商户预授权API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter5_1.shtml
-   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/partner/permissions
-   * </pre>
+   * 商户预授权
+   * @param request {@link WxPartnerPayScoreRequest} 请求对象
    *
-   * @param request 请求对象
    * @return WxPartnerPayScoreResult wx  partner payscore result
    * @throws WxPayException the wx pay exception
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-auth/apply-partner-permissions.html">商户预授权</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/permissions
    */
   WxPartnerPayScoreResult permissions(WxPartnerPayScoreRequest request) throws WxPayException;
 
 
   /**
-   * <pre>
-   * 支付分查询与用户授权记录（授权协议号）API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter5_2.shtml
-   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/partner/permissions/authorization-code/{authorization_code}
-   * </pre>
+   * 商户查询与用户授权记录 （authorization_code）
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-auth/get-partner-permissions-by-code.html">商户查询与用户授权记录</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/permissions/authorization-code/{authorization_code}
    *
-   * @param serviceId
-   * @param subMchid
-   * @param authorizationCode
+   * @param serviceId 服务id
+   * @param subMchid 特约子商户号
+   * @param authorizationCode 授权协议号
+   *
    * @return WxPayScoreResult wx partner payscore result
    * @throws WxPayException the wx pay exception
    */
@@ -49,55 +49,53 @@ public interface PartnerPayScoreService {
 
 
   /**
-   * <pre>
-   * 解除用户授权关系（授权协议号）API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter5_4.shtml
-   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/partner/permissions/authorization-code/{authorization_code}/terminate
-   * </pre>
+   * 商户解除用户授权关系（authorization_code）
    *
-   * @param serviceId
-   * @param subMchid
-   * @param authorizationCode
-   * @param reason
+   * @param serviceId         服务id
+   * @param subMchid          特约子商户号
+   * @param authorizationCode 授权协议号
+   * @param reason            撤销原因
+   *
    * @return WxPartnerPayScoreResult wx partner payscore result
    * @throws WxPayException the wx pay exception
+   * @apiNote : <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-auth/terminate-partner-permissions-by-code.html">商户解除用户授权关系</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/permissions/authorization-code/{authorization_code}/terminate
    */
   WxPartnerPayScoreResult permissionsTerminateByAuthorizationCode(String serviceId, String subMchid,
                                                                   String authorizationCode, String reason) throws WxPayException;
 
 
   /**
-   * <pre>
-   * 支付分查询与用户授权记录（openid）API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter5_3.shtml
-   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/partner/permissions/search
-   * </pre>
+   * 商户查询与用户授权记录（OpenID）
    *
-   * @param serviceId
-   * @param subMchid
-   * @param subAppid
-   * @param openId
-   * @param subOpenid
+   * @param serviceId 服务id
+   * @param subMchid  特约子商户号
+   * @param appId     服务商的公众号ID
+   * @param subAppid  子商户的公众号ID
+   * @param openId    服务商的用户标识
+   * @param subOpenid 子商户的用户标识
+   *
    * @return WxPayScoreResult wx partner payscore result
    * @throws WxPayException the wx pay exception
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-auth/get-partner-permissions-by-open-id.html">商户查询与用户授权记录</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/permissions/search
    */
   WxPartnerPayScoreResult permissionsQueryByOpenId(String serviceId, String appId, String subMchid, String subAppid,
                                                    String openId, String subOpenid) throws WxPayException;
 
 
   /**
-   * <pre>
-   * 解除用户授权关系（openid）API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter5_5.shtml
-   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/partner/permissions/openid/{openid}/terminate
-   * </pre>
+   * 商户解除用户授权关系API（OpenID）
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-auth/terminate-partner-permissions-by-open-id.html">商户解除用户授权关系API</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/permissions/terminate
    *
-   * @param serviceId
-   * @param subMchid
-   * @param subAppid
-   * @param openId
-   * @param subOpenid
-   * @param reason
+   * @param serviceId 服务id
+   * @param subMchid  特约子商户号
+   * @param appId     服务商的公众号ID
+   * @param subAppid  子商户的公众号ID
+   * @param openId    服务商的用户标识
+   * @param subOpenid 子商户的用户标识
+   * @param reason    取消理由
    * @return WxPayScoreResult wx partner payscore result
    * @throws WxPayException the wx pay exception
    */
@@ -106,106 +104,96 @@ public interface PartnerPayScoreService {
 
 
   /**
-   * <pre>
    * 支付分创建订单API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter3_1.shtml
-   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder
-   * </pre>
    *
    * @param request 请求对象
+   *
    * @return WxPayScoreResult wx partner payscore result
    * @throws WxPayException the wx pay exception
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-order/create-partner-service-order.html">创建订单</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder
    */
   WxPartnerPayScoreResult createServiceOrder(WxPartnerPayScoreRequest request) throws WxPayException;
 
   /**
-   * <pre>
    * 支付分查询订单API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter3_2.shtml
-   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder
-   * </pre>
    *
-   * @param serviceId
-   * @param subMchid
-   * @param outOrderNo the out order no
-   * @param queryId    the query id
+   * @param serviceId  服务ID
+   * @param subMchid   子商户商户号
+   * @param outOrderNo 商户订单号
+   * @param queryId    单据查询ID
+   *
    * @return the wx pay score result
    * @throws WxPayException the wx pay exception
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-order/get-partner-service-order.html">查询订单</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder
    */
   WxPartnerPayScoreResult queryServiceOrder(String serviceId, String subMchid,
                                             String outOrderNo, String queryId) throws WxPayException;
 
   /**
-   * <pre>
    * 支付分取消订单API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter3_3.shtml
-   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder/{out_order_no}/cancel
-   * </pre>
-   * <p>
    *
-   * @param serviceId
-   * @param subMchid
-   * @param outOrderNo the out order no
-   * @param reason     the reason
+   * @param serviceId  服务ID
+   * @param subMchid   子商户商户号
+   * @param outOrderNo 商户订单号
+   * @param reason     撤销原因
+   *
    * @return com.github.binarywang.wxpay.bean.payscore.WxPayScoreResult wx pay score result
    * @throws WxPayException the wx pay exception
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-order/cancel-partner-service-order.html">取消订单</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder/{out_order_no}/cancel
    */
   WxPartnerPayScoreResult cancelServiceOrder(String serviceId, String appId, String subMchid,
                                              String outOrderNo, String reason) throws WxPayException;
 
   /**
-   * <pre>
    * 支付分修改订单金额API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter3_4.shtml
-   * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder/{out_order_no}/modify
-   * </pre>
-   * <p>
    *
    * @param request the request
+   *
    * @return the wx pay score result
    * @throws WxPayException the wx pay exception
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-order/modify-partner-service-order.html">修改订单金额</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder/{out_order_no}/modify
    */
   WxPartnerPayScoreResult modifyServiceOrder(WxPartnerPayScoreRequest request) throws WxPayException;
 
   /**
-   * <pre>
    * 支付分完结订单API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter3_5.shtml
-   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder/{out_order_no}/complete
-   * </pre>
    *
    * @param request the request
+   *
    * @return the wx pay score result
    * @throws WxPayException the wx pay exception
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-order/complete-partner-service-order.html">完结订单</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder/{out_order_no}/complete
    */
   void completeServiceOrder(WxPartnerPayScoreRequest request) throws WxPayException;
 
   /**
-   * <pre>
-   * 商户发起催收扣款API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter3_6.shtml
-   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder/{out_order_no}/pay
+   * 订单收款
    *
-   * </pre>
+   * @param serviceId  服务ID
+   * @param subMchid   子商户商户号
+   * @param outOrderNo 商户订单号
    *
-   * @param serviceId
-   * @param subMchid
-   * @param outOrderNo the out order no
    * @return the wx pay score result
    * @throws WxPayException the wx pay exception
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-order/collect-partner-service-order.html">订单收款</a>
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder/{out_order_no}/pay
    */
   WxPartnerPayScoreResult payServiceOrder(String serviceId, String appId, String subMchid, String outOrderNo) throws WxPayException;
 
   /**
-   * <pre>
-   * 支付分订单收款API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter3_7.shtml
-   * 请求URL： https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder/{out_order_no}/sync
-   * </pre>
+   * 同步订单信息
    *
    * @param request the request
+   *
    * @return the wx pay score result
    * @throws WxPayException the wx pay exception
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/partner-service-order/sync-partner-service-order.html">同步订单信息</a>
+   * 请求URL： https://api.mch.weixin.qq.com/v3/payscore/partner/serviceorder/{out_order_no}/sync
    */
   WxPartnerPayScoreResult syncServiceOrder(WxPartnerPayScoreRequest request) throws WxPayException;
 
@@ -236,23 +224,19 @@ public interface PartnerPayScoreService {
   WxPartnerPayScoreResult queryServiceAccountState(String outApplyNo) throws WxPayException;
 
   /**
-   * <pre>
-   * 授权/解除授权服务回调数据处理
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter6_2_23.shtml
-   * </pre>
+   * 授权/解除授权服务回调通知
    *
    * @param notifyData 通知数据
    * @param header     通知头部数据，不传则表示不校验头
+   *
    * @return 解密后通知数据 return user authorization status notify result
    * @throws WxPayException the wx pay exception
+   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/partner-weixin-pay-score/authorization-de-authorization-service-callback-notification.html">授权/解除授权服务回调通知</a>
    */
   WxPartnerUserAuthorizationStatusNotifyResult parseUserAuthorizationStatusNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
-   * <pre>
    * 支付分回调内容解析方法
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter6_2_9.shtml
-   * </pre>
    *
    * @param data the data
    * @return the wx pay score result
@@ -260,10 +244,7 @@ public interface PartnerPayScoreService {
   PayScoreNotifyData parseNotifyData(String data, SignatureHeader header) throws WxPayException;
 
   /**
-   * <pre>
    * 支付分回调NotifyData解密resource
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_2.shtml
-   * </pre>
    *
    * @param data the data
    * @return the wx pay score result

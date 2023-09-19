@@ -26,4 +26,16 @@ public class TimeRange implements Serializable {
   private String startTime;
   @SerializedName("end_time")
   private String endTime;
+
+  /**
+   * 服务开始时间备注
+   */
+  @SerializedName("start_time_remark")
+  private String startTimeRemark;
+
+  /**
+   * 服务结束时间备注
+   */
+  @SerializedName("end_time_remark")
+  private String endTimeRemark;
 }

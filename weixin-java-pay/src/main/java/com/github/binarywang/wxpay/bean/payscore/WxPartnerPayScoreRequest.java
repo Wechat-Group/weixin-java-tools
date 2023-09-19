@@ -37,6 +37,8 @@ public class WxPartnerPayScoreRequest extends WxPayScoreRequest {
 
   /**
    * 子商户公众号下的用户表示sub_openid
+   * 微信用户在子商户公众号sub_appid下的唯一标识；
+   * need_user_confirm为false时，1. openid与sub_openid必须填写并且只能填写一个 2. 如果填写了sub_openid，那么sub_appid必填
    */
   @SerializedName("sub_openid")
   private String subOpenid;

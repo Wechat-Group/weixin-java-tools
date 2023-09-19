@@ -237,16 +237,16 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
     private CertificateInfo certificateInfo;
 
     /**
-     * 组织机构代码证
-     */
-    @SerializedName("organization_info")
-    private OrganizationInfo organizationInfo;
-
-    /**
      * 单位证明函照片
      */
     @SerializedName("certificate_letter_copy")
     private String certificateLetterCopy;
+
+    /**
+     * 金融机构许可证信息
+     */
+    @SerializedName("finance_institution_info")
+    private FinanceInstitutionInfo financeInstitutionInfo;
 
     /**
      * 经营者/法人身份证件
@@ -261,12 +261,6 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
     @SerializedName("ubo_info_list")
     @SpecEncrypt
     private List<UboInfo> uboInfoList;
-
-    /**
-     * 小微辅助证明材料（subjectType为小微商户时必填）
-     */
-    @SerializedName("micro_biz_info")
-    private MicroBizInfo microBizInfo;
 
     @Data
     @Builder
@@ -381,29 +375,22 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
     @NoArgsConstructor
     @AllArgsConstructor
     @Accessors(chain = true)
-    public static class OrganizationInfo implements Serializable {
-      private static final long serialVersionUID = 6497045652770046337L;
-      /**
-       * 组织机构代码证照片
-       */
-      @SerializedName("organization_copy")
-      private String organizationCopy;
-      /**
-       * 组织机构代码
-       */
-      @SerializedName("organization_code")
-      private String organizationCode;
-      /**
-       * 组织机构代码证有效期开始日期
-       */
-      @SerializedName("org_period_begin")
-      private String orgPeriodBegin;
-      /**
-       * 组织机构代码证有效期结束日期
-       */
-      @SerializedName("org_period_end")
-      private String orgPeriodEnd;
+    public static class FinanceInstitutionInfo implements Serializable {
 
+      private static final long serialVersionUID = 6016563999835704297L;
+      /**
+       * 金融机构类型
+       *
+       * @see FinanceTypeEnum
+       */
+      @SerializedName("finance_type")
+      private FinanceTypeEnum financeType;
+
+      /**
+       * 金融机构许可证图片
+       */
+      @SerializedName("finance_license_pics")
+      private List<String> financeLicensePics;
     }
 
     @Data
@@ -604,179 +591,6 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
        */
       @SerializedName("ubo_period_end")
       private String uboPeriodEnd;
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Accessors(chain = true)
-    public static class MicroBizInfo implements Serializable {
-      private static final long serialVersionUID = -5679477993681265764L;
-      /**
-       * 小微经营类型
-       */
-      @SerializedName("micro_biz_type")
-      private MicroBizTypeEnum microBizType;
-
-      /**
-       * 门店场所---经营类型为“门店场所”时填写
-       */
-      @SerializedName("micro_store_info")
-      private MicroStoreInfo microStoreInfo;
-
-      /**
-       * 经营类型为“流动经营/便民服务”时填写
-       */
-      @SerializedName("micro_mobile_info")
-      private MicroMobileInfo microMobileInfo;
-
-      /**
-       * 经营类型为“线上商品/服务交易”时填写
-       */
-      @SerializedName("micro_online_info")
-      private MicroOnlineInfo microOnlineInfo;
-
-      /**
-       * 门店场所
-       */
-      @Data
-      @Builder
-      @NoArgsConstructor
-      @AllArgsConstructor
-      @Accessors(chain = true)
-      public static class MicroStoreInfo implements Serializable {
-        private static final long serialVersionUID = 5277440587305558389L;
-        /**
-         * 门店名称
-         */
-        @SerializedName("micro_name")
-        private String microName;
-        /**
-         * 门店省市编码 填写门店省市编码，只能由数字组成，详细参见《微信支付提供的省市对照表》
-         *
-         * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/download/%E7%9C%81%E5%B8%82%E5%8C%BA%E7%BC%96%E5%8F%B7%E5%AF%B9%E7%85%A7%E8%A1%A8.xlsx'>下载微信支付提供的省市对照表</a>
-         */
-        @SerializedName("micro_address_code")
-        private String microAddressCode;
-        /**
-         * 门店地址(填写店铺详细地址，具体区/县及街道门牌号或大厦楼层)
-         */
-        @SerializedName("micro_address")
-        private String microAddress;
-        /**
-         * 门店门头照片
-         * <per>
-         * 1、提交门店门口照片，要求招牌清晰可见
-         * 2、可上传1张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
-         * </per>
-         *
-         * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
-         */
-        @SerializedName("store_entrance_pic")
-        private String storeEntrancePic;
-        /**
-         * 店内环境照片
-         * <per>
-         * 1、提交店内环境照片
-         * 2、可上传1张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
-         * </per>
-         *
-         * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
-         */
-        @SerializedName("micro_indoor_copy")
-        private String microIndoorCopy;
-        /**
-         * 门店经度
-         */
-        @SerializedName("store_longitude")
-        private String storeLongitude;
-        /**
-         * 门店纬度
-         */
-        @SerializedName("store_latitude")
-        private String storeLatitude;
-      }
-
-      /**
-       * 流动经营/便民服务
-       */
-      @Data
-      @Builder
-      @NoArgsConstructor
-      @AllArgsConstructor
-      @Accessors(chain = true)
-      public static class MicroMobileInfo implements Serializable {
-        private static final long serialVersionUID = -1308090894511066935L;
-        /**
-         * 经营/服务名称
-         */
-        @SerializedName("micro_mobile_name")
-        private String microMobileName;
-        /**
-         * 经营/服务所在地省市
-         */
-        @SerializedName("micro_mobile_city")
-        private String microMobileCity;
-        /**
-         * 经营/服务所在地（不含省市) 填写“无"
-         */
-        @SerializedName("micro_mobile_address")
-        private String microMobileAddress;
-        /**
-         * 经营/服务现场照片
-         * <per>
-         * 1、提交经营/服务现场照片
-         * 2、可上传多张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
-         * </per>
-         *
-         * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
-         */
-        @SerializedName("micro_mobile_pics")
-        private String microMobilePics;
-      }
-
-      /**
-       * 线上商品/服务交易
-       */
-      @Data
-      @Builder
-      @NoArgsConstructor
-      @AllArgsConstructor
-      @Accessors(chain = true)
-      public static class MicroOnlineInfo implements Serializable {
-        private static final long serialVersionUID = 9029168841403055743L;
-        /**
-         * 线上店铺名称
-         */
-        @SerializedName("micro_online_store")
-        private String microOnlineStore;
-        /**
-         * 电商平台名称
-         */
-        @SerializedName("micro_ec_name")
-        private String microEcName;
-        /**
-         * 店铺二维码
-         * <per>
-         * 1、店铺二维码或店铺链接二选一必填
-         * 2、可上传多张图片，请填写通过《图片上传API》预先上传图片生成好的MediaID
-         * </per>
-         *
-         * @see <a href='https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml'>图片上传API</a>
-         */
-        @SerializedName("micro_qrcode")
-        private String microQrcode;
-        /**
-         * 店铺二维码
-         * <per>
-         * 1、店铺二维码或店铺链接二选一必填
-         * 2、请填写店铺主页链接，需符合网站规范
-         * </per>
-         */
-        @SerializedName("micro_link")
-        private String microLink;
-      }
     }
   }
 

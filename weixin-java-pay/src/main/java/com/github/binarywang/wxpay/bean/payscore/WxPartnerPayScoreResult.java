@@ -24,6 +24,9 @@ public class WxPartnerPayScoreResult extends WxPayScoreResult {
   @SerializedName("sub_mchid")
   private String subMchid;
 
+  /**
+   * 子商户公众号下的用户标识
+   */
   @SerializedName("sub_openid")
   private String subOpenId;
 

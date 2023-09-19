@@ -104,6 +104,30 @@ public class WxPayScoreResult implements Serializable {
   private String authorizationSuccessTime;
 
   /**
+   * 用户分层
+   */
+  @SerializedName("user_risk_level")
+  private Integer userRiskLevel;
+
+  /**
+   * 分层版本
+   */
+  @SerializedName("risk_level_version")
+  private Integer riskLevelVersion;
+
+  /**
+   * 总金额
+   */
+  @SerializedName("total_amount")
+  private Integer totalAmount;
+
+  /**
+   * 渠道商商户号
+   */
+  @SerializedName("channel_id")
+  private String channel_id;
+
+  /**
    * 收款信息
    */
   @Data

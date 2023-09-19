@@ -30,16 +30,21 @@ public class PayScoreNotifyData implements Serializable {
   private String createTime;
 
   /**
+   * 通知类型
+   * <p>1、授权成功通知的类型为PAYSCORE.USER_OPEN_SERVICE</p>
+   * <p>2、解除授权成功通知的类型为PAYSCORE.USER_CLOSE_SERVICE</p>
+   * <p>3、用户确认成功通知的类型为PAYSCORE.USER_CONFIRM</p>
+   * <p>4、支付成功通知的类型为PAYSCORE.USER_PAID</p>
+   */
+  @SerializedName("event_type")
+  private String eventType;
+
+  /**
    * 通知数据类型
    */
   @SerializedName("resource_type")
   private String resourceType;
 
-  /**
-   * 通知类型
-   */
-  @SerializedName("event_type")
-  private String eventType;
 
   /**
    * 通知数据
