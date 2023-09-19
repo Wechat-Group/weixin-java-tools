@@ -125,7 +125,7 @@ public class WxPayScoreResult implements Serializable {
    * 渠道商商户号
    */
   @SerializedName("channel_id")
-  private String channel_id;
+  private String channelId;
 
   /**
    * 收款信息
