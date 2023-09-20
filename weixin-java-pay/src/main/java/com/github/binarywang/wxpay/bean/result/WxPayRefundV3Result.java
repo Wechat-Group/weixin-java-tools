@@ -313,6 +313,12 @@ public class WxPayRefundV3Result implements Serializable {
      */
     @SerializedName(value = "currency")
     private String currency;
+
+    /**
+     * 手续费退款金额
+     */
+    @SerializedName(value = "refund_fee")
+    private Integer refundFee;
   }
 
   @Data
