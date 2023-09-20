@@ -71,4 +71,15 @@ public interface Applyment4SubService {
    */
   String modifySettlement(String subMchid, ModifySettlementRequest request) throws WxPayException;
 
+  /**
+   * 查询结算账户修改申请状态
+   * 文档详见：https://pay.weixin.qq.com/docs/partner/apis/modify-settlement/sub-merchants/get-application.html
+   * 接口链接：https://api.mch.weixin.qq.com/v3/apply4sub/sub_merchants/{sub_mchid}/application/{application_no}
+   *
+   * @param subMchid
+   * @param applicationNo
+   * @return
+   * @throws WxPayException
+   */
+  SettlementApplicationResult settlementApplication(String subMchid, String applicationNo) throws WxPayException;
 }
