@@ -17,6 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class WxPayRefundQueryV3Result implements Serializable {
+  private static final long serialVersionUID = 532057810377362827L;
   /**
    * <pre>
    * 字段名：微信支付退款号
@@ -311,6 +312,12 @@ public class WxPayRefundQueryV3Result implements Serializable {
      */
     @SerializedName(value = "currency")
     private String currency;
+
+    /**
+     * 手续费退款金额
+     */
+    @SerializedName(value = "refund_fee")
+    private Integer refundFee;
   }
 
   @Data
