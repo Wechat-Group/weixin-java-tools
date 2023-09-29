@@ -64,18 +64,6 @@ public class Applyment4SubServiceImpl implements Applyment4SubService {
     return payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
   }
 
-  /**
-   * 查询结算账户修改申请状态
-   *
-   * @param subMchid      特约商户号
-   * @param applicationNo 修改结算账户申请单号
-   *
-   * @return {@link SettlementModifyStateQueryResult}
-   * @throws WxPayException
-   * @apiNote <a href="https://pay.weixin.qq.com/docs/partner/apis/modify-settlement/sub-merchants/get-application.html">查询结算账户修改申请状态</a>
-   * <p>
-   * 接口链接：https://api.mch.weixin.qq.com/v3/apply4sub/sub_merchants/{sub_mchid}/application/{applicationNo}
-   */
   @Override
   public SettlementModifyStateQueryResult querySettlementModifyStatusByApplicationNo(String subMchid, String applicationNo) throws WxPayException {
     String url = String.format("%s/v3/apply4sub/sub_merchants/%s/application/%s", this.payService.getPayBaseUrl(), subMchid, applicationNo);

@@ -79,8 +79,14 @@ public class Applyment4SubServiceImplTest {
     applyment4SubService.modifySettlement(subMchid,modifySettlementRequest);
   }
 
+  @Test
+  public void testSettlementApplication() throws WxPayException{
+    Applyment4SubService applyment4SubService=new Applyment4SubServiceImpl(wxPayService);
+    String subMchid="subMchid";
+    String applymentId="applymentId";
 
-
+    applyment4SubService.settlementApplication(subMchid, applymentId);
+  }
 
 
 

@@ -84,4 +84,5 @@ public interface Applyment4SubService {
    * <p>接口链接：https://api.mch.weixin.qq.com/v3/apply4sub/sub_merchants/{sub_mchid}/application/{applicationNo} </p>
    */
   SettlementModifyStateQueryResult querySettlementModifyStatusByApplicationNo(String subMchid, String applicationNo) throws WxPayException;
+
 }
