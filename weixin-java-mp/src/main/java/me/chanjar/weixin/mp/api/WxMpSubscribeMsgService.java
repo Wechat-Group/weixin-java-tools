@@ -134,8 +134,9 @@ public interface WxMpSubscribeMsgService {
      * </pre>
      *
      * @param subscribeMessage 订阅消息
+     * @return 下发消息id，与下发结果回调的msgId对应
      * @throws WxErrorException .
      */
-    void send(WxMpSubscribeMessage subscribeMessage) throws WxErrorException;
+    String send(WxMpSubscribeMessage subscribeMessage) throws WxErrorException;
 
 }
