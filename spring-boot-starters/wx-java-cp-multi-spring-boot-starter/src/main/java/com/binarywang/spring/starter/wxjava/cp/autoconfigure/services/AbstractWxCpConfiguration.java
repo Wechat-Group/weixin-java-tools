@@ -11,8 +11,11 @@ import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * WxCpConfigStorage 抽象配置类
@@ -27,8 +30,31 @@ public abstract class AbstractWxCpConfiguration {
     WxCpMultiServicesImpl wxCpServices = new WxCpMultiServicesImpl();
     Map<String, CorpProperties> corps = wxCpMultiProperties.getCorps();
     if (corps == null || corps.isEmpty()) {
-      throw new RuntimeException("xxxx");
+      throw new RuntimeException("企业微信配置为null");
     }
+    /**
+     * 校验同一个企业下，agentId 是否唯一，避免使用 redis 缓存 token、ticket 时错乱。
+     *
+     * 查看 {@link me.chanjar.weixin.cp.config.impl.AbstractWxCpInRedisConfigImpl#setAgentId(Integer)}
+     */
+    Collection<CorpProperties> corpList = corps.values();
+    if (corpList.size() > 1) {
+      // 先按 corpId 分组统计
+      Map<String, List<CorpProperties>> corpsMap = corpList.stream()
+        .collect(Collectors.groupingBy(CorpProperties::getCorpId));
+      Set<Map.Entry<String, List<CorpProperties>>> entries = corpsMap.entrySet();
+      for (Map.Entry<String, List<CorpProperties>> entry : entries) {
+        String corpId = entry.getKey();
+        // 校验每个企业下，agentId 是否唯一
+        boolean multi = entry.getValue().stream()
+          .collect(Collectors.groupingBy(CorpProperties::getAgentId, Collectors.counting()))
+          .entrySet().stream().anyMatch(e -> e.getValue() > 1);
+        if (multi) {
+          throw new RuntimeException("请确保企业微信配置唯一性[" + corpId + "]");
+        }
+      }
+    }
+
     Set<Map.Entry<String, CorpProperties>> entries = corps.entrySet();
     for (Map.Entry<String, CorpProperties> entry : entries) {
       String tenantId = entry.getKey();
