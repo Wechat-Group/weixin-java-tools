@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.api.impl;
 
+import com.google.gson.JsonObject;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
@@ -23,7 +24,7 @@ public class WxCpCorpGroupServiceImplTest {
   @Test
   public void testListAppShareInfo() throws WxErrorException {
     Integer agentId = wxService.getWxCpConfigStorage().getAgentId();
-    Integer businessType = 0;
+    Integer businessType = 1;
     String corpId = null;
     Integer limit = null;
     String cursor = null;
