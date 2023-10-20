@@ -31,4 +31,20 @@ public class WxCpCorpGroupServiceImplTest {
     List<WxCpCorpGroupCorp> resp = wxService.getCorpGroupService().listAppShareInfo(agentId, businessType, corpId, limit, cursor);
     assertNotNull(resp);
   }
+
+  /**
+   * <pre>
+   * 上下游 - 基础接口 - 获取下级/下游企业的access_token.
+   * 详情请见: <a href="https://developer.work.weixin.qq.com/document/path/95816">...</a>
+   * </pre>
+   * @throws WxErrorException
+   */
+  @Test
+  public void testGetToken() throws WxErrorException {
+    Integer agentId = 1000016;
+    Integer businessType = 1;
+    String corpId = "subCorpId";
+    String accessToken = wxService.getCorpGroupService().getToken(corpId, agentId, businessType);
+    assertNotNull(accessToken);
+  }
 }
