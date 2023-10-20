@@ -9,7 +9,6 @@ import me.chanjar.weixin.cp.api.WxCpCorpGroupService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.corpgroup.WxCpCorpGroupCorp;
 import me.chanjar.weixin.cp.bean.corpgroup.WxCpCorpGroupCorpListAppShareInfoResp;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.util.List;
@@ -43,18 +42,5 @@ public class WxCpCorpGroupServiceImpl implements WxCpCorpGroupService {
       new TypeToken<List<WxCpCorpGroupCorp>>() {
       }.getType()
     );
-  }
-
-  @Override
-  public String getToken(String corpId, Integer agentId, Integer businessType) throws WxErrorException {
-    final String url = this.cpService.getWxCpConfigStorage().getApiUrl(WxCpApiPathConsts.CorpGroup.CORP_GET_TOKEN);
-    JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("corpid", corpId);
-    jsonObject.addProperty("business_type", businessType);
-    jsonObject.addProperty("agentid", agentId);
-    String responseContent = this.cpService.post(url, jsonObject);
-    JsonObject tmpJson = GsonParser.parse(responseContent);
-
-    return tmpJson.get("access_token").getAsString();
   }
 }
