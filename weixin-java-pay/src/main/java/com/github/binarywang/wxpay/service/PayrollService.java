@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.marketing.payroll.*;
+import com.github.binarywang.wxpay.bean.result.WxPayApplyBillV3Result;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 /**
@@ -98,6 +99,6 @@ public interface PayrollService {
    * @return 返回数据
    * @throws WxPayException the wx pay exception
    */
-  PreOrderWithAuthResult merchantFundWithdrawBillType(String billType, String billDate) throws WxPayException;
+  WxPayApplyBillV3Result merchantFundWithdrawBillType(String billType, String billDate, String tarType) throws WxPayException;
 
 }
