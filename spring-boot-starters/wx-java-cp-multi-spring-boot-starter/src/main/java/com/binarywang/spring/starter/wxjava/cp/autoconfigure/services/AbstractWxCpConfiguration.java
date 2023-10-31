@@ -5,6 +5,7 @@ import com.binarywang.spring.starter.wxjava.cp.properties.WxCpMultiProperties;
 import com.binarywang.spring.starter.wxjava.cp.service.WxCpMultiServices;
 import com.binarywang.spring.starter.wxjava.cp.service.WxCpMultiServicesImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -24,13 +25,14 @@ import java.util.stream.Collectors;
  * created on 2023/10/16
  */
 @RequiredArgsConstructor
+@Slf4j
 public abstract class AbstractWxCpConfiguration {
 
   protected WxCpMultiServices configWxCpServices(WxCpMultiProperties wxCpMultiProperties) {
-    WxCpMultiServicesImpl wxCpServices = new WxCpMultiServicesImpl();
     Map<String, CorpProperties> corps = wxCpMultiProperties.getCorps();
     if (corps == null || corps.isEmpty()) {
-      throw new RuntimeException("企业微信配置为null");
+      log.warn("企业微信应用参数未配置，通过 WxCpMultiServices#getWxCpService(\"tenantId\")获取实例将返回空");
+      return new WxCpMultiServicesImpl();
     }
     /**
      * 校验同一个企业下，agentId 是否唯一，避免使用 redis 缓存 token、ticket 时错乱。
@@ -55,6 +57,7 @@ public abstract class AbstractWxCpConfiguration {
         }
       }
     }
+    WxCpMultiServicesImpl services = new WxCpMultiServicesImpl();
 
     Set<Map.Entry<String, CorpProperties>> entries = corps.entrySet();
     for (Map.Entry<String, CorpProperties> entry : entries) {
@@ -64,9 +67,9 @@ public abstract class AbstractWxCpConfiguration {
       this.configCorp(storage, corpProperties);
       this.configHttp(storage, wxCpMultiProperties.getConfigStorage());
       WxCpService wxCpService = this.configWxCpService(storage, wxCpMultiProperties.getConfigStorage());
-      wxCpServices.addWxCpService(tenantId, wxCpService);
+      services.addWxCpService(tenantId, wxCpService);
     }
-    return wxCpServices;
+    return services;
   }
 
   /**

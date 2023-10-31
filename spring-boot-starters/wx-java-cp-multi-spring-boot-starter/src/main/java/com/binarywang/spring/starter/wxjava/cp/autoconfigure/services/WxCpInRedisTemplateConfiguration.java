@@ -27,7 +27,7 @@ public class WxCpInRedisTemplateConfiguration extends AbstractWxCpConfiguration 
   private final ApplicationContext applicationContext;
 
   @Bean
-  public WxCpMultiServices wxCpServices() {
+  public WxCpMultiServices wxCpMultiServices() {
     return this.configWxCpServices(wxCpMultiProperties);
   }
 

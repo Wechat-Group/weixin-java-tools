@@ -23,7 +23,7 @@ public class WxCpInMemoryConfiguration extends AbstractWxCpConfiguration {
   private final WxCpMultiProperties wxCpMultiProperties;
 
   @Bean
-  public WxCpMultiServices wxCpServices() {
+  public WxCpMultiServices wxCpMultiServices() {
     return this.configWxCpServices(wxCpMultiProperties);
   }
 

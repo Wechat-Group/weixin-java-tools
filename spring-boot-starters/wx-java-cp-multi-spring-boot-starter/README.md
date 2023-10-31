@@ -80,6 +80,17 @@ public class DemoService {
     WxCpUserService userService2 = wxCpService2.getUserService();
     userService2.getUserId("xxx");
     // todo ...
+
+    // 应用 3 的 WxCpService
+    WxCpService wxCpService3 = wxCpMultiServices.getWxCpService("tenantId3");
+    // 判断是否为空
+    if (wxCpService3 == null) {
+      // todo wxCpService3 为空，请先配置 tenantId3 企业微信应用参数
+      return;
+    }
+    WxCpUserService userService3 = wxCpService3.getUserService();
+    userService3.getUserId("xxx");
+    // todo ...
   }
 }
 ```
