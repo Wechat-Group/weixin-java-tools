@@ -85,7 +85,7 @@ public class Applyment4SubServiceImplTest {
     String subMchid="subMchid";
     String applymentId="applymentId";
 
-    applyment4SubService.settlementApplication(subMchid, applymentId);
+    applyment4SubService.querySettlementModifyStatusByApplicationNo(subMchid, applymentId);
   }
 
 

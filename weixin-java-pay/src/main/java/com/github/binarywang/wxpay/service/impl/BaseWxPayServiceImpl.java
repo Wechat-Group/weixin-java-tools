@@ -120,6 +120,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final PartnerPayScoreService partnerPayScoreService = new PartnerPayScoreServiceImpl(this);
 
   @Getter
+  private final PartnerPayScoreSignPlanService partnerPayScoreSignPlanService=new PartnerPayScoreSignPlanServiceImpl(this);
+
+  @Getter
   private final MerchantTransferService merchantTransferService = new MerchantTransferServiceImpl(this);
 
   @Getter

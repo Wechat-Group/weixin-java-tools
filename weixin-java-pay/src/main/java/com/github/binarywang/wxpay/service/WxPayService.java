@@ -11,6 +11,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
@@ -1529,4 +1530,9 @@ public interface WxPayService {
    */
   PartnerPayScoreService getPartnerPayScoreService();
 
+  /**
+   * 获取服务商直股份签约计划服务类
+   * @return  the partner pay score sign plan service
+   */
+  PartnerPayScoreSignPlanService getPartnerPayScoreSignPlanService();
 }
