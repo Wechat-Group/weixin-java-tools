@@ -36,7 +36,7 @@ public class PayScoreNotifyData implements Serializable {
    * <p>3、用户确认成功通知的类型为PAYSCORE.USER_CONFIRM</p>
    * <p>4、支付成功通知的类型为PAYSCORE.USER_PAID</p>
    * <p>5、取消签约成功通知类型为PAYSCORE.USER_CANCEL_SIGN_PLAN</p>
-   * <p>6、签约计划成功通知类型为PAYSCORE</p>
+   * <p>6、签约计划成功通知类型为PAYSCORE.USER_SIGN_PLAN</p>
    */
   @SerializedName("event_type")
   private String eventType;
