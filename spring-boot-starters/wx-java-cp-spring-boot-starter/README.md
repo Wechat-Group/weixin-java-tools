@@ -16,9 +16,11 @@
     wx.cp.corp-id = @corp-id
     wx.cp.corp-secret = @corp-secret
     # 选填
+    wx.cp.agent-id = @agent-id
     wx.cp.token = @token
     wx.cp.aes-key = @aes-key
-    wx.cp.agent-id = @agent-id
+    wx.cp.msg-audit-priKey = @msg-audit-priKey
+    wx.cp.msg-audit-lib-path = @msg-audit-lib-path
     # ConfigStorage 配置（选填）
     wx.cp.config-storage.type=memory # 配置类型: memory(默认), jedis, redisson, redistemplate
     # http 客户端配置（选填）

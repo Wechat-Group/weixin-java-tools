@@ -23,19 +23,10 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WxMaExpressOrderInfoResult implements Serializable {
+public class WxMaExpressOrderInfoResult extends WxMaExpressInfoResult implements Serializable {
 
   private static final long serialVersionUID = -9166603059965942285L;
 
-  /**
-   * 错误码
-   */
-  private Integer errcode;
-
-  /**
-   * 错误信息
-   */
-  private String errmsg;
   /**
    * 订单ID
    */

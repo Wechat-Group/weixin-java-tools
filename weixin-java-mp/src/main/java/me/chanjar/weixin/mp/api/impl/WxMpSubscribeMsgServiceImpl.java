@@ -103,11 +103,12 @@ public class WxMpSubscribeMsgServiceImpl implements WxMpSubscribeMsgService {
   }
 
   @Override
-  public void send(WxMpSubscribeMessage subscribeMessage) throws WxErrorException {
+  public String send(WxMpSubscribeMessage subscribeMessage) throws WxErrorException {
     String responseContent = this.service.post(SEND_SUBSCRIBE_MESSAGE_URL, subscribeMessage.toJson());
     JsonObject jsonObject = GsonParser.parse(responseContent);
     if (jsonObject.get(ERR_CODE).getAsInt() != 0) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MP));
     }
+    return jsonObject.get("msgid").getAsString();
   }
 }

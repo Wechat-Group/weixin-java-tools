@@ -7,6 +7,7 @@ import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPath;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPrinter;
 import cn.binarywang.wx.miniapp.bean.express.request.*;
+import cn.binarywang.wx.miniapp.bean.express.result.WxMaExpressInfoResult;
 import cn.binarywang.wx.miniapp.bean.express.result.WxMaExpressOrderInfoResult;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,8 @@ public class WxMaExpressServiceImpl implements WxMaExpressService {
   }
 
   @Override
-  public void bindAccount(WxMaExpressBindAccountRequest wxMaExpressBindAccountRequest) throws WxErrorException {
-    this.service.post(BIND_ACCOUNT_URL, wxMaExpressBindAccountRequest.toJson());
+  public WxMaExpressInfoResult bindAccount(WxMaExpressBindAccountRequest wxMaExpressBindAccountRequest) throws WxErrorException {
+    return WxMaExpressInfoResult.fromJson(this.service.post(BIND_ACCOUNT_URL, wxMaExpressBindAccountRequest.toJson()));
   }
 
   @Override

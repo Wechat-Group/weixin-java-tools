@@ -542,7 +542,12 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Override
   public void setMultiConfigStorages(Map<String, WxMpConfigStorage> configStorages, String defaultMpId) {
-    this.configStorageMap = Maps.newHashMap(configStorages);
+    // 防止覆盖配置
+    if(this.configStorageMap != null) {
+      this.configStorageMap.putAll(configStorages);
+    } else {
+      this.configStorageMap = Maps.newHashMap(configStorages);
+    }
     WxMpConfigStorageHolder.set(defaultMpId);
     this.initHttp();
   }
@@ -550,7 +555,11 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void addConfigStorage(String mpId, WxMpConfigStorage configStorages) {
     synchronized (this) {
-      if (this.configStorageMap == null) {
+      /*
+       * 因为commit 2aa27cf12d 默认初始化了configStorageMap，导致使用此方法无法进入if从而触发initHttp()，
+       * 就会出现HttpClient报NullPointException
+       */
+      if (this.configStorageMap == null || this.configStorageMap.isEmpty()) {
         this.setWxMpConfigStorage(configStorages);
       } else {
         WxMpConfigStorageHolder.set(mpId);

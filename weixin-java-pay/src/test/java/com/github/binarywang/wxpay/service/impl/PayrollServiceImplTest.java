@@ -3,6 +3,7 @@ package com.github.binarywang.wxpay.service.impl;
 import com.github.binarywang.wxpay.bean.marketing.payroll.*;
 import com.github.binarywang.wxpay.bean.marketing.transfer.PartnerTransferRequest;
 import com.github.binarywang.wxpay.bean.marketing.transfer.PartnerTransferResult;
+import com.github.binarywang.wxpay.bean.result.WxPayApplyBillV3Result;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
@@ -120,9 +121,8 @@ public class PayrollServiceImplTest {
   public void merchantFundWithdrawBillType() throws WxPayException {
     String billType = "NO_SUCC";
     String billDate = "2019-08-17";
-    PreOrderWithAuthResult preOrderWithAuthResult = wxPayService.getPayrollService().merchantFundWithdrawBillType(billType, billDate);
-    log.info(preOrderWithAuthResult.toString());
-
+    WxPayApplyBillV3Result result = wxPayService.getPayrollService().merchantFundWithdrawBillType(billType, billDate, null);
+    log.info(result.toString());
   }
 
 }

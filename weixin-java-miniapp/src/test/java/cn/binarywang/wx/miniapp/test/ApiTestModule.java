@@ -35,7 +35,7 @@ public class ApiTestModule implements Module {
       binder.bind(WxMaService.class).toInstance(wxService);
       binder.bind(WxMaConfig.class).toInstance(config);
 
-      WxMaServiceOkHttpImpl wxMaServiceOkHttp = new cn.binarywang.wx.miniapp.api.impl.WxMaServiceOkHttpImpl();
+      WxMaServiceOkHttpImpl wxMaServiceOkHttp = new WxMaServiceOkHttpImpl();
       wxMaServiceOkHttp.setWxMaConfig(config);
       binder.bind(WxMaServiceOkHttpImpl.class).toInstance(wxMaServiceOkHttp);
 

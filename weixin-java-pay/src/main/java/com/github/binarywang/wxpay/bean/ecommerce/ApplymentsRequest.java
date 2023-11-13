@@ -499,7 +499,7 @@ public class ApplymentsRequest implements Serializable {
      * </pre>
      */
     @SerializedName(value = "finance_license_pics")
-    private String financeLicensePics;
+    private List<String> financeLicensePics;
 
   }
 

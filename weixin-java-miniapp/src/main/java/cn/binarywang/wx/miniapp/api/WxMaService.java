@@ -554,4 +554,5 @@ public interface WxMaService extends WxService {
    * @return getWxMaXPayService
    */
   WxMaXPayService getWxMaXPayService();
+  WxMaExpressDeliveryReturnService getWxMaExpressDeliveryReturnService();
 }

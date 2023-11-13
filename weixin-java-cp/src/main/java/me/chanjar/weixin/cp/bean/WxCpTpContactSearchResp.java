@@ -24,6 +24,9 @@ public class WxCpTpContactSearchResp extends WxCpBaseResp {
   @SerializedName("query_result")
   private QueryResult queryResult;
 
+  @SerializedName("next_cursor")
+  private String nextCursor;
+
   /**
    * The type Query result.
    */

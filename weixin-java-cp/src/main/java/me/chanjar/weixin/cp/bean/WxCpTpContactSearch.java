@@ -43,12 +43,6 @@ public class WxCpTpContactSearch implements Serializable {
   private Integer agentId;
 
   /**
-   * 查询的偏移量，每次调用的offset在上一次offset基础上加上limit
-   */
-  @SerializedName("offset")
-  private Integer offset;
-
-  /**
    * 查询返回的最大数量，默认为50，最多为200，查询返回的数量可能小于limit指定的值
    */
   @SerializedName("limit")
@@ -59,6 +53,12 @@ public class WxCpTpContactSearch implements Serializable {
    */
   @SerializedName("full_match_field")
   private Integer fullMatchField;
+
+  /**
+   * 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+   */
+  @SerializedName("cursor")
+  private String cursor;
 
   /**
    * To json string.
