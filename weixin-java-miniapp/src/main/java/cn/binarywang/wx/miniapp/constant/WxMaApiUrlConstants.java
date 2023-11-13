@@ -344,6 +344,7 @@ public class WxMaApiUrlConstants {
 
   public interface Link {
     String GENERATE_URLLINK_URL = "https://api.weixin.qq.com/wxa/generate_urllink";
+    String QUERY_URLLINK_URL = "https://api.weixin.qq.com/wxa/query_urllink";
   }
 
   public interface ShortLink {

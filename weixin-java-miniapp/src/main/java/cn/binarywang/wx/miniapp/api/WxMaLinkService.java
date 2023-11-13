@@ -3,6 +3,8 @@ package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.shortlink.GenerateShortLinkRequest;
 import cn.binarywang.wx.miniapp.bean.urllink.GenerateUrlLinkRequest;
+import cn.binarywang.wx.miniapp.bean.urllink.request.QueryUrlLinkRequest;
+import cn.binarywang.wx.miniapp.bean.urllink.response.QueryUrlLinkResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -29,4 +31,14 @@ public interface WxMaLinkService {
    * @throws WxErrorException .
    */
   String generateShortLink(GenerateShortLinkRequest request) throws WxErrorException;
+
+  /**
+   * 查询 URL Link
+   * 接口文档: https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/qrcode-link/url-link/queryUrlLink.html
+   *
+   * @param request 请求
+   * @return link地址
+   * @throws WxErrorException .
+   */
+  QueryUrlLinkResponse queryUrlLink(QueryUrlLinkRequest request) throws WxErrorException;
 }

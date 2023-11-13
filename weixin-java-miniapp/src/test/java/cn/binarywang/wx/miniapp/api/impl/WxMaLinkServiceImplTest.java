@@ -3,10 +3,13 @@ package cn.binarywang.wx.miniapp.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.shortlink.GenerateShortLinkRequest;
 import cn.binarywang.wx.miniapp.bean.urllink.GenerateUrlLinkRequest;
+import cn.binarywang.wx.miniapp.bean.urllink.request.QueryUrlLinkRequest;
+import cn.binarywang.wx.miniapp.bean.urllink.response.QueryUrlLinkResponse;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
+import org.testng.Assert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
@@ -52,5 +55,22 @@ public class WxMaLinkServiceImplTest {
       .envVersion("trial")
       .build());
     log.info("generate url link = {}", url);
+  }
+
+  @Test
+  public void testQueryUrlLink() throws WxErrorException {
+
+    String path = "pages/index";
+    String urlLink = this.wxMaService.getLinkService().generateUrlLink(GenerateUrlLinkRequest.builder()
+      .path(path)
+      .expireTime(LocalDateTime.now().plusDays(5).atZone(ZoneId.systemDefault()).toEpochSecond()) //增加有效期，此行可注释
+      .build());
+    System.out.println("urlLink: " + urlLink);
+
+    QueryUrlLinkResponse queryUrlLinkResponse = this.wxMaService.getLinkService()
+      .queryUrlLink(QueryUrlLinkRequest.builder().urlLink(urlLink).build());
+    System.out.println("linkInfo: " + queryUrlLinkResponse.toString());
+
+    Assert.assertEquals(path, queryUrlLinkResponse.getUrlLinkInfo().getPath());
   }
 }
