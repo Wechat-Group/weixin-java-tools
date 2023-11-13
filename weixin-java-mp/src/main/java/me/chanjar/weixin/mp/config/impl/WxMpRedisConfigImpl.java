@@ -68,7 +68,7 @@ public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
 
   @Override
   public synchronized void updateAccessToken(String accessToken, int expiresInSeconds) {
-    redisOps.setValue(this.accessTokenKey, accessToken, expiresInSeconds - 200, TimeUnit.SECONDS);
+    redisOps.setValue(this.accessTokenKey, accessToken, expiresInSeconds, TimeUnit.SECONDS);
   }
 
   @Override

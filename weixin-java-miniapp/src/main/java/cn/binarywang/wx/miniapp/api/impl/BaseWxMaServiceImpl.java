@@ -91,6 +91,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaOpenApiService wxMaOpenApiService = new WxMaOpenApiServiceImpl(this);
   private final WxMaVodService wxMaVodService = new WxMaVodServiceImpl(this);
   private final WxMaXPayService wxMaXPayService = new WxMaXPayServiceImpl(this);
+  private final WxMaExpressDeliveryReturnService wxMaExpressDeliveryReturnService = new WxMaExpressDeliveryReturnServiceImpl(this);
 
   private Map<String, WxMaConfig> configMap = new HashMap<>();
   private int retrySleepMillis = 1000;
@@ -376,7 +377,12 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   @JsonDeserialize
   public void setMultiConfigs(Map<String, WxMaConfig> configs, String defaultMiniappId) {
-    this.configMap = Maps.newHashMap(configs);
+    // 防止覆盖配置
+    if(this.configMap != null) {
+      this.configMap.putAll(configs);
+    } else {
+      this.configMap = Maps.newHashMap(configs);
+    }
     WxMaConfigHolder.set(defaultMiniappId);
     this.initHttp();
   }
@@ -384,7 +390,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public void addConfig(String miniappId, WxMaConfig configStorages) {
     synchronized (this) {
-      if (this.configMap == null) {
+      /*
+       * 因为commit f74b00cf 默认初始化了configMap，导致使用此方法无法进入if从而触发initHttp()，
+       * 就会出现HttpClient报NullPointException
+       */
+      if (this.configMap == null || this.configMap.isEmpty()) {
         this.setWxMaConfig(configStorages);
       } else {
         WxMaConfigHolder.set(miniappId);
@@ -676,5 +686,10 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaXPayService getWxMaXPayService() {
     return this.wxMaXPayService;
+  }
+
+  @Override
+  public WxMaExpressDeliveryReturnService getWxMaExpressDeliveryReturnService(){
+    return this.wxMaExpressDeliveryReturnService;
   }
 }

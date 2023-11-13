@@ -34,7 +34,7 @@ public class WxCpInRedissonConfigStorageConfiguration extends AbstractWxCpConfig
 
   @Bean
   @ConditionalOnMissingBean(WxCpConfigStorage.class)
-  public WxCpConfigStorage wxOpenConfigStorage() {
+  public WxCpConfigStorage wxCpConfigStorage() {
     WxCpDefaultConfigImpl config = getConfigStorage();
     return this.config(config, wxCpProperties);
   }

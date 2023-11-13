@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.bean.express.WxMaExpressDelivery;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPath;
 import cn.binarywang.wx.miniapp.bean.express.WxMaExpressPrinter;
 import cn.binarywang.wx.miniapp.bean.express.request.*;
+import cn.binarywang.wx.miniapp.bean.express.result.WxMaExpressInfoResult;
 import cn.binarywang.wx.miniapp.bean.express.result.WxMaExpressOrderInfoResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -44,7 +45,7 @@ public interface WxMaExpressService {
    * @param wxMaExpressBindAccountRequest 物流账号对象
    * @throws WxErrorException 请求失败时返回
    */
-  void bindAccount(WxMaExpressBindAccountRequest wxMaExpressBindAccountRequest) throws WxErrorException;
+  WxMaExpressInfoResult bindAccount(WxMaExpressBindAccountRequest wxMaExpressBindAccountRequest) throws WxErrorException;
 
   /**
    * 获取电子面单余额。仅在使用加盟类快递公司时，才可以调用。

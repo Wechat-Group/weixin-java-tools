@@ -39,7 +39,7 @@ public class WxCpCorpGroupServiceImpl implements WxCpCorpGroupService {
     JsonObject tmpJson = GsonParser.parse(responseContent);
 
     return WxCpGsonBuilder.create().fromJson(tmpJson.get("corp_list"),
-      new TypeToken<List<WxCpCorpGroupCorpListAppShareInfoResp>>() {
+      new TypeToken<List<WxCpCorpGroupCorp>>() {
       }.getType()
     );
   }

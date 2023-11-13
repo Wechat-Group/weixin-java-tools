@@ -19,7 +19,7 @@ public interface WxMaOpenApiService {
    *
    * @return 是否成功
    * @throws WxErrorException the wx error exception
-   * @apiNote !!! 单小程序直接调用该方法 , 如多个appid调用此方法前请调用 {@link cn.binarywang.wx.miniapp.api.WxMaService#switchoverTo} 切换appid !!!
+   * @apiNote !!! 单小程序直接调用该方法 , 如多个appid调用此方法前请调用 {@link WxMaService#switchoverTo} 切换appid !!!
    * @code wxMaService.getWxMaOpenApiService().clearQuota() //单个
    * @code wxMaService.switchoverTo(" appid ").getWxMaOpenApiService().clearQuota() //多个
    * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/openApi-mgnt/clearQuota.html">注意事项参考微信文档</a>
@@ -55,7 +55,7 @@ public interface WxMaOpenApiService {
    *
    * @return 是否成功
    * @throws WxErrorException 微信异常
-   * @apiNote !!! 单小程序直接调用该方法 , 如多个appid调用此方法前请调用 {@link cn.binarywang.wx.miniapp.api.WxMaService#switchoverTo} 切换appid!!!
+   * @apiNote !!! 单小程序直接调用该方法 , 如多个appid调用此方法前请调用 {@link WxMaService#switchoverTo} 切换appid!!!
    * 参考示例
    * @code wxMaService.getWxMaOpenApiService().clearQuotaByAppSecret() //单个
    * @code wxMaService.switchoverTo(" appid ").getWxMaOpenApiService().clearQuotaByAppSecret() //多个

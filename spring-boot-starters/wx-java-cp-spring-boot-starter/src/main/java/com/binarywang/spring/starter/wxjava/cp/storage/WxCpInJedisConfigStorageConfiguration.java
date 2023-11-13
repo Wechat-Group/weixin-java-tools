@@ -32,7 +32,7 @@ public class WxCpInJedisConfigStorageConfiguration extends AbstractWxCpConfigSto
 
   @Bean
   @ConditionalOnMissingBean(WxCpConfigStorage.class)
-  public WxCpConfigStorage wxOpenConfigStorage() {
+  public WxCpConfigStorage wxCpConfigStorage() {
     WxCpDefaultConfigImpl config = getConfigStorage();
     return this.config(config, wxCpProperties);
   }

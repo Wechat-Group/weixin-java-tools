@@ -872,4 +872,18 @@ public class WxMaApiUrlConstants {
     String QUERY_PUBLISH_GOODS_URL = "https://api.weixin.qq.com/xpay/query_publish_goods?pay_sig=%s";
 
   }
+
+  /**
+   * 退货组件
+   * <pre>
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/express/business/express_sale_return.html
+   * </pre>
+   *
+   */
+  public interface ExpressDeliveryReturn{
+    String ADD_DELIVERY_RETURN_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/return/add";
+    String GET_DELIVERY_RETURN_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/return/get";
+    String UNBIND_DELIVERY_RETURN_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/return/unbind";
+  }
+
 }

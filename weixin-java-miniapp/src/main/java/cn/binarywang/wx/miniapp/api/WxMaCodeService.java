@@ -69,7 +69,7 @@ public interface WxMaCodeService {
 
   /**
    * 查询最新一次提交的审核状态（仅供第三方代小程序调用）.
-   *
+   * 文档：<a href="https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/code-management/getLatestAuditStatus.html">文档地址</a>
    * @return 审核状态
    * @throws WxErrorException 查询失败时返回，具体错误码请看此接口的注释文档
    */

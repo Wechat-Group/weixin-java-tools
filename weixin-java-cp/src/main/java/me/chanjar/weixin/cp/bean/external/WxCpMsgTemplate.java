@@ -39,9 +39,21 @@ public class WxCpMsgTemplate implements Serializable {
   private List<String> externalUserid;
 
   /**
+   * 客户群id列表，仅在chat_type为group时有效，最多可一次指定2000个客户群。指定群id之后，收到任务的群主无须再选择客户群，仅对4.1.10及以上版本的企业微信终端生效
+   */
+  @SerializedName("chat_id_list")
+  private List<String> chatIdList;
+
+  /**
    * 发送企业群发消息的成员userid，当类型为发送给客户群时必填
    */
   private String sender;
+
+  /**
+   * 是否允许成员在待发送客户列表中重新进行选择，默认为false，仅支持客户群发场景
+   */
+  @SerializedName("allow_select")
+  private Boolean allowSelect;
 
   /**
    * 消息文本内容，最多4000个字节

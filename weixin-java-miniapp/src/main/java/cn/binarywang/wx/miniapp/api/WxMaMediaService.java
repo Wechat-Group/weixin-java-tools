@@ -46,7 +46,7 @@ public interface WxMaMediaService {
    * @param inputStream 输入流
    * @return the wx media upload result
    * @throws WxErrorException the wx error exception
-   * @see #uploadMedia(java.lang.String, java.io.File) #uploadMedia(java.lang.String, java.io.File)
+   * @see #uploadMedia(String, File) #uploadMedia(java.lang.String, java.io.File)
    */
   WxMediaUploadResult uploadMedia(String mediaType, String fileType, InputStream inputStream) throws WxErrorException;
 
