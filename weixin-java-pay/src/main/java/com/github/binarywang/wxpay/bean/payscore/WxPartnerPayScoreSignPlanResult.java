@@ -88,7 +88,7 @@ public class WxPartnerPayScoreSignPlanResult extends WxPayScoreResult {
    * 支付分计划明细列表
    */
   @SerializedName("plan_detail_list")
-  private List<PayScorePlanDetail> planDetailList;
+  private List<PayScorePlanDetailResult> planDetailList;
 
   /**
    * 终止方商户号

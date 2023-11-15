@@ -14,7 +14,7 @@ import java.io.Serializable;
  **/
 @Data
 @NoArgsConstructor
-public class PayScorePlanDetail implements Serializable {
+public class PayScorePlanDetailRequest implements Serializable {
 
   private static final long serialVersionUID = 999251141141181820L;
   /**
@@ -33,17 +33,11 @@ public class PayScorePlanDetail implements Serializable {
    * 计划明细实际支付金额(单位分)
    */
   @SerializedName("actual_price")
-  private String actualPrice;
+  private Long actualPrice;
 
   /**
    * 计划明细名称
    */
   @SerializedName("plan_detail_name")
   private String planDetailName;
-
-  /**
-   * 计划明细序号(返回参数)
-   */
-  @SerializedName("plan_detail_no")
-  private Integer planDetailNo;
 }

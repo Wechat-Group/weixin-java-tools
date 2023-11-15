@@ -82,7 +82,7 @@ public class WxPartnerPayScoreSignPlanRequest extends WxPayScoreRequest {
    * 支付分计划明细列表
    */
   @SerializedName("plan_detail_list")
-  private List<PayScorePlanDetail> planDetailList;
+  private List<PayScorePlanDetailRequest> planDetailList;
 
   /**
    * 商户侧计划号
