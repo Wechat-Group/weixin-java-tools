@@ -66,7 +66,7 @@ public class PartnerUserSignPlanDetail implements Serializable {
    * 计划详情名称
    */
   @SerializedName("plan_detail_name")
-  private Integer planDetailName;
+  private String planDetailName;
 
   /**
    * 计划明细对应订单实际支付金额（单位分）
