@@ -24,7 +24,7 @@ public class SharerOrder implements Serializable {
   /**
    * 分享场景 {@link me.chanjar.weixin.channel.enums.ShareScene}
    */
-  @JsonProperty("sharer_scene")
+  @JsonProperty("share_scene")
   private Integer sharerScene;
 
   /**
