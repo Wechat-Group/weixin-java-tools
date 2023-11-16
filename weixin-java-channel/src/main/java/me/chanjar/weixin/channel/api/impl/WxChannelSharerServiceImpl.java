@@ -7,6 +7,7 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Share.
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Share.SEARCH_SHARER_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Share.UNBIND_SHARER_URL;
 
+import com.google.gson.JsonObject;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.api.WxChannelSharerService;
@@ -21,6 +22,7 @@ import me.chanjar.weixin.channel.bean.sharer.SharerUnbindParam;
 import me.chanjar.weixin.channel.bean.sharer.SharerUnbindResponse;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonHelper;
 
 /**
  * 视频号小店 分享员服务实现
@@ -39,8 +41,9 @@ public class WxChannelSharerServiceImpl implements WxChannelSharerService {
 
   @Override
   public SharerBindResponse bindSharer(String username) throws WxErrorException {
-    String reqJson = "{\"username\": " + username + "}";
-    String resJson = shopService.post(BIND_SHARER_URL, reqJson);
+    JsonObject jsonObject = GsonHelper.buildJsonObject("username", username);
+
+    String resJson = shopService.post(BIND_SHARER_URL, jsonObject);
     return ResponseUtils.decode(resJson, SharerBindResponse.class);
   }
 
