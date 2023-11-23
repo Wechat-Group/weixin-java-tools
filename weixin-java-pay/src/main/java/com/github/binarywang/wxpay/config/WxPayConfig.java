@@ -16,10 +16,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.ssl.SSLContexts;
 
 import javax.net.ssl.SSLContext;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -385,7 +382,8 @@ public class WxPayConfig {
           throw new WxPayException(fileNotFoundMsg);
         }
 
-        return Files.newInputStream(file.toPath());
+//        return Files.newInputStream(file.toPath());
+        return new FileInputStream(file);
       } catch (IOException e) {
         throw new WxPayException(fileHasProblemMsg, e);
       }

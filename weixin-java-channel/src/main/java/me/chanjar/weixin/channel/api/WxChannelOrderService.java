@@ -97,6 +97,26 @@ public interface WxChannelOrderService {
   WxChannelBaseResponse updateDelivery(DeliveryUpdateParam param) throws WxErrorException;
 
   /**
+   * 同意用户修改收货地址请求
+   *
+   * @param orderId 订单id
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse acceptAddressModify(String orderId) throws WxErrorException;
+
+  /**
+   * 拒接用户修改收货地址请求
+   *
+   * @param orderId 订单id
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse rejectAddressModify(String orderId) throws WxErrorException;
+
+  /**
    * 关闭订单 （需要订单状态为未付款状态）
    *
    * @param orderId 订单id

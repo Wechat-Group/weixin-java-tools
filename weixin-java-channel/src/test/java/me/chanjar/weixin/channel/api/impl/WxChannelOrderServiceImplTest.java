@@ -103,6 +103,24 @@ public class WxChannelOrderServiceImplTest {
   }
 
   @Test
+  public void testAcceptAddressModify() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    WxChannelBaseResponse response = orderService.acceptAddressModify(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testRejectAddressModify() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    WxChannelBaseResponse response = orderService.rejectAddressModify(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
   public void testCloseOrder() {
     WxChannelOrderService orderService = channelService.getOrderService();
     String orderId = "";

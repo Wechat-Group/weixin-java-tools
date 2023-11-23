@@ -52,4 +52,8 @@ public class OrderDetailInfo implements Serializable {
   @JsonProperty("settle_info")
   private OrderSettleInfo settleInfo;
 
+  /** 分享员信息 */
+  @JsonProperty("sku_sharer_infos")
+  private List<OrderSkuShareInfo> skuSharerInfos;
+
 }

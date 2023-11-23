@@ -55,4 +55,12 @@ public class OrderPriceInfo implements Serializable {
   @JsonProperty("is_change_freight")
   private Boolean changeFreighted;
 
+  /** 是否使用了会员积分抵扣 */
+  @JsonProperty("use_deduction")
+  private Boolean useDeduction;
+
+  /** 会员积分抵扣金额，单位为分 */
+  @JsonProperty("deduction_price")
+  private Integer deductionPrice;
+
 }

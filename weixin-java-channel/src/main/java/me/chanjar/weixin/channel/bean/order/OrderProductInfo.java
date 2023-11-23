@@ -92,4 +92,21 @@ public class OrderProductInfo implements Serializable {
   /** 区域库存id */
   @JsonProperty("out_warehouse_id")
   private String outWarehouseId;
+
+  /** 商品发货信息 */
+  @JsonProperty("sku_deliver_info")
+  private OrderSkuDeliverInfo skuDeliverInfo;
+
+  /** 商品额外服务信息 */
+  @JsonProperty("extra_service")
+  private OrderProductExtraService extraService;
+
+  /** 是否使用了会员积分抵扣 */
+  @JsonProperty("use_deduction")
+  private Boolean useDeduction;
+
+  /** 会员积分抵扣金额，单位为分 */
+  @JsonProperty("deduction_price")
+  private Integer deductionPrice;
+
 }

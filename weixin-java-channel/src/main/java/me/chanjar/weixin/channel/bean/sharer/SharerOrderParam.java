@@ -20,7 +20,7 @@ public class SharerOrderParam extends PageParam {
   private static final long serialVersionUID = 5240085870008898601L;
   /** 分享员openid */
   @JsonProperty("openid")
-  private Integer openid;
+  private String openid;
 
   /** 分享场景 */
   @JsonProperty("share_scene")

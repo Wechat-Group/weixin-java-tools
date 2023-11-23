@@ -29,7 +29,9 @@ public class WxOAuth2AccessToken implements Serializable {
 
   @SerializedName("scope")
   private String scope;
-
+  /**
+   * 是否为快照页模式虚拟账号，只有当用户是快照页模式虚拟账号时返回，值为1
+   */
   @SerializedName("is_snapshotuser")
   private Integer snapshotUser;
 

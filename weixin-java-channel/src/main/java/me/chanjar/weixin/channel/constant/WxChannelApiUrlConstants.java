@@ -144,6 +144,10 @@ public class WxChannelApiUrlConstants {
     String UPDATE_ADDRESS_URL = "https://api.weixin.qq.com/channels/ec/order/address/update";
     /** 修改物流信息 */
     String UPDATE_EXPRESS_URL = "https://api.weixin.qq.com/channels/ec/order/deliveryinfo/update";
+    /** 同意用户修改收货地址申请 */
+    String ACCEPT_ADDRESS_MODIFY_URL = "https://api.weixin.qq.com/channels/ec/order/addressmodify/accept";
+    /** 拒绝用户修改收货地址申请 */
+    String REJECT_ADDRESS_MODIFY_URL = "https://api.weixin.qq.com/channels/ec/order/addressmodify/reject";
     /** 订单搜索 */
     String ORDER_SEARCH_URL = "https://api.weixin.qq.com/channels/ec/order/search";
   }

@@ -32,4 +32,16 @@ public class OrderDeliveryInfo implements Serializable {
   @JsonProperty("deliver_method")
   private Integer deliverMethod;
 
+  /** 用户下单后申请修改收货地址，商家同意后该字段会覆盖订单地址信息 */
+  @JsonProperty("address_under_review")
+  private OrderAddressInfo addressUnderReview;
+
+  /** 修改地址申请时间，秒级时间戳 */
+  @JsonProperty("address_apply_time")
+  private Long addressApplyTime;
+
+  /** 电子面单代发时的订单密文 */
+  @JsonProperty("ewaybill_order_code")
+  private String ewaybillOrderCode;
+
 }

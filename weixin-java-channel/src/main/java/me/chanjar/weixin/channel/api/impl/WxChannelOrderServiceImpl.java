@@ -2,13 +2,7 @@ package me.chanjar.weixin.channel.api.impl;
 
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Delivery.DELIVERY_SEND_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Delivery.GET_DELIVERY_COMPANY_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ORDER_GET_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ORDER_LIST_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ORDER_SEARCH_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_ADDRESS_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_EXPRESS_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_PRICE_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_REMARK_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.*;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -92,6 +86,20 @@ public class WxChannelOrderServiceImpl implements WxChannelOrderService {
   @Override
   public WxChannelBaseResponse updateDelivery(DeliveryUpdateParam param) throws WxErrorException {
     String resJson = shopService.post(UPDATE_EXPRESS_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse acceptAddressModify(String orderId) throws WxErrorException {
+    OrderIdParam param = new OrderIdParam(orderId);
+    String resJson = shopService.post(ACCEPT_ADDRESS_MODIFY_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse rejectAddressModify(String orderId) throws WxErrorException {
+    OrderIdParam param = new OrderIdParam(orderId);
+    String resJson = shopService.post(REJECT_ADDRESS_MODIFY_URL, param);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 

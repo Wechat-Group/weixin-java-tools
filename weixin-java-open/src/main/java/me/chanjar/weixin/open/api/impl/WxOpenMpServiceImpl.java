@@ -5,7 +5,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMpService;
@@ -14,7 +16,9 @@ import me.chanjar.weixin.open.bean.result.WxAmpLinkResult;
 import me.chanjar.weixin.open.bean.result.WxOpenResult;
 
 import java.net.URLEncoder;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>
@@ -24,13 +28,23 @@ public class WxOpenMpServiceImpl extends WxMpServiceImpl implements WxOpenMpServ
   private WxMpConfigStorage wxMpConfigStorage;
   private String appId;
 
+  /**
+   *
+   * @param wxOpenComponentService
+   * @param appId
+   * @param wxMpConfigStorage
+   */
   public WxOpenMpServiceImpl(WxOpenComponentService wxOpenComponentService, String appId, WxMpConfigStorage wxMpConfigStorage) {
 //    wxOpenComponentService.oauth2getAccessToken(appId)
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMpConfigStorage = wxMpConfigStorage;
     setOAuth2Service(new WxOpenMpOAuth2ServiceImpl(wxOpenComponentService, getOAuth2Service(), wxMpConfigStorage));
+    //添加addConfigStorage是为了解决处理来自微信开放平台的异步消息时调用WxMpServiceImpl.switchoverTo(String, Function)，因为configStorageMap没有任何公众号配置信息，最终会主动抛出无法找到对应公众号配置异常的问题。
+    //Issue:https://gitee.com/binary/weixin-java-tools/issues/I81AAF
+    addConfigStorage(appId,wxMpConfigStorage);
     initHttp();
+
   }
 
   @Override
