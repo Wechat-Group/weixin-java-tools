@@ -92,6 +92,14 @@ public class WxCpGroupRobotServiceImpl implements WxCpGroupRobotService {
       .setMediaId(mediaId).toJson());
   }
 
+
+  @Override
+  public void sendVoice(String webhookUrl, String mediaId) throws WxErrorException {
+    this.cpService.postWithoutToken(webhookUrl, new WxCpGroupRobotMessage()
+      .setMsgType(GroupRobotMsgType.VOICE)
+      .setMediaId(mediaId).toJson());
+  }
+
   @Override
   public void sendTemplateCardMessage(String webhookUrl, WxCpGroupRobotMessage wxCpGroupRobotMessage) throws WxErrorException {
     this.cpService.postWithoutToken(webhookUrl, wxCpGroupRobotMessage.toJson());
