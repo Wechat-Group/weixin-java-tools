@@ -196,12 +196,11 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
   @Override
   public void getMediaFile(@NonNull long sdk, @NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout, @NonNull Consumer<byte[]> action) throws WxErrorException {
-/**
- * 1、媒体文件每次拉取的最大size为512k，因此超过512k的文件需要分片拉取。
- * 2、若该文件未拉取完整，sdk的IsMediaDataFinish接口会返回0，同时通过GetOutIndexBuf接口返回下次拉取需要传入GetMediaData的indexbuf。
- * 3、indexbuf一般格式如右侧所示，”Range:bytes=524288-1048575“:表示这次拉取的是从524288到1048575的分片。单个文件首次拉取填写的indexbuf
- * 为空字符串，拉取后续分片时直接填入上次返回的indexbuf即可。
- */
+    /**
+     * 1、媒体文件每次拉取的最大size为512k，因此超过512k的文件需要分片拉取。
+     * 2、若该文件未拉取完整，sdk的IsMediaDataFinish接口会返回0，同时通过GetOutIndexBuf接口返回下次拉取需要传入GetMediaData的indexbuf。
+     * 3、indexbuf一般格式如右侧所示，”Range:bytes=524288-1048575“:表示这次拉取的是从524288到1048575的分片。单个文件首次拉取填写的indexbuf为空字符串，拉取后续分片时直接填入上次返回的indexbuf即可。
+     */
     String indexbuf = "";
     int ret, data_len = 0;
     log.debug("正在分片拉取媒体文件 sdkFileId为{}", sdkfileid);
@@ -215,8 +214,7 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
       }
 
       data_len += Finance.GetDataLen(mediaData);
-      log.info("正在分片拉取媒体文件 len:{}, data_len:{}, is_finis:{} \n", Finance.GetIndexLen(mediaData), data_len,
-        Finance.IsMediaDataFinish(mediaData));
+      log.debug("正在分片拉取媒体文件 len:{}, data_len:{}, is_finish:{} \n", Finance.GetIndexLen(mediaData), data_len, Finance.IsMediaDataFinish(mediaData));
 
       try {
         // 大于512k的文件会分片拉取，此处需要使用追加写，避免后面的分片覆盖之前的数据。

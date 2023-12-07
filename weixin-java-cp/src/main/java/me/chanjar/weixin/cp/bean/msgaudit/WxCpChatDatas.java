@@ -25,7 +25,7 @@ public class WxCpChatDatas implements Serializable {
   private String errMsg;
 
   @SerializedName("sdk")
-  private long sdk;
+  private Long sdk;
 
   @SerializedName("chatdata")
   private List<WxCpChatData> chatData;

@@ -18,10 +18,8 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.math.BigInteger;
+import java.util.*;
 
 /**
  * 企业微信会话内容存档测试类.
@@ -755,4 +753,48 @@ public class WxCpMsgAuditTest {
     }
     Finance.DestroySdk(chatDatas.getSdk());
   }
+
+  // 测试Uint64类型
+  public static void main(String[] args){
+    /*
+     * 会议邀请信息
+     */
+    String meeting = "{\"msgid\":\"5935786683775673543_1603877328\",\"action\":\"send\",\"from\":\"ken\"," +
+      "\"tolist\":[\"icef\",\"test\"],\"roomid\":\"wr2vOpDgAAN4zVWKbS\",\"msgtime\":1603877328914," +
+      "\"msgtype\":\"meeting\",\"meeting\":{\"topic\":\"夕会\",\"starttime\":1603877400,\"endtime\":1603881000," +
+      "\"address\":\"\",\"remarks\":\"\",\"meetingtype\":102,\"meetingid\":11101571002822706744,\"status\":1}}";
+    WxCpChatModel modelMeeting = WxCpChatModel.fromJson(meeting);
+    modelMeeting.getMeeting().getMeetingId();
+    System.out.println(modelMeeting.toJson());
+
+    /*
+     * 音频共享文档消息
+     */
+    String voipDocShare = "{\"msgid\":\"16527954622422422847_1594199256\",\"action\":\"send\"," +
+      "\"from\":\"18002520162\",\"tolist\":[\"wo137MCgAAYW6pIiKKrDe5SlzEhSgwbA\"],\"msgtime\":1594199235014," +
+      "\"msgtype\":\"voip_doc_share\",\"voipid\":\"gr2751c98b19300571f8afb3b74514bd32\"," +
+      "\"voip_doc_share\":{\"filename\":\"欢迎使用微盘.pdf.pdf\",\"md5sum\":\"ff893900f24e55e216e617a40e5c4648\"," +
+      "\"filesize\":11101571002822706744," +
+      "\"sdkfileid" +
+      "\":\"CpsBKjAqZUlLdWJMd2gvQ1JxMzd0ZjlpdW5mZzJOOE9JZm5kbndvRmRqdnBETjY0QlcvdGtHSFFTYm95dHM2VlllQXhkUUN5KzRmSy9KT3pudnA2aHhYZFlPemc2aVZ6YktzaVh3YkFPZHlqNnl2L2MvcGlqcVRjRTlhZEZsOGlGdHJpQ2RWSVNVUngrVFpuUmo3TGlPQ1BJemlRPT0SOE5EZGZNVFk0T0RnMU16YzVNVGt5T1RJMk9GODFNelUyTlRBd01qQmZNVFU1TkRFNU9USTFOZz09GiA3YTcwNmQ2Zjc5NjY3MDZjNjY2Zjc4NzI3NTZmN2E2YQ==\"}}";
+    WxCpChatModel modelVoipDocShare = WxCpChatModel.fromJson(voipDocShare);
+    System.out.println(modelVoipDocShare.toJson());
+
+    /*
+     * 填表消息
+     */
+    String collect = "{\"msgid\":\"2500536226619379797_1576034482\",\"action\":\"send\",\"from\":\"nick\"," +
+      "\"tolist\":[\"XuJinSheng\",\"15108264797\"],\"roomid\":\"wrjc7bDwYAOAhf9quEwRRxyyoMm0QAAA\"," +
+      "\"msgtime\":1576034482344,\"msgtype\":\"collect\",\"collect\":{\"room_name\":\"这是一个群\",\"creator\":\"nick\"," +
+      "\"create_time\":\"2019-12-11 11:21:22\",\"title\":\"这是填表title\",\"details\":[{\"id\":11101571002822706744,\"ques\":\"表项1，文本\"," +
+      "\"type\":\"Text\"},{\"id\":2,\"ques\":\"表项2，数字\",\"type\":\"Number\"},{\"id\":3,\"ques\":\"表项3，日期\"," +
+      "\"type\":\"Date\"},{\"id\":4,\"ques\":\"表项4，时间\",\"type\":\"Time\"}]}}";
+    WxCpChatModel modelCollect = WxCpChatModel.fromJson(collect);
+    System.out.println(modelCollect.toJson());
+
+    BigInteger id = modelCollect.getCollect().getDetails().get(0).getId();
+    System.out.println(id);
+
+  }
+
 }

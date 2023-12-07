@@ -7,6 +7,7 @@ import lombok.Setter;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -844,8 +845,11 @@ public class WxCpChatModel implements Serializable {
   public static class Details implements Serializable {
     private static final long serialVersionUID = -5028321625140879571L;
 
+    /**
+     * 表项id Uint64类型
+     */
     @SerializedName("id")
-    private Long id;
+    private BigInteger id;
 
     @SerializedName("ques")
     private String ques;
@@ -943,8 +947,11 @@ public class WxCpChatModel implements Serializable {
     @SerializedName("meetingtype")
     private Integer meetingType;
 
+    /**
+     * 会议id Uint64类型
+     */
     @SerializedName("meetingid")
-    private Long meetingId;
+    private BigInteger meetingId;
 
     @SerializedName("status")
     private Integer status;

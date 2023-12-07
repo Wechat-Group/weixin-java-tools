@@ -5,6 +5,7 @@ import lombok.Data;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 /**
  * 会话存档 文档信息对象
@@ -25,8 +26,11 @@ public class WxCpFileItem implements Serializable {
   @SerializedName("sdkfileid")
   private String sdkFileId;
 
+  /**
+   * 共享文件的大小 Uint64类型
+   */
   @SerializedName("filesize")
-  private Long fileSize;
+  private BigInteger fileSize;
 
   /**
    * From json wx cp file item.
