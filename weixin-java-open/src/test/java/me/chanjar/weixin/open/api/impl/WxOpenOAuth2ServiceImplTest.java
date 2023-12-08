@@ -12,11 +12,12 @@ import org.testng.annotations.Test;
  * created on  2020-10-19
  */
 public class WxOpenOAuth2ServiceImplTest {
-  private final WxOpenOAuth2ServiceImpl service = new WxOpenOAuth2ServiceImpl("123", "");
+  private final WxOpenOAuth2ServiceImpl service = new WxOpenOAuth2ServiceImpl("123", "",
+    new WxOpenInMemoryConfigStorage());
 
   @BeforeTest
   public void init() {
-    this.service.setWxOpenConfigStorage(new WxOpenInMemoryConfigStorage());
+//    this.service.setWxOpenConfigStorage(new WxOpenInMemoryConfigStorage());
   }
 
   @Test
