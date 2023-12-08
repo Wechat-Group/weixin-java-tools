@@ -537,6 +537,11 @@ public class WxCpConsts {
     public static final String FILE = "file";
 
     /**
+     * 文件类型消息.
+     */
+    public static final String VOICE = "voice";
+
+    /**
      * 模版类型消息.
      */
     public static final String TEMPLATE_CARD = "template_card";

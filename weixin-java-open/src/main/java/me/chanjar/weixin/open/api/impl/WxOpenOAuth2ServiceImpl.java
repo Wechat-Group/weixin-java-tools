@@ -1,6 +1,5 @@
 package me.chanjar.weixin.open.api.impl;
 
-import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.common.enums.WxType;
@@ -9,6 +8,7 @@ import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.service.WxOAuth2Service;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.URIUtil;
+import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -22,10 +22,15 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.Other.QRCONNECT_URL;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * created on  2020-10-19
  */
-@AllArgsConstructor
 public class WxOpenOAuth2ServiceImpl extends WxOpenServiceImpl implements WxOAuth2Service {
   private final String appId;
   private final String appSecret;
+
+  public WxOpenOAuth2ServiceImpl(String appId, String appSecret, WxOpenConfigStorage openConfigStorage) {
+    this.appId = appId;
+    this.appSecret = appSecret;
+    super.setWxOpenConfigStorage(openConfigStorage);
+  }
 
   @Override
   public String buildAuthorizationUrl(String redirectUri, String scope, String state) {

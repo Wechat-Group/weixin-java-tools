@@ -99,6 +99,15 @@ public interface WxCpGroupRobotService {
   void sendFile(String webhookUrl, String mediaId) throws WxErrorException;
 
   /**
+   * 发送文件类型的消息
+   *
+   * @param webhookUrl webhook地址
+   * @param mediaId    语音文件id
+   * @throws WxErrorException 异常
+   */
+  void sendVoice(String webhookUrl, String mediaId) throws WxErrorException;
+
+  /**
    * 发送模板卡片消息
    * @param webhookUrl
    * @param wxCpGroupRobotMessage
