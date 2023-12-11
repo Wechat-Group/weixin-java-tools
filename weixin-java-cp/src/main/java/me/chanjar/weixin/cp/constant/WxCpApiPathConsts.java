@@ -1330,6 +1330,10 @@ public interface WxCpApiPathConsts {
      */
     String CUSTOMER_ACQUISITION_QUOTA = "/cgi-bin/externalcontact/customer_acquisition_quota";
 
+    /**
+     * 查询链接使用详情
+     */
+    String CUSTOMER_ACQUISITION_STATISTIC = "/cgi-bin/externalcontact/customer_acquisition/statistic";
   }
 
   /**
