@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -49,6 +50,10 @@ public class ContentValue implements Serializable {
 
   @SerializedName("punch_correction")
   private PunchCorrection punchCorrection;
+
+  private Location location;
+
+  private Formula formula;
 
   /**
    * The type Date.
@@ -215,6 +220,31 @@ public class ContentValue implements Serializable {
     private static final long serialVersionUID = 2120523160034749170L;
     private String state;
     private Long time;
+    private Integer version;
+    @SerializedName("daymonthyear")
+    private Long dayMonthYear;
+  }
+
+  /**
+   * The type Location
+   */
+  @Data
+  public static class Location implements Serializable {
+    private static final long serialVersionUID = 2480012159725572839L;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
+    private String title;
+    private String address;
+    private Long time;
+  }
+
+  /**
+   * The type Formula
+   */
+  @Data
+  public static class Formula implements Serializable {
+    private static final long serialVersionUID = 816968197271971247L;
+    private String value;
   }
 
 }
