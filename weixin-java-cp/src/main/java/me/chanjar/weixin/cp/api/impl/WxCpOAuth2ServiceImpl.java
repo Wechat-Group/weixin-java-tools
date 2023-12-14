@@ -10,6 +10,7 @@ import me.chanjar.weixin.cp.api.WxCpOAuth2Service;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpOauth2UserInfo;
 import me.chanjar.weixin.cp.bean.WxCpUserDetail;
+import me.chanjar.weixin.cp.bean.workbench.WxCpSecondVerificatioInformation;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import static me.chanjar.weixin.common.api.WxConsts.OAuth2Scope.*;
@@ -105,5 +106,28 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
     String responseText = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(GET_USER_DETAIL),
       param.toString());
     return WxCpGsonBuilder.create().fromJson(responseText, WxCpUserDetail.class);
+  }
+
+  @Override
+  public WxCpOauth2UserInfo getAuthUserInfo(String code) throws WxErrorException {
+    String responseText =
+      this.mainService.get(String.format(this.mainService.getWxCpConfigStorage().getApiUrl(GET_USER_AUTH_INFO), code), null);
+    JsonObject jo = GsonParser.parse(responseText);
+
+    return WxCpOauth2UserInfo.builder()
+      .userId(GsonHelper.getString(jo, "UserId"))
+      .openId(GsonHelper.getString(jo, "OpenId"))
+      .userTicket(GsonHelper.getString(jo, "user_ticket"))
+      .externalUserId(GsonHelper.getString(jo, "external_userid"))
+      .build();
+  }
+
+  @Override
+  public WxCpSecondVerificatioInformation get_tfa_info(String code) throws WxErrorException {
+    JsonObject param = new JsonObject();
+    param.addProperty("code", code);
+    String responseText = this.mainService.post(this.mainService.getWxCpConfigStorage().getApiUrl(GET_TFA_INFO),
+      param.toString());
+    return WxCpGsonBuilder.create().fromJson(responseText, WxCpSecondVerificatioInformation.class);
   }
 }

@@ -148,6 +148,14 @@ public interface WxCpApiPathConsts {
      * The constant URL_OAUTH2_AUTHORIZE.
      */
     String URL_OAUTH2_AUTHORIZE = "https://open.weixin.qq.com/connect/oauth2/authorize";
+    /**
+     * The constant GET_USER_INFO without agentId.
+     */
+    String GET_USER_AUTH_INFO = "/cgi-bin/auth/getuserinfo?code=%s";
+    /**
+     * The constant GET_TFA_INFO.
+     */
+    String GET_TFA_INFO = "/cgi-bin/auth/get_tfa_info";
   }
 
   /**
