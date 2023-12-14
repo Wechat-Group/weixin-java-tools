@@ -28,5 +28,5 @@ public class WxCpApprovalInfo implements Serializable {
   private Integer nextCursor;
 
   @SerializedName("new_next_cursor")
-  private Integer newNextCursor;
+  private String newNextCursor;
 }
