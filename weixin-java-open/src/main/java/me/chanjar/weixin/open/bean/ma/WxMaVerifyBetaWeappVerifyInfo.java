@@ -30,7 +30,7 @@ public class WxMaVerifyBetaWeappVerifyInfo implements Serializable {
    * 企业代码类型 1：统一社会信用代码（18 位） 2：组织机构代码（9 位 xxxxxxxx-x） 3：营业执照注册号(15 位)
    */
   @SerializedName("code_type")
-  private String codeType;
+  private Integer codeType;
 
   /**
    * 法人微信号
