@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.openapi.WxMiniGetApiQuotaResult;
+import cn.binarywang.wx.miniapp.bean.openapi.WxMiniGetRidInfoResult;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -39,6 +40,15 @@ public class WxMaOpenApiServiceImplTest {
     assertNotNull(apiQuota);
     System.out.println(new Gson().toJson(apiQuota));
   }
+
+  @Test
+  public void getApiQuotaInfo() throws WxErrorException {
+    String rid = "658723fa-2d3a0086-64bc7215";
+    final WxMiniGetRidInfoResult ridInfo = wxMaService.getWxMaOpenApiService().getRidInfo(rid);
+    assertNotNull(ridInfo);
+    System.out.println(new Gson().toJson(ridInfo));
+  }
+
   @Test
   public void clearQuotaByAppSecret() throws WxErrorException {
     final boolean result = wxMaService.getWxMaOpenApiService().clearQuotaByAppSecret();
