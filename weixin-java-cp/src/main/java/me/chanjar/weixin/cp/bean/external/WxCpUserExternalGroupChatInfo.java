@@ -18,47 +18,74 @@ import java.util.List;
 @Setter
 public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
 
+  /**
+   * 客户群详情
+   */
   @SerializedName("group_chat")
   private GroupChat groupChat;
 
   /**
-   * The type Group chat.
+   * 客户群详情
    */
   @Getter
   @Setter
   public static class GroupChat implements Serializable {
     private static final long serialVersionUID = -4301684507150486556L;
 
+    /**
+     * 客户群ID
+     */
     @SerializedName("chat_id")
     private String chatId;
-
+    /**
+     * 群名
+     */
     @SerializedName("name")
     private String name;
-
+    /**
+     * 群主ID
+     */
     @SerializedName("owner")
     private String owner;
 
+    /**
+     * 群的创建时间
+     */
     @SerializedName("create_time")
     private Long createTime;
-
+    /**
+     * 群公告
+     */
     @SerializedName("notice")
     private String notice;
-
+    /**
+     * 群成员列表
+     */
     @SerializedName("member_list")
     private List<GroupMember> memberList;
-
+    /**
+     * 群管理员列表
+     */
     @SerializedName("admin_list")
     private List<GroupAdmin> adminList;
+    /**
+     * 当前群成员版本号。可以配合客户群变更事件减少主动调用本接口的次数
+     */
+    @SerializedName("member_version")
+    private String memberVersion;
   }
 
   /**
-   * The type Group member.
+   * 群成员
    */
   @Getter
   @Setter
   public static class GroupMember implements Serializable {
     private static final long serialVersionUID = -4301684507150486556L;
 
+    /**
+     * 群成员id
+     */
     @SerializedName("userid")
     private String userId;
 
@@ -70,16 +97,20 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     @SerializedName("type")
     private int type;
 
-    @SerializedName("join_time")
-    private Long joinTime;
-
     /**
      * 外部联系人在微信开放平台的唯一身份标识（微信unionid）
      * 通过此字段企业可将外部联系人与公众号/小程序用户关联起来
-     * 仅当群成员类型是微信用户（包括企业成员未添加好友），且企业或第三方服务商绑定了微信开发者ID有此字段
+     * 仅当群成员类型是微信用户（包括企业成员未添加好友），且企业绑定了微信开发者ID有此字段（查看绑定方法）。
+     * 第三方不可获取，上游企业不可获取下游企业客户的unionid字段
      */
     @SerializedName("unionid")
     private String unionId;
+
+    /**
+     * 入群时间
+     */
+    @SerializedName("join_time")
+    private Long joinTime;
 
     /**
      * 入群方式。
@@ -91,10 +122,10 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     private int joinScene;
 
     /**
-     * 该成员入群方式对应的state参数
+     * 邀请者。目前仅当是由本企业内部成员邀请入群时会返回该值
      */
-    @SerializedName("state")
-    private String state;
+    @SerializedName("invitor")
+    private Invitor invitor;
 
     /**
      * 在群里的昵称
@@ -110,11 +141,6 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     @SerializedName("name")
     private String name;
 
-    /**
-     * 邀请者。目前仅当是由本企业内部成员邀请入群时会返回该值
-     */
-    @SerializedName("invitor")
-    private Invitor invitor;
   }
 
   /**
@@ -132,7 +158,7 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
   }
 
   /**
-   * The type Group admin.
+   * 群管理员列表
    */
   @Getter
   @Setter
