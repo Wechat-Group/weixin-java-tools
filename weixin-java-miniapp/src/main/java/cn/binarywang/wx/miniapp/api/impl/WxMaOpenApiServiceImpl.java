@@ -23,7 +23,6 @@ import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 public class WxMaOpenApiServiceImpl implements WxMaOpenApiService {
   private final WxMaService wxMaService;
 
-  private static final String QUOTA = "quota";
   private static final String REQUEST = "request";
 
 
@@ -42,11 +41,7 @@ public class WxMaOpenApiServiceImpl implements WxMaOpenApiService {
     params.addProperty("cgi_path", cgiPath);
     String responseContent = this.wxMaService.post(WxMaApiUrlConstants.OpenApi.GET_API_QUOTA, params.toString());
     parseErrorResponse(responseContent);
-    JsonObject response = GsonParser.parse(responseContent);
-    if (response.has(QUOTA)) {
-      return WxMaGsonBuilder.create().fromJson(response.getAsJsonObject(QUOTA), WxMiniGetApiQuotaResult.class);
-    }
-    return null;
+    return WxMaGsonBuilder.create().fromJson(GsonParser.parse(responseContent), WxMiniGetApiQuotaResult.class);
   }
 
 
@@ -58,7 +53,7 @@ public class WxMaOpenApiServiceImpl implements WxMaOpenApiService {
     parseErrorResponse(responseContent);
     JsonObject response = GsonParser.parse(responseContent);
     if (response.has(REQUEST)) {
-      return WxMaGsonBuilder.create().fromJson(response.getAsJsonObject(QUOTA), WxMiniGetRidInfoResult.class);
+      return WxMaGsonBuilder.create().fromJson(response.getAsJsonObject(REQUEST), WxMiniGetRidInfoResult.class);
     }
     return null;
   }
