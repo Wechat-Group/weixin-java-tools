@@ -389,11 +389,15 @@ public class WxCpExternalContactServiceImplTest {
     assertNotNull(result);
   }
 
+
   /**
    * Test get group chat.
    */
   @Test
-  public void testGetGroupChat() {
+  public void testGetGroupChat() throws WxErrorException {
+    final WxCpUserExternalGroupChatInfo result = this.wxCpService.getExternalContactService().getGroupChat("wrOgQhDgAAMYQiS5ol9G7gK9JVAAAA", 1);
+    System.out.println(result);
+    assertNotNull(result);
   }
 
   /**
@@ -624,7 +628,7 @@ public class WxCpExternalContactServiceImplTest {
   @Test
   public void testRemindGroupMsgSend() throws WxErrorException {
     this.wxCpService.getExternalContactService()
-                    .remindGroupMsgSend("msgGCAAAXtWyujaWJHDDGi0mACAAAA");
+      .remindGroupMsgSend("msgGCAAAXtWyujaWJHDDGi0mACAAAA");
   }
 
   /**
@@ -635,6 +639,6 @@ public class WxCpExternalContactServiceImplTest {
   @Test
   public void testCancelGroupMsgSend() throws WxErrorException {
     this.wxCpService.getExternalContactService()
-                    .cancelGroupMsgSend("msgGCAAAXtWyujaWJHDDGi0mACAAAA");
+      .cancelGroupMsgSend("msgGCAAAXtWyujaWJHDDGi0mACAAAA");
   }
 }
