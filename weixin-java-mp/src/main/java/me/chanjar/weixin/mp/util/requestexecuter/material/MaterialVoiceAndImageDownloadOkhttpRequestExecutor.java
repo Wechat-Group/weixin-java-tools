@@ -35,7 +35,7 @@ public class MaterialVoiceAndImageDownloadOkhttpRequestExecutor extends Material
     Request request = new Request.Builder().url(uri).get().post(requestBody).build();
     Response response = client.newCall(request).execute();
     String contentTypeHeader = response.header("Content-Type");
-    if ("text/plain".equals(contentTypeHeader)) {
+    if ("text/plain".equals(contentTypeHeader) || "application/json; charset=utf-8".equals(contentTypeHeader)) {
       String responseContent = response.body().string();
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MP));
     }
