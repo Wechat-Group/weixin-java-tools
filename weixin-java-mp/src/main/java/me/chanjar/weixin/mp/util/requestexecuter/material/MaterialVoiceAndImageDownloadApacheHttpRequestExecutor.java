@@ -46,7 +46,7 @@ public class MaterialVoiceAndImageDownloadApacheHttpRequestExecutor extends Mate
       // 下载媒体文件出错
       byte[] responseContent = IOUtils.toByteArray(inputStream);
       String responseContentString = new String(responseContent, StandardCharsets.UTF_8);
-      if (responseContentString.length() <= 128) {
+      if (responseContentString.length() <= 215) {
         try {
           WxError wxError = WxGsonBuilder.create().fromJson(responseContentString, WxError.class);
           if (wxError.getErrorCode() != 0) {
