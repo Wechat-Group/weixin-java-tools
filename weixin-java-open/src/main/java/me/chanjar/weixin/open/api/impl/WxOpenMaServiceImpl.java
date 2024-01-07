@@ -4,8 +4,10 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaAuditMediaUploadResult;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.binarywang.wx.miniapp.bean.WxMaUploadAuthMaterialResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.executor.AuditMediaUploadRequestExecutor;
+import cn.binarywang.wx.miniapp.executor.UploadAuthMaterialRequestExecutor;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -465,5 +467,10 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     params.addProperty(ACTION, "apply");
     String response = post(API_WX_APPLY_LIVE_INFO, GSON.toJson(params));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaApplyLiveInfoResult.class);
+  }
+
+  @Override
+  public WxMaUploadAuthMaterialResult uploadAuthMaterial(File file) throws WxErrorException {
+    return (WxMaUploadAuthMaterialResult) this.execute(UploadAuthMaterialRequestExecutor.create(getRequestHttp()), API_UPLOAD_AUTH_MATERIAL, file);
   }
 }

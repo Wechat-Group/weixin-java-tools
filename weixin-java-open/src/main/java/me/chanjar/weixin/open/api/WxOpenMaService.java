@@ -2,6 +2,7 @@ package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaAuditMediaUploadResult;
+import cn.binarywang.wx.miniapp.bean.WxMaUploadAuthMaterialResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.bean.ma.WxMaPrefetchDomain;
 import me.chanjar.weixin.open.bean.ma.WxMaScheme;
@@ -272,6 +273,11 @@ public interface WxOpenMaService extends WxMaService {
    * 申请开通直播
    */
   String API_WX_APPLY_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/applyliveinfo";
+
+  /**
+   * 小程序认证上传补充材料
+   */
+  String API_UPLOAD_AUTH_MATERIAL = "https://api.weixin.qq.com/wxa/sec/uploadauthmaterial";
 
   /**
    * 获得小程序的域名配置信息
@@ -751,5 +757,12 @@ public interface WxOpenMaService extends WxMaService {
    * @throws WxErrorException the wx error exception
    */
   WxOpenMaApplyLiveInfoResult applyLiveInfo() throws WxErrorException;
+
+  /**
+   * 小程序认证上传补充材料
+   *
+   * @return
+   */
+  WxMaUploadAuthMaterialResult uploadAuthMaterial(File file) throws WxErrorException;
 
 }
