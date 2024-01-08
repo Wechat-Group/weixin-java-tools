@@ -115,8 +115,8 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
     JsonObject jo = GsonParser.parse(responseText);
 
     return WxCpOauth2UserInfo.builder()
-      .userId(GsonHelper.getString(jo, "UserId"))
-      .openId(GsonHelper.getString(jo, "OpenId"))
+      .userId(GsonHelper.getString(jo, "userid"))
+      .openId(GsonHelper.getString(jo, "openid"))
       .userTicket(GsonHelper.getString(jo, "user_ticket"))
       .externalUserId(GsonHelper.getString(jo, "external_userid"))
       .build();
