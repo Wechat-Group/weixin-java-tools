@@ -80,7 +80,7 @@
 <dependency>
   <groupId>com.github.binarywang</groupId>
   <artifactId>（不同模块参考下文）</artifactId>
-  <version>4.6.0</version>
+  <version>4.6.0-fix</version>
 </dependency>
 ```
 
