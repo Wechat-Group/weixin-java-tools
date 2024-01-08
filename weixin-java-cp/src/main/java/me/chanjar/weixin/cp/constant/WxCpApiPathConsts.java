@@ -143,7 +143,7 @@ public interface WxCpApiPathConsts {
     /**
      * The constant GET_USER_DETAIL.
      */
-    String GET_USER_DETAIL = "/cgi-bin/user/getuserdetail";
+    String GET_USER_DETAIL = "/cgi-bin/auth/getuserdetail";
     /**
      * The constant URL_OAUTH2_AUTHORIZE.
      */
