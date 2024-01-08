@@ -102,14 +102,16 @@ public interface WxCpOAuth2Service {
 
   /**
    * <pre>
-   * 使用user_ticket获取成员详情.
+   * 使用user_ticket获取成员详情
    *
-   * 文档地址：https://work.weixin.qq.com/api/doc#10028/%E4%BD%BF%E7%94%A8user_ticket%E8%8E%B7%E5%8F%96%E6%88%90%E5%91%98%E8%AF%A6%E6%83%85
+   * 文档地址：https://developer.work.weixin.qq.com/document/path/95833
    * 请求方式：POST（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/user/getuserdetail?access_token=ACCESS_TOKEN
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/auth/getuserdetail?access_token=ACCESS_TOKEN
    *
-   * 权限说明：
-   * 需要有对应应用的使用权限，且成员必须在授权应用的可见范围内。
+   * 注意: 原/cgi-bin/user/getuserdetail接口的url已变更为/cgi-bin/auth/getuserdetail，旧接口暂时还可以使用，但建议使用新接口
+   *
+   * 权限说明：需要有对应应用的使用权限，且成员必须在授权应用的可见范围内。
+   * 适用范围：企业内部开发、服务商代开发
    * </pre>
    *
    * @param userTicket 成员票据
