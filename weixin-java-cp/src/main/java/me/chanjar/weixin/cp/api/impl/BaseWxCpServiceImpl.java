@@ -5,12 +5,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.executor.CommonUploadRequestExecutor;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -24,8 +26,6 @@ import me.chanjar.weixin.cp.bean.WxCpAgentJsapiSignature;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
-import me.chanjar.weixin.cp.corpgroup.service.WxCpLinkedCorpService;
-import me.chanjar.weixin.cp.corpgroup.service.impl.WxCpLinkedCorpServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -266,6 +266,12 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public String post(String url, ToJson obj) throws WxErrorException {
     return this.post(url, obj.toJson());
+  }
+
+  @Override
+  public String upload(String url, CommonUploadParam param) throws WxErrorException {
+    RequestExecutor<String, CommonUploadParam> executor = CommonUploadRequestExecutor.create(getRequestHttp());
+    return this.execute(executor, url, param);
   }
 
   @Override

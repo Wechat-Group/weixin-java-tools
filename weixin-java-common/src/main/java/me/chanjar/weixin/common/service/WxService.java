@@ -1,6 +1,7 @@
 package me.chanjar.weixin.common.service;
 
 import com.google.gson.JsonObject;
+import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -60,4 +61,14 @@ public interface WxService {
    * @throws WxErrorException 异常
    */
   String post(String url, ToJson obj) throws WxErrorException;
+
+  /**
+   * 当本Service没有实现某个上传API的时候，可以用这个，针对所有微信API中的POST文件上传请求
+   *
+   * @param url   请求接口地址
+   * @param param 文件上传对象
+   * @return 接口响应字符串
+   * @throws WxErrorException 异常
+   */
+  String upload(String url, CommonUploadParam param) throws WxErrorException;
 }
