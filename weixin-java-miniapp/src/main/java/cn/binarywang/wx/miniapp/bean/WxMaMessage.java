@@ -317,4 +317,28 @@ public class WxMaMessage implements Serializable {
     return WxMaGsonBuilder.create().toJson(this);
   }
 
+  public String getAppid() {
+    return appid;
+  }
+
+  public void setAppid(String appid) {
+    this.appid = appid;
+  }
+
+  public String getAppID() {
+    return appID;
+  }
+
+  public void setAppID(String appID) {
+    this.appID = appID;
+  }
+
+  public String getAppId() {
+    return appId;
+  }
+
+  public void setAppId(String appId) {
+    this.appId = appId;
+  }
+
 }

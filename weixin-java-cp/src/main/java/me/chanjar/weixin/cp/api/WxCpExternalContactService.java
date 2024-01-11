@@ -1291,4 +1291,22 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   WxCpCustomerAcquisitionQuota customerAcquisitionQuota() throws WxErrorException;
+
+
+  /**
+   * 查询链接使用详情
+   * 服务商可通过此接口查询指定组件授权的获客链接在指定时间范围内的访问情况。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/customer_acquisition/statistic?access_token=ACCESS_TOKEN
+   *
+   * @author Hugo
+   * @date 2023/12/5 14:34
+   * @param linkId 获客链接的id
+   * @param startTime 统计起始时间
+   * @param endTime 统计结束时间
+   * @return 点击链接客户数和新增客户数
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpCustomerAcquisitionStatistic customerAcquisitionStatistic(String linkId, Date startTime, Date endTime) throws WxErrorException;
 }

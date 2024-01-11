@@ -10,6 +10,7 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import okhttp3.*;
 import okio.BufferedSink;
 import okio.Okio;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,14 +36,12 @@ public class MaterialVoiceAndImageDownloadOkhttpRequestExecutor extends Material
     Request request = new Request.Builder().url(uri).get().post(requestBody).build();
     Response response = client.newCall(request).execute();
     String contentTypeHeader = response.header("Content-Type");
-    if ("text/plain".equals(contentTypeHeader)) {
+    if ("text/plain".equals(contentTypeHeader) || "application/json; charset=utf-8".equals(contentTypeHeader)
+      || "application/json; encoding=utf-8".equals(contentTypeHeader)) {
       String responseContent = response.body().string();
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MP));
     }
-
-    try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream(); BufferedSink sink = Okio.buffer(Okio.sink(outputStream))) {
-      sink.writeAll(response.body().source());
-      return new ByteArrayInputStream(outputStream.toByteArray());
-    }
+    byte[] responseContent = IOUtils.toByteArray(response.body().source().inputStream());
+    return new ByteArrayInputStream(responseContent);
   }
 }

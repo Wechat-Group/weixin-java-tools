@@ -153,7 +153,43 @@ public class WxCpOaServiceImpl implements WxCpOaService {
 
   @Override
   public WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime) throws WxErrorException {
-    return this.getApprovalInfo(startTime, endTime, null, null, null);
+    return this.getApprovalInfo(startTime, endTime, 0, null, null);
+  }
+
+  @Override
+  public WxCpApprovalInfo getApprovalInfo(@NonNull Date startTime, @NonNull Date endTime, String newCursor,
+                                          Integer size, List<WxCpApprovalInfoQueryFilter> filters)
+    throws WxErrorException {
+    if (newCursor == null) {
+      newCursor = "";
+    }
+
+    if (size == null) {
+      size = 100;
+    }
+
+    if (size < 0 || size > 100) {
+      throw new IllegalArgumentException("size参数错误,请使用[1-100]填充，默认100");
+    }
+
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("starttime", startTime.getTime() / 1000L);
+    jsonObject.addProperty("endtime", endTime.getTime() / 1000L);
+    jsonObject.addProperty("size", size);
+    jsonObject.addProperty("new_cursor", newCursor);
+
+    if (filters != null && !filters.isEmpty()) {
+      JsonArray filterJsonArray = new JsonArray();
+      for (WxCpApprovalInfoQueryFilter filter : filters) {
+        filterJsonArray.add(new JsonParser().parse(filter.toJson()));
+      }
+      jsonObject.add("filters", filterJsonArray);
+    }
+
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_APPROVAL_INFO);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+
+    return WxCpGsonBuilder.create().fromJson(responseContent, WxCpApprovalInfo.class);
   }
 
   @Override

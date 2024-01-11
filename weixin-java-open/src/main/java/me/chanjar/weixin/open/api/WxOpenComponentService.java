@@ -75,7 +75,7 @@ public interface WxOpenComponentService {
   /**
    * 手机端打开授权链接.
    */
-  String COMPONENT_MOBILE_LOGIN_PAGE_URL = "https://mp.weixin.qq.com/safe/bindcomponent?action=bindcomponent&no_scan=1&auth_type=3&component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=xxx&biz_appid=xxx#wechat_redirect";
+  String COMPONENT_MOBILE_LOGIN_PAGE_URL = "https://open.weixin.qq.com/wxaopen/safe/bindcomponent?action=bindcomponent&no_scan=1&component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=xxx&biz_appid=xxx#wechat_redirect";
   /**
    * The constant CONNECT_OAUTH2_AUTHORIZE_URL.
    */

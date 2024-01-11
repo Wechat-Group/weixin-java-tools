@@ -167,6 +167,45 @@ public class EntPayRequest extends BaseWxPayRequest {
   @XStreamAlias("spbill_create_ip")
   private String spbillCreateIp;
 
+  /**
+   * <pre>
+   * 字段名：付款场景.
+   * 变量名：scene
+   * 是否必填：否
+   * 示例值：BRAND_REDPACKET
+   * 类型：String(64)
+   * 描述：BRAND_REDPACKET：品牌红包，其他值或不传则默认为普通付款到零钱
+   * </pre>
+   */
+  @XStreamAlias("scene")
+  private String scene;
+
+  /**
+   * <pre>
+   * 字段名：品牌ID.
+   * 变量名：brand_id
+   * 是否必填：否
+   * 示例值：1234
+   * 类型：int
+   * 描述：品牌在微信支付的唯一标识。仅在付款场景为品牌红包时必填
+   * </pre>
+   */
+  @XStreamAlias("brand_id")
+  private Integer brandId;
+
+  /**
+   * <pre>
+   * 字段名：消息模板ID.
+   * 变量名：finder_template_id
+   * 是否必填：否
+   * 示例值：1243100000000000
+   * 类型：String(128)
+   * 描述：品牌所配置的消息模板的唯一标识。仅在付款场景为品牌红包时必填。
+   * </pre>
+   */
+  @XStreamAlias("finder_template_id")
+  private String finderTemplateId;
+
   @Override
   protected void checkConstraints() {
 
@@ -209,5 +248,8 @@ public class EntPayRequest extends BaseWxPayRequest {
     map.put("amount", amount.toString());
     map.put("desc", description);
     map.put("spbill_create_ip", spbillCreateIp);
+    map.put("scene", scene);
+    map.put("brand_id", brandId.toString());
+    map.put("finder_template_id", finderTemplateId);
   }
 }
