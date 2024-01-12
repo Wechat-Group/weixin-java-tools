@@ -4,8 +4,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.crypto.WxCryptUtil;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import org.apache.commons.lang3.StringUtils;
-import sun.security.util.DerInputStream;
-import sun.security.util.DerValue;
+import org.bouncycastle.asn1.pkcs.RSAPrivateKey;
 
 import javax.crypto.Cipher;
 import java.nio.charset.StandardCharsets;
@@ -105,11 +104,18 @@ public class WxCpCryptUtil extends WxCryptUtil {
       .replace(" ", "");
 
     byte[] keyBytes = Base64.getDecoder().decode(privateKey);
-    DerValue[] seq = new DerInputStream(keyBytes).getSequence(0);
-    RSAPrivateCrtKeySpec keySpec = new RSAPrivateCrtKeySpec(seq[1].getBigInteger(), seq[2].getBigInteger(),
-      seq[3].getBigInteger(), seq[4].getBigInteger(),
-      seq[5].getBigInteger(), seq[6].getBigInteger(),
-      seq[7].getBigInteger(), seq[8].getBigInteger());
+    // Java 8 以后 sun.security.util.DerInputStream 和 sun.security.util.DerValue 无法使用
+    // 因此改为通过 org.bouncycastle:bcprov-jdk18on 来完成 ASN1 编码数据解析
+    final RSAPrivateKey key = RSAPrivateKey.getInstance(keyBytes);
+    final RSAPrivateCrtKeySpec keySpec = new RSAPrivateCrtKeySpec(
+      key.getModulus(),
+      key.getPublicExponent(),
+      key.getPrivateExponent(),
+      key.getPrime1(),
+      key.getPrime2(),
+      key.getExponent1(),
+      key.getExponent2(),
+      key.getCoefficient());
 
     PrivateKey priKey = KeyFactory.getInstance("RSA").generatePrivate(keySpec);
     Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
