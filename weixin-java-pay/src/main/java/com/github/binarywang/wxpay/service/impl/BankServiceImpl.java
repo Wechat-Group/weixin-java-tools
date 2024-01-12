@@ -4,9 +4,12 @@ import com.github.binarywang.wxpay.bean.bank.*;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.BankService;
 import com.github.binarywang.wxpay.service.WxPayService;
+import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
+
+import java.net.URLEncoder;
 
 /**
  * 微信支付-银行组件
@@ -20,6 +23,12 @@ public class BankServiceImpl implements BankService {
 
   @Override
   public BankAccountResult searchBanksByBankAccount(String accountNumber) throws WxPayException {
+    try {
+      String encryptAccountNumber = RsaCryptoUtil.encryptOAEP(accountNumber, this.payService.getConfig().getVerifier().getValidCertificate());
+      accountNumber = URLEncoder.encode(encryptAccountNumber, "UTF-8");
+    } catch (Exception e) {
+      throw new RuntimeException("银行卡号加密异常!", e);
+    }
     String url = String.format("%s/v3/capital/capitallhh/banks/search-banks-by-bank-account?account_number=%s", this.payService.getPayBaseUrl(), accountNumber);
     String response = payService.getV3WithWechatPaySerial(url);
     return GSON.fromJson(response, BankAccountResult.class);
