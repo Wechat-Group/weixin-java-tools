@@ -12,12 +12,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.executor.CommonUploadRequestExecutor;
 import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.util.DataUtils;
@@ -238,6 +240,12 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
+  public String upload(String url, CommonUploadParam param) throws WxErrorException {
+    RequestExecutor<String, CommonUploadParam> executor = CommonUploadRequestExecutor.create(getRequestHttp());
+    return this.execute(executor, url, param);
+  }
+
+  @Override
   public String post(String url, JsonObject jsonObject) throws WxErrorException {
     return this.post(url, jsonObject.toString());
   }
@@ -378,7 +386,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @JsonDeserialize
   public void setMultiConfigs(Map<String, WxMaConfig> configs, String defaultMiniappId) {
     // 防止覆盖配置
-    if(this.configMap != null) {
+    if (this.configMap != null) {
       this.configMap.putAll(configs);
     } else {
       this.configMap = Maps.newHashMap(configs);
@@ -689,7 +697,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
-  public WxMaExpressDeliveryReturnService getWxMaExpressDeliveryReturnService(){
+  public WxMaExpressDeliveryReturnService getWxMaExpressDeliveryReturnService() {
     return this.wxMaExpressDeliveryReturnService;
   }
 }

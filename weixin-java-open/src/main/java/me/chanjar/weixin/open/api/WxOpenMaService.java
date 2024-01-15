@@ -703,6 +703,13 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenMaBasicService getBasicService();
 
   /**
+   * 小程序认证（年审）服务
+   *
+   * @return 小程序认证（年审）服务
+   */
+  WxOpenMaAuthService getAuthService();
+
+  /**
    * 小程序用户隐私保护指引服务
    *
    * @return 小程序用户隐私保护指引服务
@@ -719,7 +726,7 @@ public interface WxOpenMaService extends WxMaService {
   /**
    * 小程序审核 提审素材上传接口
    *
-   * @return
+   * @return 结果
    */
   WxMaAuditMediaUploadResult uploadMedia(File file) throws WxErrorException;
 

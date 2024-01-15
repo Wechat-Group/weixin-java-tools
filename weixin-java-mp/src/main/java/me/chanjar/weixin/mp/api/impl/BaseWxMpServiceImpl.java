@@ -8,15 +8,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.bean.ToJson;
-import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.bean.WxJsapiSignature;
-import me.chanjar.weixin.common.bean.WxNetCheckResult;
+import me.chanjar.weixin.common.bean.*;
 import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.executor.CommonUploadRequestExecutor;
 import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.service.WxOAuth2Service;
 import me.chanjar.weixin.common.service.WxOcrService;
@@ -402,6 +400,12 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   }
 
   @Override
+  public String upload(String url, CommonUploadParam param) throws WxErrorException {
+    RequestExecutor<String, CommonUploadParam> executor = CommonUploadRequestExecutor.create(getRequestHttp());
+    return this.execute(executor, url, param);
+  }
+
+  @Override
   public String post(String url, JsonObject jsonObject) throws WxErrorException {
     return this.post(url, jsonObject.toString());
   }
@@ -543,7 +547,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   @Override
   public void setMultiConfigStorages(Map<String, WxMpConfigStorage> configStorages, String defaultMpId) {
     // 防止覆盖配置
-    if(this.configStorageMap != null) {
+    if (this.configStorageMap != null) {
       this.configStorageMap.putAll(configStorages);
     } else {
       this.configStorageMap = Maps.newHashMap(configStorages);

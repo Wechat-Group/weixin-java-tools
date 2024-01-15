@@ -1,44 +1,23 @@
 package me.chanjar.weixin.qidian.api.impl;
 
-import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.CLEAR_QUOTA_URL;
-import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_CALLBACK_IP_URL;
-import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_CURRENT_AUTOREPLY_INFO_URL;
-import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.GET_TICKET_URL;
-import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.NETCHECK_URL;
-import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.QRCONNECT_URL;
-import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.SHORTURL_API_URL;
-
-import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
-import org.apache.commons.lang3.StringUtils;
-
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.bean.ToJson;
-import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.bean.WxJsapiSignature;
-import me.chanjar.weixin.common.bean.WxNetCheckResult;
+import me.chanjar.weixin.common.bean.*;
 import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.executor.CommonUploadRequestExecutor;
 import me.chanjar.weixin.common.util.DataUtils;
 import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
-import me.chanjar.weixin.common.util.http.RequestExecutor;
-import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
-import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
-import me.chanjar.weixin.common.util.http.URIUtil;
+import me.chanjar.weixin.common.util.http.*;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.qidian.api.WxQidianCallDataService;
@@ -47,6 +26,13 @@ import me.chanjar.weixin.qidian.api.WxQidianService;
 import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
 import me.chanjar.weixin.qidian.enums.WxQidianApiUrl;
 import me.chanjar.weixin.qidian.util.WxQidianConfigStorageHolder;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
+
+import static me.chanjar.weixin.qidian.enums.WxQidianApiUrl.Other.*;
 
 /**
  * 基础实现类.
@@ -56,9 +42,9 @@ import me.chanjar.weixin.qidian.util.WxQidianConfigStorageHolder;
 @Slf4j
 public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, RequestHttp<H, P> {
   @Getter
-  private WxQidianDialService dialService = new WxQidianDialServiceImpl(this);
+  private final WxQidianDialService dialService = new WxQidianDialServiceImpl(this);
   @Getter
-  private WxQidianCallDataService callDataService = new WxQidianCallDataServiceImpl(this);
+  private final WxQidianCallDataService callDataService = new WxQidianCallDataServiceImpl(this);
 
   private Map<String, WxQidianConfigStorage> configStorageMap;
 
@@ -93,7 +79,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
       try {
         if (this.getWxMpConfigStorage().isTicketExpired(type)) {
           String responseContent = execute(SimpleGetRequestExecutor.create(this),
-              GET_TICKET_URL.getUrl(this.getWxMpConfigStorage()) + type.getCode(), null);
+            GET_TICKET_URL.getUrl(this.getWxMpConfigStorage()) + type.getCode(), null);
           JsonObject tmpJsonObject = GsonParser.parse(responseContent);
           String jsapiTicket = tmpJsonObject.get("ticket").getAsString();
           int expiresInSeconds = tmpJsonObject.get("expires_in").getAsInt();
@@ -123,7 +109,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
     String randomStr = RandomUtils.getRandomStr();
     String jsapiTicket = getJsapiTicket(false);
     String signature = SHA1.genWithAmple("jsapi_ticket=" + jsapiTicket, "noncestr=" + randomStr,
-        "timestamp=" + timestamp, "url=" + url);
+      "timestamp=" + timestamp, "url=" + url);
     WxJsapiSignature jsapiSignature = new WxJsapiSignature();
     jsapiSignature.setAppId(this.getWxMpConfigStorage().getAppId());
     jsapiSignature.setTimestamp(timestamp);
@@ -154,7 +140,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   @Override
   public String buildQrConnectUrl(String redirectUri, String scope, String state) {
     return String.format(QRCONNECT_URL.getUrl(this.getWxMpConfigStorage()), this.getWxMpConfigStorage().getAppId(),
-        URIUtil.encodeURIComponent(redirectUri), scope, StringUtils.trimToEmpty(state));
+      URIUtil.encodeURIComponent(redirectUri), scope, StringUtils.trimToEmpty(state));
   }
 
   @Override
@@ -213,6 +199,12 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   @Override
   public String post(String url, ToJson obj) throws WxErrorException {
     return this.post(url, obj.toJson());
+  }
+
+  @Override
+  public String upload(String url, CommonUploadParam param) throws WxErrorException {
+    RequestExecutor<String, CommonUploadParam> executor = CommonUploadRequestExecutor.create(getRequestHttp());
+    return this.execute(executor, url, param);
   }
 
   @Override
