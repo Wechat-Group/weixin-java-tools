@@ -203,6 +203,27 @@ public class WxCpXmlMessage implements Serializable {
   private String openKfId;
 
   /**
+   * 新增授权的客服账号列表，多个AuthAddOpenKfId节点表示多个新增账号
+   */
+  @XStreamAlias("AuthAddOpenKfId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String authAddOpenKfId;
+
+  /**
+   * 取消授权的客服账号列表，多个AuthDelOpenKfId节点表示多个取消账号
+   */
+  @XStreamAlias("AuthDelOpenKfId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String authDelOpenKfId;
+
+  /**
+   * 失效的获客链接ID
+   */
+  @XStreamAlias("LinkId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String linkId;
+
+  /**
    * 通讯录变更事件.
    * 请参考常量 me.chanjar.weixin.cp.constant.WxCpConsts.ContactChangeType
    */

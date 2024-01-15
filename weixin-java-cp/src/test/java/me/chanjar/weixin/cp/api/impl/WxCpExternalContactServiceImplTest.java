@@ -3,6 +3,7 @@ package me.chanjar.weixin.cp.api.impl;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
@@ -13,6 +14,9 @@ import me.chanjar.weixin.cp.bean.external.msg.Attachment;
 import me.chanjar.weixin.cp.bean.external.msg.AttachmentBuilder;
 import me.chanjar.weixin.cp.bean.external.msg.Image;
 import me.chanjar.weixin.cp.bean.external.msg.Video;
+import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
@@ -641,4 +645,124 @@ public class WxCpExternalContactServiceImplTest {
     this.wxCpService.getExternalContactService()
       .cancelGroupMsgSend("msgGCAAAXtWyujaWJHDDGi0mACAAAA");
   }
+
+  /**
+   * 获客助手事件通知
+   * https://developer.work.weixin.qq.com/document/path/97299
+   *
+   * @throws WxErrorException
+   */
+  @Test
+  public void testEvent() throws WxErrorException {
+
+    /**
+     * 获客额度即将耗尽事件
+     */
+    String xml1 = "<xml>\n" +
+      "\t<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "\t<CreateTime>1403610513</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[customer_acquisition]]></Event>\n" +
+      "\t<ChangeType><![CDATA[balance_low]]></ChangeType>\n" +
+      "</xml>";
+
+    WxCpXmlMessage msg1 = XStreamTransformer.fromXml(WxCpXmlMessage.class, xml1);
+    msg1.setAllFieldsMap(XmlUtils.xml2Map(xml1));
+    System.out.println("获客额度即将耗尽事件：" + WxCpGsonBuilder.create().toJson(msg1));
+
+    /**
+     * 使用量已经耗尽事件
+     */
+    String xml2 = "<xml>\n" +
+      "\t<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "\t<CreateTime>1403610513</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[customer_acquisition]]></Event>\n" +
+      "\t<ChangeType><![CDATA[balance_exhausted]]></ChangeType>\n" +
+      "</xml>";
+
+    WxCpXmlMessage msg2 = XStreamTransformer.fromXml(WxCpXmlMessage.class, xml2);
+    msg2.setAllFieldsMap(XmlUtils.xml2Map(xml2));
+    System.out.println("使用量已经耗尽事件：" + WxCpGsonBuilder.create().toJson(msg2));
+
+    /**
+     * 获客链接不可用事件
+     */
+    String xml3 = "<xml>\n" +
+      "\t<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "\t<CreateTime>1403610513</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[customer_acquisition]]></Event>\n" +
+      "\t<ChangeType><![CDATA[link_unavailable]]></ChangeType>\n" +
+      "\t<LinkId><![CDATA[cawcdea7783d7330b4]]></LinkId>\n" +
+      "</xml>";
+
+    WxCpXmlMessage msg3 = XStreamTransformer.fromXml(WxCpXmlMessage.class, xml3);
+    msg3.setAllFieldsMap(XmlUtils.xml2Map(xml3));
+    System.out.println("获客链接不可用事件：" + WxCpGsonBuilder.create().toJson(msg3));
+
+    /**
+     * 微信客户发起会话事件
+     */
+    String xml4 = "<xml>\n" +
+      "<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "<CreateTime>1403610513</CreateTime>\n" +
+      "<MsgType><![CDATA[event]]></MsgType>\n" +
+      "<Event><![CDATA[customer_acquisition]]></Event>\n" +
+      "<ChangeType><![CDATA[customer_start_chat]]></ChangeType>\n" +
+      "<UserID><![CDATA[zhangsan]]></UserID>\n" +
+      "<ExternalUserID><![CDATA[woAJ2GCAAAXtWyujaWJHDDGi0mAAAA]]></ExternalUserID>\n" +
+      "</xml>";
+
+    WxCpXmlMessage msg4 = XStreamTransformer.fromXml(WxCpXmlMessage.class, xml4);
+    msg4.setAllFieldsMap(XmlUtils.xml2Map(xml4));
+    System.out.println("微信客户发起会话事件：" + WxCpGsonBuilder.create().toJson(msg4));
+
+    /**
+     * 删除获客链接事件
+     */
+    String xml5 = "<xml>\n" +
+      "\t<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "\t<CreateTime>1403610513</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[customer_acquisition]]></Event>\n" +
+      "\t<ChangeType><![CDATA[delete_link]]></ChangeType>\n" +
+      "\t<LinkId><![CDATA[cawcdea7783d7330b4]]></LinkId>\n" +
+      "</xml>";
+
+    WxCpXmlMessage msg5 = XStreamTransformer.fromXml(WxCpXmlMessage.class, xml5);
+    msg5.setAllFieldsMap(XmlUtils.xml2Map(xml5));
+    System.out.println("删除获客链接事件：" + WxCpGsonBuilder.create().toJson(msg5));
+
+    /**
+     * 通过获客链接申请好友事件
+     */
+    String xml6 = "<xml>\n" +
+      "\t<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "\t<CreateTime>1689171577</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[customer_acquisition]]></Event>\n" +
+      "\t<ChangeType><![CDATA[friend_request]]></ChangeType>\n" +
+      "\t<LinkId><![CDATA[cawcdea7783d7330b4]]></LinkId>\n" +
+      "\t<State><![CDATA[STATE]]></State>\n" +
+      "</xml>";
+
+    WxCpXmlMessage msg6 = XStreamTransformer.fromXml(WxCpXmlMessage.class, xml6);
+    msg6.setAllFieldsMap(XmlUtils.xml2Map(xml6));
+    System.out.println("通过获客链接申请好友事件：" + WxCpGsonBuilder.create().toJson(msg6));
+
+
+    /**
+     * 获客助手事件通知ChangeType
+     * @see me.chanjar.weixin.cp.constant.WxCpConsts.CustomerAcquisitionChangeType.CUSTOMER_START_CHAT
+     */
+
+  }
+
 }

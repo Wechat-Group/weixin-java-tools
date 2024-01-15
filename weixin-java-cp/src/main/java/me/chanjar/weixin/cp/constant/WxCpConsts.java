@@ -159,6 +159,60 @@ public class WxCpConsts {
      */
     public static final String LIVING_STATUS_CHANGE = "living_status_change";
 
+    /**
+     * 微信客服消息事件
+     */
+    public static final String KF_MSG_OR_EVENT = "kf_msg_or_event";
+
+    /**
+     * 客服账号授权变更事件
+     */
+    public static final String KF_ACCOUNT_AUTH_CHANGE = "kf_account_auth_change";
+
+    /**
+     * 获客助手事件通知
+     */
+    public static final String CUSTOMER_ACQUISITION = "customer_acquisition";
+
+  }
+
+  /**
+   * 获客助手事件通知CHANGE_TYPE
+   * https://developer.work.weixin.qq.com/document/path/97299
+   */
+  @UtilityClass
+  public static class CustomerAcquisitionChangeType {
+
+    /**
+     * 获客额度即将耗尽事件
+     */
+    public static final String BALANCE_LOW = "balance_low";
+
+    /**
+     * 使用量已经耗尽事件
+     */
+    public static final String BALANCE_EXHAUSTED = "balance_exhausted";
+
+    /**
+     * 获客链接不可用事件
+     */
+    public static final String LINK_UNAVAILABLE = "link_unavailable";
+
+    /**
+     * 微信客户发起会话事件
+     */
+    public static final String CUSTOMER_START_CHAT = "customer_start_chat";
+
+    /**
+     * 删除获客链接事件
+     */
+    public static final String DELETE_LINK = "delete_link";
+
+    /**
+     * 通过获客链接申请好友事件
+     */
+    public static final String friend_request = "friend_request";
+
   }
 
   /**

@@ -303,10 +303,6 @@ public class WxConsts {
     public static final String MASS_SEND_JOB_FINISH = "MASSSENDJOBFINISH";
 
     /**
-     * 微信客服消息事件推送
-     */
-    public static final String KF_MSG_OR_EVENT = "kf_msg_or_event";
-    /**
      * 扫码推事件的事件推送
      */
     public static final String SCANCODE_PUSH = "scancode_push";

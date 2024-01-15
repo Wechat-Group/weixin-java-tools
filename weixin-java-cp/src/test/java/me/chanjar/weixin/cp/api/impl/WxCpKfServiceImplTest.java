@@ -106,11 +106,27 @@ public class WxCpKfServiceImplTest {
   /**
    * 测试回调事件
    * https://developer.work.weixin.qq.com/document/path/94670
+   * https://developer.work.weixin.qq.com/document/path/97712
    *
    * @throws Exception
    */
   @Test(priority = 6)
   public void testEvent() throws Exception {
+
+    // 客服账号授权变更事件
+    String xml1 = "<xml>\n" +
+      "   <ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "   <FromUserName><![CDATA[sys]]></FromUserName> \n" +
+      "   <CreateTime>1348831860</CreateTime>\n" +
+      "   <MsgType><![CDATA[event]]></MsgType>\n" +
+      "   <Event><![CDATA[kf_account_auth_change]]></Event>\n" +
+      "   <AuthAddOpenKfId><![CDATA[wkxxxx1]]></AuthAddOpenKfId>\n" +
+      "   <AuthDelOpenKfId><![CDATA[wkxxxx2]]></AuthDelOpenKfId>\n" +
+      "</xml>";
+
+    WxCpXmlMessage xmlMsg1 = XStreamTransformer.fromXml(WxCpXmlMessage.class, xml1);
+    xmlMsg1.setAllFieldsMap(XmlUtils.xml2Map(xml1));
+    System.out.println(WxCpGsonBuilder.create().toJson(xmlMsg1));
 
     String xml = "<xml>\n" +
       "   <ToUserName><![CDATA[ww12345678910]]></ToUserName>\n" +
@@ -124,13 +140,15 @@ public class WxCpKfServiceImplTest {
     WxCpXmlMessage xmlMsg = XStreamTransformer.fromXml(WxCpXmlMessage.class, xml);
     xmlMsg.setAllFieldsMap(XmlUtils.xml2Map(xml));
     System.out.println(WxCpGsonBuilder.create().toJson(xmlMsg));
+    System.out.println("token：" + xmlMsg.getToken());
+    System.out.println("openKfId：" + xmlMsg.getOpenKfId());
 
     /**
      * 微信客服事件推送
-     * @see WxConsts.EventType.KF_MSG_OR_EVENT
+     * @see me.chanjar.weixin.cp.constant.WxCpConsts.EventType.KF_MSG_OR_EVENT
+     * @see me.chanjar.weixin.cp.constant.WxCpConsts.EventType.KF_ACCOUNT_AUTH_CHANGE
      */
-    System.out.println("token：" + xmlMsg.getToken());
-    System.out.println("openKfId：" + xmlMsg.getOpenKfId());
+    System.out.println("微信客服事件：" + me.chanjar.weixin.cp.constant.WxCpConsts.EventType.KF_MSG_OR_EVENT);
   }
 
 }
