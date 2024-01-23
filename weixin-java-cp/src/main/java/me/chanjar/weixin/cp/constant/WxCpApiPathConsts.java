@@ -143,7 +143,7 @@ public interface WxCpApiPathConsts {
     /**
      * The constant GET_USER_DETAIL.
      */
-    String GET_USER_DETAIL = "/cgi-bin/auth/getuserdetail";
+    String GET_USER_DETAIL = "/cgi-bin/user/getuserdetail";
     /**
      * The constant URL_OAUTH2_AUTHORIZE.
      */
@@ -507,6 +507,32 @@ public interface WxCpApiPathConsts {
      * https://developer.work.weixin.qq.com/document/path/90269
      */
     String GET_OPEN_APPROVAL_DATA = "/cgi-bin/corp/getopenapprovaldata";
+
+    /**
+     * 文档
+     * https://developer.work.weixin.qq.com/document/path/97392
+     */
+    /**
+     * The constant WEDOC_CREATE_DOC.
+     */
+    String WEDOC_CREATE_DOC = "/cgi-bin/wedoc/create_doc";
+    /**
+     * The constant WEDOC_RENAME_DOC.
+     */
+    String WEDOC_RENAME_DOC = "/cgi-bin/wedoc/rename_doc";
+    /**
+     * The constant WEDOC_DEL_DOC.
+     */
+    String WEDOC_DEL_DOC = "/cgi-bin/wedoc/del_doc";
+    /**
+     * The constant WEDOC_GET_DOC_BASE_INFO.
+     */
+    String WEDOC_GET_DOC_BASE_INFO = "/cgi-bin/wedoc/get_doc_base_info";
+    /**
+     * The constant WEDOC_DOC_SHARE.
+     */
+    String WEDOC_DOC_SHARE = "/cgi-bin/wedoc/doc_share";
+
   }
 
   /**
