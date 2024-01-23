@@ -1,6 +1,7 @@
 package com.binarywang.spring.starter.wxjava.cp.properties;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * created on 2023/10/16
  */
 @Data
+@NoArgsConstructor
 public class WxCpMultiRedisProperties implements Serializable {
   private static final long serialVersionUID = -5924815351660074401L;
 

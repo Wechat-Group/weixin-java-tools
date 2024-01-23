@@ -1,13 +1,16 @@
-package com.binarywang.spring.starter.wxjava.cp.autoconfigure.services;
+package com.binarywang.spring.starter.wxjava.cp.configuration.services;
 
-import com.binarywang.spring.starter.wxjava.cp.properties.CorpProperties;
 import com.binarywang.spring.starter.wxjava.cp.properties.WxCpMultiProperties;
+import com.binarywang.spring.starter.wxjava.cp.properties.WxCpSingleProperties;
 import com.binarywang.spring.starter.wxjava.cp.service.WxCpMultiServices;
 import com.binarywang.spring.starter.wxjava.cp.service.WxCpMultiServicesImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.api.impl.WxCpServiceApacheHttpClientImpl;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
+import me.chanjar.weixin.cp.api.impl.WxCpServiceJoddHttpImpl;
+import me.chanjar.weixin.cp.api.impl.WxCpServiceOkHttpImpl;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -28,8 +31,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public abstract class AbstractWxCpConfiguration {
 
-  protected WxCpMultiServices configWxCpServices(WxCpMultiProperties wxCpMultiProperties) {
-    Map<String, CorpProperties> corps = wxCpMultiProperties.getCorps();
+  protected WxCpMultiServices wxCpMultiServices(WxCpMultiProperties wxCpMultiProperties) {
+    Map<String, WxCpSingleProperties> corps = wxCpMultiProperties.getCorps();
     if (corps == null || corps.isEmpty()) {
       log.warn("企业微信应用参数未配置，通过 WxCpMultiServices#getWxCpService(\"tenantId\")获取实例将返回空");
       return new WxCpMultiServicesImpl();
@@ -39,13 +42,13 @@ public abstract class AbstractWxCpConfiguration {
      *
      * 查看 {@link me.chanjar.weixin.cp.config.impl.AbstractWxCpInRedisConfigImpl#setAgentId(Integer)}
      */
-    Collection<CorpProperties> corpList = corps.values();
+    Collection<WxCpSingleProperties> corpList = corps.values();
     if (corpList.size() > 1) {
       // 先按 corpId 分组统计
-      Map<String, List<CorpProperties>> corpsMap = corpList.stream()
-        .collect(Collectors.groupingBy(CorpProperties::getCorpId));
-      Set<Map.Entry<String, List<CorpProperties>>> entries = corpsMap.entrySet();
-      for (Map.Entry<String, List<CorpProperties>> entry : entries) {
+      Map<String, List<WxCpSingleProperties>> corpsMap = corpList.stream()
+        .collect(Collectors.groupingBy(WxCpSingleProperties::getCorpId));
+      Set<Map.Entry<String, List<WxCpSingleProperties>>> entries = corpsMap.entrySet();
+      for (Map.Entry<String, List<WxCpSingleProperties>> entry : entries) {
         String corpId = entry.getKey();
         // 校验每个企业下，agentId 是否唯一
         boolean multi = entry.getValue().stream()
@@ -59,14 +62,14 @@ public abstract class AbstractWxCpConfiguration {
     }
     WxCpMultiServicesImpl services = new WxCpMultiServicesImpl();
 
-    Set<Map.Entry<String, CorpProperties>> entries = corps.entrySet();
-    for (Map.Entry<String, CorpProperties> entry : entries) {
+    Set<Map.Entry<String, WxCpSingleProperties>> entries = corps.entrySet();
+    for (Map.Entry<String, WxCpSingleProperties> entry : entries) {
       String tenantId = entry.getKey();
-      CorpProperties corpProperties = entry.getValue();
-      WxCpDefaultConfigImpl storage = this.configWxCpDefaultConfigImpl(wxCpMultiProperties);
-      this.configCorp(storage, corpProperties);
+      WxCpSingleProperties wxCpSingleProperties = entry.getValue();
+      WxCpDefaultConfigImpl storage = this.wxCpConfigStorage(wxCpMultiProperties);
+      this.configCorp(storage, wxCpSingleProperties);
       this.configHttp(storage, wxCpMultiProperties.getConfigStorage());
-      WxCpService wxCpService = this.configWxCpService(storage, wxCpMultiProperties.getConfigStorage());
+      WxCpService wxCpService = this.wxCpService(storage, wxCpMultiProperties.getConfigStorage());
       services.addWxCpService(tenantId, wxCpService);
     }
     return services;
@@ -78,12 +81,26 @@ public abstract class AbstractWxCpConfiguration {
    * @param wxCpMultiProperties 参数
    * @return WxCpDefaultConfigImpl
    */
-  protected abstract WxCpDefaultConfigImpl configWxCpDefaultConfigImpl(WxCpMultiProperties wxCpMultiProperties);
+  protected abstract WxCpDefaultConfigImpl wxCpConfigStorage(WxCpMultiProperties wxCpMultiProperties);
 
-  private WxCpService configWxCpService(WxCpConfigStorage wxCpConfigStorage, WxCpMultiProperties.ConfigStorage storage) {
-    WxCpService wxCpService = new WxCpServiceImpl();
+  private WxCpService wxCpService(WxCpConfigStorage wxCpConfigStorage, WxCpMultiProperties.ConfigStorage storage) {
+    WxCpMultiProperties.HttpClientType httpClientType = storage.getHttpClientType();
+    WxCpService wxCpService;
+    switch (httpClientType) {
+      case OK_HTTP:
+        wxCpService = new WxCpServiceOkHttpImpl();
+        break;
+      case JODD_HTTP:
+        wxCpService = new WxCpServiceJoddHttpImpl();
+        break;
+      case HTTP_CLIENT:
+        wxCpService = new WxCpServiceApacheHttpClientImpl();
+        break;
+      default:
+        wxCpService = new WxCpServiceImpl();
+        break;
+    }
     wxCpService.setWxCpConfigStorage(wxCpConfigStorage);
-
     int maxRetryTimes = storage.getMaxRetryTimes();
     if (maxRetryTimes < 0) {
       maxRetryTimes = 0;
@@ -97,15 +114,15 @@ public abstract class AbstractWxCpConfiguration {
     return wxCpService;
   }
 
-  private void configCorp(WxCpDefaultConfigImpl config, CorpProperties corpProperties) {
-    String corpId = corpProperties.getCorpId();
-    String corpSecret = corpProperties.getCorpSecret();
-    Integer agentId = corpProperties.getAgentId();
-    String token = corpProperties.getToken();
-    String aesKey = corpProperties.getAesKey();
+  private void configCorp(WxCpDefaultConfigImpl config, WxCpSingleProperties wxCpSingleProperties) {
+    String corpId = wxCpSingleProperties.getCorpId();
+    String corpSecret = wxCpSingleProperties.getCorpSecret();
+    Integer agentId = wxCpSingleProperties.getAgentId();
+    String token = wxCpSingleProperties.getToken();
+    String aesKey = wxCpSingleProperties.getAesKey();
     // 企业微信，私钥，会话存档路径
-    String msgAuditPriKey = corpProperties.getMsgAuditPriKey();
-    String msgAuditLibPath = corpProperties.getMsgAuditLibPath();
+    String msgAuditPriKey = wxCpSingleProperties.getMsgAuditPriKey();
+    String msgAuditLibPath = wxCpSingleProperties.getMsgAuditLibPath();
 
     config.setCorpId(corpId);
     config.setCorpSecret(corpSecret);

@@ -3,6 +3,8 @@ package com.binarywang.spring.starter.wxjava.cp.properties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 企业微信企业相关配置属性
  *
@@ -11,7 +13,8 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class CorpProperties {
+public class WxCpSingleProperties implements Serializable {
+  private static final long serialVersionUID = -7502823825007859418L;
   /**
    * 微信企业号 corpId
    */

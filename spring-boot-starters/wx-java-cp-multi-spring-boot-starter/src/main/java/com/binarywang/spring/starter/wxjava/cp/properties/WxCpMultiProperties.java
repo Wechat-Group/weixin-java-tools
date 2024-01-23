@@ -18,10 +18,11 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @ConfigurationProperties(prefix = WxCpMultiProperties.PREFIX)
-public class WxCpMultiProperties {
+public class WxCpMultiProperties implements Serializable {
+  private static final long serialVersionUID = -1569510477055668503L;
   public static final String PREFIX = "wx.cp";
 
-  private Map<String, CorpProperties> corps = new HashMap<>();
+  private Map<String, WxCpSingleProperties> corps = new HashMap<>();
 
   /**
    * 配置存储策略，默认内存
@@ -47,6 +48,11 @@ public class WxCpMultiProperties {
      */
     @NestedConfigurationProperty
     private WxCpMultiRedisProperties redis = new WxCpMultiRedisProperties();
+
+    /**
+     * http客户端类型.
+     */
+    private HttpClientType httpClientType = HttpClientType.HTTP_CLIENT;
 
     /**
      * http代理主机
@@ -104,5 +110,20 @@ public class WxCpMultiProperties {
      * redistemplate
      */
     redistemplate
+  }
+
+  public enum HttpClientType {
+    /**
+     * HttpClient
+     */
+    HTTP_CLIENT,
+    /**
+     * OkHttp
+     */
+    OK_HTTP,
+    /**
+     * JoddHttp
+     */
+    JODD_HTTP
   }
 }

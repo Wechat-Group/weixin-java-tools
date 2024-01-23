@@ -1,4 +1,4 @@
-package com.binarywang.spring.starter.wxjava.cp.autoconfigure.services;
+package com.binarywang.spring.starter.wxjava.cp.configuration.services;
 
 import com.binarywang.spring.starter.wxjava.cp.properties.WxCpMultiProperties;
 import com.binarywang.spring.starter.wxjava.cp.properties.WxCpMultiRedisProperties;
@@ -31,11 +31,11 @@ public class WxCpInJedisConfiguration extends AbstractWxCpConfiguration {
 
   @Bean
   public WxCpMultiServices wxCpMultiServices() {
-    return this.configWxCpServices(wxCpMultiProperties);
+    return this.wxCpMultiServices(wxCpMultiProperties);
   }
 
   @Override
-  protected WxCpDefaultConfigImpl configWxCpDefaultConfigImpl(WxCpMultiProperties wxCpMultiProperties) {
+  protected WxCpDefaultConfigImpl wxCpConfigStorage(WxCpMultiProperties wxCpMultiProperties) {
     return this.configRedis(wxCpMultiProperties);
   }
 
