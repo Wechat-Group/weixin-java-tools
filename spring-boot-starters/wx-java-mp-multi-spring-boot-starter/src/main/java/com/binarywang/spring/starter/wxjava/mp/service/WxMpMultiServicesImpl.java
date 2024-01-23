@@ -14,22 +14,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WxMpMultiServicesImpl implements WxMpMultiServices {
   private final Map<String, WxMpService> services = new ConcurrentHashMap<>();
 
-  /**
-   * 通过租户 Id 获取 WxCpService
-   *
-   * @param tenantId 租户 Id
-   * @return WxCpService
-   */
   @Override
   public WxMpService getWxMpService(String tenantId) {
     return this.services.get(tenantId);
   }
 
   /**
-   * 根据租户 Id，添加一个 WxCpService 到列表
+   * 根据租户 Id，添加一个 WxMpService 到列表
    *
    * @param tenantId    租户 Id
-   * @param wxMpService WxCpService 实例
+   * @param wxMpService WxMpService 实例
    */
   public void addWxMpService(String tenantId, WxMpService wxMpService) {
     this.services.put(tenantId, wxMpService);

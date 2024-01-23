@@ -11,15 +11,15 @@ import me.chanjar.weixin.mp.api.WxMpService;
  */
 public interface WxMpMultiServices {
   /**
-   * 通过租户 Id 获取 WxCpService
+   * 通过租户 Id 获取 WxMpService
    *
    * @param tenantId 租户 Id
-   * @return WxCpService
+   * @return WxMpService
    */
   WxMpService getWxMpService(String tenantId);
 
   /**
-   * 根据租户 Id，从列表中移除一个 WxCpService 实例
+   * 根据租户 Id，从列表中移除一个 WxMpService 实例
    *
    * @param tenantId 租户 Id
    */
