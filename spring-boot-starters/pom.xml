@@ -19,6 +19,7 @@
 
   <modules>
     <module>wx-java-miniapp-spring-boot-starter</module>
+    <module>wx-java-mp-multi-spring-boot-starter</module>
     <module>wx-java-mp-spring-boot-starter</module>
     <module>wx-java-pay-spring-boot-starter</module>
     <module>wx-java-open-spring-boot-starter</module>
