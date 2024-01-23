@@ -11,8 +11,10 @@ import java.io.Serializable;
  *
  * @author penhuozhu
  * @since 2024/01/07
+ * @deprecated  应使用 WxOpenMaService.getAuthService() 的相关功能来处理小程序认证相关业务
  */
 @Data
+@Deprecated
 public class WxMaUploadAuthMaterialResult implements Serializable {
     private static final long serialVersionUID = 1L;
 

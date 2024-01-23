@@ -570,6 +570,10 @@ public class WxMpXmlMessage implements Serializable {
   ///////////////////////////////////////
   // 微信认证事件推送
   ///////////////////////////////////////
+  // event=wx_verify_pay_succ支付完成
+  // event=wx_verify_dispatch分配审核提供商
+  // event=wx_verify_refill拒绝需重新提交
+  // event=wx_verify_fail拒绝(不可重新提交)
   /**
    * 资质认证成功/名称认证成功: 有效期 (整形)，指的是时间戳，将于该时间戳认证过期.
    * 年审通知: 有效期 (整形)，指的是时间戳，将于该时间戳认证过期，需尽快年审
@@ -590,6 +594,20 @@ public class WxMpXmlMessage implements Serializable {
   @XStreamAlias("FailReason")
   @JacksonXmlProperty(localName = "FailReason")
   private String failReason;
+
+  /**
+   * 重新填写时间戳（秒数）
+   */
+  @XStreamAlias("RefillTime")
+  @JacksonXmlProperty(localName = "RefillTime")
+  private Long refillTime;
+
+  /**
+   * 重新填写原因
+   */
+  @XStreamAlias("RefillReason")
+  @JacksonXmlProperty(localName = "RefillReason")
+  private String refillReason;
 
   ///////////////////////////////////////
   // 微信小店 6.1订单付款通知

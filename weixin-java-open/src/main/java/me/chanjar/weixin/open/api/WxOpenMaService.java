@@ -783,8 +783,10 @@ public interface WxOpenMaService extends WxMaService {
   /**
    * 小程序认证上传补充材料
    *
-   * @return
+   * @return 结果
+   * @see #getAuthService() 应使用此处方法处理小程序认证相关业务
    */
+  @Deprecated
   WxMaUploadAuthMaterialResult uploadAuthMaterial(File file) throws WxErrorException;
 
 }

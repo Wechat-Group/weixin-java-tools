@@ -27,6 +27,9 @@ import java.nio.charset.StandardCharsets;
 public class WxOpenXmlMessage implements Serializable {
   private static final long serialVersionUID = -5641769554709507771L;
 
+  /**
+   * 第三方平台的APPID
+   */
   @XStreamAlias("AppId")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String appId;
@@ -57,10 +60,13 @@ public class WxOpenXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String preAuthCode;
 
-  // 以下为快速创建小程序接口推送的的信息
-
+  /**
+   * 子平台APPID(公众号/小程序的APPID) 快速创建小程序、小程序认证中
+   */
   @XStreamAlias("appid")
-  private String registAppId;
+  private String subAppId;
+
+  // 以下为快速创建小程序接口推送的的信息
 
   @XStreamAlias("status")
   private int status;
@@ -74,6 +80,70 @@ public class WxOpenXmlMessage implements Serializable {
 
   @XStreamAlias("info")
   private Info info = new Info();
+
+  // 以下为小程序认证（年审）申请审核流程 推送的消息 infoType=notify_3rd_wxa_auth
+  /**
+   * 任务ID
+   */
+  @XStreamAlias("taskid")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String taskId;
+
+  /**
+   * 认证任务状态 0初始 1超24小时 2用户拒绝 3用户同意 4发起人脸 5人脸失败 6人脸ok 7人脸认证后手机验证码 8手机验证失败 9手机验证成功 11创建审核单失败 12创建审核单成功 14验证失败 15等待支付
+   */
+  @XStreamAlias("task_status")
+  private Integer taskStatus;
+
+  /**
+   * 审核单状态，创建审核单成功后有效 0审核单不存在 1待支付 2审核中 3打回重填 4认证通过 5认证最终失败（不能再修改）
+   */
+  @XStreamAlias("apply_status")
+  private Integer applyStatus;
+
+  /**
+   * 审核消息或失败原因
+   */
+  @XStreamAlias("message")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String message;
+
+
+  /**
+   * 审核提供商分配信息
+   */
+  @XStreamAlias("dispatch_info")
+  private DispatchInfo dispatchInfo;
+
+
+  // 以下为小程序认证（年审）即将到期通知(过期当天&过期30天&过期60) infoType=notify_3rd_wxa_wxverify，并会附带message
+  /**
+   * 过期时间戳（秒数）
+   */
+  @XStreamAlias("expired")
+  private Long expired;
+
+
+  /**
+   * 快速创建的小程序appId，已弃用，未来将删除
+   *
+   * @see #getSubAppId() 应使用此方法
+   */
+  @Deprecated
+  public String getRegistAppId() {
+    return subAppId;
+  }
+
+  /**
+   * 快速创建的小程序appId，已弃用，未来将删除
+   *
+   * @see #setSubAppId(String) 应使用此方法
+   */
+  @Deprecated
+  public void setRegistAppId(String value) {
+    subAppId = value;
+  }
+
 
   @XStreamAlias("info")
   @Data
@@ -117,6 +187,33 @@ public class WxOpenXmlMessage implements Serializable {
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String uniqueId;
 
+  }
+
+  /**
+   * 审核提供商分配信息
+   */
+  @Data
+  public static class DispatchInfo {
+
+    /**
+     * 提供商，如：上海倍通企业信用征信有限公司
+     */
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    @XStreamAlias("provider")
+    private String provider;
+
+    /**
+     * 联系方式，如：咨询电话：0411-84947888，咨询时间：周一至周五（工作日）8：30-17：30
+     */
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    @XStreamAlias("contact")
+    private String contact;
+
+    /**
+     * 派遣时间戳(秒)，如：1704952913
+     */
+    @XStreamAlias("dispatch_time")
+    private Long dispatchTime;
   }
 
   public static String wxMpOutXmlMessageToEncryptedXml(WxMpXmlOutMessage message, WxOpenConfigStorage wxOpenConfigStorage) {

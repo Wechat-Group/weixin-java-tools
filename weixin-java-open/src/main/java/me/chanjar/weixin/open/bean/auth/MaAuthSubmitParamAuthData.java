@@ -23,7 +23,7 @@ public class MaAuthSubmitParamAuthData {
    */
   @NotNull
   @SerializedName("customer_type")
-  private String customerType;
+  private Integer customerType;
 
   /**
    * 联系人信息
@@ -33,7 +33,7 @@ public class MaAuthSubmitParamAuthData {
   private MaAuthSubmitParamContactInfo contactInfo;
 
   /**
-   * 发票信息，如果是服务商代缴模式，不需要改参数
+   * 发票信息，实测即使是服务商（第三方平台）代缴，也需要提供此参数，否则报错。官方文档为：如果是服务商代缴模式，不需要改参数
    */
   @Nullable
   @SerializedName("invoice_info")
@@ -78,7 +78,7 @@ public class MaAuthSubmitParamAuthData {
    */
   @NotNull
   @SerializedName("pay_type")
-  private String payType;
+  private Integer payType;
 
   /**
    * 认证类型为个人类型时可以选择要认证的身份，从/wxa/sec/authidentitytree 里获取，填叶节点的name
@@ -106,5 +106,5 @@ public class MaAuthSubmitParamAuthData {
    */
   @Nullable
   @SerializedName("service_appid")
-  private String serviceAppid;
+  private String serviceAppId;
 }
