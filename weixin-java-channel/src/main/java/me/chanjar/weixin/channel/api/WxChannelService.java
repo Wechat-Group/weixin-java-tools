@@ -119,4 +119,25 @@ public interface WxChannelService extends BaseWxChannelService {
    */
   WxLeagueProductService getLeagueProductService();
 
+  /**
+   * 视频号助手 留资组件管理服务
+   *
+   * @return 留资组件管理服务
+   */
+  WxLeadComponentService getLeadComponentService();
+
+  /**
+   * 视频号助手 留资服务的直播数据服务
+   *
+   * @return 留资服务的直播数据服务
+   */
+  WxFinderLiveService getFinderLiveService();
+
+  /**
+   * 视频号助手 橱窗管理服务
+   *
+   * @return 橱窗管理服务
+   */
+  WxAssistantService getAssistantService();
+
 }

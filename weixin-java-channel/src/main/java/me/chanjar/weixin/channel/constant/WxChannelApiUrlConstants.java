@@ -351,4 +351,53 @@ public class WxChannelApiUrlConstants {
     /** 下架橱窗商品 */
     String OFF_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/window/product/off";
   }
+
+  /**
+   * 留资组件管理
+   */
+  public interface LeadComponent {
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/leads/get_leads_info_by_component_id.html">按时间获取留资信息详情</a>
+     */
+    String GET_LEADS_INFO_BY_COMPONENT_ID = "https://api.weixin.qq.com/channels/leads/get_leads_info_by_component_id";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/leads/get_leads_info_by_request_id.html">按直播场次获取留资信息详情</a>
+     */
+    String GET_LEADS_INFO_BY_REQUEST_ID = "https://api.weixin.qq.com/channels/leads/get_leads_info_by_request_id";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/leads/get_leads_request_id.html">获取留资request_id列表详情</a>
+     */
+    String GET_LEADS_REQUEST_ID = "https://api.weixin.qq.com/channels/leads/get_leads_request_id";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/leads/get_leads_component_promote_record.html">获取留资组件直播推广记录信息详情</a>
+     */
+    String GET_LEADS_COMPONENT_PROMOTE_RECORD = "https://api.weixin.qq.com/channels/leads/get_leads_component_promote_record";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/leads/get_leads_component_id.html">获取留资组件Id列表详情</a>
+     */
+    String GET_LEADS_COMPONENT_ID = "https://api.weixin.qq.com/channels/leads/get_leads_component_id";
+  }
+
+  /**
+   * 留资服务的直播数据
+   */
+  public interface FinderLive {
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/live/get_finder_attr_by_appid.html">获取视频号账号信息</a>
+     */
+    String GET_FINDER_ATTR_BY_APPID = "https://api.weixin.qq.com/channels/finderlive/get_finder_attr_by_appid";
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/live/get_finder_live_data_list.html">获取留资直播间数据详情</a>
+     */
+    String GET_FINDER_LIVE_DATA_LIST = "https://api.weixin.qq.com/channels/finderlive/get_finder_live_data_list";
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/live/get_finder_live_leads_data.html">获取账号收集的留资数量</a>
+     */
+    String GET_FINDER_LIVE_LEADS_DATA = "https://api.weixin.qq.com/channels/finderlive/get_finder_live_leads_data";
+  }
 }
