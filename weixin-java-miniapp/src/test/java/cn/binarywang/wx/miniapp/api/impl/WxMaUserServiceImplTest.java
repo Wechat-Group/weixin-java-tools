@@ -47,14 +47,10 @@ public class WxMaUserServiceImplTest {
       "75e81ceda165f4ffa64f4068af58c64b8f54b88c"));
   }
 
-  /**
-   * TODO 测试数据有问题，需要替换为正确的数据
-   */
+
   @Test
-  public void testGetPhoneNoInfo() {
-    WxMaPhoneNumberInfo phoneNoInfo = this.wxService.getUserService().getPhoneNoInfo("tiihtNczf5v6AKRyjwEUhQ==",
-      "CiyLU1Aw2KjvrjMdj8YKliAjtP4gsMZMQmRzooG2xrDcvSnxIMXFufNstNGTyaGS9uT5geRa0W4oTOb1WT7fJlAC+oNPdbB+3hVbJSRgv+4lGOETKUQz6OYStslQ142dNCuabNPGBzlooOmB231qMM85d2/fV6ChevvXvQP8Hkue1poOFtnEtpyxVLW1zAo6/1Xx1COxFvrc2d7UL/lmHInNlxuacJXwu0fjpXfz/YqYzBIBzD6WUfTIF9GRHpOn/Hz7saL8xz+W//FRAUid1OksQaQx4CMs8LOddcQhULW4ucetDf96JcR3g0gfRK4PC7E/r7Z6xNrXd2UIeorGj5Ef7b1pJAYB6Y5anaHqZ9J6nKEBvB4DnNLIVWSgARns/8wR2SiRS7MNACwTyrGvt9ts8p12PKFdlqYTopNHR1Vf7XjfhQlVsAJdNiKdYmYVoKlaRv85IfVunYzO0IKXsyl7JCUjCpoG20f0a04COwfneQAGGwd5oa+T8yO5hzuyDb/XcxxmK01EpqOyuxINew==",
-      "r7BXXKkLb8qrSNn05n0qiA==");
+  public void testGetPhoneNoInfo() throws WxErrorException {
+    WxMaPhoneNumberInfo phoneNoInfo = this.wxService.getUserService().getPhoneNumber("tiihtNczf5v6AKRyjwEUhQ==");
     assertNotNull(phoneNoInfo);
     System.out.println(phoneNoInfo.toString());
   }
@@ -70,11 +66,6 @@ public class WxMaUserServiceImplTest {
   public void testSetUserStorage() throws WxErrorException {
     this.wxService.getUserService().setUserStorage(ImmutableMap.of("1","2"),
       "r7BXXKkLb8qrSNn05n0qiA",((TestConfig)this.wxService.getWxMaConfig()).getOpenid());
-  }
-
-  @Test
-  public void testGetNewPhoneNoInfo() throws Exception{
-    assertNotNull(wxService.getUserService().getNewPhoneNoInfo("test"));
   }
 
   @Test
