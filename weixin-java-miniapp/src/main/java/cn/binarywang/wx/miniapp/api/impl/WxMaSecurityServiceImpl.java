@@ -1,14 +1,17 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMaSecCheckService;
+import cn.binarywang.wx.miniapp.api.WxMaSecurityService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaMediaAsyncCheckResult;
+import cn.binarywang.wx.miniapp.bean.safety.request.WxMaUserSafetyRiskRankRequest;
+import cn.binarywang.wx.miniapp.bean.safety.response.WxMaUserSafetyRiskRankResponse;
 import cn.binarywang.wx.miniapp.bean.security.WxMaMediaSecCheckCheckRequest;
 import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckRequest;
 import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckResponse;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
@@ -26,14 +29,14 @@ import static me.chanjar.weixin.common.api.WxConsts.ERR_CODE;
 
 /**
  * <pre>
- *
+ * 小程序安全接口
  * Created by Binary Wang on 2018/11/24.
  * </pre>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @RequiredArgsConstructor
-public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
+public class WxMaSecurityServiceImpl implements WxMaSecurityService {
   private final WxMaService service;
 
   @Override
@@ -89,6 +92,16 @@ public class WxMaSecCheckServiceImpl implements WxMaSecCheckService {
     String response = this.service.post(MEDIA_CHECK_ASYNC_URL, request);
     parseErrorResponse(response);
     return WxMaGsonBuilder.create().fromJson(response,WxMaMediaAsyncCheckResult.class);
+  }
+
+  @Override
+  public WxMaUserSafetyRiskRankResponse getUserRiskRank(WxMaUserSafetyRiskRankRequest wxMaUserSafetyRiskRankRequest) throws WxErrorException {
+    String responseContent = this.service.post(GET_USER_RISK_RANK, wxMaUserSafetyRiskRankRequest.toJson());
+    JsonObject jsonObject = GsonParser.parse(responseContent);
+    if (jsonObject.get(WxConsts.ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return WxMaUserSafetyRiskRankResponse.fromJson(responseContent);
   }
 
   private void parseErrorResponse(String response) throws WxErrorException {

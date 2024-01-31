@@ -57,7 +57,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaJsapiService jsapiService = new WxMaJsapiServiceImpl(this);
   private final WxMaShareService shareService = new WxMaShareServiceImpl(this);
   private final WxMaRunService runService = new WxMaRunServiceImpl(this);
-  private final WxMaSecCheckService secCheckService = new WxMaSecCheckServiceImpl(this);
+  private final WxMaSecurityService securityService = new WxMaSecurityServiceImpl(this);
   private final WxMaPluginService pluginService = new WxMaPluginServiceImpl(this);
   private final WxMaExpressService expressService = new WxMaExpressServiceImpl(this);
   private final WxMaSubscribeService subscribeService = new WxMaSubscribeServiceImpl(this);
@@ -81,7 +81,6 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaDeviceSubscribeService deviceSubscribeService = new WxMaDeviceSubscribeServiceImpl(this);
   private final WxMaMarketingService marketingService = new WxMaMarketingServiceImpl(this);
   private final WxMaImmediateDeliveryService immediateDeliveryService = new WxMaImmediateDeliveryServiceImpl(this);
-  private final WxMaSafetyRiskControlService safetyRiskControlService = new WxMaSafetyRiskControlServiceImpl(this);
   private final WxMaShopSharerService shopSharerService = new WxMaShopSharerServiceImpl(this);
   private final WxMaProductService productService = new WxMaProductServiceImpl(this);
   private final WxMaProductOrderService productOrderService = new WxMaProductOrderServiceImpl(this);
@@ -522,8 +521,8 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
-  public WxMaSecCheckService getSecCheckService() {
-    return this.secCheckService;
+  public WxMaSecurityService getSecurityService() {
+    return this.securityService;
   }
 
   @Override
@@ -639,11 +638,6 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaImmediateDeliveryService getWxMaImmediateDeliveryService() {
     return this.immediateDeliveryService;
-  }
-
-  @Override
-  public WxMaSafetyRiskControlService getSafetyRiskControlService() {
-    return this.safetyRiskControlService;
   }
 
   @Override

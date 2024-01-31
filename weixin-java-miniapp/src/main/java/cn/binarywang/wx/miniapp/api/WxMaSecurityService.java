@@ -1,6 +1,8 @@
 package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaMediaAsyncCheckResult;
+import cn.binarywang.wx.miniapp.bean.safety.request.WxMaUserSafetyRiskRankRequest;
+import cn.binarywang.wx.miniapp.bean.safety.response.WxMaUserSafetyRiskRankResponse;
 import cn.binarywang.wx.miniapp.bean.security.WxMaMediaSecCheckCheckRequest;
 import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckRequest;
 import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckResponse;
@@ -10,13 +12,13 @@ import java.io.File;
 
 /**
  * <pre>
- * 内容安全相关接口.
+ * 小程序安全相关接口.
  * Created by Binary Wang on 2018/11/24.
  * </pre>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public interface WxMaSecCheckService {
+public interface WxMaSecurityService {
   /**
    * <pre>
    * 校验一张图片是否含有违法违规内容.
@@ -108,5 +110,16 @@ public interface WxMaSecCheckService {
    */
 
   WxMaMediaAsyncCheckResult mediaCheckAsync(WxMaMediaSecCheckCheckRequest request) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 根据提交的用户信息数据获取用户的安全等级，无需用户授权
+   * 文档：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/safety-control-capability/riskControl.getUserRiskRank.html
+   * </pre>
+   *
+   * @param wxMaUserSafetyRiskRankRequest 获取用户安全等级请求
+   * @throws WxErrorException 通用异常
+   */
+  WxMaUserSafetyRiskRankResponse getUserRiskRank(WxMaUserSafetyRiskRankRequest wxMaUserSafetyRiskRankRequest) throws WxErrorException;
 
 }
