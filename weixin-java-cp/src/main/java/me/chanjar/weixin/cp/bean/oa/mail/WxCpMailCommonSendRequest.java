@@ -58,13 +58,14 @@ public class WxCpMailCommonSendRequest implements Serializable {
   private List<Attachment> attachmentList;
 
   /**
-   * 内容
+   * 内容类型 html，text（默认是html）
    */
   @SerializedName("content_type")
   private String contentType;
 
   /**
-   * 内容
+   * 表示是否开启id转译，0表示否，1表示是，默认0。仅第三方应用需要用到，企业自建应用可以忽略。
+   * 目前仅subject、content、attachment_list[].file_name字段支持转译。
    */
   @SerializedName("enable_id_trans")
   private Integer enableIdTrans;
