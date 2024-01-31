@@ -533,6 +533,15 @@ public interface WxCpApiPathConsts {
      */
     String WEDOC_DOC_SHARE = "/cgi-bin/wedoc/doc_share";
 
+    /**
+     * 邮件
+     * https://developer.work.weixin.qq.com/document/path/95486
+     */
+    /**
+     * The constant EXMAIL_APP_COMPOSE_SEND.
+     */
+    String EXMAIL_APP_COMPOSE_SEND = "/cgi-bin/exmail/app/compose_send";
+
   }
 
   /**
