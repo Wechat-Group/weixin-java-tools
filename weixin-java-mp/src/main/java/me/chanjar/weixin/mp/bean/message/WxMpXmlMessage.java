@@ -709,6 +709,20 @@ public class WxMpXmlMessage implements Serializable {
   @JacksonXmlProperty(localName = "Reason")
   private String reason;
 
+  /**
+   * 审核延后时的时间（整形），时间戳
+   */
+  @XStreamAlias("DelayTime")
+  @JacksonXmlProperty(localName = "DelayTime")
+  private Long delayTime;
+
+  /**
+   * 审核不通过的截图示例。用 | 分隔的 media_id 的列表
+   */
+  @XStreamAlias("ScreenShot")
+  @JacksonXmlProperty(localName = "ScreenShot")
+  private String screenShot;
+
   ///////////////////////////////////////
   // 扫一扫事件推送
   ///////////////////////////////////////

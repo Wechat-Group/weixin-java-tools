@@ -347,6 +347,12 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   @Override
+  public WxOpenMaGetCodePrivacyInfoResult getCodePrivacyInfo() throws WxErrorException {
+    String response = get(API_GET_CODE_PRIVACY_INFO, null);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaGetCodePrivacyInfoResult.class);
+  }
+
+  @Override
   public WxOpenMaQueryQuotaResult queryQuota() throws WxErrorException {
     String response = get(API_QUERY_QUOTA, null);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaQueryQuotaResult.class);
