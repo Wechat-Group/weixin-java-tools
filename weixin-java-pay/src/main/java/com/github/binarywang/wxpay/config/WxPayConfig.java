@@ -278,7 +278,7 @@ public class WxPayConfig {
 
       AutoUpdateCertificatesVerifier certificatesVerifier = new AutoUpdateCertificatesVerifier(
         new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
-        this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(), wxPayHttpProxy);
+        this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(), this.getPayBaseUrl(), wxPayHttpProxy);
 
       WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
