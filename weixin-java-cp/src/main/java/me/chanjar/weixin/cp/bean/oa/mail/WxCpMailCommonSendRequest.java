@@ -93,8 +93,8 @@ public class WxCpMailCommonSendRequest implements Serializable {
      * @param json the json
      * @return the space info
      */
-    public static WxCpMailCommonSendRequest.TO fromJson(String json) {
-      return WxCpGsonBuilder.create().fromJson(json, WxCpMailCommonSendRequest.TO.class);
+    public static TO fromJson(String json) {
+      return WxCpGsonBuilder.create().fromJson(json, TO.class);
     }
 
     /**
@@ -131,8 +131,8 @@ public class WxCpMailCommonSendRequest implements Serializable {
      * @param json the json
      * @return the space info
      */
-    public static WxCpMailCommonSendRequest.CC fromJson(String json) {
-      return WxCpGsonBuilder.create().fromJson(json, WxCpMailCommonSendRequest.CC.class);
+    public static CC fromJson(String json) {
+      return WxCpGsonBuilder.create().fromJson(json, CC.class);
     }
 
     /**
@@ -169,8 +169,8 @@ public class WxCpMailCommonSendRequest implements Serializable {
      * @param json the json
      * @return the space info
      */
-    public static WxCpMailCommonSendRequest.BCC fromJson(String json) {
-      return WxCpGsonBuilder.create().fromJson(json, WxCpMailCommonSendRequest.BCC.class);
+    public static BCC fromJson(String json) {
+      return WxCpGsonBuilder.create().fromJson(json, BCC.class);
     }
 
     /**
@@ -207,8 +207,8 @@ public class WxCpMailCommonSendRequest implements Serializable {
      * @param json the json
      * @return the space info
      */
-    public static WxCpMailCommonSendRequest.Attachment fromJson(String json) {
-      return WxCpGsonBuilder.create().fromJson(json, WxCpMailCommonSendRequest.Attachment.class);
+    public static Attachment fromJson(String json) {
+      return WxCpGsonBuilder.create().fromJson(json, Attachment.class);
     }
 
     /**

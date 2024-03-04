@@ -18,14 +18,218 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class WxCpMailMeetingSendRequest extends WxCpMailCommonSendRequest implements Serializable {
+public class WxCpMailMeetingSendRequest implements Serializable {
   private static final long serialVersionUID = -4961279393895454138L;
+
+
+  /**
+   * 收件人，to.emails 和 to.userids 至少传一个
+   */
+  @SerializedName("to")
+  private TO to;
+
+  /**
+   * 抄送
+   */
+  @SerializedName("cc")
+  private CC cc;
+
+  /**
+   * 文档类型, 3:文档 4:表格
+   */
+  @SerializedName("bcc")
+  private BCC bcc;
+
+  /**
+   * 标题
+   */
+  @SerializedName("subject")
+  private String subject;
+
+  /**
+   * 内容
+   */
+  @SerializedName("content")
+  private String content;
+
+  /**
+   * 附件相关
+   */
+  @SerializedName("attachment_list")
+  private List<Attachment> attachmentList;
+
+  /**
+   * 内容类型 html，text（默认是html）
+   */
+  @SerializedName("content_type")
+  private String contentType;
+
+  /**
+   * 表示是否开启id转译，0表示否，1表示是，默认0。仅第三方应用需要用到，企业自建应用可以忽略。
+   * 目前仅subject、content、attachment_list[].file_name字段支持转译。
+   */
+  @SerializedName("enable_id_trans")
+  private Integer enableIdTrans;
+
 
   /**
    * 会议相关，会议邮件必填，且必须同时带上schedule，会议的基本设置放在schedule里
    */
   @SerializedName("meeting")
   private Meeting meeting;
+
+
+  @Getter
+  @Setter
+  public static class TO implements Serializable {
+    private static final long serialVersionUID = -4860239393895754598L;
+
+    /**
+     * 收件人，邮箱地址
+     */
+    @SerializedName("emails")
+    private List<String> emails;
+
+    /**
+     * 收件人，企业内成员的userid
+     */
+    @SerializedName("userids")
+    private List<String> userIds;
+
+    /**
+     * From json space info.
+     *
+     * @param json the json
+     * @return the space info
+     */
+    public static TO fromJson(String json) {
+      return WxCpGsonBuilder.create().fromJson(json, TO.class);
+    }
+
+    /**
+     * To json string.
+     *
+     * @return the string
+     */
+    public String toJson() {
+      return WxCpGsonBuilder.create().toJson(this);
+    }
+
+  }
+
+  @Getter
+  @Setter
+  public static class CC implements Serializable {
+    private static final long serialVersionUID = -4863239393895754598L;
+
+    /**
+     * 抄送人，邮箱地址
+     */
+    @SerializedName("emails")
+    private List<String> emails;
+
+    /**
+     * 抄送人，企业内成员的userid
+     */
+    @SerializedName("userids")
+    private List<String> userIds;
+
+    /**
+     * From json space info.
+     *
+     * @param json the json
+     * @return the space info
+     */
+    public static CC fromJson(String json) {
+      return WxCpGsonBuilder.create().fromJson(json, CC.class);
+    }
+
+    /**
+     * To json string.
+     *
+     * @return the string
+     */
+    public String toJson() {
+      return WxCpGsonBuilder.create().toJson(this);
+    }
+
+  }
+
+  @Getter
+  @Setter
+  public static class BCC implements Serializable {
+    private static final long serialVersionUID = -4860239393885754598L;
+
+    /**
+     * 密送人，邮箱地址
+     */
+    @SerializedName("emails")
+    private List<String> emails;
+
+    /**
+     * 密送人，企业内成员的userid
+     */
+    @SerializedName("userids")
+    private List<String> userIds;
+
+    /**
+     * From json space info.
+     *
+     * @param json the json
+     * @return the space info
+     */
+    public static BCC fromJson(String json) {
+      return WxCpGsonBuilder.create().fromJson(json, BCC.class);
+    }
+
+    /**
+     * To json string.
+     *
+     * @return the string
+     */
+    public String toJson() {
+      return WxCpGsonBuilder.create().toJson(this);
+    }
+
+  }
+
+  @Getter
+  @Setter
+  public static class Attachment implements Serializable {
+    private static final long serialVersionUID = -4860230393895754598L;
+
+    /**
+     * 文件名
+     */
+    @SerializedName("file_name")
+    private String fileName;
+
+    /**
+     * 文件内容（base64编码），所有附件加正文的大小不允许超过50M, 且附件个数不能超过200个
+     */
+    @SerializedName("content")
+    private String content;
+
+    /**
+     * From json space info.
+     *
+     * @param json the json
+     * @return the space info
+     */
+    public static Attachment fromJson(String json) {
+      return WxCpGsonBuilder.create().fromJson(json, Attachment.class);
+    }
+
+    /**
+     * To json string.
+     *
+     * @return the string
+     */
+    public String toJson() {
+      return WxCpGsonBuilder.create().toJson(this);
+    }
+
+  }
 
   @Getter
   @Setter
