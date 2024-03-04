@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class WxCpMailMeetingSendRequest extends WxCpMailScheduleSendRequest implements Serializable {
+public class WxCpMailMeetingSendRequest extends WxCpMailCommonSendRequest implements Serializable {
   private static final long serialVersionUID = -4961279393895454138L;
 
   /**
