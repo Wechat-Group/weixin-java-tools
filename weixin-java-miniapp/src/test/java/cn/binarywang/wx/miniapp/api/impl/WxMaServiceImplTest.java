@@ -5,6 +5,8 @@ import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
+import lombok.SneakyThrows;
+import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.bean.WxAccessTokenEntity;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -16,6 +18,7 @@ import org.testng.Assert;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -182,6 +185,14 @@ public class WxMaServiceImplTest {
       Assert.assertEquals(WxMpErrorMsgEnum.CODE_40001.getCode(), e.getError().getErrorCode());
       Assert.assertEquals(2, counter.get());
     }
+  }
+
+  @SneakyThrows
+  @Test
+  public void upload() {
+    CommonUploadParam param = CommonUploadParam.fromFile("media", new File("./static/1.jpg"));
+    String result = wxService.upload("https://api.weixin.qq.com/wxa/sec/uploadauthmaterial", param);
+    System.out.println(result);
   }
 
   @Test

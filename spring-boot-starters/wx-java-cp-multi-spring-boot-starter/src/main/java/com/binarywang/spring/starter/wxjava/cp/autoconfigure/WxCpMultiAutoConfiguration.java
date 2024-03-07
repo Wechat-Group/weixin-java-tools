@@ -1,7 +1,6 @@
 package com.binarywang.spring.starter.wxjava.cp.autoconfigure;
 
-import com.binarywang.spring.starter.wxjava.cp.properties.WxCpMultiProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import com.binarywang.spring.starter.wxjava.cp.configuration.WxCpMultiServicesAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -12,9 +11,6 @@ import org.springframework.context.annotation.Import;
  * created on 2023/10/16
  */
 @Configuration
-@EnableConfigurationProperties(WxCpMultiProperties.class)
-@Import({
-  WxCpMultiServicesAutoConfiguration.class
-})
+@Import(WxCpMultiServicesAutoConfiguration.class)
 public class WxCpMultiAutoConfiguration {
 }

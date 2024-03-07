@@ -22,7 +22,7 @@ public interface BankService {
    * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_1.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_1.shtml</a>
    * </pre>
    *
-   * @param accountNumber 银行卡号	该字段需进行加密处理，加密方法详见敏感信息加密说明。(提醒：必须在HTTP头中上送Wechatpay-Serial)
+   * @param accountNumber 银行卡号
    * @return BankAccountResult 对私银行卡号开户银行信息
    * @throws WxPayException .
    */

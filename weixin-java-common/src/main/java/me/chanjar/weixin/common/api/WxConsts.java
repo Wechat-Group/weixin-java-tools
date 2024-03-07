@@ -301,6 +301,7 @@ public class WxConsts {
     public static final String CLICK = "CLICK";
     public static final String VIEW = "VIEW";
     public static final String MASS_SEND_JOB_FINISH = "MASSSENDJOBFINISH";
+
     /**
      * 扫码推事件的事件推送
      */

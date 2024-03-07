@@ -46,7 +46,7 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
   /**
    * 证书下载地址
    */
-  private static final String CERT_DOWNLOAD_PATH = "https://api.mch.weixin.qq.com/v3/certificates";
+  private static final String CERT_DOWNLOAD_PATH = "/v3/certificates";
 
   /**
    * 上次更新时间
@@ -63,6 +63,8 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
   private final Credentials credentials;
 
   private final byte[] apiV3Key;
+
+  private String payBaseUrl ;
 
   private final ReentrantLock lock = new ReentrantLock();
 
@@ -93,18 +95,19 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
     private final int minutes;
   }
 
-  public AutoUpdateCertificatesVerifier(Credentials credentials, byte[] apiV3Key) {
-    this(credentials, apiV3Key, TimeInterval.OneHour.getMinutes());
+  public AutoUpdateCertificatesVerifier(Credentials credentials, byte[] apiV3Key, String payBaseUrl) {
+    this(credentials, apiV3Key, TimeInterval.OneHour.getMinutes(), payBaseUrl);
   }
 
-  public AutoUpdateCertificatesVerifier(Credentials credentials, byte[] apiV3Key, int minutesInterval) {
-    this(credentials,apiV3Key,minutesInterval,null);
+  public AutoUpdateCertificatesVerifier(Credentials credentials, byte[] apiV3Key, int minutesInterval, String payBaseUrl) {
+    this(credentials, apiV3Key, minutesInterval, payBaseUrl, null);
   }
 
-  public AutoUpdateCertificatesVerifier(Credentials credentials, byte[] apiV3Key, int minutesInterval,WxPayHttpProxy wxPayHttpProxy) {
+  public AutoUpdateCertificatesVerifier(Credentials credentials, byte[] apiV3Key, int minutesInterval, String payBaseUrl, WxPayHttpProxy wxPayHttpProxy) {
     this.credentials = credentials;
     this.apiV3Key = apiV3Key;
     this.minutesInterval = minutesInterval;
+    this.payBaseUrl = payBaseUrl;
     this.wxPayHttpProxy = wxPayHttpProxy;
     //构造时更新证书
     try {
@@ -153,7 +156,7 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
 
     CloseableHttpClient httpClient = wxPayV3HttpClientBuilder.build();
 
-    HttpGet httpGet = new HttpGet(CERT_DOWNLOAD_PATH);
+    HttpGet httpGet = new HttpGet(this.payBaseUrl + CERT_DOWNLOAD_PATH);
     httpGet.addHeader("Accept", "application/json");
 
     CloseableHttpResponse response = httpClient.execute(httpGet);

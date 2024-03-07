@@ -4,6 +4,7 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.mp.bean.*;
 import me.chanjar.weixin.mp.bean.card.WxMpCard;
 import me.chanjar.weixin.mp.bean.card.WxMpCardResult;
@@ -55,9 +56,11 @@ public class WxMpGsonBuilder {
     INSTANCE.registerTypeAdapter(WxMpMaterialNews.class, new WxMpMaterialNewsGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpNewsArticle.class, new WxMpNewsArticleGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpMaterialNewsBatchGetResult.class, new WxMpMaterialNewsBatchGetGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem.class, new WxMpMaterialNewsBatchGetGsonItemAdapter());
+    INSTANCE.registerTypeAdapter(WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem.class,
+      new WxMpMaterialNewsBatchGetGsonItemAdapter());
     INSTANCE.registerTypeAdapter(WxMpMaterialFileBatchGetResult.class, new WxMpMaterialFileBatchGetGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMaterialFileBatchGetResult.WxMaterialFileBatchGetNewsItem.class, new WxMpMaterialFileBatchGetGsonItemAdapter());
+    INSTANCE.registerTypeAdapter(WxMpMaterialFileBatchGetResult.WxMaterialFileBatchGetNewsItem.class,
+      new WxMpMaterialFileBatchGetGsonItemAdapter());
     INSTANCE.registerTypeAdapter(WxMpCardResult.class, new WxMpCardResultGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpCard.class, new WxMpCardGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpMassPreviewMessage.class, new WxMpMassPreviewMessageGsonAdapter());
@@ -66,7 +69,8 @@ public class WxMpGsonBuilder {
     INSTANCE.registerTypeAdapter(WxMpUserBlacklistGetResult.class, new WxUserBlacklistGetResultGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpMemberCardUserInfoResult.class, new WxMpMemberCardUserInfoResultGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMpMemberCardUpdateResult.class, new WxMpMemberCardUpdateResultGsonAdapter());
-    INSTANCE.registerTypeAdapter(WxMpMemberCardActivateTempInfoResult.class, new WxMpMemberCardActivateTempInfoResultGsonAdapter());
+    INSTANCE.registerTypeAdapter(WxMpMemberCardActivateTempInfoResult.class,
+      new WxMpMemberCardActivateTempInfoResultGsonAdapter());
 
     INSTANCE.setExclusionStrategies(new ExclusionStrategy() {
       @Override
@@ -76,11 +80,7 @@ public class WxMpGsonBuilder {
 
       @Override
       public boolean shouldSkipClass(Class<?> aClass) {
-        if (aClass == File.class) {
-          return true;
-        }
-
-        return false;
+        return aClass == File.class || aClass == ApacheHttpClientBuilder.class;
       }
     });
   }

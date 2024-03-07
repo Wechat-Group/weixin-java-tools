@@ -2,6 +2,7 @@ package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaAuditMediaUploadResult;
+import cn.binarywang.wx.miniapp.bean.WxMaUploadAuthMaterialResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.bean.ma.WxMaPrefetchDomain;
 import me.chanjar.weixin.open.bean.ma.WxMaScheme;
@@ -224,6 +225,11 @@ public interface WxOpenMaService extends WxMaService {
    */
   String API_GET_GRAY_RELEASE_PLAN = "https://api.weixin.qq.com/wxa/getgrayreleaseplan";
 
+  /**
+   * 17 获取隐私接口检测结果
+   */
+  String API_GET_CODE_PRIVACY_INFO = "https://api.weixin.qq.com/wxa/security/get_code_privacy_info";
+
 
   /**
    * 查询服务商的当月提审限额和加急次数（Quota）
@@ -272,6 +278,11 @@ public interface WxOpenMaService extends WxMaService {
    * 申请开通直播
    */
   String API_WX_APPLY_LIVE_INFO = "https://api.weixin.qq.com/wxa/business/applyliveinfo";
+
+  /**
+   * 小程序认证上传补充材料
+   */
+  String API_UPLOAD_AUTH_MATERIAL = "https://api.weixin.qq.com/wxa/sec/uploadauthmaterial";
 
   /**
    * 获得小程序的域名配置信息
@@ -619,6 +630,16 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenMaGrayReleasePlanResult getGrayReleasePlan() throws WxErrorException;
 
   /**
+   * 17. 获取隐私接口检测结果
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/code-management/getCodePrivacyInfo.html
+   *
+   * @return {@link WxOpenMaGetCodePrivacyInfoResult }
+   * @throws WxErrorException wx错误异常
+   * @author Yuan
+   */
+  WxOpenMaGetCodePrivacyInfoResult getCodePrivacyInfo() throws WxErrorException;
+
+  /**
    * 查询服务商的当月提审限额和加急次数（Quota）
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html
    *
@@ -697,6 +718,13 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenMaBasicService getBasicService();
 
   /**
+   * 小程序认证（年审）服务
+   *
+   * @return 小程序认证（年审）服务
+   */
+  WxOpenMaAuthService getAuthService();
+
+  /**
    * 小程序用户隐私保护指引服务
    *
    * @return 小程序用户隐私保护指引服务
@@ -713,7 +741,7 @@ public interface WxOpenMaService extends WxMaService {
   /**
    * 小程序审核 提审素材上传接口
    *
-   * @return
+   * @return 结果
    */
   WxMaAuditMediaUploadResult uploadMedia(File file) throws WxErrorException;
 
@@ -751,5 +779,12 @@ public interface WxOpenMaService extends WxMaService {
    * @throws WxErrorException the wx error exception
    */
   WxOpenMaApplyLiveInfoResult applyLiveInfo() throws WxErrorException;
+
+  /**
+   * 小程序认证上传补充材料
+   *
+   * @return
+   */
+  WxMaUploadAuthMaterialResult uploadAuthMaterial(File file) throws WxErrorException;
 
 }

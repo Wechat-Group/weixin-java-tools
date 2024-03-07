@@ -305,11 +305,11 @@ public interface WxMaService extends WxService {
   WxMaRunService getRunService();
 
   /**
-   * 返回内容安全相关接口服务对象.
+   * 返回小程序安全相关接口服务对象.
    *
    * @return WxMaShareService sec check service
    */
-  WxMaSecCheckService getSecCheckService();
+  WxMaSecurityService getSecurityService();
 
   /**
    * 返回插件相关接口服务对象.
@@ -485,14 +485,6 @@ public interface WxMaService extends WxService {
    * @return WxMaImmediateDeliveryService
    */
   WxMaImmediateDeliveryService getWxMaImmediateDeliveryService();
-
-
-  /**
-   * 小程序安全风控相关接口服务
-   *
-   * @return safetyRiskControl service
-   */
-  WxMaSafetyRiskControlService getSafetyRiskControlService();
 
   /**
    * 分享人接口

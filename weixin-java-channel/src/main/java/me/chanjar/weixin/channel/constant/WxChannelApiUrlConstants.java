@@ -16,6 +16,11 @@ public class WxChannelApiUrlConstants {
   public static final String GET_ACCESS_TOKEN_URL =
     "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
+  /**
+   * 获取Stable access_token.
+   */
+  public static final String GET_STABLE_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/stable_token";
+
   /** 基础接口 */
   public interface Basics {
 
@@ -350,5 +355,73 @@ public class WxChannelApiUrlConstants {
     String LIST_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/window/product/list/get";
     /** 下架橱窗商品 */
     String OFF_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/window/product/off";
+  }
+
+  /**
+   * 留资组件管理
+   */
+  public interface LeadComponent {
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/leads/get_leads_info_by_component_id.html">按时间获取留资信息详情</a>
+     */
+    String GET_LEADS_INFO_BY_COMPONENT_ID = "https://api.weixin.qq.com/channels/leads/get_leads_info_by_component_id";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/leads/get_leads_info_by_request_id.html">按直播场次获取留资信息详情</a>
+     */
+    String GET_LEADS_INFO_BY_REQUEST_ID = "https://api.weixin.qq.com/channels/leads/get_leads_info_by_request_id";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/leads/get_leads_request_id.html">获取留资request_id列表详情</a>
+     */
+    String GET_LEADS_REQUEST_ID = "https://api.weixin.qq.com/channels/leads/get_leads_request_id";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/leads/get_leads_component_promote_record.html">获取留资组件直播推广记录信息详情</a>
+     */
+    String GET_LEADS_COMPONENT_PROMOTE_RECORD = "https://api.weixin.qq.com/channels/leads/get_leads_component_promote_record";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/leads/get_leads_component_id.html">获取留资组件Id列表详情</a>
+     */
+    String GET_LEADS_COMPONENT_ID = "https://api.weixin.qq.com/channels/leads/get_leads_component_id";
+  }
+
+  /**
+   * 留资服务的直播数据
+   */
+  public interface FinderLive {
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/live/get_finder_attr_by_appid.html">获取视频号账号信息</a>
+     */
+    String GET_FINDER_ATTR_BY_APPID = "https://api.weixin.qq.com/channels/finderlive/get_finder_attr_by_appid";
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/live/get_finder_live_data_list.html">获取留资直播间数据详情</a>
+     */
+    String GET_FINDER_LIVE_DATA_LIST = "https://api.weixin.qq.com/channels/finderlive/get_finder_live_data_list";
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/live/get_finder_live_leads_data.html">获取账号收集的留资数量</a>
+     */
+    String GET_FINDER_LIVE_LEADS_DATA = "https://api.weixin.qq.com/channels/finderlive/get_finder_live_leads_data";
+  }
+
+
+  /** 会员功能接口 */
+  public interface Vip {
+    /** 拉取用户详情 */
+    String VIP_USER_INFO_URL = "https://api.weixin.qq.com/channels/ec/vip/user/info/get";
+    /** 拉取用户列表 */
+    String VIP_USER_LIST_URL = "https://api.weixin.qq.com/channels/ec/vip/user/list/get";
+
+    /** 获取用户积分 */
+    String VIP_SCORE_URL = "https://api.weixin.qq.com/channels/ec/vip/user/score/get";
+    /** 增加用户积分 */
+    String SCORE_INCREASE_URL = "https://api.weixin.qq.com/channels/ec/vip/user/score/increase";
+    /** 减少用户积分 */
+    String SCORE_DECREASE_URL = "https://api.weixin.qq.com/channels/ec/vip/user/score/decrease";
+
+    /** 更新用户等级 */
+    String GRADE_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/vip/user/grade/update";
   }
 }

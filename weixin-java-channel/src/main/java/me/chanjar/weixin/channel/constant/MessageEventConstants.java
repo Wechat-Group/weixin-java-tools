@@ -67,4 +67,16 @@ public interface MessageEventConstants {
     // 其他
     /** 进入会话事件 */
     String USER_ENTER_TEMP_SESSION = "user_enter_tempsession";
+
+    // 会员相关
+    /** 用户加入会员 */
+    String USER_VIP_JOIN = "channels_ec_vip_join";
+    /** 用户注销会员 */
+    String USER_VIP_CLOSE = "channels_ec_vip_close";
+    /** 用户等级更新 */
+    String USER_VIP_GRADE_INFO_UPDATE = "channels_ec_vip_grade_info_update";
+    /** 用户积分更新 */
+    String USER_VIP_SCORE_UPDATE = "channels_ec_vip_score_update";
+    /** 用户积分兑换 */
+    String USER_VIP_SCORE_EXCHANGE = "channels_ec_vip_score_exchange";
 }

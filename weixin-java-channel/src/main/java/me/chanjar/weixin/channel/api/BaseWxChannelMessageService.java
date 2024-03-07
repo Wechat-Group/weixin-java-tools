@@ -21,6 +21,8 @@ import me.chanjar.weixin.channel.bean.message.product.BrandMessage;
 import me.chanjar.weixin.channel.bean.message.product.CategoryAuditMessage;
 import me.chanjar.weixin.channel.bean.message.product.SpuAuditMessage;
 import me.chanjar.weixin.channel.bean.message.supplier.SupplierItemMessage;
+import me.chanjar.weixin.channel.bean.message.vip.ExchangeInfoMessage;
+import me.chanjar.weixin.channel.bean.message.vip.UserInfoMessage;
 import me.chanjar.weixin.channel.message.WxChannelMessage;
 import me.chanjar.weixin.channel.message.WxChannelMessageRouterRule;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -356,6 +358,68 @@ public interface BaseWxChannelMessageService {
    */
   void supplierItemUpdate(SupplierItemMessage message, final String content, final String appId,
     final Map<String, Object> context, final WxSessionManager sessionManager);
+
+
+  /**
+   * 用户加入会员.
+   *
+   * @param message        the message
+   * @param content        the content
+   * @param appId          the app id
+   * @param context        the context
+   * @param sessionManager the session manager
+   */
+  public void vipJoin(UserInfoMessage message, final String content, final String appId,
+                      final Map<String, Object> context, final WxSessionManager sessionManager);
+
+  /**
+   * 用户注销会员.
+   *
+   * @param message        the message
+   * @param content        the content
+   * @param appId          the app id
+   * @param context        the context
+   * @param sessionManager the session manager
+   */
+  void vipClose(UserInfoMessage message, final String content, final String appId,
+                final Map<String, Object> context, final WxSessionManager sessionManager);
+
+  /**
+   * 用户等级更新.
+   *
+   * @param message        the message
+   * @param content        the content
+   * @param appId          the app id
+   * @param context        the context
+   * @param sessionManager the session manager
+   */
+  void vipGradeUpdate(UserInfoMessage message, final String content, final String appId,
+                      final Map<String, Object> context, final WxSessionManager sessionManager);
+
+  /**
+   * 用户积分更新.
+   *
+   * @param message        the message
+   * @param content        the content
+   * @param appId          the app id
+   * @param context        the context
+   * @param sessionManager the session manager
+   */
+  void vipScoreUpdate(UserInfoMessage message, final String content, final String appId,
+                      final Map<String, Object> context, final WxSessionManager sessionManager);
+
+  /**
+   * 用户积分兑换
+   *
+   * @param message        the message
+   * @param content        the content
+   * @param appId          the app id
+   * @param context        the context
+   * @param sessionManager the session manager
+   */
+  void vipScoreExchange(ExchangeInfoMessage message, final String content, final String appId,
+                        final Map<String, Object> context, final WxSessionManager sessionManager);
+
 
   /**
    * 默认消息处理

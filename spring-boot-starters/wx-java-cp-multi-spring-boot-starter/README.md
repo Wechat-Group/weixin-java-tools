@@ -42,6 +42,8 @@
     ## ConfigStorage 配置（选填）
     wx.cp.config-storage.type=memory # 配置类型: memory(默认), jedis, redisson, redistemplate
     ## http 客户端配置（选填）
+    ## # http客户端类型: http_client(默认), ok_http, jodd_http
+    wx.cp.config-storage.http-client-type=http_client
     wx.cp.config-storage.http-proxy-host=
     wx.cp.config-storage.http-proxy-port=
     wx.cp.config-storage.http-proxy-username=
@@ -57,7 +59,6 @@
 
 ```java
 import com.binarywang.spring.starter.wxjava.cp.service.WxCpMultiServices;
-import com.binarywang.spring.starter.wxjava.cp.service.WxCpServices;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpUserService;
 import org.springframework.beans.factory.annotation.Autowired;

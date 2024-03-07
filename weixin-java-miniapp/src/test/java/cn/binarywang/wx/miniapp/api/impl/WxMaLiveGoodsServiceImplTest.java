@@ -30,7 +30,8 @@ public class WxMaLiveGoodsServiceImplTest {
   @Test
   public void addGoods() throws Exception {
     //上传临时素材
-    WxMediaUploadResult mediaUpload = this.wxService.getMediaService().uploadMedia("image", new File("E:\\1.png"));
+    WxMediaUploadResult mediaUpload = this.wxService.getMediaService()
+      .uploadMedia("image", new File("./static/temp.jpg"));
 
     WxMaLiveGoodInfo goods = new WxMaLiveGoodInfo();
     goods.setCoverImgUrl(mediaUpload.getMediaId());

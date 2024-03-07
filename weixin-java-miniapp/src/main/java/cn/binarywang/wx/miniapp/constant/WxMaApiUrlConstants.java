@@ -351,10 +351,18 @@ public class WxMaApiUrlConstants {
     String GENERATE_SHORT_LINK_URL = "https://api.weixin.qq.com/wxa/genwxashortlink";
   }
 
+  /**
+   * 小程序安全
+   */
   public interface SecCheck {
     String IMG_SEC_CHECK_URL = "https://api.weixin.qq.com/wxa/img_sec_check";
     String MSG_SEC_CHECK_URL = "https://api.weixin.qq.com/wxa/msg_sec_check";
     String MEDIA_CHECK_ASYNC_URL = "https://api.weixin.qq.com/wxa/media_check_async";
+
+    /**
+     * 获取用户安全等级
+     */
+    String GET_USER_RISK_RANK = "https://api.weixin.qq.com/wxa/getuserriskrank";
   }
 
   public interface Setting {
@@ -751,17 +759,6 @@ public class WxMaApiUrlConstants {
        */
       String ABNORMAL_CONFIRM = "https://api.weixin.qq.com/cgi-bin/express/local/business/order/confirm_return";
 
-    }
-
-
-    /**
-     * 安全风控
-     */
-    interface SafetyRiskControl {
-      /**
-       * 获取用户的安全等级，无需用户授权
-       */
-      String GET_USER_RISK_RANK = "https://api.weixin.qq.com/wxa/getuserriskrank";
     }
 
   }
