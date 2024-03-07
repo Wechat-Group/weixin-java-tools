@@ -1345,6 +1345,14 @@ public interface WxCpApiPathConsts {
      */
     String DEL_INTERCEPT_RULE = "/cgi-bin/externalcontact/del_intercept_rule";
     /**
+     * 获取敏感词规则列表
+     */
+    String GET_INTERCEPT_RULE_LIST = "/cgi-bin/externalcontact/get_intercept_rule_list";
+    /**
+     * 获取敏感词规则详情
+     */
+    String GET_INTERCEPT_RULE = "/cgi-bin/externalcontact/get_intercept_rule";
+    /**
      * 获取当前仍然有效的获客链接
      */
     String CUSTOMER_ACQUISITION_LINK_LIST = "/cgi-bin/externalcontact/customer_acquisition/list_link";
