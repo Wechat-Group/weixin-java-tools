@@ -267,10 +267,10 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
     boolean locked = false;
     try {
       do {
-        locked = lock.tryLock(100, TimeUnit.MILLISECONDS);
         if (!forceRefresh && !this.getWxMpConfigStorage().isAccessTokenExpired()) {
           return this.getWxMpConfigStorage().getAccessToken();
         }
+        locked = lock.tryLock(100, TimeUnit.MILLISECONDS);
         if (!locked && System.currentTimeMillis() > timeOutMillis) {
           throw new InterruptedException("获取accessToken超时：获取时间超时");
         }
