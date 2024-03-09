@@ -1,18 +1,22 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
-import java.io.File;
-
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.safety.request.WxMaUserSafetyRiskRankRequest;
+import cn.binarywang.wx.miniapp.bean.safety.response.WxMaUserSafetyRiskRankResponse;
 import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckRequest;
 import cn.binarywang.wx.miniapp.bean.security.WxMaMsgSecCheckCheckResponse;
-import org.testng.annotations.*;
-
-import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
+
+import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertNotNull;
 
 /**
  * <pre>
@@ -24,13 +28,13 @@ import static org.testng.Assert.*;
  */
 @Test
 @Guice(modules = ApiTestModule.class)
-public class WxMaSecCheckServiceImplTest {
+public class WxMaSecurityServiceImplTest {
   @Inject
   private WxMaService wxService;
 
   @Test
   public void testCheckImage() throws WxErrorException {
-    boolean result = this.wxService.getSecCheckService()
+    boolean result = this.wxService.getSecurityService()
       .checkImage(new File(ClassLoader.getSystemResource("tmp.png").getFile()));
     assertTrue(result);
   }
@@ -47,7 +51,7 @@ public class WxMaSecCheckServiceImplTest {
 
   @Test(dataProvider = "secData")
   public void testCheckMessage(String msg, boolean result) throws WxErrorException {
-    assertThat(this.wxService.getSecCheckService()
+    assertThat(this.wxService.getSecurityService()
       .checkMessage(msg))
       .isEqualTo(result);
   }
@@ -60,7 +64,19 @@ public class WxMaSecCheckServiceImplTest {
       .version("2")
       .openid("xxx")
       .build();
-    WxMaMsgSecCheckCheckResponse response = this.wxService.getSecCheckService().checkMessage(request);
+    WxMaMsgSecCheckCheckResponse response = this.wxService.getSecurityService().checkMessage(request);
     assertThat(response).isNotNull();
+  }
+
+  @Test
+  public void testGetUserRiskRank() throws WxErrorException {
+    WxMaUserSafetyRiskRankRequest wxMaUserSafetyRiskRankRequest = WxMaUserSafetyRiskRankRequest.builder()
+      .appid("")
+      .openid("")
+      .scene(1)
+      .isTest(true)
+      .build();
+    WxMaUserSafetyRiskRankResponse wxMaUserSafetyRiskRankResponse = this.wxService.getSecurityService().getUserRiskRank(wxMaUserSafetyRiskRankRequest);
+    assertNotNull(wxMaUserSafetyRiskRankResponse);
   }
 }

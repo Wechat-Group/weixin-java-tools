@@ -140,4 +140,11 @@ public interface WxChannelService extends BaseWxChannelService {
    */
   WxAssistantService getAssistantService();
 
+
+  /**
+   * 会员功能
+   *
+   * @return 会员服务
+   */
+  WxChannelVipService getVipService();
 }

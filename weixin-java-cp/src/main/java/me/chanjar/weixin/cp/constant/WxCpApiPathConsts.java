@@ -533,6 +533,15 @@ public interface WxCpApiPathConsts {
      */
     String WEDOC_DOC_SHARE = "/cgi-bin/wedoc/doc_share";
 
+    /**
+     * 邮件
+     * https://developer.work.weixin.qq.com/document/path/95486
+     */
+    /**
+     * The constant EXMAIL_APP_COMPOSE_SEND.
+     */
+    String EXMAIL_APP_COMPOSE_SEND = "/cgi-bin/exmail/app/compose_send";
+
   }
 
   /**
@@ -1335,6 +1344,14 @@ public interface WxCpApiPathConsts {
      * The constant DEL_INTERCEPT_RULE.
      */
     String DEL_INTERCEPT_RULE = "/cgi-bin/externalcontact/del_intercept_rule";
+    /**
+     * 获取敏感词规则列表
+     */
+    String GET_INTERCEPT_RULE_LIST = "/cgi-bin/externalcontact/get_intercept_rule_list";
+    /**
+     * 获取敏感词规则详情
+     */
+    String GET_INTERCEPT_RULE = "/cgi-bin/externalcontact/get_intercept_rule";
     /**
      * 获取当前仍然有效的获客链接
      */

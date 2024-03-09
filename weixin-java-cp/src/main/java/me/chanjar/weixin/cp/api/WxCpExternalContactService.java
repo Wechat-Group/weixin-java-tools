@@ -8,6 +8,8 @@ import me.chanjar.weixin.cp.bean.external.acquisition.*;
 import me.chanjar.weixin.cp.bean.external.contact.*;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRule;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleAddRequest;
+import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleInfo;
+import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleList;
 
 import java.io.File;
 import java.io.IOException;
@@ -1133,6 +1135,31 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   void delInterceptRule(String ruleId) throws WxErrorException;
+
+  /**
+   * 获取敏感词规则列表
+   *
+   * 企业和第三方应用可以通过此接口获取所有设置的敏感词规则列表。
+   * 请求方式：GET(HTTPS)
+   * 文档地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_intercept_rule_list">获取敏感词规则列表</a>
+   *
+   * @return WxCpInterceptRuleList 敏感词规则列表
+   * @throws WxErrorException 微信API异常
+   */
+  WxCpInterceptRuleList getInterceptRuleList() throws WxErrorException;
+
+  /**
+   * 获取敏感词详情
+   *
+   * 企业和第三方应用可以通过此接口获取单个敏感词规则的详细信息。
+   * 请求方式：GET(HTTPS)
+   * 文档地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_intercept_rule">获取敏感词详情</a>
+   *
+   * @param ruleId 敏感词规则ID
+   * @return WxCpInterceptRuleInfo 敏感词规则详情
+   * @throws WxErrorException 微信API异常
+   */
+  WxCpInterceptRuleInfo getInterceptRuleDetail(String ruleId) throws WxErrorException;
 
   /**
    * <pre>

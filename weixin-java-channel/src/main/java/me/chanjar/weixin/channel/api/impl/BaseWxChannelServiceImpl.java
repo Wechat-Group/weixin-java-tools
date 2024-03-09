@@ -3,26 +3,7 @@ package me.chanjar.weixin.channel.api.impl;
 
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.channel.api.WxAssistantService;
-import me.chanjar.weixin.channel.api.WxChannelAddressService;
-import me.chanjar.weixin.channel.api.WxChannelAfterSaleService;
-import me.chanjar.weixin.channel.api.WxChannelBasicService;
-import me.chanjar.weixin.channel.api.WxChannelBrandService;
-import me.chanjar.weixin.channel.api.WxChannelCategoryService;
-import me.chanjar.weixin.channel.api.WxChannelCouponService;
-import me.chanjar.weixin.channel.api.WxChannelFreightTemplateService;
-import me.chanjar.weixin.channel.api.WxChannelFundService;
-import me.chanjar.weixin.channel.api.WxChannelOrderService;
-import me.chanjar.weixin.channel.api.WxChannelProductService;
-import me.chanjar.weixin.channel.api.WxChannelService;
-import me.chanjar.weixin.channel.api.WxChannelSharerService;
-import me.chanjar.weixin.channel.api.WxChannelWarehouseService;
-import me.chanjar.weixin.channel.api.WxFinderLiveService;
-import me.chanjar.weixin.channel.api.WxLeadComponentService;
-import me.chanjar.weixin.channel.api.WxLeagueProductService;
-import me.chanjar.weixin.channel.api.WxLeaguePromoterService;
-import me.chanjar.weixin.channel.api.WxLeagueSupplierService;
-import me.chanjar.weixin.channel.api.WxLeagueWindowService;
+import me.chanjar.weixin.channel.api.*;
 import me.chanjar.weixin.channel.config.WxChannelConfig;
 import me.chanjar.weixin.channel.util.JsonUtils;
 import me.chanjar.weixin.common.api.WxConsts;
@@ -73,6 +54,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private WxLeadComponentService leadComponentService = null;
   private WxFinderLiveService finderLiveService = null;
   private WxAssistantService assistantService = null;
+  private WxChannelVipService vipService = new WxChannelVipServiceImpl(this);
 
   protected WxChannelConfig config;
   private int retrySleepMillis = 1000;
@@ -115,7 +97,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
       } while (!locked);
       String response = doGetAccessTokenRequest();
       return extractAccessToken(response);
-    } catch (IOException | InterruptedException e) {
+    } catch (WxErrorException | InterruptedException e) {
       throw new WxRuntimeException(e);
     } finally {
       if (locked) {
@@ -130,7 +112,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
    * @return .
    * @throws IOException .
    */
-  protected abstract String doGetAccessTokenRequest() throws IOException;
+  protected abstract String doGetAccessTokenRequest() throws WxErrorException;
 
   @Override
   public String get(String url, String queryParam) throws WxErrorException {
@@ -425,4 +407,8 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
     return assistantService;
   }
 
+  @Override
+  public WxChannelVipService getVipService() {
+    return vipService;
+  }
 }

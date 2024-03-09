@@ -58,12 +58,7 @@ public class WxMaUserServiceImpl implements WxMaUserService {
   }
 
   @Override
-  public WxMaPhoneNumberInfo getPhoneNoInfo(String sessionKey, String encryptedData, String ivStr) {
-    return WxMaPhoneNumberInfo.fromJson(WxMaCryptUtils.decrypt(sessionKey, encryptedData, ivStr));
-  }
-
-  @Override
-  public WxMaPhoneNumberInfo getPhoneNoInfo(String code) throws WxErrorException {
+  public WxMaPhoneNumberInfo getPhoneNumber(String code) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("code", code);
     String responseContent = this.service.post(GET_PHONE_NUMBER_URL, param.toString());
@@ -77,8 +72,8 @@ public class WxMaUserServiceImpl implements WxMaUserService {
   }
 
   @Override
-  public WxMaPhoneNumberInfo getNewPhoneNoInfo(String code) throws WxErrorException {
-    return this.getPhoneNoInfo(code);
+  public WxMaPhoneNumberInfo getPhoneNoInfo(String code) throws WxErrorException {
+    return this.getPhoneNumber(code);
   }
 
   @Override
