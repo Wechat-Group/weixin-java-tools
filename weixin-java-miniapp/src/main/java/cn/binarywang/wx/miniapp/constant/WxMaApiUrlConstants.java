@@ -681,6 +681,18 @@ public class WxMaApiUrlConstants {
      */
     String QUERY_FOLLOW_TRACE_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/query_follow_trace";
 
+    /**
+     * 获取运力id列表get_delivery_list
+     * 商户使用此接口获取所有运力id的列表
+     */
+    String GET_DELIVERY_LIST_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/get_delivery_list";
+
+    /**
+     * 获取运力id列表get_delivery_list
+     * 商户使用此接口获取所有运力id的列表
+     */
+    String UPDATE_WAYBILL_GOODS_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/update_waybill_goods";
+
 
     /**
      * 下单接口.

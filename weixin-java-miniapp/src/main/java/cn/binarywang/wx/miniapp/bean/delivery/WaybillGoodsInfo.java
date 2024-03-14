@@ -54,6 +54,14 @@ public class WaybillGoodsInfo implements Serializable {
     @SerializedName("goods_img_url")
     private String goodsImgUrl;
 
+    /**
+     * 商品详情描述，不传默认取“商品名称”值，最多40汉字
+     * <pre>
+     * 是否必填： 否
+     * </pre>
+     */
+    @SerializedName("goods_desc")
+    private String goodsDesc;
 
   }
 }

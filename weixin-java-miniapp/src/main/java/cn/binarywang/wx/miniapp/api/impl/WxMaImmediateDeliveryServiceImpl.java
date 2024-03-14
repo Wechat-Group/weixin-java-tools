@@ -2,10 +2,12 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaImmediateDeliveryService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaBaseResponse;
 import cn.binarywang.wx.miniapp.bean.delivery.*;
 import cn.binarywang.wx.miniapp.bean.delivery.base.WxMaDeliveryBaseResponse;
 import cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants;
 import cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.InstantDelivery;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
@@ -187,6 +189,26 @@ public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliverySe
     QueryFollowTraceRequest request) throws WxErrorException {
     String responseContent = this.wxMaService.post(InstantDelivery.QUERY_FOLLOW_TRACE_URL, request);
     QueryFollowTraceResponse response = QueryFollowTraceResponse.fromJson(responseContent);
+    if (response.getErrcode() == -1) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return response;
+  }
+
+  @Override
+  public GetDeliveryListResponse getDeliveryList() throws WxErrorException {
+    String responseContent = this.wxMaService.post(InstantDelivery.GET_DELIVERY_LIST_URL,"");
+    GetDeliveryListResponse response = GetDeliveryListResponse.fromJson(responseContent);
+    if (response.getErrcode() == -1) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
+    }
+    return response;
+  }
+
+  @Override
+  public WxMaBaseResponse updateWaybillGoods(UpdateWaybillGoodsRequest request) throws WxErrorException {
+    String responseContent = this.wxMaService.post(InstantDelivery.GET_DELIVERY_LIST_URL,request);
+    WxMaBaseResponse response = WxMaGsonBuilder.create().fromJson(responseContent, WxMaBaseResponse.class);
     if (response.getErrcode() == -1) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));
     }
