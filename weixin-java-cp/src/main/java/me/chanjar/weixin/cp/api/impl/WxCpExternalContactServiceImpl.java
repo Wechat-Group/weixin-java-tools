@@ -531,6 +531,14 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpBaseResp cancelMomentTask(String momentId) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(CANCEL_MOMENT_TASK);
+    JsonObject json = new JsonObject();
+    json.addProperty("moment_id", momentId);
+    return WxCpBaseResp.fromJson(this.mainService.post(url, json.toString()));
+  }
+
+  @Override
   public WxCpGetMomentList getMomentList(Long startTime, Long endTime, String creator, Integer filterType,
                                          String cursor, Integer limit) throws WxErrorException {
     JsonObject json = new JsonObject();

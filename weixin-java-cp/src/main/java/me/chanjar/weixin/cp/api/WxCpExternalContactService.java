@@ -847,6 +847,20 @@ public interface WxCpExternalContactService {
    */
   WxCpGetMomentTaskResult getMomentTaskResult(String jobId) throws WxErrorException;
 
+
+  /**
+   * <pre>
+   *   停止发表企业朋友圈。
+   *   <a href="https://developer.work.weixin.qq.com/document/path/97612">文档地址</a>
+   * </pre>
+   *
+   * @param momentId 朋友圈id，可通过<a href="https://developer.work.weixin.qq.com/document/path/97612#25254/%E8%8E%B7%E5%8F%96%E5%AE%A2%E6%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88%E4%BC%81%E4%B8%9A%E5%8F%91%E8%A1%A8%E7%9A%84%E5%88%97%E8%A1%A8">获取客户朋友圈企业发表的列表</a>接口获取朋友圈企业发表的列表
+   * @return wx cp add moment result
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp cancelMomentTask(String momentId) throws WxErrorException;
+
+
   /**
    * <pre>
    * 获取客户朋友圈全部的发表记录 获取企业全部的发表列表

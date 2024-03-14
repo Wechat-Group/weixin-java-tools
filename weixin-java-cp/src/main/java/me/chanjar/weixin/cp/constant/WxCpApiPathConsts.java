@@ -1233,6 +1233,12 @@ public interface WxCpApiPathConsts {
      * The constant GET_MOMENT_TASK_RESULT.
      */
     String GET_MOMENT_TASK_RESULT = "/cgi-bin/externalcontact/get_moment_task_result";
+
+    /**
+     * 停止发表企业朋友圈
+     */
+    String CANCEL_MOMENT_TASK = "/cgi-bin/externalcontact/cancel_moment_task";
+
     /**
      * The constant GET_MOMENT_LIST.
      */
