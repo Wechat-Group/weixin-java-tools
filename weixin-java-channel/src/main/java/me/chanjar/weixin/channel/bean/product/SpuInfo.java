@@ -94,4 +94,23 @@ public class SpuInfo extends SpuSimpleInfo {
   @JsonProperty("create_time")
   private String createTime;
 
+  /**
+   * 商品草稿最近一次修改时间
+   */
+  @JsonProperty("edit_time")
+  private Long editTime;
+
+  /**
+   * 商品类型。1: 小店普通自营商品；2: 福袋抽奖商品；3: 直播间闪电购商品。
+   * 注意: 福袋抽奖、直播间闪电购类型的商品为只读数据，不支持编辑、上架操作，不支持用data_type=2的参数获取。
+   */
+  @JsonProperty("product_type")
+  private Integer productType;
+
+
+  /**
+   * 商品的售后信息
+   */
+  @JsonProperty("after_sale_info")
+  private AfterSaleInfo afterSaleInfo;
 }
