@@ -19,9 +19,9 @@ import javax.net.ssl.SSLContext;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.security.KeyStore;
 import java.security.PrivateKey;
+import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.Optional;
@@ -263,17 +263,31 @@ public class WxPayConfig {
       throw new WxPayException("请确保apiV3Key值已设置");
     }
 
-    if(StringUtils.isNotBlank(this.getPrivateKeyString())){
-      this.setPrivateKeyString(Base64.getEncoder().encodeToString(this.getPrivateKeyString().getBytes()));
+    // 尝试从p12证书中加载私钥和证书
+    PrivateKey merchantPrivateKey = null;
+    X509Certificate certificate = null;
+    Object[] objects = this.p12ToPem();
+    if (objects != null) {
+      merchantPrivateKey = (PrivateKey) objects[0];
+      certificate = (X509Certificate) objects[1];
     }
-    InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
-      this.privateKeyContent, "privateKeyPath");
     try {
-      PrivateKey merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
-      if (StringUtils.isBlank(this.getCertSerialNo())) {
+      if (merchantPrivateKey == null) {
+        if (StringUtils.isNotBlank(this.getPrivateKeyString())) {
+          this.setPrivateKeyString(Base64.getEncoder().encodeToString(this.getPrivateKeyString().getBytes()));
+        }
+        InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
+          this.privateKeyContent, "privateKeyPath");
+        merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
+
+      }
+      if (certificate == null) {
         InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
           this.privateCertContent, "privateCertPath");
-        X509Certificate certificate = PemUtils.loadCertificate(certInputStream);
+        certificate = PemUtils.loadCertificate(certInputStream);
+      }
+
+      if (StringUtils.isBlank(this.getCertSerialNo())) {
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
       //构造Http Proxy正向代理
@@ -391,6 +405,54 @@ public class WxPayConfig {
         throw new WxPayException(fileHasProblemMsg, e);
       }
     }
+  }
+
+  /**
+   * 从配置路径 加载p12证书文件流
+   *
+   * @return 文件流
+   */
+  private InputStream loadP12InputStream() {
+    try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
+      this.keyContent, "p12证书");) {
+      return inputStream;
+    } catch (Exception e) {
+      return null;
+    }
+  }
+
+  /**
+   * 分解p12证书文件
+   *
+   * @return
+   */
+  private Object[] p12ToPem() {
+    InputStream inputStream = this.loadP12InputStream();
+    if (inputStream == null) {
+      return null;
+    }
+    String key = getMchId();
+    if (StringUtils.isBlank(key)) {
+      return null;
+    }
+    // 分解p12证书文件
+    PrivateKey privateKey = null;
+    X509Certificate x509Certificate = null;
+    try {
+      KeyStore keyStore = KeyStore.getInstance("PKCS12");
+      keyStore.load(inputStream, key.toCharArray());
+
+      String alias = keyStore.aliases().nextElement();
+      privateKey = (PrivateKey) keyStore.getKey(alias, key.toCharArray());
+
+      Certificate certificate = keyStore.getCertificate(alias);
+      x509Certificate = (X509Certificate) certificate;
+      return new Object[]{privateKey, x509Certificate};
+    } catch (Exception ignored) {
+
+    }
+    return null;
+
 
   }
 }
