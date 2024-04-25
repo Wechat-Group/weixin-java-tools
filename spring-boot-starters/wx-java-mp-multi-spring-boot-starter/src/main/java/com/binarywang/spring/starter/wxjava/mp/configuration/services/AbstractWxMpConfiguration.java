@@ -115,6 +115,7 @@ public abstract class AbstractWxMpConfiguration {
     String appSecret = corpProperties.getAppSecret();
     String token = corpProperties.getToken();
     String aesKey = corpProperties.getAesKey();
+    boolean useStableAccessToken = corpProperties.isUseStableAccessToken();
 
     config.setAppId(appId);
     config.setSecret(appSecret);
@@ -124,6 +125,7 @@ public abstract class AbstractWxMpConfiguration {
     if (StringUtils.isNotBlank(aesKey)) {
       config.setAesKey(aesKey);
     }
+    config.setUseStableAccessToken(useStableAccessToken);
   }
 
   private void configHttp(WxMpDefaultConfigImpl config, WxMpMultiProperties.ConfigStorage storage) {

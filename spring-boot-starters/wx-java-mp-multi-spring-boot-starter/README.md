@@ -19,12 +19,14 @@
     ## 选填
     wx.mp.tenantId1.token=@token
     wx.mp.tenantId1.aes-key=@aesKey
+    wx.mp.tenantId1.use-stable-access-token=@useStableAccessToken
     ## 应用 2 配置(必填)
     wx.mp.tenantId2.app-id=@appId
     wx.mp.tenantId2.app-secret =@secret
     ## 选填
     wx.mp.tenantId2.token=@token
     wx.mp.tenantId2.aes-key=@aesKey
+    wx.mp.tenantId2.use-stable-access-token=@useStableAccessToken
    
     # ConfigStorage 配置（选填）
     ## 配置类型: memory(默认), jedis, redisson, redis_template

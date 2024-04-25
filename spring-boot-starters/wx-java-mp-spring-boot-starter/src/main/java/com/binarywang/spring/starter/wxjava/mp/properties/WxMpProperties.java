@@ -40,6 +40,11 @@ public class WxMpProperties {
    * 设置微信公众号的EncodingAESKey.
    */
   private String aesKey;
+  
+  /**
+   * 是否使用稳定版 Access Token
+   */
+  private boolean useStableAccessToken = false;
 
   /**
    * 自定义host配置
