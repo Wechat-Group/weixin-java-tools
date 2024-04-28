@@ -171,7 +171,7 @@ public class FavorCouponsGetResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "single_price_max")
-    private Integer singlePriceMax;
+    private Long singlePriceMax;
 
     /**
      * 减至后的优惠单价
@@ -180,7 +180,7 @@ public class FavorCouponsGetResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "cut_to_price")
-    private Integer cutToPrice;
+    private Long cutToPrice;
   }
 
   @Data
