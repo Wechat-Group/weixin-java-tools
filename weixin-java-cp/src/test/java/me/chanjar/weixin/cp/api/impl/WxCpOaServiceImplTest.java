@@ -211,6 +211,11 @@ public class WxCpOaServiceImplTest {
    */
   @Test
   public void testGetTemplateDetail() throws WxErrorException {
+
+    String json = "{\"errcode\":0,\"errmsg\":\"ok\",\"template_names\":[{\"text\":\"销售用章申请-CIC测试\",\"lang\":\"zh_CN\"}],\"template_content\":{\"controls\":[{\"property\":{\"control\":\"Text\",\"id\":\"Text-1642064119106\",\"title\":[{\"text\":\"甲方全称\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请输入\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1}},{\"property\":{\"control\":\"Selector\",\"id\":\"Selector-1641521155746\",\"title\":[{\"text\":\"用章公司\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请选择\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1},\"config\":{\"selector\":{\"type\":\"single\",\"options\":[{\"key\":\"option-1641521155746\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1703845381898\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1643277806277\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1641521181119\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1641521191559\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1641521216515\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1650417735718\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1652756795298\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1664422448363\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1673487035814\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1675128722320\",\"value\":[{\"text\":\"事务所\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1678071926146\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1678071927225\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1703845339862\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1703845330660\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1684459670059\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1698111016115\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1705559650950\",\"value\":[{\"text\":\"有限公司\",\"lang\":\"zh_CN\"}]}],\"op_relations\":[]}}},{\"property\":{\"control\":\"Text\",\"id\":\"Text-1641521297125\",\"title\":[{\"text\":\"渠道来源\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请输入\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1}},{\"property\":{\"control\":\"Selector\",\"id\":\"Selector-1641521316173\",\"title\":[{\"text\":\"印章类型\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请选择\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1},\"config\":{\"selector\":{\"type\":\"single\",\"options\":[{\"key\":\"option-1641521316173\",\"value\":[{\"text\":\"公章\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1641521316174\",\"value\":[{\"text\":\"业务章\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1641521339762\",\"value\":[{\"text\":\"法人章\",\"lang\":\"zh_CN\"}]}],\"op_relations\":[]}}},{\"property\":{\"control\":\"Selector\",\"id\":\"Selector-1641521355432\",\"title\":[{\"text\":\"是否外带\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请选择\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1},\"config\":{\"selector\":{\"type\":\"single\",\"options\":[{\"key\":\"option-1641521355432\",\"value\":[{\"text\":\"否\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1641521355433\",\"value\":[{\"text\":\"是\",\"lang\":\"zh_CN\"}]}],\"op_relations\":[]}}},{\"property\":{\"control\":\"Selector\",\"id\":\"Selector-1648619603087\",\"title\":[{\"text\":\"盖章形式\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请选择\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1},\"config\":{\"selector\":{\"type\":\"single\",\"options\":[{\"key\":\"option-1648619603087\",\"value\":[{\"text\":\"电子合同章\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1648619603088\",\"value\":[{\"text\":\"纸质合同章\",\"lang\":\"zh_CN\"}]}],\"op_relations\":[]}}},{\"property\":{\"control\":\"Textarea\",\"id\":\"Textarea-1641521378351\",\"title\":[{\"text\":\"用印事由\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请输入\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1}},{\"property\":{\"control\":\"Date\",\"id\":\"Date-1641521411373\",\"title\":[{\"text\":\"借用时间\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请选择\",\"lang\":\"zh_CN\"}],\"require\":0,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1},\"config\":{\"date\":{\"type\":\"hour\"}}},{\"property\":{\"control\":\"Date\",\"id\":\"Date-1641521421730\",\"title\":[{\"text\":\"归还时间\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请选择\",\"lang\":\"zh_CN\"}],\"require\":0,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1},\"config\":{\"date\":{\"type\":\"hour\"}}},{\"property\":{\"control\":\"Selector\",\"id\":\"Selector-1641521441251\",\"title\":[{\"text\":\"文件类型\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请选择\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1},\"config\":{\"selector\":{\"type\":\"single\",\"options\":[{\"key\":\"option-1641521441251\",\"value\":[{\"text\":\"业务合同\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1643278221491\",\"value\":[{\"text\":\"人事行政类文件\",\"lang\":\"zh_CN\"}]},{\"key\":\"option-1641521534238\",\"value\":[{\"text\":\"经纪人、商事服务合作合同\",\"lang\":\"zh_CN\"}]}],\"op_relations\":[]}}},{\"property\":{\"control\":\"Text\",\"id\":\"Text-1641521571559\",\"title\":[{\"text\":\"文件名称\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请输入\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1}},{\"property\":{\"control\":\"Text\",\"id\":\"Text-1641521587698\",\"title\":[{\"text\":\"文件份数\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请输入整数\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1}},{\"property\":{\"control\":\"Date\",\"id\":\"Date-1641521607834\",\"title\":[{\"text\":\"用印日期\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"请选择\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1},\"config\":{\"date\":{\"type\":\"day\"}}},{\"property\":{\"control\":\"File\",\"id\":\"File-1641521617014\",\"title\":[{\"text\":\"附件\",\"lang\":\"zh_CN\"}],\"placeholder\":[{\"text\":\"一定要上传所盖章原件，以附件内容为主\",\"lang\":\"zh_CN\"}],\"require\":1,\"un_print\":0,\"inner_id\":\"\",\"un_replace\":0,\"display\":1},\"config\":{\"file\":{\"is_only_photo\":0}}}]}}";
+    WxCpOaApprovalTemplateResult oaApprovalTemplateResult = WxCpOaApprovalTemplateResult.fromJson(json);
+    System.out.println("模板信息：" + oaApprovalTemplateResult.toJson());
+
     String templateId = "3TkZjxugodbqpEMk9j7X6h6zKqYkc7MxQrrFmT7H";
     WxCpOaApprovalTemplateResult result = wxService.getOaService().getTemplateDetail(templateId);
     assertThat(result).isNotNull();
@@ -321,9 +326,61 @@ public class WxCpOaServiceImplTest {
 
   }
 
+  /**
+   * 创建审批模板
+   * https://developer.work.weixin.qq.com/document/path/97437
+   */
   @Test
   public void testCreateOaApprovalTemplate() {
     //TODO
+    String json = "{\n" +
+      "    \"template_name\": [{\n" +
+      "        \"text\": \"我的api测试模版\",\n" +
+      "        \"lang\": \"zh_CN\"\n" +
+      "    }],\n" +
+      "    \"template_content\": {\n" +
+      "        \"controls\": [{\n" +
+      "            \"property\": {\n" +
+      "                \"control\": \"Selector\",\n" +
+      "                \"id\": \"Selector-01\",\n" +
+      "                \"title\": [{\n" +
+      "                    \"text\": \"控件名称\",\n" +
+      "                    \"lang\": \"zh_CN\"\n" +
+      "                }],\n" +
+      "                \"placeholder\": [{\n" +
+      "                    \"text\": \"控件说明\",\n" +
+      "                    \"lang\": \"zh_CN\"\n" +
+      "                }],\n" +
+      "                \"require\": 0,\n" +
+      "                \"un_print\": 1\n" +
+      "            },\n" +
+      "            \"config\":{\n" +
+      "                \"selector\": {\n" +
+      "                \"type\": \"multi\",\n" +
+      "                \"options\": [\n" +
+      "                    {\n" +
+      "                        \"key\": \"option-1\", \n" +
+      "                        \"value\":{\n" +
+      "                            \"text\":\"选项1\",\n" +
+      "                            \"lang\":\"zh_CN\"\n" +
+      "                        }\n" +
+      "                    },\n" +
+      "                    {\n" +
+      "                        \"key\": \"option-2\",\n" +
+      "                        \"value\":{\n" +
+      "                            \"text\":\"选项2\",\n" +
+      "                            \"lang\":\"zh_CN\"\n" +
+      "                        }\n" +
+      "                    }\n" +
+      "                ]\n" +
+      "                }\n" +
+      "            }\n" +
+      "        }]\n" +
+      "    }\n" +
+      "}";
+    WxCpOaApprovalTemplate createTemplate = WxCpOaApprovalTemplate.fromJson(json);
+    System.out.println("create_template数据为：" + createTemplate.toJson());
+
   }
 
   @Test
