@@ -292,6 +292,8 @@ public interface WxOpenComponentService {
    */
   String post(String uri, String postData, String accessTokenKey) throws WxErrorException;
 
+  String post(String uri, String postData, String accessTokenKey, String accessToken) throws WxErrorException;
+
   /**
    * Get string.
    *
