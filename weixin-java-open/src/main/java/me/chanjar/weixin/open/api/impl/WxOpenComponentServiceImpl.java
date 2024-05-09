@@ -402,7 +402,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
     jsonObject.addProperty("authorizer_appid", authorizerAppid);
     jsonObject.addProperty("option_name", optionName);
-    String responseContent = post(API_GET_AUTHORIZER_OPTION_URL, jsonObject.toString());
+    String responseContent = post(GET_AUTHORIZER_OPTION_URL, jsonObject.toString());
     return WxOpenGsonBuilder.create().fromJson(responseContent, WxOpenAuthorizerOptionResult.class);
   }
 
@@ -413,7 +413,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("authorizer_appid", authorizerAppid);
     jsonObject.addProperty("option_name", optionName);
     jsonObject.addProperty("option_value", optionValue);
-    post(API_SET_AUTHORIZER_OPTION_URL, jsonObject.toString());
+    post(SET_AUTHORIZER_OPTION_URL, jsonObject.toString());
   }
 
   @Override
