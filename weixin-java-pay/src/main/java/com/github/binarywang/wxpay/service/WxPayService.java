@@ -981,6 +981,17 @@ public interface WxPayService {
   WxPayRefundNotifyV3Result parseRefundNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
+   * 解析商家转账批次回调通知
+   * https://pay.weixin.qq.com/docs/merchant/apis/batch-transfer-to-balance/transfer-batch-callback-notice.html
+   *
+   * @param notifyData
+   * @param header
+   * @return
+   * @throws WxPayException
+   */
+  WxPayTransferBatchesNotifyV3Result parseTransferBatchesNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
    * 解析服务商模式退款结果通知
    * 详见https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_11.shtml
    *
