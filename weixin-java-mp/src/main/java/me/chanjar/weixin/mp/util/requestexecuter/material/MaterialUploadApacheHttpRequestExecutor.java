@@ -60,7 +60,9 @@ public class MaterialUploadApacheHttpRequestExecutor extends MaterialUploadReque
     }
 
     httpPost.setEntity(multipartEntityBuilder.build());
-    httpPost.setHeader("Content-Type", ContentType.MULTIPART_FORM_DATA.toString());
+    //手动设置的Content-Type请求头没有boundary，是一个非标准的文件上传请求头，虽然微信提供了对这类非标准请求的支持，但如果请求需要先经过我们的tomcat server，那么都会报错:the request was rejected because no multipart boundary was found
+    //不设置Content-Type请求头，httpclient将会自动设置，值为entity的getContentType方法返回值。MultipartEntityBuilder的getContentType方法将会返回boundary
+    //httpPost.setHeader("Content-Type", ContentType.MULTIPART_FORM_DATA.toString());
 
     try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
       String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
