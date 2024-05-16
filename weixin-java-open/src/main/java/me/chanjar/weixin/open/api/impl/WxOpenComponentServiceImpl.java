@@ -232,6 +232,20 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
+  public String post(String uri, String postData, String accessTokenKey, String accessToken) throws WxErrorException {
+    String uriWithComponentAccessToken = uri + (uri.contains("?") ? "&" : "?") + accessTokenKey + "=" + accessToken;
+    try {
+      return getWxOpenService().post(uriWithComponentAccessToken, postData);
+    } catch (WxErrorException e) {
+      WxError error = e.getError();
+      if (error.getErrorCode() != 0) {
+        throw new WxErrorException(error, e);
+      }
+      return error.getErrorMsg();
+    }
+  }
+
+  @Override
   public String get(String uri) throws WxErrorException {
     return get(uri, "component_access_token");
   }
@@ -398,22 +412,24 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public WxOpenAuthorizerOptionResult getAuthorizerOption(String authorizerAppid, String optionName) throws WxErrorException {
+    String authorizerAccessToken = this.getAuthorizerAccessToken(authorizerAppid, false);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
     jsonObject.addProperty("authorizer_appid", authorizerAppid);
     jsonObject.addProperty("option_name", optionName);
-    String responseContent = post(API_GET_AUTHORIZER_OPTION_URL, jsonObject.toString());
+    String responseContent = post(GET_AUTHORIZER_OPTION_URL, jsonObject.toString(), "access_token", authorizerAccessToken);
     return WxOpenGsonBuilder.create().fromJson(responseContent, WxOpenAuthorizerOptionResult.class);
   }
 
   @Override
   public void setAuthorizerOption(String authorizerAppid, String optionName, String optionValue) throws WxErrorException {
+    String authorizerAccessToken = this.getAuthorizerAccessToken(authorizerAppid, false);
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("component_appid", getWxOpenConfigStorage().getComponentAppId());
     jsonObject.addProperty("authorizer_appid", authorizerAppid);
     jsonObject.addProperty("option_name", optionName);
     jsonObject.addProperty("option_value", optionValue);
-    post(API_SET_AUTHORIZER_OPTION_URL, jsonObject.toString());
+    post(SET_AUTHORIZER_OPTION_URL, jsonObject.toString(), "access_token", authorizerAccessToken);
   }
 
   @Override
