@@ -547,4 +547,11 @@ public interface WxMaService extends WxService {
    */
   WxMaXPayService getWxMaXPayService();
   WxMaExpressDeliveryReturnService getWxMaExpressDeliveryReturnService();
+
+  /**
+   * 小程序推广员
+   *
+   * @return WxMaPromotionService
+   */
+  WxMaPromotionService getWxMaPromotionService();
 }

@@ -859,6 +859,7 @@ public class WxMaApiUrlConstants {
     String GET_CDN_LOGS_URL = "https://api.weixin.qq.com/wxa/sec/vod/getcdnlogs";
 
   }
+
   /**
    * 小程序虚拟支付服务相关接口
    * <pre>
@@ -888,12 +889,33 @@ public class WxMaApiUrlConstants {
    * <pre>
    * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/express/business/express_sale_return.html
    * </pre>
-   *
    */
-  public interface ExpressDeliveryReturn{
+  public interface ExpressDeliveryReturn {
     String ADD_DELIVERY_RETURN_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/return/add";
     String GET_DELIVERY_RETURN_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/return/get";
     String UNBIND_DELIVERY_RETURN_URL = "https://api.weixin.qq.com/cgi-bin/express/delivery/return/unbind";
+  }
+
+  /**
+   * <pre> 小程序推广员
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/promoter/instruction/instruction.html
+   * </pre>
+   */
+  public interface Promotion {
+    String PROMOTION_ADD_ROLE = "https://api.weixin.qq.com/promoter/addrole";
+    String PROMOTION_GET_ROLE = "https://api.weixin.qq.com/promoter/getrole";
+    String PROMOTION_UPDATE_ROLE = "https://api.weixin.qq.com/promoter/updaterole";
+    String PROMOTION_ADD_PROMOTER = "https://api.weixin.qq.com/promoter/addpromoter";
+    String PROMOTION_GET_PROMOTER = "https://api.weixin.qq.com/promoter/getpromoter";
+    String PROMOTION_UPDATE_PROMOTER = "https://api.weixin.qq.com/promoter/updatepromoter";
+    String PROMOTION_GET_INVITATION_MATERIAL = "https://api.weixin.qq.com/promoter/getinvitationmaterial";
+    String PROMOTION_SEND_MSG = "https://api.weixin.qq.com/promoter/sendmsg";
+    String PROMOTION_SINGLE_SEND_MSG = "https://api.weixin.qq.com/promoter/singlesendmsg";
+    String PROMOTION_GET_MSG = "https://api.weixin.qq.com/promoter/getmsg";
+    String PROMOTION_GET_MSG_CLICK_DATA = "https://api.weixin.qq.com/promoter/getmsgclickdata";
+    String PROMOTION_GET_SHARE_MATERIAL = "https://api.weixin.qq.com/promoter/getsharematerial";
+    String PROMOTION_GET_RELATION = "https://api.weixin.qq.com/promoter/getrelation";
+    String PROMOTION_GET_ORDER = "https://api.weixin.qq.com/promoter/getorder";
   }
 
 }
