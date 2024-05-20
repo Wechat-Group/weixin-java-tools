@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.promoter.request.*;
+import cn.binarywang.wx.miniapp.bean.promoter.response.*;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.testng.annotations.Test;
@@ -21,7 +22,7 @@ public class WxMaPromotionServiceTest {
       .name("推广员1号名字")
       .desc("推广员1号描述")
       .build();
-    var response = wxService.getWxMaPromotionService().addRole(request);
+    WxMaPromotionAddRoleResponse response = wxService.getWxMaPromotionService().addRole(request);
     assertThat(response).isNotNull();
   }
 
@@ -30,7 +31,7 @@ public class WxMaPromotionServiceTest {
     WxMaPromotionGetRoleRequest request = WxMaPromotionGetRoleRequest.builder()
       .roleId(1L)
       .build();
-    var response = wxService.getWxMaPromotionService().getRole(request);
+    WxMaPromotionGetRoleResponse response = wxService.getWxMaPromotionService().getRole(request);
     assertThat(response).isNotNull();
   }
 
@@ -41,7 +42,7 @@ public class WxMaPromotionServiceTest {
       .name("推广员1号名字")
       .desc("推广员1号描述")
       .build();
-    var response = wxService.getWxMaPromotionService().updateRole(request);
+    WxMaPromotionUpdateRoleResponse response = wxService.getWxMaPromotionService().updateRole(request);
     assertThat(response).isNotNull();
   }
 
@@ -59,7 +60,7 @@ public class WxMaPromotionServiceTest {
     WxMaPromotionAddPromoterRequest request = WxMaPromotionAddPromoterRequest.builder()
       .promoterList(Collections.singletonList(promoter))
       .build();
-    var response = wxService.getWxMaPromotionService().addPromoter(request);
+    WxMaPromotionAddPromoterResponse response = wxService.getWxMaPromotionService().addPromoter(request);
     assertThat(response).isNotNull();
   }
 
@@ -76,7 +77,7 @@ public class WxMaPromotionServiceTest {
       .authStatus(null)
       .declStatus("1")
       .build();
-    var response = wxService.getWxMaPromotionService().getPromoter(request);
+    WxMaPromotionGetPromoterResponse response = wxService.getWxMaPromotionService().getPromoter(request);
     assertThat(response).isNotNull();
   }
 
@@ -91,7 +92,7 @@ public class WxMaPromotionServiceTest {
       .phone("15600000000")
       .declStatus("1")
       .build();
-    var response = wxService.getWxMaPromotionService().updatePromoter(request);
+    WxMaPromotionUpdatePromoterResponse response = wxService.getWxMaPromotionService().updatePromoter(request);
     assertThat(response).isNotNull();
   }
 
@@ -101,7 +102,7 @@ public class WxMaPromotionServiceTest {
       .roleId(1L)
       .invitationType(0L)
       .build();
-    var response = wxService.getWxMaPromotionService().getInvitationMaterial(request);
+    WxMaPromotionGetInvitationMaterialResponse response = wxService.getWxMaPromotionService().getInvitationMaterial(request);
     assertThat(response).isNotNull();
   }
 
@@ -117,7 +118,7 @@ public class WxMaPromotionServiceTest {
       .retailId(null)
       .id(null)
       .build();
-    var response = wxService.getWxMaPromotionService().sendMsg(request);
+    WxMaPromotionSendMsgResponse response = wxService.getWxMaPromotionService().sendMsg(request);
     assertThat(response).isNotNull();
   }
 
@@ -130,7 +131,7 @@ public class WxMaPromotionServiceTest {
       .path("")
       .openid("")
       .build();
-    var response = wxService.getWxMaPromotionService().singleSendMsg(request);
+    WxMaPromotionSingleSendMsgResponse response = wxService.getWxMaPromotionService().singleSendMsg(request);
     assertThat(response).isNotNull();
   }
 
@@ -139,7 +140,7 @@ public class WxMaPromotionServiceTest {
     WxMaPromotionGetMsgRequest request = WxMaPromotionGetMsgRequest.builder()
       .msgId("")
       .build();
-    var response = wxService.getWxMaPromotionService().getMsg(request);
+    WxMaPromotionGetMsgResponse response = wxService.getWxMaPromotionService().getMsg(request);
     assertThat(response).isNotNull();
   }
 
@@ -153,7 +154,7 @@ public class WxMaPromotionServiceTest {
       .beginSendTime(1715938250L)
       .endSendTime(1715938250L)
       .build();
-    var response = wxService.getWxMaPromotionService().getMsgClickData(request);
+    WxMaPromotionGetMsgClickDataResponse response = wxService.getWxMaPromotionService().getMsgClickData(request);
     assertThat(response).isNotNull();
   }
 
@@ -167,7 +168,7 @@ public class WxMaPromotionServiceTest {
       .shareType(0L)
       .envVersion("")
       .build();
-    var response = wxService.getWxMaPromotionService().getShareMaterial(request);
+    WxMaPromotionGetShareMaterialResponse response = wxService.getWxMaPromotionService().getShareMaterial(request);
     assertThat(response).isNotNull();
   }
 
@@ -182,7 +183,7 @@ public class WxMaPromotionServiceTest {
       .startId("")
       .needUnionid(0L)
       .build();
-    var response = wxService.getWxMaPromotionService().getRelation(request);
+    WxMaPromotionGetRelationResponse response = wxService.getWxMaPromotionService().getRelation(request);
     assertThat(response).isNotNull();
   }
 
@@ -198,7 +199,7 @@ public class WxMaPromotionServiceTest {
       .needUnionid(0L)
       .date(1715938250L)
       .build();
-    var response = wxService.getWxMaPromotionService().getOrder(request);
+    WxMaPromotionGetOrderResponse response = wxService.getWxMaPromotionService().getOrder(request);
     assertThat(response).isNotNull();
   }
 }
