@@ -61,6 +61,16 @@ public class FollowWaybillRequest implements Serializable {
   private String receiverPhone;
 
   /**
+   * 运力id（运单号所属运力公司id），该字段从 <a href='https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/express/business/express_open_msg.html#_4-4%E8%8E%B7%E5%8F%96%E8%BF%90%E5%8A%9Bid%E5%88%97%E8%A1%A8get-delivery-list'>get_delivery_list</a> 获取。
+   * <pre>
+   * 是否必填： 否
+   * 描述：该参数用于提高运单号识别的准确度；特别是对非主流快递公司，建议传入该参数，确保查询正确率。
+   * </pre>
+   */
+  @SerializedName("delivery_id")
+  private String deliveryId;
+
+  /**
    * 运单ID
    * <pre>
    * 是否必填： 是
