@@ -431,6 +431,12 @@ public class WxConsts {
      */
     public static final String WEAPP_AUDIT_FAIL = "weapp_audit_fail";
 
+    
+    /**
+     * 小程序审核事件：审核延后
+     */
+    public static final String WEAPP_AUDIT_DELAY = "weapp_audit_delay";
+
     /**
      * 小程序自定义交易组件支付通知
      */
