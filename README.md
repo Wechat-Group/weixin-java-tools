@@ -9,7 +9,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 #### 微信`Java`开发工具包，支持包括微信支付、开放平台、公众号、企业微信、视频号、小程序等微信功能模块的后端开发。
-
 <div align="center">
   <b>特别赞助</b>
 </div>
@@ -40,8 +39,16 @@
       </a>
     </td>
     <td align="right" valign="middle">
-      <a href="https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=7makzf5h" target="_blank">
-        <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/banners/aliyun.jpg" alt="aliyun ad">
+      <a href="https://www.iyque.cn/" target="_blank">
+        <img height="120" src="https://iyque-1251309172.cos.ap-nanjing.myqcloud.com/advert/wxjava.jpg" alt="aliyun ad">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" align="center">
+      <a href="https://hellogithub.com/repository/6de6147050c94db4aedfd7098d19f8d8" target="_blank">
+        <img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=6de6147050c94db4aedfd7098d19f8d8&claim_uid=mwKh0tILBfjlezR" 
+            alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" />
       </a>
     </td>
   </tr>

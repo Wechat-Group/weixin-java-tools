@@ -79,4 +79,8 @@ public interface MessageEventConstants {
     String USER_VIP_SCORE_UPDATE = "channels_ec_vip_score_update";
     /** 用户积分兑换 */
     String USER_VIP_SCORE_EXCHANGE = "channels_ec_vip_score_exchange";
+
+    // 分享员相关
+    /** 分享员变更 **/
+    String SHARER_CHANGE = "channels_ec_sharer_change";
 }

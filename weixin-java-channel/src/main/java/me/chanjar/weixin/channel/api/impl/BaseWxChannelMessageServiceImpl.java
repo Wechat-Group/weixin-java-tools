@@ -23,6 +23,7 @@ import me.chanjar.weixin.channel.bean.message.order.OrderStatusMessage;
 import me.chanjar.weixin.channel.bean.message.product.BrandMessage;
 import me.chanjar.weixin.channel.bean.message.product.CategoryAuditMessage;
 import me.chanjar.weixin.channel.bean.message.product.SpuAuditMessage;
+import me.chanjar.weixin.channel.bean.message.sharer.SharerChangeMessage;
 import me.chanjar.weixin.channel.bean.message.supplier.SupplierItemMessage;
 import me.chanjar.weixin.channel.bean.message.vip.ExchangeInfoMessage;
 import me.chanjar.weixin.channel.bean.message.vip.UserInfoMessage;
@@ -121,6 +122,10 @@ public abstract class BaseWxChannelMessageServiceImpl implements BaseWxChannelMe
     this.addRule(UserInfoMessage.class, USER_VIP_SCORE_UPDATE, false, this::vipScoreUpdate);
     /* 用户积分兑换 */
     this.addRule(ExchangeInfoMessage.class, USER_VIP_SCORE_EXCHANGE, false, this::vipScoreExchange);
+
+
+    /* 分享员变更 */
+    this.addRule(SharerChangeMessage.class,SHARER_CHANGE,false,this::sharerChange);
   }
 
   /**
@@ -333,6 +338,10 @@ public abstract class BaseWxChannelMessageServiceImpl implements BaseWxChannelMe
     return null;
   }
 
+  @Override
+  public void sharerChange(WxChannelMessage message, String content, String appId, Map<String, Object> context, WxSessionManager sessionManager) {
+    log.info("分享员变更:{}", JsonUtils.encode(message));
+  }
 
   @Override
   public abstract void vipJoin(UserInfoMessage message, String content, String appId,

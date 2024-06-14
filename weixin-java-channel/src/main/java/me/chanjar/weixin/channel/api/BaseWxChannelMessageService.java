@@ -433,4 +433,17 @@ public interface BaseWxChannelMessageService {
    */
   Object defaultMessageHandler(WxChannelMessage message, final String content, final String appId,
     final Map<String, Object> context, final WxSessionManager sessionManager);
+
+
+  /**
+   * 分享员变更
+   *
+   * @param message        the message
+   * @param content        the content
+   * @param appId          the app id
+   * @param context        the context
+   * @param sessionManager the session manager
+   */
+  void sharerChange(WxChannelMessage message, final String content, final String appId,
+                    final Map<String, Object> context, final WxSessionManager sessionManager);
 }

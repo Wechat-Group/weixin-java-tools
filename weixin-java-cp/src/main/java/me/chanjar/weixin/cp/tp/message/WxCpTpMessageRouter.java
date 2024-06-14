@@ -265,7 +265,7 @@ public class WxCpTpMessageRouter {
    * @return the wx cp xml out message
    */
   public WxCpXmlOutMessage route(final WxCpTpXmlMessage wxMessage, final Map<String, Object> context) {
-    return this.route(null, wxMessage, new HashMap<>(2));
+    return this.route(null, wxMessage, context);
   }
 
   /**
