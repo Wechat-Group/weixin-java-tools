@@ -453,7 +453,8 @@ public interface WxCpService extends WxService {
    *
    * @return oa we doc service
    */
-  WxCpOaWeDocService getWxCpOaWeDocService();
+
+  WxCpOaWeDocService getOaWeDocService();
 
   /**
    * 获取OA效率工具 微盘的服务类对象

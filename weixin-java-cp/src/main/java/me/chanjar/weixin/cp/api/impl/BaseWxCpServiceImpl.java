@@ -579,6 +579,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     return oaAgentService;
   }
 
+  @Override
   public WxCpOaWeDocService getOaWeDocService() {
     return oaWeDocService;
   }
