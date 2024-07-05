@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <pre>
- * 传运单接口 follow_waybil
+ * 传运单接口 follow_waybill
  *
  * 商户使用此接口向微信提供某交易单号对应的运单号。微信后台会跟踪运单的状态变化，在关键物流节点给下单用户推送消息通知。
  * </pre>
@@ -53,7 +53,7 @@ public class FollowWaybillRequest implements Serializable {
   /**
    * 收件人手机号
    * <pre>
-   * 是否必填： 否
+   * 是否必填： 是
    * 描述：部分运力需要用户手机号作为查单依据
    * </pre>
    */

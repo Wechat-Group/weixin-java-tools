@@ -147,4 +147,8 @@ public class WxMaRedissonConfigImpl extends WxMaDefaultConfigImpl {
     redisOps.expire(this.accessTokenKey, 0, TimeUnit.SECONDS);
   }
 
+  @Override
+  public long getExpiresTime() {
+    return redisOps.getExpire(this.accessTokenKey);
+  }
 }
