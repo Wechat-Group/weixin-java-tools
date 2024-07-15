@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.bean.merchanttransfer;
 
+import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.v3.SpecEncrypt;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
@@ -135,6 +136,20 @@ public class TransferCreateRequest implements Serializable {
    */
   @SerializedName("transfer_scene_id")
   private String transferSceneId;
+
+  /**
+   * <pre>
+   * 字段名：通知地址
+   * 变量名：notify_url
+   * 是否必填：否
+   * 类型：string(256)
+   * 描述：
+   *  异步接收微信支付结果通知的回调地址，通知url必须为公网可访问的url，必须为https，不能携带参数。
+   * 回调解析: {@link WxPayService#parseTransferBatchesNotifyV3Result}
+   * </pre>
+   */
+  @SerializedName("notify_url")
+  private String notifyUrl;
 
 
   /**
