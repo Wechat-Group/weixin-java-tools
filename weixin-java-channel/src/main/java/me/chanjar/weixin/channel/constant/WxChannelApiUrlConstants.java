@@ -170,6 +170,10 @@ public class WxChannelApiUrlConstants {
     String AFTER_SALE_REJECT_URL = "https://api.weixin.qq.com/channels/ec/aftersale/rejectapply";
     /** 上传退款凭证 */
     String AFTER_SALE_UPLOAD_URL = "https://api.weixin.qq.com/channels/ec/aftersale/uploadrefundcertificate";
+    /** 获取全量售后原因*/
+    String AFTER_SALE_REASON_GET_URL = "https://api.weixin.qq.com/channels/ec/aftersale/reason/get";
+    /** 获取拒绝售后原因*/
+    String AFTER_SALE_REJECT_REASON_GET_URL = "https://api.weixin.qq.com/channels/ec/aftersale/rejectreason/get";
   }
 
   /** 纠纷相关接口 */

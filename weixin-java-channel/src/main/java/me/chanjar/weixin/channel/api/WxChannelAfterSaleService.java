@@ -4,6 +4,8 @@ package me.chanjar.weixin.channel.api;
 import java.util.List;
 import me.chanjar.weixin.channel.bean.after.AfterSaleInfoResponse;
 import me.chanjar.weixin.channel.bean.after.AfterSaleListResponse;
+import me.chanjar.weixin.channel.bean.after.AfterSaleReasonResponse;
+import me.chanjar.weixin.channel.bean.after.AfterSaleRejectReasonResponse;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.complaint.ComplaintOrderResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -39,26 +41,31 @@ public interface WxChannelAfterSaleService {
   AfterSaleInfoResponse get(String afterSaleOrderId) throws WxErrorException;
 
   /**
-   * 同意退款
+   * 同意售后
+   * 文档地址 https://developers.weixin.qq.com/doc/channels/API/aftersale/acceptapply.html
    *
    * @param afterSaleOrderId 售后单号
    * @param addressId        同意退货时传入地址id
+   * @param acceptType       1. 同意退货退款，并通知用户退货; 2. 确认收到货并退款给用户。 如果不填则将根据当前的售后单状态自动选择相应操作。对于仅退款的情况，由于只存在一种同意的场景，无需填写此字段。
    * @return BaseResponse
    *
    * @throws WxErrorException 异常
    */
-  WxChannelBaseResponse accept(String afterSaleOrderId, String addressId) throws WxErrorException;
+  WxChannelBaseResponse accept(String afterSaleOrderId, String addressId, Integer acceptType) throws WxErrorException;
 
   /**
    * 拒绝售后
+   * 文档地址 https://developers.weixin.qq.com/doc/channels/API/aftersale/rejectapply.html
    *
    * @param afterSaleOrderId 售后单号
    * @param rejectReason     拒绝原因
+   * @param rejectReasonType 拒绝原因枚举值
+   * @see #getRejectReason()
    * @return BaseResponse
    *
    * @throws WxErrorException 异常
    */
-  WxChannelBaseResponse reject(String afterSaleOrderId, String rejectReason) throws WxErrorException;
+  WxChannelBaseResponse reject(String afterSaleOrderId, String rejectReason, Integer rejectReasonType) throws WxErrorException;
 
   /**
    * 上传退款凭证
@@ -108,4 +115,25 @@ public interface WxChannelAfterSaleService {
    * @throws WxErrorException 异常
    */
   ComplaintOrderResponse getComplaint(String complaintId) throws WxErrorException;
+
+
+  /**
+   * 获取全量售后原因
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/aftersale/getaftersalereason.html
+   *
+   * @return 售后原因
+   *
+   * @throws WxErrorException 异常
+   */
+  AfterSaleReasonResponse getAllReason() throws WxErrorException;
+
+  /**
+   * 获取拒绝售后原因
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/aftersale/getrejectreason.html
+   *
+   * @return 拒绝售后原因
+   *
+   * @throws WxErrorException 异常
+   */
+  AfterSaleRejectReasonResponse getRejectReason() throws WxErrorException;
 }
