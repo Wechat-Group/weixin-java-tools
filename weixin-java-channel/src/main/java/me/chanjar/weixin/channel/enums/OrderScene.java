@@ -2,8 +2,8 @@ package me.chanjar.weixin.channel.enums;
 
 /**
  * 下单场景
- * @author lizhengwu
  *
+ * @author lizhengwu
  * @description
  */
 public enum OrderScene {
@@ -14,7 +14,7 @@ public enum OrderScene {
   /**
    * 直播间下单
    */
-  LIVE(2 ,"直播间"),
+  LIVE(2, "直播间"),
   /**
    * 短视频
    */
@@ -40,9 +40,11 @@ public enum OrderScene {
     this.key = key;
     this.value = value;
   }
+
   public int getKey() {
     return key;
   }
+
   public String getValue() {
     return value;
   }
