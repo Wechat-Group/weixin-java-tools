@@ -54,6 +54,32 @@ public interface WxCpMediaService {
     throws WxErrorException, IOException;
 
   /**
+   * <pre>
+   *   上传多媒体文件.
+   * </pre>
+   *
+   * @param mediaType 媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
+   * @param file      文件对象, 上传的文件内容
+   * @param filename  上传内容的实际文件名.例如：wework.txt
+   * @return wx media upload result
+   * @throws WxErrorException the wx error exception
+   */
+  WxMediaUploadResult upload(String mediaType, File file, String filename) throws WxErrorException;
+
+  /**
+   * <pre>
+   *   上传多媒体文件.
+   * </pre>
+   *
+   * @param mediaType   媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
+   * @param inputStream 上传的文件内容
+   * @param filename    上传内容的实际文件名.例如：wework.txt
+   * @return wx media upload result
+   * @throws WxErrorException the wx error exception
+   */
+  WxMediaUploadResult upload(String mediaType, InputStream inputStream, String filename) throws WxErrorException;
+
+  /**
    * 上传多媒体文件.
    *
    * @param mediaType 媒体类型
