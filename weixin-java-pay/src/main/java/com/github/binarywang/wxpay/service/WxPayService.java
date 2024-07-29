@@ -1277,6 +1277,25 @@ public interface WxPayService {
 
   /**
    * <pre>
+   * 付款码支付API.
+   * 文档地址：<a href="https://pay.weixin.qq.com/docs/merchant/apis/code-payment-v3/direct/code-pay.html">https://pay.weixin.qq.com/docs/merchant/apis/code-payment-v3/direct/code-pay.html</a>
+   * 应用场景：
+   * 收银员使用扫码设备读取微信用户付款码以后，二维码或条码信息会传送至商户收银台，由商户收银台或者商户后台调用该接口发起支付。
+   * 提醒1：提交支付请求后微信会同步返回支付结果。当返回结果为“系统错误”时，商户系统等待5秒后调用【查询订单API】，查询支付实际交易结果；当返回结果为“USERPAYING”时，商户系统可设置间隔时间(建议10秒)重新查询支付结果，直到支付成功或超时(建议30秒)；
+   * 提醒2：在调用查询接口返回后，如果交易状况不明晰，请调用【撤销订单API】，此时如果交易失败则关闭订单，该单不能再支付成功；如果交易成功，则将扣款退回到用户账户。当撤销无返回或错误时，请再次调用。注意：请勿扣款后立即调用【撤销订单API】,建议至少15秒后再调用。撤销订单API需要双向证书。
+   * 接口地址：   <a href="https://pay.weixin.qq.com/docs/merchant/apis/code-payment-v3/direct/reverse.html">https://pay.weixin.qq.com/docs/merchant/apis/code-payment-v3/direct/reverse.html</a>
+   * 是否需要证书：不需要。
+   * </pre>
+   *
+   * @param request the request
+   * @return the wx codepay result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayCodepayResult codepay(WxPayCodepayRequest request) throws WxPayException;
+
+
+  /**
+   * <pre>
    * 撤销订单API.
    * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_11&index=3
    * 应用场景：
@@ -1294,6 +1313,47 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayOrderReverseResult reverseOrder(WxPayOrderReverseRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 撤销订单API.
+   * 文档地址：https://pay.weixin.qq.com/docs/merchant/apis/code-payment-v3/direct/reverse.html
+   * 应用场景：
+   *  支付交易返回失败或支付系统超时，调用该接口撤销交易。如果此订单用户支付失败，微信支付系统会将此订单关闭；
+   *  如果用户支付成功，微信支付系统会将此订单资金退还给用户。
+   *  注意：7天以内的交易单可调用撤销，其他正常支付的单如需实现相同功能请调用申请退款API。
+   *  提交支付交易后调用【查询订单API】，没有明确的支付结果再调用【撤销订单API】。
+   *  调用支付接口后请勿立即调用撤销订单API，建议支付后至少15s后再调用撤销订单接口。
+   *  接口链接 ：https://pay.weixin.qq.com/docs/merchant/apis/code-payment-v3/direct/reverse.html
+   *  是否需要证书：请求需要双向证书。
+   * </pre>
+   *
+   * @param request the request
+   * @return the wx pay order reverse result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayOrderReverseV3Result reverseOrderV3(WxPayOrderReverseV3Request request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 撤销订单API.
+   * 文档地址：https://pay.weixin.qq.com/docs/merchant/apis/code-payment-v3/direct/reverse.html
+   * 应用场景：
+   *  支付交易返回失败或支付系统超时，调用该接口撤销交易。如果此订单用户支付失败，微信支付系统会将此订单关闭；
+   *  如果用户支付成功，微信支付系统会将此订单资金退还给用户。
+   *  注意：7天以内的交易单可调用撤销，其他正常支付的单如需实现相同功能请调用申请退款API。
+   *  提交支付交易后调用【查询订单API】，没有明确的支付结果再调用【撤销订单API】。
+   *  调用支付接口后请勿立即调用撤销订单API，建议支付后至少15s后再调用撤销订单接口。
+   *  接口链接 ：https://pay.weixin.qq.com/docs/merchant/apis/code-payment-v3/direct/reverse.html
+   *  是否需要证书：请求需要双向证书。
+   * </pre>
+   *
+   * @param outTradeNo 商户系统内部的订单号
+   * @return the wx pay order reverse result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayOrderReverseV3Result reverseOrderV3(String outTradeNo) throws WxPayException;
+
 
   /**
    * <pre>

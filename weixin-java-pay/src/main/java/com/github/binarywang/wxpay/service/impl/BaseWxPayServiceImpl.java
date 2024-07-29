@@ -1131,6 +1131,19 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public WxPayCodepayResult codepay(WxPayCodepayRequest request) throws WxPayException {
+    if (StringUtils.isBlank(request.getAppid())) {
+      request.setAppid(this.getConfig().getAppId());
+    }
+    if (StringUtils.isBlank(request.getMchid())) {
+      request.setMchid(this.getConfig().getMchId());
+    }
+    String url = String.format("%s/v3/pay/transactions/codepay", this.getPayBaseUrl());
+    String body = this.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(body, WxPayCodepayResult.class);
+  }
+
+  @Override
   public WxPayOrderReverseResult reverseOrder(WxPayOrderReverseRequest request) throws WxPayException {
     request.checkAndSign(this.getConfig());
 
@@ -1139,6 +1152,31 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     WxPayOrderReverseResult result = BaseWxPayResult.fromXML(responseContent, WxPayOrderReverseResult.class);
     result.checkResult(this, request.getSignType(), true);
     return result;
+  }
+
+
+  @Override
+  public WxPayOrderReverseV3Result reverseOrderV3(WxPayOrderReverseV3Request request) throws WxPayException {
+    if (StringUtils.isBlank(request.getAppid())) {
+      request.setAppid(this.getConfig().getAppId());
+    }
+    if (StringUtils.isBlank(request.getMchid())) {
+      request.setMchid(this.getConfig().getMchId());
+    }
+    // 拼接参数请求路径并发送
+    String url = String.format("%s/v3/pay/transactions/out-trade-no/%s/reverse", this.getPayBaseUrl(), request.getOutTradeNo());
+    String response = this.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, WxPayOrderReverseV3Result.class);
+  }
+
+  @Override
+  public WxPayOrderReverseV3Result reverseOrderV3(String outTradeNo) throws WxPayException {
+    if (StringUtils.isBlank(outTradeNo)) {
+      throw new WxPayException("out_trade_no不能为空");
+    }
+    WxPayOrderReverseV3Request request = new WxPayOrderReverseV3Request();
+    request.setOutTradeNo(StringUtils.trimToNull(outTradeNo));
+    return this.reverseOrderV3(request);
   }
 
   @Override
