@@ -53,6 +53,11 @@ public class WxCpAgentWorkBench implements Serializable {
    * 是否覆盖用户工作台的数据。设置为true的时候，会覆盖企业所有用户当前设置的数据。若设置为false,则不会覆盖用户当前设置的所有数据
    */
   private Boolean replaceUserData;
+  /**
+   * 是否开启webview内的链接跳转能力，默认值为false。注意：开启之后，会使jump_url失效。 链接跳转仅支持以下schema方式：wxwork://openurl?url=xxxx，注意url需要进行编码。
+   * 参考示例：<a href="wxwork://openurl?url=https%3A%2F%2Fwork.weixin.qq.com%2F">今日要闻</a>
+   */
+  private Boolean enableWebviewClick;
 
   private List<WorkBenchKeyData> keyDataList;
 
@@ -135,6 +140,9 @@ public class WxCpAgentWorkBench implements Serializable {
         webview.addProperty("url", this.url);
         webview.addProperty("jump_url", this.jumpUrl);
         webview.addProperty("pagepath", this.pagePath);
+        if (null != this.enableWebviewClick) {
+          webview.addProperty("enable_webview_click", this.enableWebviewClick);
+        }
         templateObject.add("webview", webview);
         break;
       }
