@@ -123,6 +123,37 @@ public class WxOpenXmlMessage implements Serializable {
   @XStreamAlias("expired")
   private Long expired;
 
+  //region 以下为小程序管理员人脸核身完成事件 推送的消息 infoType=notify_icpfiling_verify_result
+
+  /**
+   * 人脸核验任务id
+   */
+  @XStreamAlias("task_id")
+  private String IcpVerifyTaskId;
+  /**
+   * 小程序唯一id
+   */
+  @XStreamAlias("verify_appid")
+  private String verifyAppId;
+  /**
+   * 人脸核验结果： 2-核验失败；3-核验成功
+   */
+  @XStreamAlias("result")
+  private Integer result;
+  //endregion
+
+  //region 当备案审核被驳回或通过时会推送该事件 推送的消息 infoType=notify_apply_icpfiling_result
+  /**
+   * 小程序唯一id
+   */
+  @XStreamAlias("authorizer_appid")
+  private String authorizerAppId;
+  /**
+   * 备案状态，参考“获取小程序备案状态及驳回原因”接口的备案状态枚举¬
+   */
+  @XStreamAlias("beian_status")
+  private Integer beianStatus;
+  //endregion
 
   /**
    * 快速创建的小程序appId，已弃用，未来将删除
