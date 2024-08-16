@@ -725,6 +725,13 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenMaAuthService getAuthService();
 
   /**
+   * 小程序备案服务
+   *
+   * @return 小程序备案服务
+   */
+  WxOpenMaIcpService getIcpService();
+
+  /**
    * 小程序用户隐私保护指引服务
    *
    * @return 小程序用户隐私保护指引服务
