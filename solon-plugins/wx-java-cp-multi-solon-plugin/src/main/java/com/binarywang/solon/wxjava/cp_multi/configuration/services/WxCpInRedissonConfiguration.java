@@ -23,8 +23,10 @@ import org.redisson.config.TransportMode;
  * created on 2023/10/16
  */
 @Configuration
-@Condition(onProperty = "${"+WxCpMultiProperties.PREFIX + ".configStorage.type} = redisson",
-           onClass = Redisson.class)
+@Condition(
+  onProperty = "${"+WxCpMultiProperties.PREFIX + ".configStorage.type} = redisson",
+  onClass = Redisson.class
+)
 @RequiredArgsConstructor
 public class WxCpInRedissonConfiguration extends AbstractWxCpConfiguration {
   private final WxCpMultiProperties wxCpMultiProperties;

@@ -13,7 +13,9 @@ import org.noear.solon.annotation.Configuration;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Configuration
-@Condition(onProperty = "${"+WxChannelProperties.PREFIX + ".configStorage.type:memory} = memory")
+@Condition(
+  onProperty = "${"+WxChannelProperties.PREFIX + ".configStorage.type:memory} = memory"
+)
 @RequiredArgsConstructor
 public class WxChannelInMemoryConfigStorageConfiguration extends AbstractWxChannelConfigStorageConfiguration {
   private final WxChannelProperties properties;

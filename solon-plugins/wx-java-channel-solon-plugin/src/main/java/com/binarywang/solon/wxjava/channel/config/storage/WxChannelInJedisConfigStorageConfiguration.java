@@ -21,8 +21,10 @@ import redis.clients.jedis.JedisPoolConfig;
  * @author noear
  */
 @Configuration
-@Condition(onProperty = "${"+WxChannelProperties.PREFIX + ".configStorage.type} = jedis",
-           onClass = JedisPool.class)
+@Condition(
+  onProperty = "${"+WxChannelProperties.PREFIX + ".configStorage.type} = jedis",
+  onClass = JedisPool.class
+)
 @RequiredArgsConstructor
 public class WxChannelInJedisConfigStorageConfiguration extends AbstractWxChannelConfigStorageConfiguration {
   private final WxChannelProperties properties;

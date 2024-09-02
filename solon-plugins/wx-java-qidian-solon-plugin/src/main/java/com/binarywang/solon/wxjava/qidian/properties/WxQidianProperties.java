@@ -5,7 +5,6 @@ import com.binarywang.solon.wxjava.qidian.enums.StorageType;
 import lombok.Data;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;
 

@@ -22,7 +22,8 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Configuration
 @Condition(
-  onProperty = "${"+WxCpMultiProperties.PREFIX + ".configStorage.type} = jedis"
+  onProperty = "${"+WxCpMultiProperties.PREFIX + ".configStorage.type} = jedis",
+  onClass = JedisPool.class
 )
 @RequiredArgsConstructor
 public class WxCpInJedisConfiguration extends AbstractWxCpConfiguration {

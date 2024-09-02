@@ -20,8 +20,10 @@ import org.redisson.config.TransportMode;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Configuration
-@Condition(onProperty = "${"+WxChannelProperties.PREFIX + ".configStorage.type} = redisson",
-           onClass = Redisson.class)
+@Condition(
+  onProperty = "${"+WxChannelProperties.PREFIX + ".configStorage.type} = redisson",
+  onClass = Redisson.class
+)
 @RequiredArgsConstructor
 public class WxChannelInRedissonConfigStorageConfiguration extends AbstractWxChannelConfigStorageConfiguration {
   private final WxChannelProperties properties;
