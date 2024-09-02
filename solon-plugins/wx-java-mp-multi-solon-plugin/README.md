@@ -66,8 +66,6 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Component
 public class DemoService {

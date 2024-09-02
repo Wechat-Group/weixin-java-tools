@@ -11,7 +11,7 @@ import lombok.Data;
 public class RedisProperties {
 
   /**
-   * 主机地址,不填则从spring容器内获取JedisPool
+   * 主机地址,不填则从solon容器内获取JedisPool
    */
   private String host;
 
