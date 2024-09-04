@@ -147,7 +147,7 @@ public class WxOpenXmlMessage implements Serializable {
    * 小程序唯一id
    */
   @XStreamAlias("authorizer_appid")
-  private String authorizerAppId;
+  private String beianAuthorizerAppId;
   /**
    * 备案状态，参考“获取小程序备案状态及驳回原因”接口的备案状态枚举¬
    */
