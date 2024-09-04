@@ -498,4 +498,41 @@ public interface EcommerceService {
    */
   InputStream downloadBill(String url) throws WxPayException;
 
+
+  /**
+   * <pre>
+   * 请求补差API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_5_1.shtml
+   * </pre>
+   *
+   * @param subsidiesCreateRequest 请求补差。
+   * @return 返回数据 return SubsidiesCreateResult
+   * @throws WxPayException the wx pay exception
+   */
+  SubsidiesCreateResult subsidiesCreate(SubsidiesCreateRequest subsidiesCreateRequest) throws WxPayException;
+
+  /**
+   * <pre>
+   * 请求补差回退API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_5_2.shtml
+   * </pre>
+   *
+   * @param subsidiesReturnRequest 请求补差。
+   * @return 返回数据 return SubsidiesReturnResult
+   * @throws WxPayException the wx pay exception
+   */
+  SubsidiesReturnResult subsidiesReturn(SubsidiesReturnRequest subsidiesReturnRequest) throws WxPayException;
+
+  /**
+   * <pre>
+   * 取消补差API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_5_3.shtml
+   * </pre>
+   *
+   * @param subsidiesCancelRequest 请求补差。
+   * @return 返回数据 return SubsidiesCancelResult
+   * @throws WxPayException the wx pay exception
+   */
+  SubsidiesCancelResult subsidiesCancel(SubsidiesCancelRequest subsidiesCancelRequest) throws WxPayException;
+
 }

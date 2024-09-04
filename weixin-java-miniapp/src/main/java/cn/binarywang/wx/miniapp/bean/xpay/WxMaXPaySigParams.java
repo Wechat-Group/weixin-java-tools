@@ -22,14 +22,12 @@ public class WxMaXPaySigParams implements Serializable {
   public String signUriWithBoth(String url, String postData) {
     final String sig = this.calcSig(postData);
     final String paySig = this.calcPaySig(url, postData);
-    final String uri = String.format(url, paySig, sig);
-    return uri;
+    return String.format(url, paySig, sig);
   }
 
   public String signUriWithPay(String url, String postData) {
     final String paySig = this.calcPaySig(url, postData);
-    final String uri = String.format(url, paySig);
-    return uri;
+    return String.format(url, paySig);
   }
 
   public String signUriWithUser(String url, String postData) {
@@ -52,40 +50,35 @@ public class WxMaXPaySigParams implements Serializable {
     String ak = StringUtils.trimToEmpty(this.appKey);
     final String sigUri = convUrlToSigUri(url);
     final String paySig = calcPaySignature(sigUri, postBody, ak);
-    return paySig;
+    return paySig.toLowerCase();
   }
 
   public String calcSig(String postBody) {
     String sk = StringUtils.trimToEmpty(this.sessionKey);
-    final String sig = calcSignature(postBody, sk);
-    return sig;
+    return calcSignature(postBody, sk);
   }
 
+  /**
+   * 用户登录态signature签名算法
+   *
+   * @param postBody   - http POST的数据包体
+   * @param sessionKey - 当前用户有效的session_key，参考auth.code2Session接口
+   * @return 用户登录态签名signature
+   */
   protected String calcSignature(String postBody, String sessionKey) {
-//        """ 用户登录态signature签名算法
-//      Args:
-//          postBody   - http POST的数据包体
-//          sessionKey - 当前用户有效的session_key，参考auth.code2Session接口
-//      Returns:
-//          用户登录态签名signature
-//    """
-    String needSignData = postBody;
-    String signature = SignUtils.createHmacSha256Sign(needSignData, sessionKey);
-    return signature;
+    return SignUtils.createHmacSha256Sign(postBody, sessionKey);
   }
 
-
+  /**
+   * pay_sig签名算法
+   *
+   * @param uri      - 当前请求的API的uri部分，不带query_string 例如：/xpay/query_user_balance
+   * @param postBody - http POST的数据包体
+   * @param appKey   - 对应环境的AppKey
+   * @return 支付请求签名pay_sig
+   */
   protected String calcPaySignature(String uri, String postBody, String appKey) {
-//        """ pay_sig签名算法
-//      Args:
-//     uri - 当前请求的API的uri部分，不带query_string 例如：/xpay/query_user_balance
-//          postBody - http POST的数据包体
-//          appKey    - 对应环境的AppKey
-//      Returns:
-//          支付请求签名pay_sig
-//    """
     String needSignData = uri + '&' + postBody;
-    String paySig = SignUtils.createHmacSha256Sign(needSignData, appKey);
-    return paySig;
+    return SignUtils.createHmacSha256Sign(needSignData, appKey);
   }
 }

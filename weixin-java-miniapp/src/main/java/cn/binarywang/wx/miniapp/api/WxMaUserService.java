@@ -45,7 +45,19 @@ public interface WxMaUserService {
   void setUserStorage(Map<String, String> kvMap, String sessionKey, String openid) throws WxErrorException;
 
   /**
-   * 获取手机号信息,2023年8月28日起
+   * 解密用户手机号信息.
+   *
+   * @param sessionKey    会话密钥
+   * @param encryptedData 消息密文
+   * @param ivStr         加密算法的初始向量
+   * @return .
+   * @deprecated 当前（基础库2.21.2以下使用）旧版本，以上请使用替代方法 {@link #getPhoneNoInfo(String)}
+   */
+  @Deprecated
+  WxMaPhoneNumberInfo getPhoneNoInfo(String sessionKey, String encryptedData, String ivStr);
+
+  /**
+   * 获取手机号信息,基础库:2.21.2及以上或2023年8月28日起
    *
    * @param code 每个code只能使用一次，code的有效期为5min。code获取方式参考<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html">手机号快速验证组件</a>
    * @return 用户手机号信息
@@ -55,7 +67,7 @@ public interface WxMaUserService {
   WxMaPhoneNumberInfo getPhoneNumber(String code) throws WxErrorException;
 
   /**
-   * 获取手机号信息,2023年8月28日起
+   * 获取手机号信息,基础库:2.21.2及以上或2023年8月28日起
    *
    * @param code 每个code只能使用一次，code的有效期为5min。code获取方式参考<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html">手机号快速验证组件</a>
    * @return 用户手机号信息

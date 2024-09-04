@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>4.6.3.B</version>
+  <version>4.6.4.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -126,6 +126,7 @@
     <module>weixin-java-qidian</module>
     <module>weixin-java-channel</module>
     <module>spring-boot-starters</module>
+    <module>solon-plugins</module>
     <!--module>weixin-java-osgi</module-->
   </modules>
 

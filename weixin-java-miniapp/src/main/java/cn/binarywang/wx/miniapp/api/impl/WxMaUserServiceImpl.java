@@ -58,6 +58,11 @@ public class WxMaUserServiceImpl implements WxMaUserService {
   }
 
   @Override
+  public WxMaPhoneNumberInfo getPhoneNoInfo(String sessionKey, String encryptedData, String ivStr) {
+    return WxMaPhoneNumberInfo.fromJson(WxMaCryptUtils.decrypt(sessionKey, encryptedData, ivStr));
+  }
+
+  @Override
   public WxMaPhoneNumberInfo getPhoneNumber(String code) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("code", code);
@@ -67,7 +72,6 @@ public class WxMaUserServiceImpl implements WxMaUserService {
       return WxMaGsonBuilder.create().fromJson(response.getAsJsonObject(PHONE_INFO),
         WxMaPhoneNumberInfo.class);
     }
-
     return null;
   }
 
