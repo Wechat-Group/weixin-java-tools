@@ -6,6 +6,12 @@ import okhttp3.Response;
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * <pre>
  * 三种http框架的response代理类，方便提取公共方法
@@ -56,29 +62,42 @@ public class HttpResponseProxy {
       throw new WxErrorException("无法获取到文件名，Content-disposition为空");
     }
 
-    return this.extractFileNameFromContentString(contentDispositionHeader[0].getValue());
+    return extractFileNameFromContentString(contentDispositionHeader[0].getValue());
   }
 
   private String getFileName(HttpResponse response) throws WxErrorException {
     String content = response.header("Content-disposition");
-    return this.extractFileNameFromContentString(content);
+    return extractFileNameFromContentString(content);
   }
 
   private String getFileName(Response response) throws WxErrorException {
     String content = response.header("Content-disposition");
-    return this.extractFileNameFromContentString(content);
+    return extractFileNameFromContentString(content);
   }
 
-  private String extractFileNameFromContentString(String content) throws WxErrorException {
-    if (content == null || content.length() == 0) {
+  public static String extractFileNameFromContentString(String content) throws WxErrorException {
+    if (content == null || content.isEmpty()) {
       throw new WxErrorException("无法获取到文件名，content为空");
     }
 
-    int startIndex = content.indexOf("filename=\"");
-    if (startIndex != -1) {
-      startIndex += "filename=\"".length();
-      int endIndex = content.indexOf('"', startIndex);
-      return content.substring(startIndex, endIndex);
+    // 查找filename*=utf-8''开头的部分
+    Pattern pattern = Pattern.compile("filename\\*=utf-8''(.*?)($|;|\\s|,)");
+    Matcher matcher = pattern.matcher(content);
+    if (matcher.find()) {
+      String encodedFileName = matcher.group(1);
+      // 解码URL编码的文件名
+      try {
+        return URLDecoder.decode(encodedFileName, StandardCharsets.UTF_8.name());
+      } catch (UnsupportedEncodingException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    // 查找普通filename="..."部分
+    pattern = Pattern.compile("filename=\"(.*?)\"");
+    matcher = pattern.matcher(content);
+    if (matcher.find()) {
+      return new String(matcher.group(1).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
     }
 
     throw new WxErrorException("无法获取到文件名，header信息有问题");

@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.service;
 
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.bean.transfer.*;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
@@ -27,6 +28,17 @@ public interface TransferService {
    * @throws WxPayException .
    */
   TransferBatchesResult transferBatches(TransferBatchesRequest request) throws WxPayException;
+
+  /**
+   * 解析商家转账结果
+   * 详见<a href="https://pay.weixin.qq.com/docs/merchant/apis/batch-transfer-to-balance/transfer-batch-callback-notice.html"></a>
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return the wx transfer notify result
+   * @throws WxPayException the wx pay exception
+   */
+  TransferNotifyResult parseTransferNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * <pre>

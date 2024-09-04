@@ -40,7 +40,7 @@ public class WxMpProperties {
    * 设置微信公众号的EncodingAESKey.
    */
   private String aesKey;
-  
+
   /**
    * 是否使用稳定版 Access Token
    */
@@ -49,6 +49,7 @@ public class WxMpProperties {
   /**
    * 自定义host配置
    */
+  @NestedConfigurationProperty
   private HostConfig hosts;
 
   /**

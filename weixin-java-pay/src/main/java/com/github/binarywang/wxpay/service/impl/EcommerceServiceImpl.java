@@ -374,6 +374,27 @@ public class EcommerceServiceImpl implements EcommerceService {
     return this.payService.downloadV3(url);
   }
 
+  @Override
+  public SubsidiesCreateResult subsidiesCreate(SubsidiesCreateRequest subsidiesCreateRequest) throws WxPayException{
+    String url = String.format("%s/v3/ecommerce/subsidies/create", this.payService.getPayBaseUrl());
+    String response = this.payService.postV3(url, GSON.toJson(subsidiesCreateRequest));
+    return GSON.fromJson(response, SubsidiesCreateResult.class);
+  }
+
+  @Override
+  public  SubsidiesReturnResult subsidiesReturn(SubsidiesReturnRequest subsidiesReturnRequest) throws WxPayException{
+    String url = String.format("%s/v3/ecommerce/subsidies/return", this.payService.getPayBaseUrl());
+    String response = this.payService.postV3(url, GSON.toJson(subsidiesReturnRequest));
+    return GSON.fromJson(response, SubsidiesReturnResult.class);
+  }
+
+
+  @Override
+  public SubsidiesCancelResult subsidiesCancel(SubsidiesCancelRequest subsidiesCancelRequest) throws WxPayException{
+    String url = String.format("%s/v3/ecommerce/subsidies/cancel", this.payService.getPayBaseUrl());
+    String response = this.payService.postV3(url, GSON.toJson(subsidiesCancelRequest));
+    return GSON.fromJson(response, SubsidiesCancelResult.class);
+  }
   /**
    * 校验通知签名
    *
