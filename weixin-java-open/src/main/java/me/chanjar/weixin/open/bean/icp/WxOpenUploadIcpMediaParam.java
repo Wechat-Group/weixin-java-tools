@@ -34,7 +34,7 @@ public class WxOpenUploadIcpMediaParam implements Serializable {
    * 证件类型(参考：获取证件类型)，如果上传的是证件媒体材料，则必填，示例值：2
    */
   @SerializedName("certificate_type")
-  private String certificateType;
+  private Integer certificateType;
 
   /**
    * 媒体材料所属的备案字段名(参考：申请小程序备案接口)，如要用于多个备案字段，则填写其中一个字段名即可。
@@ -54,7 +54,7 @@ public class WxOpenUploadIcpMediaParam implements Serializable {
     return CommonUploadMultiParam.builder()
       .normalParams(Arrays.asList(
         CommonUploadMultiParam.NormalParam.builder().name("type").value(type).build(),
-        CommonUploadMultiParam.NormalParam.builder().name("certificate_type").value(certificateType).build(),
+        CommonUploadMultiParam.NormalParam.builder().name("certificate_type").value(String.valueOf(certificateType)).build(),
         CommonUploadMultiParam.NormalParam.builder().name("icp_order_field").value(icpOrderField).build()
       ))
       .uploadParam(new CommonUploadParam("media", media))

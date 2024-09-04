@@ -7,6 +7,7 @@ import lombok.Setter;
 import me.chanjar.weixin.open.bean.result.WxOpenResult;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -49,7 +50,7 @@ public class WxOpenIcpEntranceInfoResult extends WxOpenResult {
      * 驳回原因，备案不通过时返回
      */
     @SerializedName("audit_data")
-    private AuditData auditData;
+    private List<AuditData> auditData;
 
     /**
      * 备案入口是否对该小程序开放，0：不开放，1：开放。特定情况下入口不会开放，如小程序昵称包含某些关键词时、管局系统不可用时，当备案入口开放时才能提交备案申请
