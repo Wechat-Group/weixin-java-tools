@@ -27,32 +27,32 @@ import redis.clients.jedis.JedisPoolConfig;
 )
 @RequiredArgsConstructor
 public class WxMpInJedisConfiguration extends AbstractWxMpConfiguration {
-  private final WxMpMultiProperties wxCpMultiProperties;
+  private final WxMpMultiProperties wxMpMultiProperties;
   private final ApplicationContext applicationContext;
 
   @Bean
   public WxMpMultiServices wxMpMultiServices() {
-    return this.wxMpMultiServices(wxCpMultiProperties);
+    return this.wxMpMultiServices(wxMpMultiProperties);
   }
 
   @Override
-  protected WxMpDefaultConfigImpl wxMpConfigStorage(WxMpMultiProperties wxCpMultiProperties) {
-    return this.configRedis(wxCpMultiProperties);
+  protected WxMpDefaultConfigImpl wxMpConfigStorage(WxMpMultiProperties wxMpMultiProperties) {
+    return this.configRedis(wxMpMultiProperties);
   }
 
-  private WxMpDefaultConfigImpl configRedis(WxMpMultiProperties wxCpMultiProperties) {
-    WxMpMultiRedisProperties wxCpMultiRedisProperties = wxCpMultiProperties.getConfigStorage().getRedis();
+  private WxMpDefaultConfigImpl configRedis(WxMpMultiProperties wxMpMultiProperties) {
+    WxMpMultiRedisProperties wxMpMultiRedisProperties = wxMpMultiProperties.getConfigStorage().getRedis();
     JedisPool jedisPool;
-    if (wxCpMultiRedisProperties != null && StringUtils.isNotEmpty(wxCpMultiRedisProperties.getHost())) {
-      jedisPool = getJedisPool(wxCpMultiProperties);
+    if (wxMpMultiRedisProperties != null && StringUtils.isNotEmpty(wxMpMultiRedisProperties.getHost())) {
+      jedisPool = getJedisPool(wxMpMultiProperties);
     } else {
       jedisPool = applicationContext.getBean(JedisPool.class);
     }
-    return new WxMpRedisConfigImpl(new JedisWxRedisOps(jedisPool), wxCpMultiProperties.getConfigStorage().getKeyPrefix());
+    return new WxMpRedisConfigImpl(new JedisWxRedisOps(jedisPool), wxMpMultiProperties.getConfigStorage().getKeyPrefix());
   }
 
-  private JedisPool getJedisPool(WxMpMultiProperties wxCpMultiProperties) {
-    WxMpMultiProperties.ConfigStorage storage = wxCpMultiProperties.getConfigStorage();
+  private JedisPool getJedisPool(WxMpMultiProperties wxMpMultiProperties) {
+    WxMpMultiProperties.ConfigStorage storage = wxMpMultiProperties.getConfigStorage();
     WxMpMultiRedisProperties redis = storage.getRedis();
 
     JedisPoolConfig config = new JedisPoolConfig();

@@ -31,8 +31,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public abstract class AbstractWxMpConfiguration {
 
-  protected WxMpMultiServices wxMpMultiServices(WxMpMultiProperties wxCpMultiProperties) {
-    Map<String, WxMpSingleProperties> appsMap = wxCpMultiProperties.getApps();
+  protected WxMpMultiServices wxMpMultiServices(WxMpMultiProperties wxMpMultiProperties) {
+    Map<String, WxMpSingleProperties> appsMap = wxMpMultiProperties.getApps();
     if (appsMap == null || appsMap.isEmpty()) {
       log.warn("微信公众号应用参数未配置，通过 WxMpMultiServices#getWxMpService(\"tenantId\")获取实例将返回空");
       return new WxMpMultiServicesImpl();
@@ -59,12 +59,12 @@ public abstract class AbstractWxMpConfiguration {
     for (Map.Entry<String, WxMpSingleProperties> entry : entries) {
       String tenantId = entry.getKey();
       WxMpSingleProperties wxMpSingleProperties = entry.getValue();
-      WxMpDefaultConfigImpl storage = this.wxMpConfigStorage(wxCpMultiProperties);
+      WxMpDefaultConfigImpl storage = this.wxMpConfigStorage(wxMpMultiProperties);
       this.configApp(storage, wxMpSingleProperties);
-      this.configHttp(storage, wxCpMultiProperties.getConfigStorage());
-      this.configHost(storage, wxCpMultiProperties.getHosts());
-      WxMpService wxCpService = this.wxMpService(storage, wxCpMultiProperties);
-      services.addWxMpService(tenantId, wxCpService);
+      this.configHttp(storage, wxMpMultiProperties.getConfigStorage());
+      this.configHost(storage, wxMpMultiProperties.getHosts());
+      WxMpService wxMpService = this.wxMpService(storage, wxMpMultiProperties);
+      services.addWxMpService(tenantId, wxMpService);
     }
     return services;
   }
