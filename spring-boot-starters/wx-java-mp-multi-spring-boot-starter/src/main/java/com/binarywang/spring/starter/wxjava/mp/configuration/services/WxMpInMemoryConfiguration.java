@@ -21,15 +21,15 @@ import org.springframework.context.annotation.Configuration;
 )
 @RequiredArgsConstructor
 public class WxMpInMemoryConfiguration extends AbstractWxMpConfiguration {
-  private final WxMpMultiProperties wxCpMultiProperties;
+  private final WxMpMultiProperties wxMpMultiProperties;
 
   @Bean
-  public WxMpMultiServices wxCpMultiServices() {
-    return this.wxMpMultiServices(wxCpMultiProperties);
+  public WxMpMultiServices wxMpMultiServices() {
+    return this.wxMpMultiServices(wxMpMultiProperties);
   }
 
   @Override
-  protected WxMpDefaultConfigImpl wxMpConfigStorage(WxMpMultiProperties wxCpMultiProperties) {
+  protected WxMpDefaultConfigImpl wxMpConfigStorage(WxMpMultiProperties wxMpMultiProperties) {
     return this.configInMemory();
   }
 

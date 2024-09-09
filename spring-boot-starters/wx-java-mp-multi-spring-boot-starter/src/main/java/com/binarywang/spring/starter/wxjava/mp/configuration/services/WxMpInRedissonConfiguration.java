@@ -28,32 +28,32 @@ import org.springframework.context.annotation.Configuration;
 )
 @RequiredArgsConstructor
 public class WxMpInRedissonConfiguration extends AbstractWxMpConfiguration {
-  private final WxMpMultiProperties wxCpMultiProperties;
+  private final WxMpMultiProperties wxMpMultiProperties;
   private final ApplicationContext applicationContext;
 
   @Bean
   public WxMpMultiServices wxMpMultiServices() {
-    return this.wxMpMultiServices(wxCpMultiProperties);
+    return this.wxMpMultiServices(wxMpMultiProperties);
   }
 
   @Override
-  protected WxMpDefaultConfigImpl wxMpConfigStorage(WxMpMultiProperties wxCpMultiProperties) {
-    return this.configRedisson(wxCpMultiProperties);
+  protected WxMpDefaultConfigImpl wxMpConfigStorage(WxMpMultiProperties wxMpMultiProperties) {
+    return this.configRedisson(wxMpMultiProperties);
   }
 
-  private WxMpDefaultConfigImpl configRedisson(WxMpMultiProperties wxCpMultiProperties) {
-    WxMpMultiRedisProperties redisProperties = wxCpMultiProperties.getConfigStorage().getRedis();
+  private WxMpDefaultConfigImpl configRedisson(WxMpMultiProperties wxMpMultiProperties) {
+    WxMpMultiRedisProperties redisProperties = wxMpMultiProperties.getConfigStorage().getRedis();
     RedissonClient redissonClient;
     if (redisProperties != null && StringUtils.isNotEmpty(redisProperties.getHost())) {
-      redissonClient = getRedissonClient(wxCpMultiProperties);
+      redissonClient = getRedissonClient(wxMpMultiProperties);
     } else {
       redissonClient = applicationContext.getBean(RedissonClient.class);
     }
-    return new WxMpRedissonConfigImpl(redissonClient, wxCpMultiProperties.getConfigStorage().getKeyPrefix());
+    return new WxMpRedissonConfigImpl(redissonClient, wxMpMultiProperties.getConfigStorage().getKeyPrefix());
   }
 
-  private RedissonClient getRedissonClient(WxMpMultiProperties wxCpMultiProperties) {
-    WxMpMultiProperties.ConfigStorage storage = wxCpMultiProperties.getConfigStorage();
+  private RedissonClient getRedissonClient(WxMpMultiProperties wxMpMultiProperties) {
+    WxMpMultiProperties.ConfigStorage storage = wxMpMultiProperties.getConfigStorage();
     WxMpMultiRedisProperties redis = storage.getRedis();
 
     Config config = new Config();

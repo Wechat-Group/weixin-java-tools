@@ -61,7 +61,7 @@
 4. 使用样例
 
 ```java
-import com.binarywang.spring.starter.wxjava.mp.service.WxMpMultiServices;
+import com.binarywang.spring.starter.wxjava.mp.service.WxMaMultiServices;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
 import org.springframework.beans.factory.annotation.Autowired;
