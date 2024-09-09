@@ -143,6 +143,8 @@ public class ContentValue implements Serializable {
     @SerializedName("date_range")
     private DataRange dateRange;
     private Integer type;
+    @SerializedName("slice_info")
+    private SliceInfo sliceInfo;
 
     /**
      * The type Data range.
@@ -158,6 +160,29 @@ public class ContentValue implements Serializable {
       @SerializedName("new_duration")
       private Long duration;
     }
+
+    /**
+     * The type slice_info
+     */
+    @Data
+    public static class SliceInfo implements Serializable {
+      private static final long serialVersionUID = 4369560551634923348L;
+      @SerializedName("day_items")
+      private List<DayItems> dayItems;
+      private Long duration;
+      private Integer state;
+
+      /**
+       * The type day_items
+       */
+      @Data
+      public static class DayItems implements Serializable {
+        private static final long serialVersionUID = -7076615961077782776L;
+        private Long daytime;
+        private Long duration;
+      }
+    }
+
   }
 
   /**
