@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class WxCpKfGetCorpStatisticRequest {
 
   /**
-   * 客服帐号ID。不传入时返回的数据为企业维度汇总的数据
+   * 客服账号ID。不传入时返回的数据为企业维度汇总的数据
    */
   @SerializedName("open_kfid")
   private String openKfId;

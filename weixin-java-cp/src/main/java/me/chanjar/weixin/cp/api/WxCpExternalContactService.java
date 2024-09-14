@@ -135,7 +135,7 @@ public interface WxCpExternalContactService {
    * 第三方/自建应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
    * </pre>
    *
-   * @param externalUserId 外部联系人的userid，注意不是企业成员的帐号
+   * @param externalUserId 外部联系人的userid，注意不是企业成员的账号
    * @param cursor 用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
    * @return . contact detail
    * @throws WxErrorException .
@@ -371,7 +371,7 @@ public interface WxCpExternalContactService {
    * 第三方/自建应用调用时，返回的跟进人follow_user仅包含应用可见范围之内的成员。
    * </pre>
    *
-   * @param userIdList 企业成员的userid列表，注意不是外部联系人的帐号
+   * @param userIdList 企业成员的userid列表，注意不是外部联系人的账号
    * @param cursor     the cursor
    * @param limit      the  limit
    * @return wx cp user external contact batch info

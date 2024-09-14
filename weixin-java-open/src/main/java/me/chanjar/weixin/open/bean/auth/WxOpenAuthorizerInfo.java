@@ -24,7 +24,7 @@ public class WxOpenAuthorizerInfo implements Serializable {
   private String alias;
   private String qrcodeUrl;
   /**
-   * 帐号状态
+   * 账号状态
    * 类型	说明
    * 1	正常
    * 14	已注销

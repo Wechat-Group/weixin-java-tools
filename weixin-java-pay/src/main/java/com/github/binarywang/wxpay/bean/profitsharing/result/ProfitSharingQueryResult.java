@@ -98,7 +98,7 @@ public class ProfitSharingQueryResult extends BaseWxPayResult implements Seriali
      */
     private String type;
     /**
-     * 分账接收方帐号
+     * 分账接收方账号
      */
     private String account;
     /**

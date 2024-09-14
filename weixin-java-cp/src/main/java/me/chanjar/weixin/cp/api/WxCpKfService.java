@@ -18,16 +18,16 @@ import java.util.List;
 public interface WxCpKfService {
 
   /**
-   * 添加客服帐号，并可设置客服名称和头像。目前一家企业最多可添加10个客服帐号
+   * 添加客服账号，并可设置客服名称和头像。目前一家企业最多可添加10个客服账号
    *
-   * @param add 客服帐号信息
-   * @return result -新创建的客服帐号ID
+   * @param add 客服账号信息
+   * @return result -新创建的客服账号ID
    * @throws WxErrorException 异常
    */
   WxCpKfAccountAddResp addAccount(WxCpKfAccountAdd add) throws WxErrorException;
 
   /**
-   * 修改已有的客服帐号，可修改客服名称和头像。
+   * 修改已有的客服账号，可修改客服名称和头像。
    *
    * @param upd 新的客服账号信息
    * @return result wx cp base resp
@@ -36,27 +36,27 @@ public interface WxCpKfService {
   WxCpBaseResp updAccount(WxCpKfAccountUpd upd) throws WxErrorException;
 
   /**
-   * 删除已有的客服帐号
+   * 删除已有的客服账号
    *
-   * @param del 要删除的客服帐号
+   * @param del 要删除的客服账号
    * @return result wx cp base resp
    * @throws WxErrorException 异常
    */
   WxCpBaseResp delAccount(WxCpKfAccountDel del) throws WxErrorException;
 
   /**
-   * 获取客服帐号列表，包括所有的客服帐号的客服ID、名称和头像。
+   * 获取客服账号列表，包括所有的客服账号的客服ID、名称和头像。
    *
    * @param offset 分页，偏移量, 默认为0
    * @param limit  分页，预期请求的数据量，默认为100，取值范围 1 ~ 100
-   * @return 客服帐号列表 wx cp kf account list resp
+   * @return 客服账号列表 wx cp kf account list resp
    * @throws WxErrorException 异常
    */
   WxCpKfAccountListResp listAccount(Integer offset, Integer limit) throws WxErrorException;
 
   /**
-   * 企业可通过此接口获取带有不同参数的客服链接，不同客服帐号对应不同的客服链接。获取后，企业可将链接嵌入到网页等场景中，
-   * 微信用户点击链接即可向对应的客服帐号发起咨询。企业可依据参数来识别用户的咨询来源等
+   * 企业可通过此接口获取带有不同参数的客服链接，不同客服账号对应不同的客服链接。获取后，企业可将链接嵌入到网页等场景中，
+   * 微信用户点击链接即可向对应的客服账号发起咨询。企业可依据参数来识别用户的咨询来源等
    *
    * @param link 参数
    * @return 链接 account link
@@ -66,9 +66,9 @@ public interface WxCpKfService {
 
   /**
    * 接待人员管理
-   * 添加指定客服帐号的接待人员，每个客服帐号目前最多可添加500个接待人员。
+   * 添加指定客服账号的接待人员，每个客服账号目前最多可添加500个接待人员。
    *
-   * @param openKfid   客服帐号ID
+   * @param openKfid   客服账号ID
    * @param userIdList 接待人员userid列表。第三方应用填密文userid，即open_userid 可填充个数：1 ~ 100。超过100个需分批调用。
    * @return 添加客服账号结果 wx cp kf servicer op resp
    * @throws WxErrorException 异常
@@ -77,9 +77,9 @@ public interface WxCpKfService {
 
   /**
    * 接待人员管理
-   * 从客服帐号删除接待人员
+   * 从客服账号删除接待人员
    *
-   * @param openKfid   客服帐号ID
+   * @param openKfid   客服账号ID
    * @param userIdList 接待人员userid列表。第三方应用填密文userid，即open_userid 可填充个数：1 ~ 100。超过100个需分批调用。
    * @return 删除客服账号结果 wx cp kf servicer op resp
    * @throws WxErrorException 异常
@@ -88,9 +88,9 @@ public interface WxCpKfService {
 
   /**
    * 接待人员管理
-   * 获取某个客服帐号的接待人员列表
+   * 获取某个客服账号的接待人员列表
    *
-   * @param openKfid 客服帐号ID
+   * @param openKfid 客服账号ID
    * @return 接待人员列表 wx cp kf servicer list resp
    * @throws WxErrorException 异常
    */
@@ -100,7 +100,7 @@ public interface WxCpKfService {
    * 分配客服会话
    * 获取会话状态
    *
-   * @param openKfid       客服帐号ID
+   * @param openKfid       客服账号ID
    * @param externalUserId 微信客户的external_userid
    * @return service state
    * @throws WxErrorException the wx error exception
@@ -112,7 +112,7 @@ public interface WxCpKfService {
    * 分配客服会话
    * 变更会话状态
    *
-   * @param openKfid       客服帐号ID
+   * @param openKfid       客服账号ID
    * @param externalUserId 微信客户的external_userid
    * @param serviceState   变更的目标状态，状态定义和所允许的变更可参考概述中的流程图和表格
    * @param servicerUserId 接待人员的userid。第三方应用填密文userid，即open_userid。当state=3时要求必填，接待人员须处于“正在接待”中。
@@ -232,7 +232,7 @@ public interface WxCpKfService {
   /**
    * 升级专员服务
    *
-   * @param openKfid       客服帐号ID
+   * @param openKfid       客服账号ID
    * @param externalUserId 微信客户的external_userid
    * @param userid         服务专员的userid
    * @param wording        推荐语
@@ -245,7 +245,7 @@ public interface WxCpKfService {
   /**
    * 升级客户群服务
    *
-   * @param openKfid       客服帐号ID
+   * @param openKfid       客服账号ID
    * @param externalUserId 微信客户的external_userid
    * @param chatId         客户群id
    * @param wording        推荐语
@@ -258,7 +258,7 @@ public interface WxCpKfService {
   /**
    * 为客户取消推荐
    *
-   * @param openKfid       客服帐号ID
+   * @param openKfid       客服账号ID
    * @param externalUserId 微信客户的external_userid
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception

@@ -85,7 +85,7 @@ public class WxPayCouponSendRequest extends BaseWxPayRequest {
    * 是否必填：否
    * 示例值：10000098
    * 类型：String(32)
-   * 说明：操作员帐号, 默认为商户号,可在商户平台配置操作员对应的api权限
+   * 说明：操作员账号, 默认为商户号,可在商户平台配置操作员对应的api权限
    * </pre>
    */
   @XStreamAlias("op_user_id")

@@ -4,7 +4,7 @@ import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.testng.annotations.Test;
 
 /**
- * @title: 获取授权帐号详情 信息反序列化测试
+ * @title: 获取授权账号详情 信息反序列化测试
  * @author: trifolium
  * created on : 2022/6/7
  * @modified :

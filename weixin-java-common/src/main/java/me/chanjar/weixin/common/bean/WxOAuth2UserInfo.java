@@ -18,7 +18,7 @@ public class WxOAuth2UserInfo implements Serializable {
   private static final long serialVersionUID = 3181943506448954725L;
 
   /**
-   * openid	普通用户的标识，对当前开发者帐号唯一
+   * openid	普通用户的标识，对当前开发者账号唯一
    */
   private String openid;
   /**
@@ -49,7 +49,7 @@ public class WxOAuth2UserInfo implements Serializable {
   @SerializedName("headimgurl")
   private String headImgUrl;
   /**
-   * unionid	用户统一标识。针对一个微信开放平台帐号下的应用，同一用户的unionid是唯一的。
+   * unionid	用户统一标识。针对一个微信开放平台账号下的应用，同一用户的unionid是唯一的。
    */
   @SerializedName("unionid")
   private String unionId;

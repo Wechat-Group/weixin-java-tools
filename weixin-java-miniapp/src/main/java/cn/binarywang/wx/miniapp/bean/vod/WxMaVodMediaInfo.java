@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 小程序帐号的可选类目，其中 address / tag / title 是提交审核会用到的
+ * 小程序账号的可选类目，其中 address / tag / title 是提交审核会用到的
  * <p>
  * media_id 	number 	媒资文件id。
  * create_time 	number 	上传时间，时间戳。

@@ -94,7 +94,7 @@ public class MakeOutInvoiceRequest implements Serializable {
     private String ghfbank;
 
     /**
-     * 购货方银行帐号
+     * 购货方银行账号
      */
     private String ghfbankid;
 

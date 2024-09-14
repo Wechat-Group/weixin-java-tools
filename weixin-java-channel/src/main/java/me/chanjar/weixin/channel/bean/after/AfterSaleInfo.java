@@ -31,7 +31,7 @@ public class AfterSaleInfo implements Serializable {
   @JsonProperty("openid")
   private String openid;
 
-  /** 买家在开放平台的唯一标识符，若当前视频号小店已绑定到微信开放平台帐号下会返回 */
+  /** 买家在开放平台的唯一标识符，若当前视频号小店已绑定到微信开放平台账号下会返回 */
   @JsonProperty("unionid")
   private String unionid;
 

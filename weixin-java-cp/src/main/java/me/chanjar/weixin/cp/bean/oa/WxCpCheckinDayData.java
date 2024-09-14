@@ -59,7 +59,7 @@ public class WxCpCheckinDayData implements Serializable {
     private String departsName;
 
     /**
-     * acctid 打卡人员帐号，即userid
+     * acctid 打卡人员账号，即userid
      */
     @SerializedName("acctid")
     private String acctId;

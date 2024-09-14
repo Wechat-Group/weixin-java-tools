@@ -10,7 +10,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import java.util.List;
 
 /**
- * 获取客服帐号列表-结果
+ * 获取客服账号列表-结果
  *
  * @author Fu  created on  2022/1/19 19:13
  */
@@ -22,7 +22,7 @@ public class WxCpKfAccountListResp extends WxCpBaseResp {
   private static final long serialVersionUID = -1317201649692262217L;
 
   /**
-   * 帐号信息列表
+   * 账号信息列表
    */
   @SerializedName("account_list")
   private List<AccountListDTO> accountList;
@@ -34,7 +34,7 @@ public class WxCpKfAccountListResp extends WxCpBaseResp {
   @Data
   public static class AccountListDTO {
     /**
-     * 客服帐号ID
+     * 客服账号ID
      */
     @SerializedName("open_kfid")
     private String openKfid;

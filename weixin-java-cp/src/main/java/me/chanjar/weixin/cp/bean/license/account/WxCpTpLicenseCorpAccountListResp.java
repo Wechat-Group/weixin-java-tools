@@ -10,7 +10,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import java.util.List;
 
 /**
- * 企业的帐号列表（已激活）
+ * 企业的账号列表（已激活）
  * 文档地址：https://developer.work.weixin.qq.com/document/path/95544
  *
  * @author Totoro  created on  2022/6/27 15:15

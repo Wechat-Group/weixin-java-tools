@@ -387,7 +387,7 @@ public class WxPayRefundQueryResult extends BaseWxPayResult implements Serializa
      *  FAIL—退款失败，
      *  PROCESSING—退款处理中，
      *  CHANGE—转入代发，
-     * 退款到银行发现用户的卡作废或者冻结了，导致原路退款银行卡失败，资金回流到商户的现金帐号，需要商户人工干预，通过线下或者财付通转账的方式进行退款。
+     * 退款到银行发现用户的卡作废或者冻结了，导致原路退款银行卡失败，资金回流到商户的现金账号，需要商户人工干预，通过线下或者财付通转账的方式进行退款。
      * </pre>
      */
     @XStreamAlias("refund_status")

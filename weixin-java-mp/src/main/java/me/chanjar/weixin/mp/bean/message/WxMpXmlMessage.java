@@ -233,19 +233,19 @@ public class WxMpXmlMessage implements Serializable {
   // 客服会话管理相关事件推送
   ///////////////////////////////////////
   /**
-   * 创建或关闭客服会话时的客服帐号.
+   * 创建或关闭客服会话时的客服账号.
    */
   @XStreamAlias("KfAccount")
   @JacksonXmlProperty(localName = "KfAccount")
   private String kfAccount;
   /**
-   * 转接客服会话时的转入客服帐号.
+   * 转接客服会话时的转入客服账号.
    */
   @XStreamAlias("ToKfAccount")
   @JacksonXmlProperty(localName = "ToKfAccount")
   private String toKfAccount;
   /**
-   * 转接客服会话时的转出客服帐号.
+   * 转接客服会话时的转出客服账号.
    */
   @XStreamAlias("FromKfAccount")
   @JacksonXmlProperty(localName = "FromKfAccount")

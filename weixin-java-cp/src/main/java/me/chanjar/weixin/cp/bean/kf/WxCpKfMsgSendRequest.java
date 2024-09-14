@@ -32,7 +32,7 @@ public class WxCpKfMsgSendRequest {
    *   参数：open_kfid
    *   是否必须：是
    *   类型：string
-   *   说明：指定发送消息的客服帐号ID
+   *   说明：指定发送消息的客服账号ID
    * </pre>
    */
   @SerializedName("open_kfid")

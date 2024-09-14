@@ -116,7 +116,7 @@ public interface WxOpenComponentService {
   String GET_OPEN_URL = "https://api.weixin.qq.com/cgi-bin/open/get";
 
   /**
-   * 查询公众号/小程序是否绑定 open 帐号
+   * 查询公众号/小程序是否绑定 open 账号
    */
   String HAVE_OPEN_URL = "https://api.weixin.qq.com/cgi-bin/open/have";
 
@@ -326,7 +326,7 @@ public interface WxOpenComponentService {
    * .
    *
    * @param redirectUri the redirect uri
-   * @param authType    要授权的帐号类型：1则商户点击链接后，手机端仅展示公众号、2表示仅展示小程序，3表示公众号和小程序都展示。如果为未指定，则默认小程序和公众号都展示。第三方平台开发者可以使用本字段来控制授权的帐号类型。
+   * @param authType    要授权的账号类型：1则商户点击链接后，手机端仅展示公众号、2表示仅展示小程序，3表示公众号和小程序都展示。如果为未指定，则默认小程序和公众号都展示。第三方平台开发者可以使用本字段来控制授权的账号类型。
    * @param bizAppid    指定授权唯一的小程序或公众号                 注：authType、bizAppid 互斥。
    * @return the pre auth url
    * @throws WxErrorException the wx error exception
@@ -372,7 +372,7 @@ public interface WxOpenComponentService {
   WxOpenQueryAuthResult getQueryAuth(String authorizationCode) throws WxErrorException;
 
   /**
-   * 获取授权方的帐号基本信息.
+   * 获取授权方的账号基本信息.
    *
    * @param authorizerAppid the authorizer appid
    * @return the authorizer info
@@ -539,7 +539,7 @@ public interface WxOpenComponentService {
 
   /**
    * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704199_1bcax&token=6df5e3650041eff2cd3ec3662425ad8d7beec8d9&lang=zh_CN
-   * 创建 开放平台帐号并绑定公众号/小程序.
+   * 创建 开放平台账号并绑定公众号/小程序.
    * https://api.weixin.qq.com/cgi-bin/open/create
    *
    * @param appId     公众号/小程序的appId
@@ -551,11 +551,11 @@ public interface WxOpenComponentService {
 
   /**
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/account/bind.html
-   * 将公众号/小程序绑定到开放平台帐号下
+   * 将公众号/小程序绑定到开放平台账号下
    *
    * @param appId     公众号/小程序的appId
    * @param appIdType appId类型   me.chanjar.weixin.common.api.WxConsts.AppIdType   mp-公众号  mini-小程序
-   * @param openAppid 开放平台帐号 appid，由创建开发平台帐号接口返回
+   * @param openAppid 开放平台账号 appid，由创建开发平台账号接口返回
    * @return the boolean
    * @throws WxErrorException the wx error exception
    */
@@ -563,11 +563,11 @@ public interface WxOpenComponentService {
 
   /**
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/account/unbind.html
-   * 将公众号/小程序从开放平台帐号下解绑
+   * 将公众号/小程序从开放平台账号下解绑
    *
    * @param appId     公众号/小程序的appId
    * @param appIdType appId类型   me.chanjar.weixin.common.api.WxConsts.AppIdType   mp-公众号  mini-小程序
-   * @param openAppid 开放平台帐号 appid，由创建开发平台帐号接口返回
+   * @param openAppid 开放平台账号 appid，由创建开发平台账号接口返回
    * @return the boolean
    * @throws WxErrorException the wx error exception
    */
@@ -575,20 +575,20 @@ public interface WxOpenComponentService {
 
   /**
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/account/get.html
-   * 获取公众号/小程序所绑定的开放平台帐号
+   * 获取公众号/小程序所绑定的开放平台账号
    *
    * @param appId     公众号/小程序的appId
    * @param appIdType appId类型   me.chanjar.weixin.common.api.WxConsts.AppIdType   mp-公众号  mini-小程序
-   * @return 开放平台帐号 appid，由创建开发平台帐号接口返回
+   * @return 开放平台账号 appid，由创建开发平台账号接口返回
    * @throws WxErrorException the wx error exception
    */
   WxOpenGetResult getOpenAccount(String appId, String appIdType) throws WxErrorException;
 
   /**
    * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/getbindopeninfo.html
-   * 查询公众号/小程序是否绑定 open 帐号
+   * 查询公众号/小程序是否绑定 open 账号
    *
-   * @return 是否绑定 open 帐号，true表示绑定；false表示未绑定任何 open 帐号
+   * @return 是否绑定 open 账号，true表示绑定；false表示未绑定任何 open 账号
    * @throws WxErrorException the wx error exception
    */
   WxOpenHaveResult haveOpen() throws WxErrorException;

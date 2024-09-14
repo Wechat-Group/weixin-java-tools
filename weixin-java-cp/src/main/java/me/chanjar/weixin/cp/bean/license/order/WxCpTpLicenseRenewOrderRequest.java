@@ -11,7 +11,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import java.io.Serializable;
 
 /**
- * 续期帐号订单
+ * 续期账号订单
  * 文档地址：https://developer.work.weixin.qq.com/document/path/95646
  *
  * @author Totoro  created on  2022-6-27 11:21:51

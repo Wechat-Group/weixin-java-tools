@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 创建下单续期帐号任务
+ * 创建下单续期账号任务
  * 文档地址：https://developer.work.weixin.qq.com/document/path/95646
  *
  * @author Totoro  created on  2022/6/27 11:12

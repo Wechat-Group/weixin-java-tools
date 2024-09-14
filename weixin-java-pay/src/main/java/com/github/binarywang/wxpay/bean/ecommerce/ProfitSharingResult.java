@@ -188,7 +188,7 @@ public class ProfitSharingResult implements Serializable {
      * 类型：string (80)
      * 描述：
      *  分账的原因描述，分账账单中需要体现。
-     * 示例值：分帐1900000110
+     * 示例值：分账1900000110
      * </pre>
      */
     @SerializedName(value = "description")

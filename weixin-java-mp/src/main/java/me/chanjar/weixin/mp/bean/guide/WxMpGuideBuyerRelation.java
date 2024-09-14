@@ -19,7 +19,7 @@ public class WxMpGuideBuyerRelation implements ToJson, Serializable {
   private static final long serialVersionUID = 1531261524650705552L;
 
   /**
-   * 顾问的微信帐号
+   * 顾问的微信账号
    */
   @SerializedName("guide_account")
   private String guideAccount;

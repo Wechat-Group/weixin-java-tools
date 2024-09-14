@@ -60,7 +60,7 @@ public interface Applyment4SubService {
   SettlementInfoResult querySettlementBySubMchid(String subMchid) throws WxPayException;
 
   /**
-   * 修改结算帐号
+   * 修改结算账号
    * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_3.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/apply4sub/sub_merchants/{sub_mchid}/modify-settlement
    *

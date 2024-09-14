@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * 小程序帐号的可选类目，其中 address / tag / title 是提交审核会用到的
+ * 小程序账号的可选类目，其中 address / tag / title 是提交审核会用到的
  *
  * @author <a href="https://github.com/charmingoh">Charming</a>
  * @since 2018-04-26 19:44
@@ -34,7 +34,7 @@ public class WxMaCodeSubmitAuditItem implements Serializable {
 
   /**
    * 一级类目名称
-   * 类目名称，可通过“获取授权小程序帐号的可选类目”接口获得
+   * 类目名称，可通过“获取授权小程序账号的可选类目”接口获得
    */
   @SerializedName("first_class")
   private String firstClass;
@@ -50,7 +50,7 @@ public class WxMaCodeSubmitAuditItem implements Serializable {
   private String thirdClass;
   /**
    * 一级类目的ID编号
-   * 类目的ID，可通过“获取授权小程序帐号的可选类目”接口获得
+   * 类目的ID，可通过“获取授权小程序账号的可选类目”接口获得
    */
   @SerializedName("first_id")
   private Long firstId;

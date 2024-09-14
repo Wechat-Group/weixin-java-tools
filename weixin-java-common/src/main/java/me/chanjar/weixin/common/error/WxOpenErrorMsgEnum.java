@@ -2412,9 +2412,9 @@ public enum WxOpenErrorMsgEnum {
   CODE_50001(50001, "用户未授权该 api"),
 
   /**
-   * 用户受限，可能是用户帐号被冻结或注销  user limited
+   * 用户受限，可能是用户账号被冻结或注销  user limited
    */
-  CODE_50002(50002, "用户受限，可能是用户帐号被冻结或注销"),
+  CODE_50002(50002, "用户受限，可能是用户账号被冻结或注销"),
 
   /**
    * user unexpected, maybe not in white list
@@ -2737,14 +2737,14 @@ public enum WxOpenErrorMsgEnum {
   CODE_53013(53013, "公众号：名称与已有公众号名称重复;小程序：该名称与已有小程序名称重复"),
 
   /**
-   * 公众号：公众号已有{名称  A+}时，需与该帐号相同主体才可申请{名称 A};小程序：小程序已有{名称 A+}时，需与该帐号相同主体才可申请{名称 A}
+   * 公众号：公众号已有{名称  A+}时，需与该账号相同主体才可申请{名称 A};小程序：小程序已有{名称 A+}时，需与该账号相同主体才可申请{名称 A}
    */
-  CODE_53014(53014, "公众号：公众号已有{名称  A+}时，需与该帐号相同主体才可申请{名称 A};小程序：小程序已有{名称 A+}时，需与该帐号相同主体才可申请{名称 A}"),
+  CODE_53014(53014, "公众号：公众号已有{名称  A+}时，需与该账号相同主体才可申请{名称 A};小程序：小程序已有{名称 A+}时，需与该账号相同主体才可申请{名称 A}"),
 
   /**
-   * 公众号：该名称与已有小程序名称重复，需与该小程序帐号相同主体才可申请;小程序：该名称与已有公众号名称重复，需与该公众号帐号相同主体才可申请
+   * 公众号：该名称与已有小程序名称重复，需与该小程序账号相同主体才可申请;小程序：该名称与已有公众号名称重复，需与该公众号账号相同主体才可申请
    */
-  CODE_53015(53015, "公众号：该名称与已有小程序名称重复，需与该小程序帐号相同主体才可申请;小程序：该名称与已有公众号名称重复，需与该公众号帐号相同主体才可申请"),
+  CODE_53015(53015, "公众号：该名称与已有小程序名称重复，需与该小程序账号相同主体才可申请;小程序：该名称与已有公众号名称重复，需与该公众号账号相同主体才可申请"),
 
   /**
    * 公众号：该名称与已有多个小程序名称重复，暂不支持申请;小程序：该名称与已有多个公众号名称重复，暂不支持申请
@@ -2752,9 +2752,9 @@ public enum WxOpenErrorMsgEnum {
   CODE_53016(53016, "公众号：该名称与已有多个小程序名称重复，暂不支持申请;小程序：该名称与已有多个公众号名称重复，暂不支持申请"),
 
   /**
-   * 公众号：小程序已有{名称  A+}时，需与该帐号相同主体才可申请{名称 A};小程序：公众号已有{名称 A+}时，需与该帐号相同主体才可申请{名称 A}
+   * 公众号：小程序已有{名称  A+}时，需与该账号相同主体才可申请{名称 A};小程序：公众号已有{名称 A+}时，需与该账号相同主体才可申请{名称 A}
    */
-  CODE_53017(53017, "公众号：小程序已有{名称  A+}时，需与该帐号相同主体才可申请{名称 A};小程序：公众号已有{名称 A+}时，需与该帐号相同主体才可申请{名称 A}"),
+  CODE_53017(53017, "公众号：小程序已有{名称  A+}时，需与该账号相同主体才可申请{名称 A};小程序：公众号已有{名称 A+}时，需与该账号相同主体才可申请{名称 A}"),
 
   /**
    * 名称命中微信号  nickname hit alias
@@ -2899,7 +2899,7 @@ public enum WxOpenErrorMsgEnum {
   /**
    * component is not authorized by this account
    */
-  CODE_61003(61003, "帐号未授权"),
+  CODE_61003(61003, "账号未授权"),
 
   /**
    * api 功能未授权，请确认公众号/小程序已获得该接口，可以在公众平台官网 - 开发者中心页中查看接口权限  access clientip is not registered
@@ -2959,7 +2959,7 @@ public enum WxOpenErrorMsgEnum {
   /**
    * must use biz account token for not component api
    */
-  CODE_61015(61015, "必须使用商业帐号token，而不是component api"),
+  CODE_61015(61015, "必须使用商业账号token，而不是component api"),
 
   /**
    * function category of API need be  confirmed by component
@@ -3417,24 +3417,24 @@ public enum WxOpenErrorMsgEnum {
   CODE_61452(61452, "无效客服账号 (invalid kf_account)"),
 
   /**
-   * 客服帐号已存在 (kf_account exsited)
+   * 客服账号已存在 (kf_account exsited)
    */
-  CODE_61453(61453, "客服帐号已存在 (kf_account exsited)"),
+  CODE_61453(61453, "客服账号已存在 (kf_account exsited)"),
 
   /**
-   * 客服帐号名长度超过限制 ( 仅允许 10 个英文字符，不包括 @ 及 @ 后的公众号的微信号 )(invalid  kf_acount  length)
+   * 客服账号名长度超过限制 ( 仅允许 10 个英文字符，不包括 @ 及 @ 后的公众号的微信号 )(invalid  kf_acount  length)
    */
-  CODE_61454(61454, "客服帐号名长度超过限制 ( 仅允许 10 个英文字符，不包括 @ 及 @ 后的公众号的微信号 )(invalid  kf_acount  length)"),
+  CODE_61454(61454, "客服账号名长度超过限制 ( 仅允许 10 个英文字符，不包括 @ 及 @ 后的公众号的微信号 )(invalid  kf_acount  length)"),
 
   /**
-   * 客服帐号名包含非法字符 ( 仅允许英文 + 数字 )(illegal character in   kf_account)
+   * 客服账号名包含非法字符 ( 仅允许英文 + 数字 )(illegal character in   kf_account)
    */
-  CODE_61455(61455, "客服帐号名包含非法字符 ( 仅允许英文 + 数字 )(illegal character in   kf_account)"),
+  CODE_61455(61455, "客服账号名包含非法字符 ( 仅允许英文 + 数字 )(illegal character in   kf_account)"),
 
   /**
-   * 客服帐号个数超过限制 (10 个客服账号 )(kf_account count exceeded)
+   * 客服账号个数超过限制 (10 个客服账号 )(kf_account count exceeded)
    */
-  CODE_61456(61456, "客服帐号个数超过限制 (10 个客服账号 )(kf_account count exceeded)"),
+  CODE_61456(61456, "客服账号个数超过限制 (10 个客服账号 )(kf_account count exceeded)"),
 
   /**
    * 无效头像文件类型 (invalid  file type)
@@ -3817,9 +3817,9 @@ public enum WxOpenErrorMsgEnum {
   CODE_65305(65305, "个性化菜单数量受限"),
 
   /**
-   * 不支持个性化菜单的帐号  conditional menu not support
+   * 不支持个性化菜单的账号  conditional menu not support
    */
-  CODE_65306(65306, "不支持个性化菜单的帐号"),
+  CODE_65306(65306, "不支持个性化菜单的账号"),
 
   /**
    * 个性化菜单信息为空  conditional menu is empty
@@ -6442,29 +6442,29 @@ public enum WxOpenErrorMsgEnum {
   CODE_88011(88011, "the article is limit for safety"),
 
   /**
-   * account has bound open，该公众号/小程序已经绑定了开放平台帐号  account has bound open
+   * account has bound open，该公众号/小程序已经绑定了开放平台账号  account has bound open
    */
-  CODE_89000(89000, "account has bound open，该公众号/小程序已经绑定了开放平台帐号"),
+  CODE_89000(89000, "account has bound open，该公众号/小程序已经绑定了开放平台账号"),
 
   /**
-   * not same contractor，Authorizer 与开放平台帐号主体不相同  not same contractor
+   * not same contractor，Authorizer 与开放平台账号主体不相同  not same contractor
    */
-  CODE_89001(89001, "not same contractor，Authorizer 与开放平台帐号主体不相同"),
+  CODE_89001(89001, "not same contractor，Authorizer 与开放平台账号主体不相同"),
 
   /**
-   * open not exists，该公众号/小程序未绑定微信开放平台帐号。  open not exists
+   * open not exists，该公众号/小程序未绑定微信开放平台账号。  open not exists
    */
-  CODE_89002(89002, "open not exists，该公众号/小程序未绑定微信开放平台帐号。"),
+  CODE_89002(89002, "open not exists，该公众号/小程序未绑定微信开放平台账号。"),
 
   /**
-   * 该开放平台帐号并非通过 api 创建，不允许操作  open is not created by api
+   * 该开放平台账号并非通过 api 创建，不允许操作  open is not created by api
    */
-  CODE_89003(89003, "该开放平台帐号并非通过 api 创建，不允许操作"),
+  CODE_89003(89003, "该开放平台账号并非通过 api 创建，不允许操作"),
 
   /**
-   * 该开放平台帐号所绑定的公众号/小程序已达上限（100  个）
+   * 该开放平台账号所绑定的公众号/小程序已达上限（100  个）
    */
-  CODE_89004(89004, "该开放平台帐号所绑定的公众号/小程序已达上限（100  个）"),
+  CODE_89004(89004, "该开放平台账号所绑定的公众号/小程序已达上限（100  个）"),
 
   /**
    * without add video ability, the ability was banned
@@ -6707,9 +6707,9 @@ public enum WxOpenErrorMsgEnum {
   CODE_89257(89257, "该插件版本不支持快速更新"),
 
   /**
-   * 当前小程序帐号存在灰度发布中的版本，不可操作快速更新  code is gray online
+   * 当前小程序账号存在灰度发布中的版本，不可操作快速更新  code is gray online
    */
-  CODE_89258(89258, "当前小程序帐号存在灰度发布中的版本，不可操作快速更新"),
+  CODE_89258(89258, "当前小程序账号存在灰度发布中的版本，不可操作快速更新"),
 
   /**
    * zhibo plugin is not allow to delete
@@ -7592,9 +7592,9 @@ public enum WxOpenErrorMsgEnum {
   CODE_9001010(9001010, "上传失败"),
 
   /**
-   * 帐号不合法
+   * 账号不合法
    */
-  CODE_9001020(9001020, "帐号不合法"),
+  CODE_9001020(9001020, "账号不合法"),
 
   /**
    * 已有设备激活率低于 50% ，不能新增设备

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface WxMaCodeService {
   /**
-   * 为授权的小程序帐号上传小程序代码（仅仅支持第三方开放平台）.
+   * 为授权的小程序账号上传小程序代码（仅仅支持第三方开放平台）.
    *
    * @param commitRequest 参数
    * @throws WxErrorException 上传失败时抛出，具体错误码请看类注释文档
@@ -34,7 +34,7 @@ public interface WxMaCodeService {
   byte[] getQrCode(String path) throws WxErrorException;
 
   /**
-   * 获取授权小程序帐号的可选类目.
+   * 获取授权小程序账号的可选类目.
    *
    * @return List<WxMaCategory>
    * @throws WxErrorException 获取失败时返回，具体错误码请看此接口的注释文档
@@ -123,7 +123,7 @@ public interface WxMaCodeService {
 
   /**
    * 小程序审核撤回.
-   * 单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次
+   * 单个账号每天审核撤回次数最多不超过1次，一个月不超过10次
    *
    * @throws WxErrorException 失败时抛出，具体错误码请看此接口的注释文档
    */

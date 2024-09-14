@@ -297,7 +297,7 @@ public interface WxCpSchoolUserService {
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get?access_token=ACCESS_TOKEN&external_userid
    * =EXTERNAL_USERID
    *
-   * @param externalUserId 外部联系人的userid，注意不是学校成员的帐号
+   * @param externalUserId 外部联系人的userid，注意不是学校成员的账号
    * @return external contact
    * @throws WxErrorException the wx error exception
    */

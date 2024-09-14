@@ -41,7 +41,7 @@ public class WxMaExpressAddOrderRequest implements Serializable {
    * App或H5的appid
    * <pre>
    * 是否必填： 否
-   * 描述： add_source=2时必填，需和开通了物流助手的小程序绑定同一open帐号
+   * 描述： add_source=2时必填，需和开通了物流助手的小程序绑定同一open账号
    * </pre>
    */
   @SerializedName("wx_appid")

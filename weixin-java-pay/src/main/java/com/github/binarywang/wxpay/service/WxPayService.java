@@ -737,7 +737,7 @@ public interface WxPayService {
    * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_103&index=3">https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_103&index=3</a>
    *
    * 应用场景
-   * 当交易发生之后一段时间内，由于买家或者卖家的原因需要退款时，卖家可以通过退款接口将支付款退还给买家，微信支付将在收到退款请求并且验证成功之后，按照退款规则将支付款按原路退到买家帐号上。
+   * 当交易发生之后一段时间内，由于买家或者卖家的原因需要退款时，卖家可以通过退款接口将支付款退还给买家，微信支付将在收到退款请求并且验证成功之后，按照退款规则将支付款按原路退到买家账号上。
    *
    * 注意：
    * 1、交易时间超过一年的订单无法提交退款；

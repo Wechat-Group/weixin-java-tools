@@ -39,7 +39,7 @@ public class WxCpLinkedCorpMessage implements Serializable {
   private Boolean isToAll;
 
   /**
-   * 成员ID列表（消息接收者，最多支持1000个）。每个元素的格式为： corpid/userid，其中，corpid为该互联成员所属的企业，userid为该互联成员所属企业中的帐号。如果是本企业的成员，则直接传userid即可
+   * 成员ID列表（消息接收者，最多支持1000个）。每个元素的格式为： corpid/userid，其中，corpid为该互联成员所属的企业，userid为该互联成员所属企业中的账号。如果是本企业的成员，则直接传userid即可
    */
   private String[] toUsers;
   /**

@@ -25,8 +25,8 @@ public class WxPayErrorCode {
     /**
      * <pre>
      * 描述：余额不足.
-     * 原因：用户帐号余额不足
-     * 解决方案：用户帐号余额不足，请用户充值或更换支付卡后再支付
+     * 原因：用户账号余额不足
+     * 解决方案：用户账号余额不足，请用户充值或更换支付卡后再支付
      * </pre>
      */
     public static final String NOTENOUGH = "NOTENOUGH";
@@ -222,7 +222,7 @@ public class WxPayErrorCode {
     /**
      * <pre>
      * 描述：退款请求失败.
-     * 原因：用户帐号注销
+     * 原因：用户账号注销
      * 解决方案：此状态代表退款申请失败，商户可自行处理退款。
      * </pre>
      */

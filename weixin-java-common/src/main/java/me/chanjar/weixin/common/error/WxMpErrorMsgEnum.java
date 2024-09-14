@@ -453,21 +453,21 @@ public enum WxMpErrorMsgEnum {
    */
   CODE_61452(61452, "无效客服账号 (invalid kf_account)"),
   /**
-   * 客服帐号已存在 (kf_account exsited).
+   * 客服账号已存在 (kf_account exsited).
    */
-  CODE_61453(61453, "客服帐号已存在 (kf_account exsited)"),
+  CODE_61453(61453, "客服账号已存在 (kf_account exsited)"),
   /**
-   * 客服帐号名长度超过限制 ( 仅允许 10 个英文字符，不包括 @ 及 @ 后的公众号的微信号 )(invalid kf_acount length).
+   * 客服账号名长度超过限制 ( 仅允许 10 个英文字符，不包括 @ 及 @ 后的公众号的微信号 )(invalid kf_acount length).
    */
-  CODE_61454(61454, "客服帐号名长度超过限制 ( 仅允许 10 个英文字符，不包括 @ 及 @ 后的公众号的微信号 )(invalid kf_acount length)"),
+  CODE_61454(61454, "客服账号名长度超过限制 ( 仅允许 10 个英文字符，不包括 @ 及 @ 后的公众号的微信号 )(invalid kf_acount length)"),
   /**
-   * 客服帐号名包含非法字符 ( 仅允许英文 + 数字 )(illegal character in kf_account).
+   * 客服账号名包含非法字符 ( 仅允许英文 + 数字 )(illegal character in kf_account).
    */
-  CODE_61455(61455, "客服帐号名包含非法字符 ( 仅允许英文 + 数字 )(illegal character in kf_account)"),
+  CODE_61455(61455, "客服账号名包含非法字符 ( 仅允许英文 + 数字 )(illegal character in kf_account)"),
   /**
-   * 客服帐号个数超过限制 (10 个客服账号 )(kf_account count exceeded).
+   * 客服账号个数超过限制 (10 个客服账号 )(kf_account count exceeded).
    */
-  CODE_61456(61456, "客服帐号个数超过限制 (10 个客服账号 )(kf_account count exceeded)"),
+  CODE_61456(61456, "客服账号个数超过限制 (10 个客服账号 )(kf_account count exceeded)"),
   /**
    * 无效头像文件类型 (invalid file type).
    */
@@ -501,9 +501,9 @@ public enum WxMpErrorMsgEnum {
    */
   CODE_65305(65305, "个性化菜单数量受限"),
   /**
-   * 不支持个性化菜单的帐号.
+   * 不支持个性化菜单的账号.
    */
-  CODE_65306(65306, "不支持个性化菜单的帐号"),
+  CODE_65306(65306, "不支持个性化菜单的账号"),
   /**
    * 个性化菜单信息为空.
    */
@@ -585,9 +585,9 @@ public enum WxMpErrorMsgEnum {
    */
   CODE_9001010(9001010, "上传失败"),
   /**
-   * 帐号不合法.
+   * 账号不合法.
    */
-  CODE_9001020(9001020, "帐号不合法"),
+  CODE_9001020(9001020, "账号不合法"),
   /**
    * 已有设备激活率低于 50% ，不能新增设备.
    */

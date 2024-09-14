@@ -80,7 +80,7 @@ public class WxMaApiUrlConstants {
 
   public interface Code {
     /**
-     * 为授权的小程序帐号上传小程序代码.
+     * 为授权的小程序账号上传小程序代码.
      */
     String COMMIT_URL = "https://api.weixin.qq.com/wxa/commit";
     String GET_QRCODE_URL = "https://api.weixin.qq.com/wxa/get_qrcode";
@@ -394,15 +394,15 @@ public class WxMaApiUrlConstants {
      */
     String GET_PUB_TEMPLATE_KEY_WORDS_BY_ID_URL = "https://api.weixin.qq.com/wxaapi/newtmpl/getpubtemplatekeywords";
     /**
-     * 组合模板并添加至帐号下的个人模板库.
+     * 组合模板并添加至账号下的个人模板库.
      */
     String TEMPLATE_ADD_URL = "https://api.weixin.qq.com/wxaapi/newtmpl/addtemplate";
     /**
-     * 获取当前帐号下的个人模板列表.
+     * 获取当前账号下的个人模板列表.
      */
     String TEMPLATE_LIST_URL = "https://api.weixin.qq.com/wxaapi/newtmpl/gettemplate";
     /**
-     * 删除帐号下的某个模板.
+     * 删除账号下的某个模板.
      */
     String TEMPLATE_DEL_URL = "https://api.weixin.qq.com/wxaapi/newtmpl/deltemplate";
     /**

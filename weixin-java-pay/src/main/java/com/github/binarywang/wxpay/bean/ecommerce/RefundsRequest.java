@@ -56,7 +56,7 @@ public class RefundsRequest implements Serializable {
    * 是否必填：否
    * 类型：string（32）
    * 描述：
-   *  二级商户在微信申请公众号成功后分配的帐号ID，需要电商平台侧配置绑定关系才能传参。
+   *  二级商户在微信申请公众号成功后分配的账号ID，需要电商平台侧配置绑定关系才能传参。
    *  示例值：wxd678efh567hg6999
    * </pre>
    */

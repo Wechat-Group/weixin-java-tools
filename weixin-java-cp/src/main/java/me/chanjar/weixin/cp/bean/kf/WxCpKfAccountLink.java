@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 获取客服帐号链接-请求参数
+ * 获取客服账号链接-请求参数
  *
  * @author Fu  created on  2022/1/19 19:18
  */
@@ -18,7 +18,7 @@ public class WxCpKfAccountLink implements Serializable {
   private static final long serialVersionUID = -1920926948347984256L;
 
   /**
-   * 客服帐号ID
+   * 客服账号ID
    */
   @SerializedName("open_kfid")
   private String openKfid;

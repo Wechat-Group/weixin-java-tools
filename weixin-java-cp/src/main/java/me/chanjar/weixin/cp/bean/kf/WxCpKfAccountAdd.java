@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 添加客服帐号-请求参数
+ * 添加客服账号-请求参数
  *
  * @author Fu  created on  2022/1/19 18:59
  */

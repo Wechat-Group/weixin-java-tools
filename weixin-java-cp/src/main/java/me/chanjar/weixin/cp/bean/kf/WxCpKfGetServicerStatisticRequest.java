@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class WxCpKfGetServicerStatisticRequest {
   /**
-   * 客服帐号ID
+   * 客服账号ID
    */
   @SerializedName("open_kfid")
   private String openKfId;

@@ -92,7 +92,7 @@ public class ProfitSharingUnfreezeV3Result implements Serializable {
 
     /**
      * <pre>
-     * 字段名：分账接收方帐号
+     * 字段名：分账接收方账号
      * 是否必填：是
      * 描述：
      * 1、分账接收方类型为MERCHANT_ID时，分账接收方账号为商户号

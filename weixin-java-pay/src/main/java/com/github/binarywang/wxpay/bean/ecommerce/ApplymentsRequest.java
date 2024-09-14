@@ -973,7 +973,7 @@ public class ApplymentsRequest implements Serializable {
 
     /**
      * <pre>
-     * 字段名：银行帐号
+     * 字段名：银行账号
      * 变量名：account_number
      * 是否必填：是
      * 类型：string(128)
@@ -989,7 +989,7 @@ public class ApplymentsRequest implements Serializable {
 
     /**
      * <pre>
-     * 字段名：+银行帐户证明材料
+     * 字段名：+银行账户证明材料
      * 变量名：account_cert_info
      * 是否必填：否
      * 类型：string(128)

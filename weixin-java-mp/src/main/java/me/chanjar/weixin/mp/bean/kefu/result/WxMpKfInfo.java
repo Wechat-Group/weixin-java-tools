@@ -41,19 +41,19 @@ public class WxMpKfInfo implements Serializable {
   private String nick;
 
   /**
-   * kf_wx 如果客服帐号已绑定了客服人员微信号，则此处显示微信号
+   * kf_wx 如果客服账号已绑定了客服人员微信号，则此处显示微信号
    */
   @SerializedName("kf_wx")
   private String wxAccount;
 
   /**
-   * invite_wx 如果客服帐号尚未绑定微信号，但是已经发起了一个绑定邀请，则此处显示绑定邀请的微信号
+   * invite_wx 如果客服账号尚未绑定微信号，但是已经发起了一个绑定邀请，则此处显示绑定邀请的微信号
    */
   @SerializedName("invite_wx")
   private String inviteWx;
 
   /**
-   * invite_expire_time 如果客服帐号尚未绑定微信号，但是已经发起过一个绑定邀请，则此处显示为邀请的过期时间，为unix 时间戳
+   * invite_expire_time 如果客服账号尚未绑定微信号，但是已经发起过一个绑定邀请，则此处显示为邀请的过期时间，为unix 时间戳
    */
   @SerializedName("invite_expire_time")
   private Long inviteExpireTime;

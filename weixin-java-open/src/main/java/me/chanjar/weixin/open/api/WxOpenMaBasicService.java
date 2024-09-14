@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface WxOpenMaBasicService {
   /**
-   * 1 获取帐号基本信息.
+   * 1 获取账号基本信息.
    */
   String OPEN_GET_ACCOUNT_BASIC_INFO = "https://api.weixin.qq.com/cgi-bin/account/getaccountbasicinfo";
 

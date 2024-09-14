@@ -50,7 +50,7 @@ public interface WxOpenMaService extends WxMaService {
   String API_GET_WEBVIEW_DOMAIN_CONFIRM_FILE = "https://api.weixin.qq.com/wxa/get_webviewdomain_confirmfile";
 
   /**
-   * 获取帐号基本信息
+   * 获取账号基本信息
    * <pre>
    * GET请求
    * 注意：需要使用1.3环节获取到的新创建小程序appid及authorization_code换取authorizer_refresh_token进而得到authorizer_access_token。
@@ -105,7 +105,7 @@ public interface WxOpenMaService extends WxMaService {
    * <p>
    * <a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4&token=fe774228c66725425675810097f9e48d0737a4bf&lang=zh_CN">...</a>
    * </p>
-   * 1. 为授权的小程序帐号上传小程序代码
+   * 1. 为授权的小程序账号上传小程序代码
    */
   String API_CODE_COMMIT = "https://api.weixin.qq.com/wxa/commit";
 
@@ -120,7 +120,7 @@ public interface WxOpenMaService extends WxMaService {
   String API_VERIFY_BETA_WEAPP = "https://api.weixin.qq.com/wxa/verifybetaweapp";
 
   /**
-   * 4. 获取授权小程序帐号的可选类目
+   * 4. 获取授权小程序账号的可选类目
    */
   String API_GET_CATEGORY = "https://api.weixin.qq.com/wxa/get_category";
 
@@ -205,7 +205,7 @@ public interface WxOpenMaService extends WxMaService {
   /**
    * 15.小程序审核撤回
    * <p>
-   * 单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次。
+   * 单个账号每天审核撤回次数最多不超过1次，一个月不超过10次。
    * </p>
    */
   String API_UNDO_CODE_AUDIT = "https://api.weixin.qq.com/wxa/undocodeaudit";
@@ -434,7 +434,7 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenResult updateShowWxaItem(Integer flag, String mpAppId) throws WxErrorException;
 
   /**
-   * 1、为授权的小程序帐号上传小程序代码
+   * 1、为授权的小程序账号上传小程序代码
    *
    * @param templateId    代码模板ID
    * @param userVersion   用户定义版本
@@ -469,7 +469,7 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenResult verifyBetaWeapp(WxOpenMaVerifyBetaWeappMessage verifyBetaWeappMessage) throws WxErrorException;
 
   /**
-   * 获取授权小程序帐号的可选类目
+   * 获取授权小程序账号的可选类目
    * <p>
    * 注意：该接口可获取已设置的二级类目及用于代码审核的可选三级类目。
    * </p>
@@ -562,7 +562,7 @@ public interface WxOpenMaService extends WxMaService {
   /**
    * 15. 小程序审核撤回
    * <p>
-   * 单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次。
+   * 单个账号每天审核撤回次数最多不超过1次，一个月不超过10次。
    * </p>
    *
    * @return 。

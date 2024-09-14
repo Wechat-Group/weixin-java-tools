@@ -239,7 +239,7 @@ public class WxCpXmlMessage implements Serializable {
   private String userId;
 
   /**
-   * 变更信息的外部联系人的userid，注意不是企业成员的帐号.
+   * 变更信息的外部联系人的userid，注意不是企业成员的账号.
    */
   @XStreamAlias("ExternalUserID")
   @XStreamConverter(value = XStreamCDataConverter.class)

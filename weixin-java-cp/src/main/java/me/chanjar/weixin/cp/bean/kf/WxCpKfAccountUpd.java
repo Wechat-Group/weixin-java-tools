@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 修改客服帐号-请求参数
+ * 修改客服账号-请求参数
  *
  * @author Fu  created on  2022/1/19 19:10
  */
@@ -18,7 +18,7 @@ public class WxCpKfAccountUpd implements Serializable {
   private static final long serialVersionUID = -900712046553752529L;
 
   /**
-   * 要修改的客服帐号ID。
+   * 要修改的客服账号ID。
    * 不多于64字节
    */
   @SerializedName("open_kfid")

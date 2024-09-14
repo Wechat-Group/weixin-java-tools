@@ -8,7 +8,7 @@ import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
- * 添加客服帐号-返回结果
+ * 添加客服账号-返回结果
  *
  * @author Fu  created on  2022/1/19 19:04
  */
@@ -20,7 +20,7 @@ public class WxCpKfAccountAddResp extends WxCpBaseResp {
   private static final long serialVersionUID = -6649323005421772827L;
 
   /**
-   * 新创建的客服帐号ID
+   * 新创建的客服账号ID
    */
   @SerializedName("open_kfid")
   private String openKfid;

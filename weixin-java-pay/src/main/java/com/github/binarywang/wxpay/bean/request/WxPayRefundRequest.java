@@ -130,7 +130,7 @@ public class WxPayRefundRequest extends BaseWxPayRequest {
    * 是否必填：是
    * 类型：String(32)
    * 示例值：1900000109
-   * 描述：操作员帐号, 默认为商户号
+   * 描述：操作员账号, 默认为商户号
    * </pre>
    */
   @XStreamAlias("op_user_id")
