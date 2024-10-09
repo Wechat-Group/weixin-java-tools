@@ -14,7 +14,7 @@
   <description>WxJava 各个模块的 Solon Plugin</description>
 
   <properties>
-    <solon.version>2.9.2</solon.version>
+    <solon.version>3.0.1</solon.version>
   </properties>
 
   <modules>
@@ -27,6 +27,7 @@
     <module>wx-java-cp-multi-solon-plugin</module>
     <module>wx-java-cp-solon-plugin</module>
     <module>wx-java-channel-solon-plugin</module>
+    <module>wx-java-channel-multi-solon-plugin</module>
   </modules>
 
   <dependencies>
