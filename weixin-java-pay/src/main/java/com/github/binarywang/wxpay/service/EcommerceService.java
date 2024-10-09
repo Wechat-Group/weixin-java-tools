@@ -6,6 +6,8 @@ import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -535,4 +537,39 @@ public interface EcommerceService {
    */
   SubsidiesCancelResult subsidiesCancel(SubsidiesCancelRequest subsidiesCancelRequest) throws WxPayException;
 
+  /**
+   * <pre>
+   * 提交注销申请单
+   * 文档地址: https://pay.weixin.qq.com/docs/partner/apis/ecommerce-cancel/cancel-applications/create-cancel-application.html
+   * </pre>
+   *
+   * @param accountCancelApplicationsRequest 提交注销申请单
+   * @return 返回数据 return AccountCancelApplicationsResult
+   * @throws WxPayException the wx pay exception
+   */
+  AccountCancelApplicationsResult createdAccountCancelApplication(AccountCancelApplicationsRequest accountCancelApplicationsRequest) throws WxPayException;
+
+  /**
+   * <pre>
+   * 查询注销单状态
+   * 文档地址: https://pay.weixin.qq.com/docs/partner/apis/ecommerce-cancel/cancel-applications/get-cancel-application.html
+   * </pre>
+   *
+   * @param outApplyNo 注销申请单号
+   * @return 返回数据 return AccountCancelApplicationsResult
+   * @throws WxPayException the wx pay exception
+   */
+  AccountCancelApplicationsResult getAccountCancelApplication(String outApplyNo) throws WxPayException;
+
+  /**
+   * <pre>
+   * 注销单资料图片上传
+   * 文档地址: https://pay.weixin.qq.com/docs/partner/apis/ecommerce-cancel/media/upload-media.html
+   * </pre>
+   *
+   * @param imageFile 图片
+   * @return 返回数据 return AccountCancelApplicationsResult
+   * @throws WxPayException the wx pay exception
+   */
+  AccountCancelApplicationsMediaResult uploadMediaAccountCancelApplication(File imageFile) throws WxPayException, IOException;;
 }
