@@ -147,4 +147,19 @@ public interface WxChannelService extends BaseWxChannelService {
    * @return 会员服务
    */
   WxChannelVipService getVipService();
+
+  /**
+   * 视频号助手-罗盘达人版服务
+   *
+   * @return 罗盘达人版服务
+   */
+  WxChannelCompassFinderService getCompassFinderService();
+
+  /**
+   * 视频号助手-直播大屏数据服务
+   *
+   * @return 直播大屏数据服务
+   */
+  WxChannelLiveDashboardService getLiveDashboardService();
+
 }

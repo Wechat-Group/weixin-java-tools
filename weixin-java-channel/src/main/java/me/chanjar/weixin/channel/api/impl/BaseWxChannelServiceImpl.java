@@ -55,6 +55,10 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private WxFinderLiveService finderLiveService = null;
   private WxAssistantService assistantService = null;
   private WxChannelVipService vipService = new WxChannelVipServiceImpl(this);
+  private final WxChannelCompassFinderService compassFinderService =
+    new WxChannelCompassFinderServiceImpl(this);
+  private final WxChannelLiveDashboardService liveDashboardService =
+    new WxChannelLiveDashboardServiceImpl(this);
 
   protected WxChannelConfig config;
   private int retrySleepMillis = 1000;
@@ -411,4 +415,11 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   public WxChannelVipService getVipService() {
     return vipService;
   }
+
+  @Override
+  public WxChannelCompassFinderService getCompassFinderService() { return compassFinderService; }
+
+  @Override
+  public WxChannelLiveDashboardService getLiveDashboardService() { return liveDashboardService; }
+
 }

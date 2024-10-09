@@ -2,6 +2,7 @@ package me.chanjar.weixin.open.bean.icp;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +23,7 @@ public class WxOpenIcpCreateIcpVerifyTaskResult extends WxOpenResult {
   /**
    * 人脸核验任务id
    */
-  @JsonProperty("task_id")
+  @SerializedName("task_id")
   private String taskId;
 
 }

@@ -428,4 +428,44 @@ public class WxChannelApiUrlConstants {
     /** 更新用户等级 */
     String GRADE_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/vip/user/grade/update";
   }
+
+  /**
+   * 直播大屏数据
+   */
+  public interface LiveDashboard {
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/livedashboard/getlivelist.html">获取直播大屏直播列表</a>
+     */
+    String GET_LIVE_LIST_URL = "https://api.weixin.qq.com/channels/livedashboard/getlivelist";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/livedashboard/getlivedata.html">获取直播大屏数据</a>
+     */
+    String GET_LIVE_DATA_URL = "https://api.weixin.qq.com/channels/livedashboard/getlivedata";
+  }
+
+  /**
+   * 罗盘达人版API
+   */
+  public interface CompassFinder {
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/compass/finder/getfinderoverall.html">获取电商概览数据</a>
+     */
+    String GET_OVERALL_URL = "https://api.weixin.qq.com/channels/ec/compass/finder/overall/get";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/compass/finder/getfinderproductdata.html">获取带货商品数据</a>
+     */
+    String GET_PRODUCT_DATA_URL = "https://api.weixin.qq.com/channels/ec/compass/finder/product/data/get";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/compass/finder/getfinderproductlist.html">获取带货商品列表</a>
+     */
+    String GET_PRODUCT_LIST_URL = "https://api.weixin.qq.com/channels/ec/compass/finder/product/list/get";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/channels/API/compass/finder/getfindersaleprofiledata.html">获取带货人群数据</a>
+     */
+    String GET_SALE_PROFILE_DATA_URL = "https://api.weixin.qq.com/channels/ec/compass/finder/sale/profile/data/get";
+  }
 }

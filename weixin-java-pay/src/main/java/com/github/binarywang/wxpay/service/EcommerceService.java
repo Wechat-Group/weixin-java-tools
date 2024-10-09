@@ -439,12 +439,12 @@ public interface EcommerceService {
 
   /**
    * <pre>
-   * 修改结算帐号API
+   * 修改结算账号API
    * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/applyments/chapter3_4.shtml
    * </pre>
    *
    * @param subMchid 二级商户号。
-   * @param request 结算帐号
+   * @param request 结算账号
    * @throws WxPayException the wx pay exception
    */
   void modifySettlement(String subMchid, SettlementRequest request) throws WxPayException;
