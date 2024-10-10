@@ -281,15 +281,13 @@ public class WxPayConfig {
         merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
 
       }
-      if (certificate == null) {
+      if (certificate == null && StringUtils.isBlank(this.getCertSerialNo())) {
         InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
           this.privateCertContent, "privateCertPath");
         certificate = PemUtils.loadCertificate(certInputStream);
-      }
-
-      if (StringUtils.isBlank(this.getCertSerialNo())) {
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
+
       //构造Http Proxy正向代理
       WxPayHttpProxy wxPayHttpProxy = getWxPayHttpProxy();
 
