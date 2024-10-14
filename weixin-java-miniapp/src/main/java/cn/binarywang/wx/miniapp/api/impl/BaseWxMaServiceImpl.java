@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.CommonUploadParam;
@@ -431,13 +432,26 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
-  public WxMaService switchoverTo(String miniappId) {
-    if (this.configMap.containsKey(miniappId)) {
-      WxMaConfigHolder.set(miniappId);
+  public WxMaService switchoverTo(String miniAppId) {
+    return switchoverTo(miniAppId, null);
+  }
+
+  @Override
+  public WxMaService switchoverTo(String miniAppId, Function<String, WxMaConfig> func) {
+    if (this.configMap.containsKey(miniAppId)) {
+      WxMaConfigHolder.set(miniAppId);
       return this;
     }
 
-    throw new WxRuntimeException(String.format("无法找到对应【%s】的小程序配置信息，请核实！", miniappId));
+    if (func != null) {
+      WxMaConfig config = func.apply(miniAppId);
+      if (config != null) {
+        this.addConfig(miniAppId, config);
+        return this;
+      }
+    }
+
+    throw new WxRuntimeException(String.format("无法找到对应【%s】的小程序配置信息，请核实！", miniAppId));
   }
 
   @Override

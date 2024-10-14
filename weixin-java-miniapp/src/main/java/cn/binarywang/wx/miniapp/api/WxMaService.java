@@ -2,6 +2,7 @@ package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import java.util.function.Function;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.service.WxOcrService;
@@ -213,12 +214,21 @@ public interface WxMaService extends WxService {
   boolean switchover(String mpId);
 
   /**
-   * 进行相应的公众号切换.
+   * 进行相应的小程序切换.
    *
-   * @param miniappId 小程序标识
+   * @param miniAppId 小程序标识
    * @return 切换成功 ，则返回当前对象，方便链式调用，否则抛出异常
    */
-  WxMaService switchoverTo(String miniappId);
+  WxMaService switchoverTo(String miniAppId);
+
+  /**
+   * 进行相应的小程序切换.
+   *
+   * @param miniAppId 小程序标识
+   * @param func 当对应的小程序配置不存在时，允许通过函数的方式进行调用获取
+   * @return 切换成功 ，则返回当前对象，方便链式调用，否则抛出异常
+   */
+  WxMaService switchoverTo(String miniAppId, Function<String, WxMaConfig> func);
 
   /**
    * 返回消息（客服消息和模版消息）发送接口方法实现类，以方便调用其各个接口.
