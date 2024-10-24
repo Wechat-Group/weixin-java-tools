@@ -270,6 +270,7 @@ public class WxPayConfig {
     if (objects != null) {
       merchantPrivateKey = (PrivateKey) objects[0];
       certificate = (X509Certificate) objects[1];
+      this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
     }
     try {
       if (merchantPrivateKey == null) {
@@ -406,29 +407,11 @@ public class WxPayConfig {
   }
 
   /**
-   * 从配置路径 加载p12证书文件流
-   *
-   * @return 文件流
-   */
-  private InputStream loadP12InputStream() {
-    try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
-      this.keyContent, "p12证书");) {
-      return inputStream;
-    } catch (Exception e) {
-      return null;
-    }
-  }
-
-  /**
    * 分解p12证书文件
    *
    * @return
    */
   private Object[] p12ToPem() {
-    InputStream inputStream = this.loadP12InputStream();
-    if (inputStream == null) {
-      return null;
-    }
     String key = getMchId();
     if (StringUtils.isBlank(key)) {
       return null;
@@ -436,7 +419,11 @@ public class WxPayConfig {
     // 分解p12证书文件
     PrivateKey privateKey = null;
     X509Certificate x509Certificate = null;
-    try {
+    try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
+      this.keyContent, "p12证书");){
+      if (inputStream == null) {
+        return null;
+      }
       KeyStore keyStore = KeyStore.getInstance("PKCS12");
       keyStore.load(inputStream, key.toCharArray());
 
@@ -446,8 +433,8 @@ public class WxPayConfig {
       Certificate certificate = keyStore.getCertificate(alias);
       x509Certificate = (X509Certificate) certificate;
       return new Object[]{privateKey, x509Certificate};
-    } catch (Exception ignored) {
-
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return null;
 
