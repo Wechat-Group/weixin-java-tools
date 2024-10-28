@@ -49,6 +49,11 @@ public class WxCpConsts {
     public static final String CHANGE_CONTACT = "change_contact";
 
     /**
+     * 企业微信模板卡片事件推送
+     */
+    public static final String TEMPLATE_CARD_EVENT = "template_card_event";
+
+    /**
      * 点击菜单拉取消息的事件推送.
      */
     public static final String CLICK = "click";

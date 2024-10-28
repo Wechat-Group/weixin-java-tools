@@ -187,6 +187,17 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String taskId;
 
+  @XStreamAlias("CardType")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String cardType;
+
+  @XStreamAlias("ResponseCode")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String responseCode;
+
+  @XStreamAlias("SelectedItems")
+  private List<SelectedItem> selectedItems;
+
   /**
    * 微信客服
    * 调用拉取消息接口时，需要传此token，用于校验请求的合法性
@@ -735,6 +746,23 @@ public class WxCpXmlMessage implements Serializable {
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String poiName;
 
+  }
+
+
+  /**
+   * The type selected Items.
+   */
+  @Data
+  @XStreamAlias("SelectedItem")
+  public static class SelectedItem implements Serializable {
+    private static final long serialVersionUID = 6319921121637597406L;
+
+    @XStreamAlias("QuestionKey")
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    private String questionKey;
+
+    @XStreamAlias(value = "OptionIds")
+    private List<String> optionIds;
   }
 
 }
