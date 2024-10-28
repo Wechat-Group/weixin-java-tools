@@ -387,6 +387,19 @@ public class WxCpXmlMessage implements Serializable {
   private String calId;
 
   /**
+   * 会议室ID.
+   */
+  @XStreamAlias("MeetingRoomId")
+  private String meetingRoomId;
+
+  /**
+   * 会议室预定id，可根据该ID查询具体的会议预定情况
+   */
+  @XStreamAlias("BookingId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String bookingId;
+
+  /**
    * 扩展属性.
    */
   @XStreamAlias("ExtAttr")

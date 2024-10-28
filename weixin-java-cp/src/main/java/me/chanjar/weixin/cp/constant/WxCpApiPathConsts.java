@@ -423,6 +423,30 @@ public interface WxCpApiPathConsts {
      * The constant MEETINGROOM_DEL.
      */
     String MEETINGROOM_DEL = "/cgi-bin/oa/meetingroom/del";
+    /**
+     * The constant MEETINGROOM_GET_BOOKING_INFO.
+     */
+    String MEETINGROOM_GET_BOOKING_INFO = "/cgi-bin/oa/meetingroom/get_booking_info";
+    /**
+     * The constant MEETINGROOM_BOOK.
+     */
+    String MEETINGROOM_BOOK = "/cgi-bin/oa/meetingroom/book";
+    /**
+     * The constant MEETINGROOM_BOOK_BY_SCHEDULE.
+     */
+    String MEETINGROOM_BOOK_BY_SCHEDULE = "/cgi-bin/oa/meetingroom/book_by_schedule";
+    /**
+     * The constant MEETINGROOM_BOOK_BY_MEETING.
+     */
+    String MEETINGROOM_BOOK_BY_MEETING = "/cgi-bin/oa/meetingroom//book_by_meeting";
+    /**
+     * The constant MEETINGROOM_CANCEL_BOOK.
+     */
+    String MEETINGROOM_CANCEL_BOOK = "/cgi-bin/oa/meetingroom/cancel_book";
+    /**
+     * The constant MEETINGROOM_BOOKINFO_GET.
+     */
+    String MEETINGROOM_BOOKINFO_GET = "/cgi-bin/oa/meetingroom/bookinfo/get";
 
     /**
      * 微盘

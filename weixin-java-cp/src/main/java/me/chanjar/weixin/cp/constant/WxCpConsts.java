@@ -145,6 +145,21 @@ public class WxCpConsts {
     public static final String DELETE_SCHEDULE = "delete_schedule";
 
     /**
+     * 日程回执事件
+     */
+    public static final String RESPOND_SCHEDULE = "respond_schedule";
+
+    /**
+     * 会议室预定事件.
+     */
+    public static final String BOOK_MEETING_ROOM = "book_meeting_room";
+
+    /**
+     * 会议室取消事件.
+     */
+    public static final String CANCEL_MEETING_ROOM = "cancel_meeting_room";
+
+    /**
      * 家校通讯录事件
      */
     public static final String CHANGE_SCHOOL_CONTACT = "change_school_contact";
