@@ -281,10 +281,11 @@ public interface WxCpTpService {
    *
    * @param url      接口地址
    * @param postData 请求body字符串
+   * @param withoutSuiteAccessToken 请求是否忽略SuiteAccessToken 默认不忽略-false
    * @return the string
    * @throws WxErrorException the wx error exception
    */
-  String post(String url, String postData) throws WxErrorException;
+  String post(String url, String postData, boolean withoutSuiteAccessToken) throws WxErrorException;
 
   /**
    * <pre>
