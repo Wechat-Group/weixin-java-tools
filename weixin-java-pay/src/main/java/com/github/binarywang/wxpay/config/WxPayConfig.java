@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -32,6 +33,7 @@ import java.util.Optional;
  * @author Binary Wang (<a href="https://github.com/binarywang">...</a>)
  */
 @Data
+@Slf4j
 @ToString(exclude = "verifier")
 @EqualsAndHashCode(exclude = "verifier")
 public class WxPayConfig {
@@ -253,7 +255,7 @@ public class WxPayConfig {
 
   /**
    * 初始化api v3请求头 自动签名验签
-   * 方法参照微信官方https://github.com/wechatpay-apiv3/wechatpay-apache-httpclient
+   * 方法参照 <a href="https://github.com/wechatpay-apiv3/wechatpay-apache-httpclient">微信支付官方api项目</a>
    *
    * @return org.apache.http.impl.client.CloseableHttpClient
    * @author doger.wang
@@ -270,21 +272,25 @@ public class WxPayConfig {
     if (objects != null) {
       merchantPrivateKey = (PrivateKey) objects[0];
       certificate = (X509Certificate) objects[1];
+      this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
     }
     try {
       if (merchantPrivateKey == null) {
         if (StringUtils.isNotBlank(this.getPrivateKeyString())) {
           this.setPrivateKeyString(Base64.getEncoder().encodeToString(this.getPrivateKeyString().getBytes()));
         }
-        InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
-          this.privateKeyContent, "privateKeyPath");
-        merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
+
+        try (InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
+          this.privateKeyContent, "privateKeyPath")) {
+          merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
+        }
 
       }
       if (certificate == null && StringUtils.isBlank(this.getCertSerialNo())) {
-        InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
-          this.privateCertContent, "privateCertPath");
-        certificate = PemUtils.loadCertificate(certInputStream);
+        try (InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
+          this.privateCertContent, "privateCertPath")) {
+          certificate = PemUtils.loadCertificate(certInputStream);
+        }
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
 
@@ -396,8 +402,8 @@ public class WxPayConfig {
         if (!file.exists()) {
           throw new WxPayException(fileNotFoundMsg);
         }
-
-//        return Files.newInputStream(file.toPath());
+        //使用Files.newInputStream打开公私钥文件，会存在无法释放句柄的问题
+        //return Files.newInputStream(file.toPath());
         return new FileInputStream(file);
       } catch (IOException e) {
         throw new WxPayException(fileHasProblemMsg, e);
@@ -406,51 +412,31 @@ public class WxPayConfig {
   }
 
   /**
-   * 从配置路径 加载p12证书文件流
-   *
-   * @return 文件流
-   */
-  private InputStream loadP12InputStream() {
-    try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
-      this.keyContent, "p12证书");) {
-      return inputStream;
-    } catch (Exception e) {
-      return null;
-    }
-  }
-
-  /**
    * 分解p12证书文件
-   *
-   * @return
    */
   private Object[] p12ToPem() {
-    InputStream inputStream = this.loadP12InputStream();
-    if (inputStream == null) {
-      return null;
-    }
     String key = getMchId();
     if (StringUtils.isBlank(key)) {
       return null;
     }
+
     // 分解p12证书文件
-    PrivateKey privateKey = null;
-    X509Certificate x509Certificate = null;
-    try {
+    try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
+      this.keyContent, "p12证书");) {
       KeyStore keyStore = KeyStore.getInstance("PKCS12");
       keyStore.load(inputStream, key.toCharArray());
 
       String alias = keyStore.aliases().nextElement();
-      privateKey = (PrivateKey) keyStore.getKey(alias, key.toCharArray());
+      PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, key.toCharArray());
 
       Certificate certificate = keyStore.getCertificate(alias);
-      x509Certificate = (X509Certificate) certificate;
+      X509Certificate x509Certificate = (X509Certificate) certificate;
       return new Object[]{privateKey, x509Certificate};
-    } catch (Exception ignored) {
-
+    } catch (Exception e) {
+      log.error("加载证书时发生异常", e);
     }
-    return null;
 
+    return null;
 
   }
 }
