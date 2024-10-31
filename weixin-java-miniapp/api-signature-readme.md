@@ -40,6 +40,7 @@ apiSignatureRsaPrivateKey 在上图中**无**对应，C处右侧是公钥，apiS
 1. 如果不先点击「随机生成密钥对」，直接点击「下载私钥」得到的是公钥，公钥在这里没有用途。
 2. 打开下载的文件，第一行是「-----BEGIN RSA PRIVATE KEY-----」说明是PKCS1格式私钥。
 3. PKCS8格式第一行是「-----BEGIN PRIVATE KEY-----」
-4. 转换命令 `openssl pkcs8 -topk8 -inform PEM -outform DER -in PKCS1格式密钥文件名 -out 新的PKCS8格式密钥文件名 -nocrypt`
+4. 转换命令 `openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in PKCS1格式密钥文件名 -out 新的PKCS8格式密钥文件名`
+5. 如果密钥文件有 PUBLIC KEY 字样，说明下载了公钥，重新生成密钥对，下载私钥
 
 

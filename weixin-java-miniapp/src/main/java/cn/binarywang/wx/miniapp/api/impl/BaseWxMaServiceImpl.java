@@ -361,10 +361,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       Map<String, String> headers,
       String data)
       throws WxErrorException {
+    String dataForLog = "Headers: " + headers.toString() + " Body: " + data;
     return excuteWithRetry(
         (uriWithAccessToken) -> executor.execute(uriWithAccessToken, headers, data, WxType.MiniApp),
         uri,
-        data);
+        dataForLog);
   }
 
   private static interface ExecutorAction<R> {
@@ -864,7 +865,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public String postWithSignature(String url, JsonObject jsonObject) throws WxErrorException {
     long timestamp = System.currentTimeMillis() / 1000;
-    String appId = this.getWxMaConfig().getAppid();
+    String appId = this.getWxMaConfig().getWechatMpAppid();
     String rndStr = UUID.randomUUID().toString().replace("-", "").substring(0, 30);
     String aesKey = this.getWxMaConfig().getApiSignatureAesKey();
     String aesKeySn = this.getWxMaConfig().getApiSignatureAesKeySn();
