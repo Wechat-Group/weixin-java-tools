@@ -355,12 +355,20 @@ public interface WxOpenConfigStorage {
   /** 第三方平台设置API签名 RSA 私钥 */
   String getComponentApiSignatureRsaPrivateKey();
 
+  void setComponentApiSignatureRsaPrivateKey(String apiSignatureRsaPrivateKey);
+
   /** 第三方平台设置API签名 AES KEY */
   String getComponentApiSignatureAesKey();
+
+  void setComponentApiSignatureAesKey(String apiSignatureAesKey);
 
   /** 第三方平台设置API签名 RSA 私钥 序号 */
   String getComponentApiSignatureRsaPrivateKeySn();
 
+  void setComponentApiSignatureRsaPrivateKeySn(String apiSignatureRsaPrivateKeySn);
+
   /** 第三方平台设置API签名 AES key 序号 */
   String getComponentApiSignatureAesKeySn();
+
+  void setComponentApiSignatureAesKeySn(String apiSignatureAesKeySn);
 }
