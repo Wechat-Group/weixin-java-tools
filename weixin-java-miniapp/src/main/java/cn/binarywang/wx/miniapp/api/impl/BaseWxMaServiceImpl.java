@@ -343,12 +343,14 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   public <R, T> R execute(RequestExecutor<R, T> executor, String uri, T data)
       throws WxErrorException {
     String dataForLog;
-    if (data instanceof String) {
+    if (data == null) {
+      dataForLog = null;
+    } else if (data instanceof String) {
       dataForLog = DataUtils.handleDataWithSecret((String) data);
     } else {
       dataForLog = data.toString();
     }
-    return excuteWithRetry(
+    return executeWithRetry(
         (uriWithAccessToken) -> executor.execute(uriWithAccessToken, data, WxType.MiniApp),
         uri,
         dataForLog);
@@ -362,7 +364,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       String data)
       throws WxErrorException {
     String dataForLog = "Headers: " + headers.toString() + " Body: " + data;
-    return excuteWithRetry(
+    return executeWithRetry(
         (uriWithAccessToken) -> executor.execute(uriWithAccessToken, headers, data, WxType.MiniApp),
         uri,
         dataForLog);
@@ -372,7 +374,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     R execute(String urlWithAccessToken) throws IOException, WxErrorException;
   }
 
-  private <R, T> R excuteWithRetry(ExecutorAction<R> executor, String uri, String dataForLog)
+  private <R, T> R executeWithRetry(ExecutorAction<R> executor, String uri, String dataForLog)
       throws WxErrorException {
     int retryTimes = 0;
     do {
