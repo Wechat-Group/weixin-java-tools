@@ -13,7 +13,7 @@ public class WxMaStoreBalance {
   private String appid;
   private int allBalance;
 
-  private List<Detail> balanceDetail;
+  private List<BalanceDetail> balanceDetail;
 
   public String getWxStoreId() {
     return wxStoreId;
@@ -39,11 +39,11 @@ public class WxMaStoreBalance {
     this.allBalance = allBalance;
   }
 
-  public List<Detail> getBalanceDetail() {
+  public List<BalanceDetail> getBalanceDetail() {
     return balanceDetail;
   }
 
-  public void setBalanceDetail(List<Detail> balanceDetail) {
+  public void setBalanceDetail(List<BalanceDetail> balanceDetail) {
     this.balanceDetail = balanceDetail;
   }
 
@@ -52,7 +52,51 @@ public class WxMaStoreBalance {
     return ToStringBuilder.reflectionToString(this);
   }
 
-  public static class Detail {
+  public static class BalanceDetail {
+    private int balance;
+    private String serviceTransId;
+    private String serviceTransName;
+    private List<OrderDetail> orderList;
+
+    public int getBalance() {
+      return balance;
+    }
+
+    public void setBalance(int balance) {
+      this.balance = balance;
+    }
+
+    public String getServiceTransId() {
+      return serviceTransId;
+    }
+
+    public void setServiceTransId(String serviceTransId) {
+      this.serviceTransId = serviceTransId;
+    }
+
+    public String getServiceTransName() {
+      return serviceTransName;
+    }
+
+    public void setServiceTransName(String serviceTransName) {
+      this.serviceTransName = serviceTransName;
+    }
+
+    public List<OrderDetail> getOrderList() {
+      return orderList;
+    }
+
+    public void setOrderList(List<OrderDetail> orderList) {
+      this.orderList = orderList;
+    }
+
+    @Override
+    public String toString() {
+      return ToStringBuilder.reflectionToString(this);
+    }
+  }
+
+  public static class OrderDetail {
     private String payorderId;
     private int chargeAmt;
     private int unusedAmt;
