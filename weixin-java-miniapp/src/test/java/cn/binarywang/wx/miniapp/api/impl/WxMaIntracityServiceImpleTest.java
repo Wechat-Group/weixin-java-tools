@@ -8,9 +8,11 @@ import cn.binarywang.wx.miniapp.bean.openapi.WxMiniGetApiQuotaResult;
 import cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import cn.binarywang.wx.miniapp.test.TestConfig;
+import com.google.gson.JsonObject;
 import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,85 @@ public class WxMaIntracityServiceImpleTest {
                 WxMaApiUrlConstants.Intracity.APPLY_URL.substring(
                     "https://api.weixin.qq.com".length()));
     logger.info("apply 额度剩余 :{}", result.getQuota());
+  }
+
+  @Test
+  public void testApiGetPostNullData() throws Exception {
+    try {
+      wxService.get(WxMaApiUrlConstants.Analysis.GET_USER_PORTRAIT_URL, null);
+    } catch (NullPointerException npe) {
+      logger.error("NullPointerException", npe);
+      fail("遇到空指针 get(url, null)");
+    } catch (WxErrorException wxErrorException) {
+      // 这个是正常的，因为这里的调用没按照接口规则
+    }
+    // 走加密路径url
+    try {
+      wxService.post(WxMaApiUrlConstants.OpenApi.CLEAR_QUOTA, (Object) null);
+    } catch (NullPointerException npe) {
+      logger.error("NullPointerException", npe);
+      fail("遇到空指针 post(url, Object null)");
+    } catch (WxErrorException wxErrorException) {
+      // 这个是正常的，因为这里的调用没按照接口规则
+    }
+    try {
+      wxService.post(WxMaApiUrlConstants.OpenApi.CLEAR_QUOTA, (String) null);
+    } catch (NullPointerException npe) {
+      logger.error("NullPointerException", npe);
+      fail("遇到空指针 post(url, String null)");
+    } catch (WxErrorException wxErrorException) {
+      // 这个是正常的，因为这里的调用没按照接口规则
+    }
+    try {
+      wxService.post(WxMaApiUrlConstants.OpenApi.CLEAR_QUOTA, (JsonObject) null);
+    } catch (NullPointerException npe) {
+      logger.error("NullPointerException", npe);
+      fail("遇到空指针 post(url, JsonObject null)");
+    } catch (WxErrorException wxErrorException) {
+      // 这个是正常的，因为这里的调用没按照接口规则
+    }
+    try {
+      wxService.post(WxMaApiUrlConstants.OpenApi.CLEAR_QUOTA, (ToJson) null);
+    } catch (NullPointerException npe) {
+      logger.error("NullPointerException", npe);
+      fail("遇到空指针 post(url, ToJson null)");
+    } catch (WxErrorException wxErrorException) {
+      // 这个是正常的，因为这里的调用没按照接口规则
+    }
+
+    // 不走加密路径URL
+    try {
+      wxService.post(WxMaApiUrlConstants.Intracity.APPLY_URL, (Object) null);
+    } catch (NullPointerException npe) {
+      logger.error("NullPointerException", npe);
+      fail("遇到空指针 post(url, Object null)");
+    } catch (WxErrorException wxErrorException) {
+      // 这个是正常的，因为这里的调用没按照接口规则
+    }
+    try {
+      wxService.post(WxMaApiUrlConstants.Intracity.APPLY_URL, (String) null);
+    } catch (NullPointerException npe) {
+      logger.error("NullPointerException", npe);
+      fail("遇到空指针 post(url, String null)");
+    } catch (WxErrorException wxErrorException) {
+      // 这个是正常的，因为这里的调用没按照接口规则
+    }
+    try {
+      wxService.post(WxMaApiUrlConstants.Intracity.APPLY_URL, (JsonObject) null);
+    } catch (NullPointerException npe) {
+      logger.error("NullPointerException", npe);
+      fail("遇到空指针 post(url, JsonObject null)");
+    } catch (WxErrorException wxErrorException) {
+      // 这个是正常的，因为这里的调用没按照接口规则
+    }
+    try {
+      wxService.post(WxMaApiUrlConstants.Intracity.APPLY_URL, (ToJson) null);
+    } catch (NullPointerException npe) {
+      logger.error("NullPointerException", npe);
+      fail("遇到空指针 post(url, ToJson null)");
+    } catch (WxErrorException wxErrorException) {
+      // 这个是正常的，因为这里的调用没按照接口规则
+    }
   }
 
   @Test
