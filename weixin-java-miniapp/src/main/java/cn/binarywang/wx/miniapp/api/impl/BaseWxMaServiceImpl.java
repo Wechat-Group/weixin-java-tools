@@ -882,6 +882,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     jsonObject.addProperty("_timestamp", timestamp);
 
     String plainText = jsonObject.toString();
+    log.debug("URL:{}加密前请求数据:{}", url, plainText);
     String urlPath;
     if (url.contains("?")) {
       urlPath = url.substring(0, url.indexOf("?"));

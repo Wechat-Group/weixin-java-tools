@@ -11,6 +11,7 @@ public class WxMaOrder extends WxMaAddOrderRequest {
   private String deliveryNo;
   private int actualfee;
   private int deductfee;
+  private int distance;
   private long createTime;
   private long acceptTime;
   private long fetchTime;
@@ -194,6 +195,14 @@ public class WxMaOrder extends WxMaAddOrderRequest {
 
   public Date getCancelDate() {
     return cancelTime == 0 ? null : new Date(cancelTime * 1000);
+  }
+
+  public int getDistance() {
+    return distance;
+  }
+
+  public void setDistance(int distance) {
+    this.distance = distance;
   }
 
   @Override

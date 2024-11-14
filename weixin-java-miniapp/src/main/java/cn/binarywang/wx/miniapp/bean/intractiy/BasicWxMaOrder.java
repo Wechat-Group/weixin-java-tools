@@ -1,16 +1,20 @@
 package cn.binarywang.wx.miniapp.bean.intractiy;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class BasicWxMaOrder {
-
+  private static final Logger logger = LoggerFactory.getLogger(BasicWxMaOrder.class);
   private String wxStoreId;
   private String userName;
   private String userPhone;
   private double userLng;
   private double userLat;
   private String userAddress;
-  private int useSandbox;
+
+  /** 如果不用沙盒测试环境，传NULL（不是0），用沙盒传1 */
+  private Integer useSandbox;
 
   public String getWxStoreId() {
     return wxStoreId;
@@ -60,11 +64,16 @@ class BasicWxMaOrder {
     this.userAddress = userAddress;
   }
 
-  public int isUseSandbox() {
+  public Integer getUseSandbox() {
     return useSandbox;
   }
 
-  public void setUseSandbox(int useSandbox) {
+  public void setUseSandbox(Integer useSandbox) {
+    if (useSandbox != null && useSandbox != 1) {
+      logger.warn(
+          "目前(2024.11)useSandbox只有2个合法值：" + " 1:使用沙盒环境； null：不使用沙盒环境。建议查询微信文档确认下值「{}」是否合法。",
+          useSandbox);
+    }
     this.useSandbox = useSandbox;
   }
 
