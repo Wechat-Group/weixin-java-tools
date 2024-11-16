@@ -1,8 +1,8 @@
 ## WxJava - 微信开发 Java SDK
 
 [![码云Gitee](https://gitee.com/binary/weixin-java-tools/badge/star.svg?theme=blue)](https://gitee.com/binary/weixin-java-tools)
-[![Github](https://img.shields.io/github/stars/Wechat-Group/WxJava?logo=github&style=flat)](https://github.com/Wechat-Group/WxJava)
-[![GitHub release](https://img.shields.io/github/release/Wechat-Group/WxJava.svg)](https://github.com/Wechat-Group/WxJava/releases)
+[![Github](https://img.shields.io/github/stars/Wechat-Group/WxJava?logo=github&style=flat)](https://github.com/binarywang/WxJava)
+[![GitHub release](https://img.shields.io/github/release/Wechat-Group/WxJava.svg)](https://github.com/binarywang/WxJava/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.binarywang/wx-java.svg)](http://mvnrepository.com/artifact/com.github.binarywang/wx-java)
 [![Build Status](https://img.shields.io/circleci/project/github/Wechat-Group/WxJava/develop.svg?sanitize=true)](https://circleci.com/gh/Wechat-Group/WxJava/tree/develop)
 [![使用IntelliJ IDEA开发维护](https://img.shields.io/badge/IntelliJ%20IDEA-支持-blue.svg)](https://www.jetbrains.com/?from=WxJava-weixin-java-tools)
@@ -60,25 +60,25 @@
 2. **2023-12-28 发布 [【4.6.0正式版】](https://mp.weixin.qq.com/s/9Hhc_8w-v7ogS_TEAsqfAg)**！
 3. 贡献源码可以参考视频：[【贡献源码全过程（上集）】](https://mp.weixin.qq.com/s/3xUZSATWwHR_gZZm207h7Q)、[【贡献源码全过程（下集）】](https://mp.weixin.qq.com/s/nyzJwVVoYSJ4hSbwyvTx9A) ，友情提供：[程序员小山与Bug](https://space.bilibili.com/473631007)
 4. 新手重要提示：本项目仅是一个SDK开发工具包，未提供Web实现，建议使用 `maven` 或 `gradle` 引用本项目即可使用本SDK提供的各种功能，详情可参考 **[【Demo项目】](demo.md)** 或本项目中的部分单元测试代码；
-5. 微信开发新手请务必阅读【开发文档】（[Gitee Wiki](https://gitee.com/binary/weixin-java-tools/wikis/Home) 或者 [Github Wiki](https://github.com/Wechat-Group/WxJava/wiki)）的常见问题部分，可以少走很多弯路，节省不少时间。
+5. 微信开发新手请务必阅读【开发文档】（[Gitee Wiki](https://gitee.com/binary/weixin-java-tools/wikis/Home) 或者 [Github Wiki](https://github.com/binarywang/WxJava/wiki)）的常见问题部分，可以少走很多弯路，节省不少时间。
 6. 技术交流群：想获得QQ群/微信群/钉钉企业群等信息的同学，请使用微信扫描上面的微信公众号二维码关注 `WxJava` 后点击相关菜单即可获取加入方式，同时也可以在微信中搜索 `weixin-java-tools` 或 `WxJava` 后选择正确的公众号进行关注，该公众号会及时通知SDK相关更新信息，并不定期分享微信Java开发相关技术知识；
 7. 钉钉技术交流群：`32206329`（技术交流2群）, `30294972`（技术交流1群，目前已满），`35724728`（通知群，实时通知Github项目变更记录）。
-8. 微信开发新手或者Java开发新手在群内提问或新开Issue提问前，请先阅读[【提问的智慧】](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)，并确保已查阅过 [【开发文档Wiki】](https://github.com/wechat-group/WxJava/wiki) ，避免浪费大家的宝贵时间；
+8. 微信开发新手或者Java开发新手在群内提问或新开Issue提问前，请先阅读[【提问的智慧】](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)，并确保已查阅过 [【开发文档Wiki】](https://github.com/binarywang/WxJava/wiki) ，避免浪费大家的宝贵时间；
 9. 寻求帮助时需贴代码或大长串异常信息的，请利用 http://paste.ubuntu.com 
 
 --------------------------------
 ### 其他说明
 1. **阅读源码的同学请注意，本SDK为简化代码编译时加入了`lombok`支持，如果不了解`lombok`的话，请先学习下相关知识，比如可以阅读[此文章](https://mp.weixin.qq.com/s/cUc-bUcprycADfNepnSwZQ)；**
-2. 如有新功能需求，发现BUG，或者由于微信官方接口调整导致的代码问题，可以直接在[【Issues】](https://github.com/Wechat-Group/WxJava/issues)页提出issue，便于讨论追踪问题；
+2. 如有新功能需求，发现BUG，或者由于微信官方接口调整导致的代码问题，可以直接在[【Issues】](https://github.com/binarywang/WxJava/issues)页提出issue，便于讨论追踪问题；
 3. 如果需要贡献代码，请务必在提交PR之前先仔细阅读[【代码贡献指南】](CONTRIBUTING.md)，谢谢理解配合；
 4. 目前本`SDK`最新版本要求的`JDK`最低版本是`8`，使用`7`的同学可以使用`WxJava` `3.8.0`及以前版本，而还在使用`JDK`6的用户请参考[【此项目】]( https://github.com/binarywang/weixin-java-tools-for-jdk6) ，而其他更早的JDK版本则需要自己改造实现。
 5. [本项目在开源中国的页面](https://www.oschina.net/p/weixin-java-tools-new)，欢迎大家积极留言评分 🙂
-6. SDK开发文档请查阅 [【开发文档Wiki】](https://github.com/wechat-group/WxJava/wiki)，部分文档可能未能及时更新，如有发现，可以及时上报或者自行修改。
+6. SDK开发文档请查阅 [【开发文档Wiki】](https://github.com/binarywang/WxJava/wiki)，部分文档可能未能及时更新，如有发现，可以及时上报或者自行修改。
 7. **如果本开发工具包对您有所帮助，欢迎对我们的努力进行肯定，可以直接前往[【托管于码云的项目首页】](http://gitee.com/binary/weixin-java-tools)，在页尾部分找到“捐助”按钮进行打赏，多多益善 😄。非常感谢各位打赏和捐助的同学！**
 8. 各个模块的Javadoc可以在线查看：[weixin-java-miniapp](http://binary.ac.cn/weixin-java-miniapp-javadoc/)、[weixin-java-pay](http://binary.ac.cn/weixin-java-pay-javadoc/)、[weixin-java-mp](http://binary.ac.cn/weixin-java-mp-javadoc/)、[weixin-java-common](http://binary.ac.cn/weixin-java-common-javadoc/)、[weixin-java-cp](http://binary.ac.cn/weixin-java-cp-javadoc/)、[weixin-java-open](http://binary.ac.cn/weixin-java-open-javadoc/)
 9. 本SDK项目在以下代码托管网站同步更新:
 * 码云：https://gitee.com/binary/weixin-java-tools
-* GitHub：https://github.com/wechat-group/WxJava
+* GitHub：https://github.com/binarywang/WxJava
 
 ---------------------------------
 ### Maven 引用方式
@@ -114,7 +114,7 @@
 
 ----------------------------------
 ### 应用案例
-完整案例登记列表，请[【访问这里】](https://github.com/Wechat-Group/weixin-java-tools/issues/729)查看，欢迎登记更多的案例。
+完整案例登记列表，请[【访问这里】](https://github.com/binarywang/WxJava/issues/729)查看，欢迎登记更多的案例。
 
 以下为节选的部分案例：
 
@@ -181,7 +181,7 @@
 
 ----------------------------------
 ### 贡献者列表
-特别感谢参与贡献的所有同学，所有贡献者列表请在[此处](https://github.com/Wechat-Group/WxJava/graphs/contributors)查看，欢迎大家继续踊跃贡献代码！
+特别感谢参与贡献的所有同学，所有贡献者列表请在[此处](https://github.com/binarywang/WxJava/graphs/contributors)查看，欢迎大家继续踊跃贡献代码！
 <details>
 <summary>点击此处展开查看贡献次数最多的几位小伙伴</summary>
 
