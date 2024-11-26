@@ -364,6 +364,33 @@ public interface EcommerceService {
    */
   RefundQueryResult queryRefundByRefundId(String subMchid, String refundId) throws WxPayException;
 
+
+  /**
+   * <pre>
+   * 垫付退款回补API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_6_4.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @param refundId 微信退款单号
+   * @return 返回数据 return refunds result
+   * @throws WxPayException the wx pay exception
+   */
+  ReturnAdvanceResult refundsReturnAdvance(String subMchid, String refundId) throws WxPayException;
+
+
+  /**
+   * <pre>
+   * 查询垫付回补结果API
+   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_6_5.shtml
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @param refundId 微信退款单号
+   * @return 返回数据 return refunds result
+   * @throws WxPayException the wx pay exception
+   */
+  ReturnAdvanceResult queryRefundsReturnAdvance(String subMchid, String refundId) throws WxPayException;
   /**
    * <pre>
    * 查询退款API

@@ -290,6 +290,25 @@ public class EcommerceServiceImpl implements EcommerceService {
     return GSON.fromJson(response, RefundQueryResult.class);
   }
 
+
+  @Override
+  public ReturnAdvanceResult refundsReturnAdvance(String subMchid, String refundId) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/refunds/%s/return-advance", this.payService.getPayBaseUrl(), refundId);
+    Map request = new HashMap();
+    request.put("sub_mchid",subMchid);
+    String response = this.payService.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, ReturnAdvanceResult.class);
+  }
+
+
+  @Override
+  public ReturnAdvanceResult queryRefundsReturnAdvance(String subMchid, String refundId) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/refunds/%s/return-advance?sub_mchid=%s", this.payService.getPayBaseUrl(), refundId,subMchid);
+    String response = this.payService.getV3(url);
+    return GSON.fromJson(response, ReturnAdvanceResult.class);
+  }
+
+
   @Override
   public RefundQueryResult queryRefundByOutRefundNo(String subMchid, String outRefundNo) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/refunds/out-refund-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outRefundNo, subMchid);
