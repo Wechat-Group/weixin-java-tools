@@ -344,22 +344,32 @@ public abstract class BaseWxChannelMessageServiceImpl implements BaseWxChannelMe
   }
 
   @Override
-  public abstract void vipJoin(UserInfoMessage message, String content, String appId,
-                               Map<String, Object> context, WxSessionManager sessionManager);
+  public void vipJoin(UserInfoMessage message, String content, String appId,
+                               Map<String, Object> context, WxSessionManager sessionManager) {
+    log.info("用户加入会员:{}", JsonUtils.encode(message));
+  }
 
   @Override
-  public abstract void vipClose(UserInfoMessage message, String content, String appId,
-                                      Map<String, Object> context, WxSessionManager sessionManager);
+  public void vipClose(UserInfoMessage message, String content, String appId,
+                                      Map<String, Object> context, WxSessionManager sessionManager) {
+    log.info("用户注销会员:{}", JsonUtils.encode(message));
+  }
 
   @Override
-  public abstract void vipGradeUpdate(UserInfoMessage message, String content, String appId,
-                                            Map<String, Object> context, WxSessionManager sessionManager);
+  public void vipGradeUpdate(UserInfoMessage message, String content, String appId,
+                                            Map<String, Object> context, WxSessionManager sessionManager) {
+    log.info("用户等级信息更新:{}", JsonUtils.encode(message));
+  }
 
   @Override
-  public abstract void vipScoreUpdate(UserInfoMessage message, String content, String appId,
-                                            Map<String, Object> context, WxSessionManager sessionManager);
+  public void vipScoreUpdate(UserInfoMessage message, String content, String appId,
+                                            Map<String, Object> context, WxSessionManager sessionManager) {
+    log.info("用户积分更新:{}", JsonUtils.encode(message));
+  }
 
   @Override
-  public abstract void vipScoreExchange(ExchangeInfoMessage message, String content, String appId,
-                                              Map<String, Object> context, WxSessionManager sessionManager);
+  public void vipScoreExchange(ExchangeInfoMessage message, String content, String appId,
+                                              Map<String, Object> context, WxSessionManager sessionManager) {
+    log.info("用户积分兑换:{}", JsonUtils.encode(message));
+  }
 }
