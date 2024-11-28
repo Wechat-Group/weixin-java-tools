@@ -54,7 +54,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private WxLeadComponentService leadComponentService = null;
   private WxFinderLiveService finderLiveService = null;
   private WxAssistantService assistantService = null;
-  private WxChannelVipService vipService = new WxChannelVipServiceImpl(this);
+  private final WxChannelVipService vipService = new WxChannelVipServiceImpl(this);
   private final WxChannelCompassFinderService compassFinderService =
     new WxChannelCompassFinderServiceImpl(this);
   private final WxChannelLiveDashboardService liveDashboardService =
@@ -99,9 +99,14 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
           return this.getConfig().getAccessToken();
         }
       } while (!locked);
-      String response = doGetAccessTokenRequest();
+      String response;
+      if (getConfig().isStableAccessToken()) {
+        response = doGetStableAccessTokenRequest(forceRefresh);
+      } else {
+        response = doGetAccessTokenRequest();
+      }
       return extractAccessToken(response);
-    } catch (WxErrorException | InterruptedException e) {
+    } catch (IOException | InterruptedException e) {
       throw new WxRuntimeException(e);
     } finally {
       if (locked) {
@@ -113,10 +118,18 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   /**
    * 通过网络请求获取AccessToken
    *
-   * @return .
-   * @throws IOException .
+   * @return AccessToken
+   * @throws IOException IOException
    */
-  protected abstract String doGetAccessTokenRequest() throws WxErrorException;
+  protected abstract String doGetAccessTokenRequest() throws IOException;
+
+  /**
+   * 通过网络请求获取稳定版AccessToken
+   *
+   * @return Stable AccessToken
+   * @throws IOException IOException
+   */
+  protected abstract String doGetStableAccessTokenRequest(boolean forceRefresh) throws IOException;
 
   @Override
   public String get(String url, String queryParam) throws WxErrorException {
@@ -262,9 +275,9 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
    * @throws WxErrorException 异常
    */
   protected String extractAccessToken(String resultContent) throws WxErrorException {
-    log.info("resultContent: " + resultContent);
+    log.debug("access-token response: " + resultContent);
     WxChannelConfig config = this.getConfig();
-    WxError error = WxError.fromJson(resultContent, WxType.MiniApp);
+    WxError error = WxError.fromJson(resultContent, WxType.Channel);
     if (error.getErrorCode() != 0) {
       throw new WxErrorException(error);
     }
