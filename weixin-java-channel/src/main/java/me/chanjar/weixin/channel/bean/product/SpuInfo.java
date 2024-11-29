@@ -45,6 +45,10 @@ public class SpuInfo extends SpuSimpleInfo {
   @JsonProperty("cats")
   private List<SpuCategory> cats;
 
+  /** 新类目树，商家需要先申请可使用类目 */
+  @JsonProperty("cats_v2")
+  private List<SpuCategory> catsV2;
+
   /** 商品参数 */
   @JsonProperty("attrs")
   private List<AttrInfo> attrs;
@@ -107,10 +111,24 @@ public class SpuInfo extends SpuSimpleInfo {
   @JsonProperty("product_type")
   private Integer productType;
 
-
   /**
    * 商品的售后信息
    */
   @JsonProperty("after_sale_info")
   private AfterSaleInfo afterSaleInfo;
+
+  /**
+   * 当商品类型位福袋抽奖商品（即product_type==2）且该抽奖商品由橱窗的自营商品导入生成时有值，
+   * 表示导入的来源商品id，其他场景下该字段无值或者值为0
+   */
+  @JsonProperty("src_product_id")
+  private String srcProductId;
+
+  /** 商品资质列表 */
+  @JsonProperty("product_qua_infos")
+  private List<ProductQuaInfo> productQuaInfos;
+
+  /** 尺码表信息 */
+  @JsonProperty("size_chart")
+  private SpuSizeChart sizeChart;
 }

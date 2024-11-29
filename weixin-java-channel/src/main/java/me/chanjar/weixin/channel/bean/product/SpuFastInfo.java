@@ -1,5 +1,6 @@
 package me.chanjar.weixin.channel.bean.product;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.List;
@@ -7,23 +8,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * 商品免审更新参数
+ *
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Data
 @NoArgsConstructor
-public class SpuSimpleInfo implements Serializable {
-
-  private static final long serialVersionUID = 5583726432139404883L;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class SpuFastInfo implements Serializable {
 
   /** 商品ID */
   @JsonProperty("product_id")
   protected String productId;
 
-  /** 商家自定义商品ID */
-  @JsonProperty("out_product_id")
-  protected String outProductId;
-
-  /** sku数组 */
+  /** SKU列表 */
   @JsonProperty("skus")
-  protected List<SkuInfo> skus;
+  protected List<SkuFastInfo> skus;
+
 }

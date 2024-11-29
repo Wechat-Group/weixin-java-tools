@@ -7,18 +7,18 @@ import lombok.NoArgsConstructor;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
 /**
- * 库存信息响应
+ * 批量查询sku库存响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SkuStockResponse extends WxChannelBaseResponse {
+public class SkuStockBatchResponse extends WxChannelBaseResponse {
 
-  private static final long serialVersionUID = -2156342792354605826L;
+    private static final long serialVersionUID = 7745444061881828137L;
 
-  /** 库存信息 */
-  @JsonProperty("data")
-  private SkuStockInfo data;
-}
+    /** 库存信息 */
+    @JsonProperty("data")
+    private SkuStockBatchList data;
+  }

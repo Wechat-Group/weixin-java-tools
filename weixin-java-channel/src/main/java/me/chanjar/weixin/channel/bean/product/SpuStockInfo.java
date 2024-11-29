@@ -7,23 +7,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * SPU库存信息
+ *
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Data
 @NoArgsConstructor
-public class SpuSimpleInfo implements Serializable {
-
-  private static final long serialVersionUID = 5583726432139404883L;
+public class SpuStockInfo implements Serializable {
 
   /** 商品ID */
   @JsonProperty("product_id")
   protected String productId;
 
-  /** 商家自定义商品ID */
-  @JsonProperty("out_product_id")
-  protected String outProductId;
-
-  /** sku数组 */
-  @JsonProperty("skus")
-  protected List<SkuInfo> skus;
+  /** sku库存 */
+  @JsonProperty("sku_stock")
+  private List<SkuStockInfo> skuStock;
 }
