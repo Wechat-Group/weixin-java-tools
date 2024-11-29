@@ -90,6 +90,18 @@ public interface BaseWxChannelMessageService {
     final WxSessionManager sessionManager);
 
   /**
+   * 订单待发货
+   *
+   * @param message        消息
+   * @param content        消息原始内容
+   * @param appId          appId
+   * @param context        上下文
+   * @param sessionManager session管理器
+   */
+  void orderWaitShipping(OrderIdMessage message, final String content, final String appId, final Map<String, Object> context,
+    final WxSessionManager sessionManager);
+
+  /**
    * 订单发货
    *
    * @param message        消息

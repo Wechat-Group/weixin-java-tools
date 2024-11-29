@@ -72,6 +72,8 @@ public abstract class BaseWxChannelMessageServiceImpl implements BaseWxChannelMe
     this.addRule(OrderCancelMessage.class, ORDER_CANCEL, this::orderCancel);
     /* 订单支付成功 */
     this.addRule(OrderPayMessage.class, ORDER_PAY, this::orderPay);
+    /* 订单待发货 */
+    this.addRule(OrderIdMessage.class, ORDER_WAIT_SHIPPING, this::orderWaitShipping);
     /* 订单发货 */
     this.addRule(OrderDeliveryMessage.class, ORDER_DELIVER, this::orderDelivery);
     /* 订单确认收货 */
@@ -184,6 +186,12 @@ public abstract class BaseWxChannelMessageServiceImpl implements BaseWxChannelMe
   public void orderPay(OrderPayMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
     log.info("订单支付成功:{}", JsonUtils.encode(message));
+  }
+
+  @Override
+  public void orderWaitShipping(OrderIdMessage message, String content, String appId,
+    Map<String, Object> context, WxSessionManager sessionManager) {
+    log.info("订单待发货:{}", JsonUtils.encode(message));
   }
 
   @Override

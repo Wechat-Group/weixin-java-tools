@@ -22,6 +22,8 @@ public interface MessageEventConstants {
     String ORDER_CANCEL = "channels_ec_order_cancel";
     /** 订单支付成功 */
     String ORDER_PAY = "channels_ec_order_pay";
+    /** 订单待发货 */
+    String ORDER_WAIT_SHIPPING = "channels_ec_order_wait_shipping";
     /** 订单发货 */
     String ORDER_DELIVER = "channels_ec_order_deliver";
     /** 订单确认收货 */
