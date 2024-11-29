@@ -3,6 +3,7 @@ package me.chanjar.weixin.channel.api;
 import java.util.List;
 import me.chanjar.weixin.channel.bean.base.AddressInfo;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
+import me.chanjar.weixin.channel.bean.delivery.PackageAuditInfo;
 import me.chanjar.weixin.channel.bean.delivery.DeliveryCompanyResponse;
 import me.chanjar.weixin.channel.bean.delivery.DeliveryInfo;
 import me.chanjar.weixin.channel.bean.order.ChangeOrderInfo;
@@ -143,4 +144,19 @@ public interface WxChannelOrderService {
    * @throws WxErrorException 异常
    */
   WxChannelBaseResponse deliveryOrder(String orderId, List<DeliveryInfo> deliveryList) throws WxErrorException;
+
+  /**
+   * 上传生鲜质检信息<br />
+   *
+   * 注意事项：<br />
+   *  1. 非生鲜质检的订单不能进行上传 <br />
+   *  2. 图片url必须用图片上传接口获取 {@link WxChannelBasicService#uploadImg(int, String)}<br />
+   *
+   * @param orderId 订单id
+   * @param items   商品打包信息
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse uploadFreshInspect(String orderId, List<PackageAuditInfo> items) throws WxErrorException;
 }

@@ -47,6 +47,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private final WxChannelCouponService couponService = new WxChannelCouponServiceImpl(this);
   private final WxChannelSharerService sharerService = new WxChannelSharerServiceImpl(this);
   private final WxChannelFundService fundService = new WxChannelFundServiceImpl(this);
+  private WxChannelHomePageService homePageService = null;
   private WxLeagueWindowService leagueWindowService = null;
   private WxLeagueSupplierService leagueSupplierService = null;
   private WxLeaguePromoterService leaguePromoterService = null;
@@ -54,7 +55,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private WxLeadComponentService leadComponentService = null;
   private WxFinderLiveService finderLiveService = null;
   private WxAssistantService assistantService = null;
-  private final WxChannelVipService vipService = new WxChannelVipServiceImpl(this);
+  private WxChannelVipService vipService = null;
   private final WxChannelCompassFinderService compassFinderService =
     new WxChannelCompassFinderServiceImpl(this);
   private final WxChannelLiveDashboardService liveDashboardService =
@@ -368,6 +369,14 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   }
 
   @Override
+  public synchronized WxChannelHomePageService getHomePageService() {
+    if (homePageService == null) {
+      homePageService = new WxChannelHomePageServiceImpl(this);
+    }
+    return homePageService;
+  }
+
+  @Override
   public synchronized WxLeagueWindowService getLeagueWindowService() {
     if (leagueWindowService == null) {
       leagueWindowService = new WxLeagueWindowServiceImpl(this);
@@ -426,6 +435,9 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
 
   @Override
   public WxChannelVipService getVipService() {
+    if (vipService == null) {
+      vipService = new WxChannelVipServiceImpl(this);
+    }
     return vipService;
   }
 

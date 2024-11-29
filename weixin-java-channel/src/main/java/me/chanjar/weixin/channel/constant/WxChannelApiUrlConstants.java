@@ -55,6 +55,48 @@ public class WxChannelApiUrlConstants {
     String LIST_PASS_CATEGORY_URL = "https://api.weixin.qq.com/channels/ec/category/list/get";
   }
 
+  /** 主页管理相关接口 */
+  public interface HomePage {
+
+    /** 添加分类关联的商品 */
+    String ADD_TREE_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/classification/tree/product/add";
+    /** 删除分类关联的商品 */
+    String DEL_TREE_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/classification/tree/product/del";
+    /** 获取分类关联的商品ID列表 */
+    String LIST_TREE_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/classification/tree/product/get";
+    /** 设置展示在店铺主页的商品分类 */
+    String SET_SHOW_TREE_URL = "https://api.weixin.qq.com/channels/ec/store/classification/tree/set";
+    /** 获取在店铺主页展示的商品分类 */
+    String GET_SHOW_TREE_URL = "https://api.weixin.qq.com/channels/ec/store/classification/tree/get";
+
+    /** 获取主页展示商品列表 */
+    String LIST_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/window/product/list/get";
+    /** 重新排序主页展示商品 */
+    String REORDER_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/window/product/reorder";
+    /** 隐藏小店主页商品 */
+    String HIDE_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/window/product/hide";
+    /** 置顶小店主页商品 */
+    String TOP_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/window/product/settop";
+
+    /** 提交主页背景图申请 */
+    String APPLY_BACKGROUND_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/background/apply/submit";
+    /** 查询主页背景图 */
+    String GET_BACKGROUND_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/background/get";
+    /** 撤销主页背景图申请 */
+    String CANCEL_BACKGROUND_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/background/apply/cancel";
+    /** 清空主页背景图并撤销流程中的申请 */
+    String REMOVE_BACKGROUND_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/background/remove";
+
+    /** 提交精选展示位申请 */
+    String APPLY_BANNER_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/banner/apply/submit";
+    /** 查询精选展示位 */
+    String GET_BANNER_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/banner/get";
+    /** 撤销精选展示位申请 */
+    String CANCEL_BANNER_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/banner/apply/cancel";
+    /** 清空精选展示位并撤销流程中的申请 */
+    String REMOVE_BANNER_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/banner/remove";
+  }
+
   /** 品牌资质相关接口 */
   public interface Brand {
 
@@ -155,6 +197,8 @@ public class WxChannelApiUrlConstants {
     String REJECT_ADDRESS_MODIFY_URL = "https://api.weixin.qq.com/channels/ec/order/addressmodify/reject";
     /** 订单搜索 */
     String ORDER_SEARCH_URL = "https://api.weixin.qq.com/channels/ec/order/search";
+    /** 上传生鲜质检信息 */
+    String UPLOAD_FRESH_INSPECT_URL = "https://api.weixin.qq.com/channels/ec/order/freshinspect/submit";
   }
 
   /** 售后相关接口 */

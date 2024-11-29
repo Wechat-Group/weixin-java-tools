@@ -92,6 +92,13 @@ public interface WxChannelService extends BaseWxChannelService {
   WxChannelFundService getFundService();
 
   /**
+   * 主页管理服务
+   *
+   * @return 主页管理服务
+   */
+  WxChannelHomePageService getHomePageService();
+
+  /**
    * 优选联盟-团长合作达人管理服务
    *
    * @return 团长合作达人管理服务
@@ -139,7 +146,6 @@ public interface WxChannelService extends BaseWxChannelService {
    * @return 橱窗管理服务
    */
   WxAssistantService getAssistantService();
-
 
   /**
    * 会员功能

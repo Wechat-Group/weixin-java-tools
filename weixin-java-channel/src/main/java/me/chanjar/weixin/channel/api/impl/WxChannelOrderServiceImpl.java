@@ -9,9 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.api.WxChannelOrderService;
 import me.chanjar.weixin.channel.bean.base.AddressInfo;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
+import me.chanjar.weixin.channel.bean.delivery.PackageAuditInfo;
 import me.chanjar.weixin.channel.bean.delivery.DeliveryCompanyResponse;
 import me.chanjar.weixin.channel.bean.delivery.DeliveryInfo;
 import me.chanjar.weixin.channel.bean.delivery.DeliverySendParam;
+import me.chanjar.weixin.channel.bean.delivery.FreshInspectParam;
 import me.chanjar.weixin.channel.bean.order.ChangeOrderInfo;
 import me.chanjar.weixin.channel.bean.order.DeliveryUpdateParam;
 import me.chanjar.weixin.channel.bean.order.OrderAddressParam;
@@ -120,6 +122,14 @@ public class WxChannelOrderServiceImpl implements WxChannelOrderService {
     throws WxErrorException {
     DeliverySendParam param = new DeliverySendParam(orderId, deliveryList);
     String resJson = shopService.post(DELIVERY_SEND_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse uploadFreshInspect(String orderId, List<PackageAuditInfo> items)
+    throws WxErrorException {
+    FreshInspectParam param = new FreshInspectParam(orderId, items);
+    String resJson = shopService.post(UPLOAD_FRESH_INSPECT_URL, param);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 }
