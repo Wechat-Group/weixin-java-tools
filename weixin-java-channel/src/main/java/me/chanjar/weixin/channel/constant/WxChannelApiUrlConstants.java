@@ -209,6 +209,10 @@ public class WxChannelApiUrlConstants {
     String ORDER_SEARCH_URL = "https://api.weixin.qq.com/channels/ec/order/search";
     /** 上传生鲜质检信息 */
     String UPLOAD_FRESH_INSPECT_URL = "https://api.weixin.qq.com/channels/ec/order/freshinspect/submit";
+    /** 兑换虚拟号 */
+    String VIRTUAL_TEL_NUMBER_URL = "https://api.weixin.qq.com/channels/ec/order/virtualtelnumber/get";
+    /** 解码订单包含的敏感数据 */
+    String DECODE_SENSITIVE_INFO_URL = "https://api.weixin.qq.com/channels/ec/order/sensitiveinfo/decode";
   }
 
   /** 售后相关接口 */

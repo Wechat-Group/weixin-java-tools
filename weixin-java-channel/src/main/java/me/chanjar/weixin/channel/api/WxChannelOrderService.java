@@ -7,11 +7,13 @@ import me.chanjar.weixin.channel.bean.delivery.PackageAuditInfo;
 import me.chanjar.weixin.channel.bean.delivery.DeliveryCompanyResponse;
 import me.chanjar.weixin.channel.bean.delivery.DeliveryInfo;
 import me.chanjar.weixin.channel.bean.order.ChangeOrderInfo;
+import me.chanjar.weixin.channel.bean.order.DecodeSensitiveInfoResponse;
 import me.chanjar.weixin.channel.bean.order.DeliveryUpdateParam;
 import me.chanjar.weixin.channel.bean.order.OrderInfoResponse;
 import me.chanjar.weixin.channel.bean.order.OrderListParam;
 import me.chanjar.weixin.channel.bean.order.OrderListResponse;
 import me.chanjar.weixin.channel.bean.order.OrderSearchParam;
+import me.chanjar.weixin.channel.bean.order.VirtualTelNumberResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -159,4 +161,22 @@ public interface WxChannelOrderService {
    * @throws WxErrorException 异常
    */
   WxChannelBaseResponse uploadFreshInspect(String orderId, List<PackageAuditInfo> items) throws WxErrorException;
+
+  /**
+   * 兑换虚拟号
+   *
+   * @param orderId 订单id
+   * @return 虚拟号信息
+   * @throws WxErrorException 异常
+   */
+  VirtualTelNumberResponse getVirtualTelNumber(String orderId) throws WxErrorException;
+
+  /**
+   * 解码订单包含的敏感数据
+   *
+   * @param orderId 订单id
+   * @return 解码结果
+   * @throws WxErrorException 异常
+   */
+  DecodeSensitiveInfoResponse decodeSensitiveInfo(String orderId) throws WxErrorException;
 }

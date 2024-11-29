@@ -14,12 +14,14 @@ import me.chanjar.weixin.channel.bean.delivery.DeliveryCompanyResponse;
 import me.chanjar.weixin.channel.bean.delivery.DeliveryInfo;
 import me.chanjar.weixin.channel.bean.delivery.PackageAuditInfo;
 import me.chanjar.weixin.channel.bean.order.ChangeOrderInfo;
+import me.chanjar.weixin.channel.bean.order.DecodeSensitiveInfoResponse;
 import me.chanjar.weixin.channel.bean.order.DeliveryUpdateParam;
 import me.chanjar.weixin.channel.bean.order.OrderAddressInfo;
 import me.chanjar.weixin.channel.bean.order.OrderInfoResponse;
 import me.chanjar.weixin.channel.bean.order.OrderListParam;
 import me.chanjar.weixin.channel.bean.order.OrderListResponse;
 import me.chanjar.weixin.channel.bean.order.OrderSearchParam;
+import me.chanjar.weixin.channel.bean.order.VirtualTelNumberResponse;
 import me.chanjar.weixin.channel.test.ApiTestModule;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.testng.annotations.Guice;
@@ -160,6 +162,24 @@ public class WxChannelOrderServiceImplTest {
     items.add(new PackageAuditInfo("product_unboxing_panoramic_video_url", "https://store.mp.video.tencent-cloud.com/z"));
     items.add(new PackageAuditInfo("single_product_detail_panoramic_video_url", "https://store.mp.video.tencent-cloud.com/a"));
     WxChannelBaseResponse response = orderService.uploadFreshInspect(orderId, items);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetVirtualTelNumber() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "123";
+    VirtualTelNumberResponse response = orderService.getVirtualTelNumber(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testDecodeSensitiveInfo() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "123";
+    DecodeSensitiveInfoResponse response = orderService.decodeSensitiveInfo(orderId);
     assertNotNull(response);
     assertTrue(response.isSuccess());
   }

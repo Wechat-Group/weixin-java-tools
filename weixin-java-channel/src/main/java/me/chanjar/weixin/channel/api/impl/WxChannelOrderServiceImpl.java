@@ -15,6 +15,7 @@ import me.chanjar.weixin.channel.bean.delivery.DeliveryInfo;
 import me.chanjar.weixin.channel.bean.delivery.DeliverySendParam;
 import me.chanjar.weixin.channel.bean.delivery.FreshInspectParam;
 import me.chanjar.weixin.channel.bean.order.ChangeOrderInfo;
+import me.chanjar.weixin.channel.bean.order.DecodeSensitiveInfoResponse;
 import me.chanjar.weixin.channel.bean.order.DeliveryUpdateParam;
 import me.chanjar.weixin.channel.bean.order.OrderAddressParam;
 import me.chanjar.weixin.channel.bean.order.OrderIdParam;
@@ -24,6 +25,7 @@ import me.chanjar.weixin.channel.bean.order.OrderListResponse;
 import me.chanjar.weixin.channel.bean.order.OrderPriceParam;
 import me.chanjar.weixin.channel.bean.order.OrderRemarkParam;
 import me.chanjar.weixin.channel.bean.order.OrderSearchParam;
+import me.chanjar.weixin.channel.bean.order.VirtualTelNumberResponse;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -131,5 +133,19 @@ public class WxChannelOrderServiceImpl implements WxChannelOrderService {
     FreshInspectParam param = new FreshInspectParam(orderId, items);
     String resJson = shopService.post(UPLOAD_FRESH_INSPECT_URL, param);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public VirtualTelNumberResponse getVirtualTelNumber(String orderId) throws WxErrorException {
+    String reqJson = "{\"order_id\":\"" + orderId + "\"}";
+    String resJson = shopService.post(VIRTUAL_TEL_NUMBER_URL, reqJson);
+    return ResponseUtils.decode(resJson, VirtualTelNumberResponse.class);
+  }
+
+  @Override
+  public DecodeSensitiveInfoResponse decodeSensitiveInfo(String orderId) throws WxErrorException {
+    String reqJson = "{\"order_id\":\"" + orderId + "\"}";
+    String resJson = shopService.post(DECODE_SENSITIVE_INFO_URL, reqJson);
+    return ResponseUtils.decode(resJson, DecodeSensitiveInfoResponse.class);
   }
 }
