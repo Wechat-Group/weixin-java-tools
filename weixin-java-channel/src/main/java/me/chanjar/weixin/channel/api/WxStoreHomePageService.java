@@ -20,7 +20,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
-public interface WxChannelHomePageService {
+public interface WxStoreHomePageService {
 
   /**
    * 添加分类关联的商品

@@ -96,7 +96,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 主页管理服务
    */
-  WxChannelHomePageService getHomePageService();
+  WxStoreHomePageService getHomePageService();
 
   /**
    * 优选联盟-团长合作达人管理服务

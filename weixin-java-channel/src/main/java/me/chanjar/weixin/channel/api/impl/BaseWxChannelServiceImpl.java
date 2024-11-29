@@ -47,7 +47,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private final WxChannelCouponService couponService = new WxChannelCouponServiceImpl(this);
   private final WxChannelSharerService sharerService = new WxChannelSharerServiceImpl(this);
   private final WxChannelFundService fundService = new WxChannelFundServiceImpl(this);
-  private WxChannelHomePageService homePageService = null;
+  private WxStoreHomePageService homePageService = null;
   private WxLeagueWindowService leagueWindowService = null;
   private WxLeagueSupplierService leagueSupplierService = null;
   private WxLeaguePromoterService leaguePromoterService = null;
@@ -369,9 +369,9 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   }
 
   @Override
-  public synchronized WxChannelHomePageService getHomePageService() {
+  public synchronized WxStoreHomePageService getHomePageService() {
     if (homePageService == null) {
-      homePageService = new WxChannelHomePageServiceImpl(this);
+      homePageService = new WxStoreHomePageServiceImpl(this);
     }
     return homePageService;
   }

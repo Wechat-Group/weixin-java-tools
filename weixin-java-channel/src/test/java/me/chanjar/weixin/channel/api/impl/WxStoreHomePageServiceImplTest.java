@@ -4,7 +4,7 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 import com.google.inject.Inject;
-import me.chanjar.weixin.channel.api.WxChannelHomePageService;
+import me.chanjar.weixin.channel.api.WxStoreHomePageService;
 import me.chanjar.weixin.channel.api.WxChannelService;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.home.background.BackgroundApplyResponse;
@@ -32,14 +32,14 @@ import org.testng.annotations.Test;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Guice(modules = ApiTestModule.class)
-public class WxChannelHomePageServiceImplTest {
+public class WxStoreHomePageServiceImplTest {
 
   @Inject
   private WxChannelService channelService;
 
   @Test
   public void testAddTreeProduct() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     // https://developers.weixin.qq.com/doc/store/API/homepage/classification/addclassificationproduct.html
     String json = "{\n"
       + "  \"req\": {\n"
@@ -64,7 +64,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testDelTreeProduct() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     String json = "{\n"
       + "  \"req\": {\n"
       + "    \"level_1_id\": 1,\n"
@@ -88,7 +88,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testGetTreeProductList() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     String pageContext = "";
     TreeProductListInfo info = new TreeProductListInfo();
     info.setLevel1Id(1);
@@ -104,7 +104,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testSetShowTree() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     // https://developers.weixin.qq.com/doc/store/API/homepage/classification/setclassificationtree.html
     String json = "{\n"
       + "  \"req\": {\n"
@@ -161,7 +161,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testGetShowTree() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     TreeShowGetResponse response = service.getShowTree();
     assertNotNull(response);
     assertTrue(response.isSuccess());
@@ -170,7 +170,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testListWindowProduct() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     Integer pageSize = 1;
     String nextKey = "";
     WindowProductSettingResponse response = service.listWindowProduct(pageSize, nextKey);
@@ -181,7 +181,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testReorderWindowProduct() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     String productId = "";
     Integer indexNum = 100;
     WxChannelBaseResponse response = service.reorderWindowProduct(productId, indexNum);
@@ -192,7 +192,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testHideWindowProduct() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     String productId = "";
     // 0:显示 1:隐藏
     Integer setHide = 0;
@@ -204,7 +204,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testTopWindowProduct() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     String productId = "";
     // 0:取消置顶 1:置顶
     Integer setTop = 0;
@@ -216,7 +216,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testApplyBackground() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     String imgUrl = "https://github.githubassets.com/images/icons/emoji/octocat.png";
     BackgroundApplyResponse response = service.applyBackground(imgUrl);
     assertNotNull(response);
@@ -226,7 +226,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testGetBackground() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     BackgroundGetResponse response = service.getBackground();
     assertNotNull(response);
     assertTrue(response.isSuccess());
@@ -236,7 +236,7 @@ public class WxChannelHomePageServiceImplTest {
   @Test
   public void testCancelBackground() throws WxErrorException {
     Integer applyId = 1;
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     WxChannelBaseResponse response = service.cancelBackground(applyId);
     assertNotNull(response);
     assertTrue(response.isSuccess());
@@ -245,7 +245,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testRemoveBackground() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     WxChannelBaseResponse response = service.removeBackground();
     assertNotNull(response);
     assertTrue(response.isSuccess());
@@ -254,7 +254,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testApplyBanner() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     // https://developers.weixin.qq.com/doc/store/API/homepage/banner/submit_banner_apply.html
     String json = "{\n"
       + "  \"banner\": {\n"
@@ -311,7 +311,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testGetBanner() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     BannerGetResponse response = service.getBanner();
     assertNotNull(response);
     assertTrue(response.isSuccess());
@@ -321,7 +321,7 @@ public class WxChannelHomePageServiceImplTest {
   @Test
   public void testCancelBanner() throws WxErrorException {
     Integer applyId = 1;
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     WxChannelBaseResponse response = service.cancelBanner(applyId);
     assertNotNull(response);
     assertTrue(response.isSuccess());
@@ -330,7 +330,7 @@ public class WxChannelHomePageServiceImplTest {
 
   @Test
   public void testRemoveBanner() throws WxErrorException {
-    WxChannelHomePageService service = channelService.getHomePageService();
+    WxStoreHomePageService service = channelService.getHomePageService();
     WxChannelBaseResponse response = service.removeBanner();
     assertNotNull(response);
     assertTrue(response.isSuccess());
