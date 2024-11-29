@@ -83,4 +83,10 @@ public interface MessageEventConstants {
     // 分享员相关
     /** 分享员变更 **/
     String SHARER_CHANGE = "channels_ec_sharer_change";
+
+    // 店铺相关
+    /** 小店注销 */
+    String CLOSE_STORE = "channels_ec_close_store";
+    /** 小店修改 */
+    String SET_SHOP_NICKNAME = "set_shop_nickname";
 }

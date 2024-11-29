@@ -20,6 +20,8 @@ import me.chanjar.weixin.channel.bean.message.order.OrderStatusMessage;
 import me.chanjar.weixin.channel.bean.message.product.BrandMessage;
 import me.chanjar.weixin.channel.bean.message.product.CategoryAuditMessage;
 import me.chanjar.weixin.channel.bean.message.product.SpuAuditMessage;
+import me.chanjar.weixin.channel.bean.message.store.CloseStoreMessage;
+import me.chanjar.weixin.channel.bean.message.store.NicknameUpdateMessage;
 import me.chanjar.weixin.channel.bean.message.supplier.SupplierItemMessage;
 import me.chanjar.weixin.channel.bean.message.vip.ExchangeInfoMessage;
 import me.chanjar.weixin.channel.bean.message.vip.UserInfoMessage;
@@ -55,6 +57,7 @@ public interface BaseWxChannelMessageService {
    * 订单下单
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -66,6 +69,7 @@ public interface BaseWxChannelMessageService {
    * 订单取消
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -77,6 +81,7 @@ public interface BaseWxChannelMessageService {
    * 订单支付成功
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -88,6 +93,7 @@ public interface BaseWxChannelMessageService {
    * 订单发货
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -99,6 +105,7 @@ public interface BaseWxChannelMessageService {
    * 订单确认收货
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -110,6 +117,7 @@ public interface BaseWxChannelMessageService {
    * 订单结算成功
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -121,6 +129,7 @@ public interface BaseWxChannelMessageService {
    * 订单其他信息更新
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -132,6 +141,7 @@ public interface BaseWxChannelMessageService {
    * 订单状态更新
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -143,6 +153,7 @@ public interface BaseWxChannelMessageService {
    * 商品审核结果
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -154,6 +165,7 @@ public interface BaseWxChannelMessageService {
    * 商品系统下架通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -165,6 +177,7 @@ public interface BaseWxChannelMessageService {
    * 商品更新通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -176,6 +189,7 @@ public interface BaseWxChannelMessageService {
    * 类目审核结果
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -187,6 +201,7 @@ public interface BaseWxChannelMessageService {
    * 品牌更新
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -198,6 +213,7 @@ public interface BaseWxChannelMessageService {
    * 售后单状态更新
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -209,6 +225,7 @@ public interface BaseWxChannelMessageService {
    * 纠纷回调
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -220,6 +237,7 @@ public interface BaseWxChannelMessageService {
    * 用户领券通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -231,6 +249,7 @@ public interface BaseWxChannelMessageService {
    * 创建优惠券通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -242,6 +261,7 @@ public interface BaseWxChannelMessageService {
    * 优惠券删除通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -253,6 +273,7 @@ public interface BaseWxChannelMessageService {
    * 优惠券过期通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -264,6 +285,7 @@ public interface BaseWxChannelMessageService {
    * 更新优惠券信息通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -275,6 +297,7 @@ public interface BaseWxChannelMessageService {
    * 优惠券作废通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -286,6 +309,7 @@ public interface BaseWxChannelMessageService {
    * 用户优惠券过期通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -297,6 +321,7 @@ public interface BaseWxChannelMessageService {
    * 用户优惠券使用通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -308,6 +333,7 @@ public interface BaseWxChannelMessageService {
    * 用户优惠券返还通知
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -319,6 +345,7 @@ public interface BaseWxChannelMessageService {
    * 结算账户变更回调
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -330,6 +357,7 @@ public interface BaseWxChannelMessageService {
    * 提现回调
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -341,6 +369,7 @@ public interface BaseWxChannelMessageService {
    * 提现二维码回调
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -352,6 +381,7 @@ public interface BaseWxChannelMessageService {
    * 团长商品变更
    *
    * @param message        消息
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
@@ -420,12 +450,36 @@ public interface BaseWxChannelMessageService {
   void vipScoreExchange(ExchangeInfoMessage message, final String content, final String appId,
                         final Map<String, Object> context, final WxSessionManager sessionManager);
 
+  /**
+   * 小店注销
+   *
+   * @param message        消息
+   * @param content        消息原始内容
+   * @param appId          appId
+   * @param context        上下文
+   * @param sessionManager session管理器
+   */
+  void closeStore(CloseStoreMessage message, final String content, final String appId,
+    final Map<String, Object> context, final WxSessionManager sessionManager);
+
+
+  /**
+   * 小店修改名称
+   *
+   * @param message        消息
+   * @param content        消息原始内容
+   * @param appId          appId
+   * @param context        上下文
+   * @param sessionManager session管理器
+   */
+  void updateNickname(NicknameUpdateMessage message, final String content, final String appId,
+    final Map<String, Object> context, final WxSessionManager sessionManager);
 
   /**
    * 默认消息处理
    *
    * @param message        消息
-   * @param content        内容
+   * @param content        消息原始内容
    * @param appId          appId
    * @param context        上下文
    * @param sessionManager session管理器
