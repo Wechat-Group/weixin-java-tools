@@ -316,6 +316,20 @@ public class WxChannelApiUrlConstants {
     String UNBIND_SHARER_URL = "https://api.weixin.qq.com/channels/ec/sharer/unbind";
   }
 
+  /** 合作账号相关接口 */
+  public interface Cooperation {
+    /** 获取合作账号列表 */
+    String LIST_COOPERATION_URL = "https://api.weixin.qq.com/channels/ec/cooperation/list";
+    /** 查看合作账号邀请状态 */
+    String GET_COOPERATION_STATUS_URL = "https://api.weixin.qq.com/channels/ec/cooperation/invitation/get";
+    /** 邀请合作账号 */
+    String GENERATE_QRCODE_COOPERATION_URL = "https://api.weixin.qq.com/channels/ec/cooperation/invitation/qrcode/generate";
+    /** 取消合作账号邀请 */
+    String CANCEL_COOPERATION_URL = "https://api.weixin.qq.com/channels/ec/cooperation/invitation/cancel";
+    /** 解绑合作账号 */
+    String UNBIND_COOPERATION_URL = "https://api.weixin.qq.com/channels/ec/cooperation/unbind";
+  }
+
   /** 资金相关接口 */
   public interface Fund {
 

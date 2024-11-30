@@ -37,7 +37,8 @@ public class SpuInfo extends SpuSimpleInfo {
   @JsonProperty("deliver_method")
   private Integer deliverMethod;
 
-  /** 发货账号：1-微信openid；2-QQ号；3-手机号；4-邮箱。
+  /**
+   * 发货账号：1-微信openid；2-QQ号；3-手机号；4-邮箱。
    * 可多选，只有deliver_method=3时，本参数有意义。
    * 且当发货账号为微信、QQ和邮箱时，需要更新订单接口读取详情字段，详情参考订单接口的说明
    */

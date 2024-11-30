@@ -22,8 +22,7 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 /**
- * @author LiXiZe
- * @since 2023-04-21
+ * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Slf4j
 @Guice(modules = ApiTestModule.class)

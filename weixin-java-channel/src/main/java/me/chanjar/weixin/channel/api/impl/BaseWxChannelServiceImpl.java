@@ -48,6 +48,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private final WxChannelSharerService sharerService = new WxChannelSharerServiceImpl(this);
   private final WxChannelFundService fundService = new WxChannelFundServiceImpl(this);
   private WxStoreHomePageService homePageService = null;
+  private WxStoreCooperationService cooperationService = null;
   private WxLeagueWindowService leagueWindowService = null;
   private WxLeagueSupplierService leagueSupplierService = null;
   private WxLeaguePromoterService leaguePromoterService = null;
@@ -374,6 +375,14 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
       homePageService = new WxStoreHomePageServiceImpl(this);
     }
     return homePageService;
+  }
+
+  @Override
+  public WxStoreCooperationService getCooperationService() {
+    if (cooperationService == null) {
+      cooperationService = new WxStoreCooperationServiceImpl(this);
+    }
+    return cooperationService;
   }
 
   @Override
