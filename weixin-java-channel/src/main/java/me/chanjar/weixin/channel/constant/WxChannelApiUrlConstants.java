@@ -338,9 +338,9 @@ public class WxChannelApiUrlConstants {
     /** 获取结算账户 */
     String GET_BANK_ACCOUNT_URL = "https://api.weixin.qq.com/channels/ec/funds/getbankacct";
     /** 获取资金流水详情 */
-    String GET_BALANCE_FLOW_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/league/funds/getfundsflowdetail";
+    String GET_BALANCE_FLOW_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/funds/getfundsflowdetail";
     /** 获取资金流水列表 */
-    String GET_BALANCE_FLOW_LIST_URL = "https://api.weixin.qq.com/channels/ec/league/funds/getfundsflowlist";
+    String GET_BALANCE_FLOW_LIST_URL = "https://api.weixin.qq.com/channels/ec/funds/getfundsflowlist";
     /** 获取提现记录 */
     String GET_WITHDRAW_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/funds/getwithdrawdetail";
     /** 获取提现记录列表 */
