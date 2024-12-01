@@ -97,6 +97,7 @@
   - 微信开放平台：`weixin-java-open`   
   - 公众号（包括订阅号和服务号）：`weixin-java-mp`    
   - 企业号/企业微信：`weixin-java-cp`
+  - 视频号/微信小店：`weixin-java-channel`
 
 
 ---------------------------------
