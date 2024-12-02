@@ -211,10 +211,10 @@ public class WxChannelMessageRouter {
    *
    * @param sessionManager session管理器
    * @param message 消息
-   * @param sync 是否同步 打印log用
+   * @param async 是否异步 打印log用
    */
-  private void sessionEndAccess(WxSessionManager sessionManager, WxChannelMessage message, boolean sync) {
-    log.debug("End session access: async={}, sessionId={}", sync, message.getFromUser());
+  private void sessionEndAccess(WxSessionManager sessionManager, WxChannelMessage message, boolean async) {
+    log.debug("End session access: async={}, sessionId={}", async, message.getFromUser());
     InternalSession session = ((InternalSessionManager) sessionManager).findSession(message.getFromUser());
     if (session != null) {
       session.endAccess();
