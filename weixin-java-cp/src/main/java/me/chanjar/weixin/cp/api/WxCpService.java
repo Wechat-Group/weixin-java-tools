@@ -149,7 +149,7 @@ public interface WxCpService extends WxService {
 
   /**
    * <pre>
-   * 获取微信服务器的ip段
+   * 获取企业微信回调IP段
    * http://qydev.weixin.qq.com/wiki/index.php?title=回调模式#.E8.8E.B7.E5.8F.96.E5.BE.AE.E4.BF.A1.E6.9C.8D.E5.8A.A1.E5.99.A8.E7.9A.84ip.E6.AE.B5
    * </pre>
    *
@@ -157,6 +157,17 @@ public interface WxCpService extends WxService {
    * @throws WxErrorException the wx error exception
    */
   String[] getCallbackIp() throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取企业微信接口IP段
+   * https://developer.work.weixin.qq.com/document/path/92520
+   * </pre>
+   *
+   * @return 企业微信接口IP段
+   * @throws WxErrorException the wx error exception
+   */
+  String[] getApiDomainIp() throws WxErrorException;
 
   /**
    * <pre>

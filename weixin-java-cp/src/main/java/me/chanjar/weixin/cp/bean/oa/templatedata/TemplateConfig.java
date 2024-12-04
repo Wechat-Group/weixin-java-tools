@@ -32,6 +32,8 @@ public class TemplateConfig implements Serializable {
 
   private TemplateAttendance attendance;
 
+  private TemplateLocation location;
+
   @SerializedName("vacation_list")
   private TemplateVacation vacationList;
 

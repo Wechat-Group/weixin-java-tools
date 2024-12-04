@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateContent;
 import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateTitle;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
 import java.util.List;
@@ -36,5 +37,13 @@ public class WxCpOaApprovalTemplate implements Serializable {
 
   @SerializedName("template_content")
   private TemplateContent templateContent;
+
+  public static WxCpOaApprovalTemplate fromJson(String json) {
+    return WxCpGsonBuilder.create().fromJson(json, WxCpOaApprovalTemplate.class);
+  }
+
+  public String toJson() {
+    return WxCpGsonBuilder.create().toJson(this);
+  }
 
 }

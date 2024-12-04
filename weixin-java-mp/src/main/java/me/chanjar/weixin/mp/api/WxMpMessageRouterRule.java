@@ -25,6 +25,8 @@ public class WxMpMessageRouterRule {
 
   private String event;
 
+  private String eventRegex;
+
   private String eventKey;
 
   private String eventKeyRegex;
@@ -105,6 +107,18 @@ public class WxMpMessageRouterRule {
     return this;
   }
 
+
+  /**
+   * event匹配该正则表达式
+   * 比如"^weapp_audit_.*"用以匹配所有审核类类事件
+   *
+   * @param regex the regex
+   * @return the wx mp message router rule
+   */
+  public WxMpMessageRouterRule eventRegex(String regex) {
+    this.eventRegex = regex;
+    return this;
+  }
     /**
      * 如果content等于某值
      *
@@ -235,6 +249,8 @@ public class WxMpMessageRouterRule {
         (this.msgType == null || this.msgType.equalsIgnoreCase(wxMessage.getMsgType()))
         &&
         (this.event == null || this.event.equalsIgnoreCase(wxMessage.getEvent()))
+        &&
+        (this.eventRegex == null || Pattern.matches(this.eventRegex, StringUtils.trimToEmpty(wxMessage.getEvent())))
         &&
         (this.eventKey == null || this.eventKey.equalsIgnoreCase(wxMessage.getEventKey()))
         &&

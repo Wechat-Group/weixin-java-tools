@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.chanjar.weixin.open.bean.result.WxOpenResult;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 小程序认证 查询操作 响应
@@ -40,25 +41,36 @@ public class MaAuthQueryResult extends WxOpenResult {
   /**
    * 审核单状态，创建审核单成功后有效 0审核单不存在 1待支付 2审核中 3打回重填 4认证通过 5认证最终失败（不能再修改）
    */
+  @Nullable
   @SerializedName("apply_status")
   private Integer applyStatus;
 
   /**
    * 小程序后台展示的认证订单号
    */
+  @Nullable
   @SerializedName("orderid")
   private String orderId;
 
   /**
    * 当审核单被打回重填(apply_status=3)时有效
    */
+  @Nullable
   @SerializedName("refill_reason")
   private String refillReason;
 
   /**
    * 审核最终失败的原因(apply_status=5)时有效
    */
+  @Nullable
   @SerializedName("fail_reason")
   private String failReason;
+
+  /**
+   * 审核提供商分配信息
+   */
+  @Nullable
+  @SerializedName("dispatch_info")
+  private MaAuthQueryResultDispatchInfo dispatchInfo;
 
 }

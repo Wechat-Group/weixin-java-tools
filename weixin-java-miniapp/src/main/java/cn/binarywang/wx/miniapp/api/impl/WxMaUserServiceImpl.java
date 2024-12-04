@@ -63,7 +63,7 @@ public class WxMaUserServiceImpl implements WxMaUserService {
   }
 
   @Override
-  public WxMaPhoneNumberInfo getPhoneNoInfo(String code) throws WxErrorException {
+  public WxMaPhoneNumberInfo getPhoneNumber(String code) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("code", code);
     String responseContent = this.service.post(GET_PHONE_NUMBER_URL, param.toString());
@@ -72,13 +72,12 @@ public class WxMaUserServiceImpl implements WxMaUserService {
       return WxMaGsonBuilder.create().fromJson(response.getAsJsonObject(PHONE_INFO),
         WxMaPhoneNumberInfo.class);
     }
-
     return null;
   }
 
   @Override
-  public WxMaPhoneNumberInfo getNewPhoneNoInfo(String code) throws WxErrorException {
-    return this.getPhoneNoInfo(code);
+  public WxMaPhoneNumberInfo getPhoneNoInfo(String code) throws WxErrorException {
+    return this.getPhoneNumber(code);
   }
 
   @Override

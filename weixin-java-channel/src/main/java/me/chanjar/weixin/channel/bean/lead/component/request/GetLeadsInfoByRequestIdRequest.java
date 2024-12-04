@@ -31,9 +31,10 @@ public class GetLeadsInfoByRequestIdRequest {
   private String lastBuffer;
 
   /**
-   * 接口版本号
+   * 接口版本号,默认=1
+   * =null和=1,微信返回的结构不一样,=1信息更全
    */
   @JsonProperty("version")
-  private int version;
+  private Integer version;
 
 }

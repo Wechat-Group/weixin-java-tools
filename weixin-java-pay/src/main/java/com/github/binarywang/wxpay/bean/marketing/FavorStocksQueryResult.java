@@ -25,7 +25,7 @@ public class FavorStocksQueryResult implements Serializable {
    * 示例值：10
    */
   @SerializedName("total_count")
-  private Integer totalCount;
+  private Long totalCount;
 
   /**
    * 批次详情

@@ -39,6 +39,10 @@ public enum AfterSaleStatus {
   MERCHANT_REFUND_RETRY_FAIL("MERCHANT_REFUND_RETRY_FAIL", "商家打款失败，客服关闭售后"),
   /** 售后关闭 */
   MERCHANT_FAIL("MERCHANT_FAIL", "售后关闭"),
+  /** 待用户处理商家协商 */
+  USER_WAIT_CONFIRM_UPDATE("USER_WAIT_CONFIRM_UPDATE", "待用户处理商家协商"),
+  /** 待用户处理商家代发起的售后申请 */
+  USER_WAIT_HANDLE_MERCHANT_AFTER_SALE("USER_WAIT_HANDLE_MERCHANT_AFTER_SALE", "待用户处理商家代发起的售后申请"),
   ;
 
   private final String key;

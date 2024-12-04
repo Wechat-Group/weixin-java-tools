@@ -25,4 +25,12 @@ public class ShopInfo implements Serializable {
   /** 店铺类型，目前为"企业"或"个体工商户" */
   @JsonProperty("subject_type")
   private String subjectType;
+
+  /** 店铺状态，目前为 opening 或 open_finished 或 closing 或 close_finished */
+  @JsonProperty("status")
+  private String status;
+
+  /** 店铺原始ID */
+  @JsonProperty("username")
+  private String username;
 }

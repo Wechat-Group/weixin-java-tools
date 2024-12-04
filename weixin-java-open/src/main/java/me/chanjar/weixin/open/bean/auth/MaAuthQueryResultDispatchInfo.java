@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 小程序认证 查询操作 响应数据
+ * 小程序认证 查询操作 响应数据 - 审核提供商分配信息
  *
  * @author <a href="https://www.sacoc.cn">广州跨界</a>
  * created on 2024/01/11
@@ -32,5 +32,5 @@ public class MaAuthQueryResultDispatchInfo {
    */
   @NotNull
   @SerializedName("dispatch_time")
-  private Integer dispatchTime;
+  private Long dispatchTime;
 }

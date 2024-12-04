@@ -36,6 +36,8 @@ public class WxMaVodDramaInfo implements Serializable {
   private String productionLicense;
   @SerializedName("description")
   private String description;
+  @SerializedName("status")
+  private String status;
 
   @SerializedName("audit_detail")
   private DramaAuditDetail auditDetail;

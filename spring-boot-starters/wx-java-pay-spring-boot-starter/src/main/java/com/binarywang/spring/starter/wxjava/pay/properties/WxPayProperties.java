@@ -73,5 +73,11 @@ public class WxPayProperties {
    * apiv3 商户apiclient_cert.pem
    */
   private String privateCertPath;
+  
+  /**
+   * 微信支付是否使用仿真测试环境.
+   * 默认不使用
+   */
+  private boolean useSandboxEnv;
 
 }

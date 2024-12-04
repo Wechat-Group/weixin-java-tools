@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
+import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.HttpResponseInterceptor;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -34,6 +36,8 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -92,6 +96,16 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
    * 自定义httpclient的User Agent
    */
   private String userAgent;
+
+  /**
+   * 自定义请求拦截器
+   */
+  private List<HttpRequestInterceptor> requestInterceptors = new ArrayList<>();
+
+  /**
+   * 自定义响应拦截器
+   */
+  private List<HttpResponseInterceptor> responseInterceptors = new ArrayList<>();
 
   /**
    * 自定义重试策略
@@ -228,6 +242,12 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     if (StringUtils.isNotBlank(this.userAgent)) {
       httpClientBuilder.setUserAgent(this.userAgent);
     }
+
+    //添加自定义的请求拦截器
+    requestInterceptors.forEach(httpClientBuilder::addInterceptorFirst);
+
+    //添加自定义的响应拦截器
+    responseInterceptors.forEach(httpClientBuilder::addInterceptorLast);
 
     this.closeableHttpClient = httpClientBuilder.build();
     prepared.set(true);

@@ -431,6 +431,12 @@ public class WxConsts {
      */
     public static final String WEAPP_AUDIT_FAIL = "weapp_audit_fail";
 
+    
+    /**
+     * 小程序审核事件：审核延后
+     */
+    public static final String WEAPP_AUDIT_DELAY = "weapp_audit_delay";
+
     /**
      * 小程序自定义交易组件支付通知
      */
@@ -454,7 +460,36 @@ public class WxConsts {
      * 订阅通知事件：发送订阅通知回调
      */
     public static final String SUBSCRIBE_MSG_SENT_EVENT = "subscribe_msg_sent_event";
-  }
+
+    /**
+     * 名称审核事件
+     */
+    public static final String  WXA_NICKNAME_AUDIT = "wxa_nickname_audit" ;
+    /**
+     *小程序违规记录事件
+    */
+    public static final String  WXA_ILLEGAL_RECORD= "wxa_illegal_record";
+    /**
+     *小程序申诉记录推送
+    */
+    public static final String  WXA_APPEAL_RECORD= "wxa_appeal_record";
+    /**
+     * 隐私权限审核结果推送
+     */
+    public static final String  WXA_PRIVACY_APPLY= "wxa_privacy_apply";
+    /**
+     * 类目审核结果事件推送
+     */
+    public static final String  WXA_CATEGORY_AUDIT= "wxa_category_audit";
+    /**
+     * 小程序微信认证支付成功事件
+     */
+    public static final String  WX_VERIFY_PAY_SUCC= "wx_verify_pay_succ";
+    /**
+     * 小程序微信认证派单事件
+     */
+    public static final String  WX_VERIFY_DISPATCH= "wx_verify_dispatch";
+    }
 
   /**
    * 上传多媒体（临时素材）文件的类型.

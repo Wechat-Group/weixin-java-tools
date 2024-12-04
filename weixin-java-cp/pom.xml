@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.6.0</version>
+    <version>4.6.8.B</version>
   </parent>
 
   <artifactId>weixin-java-cp</artifactId>
@@ -84,7 +84,7 @@
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk18on</artifactId>
-      <version>1.77</version>
+      <version>1.78.1</version>
     </dependency>
 
     <dependency>

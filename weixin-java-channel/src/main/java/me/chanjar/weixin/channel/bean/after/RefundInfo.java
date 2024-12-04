@@ -18,4 +18,8 @@ public class RefundInfo implements Serializable {
   /** 退款金额（分） */
   @JsonProperty("amount")
   private Integer amount;
+
+  /** 标明售后单退款直接原因, 枚举值详情请参考 {@link me.chanjar.weixin.channel.enums.RefundReason} */
+  @JsonProperty("refund_reason")
+  private Integer refundReason;
 }

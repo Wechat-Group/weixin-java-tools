@@ -82,4 +82,8 @@ public class AfterSaleInfo implements Serializable {
   /** 纠纷id，该字段可用于获取纠纷信息 */
   @JsonProperty("complaint_id")
   private String complaintId;
+
+  /** 仅在待商家审核退款退货申请或收货期间返回，表示操作剩余时间（秒数）*/
+  @JsonProperty("deadline")
+  private Long deadline;
 }

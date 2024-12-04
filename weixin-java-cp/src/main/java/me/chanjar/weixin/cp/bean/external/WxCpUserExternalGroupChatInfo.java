@@ -122,6 +122,12 @@ public class WxCpUserExternalGroupChatInfo extends WxCpBaseResp {
     private int joinScene;
 
     /**
+     * 该成员入群方式对应的state参数。仅限通过带有state的入群方式入群时会返回该值。
+     */
+    @SerializedName("state")
+    private String state;
+
+    /**
      * 邀请者。目前仅当是由本企业内部成员邀请入群时会返回该值
      */
     @SerializedName("invitor")

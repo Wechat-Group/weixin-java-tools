@@ -1,5 +1,7 @@
 package me.chanjar.weixin.channel.api.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import me.chanjar.weixin.channel.api.WxChannelService;
 import me.chanjar.weixin.channel.bean.lead.component.request.GetLeadInfoByComponentRequest;
@@ -28,19 +30,24 @@ import static org.testng.Assert.assertTrue;
 @Guice(modules = ApiTestModule.class)
 public class WxLeadComponentServiceImplTest {
 
+  private static final String LEADS_COMPONENT_ID = "123";
+  private static final String REQUEST_ID = "123";
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   @Inject
   private WxChannelService channelService;
 
   @Test
-  public void testGetLeadsInfoByComponentId() throws WxErrorException {
+  public void testGetLeadsInfoByComponentId() throws WxErrorException, JsonProcessingException {
     String lastBuffer = null;
     for (; ; ) {
       GetLeadInfoByComponentRequest req = new GetLeadInfoByComponentRequest();
       req.setStartTime(Instant.now().minus(1, ChronoUnit.DAYS).getEpochSecond());
       req.setEndTime(Instant.now().getEpochSecond());
-      req.setLeadsComponentId("123");
+      req.setLeadsComponentId(LEADS_COMPONENT_ID);
       req.setLastBuffer(lastBuffer);
+      req.setVersion(1);
       LeadInfoResponse response = channelService.getLeadComponentService().getLeadsInfoByComponentId(req);
+      System.out.println(OBJECT_MAPPER.writeValueAsString(response));
       assertNotNull(response);
       assertTrue(response.isSuccess());
       lastBuffer = response.getLastBuffer();
@@ -51,13 +58,14 @@ public class WxLeadComponentServiceImplTest {
   }
 
   @Test
-  public void testGetLeadsInfoByRequestId() throws WxErrorException {
+  public void testGetLeadsInfoByRequestId() throws WxErrorException, JsonProcessingException {
     String lastBuffer = null;
     for (; ; ) {
       GetLeadsInfoByRequestIdRequest req = new GetLeadsInfoByRequestIdRequest();
       req.setLastBuffer(lastBuffer);
-      req.setRequestId("123");
+      req.setRequestId(REQUEST_ID);
       LeadInfoResponse response = channelService.getLeadComponentService().getLeadsInfoByRequestId(req);
+      System.out.println(OBJECT_MAPPER.writeValueAsString(response));
       assertNotNull(response);
       assertTrue(response.isSuccess());
       lastBuffer = response.getLastBuffer();
@@ -68,13 +76,14 @@ public class WxLeadComponentServiceImplTest {
   }
 
   @Test
-  public void testGetLeadsRequestId() throws WxErrorException {
+  public void testGetLeadsRequestId() throws WxErrorException, JsonProcessingException {
     String lastBuffer = null;
     for (; ; ) {
       GetLeadsRequestIdRequest req = new GetLeadsRequestIdRequest();
       req.setLastBuffer(lastBuffer);
-      req.setLeadsComponentId("123");
+      req.setLeadsComponentId(LEADS_COMPONENT_ID);
       GetLeadsRequestIdResponse response = channelService.getLeadComponentService().getLeadsRequestId(req);
+      System.out.println(OBJECT_MAPPER.writeValueAsString(response));
       assertNotNull(response);
       assertTrue(response.isSuccess());
       lastBuffer = response.getLastBuffer();
@@ -85,15 +94,16 @@ public class WxLeadComponentServiceImplTest {
   }
 
   @Test
-  public void testGetLeadsComponentPromoteRecord() throws WxErrorException {
+  public void testGetLeadsComponentPromoteRecord() throws WxErrorException, JsonProcessingException {
     String lastBuffer = null;
     for (; ; ) {
       GetLeadsComponentPromoteRecordRequest req = new GetLeadsComponentPromoteRecordRequest();
       req.setStartTime(Instant.now().minus(1, ChronoUnit.DAYS).getEpochSecond());
       req.setEndTime(Instant.now().getEpochSecond());
-      req.setLeadsComponentId("123");
+      req.setLeadsComponentId(LEADS_COMPONENT_ID);
       req.setLastBuffer(lastBuffer);
       GetLeadsComponentPromoteRecordResponse response = channelService.getLeadComponentService().getLeadsComponentPromoteRecord(req);
+      System.out.println(OBJECT_MAPPER.writeValueAsString(response));
       assertNotNull(response);
       assertTrue(response.isSuccess());
       lastBuffer = response.getLastBuffer();
@@ -104,13 +114,13 @@ public class WxLeadComponentServiceImplTest {
   }
 
   @Test
-  public void testGetLeadsComponentId() throws WxErrorException {
+  public void testGetLeadsComponentId() throws WxErrorException, JsonProcessingException {
     String lastBuffer = null;
     for (; ; ) {
       GetLeadsComponentIdRequest req = new GetLeadsComponentIdRequest();
       req.setLastBuffer(lastBuffer);
       GetLeadsComponentIdResponse response = channelService.getLeadComponentService().getLeadsComponentId(req);
-      System.out.println(response);
+      System.out.println(OBJECT_MAPPER.writeValueAsString(response));
       assertNotNull(response);
       assertTrue(response.isSuccess());
       lastBuffer = response.getLastBuffer();

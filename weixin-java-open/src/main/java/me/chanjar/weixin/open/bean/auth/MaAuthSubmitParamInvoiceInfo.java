@@ -17,7 +17,7 @@ import org.springframework.lang.Nullable;
 public class MaAuthSubmitParamInvoiceInfo {
 
   /**
-   * 发票类型 1: 不开发票 2: 电子发票 3: 增值税专票
+   * 发票类型 1不开发票 2电子发票 3增值税专票，服务商代缴时只能为1，即不开发票
    */
   @NotNull
   @SerializedName("invoice_type")

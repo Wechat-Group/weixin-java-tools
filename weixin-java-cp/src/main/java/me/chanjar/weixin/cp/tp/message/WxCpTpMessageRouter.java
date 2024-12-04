@@ -187,15 +187,17 @@ public class WxCpTpMessageRouter {
     return new WxCpTpMessageRouterRule(this);
   }
 
+
   /**
    * 处理微信消息.
    *
+   * @param suiteId   the suiteId
    * @param wxMessage the wx message
    * @param context   the context
    * @return the wx cp xml out message
    */
-  public WxCpXmlOutMessage route(final WxCpTpXmlMessage wxMessage, final Map<String, Object> context) {
-    if (isMsgDuplicated(wxMessage)) {
+  public WxCpXmlOutMessage route(final String suiteId, final WxCpTpXmlMessage wxMessage, final Map<String, Object> context) {
+    if (isMsgDuplicated(suiteId, wxMessage)) {
       // 如果是重复消息，那么就不做处理
       return null;
     }
@@ -254,6 +256,18 @@ public class WxCpTpMessageRouter {
     return res;
   }
 
+
+  /**
+   * 处理微信消息.
+   *
+   * @param wxMessage the wx message
+   * @param context   the context
+   * @return the wx cp xml out message
+   */
+  public WxCpXmlOutMessage route(final WxCpTpXmlMessage wxMessage, final Map<String, Object> context) {
+    return this.route(null, wxMessage, context);
+  }
+
   /**
    * 处理微信消息.
    *
@@ -264,8 +278,9 @@ public class WxCpTpMessageRouter {
     return this.route(wxMessage, new HashMap<>(2));
   }
 
-  private boolean isMsgDuplicated(WxCpTpXmlMessage wxMessage) {
+  private boolean isMsgDuplicated(final String suiteId, WxCpTpXmlMessage wxMessage) {
     StringBuilder messageId = new StringBuilder();
+    messageId.append(wxMessage.getToUserName());
     if (wxMessage.getInfoType() != null) {
       messageId.append(wxMessage.getInfoType())
         .append("-").append(StringUtils.trimToEmpty(wxMessage.getSuiteId()))
@@ -275,6 +290,10 @@ public class WxCpTpMessageRouter {
         .append("-").append(StringUtils.trimToEmpty(wxMessage.getChangeType()))
         .append("-").append(StringUtils.trimToEmpty(wxMessage.getServiceCorpId()))
         .append("-").append(StringUtils.trimToEmpty(wxMessage.getExternalUserID()));
+    } else {
+      if (StringUtils.isNotBlank(suiteId)) {
+        messageId.append(suiteId);
+      }
     }
 
     if (wxMessage.getMsgType() != null) {

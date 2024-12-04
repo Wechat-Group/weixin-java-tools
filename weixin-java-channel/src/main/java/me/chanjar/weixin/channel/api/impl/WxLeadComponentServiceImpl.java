@@ -1,6 +1,11 @@
 package me.chanjar.weixin.channel.api.impl;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.api.WxLeadComponentService;
@@ -15,6 +20,7 @@ import me.chanjar.weixin.channel.bean.lead.component.response.GetLeadsRequestIdR
 import me.chanjar.weixin.channel.bean.lead.component.response.LeadInfoResponse;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
+import org.apache.commons.lang3.ObjectUtils;
 
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.LeadComponent.GET_LEADS_COMPONENT_ID;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.LeadComponent.GET_LEADS_COMPONENT_PROMOTE_RECORD;
@@ -33,16 +39,19 @@ public class WxLeadComponentServiceImpl implements WxLeadComponentService {
 
   /** 微信商店服务 */
   private final BaseWxChannelServiceImpl shopService;
+  private final ObjectMapper objectMapper = new ObjectMapper();
   @Override
   public LeadInfoResponse getLeadsInfoByComponentId(GetLeadInfoByComponentRequest req) throws WxErrorException {
+    req.setVersion(ObjectUtils.defaultIfNull(req.getVersion(), 1));
     String resJson = shopService.post(GET_LEADS_INFO_BY_COMPONENT_ID, req);
-    return ResponseUtils.decode(resJson, LeadInfoResponse.class);
+    return this.convertLeadInfoResponse(resJson);
   }
 
   @Override
   public LeadInfoResponse getLeadsInfoByRequestId(GetLeadsInfoByRequestIdRequest req) throws WxErrorException {
+    req.setVersion(ObjectUtils.defaultIfNull(req.getVersion(), 1));
     String resJson = shopService.post(GET_LEADS_INFO_BY_REQUEST_ID, req);
-    return ResponseUtils.decode(resJson, LeadInfoResponse.class);
+    return this.convertLeadInfoResponse(resJson);
   }
 
   @Override
@@ -62,4 +71,26 @@ public class WxLeadComponentServiceImpl implements WxLeadComponentService {
     String resJson = shopService.post(GET_LEADS_COMPONENT_ID, req);
     return ResponseUtils.decode(resJson, GetLeadsComponentIdResponse.class);
   }
+
+  /**
+   * 微信返回的数据中, user_data和leads_data均为字符串包裹的非标准JSON结构, 为方便业务使用避免踩坑此处做好解析
+   */
+  private LeadInfoResponse convertLeadInfoResponse(String resJson) throws WxErrorException {
+    try {
+      ObjectNode rootNode = (ObjectNode) objectMapper.readTree(resJson);
+      ArrayNode convertedUserDataArray = objectMapper.createArrayNode();
+      for (JsonNode userDataEle : rootNode.get("user_data")) {
+        ObjectNode userDataJsonNode = (ObjectNode) objectMapper.readTree(userDataEle.asText());
+        ArrayNode leadsDataArray = (ArrayNode) objectMapper.readTree(userDataJsonNode.get("leads_data").asText());
+        userDataJsonNode.set("leads_data", leadsDataArray);
+        convertedUserDataArray.add(userDataJsonNode);
+      }
+      rootNode.set("user_data", convertedUserDataArray);
+      String json = objectMapper.writeValueAsString(rootNode);
+      return ResponseUtils.decode(json, LeadInfoResponse.class);
+    } catch (JsonProcessingException e) {
+      throw new WxErrorException(e);
+    }
+  }
+
 }

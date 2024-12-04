@@ -1,24 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
-import cn.binarywang.wx.miniapp.bean.delivery.AbnormalConfirmRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.AbnormalConfirmResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.AddOrderRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.AddOrderResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.BindAccountResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.CancelOrderRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.CancelOrderResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.FollowWaybillRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.FollowWaybillResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.GetOrderRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.GetOrderResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.MockUpdateOrderRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.MockUpdateOrderResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.QueryFollowTraceRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.QueryFollowTraceResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.QueryWaybillTraceRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.QueryWaybillTraceResponse;
-import cn.binarywang.wx.miniapp.bean.delivery.TraceWaybillRequest;
-import cn.binarywang.wx.miniapp.bean.delivery.TraceWaybillResponse;
+import cn.binarywang.wx.miniapp.bean.WxMaBaseResponse;
+import cn.binarywang.wx.miniapp.bean.delivery.*;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -162,5 +145,30 @@ public interface WxMaImmediateDeliveryService {
   QueryFollowTraceResponse queryFollowTrace(QueryFollowTraceRequest request)
     throws WxErrorException ;
 
+  /**
+   * 获取运力id列表get_delivery_list
+   *
+   * <pre>
+   * 商户使用此接口获取所有运力id的列表
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/express/business/express_search.html
+   * </pre>
+   *
+   * @return 响应
+   * @throws WxErrorException 异常
+   */
+  GetDeliveryListResponse getDeliveryList() throws WxErrorException;
+
+  /**
+   * 更新物流物品信息接口 update_waybill_goods
+   *
+   * <pre>
+   * 更新物品信息
+   * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/express/business/express_search.html
+   * </pre>
+   *
+   * @return 响应
+   * @throws WxErrorException 异常
+   */
+  WxMaBaseResponse updateWaybillGoods(UpdateWaybillGoodsRequest request) throws WxErrorException;
 
 }

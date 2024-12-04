@@ -24,12 +24,15 @@ public interface WxMaInternetService {
    *
    * @return {@link WxMaInternetResponse}
    * @throws WxErrorException
+   * @apiNote 推荐使用  {@link #getUserEncryptKey(java.lang.String, java.lang.String)}
    */
+  @Deprecated
   WxMaInternetResponse getUserEncryptKey(String openid, String signature, String sigMethod) throws WxErrorException;
 
   /**
    * <pre>
-   * 获取用户encryptKey。 会获取用户最近3次的key，每个key的存活时间为3600s。
+   * 获取用户encryptKey。
+   * @implNote 会获取用户最近3次的key，每个key的存活时间为3600s。
    * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/internet/internet.getUserEncryptKey.html
    * 接口地址：POST https://api.weixin.qq.com/wxa/business/getuserencryptkey?access_token=ACCESS_TOKEN&openid=OPENID&signature=SIGNATURE&sig_method=hmac_sha256
    * @param openid 用户的openid

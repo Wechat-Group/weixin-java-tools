@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <pre>
- * 传运单接口 follow_waybil
+ * 传运单接口 follow_waybill
  *
  * 商户使用此接口向微信提供某交易单号对应的运单号。微信后台会跟踪运单的状态变化，在关键物流节点给下单用户推送消息通知。
  * </pre>
@@ -53,12 +53,22 @@ public class FollowWaybillRequest implements Serializable {
   /**
    * 收件人手机号
    * <pre>
-   * 是否必填： 否
+   * 是否必填： 是
    * 描述：部分运力需要用户手机号作为查单依据
    * </pre>
    */
   @SerializedName("receiver_phone")
   private String receiverPhone;
+
+  /**
+   * 运力id（运单号所属运力公司id），该字段从 <a href='https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/express/business/express_open_msg.html#_4-4%E8%8E%B7%E5%8F%96%E8%BF%90%E5%8A%9Bid%E5%88%97%E8%A1%A8get-delivery-list'>get_delivery_list</a> 获取。
+   * <pre>
+   * 是否必填： 否
+   * 描述：该参数用于提高运单号识别的准确度；特别是对非主流快递公司，建议传入该参数，确保查询正确率。
+   * </pre>
+   */
+  @SerializedName("delivery_id")
+  private String deliveryId;
 
   /**
    * 运单ID

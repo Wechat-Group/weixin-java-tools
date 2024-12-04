@@ -55,13 +55,13 @@ public interface WxOpenComponentService {
    */
   String API_GET_AUTHORIZER_INFO_URL = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_info";
   /**
-   * The constant API_GET_AUTHORIZER_OPTION_URL.
+   * The constant GET_AUTHORIZER_OPTION_URL.
    */
-  String API_GET_AUTHORIZER_OPTION_URL = "https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_option";
+  String GET_AUTHORIZER_OPTION_URL = "https://api.weixin.qq.com/cgi-bin/component/get_authorizer_option";
   /**
-   * The constant API_SET_AUTHORIZER_OPTION_URL.
+   * The constant SET_AUTHORIZER_OPTION_URL.
    */
-  String API_SET_AUTHORIZER_OPTION_URL = "https://api.weixin.qq.com/cgi-bin/component/api_set_authorizer_option";
+  String SET_AUTHORIZER_OPTION_URL = "https://api.weixin.qq.com/cgi-bin/component/set_authorizer_option";
   /**
    * The constant API_GET_AUTHORIZER_LIST.
    */
@@ -202,6 +202,7 @@ public interface WxOpenComponentService {
   String BATCH_SHARE_ENV = "https://api.weixin.qq.com/componenttcb/batchshareenv";
 
   String COMPONENT_CLEAR_QUOTA_URL = "https://api.weixin.qq.com/cgi-bin/component/clear_quota/v2";
+
   /**
    * Gets wx mp service by appid.
    *
@@ -290,6 +291,8 @@ public interface WxOpenComponentService {
    * @throws WxErrorException the wx error exception
    */
   String post(String uri, String postData, String accessTokenKey) throws WxErrorException;
+
+  String post(String uri, String postData, String accessTokenKey, String accessToken) throws WxErrorException;
 
   /**
    * Get string.
@@ -1092,7 +1095,7 @@ public interface WxOpenComponentService {
    * 使用 AppSecret 重置第三方平台 API 调用次数
    * https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/openapi/clearComponentQuotaByAppSecret.html
    *
-   * @param appid  授权用户appid
+   * @param appid 授权用户appid
    * @return
    * @throws WxErrorException
    */

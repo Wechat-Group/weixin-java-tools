@@ -229,7 +229,23 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
 
   @Override
   public String[] getCallbackIp() throws WxErrorException {
-    String responseContent = get(this.configStorage.getApiUrl(GET_CALLBACK_IP), null);
+    return getIp(GET_CALLBACK_IP);
+  }
+
+  @Override
+  public String[] getApiDomainIp() throws WxErrorException {
+    return getIp(GET_API_DOMAIN_IP);
+  }
+
+  /**
+   * 获取 IP
+   *
+   * @param suffixUrl 接口URL 后缀
+   * @return 返回结果
+   * @throws WxErrorException 异常信息
+   */
+  private String[] getIp(String suffixUrl) throws WxErrorException {
+    String responseContent = get(this.configStorage.getApiUrl(suffixUrl), null);
     JsonObject tmpJsonObject = GsonParser.parse(responseContent);
     JsonArray jsonArray = tmpJsonObject.get("ip_list").getAsJsonArray();
     String[] ips = new String[jsonArray.size()];

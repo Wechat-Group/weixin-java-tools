@@ -12,6 +12,8 @@ import me.chanjar.weixin.channel.api.WxChannelAfterSaleService;
 import me.chanjar.weixin.channel.api.WxChannelService;
 import me.chanjar.weixin.channel.bean.after.AfterSaleInfoResponse;
 import me.chanjar.weixin.channel.bean.after.AfterSaleListResponse;
+import me.chanjar.weixin.channel.bean.after.AfterSaleReasonResponse;
+import me.chanjar.weixin.channel.bean.after.AfterSaleRejectReasonResponse;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.complaint.ComplaintOrderResponse;
 import me.chanjar.weixin.channel.test.ApiTestModule;
@@ -52,8 +54,8 @@ public class WxChannelAfterSaleServiceImplTest {
   public void testAccept() throws WxErrorException {
     WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
     String afterSaleOrderId = "";
-    String addressId = "123";
-    WxChannelBaseResponse response = afterSaleService.accept(afterSaleOrderId, addressId);
+    String addressId = null;
+    WxChannelBaseResponse response = afterSaleService.accept(afterSaleOrderId, addressId, 2);
     assertNotNull(response);
     assertTrue(response.isSuccess());
   }
@@ -62,8 +64,8 @@ public class WxChannelAfterSaleServiceImplTest {
   public void testReject() throws WxErrorException {
     WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
     String afterSaleOrderId = "";
-    String rejectReason = "123";
-    WxChannelBaseResponse response = afterSaleService.reject(afterSaleOrderId, rejectReason);
+    String rejectReason = null;
+    WxChannelBaseResponse response = afterSaleService.reject(afterSaleOrderId, rejectReason,1);
     assertNotNull(response);
     assertTrue(response.isSuccess());
   }
@@ -108,5 +110,22 @@ public class WxChannelAfterSaleServiceImplTest {
     ComplaintOrderResponse response = afterSaleService.getComplaint(complaintId);
     assertNotNull(response);
     assertTrue(response.isSuccess());
+  }
+
+
+  @Test
+  public void testGetAllReason() throws WxErrorException {
+    WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
+    AfterSaleReasonResponse allReason = afterSaleService.getAllReason();
+    assertNotNull(allReason);
+    assertTrue(allReason.isSuccess());
+  }
+
+  @Test
+  public void testGetRejectReason() throws WxErrorException {
+    WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
+    AfterSaleRejectReasonResponse rejectReason = afterSaleService.getRejectReason();
+    assertNotNull(rejectReason);
+    assertTrue(rejectReason.isSuccess());
   }
 }

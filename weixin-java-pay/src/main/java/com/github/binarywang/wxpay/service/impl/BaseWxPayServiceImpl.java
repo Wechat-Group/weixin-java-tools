@@ -17,6 +17,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.exception.WxSignTestException;
 import com.github.binarywang.wxpay.service.*;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.github.binarywang.wxpay.util.XmlConfig;
@@ -343,7 +344,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
    * @param data   通知数据
    * @return true:校验通过 false:校验不通过
    */
-  private boolean verifyNotifySign(SignatureHeader header, String data) {
+  private boolean verifyNotifySign(SignatureHeader header, String data) throws WxSignTestException {
+    String wxPaySign = header.getSignature();
+    if(wxPaySign.startsWith("WECHATPAY/SIGNTEST/")){
+      throw new WxSignTestException("微信支付签名探测流量");
+    }
     String beforeSign = String.format("%s\n%s\n%s\n",
       header.getTimeStamp(),
       header.getNonce(),
@@ -430,6 +435,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public WxPayRefundNotifyV3Result parseRefundNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException {
     return this.baseParseOrderNotifyV3Result(notifyData, header, WxPayRefundNotifyV3Result.class, WxPayRefundNotifyV3Result.DecryptNotifyResult.class);
+  }
+
+  @Override
+  public WxPayTransferBatchesNotifyV3Result parseTransferBatchesNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException {
+    return this.baseParseOrderNotifyV3Result(notifyData, header, WxPayTransferBatchesNotifyV3Result.class, WxPayTransferBatchesNotifyV3Result.DecryptNotifyResult.class);
   }
 
   @Override
@@ -1126,6 +1136,19 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public WxPayCodepayResult codepay(WxPayCodepayRequest request) throws WxPayException {
+    if (StringUtils.isBlank(request.getAppid())) {
+      request.setAppid(this.getConfig().getAppId());
+    }
+    if (StringUtils.isBlank(request.getMchid())) {
+      request.setMchid(this.getConfig().getMchId());
+    }
+    String url = String.format("%s/v3/pay/transactions/codepay", this.getPayBaseUrl());
+    String body = this.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(body, WxPayCodepayResult.class);
+  }
+
+  @Override
   public WxPayOrderReverseResult reverseOrder(WxPayOrderReverseRequest request) throws WxPayException {
     request.checkAndSign(this.getConfig());
 
@@ -1134,6 +1157,31 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     WxPayOrderReverseResult result = BaseWxPayResult.fromXML(responseContent, WxPayOrderReverseResult.class);
     result.checkResult(this, request.getSignType(), true);
     return result;
+  }
+
+
+  @Override
+  public WxPayOrderReverseV3Result reverseOrderV3(WxPayOrderReverseV3Request request) throws WxPayException {
+    if (StringUtils.isBlank(request.getAppid())) {
+      request.setAppid(this.getConfig().getAppId());
+    }
+    if (StringUtils.isBlank(request.getMchid())) {
+      request.setMchid(this.getConfig().getMchId());
+    }
+    // 拼接参数请求路径并发送
+    String url = String.format("%s/v3/pay/transactions/out-trade-no/%s/reverse", this.getPayBaseUrl(), request.getOutTradeNo());
+    String response = this.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, WxPayOrderReverseV3Result.class);
+  }
+
+  @Override
+  public WxPayOrderReverseV3Result reverseOrderV3(String outTradeNo) throws WxPayException {
+    if (StringUtils.isBlank(outTradeNo)) {
+      throw new WxPayException("out_trade_no不能为空");
+    }
+    WxPayOrderReverseV3Request request = new WxPayOrderReverseV3Request();
+    request.setOutTradeNo(StringUtils.trimToNull(outTradeNo));
+    return this.reverseOrderV3(request);
   }
 
   @Override

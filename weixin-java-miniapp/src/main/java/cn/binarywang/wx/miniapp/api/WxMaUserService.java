@@ -51,30 +51,32 @@ public interface WxMaUserService {
    * @param encryptedData 消息密文
    * @param ivStr         加密算法的初始向量
    * @return .
-   * @deprecated 请使用替代方法 {@link #getPhoneNoInfo(String)}
+   * @deprecated 当前（基础库2.21.2以下使用）旧版本，以上请使用替代方法 {@link #getPhoneNoInfo(String)}
    */
   @Deprecated
   WxMaPhoneNumberInfo getPhoneNoInfo(String sessionKey, String encryptedData, String ivStr);
 
   /**
-   * 获取手机号信息,基础库:2.21.2及以上
+   * 获取手机号信息,基础库:2.21.2及以上或2023年8月28日起
    *
-   * @param code 动态令牌
-   * @return .
+   * @param code 每个code只能使用一次，code的有效期为5min。code获取方式参考<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html">手机号快速验证组件</a>
+   * @return 用户手机号信息
    * @throws WxErrorException .
+   * @apiNote 该接口用于将code换取用户手机号。
    */
-  WxMaPhoneNumberInfo getPhoneNoInfo(String code) throws WxErrorException;
+  WxMaPhoneNumberInfo getPhoneNumber(String code) throws WxErrorException;
 
   /**
-   * 获取手机号信息,基础库:2.21.2及以上
+   * 获取手机号信息,基础库:2.21.2及以上或2023年8月28日起
    *
-   * @param code 动态令牌
-   * @return .
+   * @param code 每个code只能使用一次，code的有效期为5min。code获取方式参考<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html">手机号快速验证组件</a>
+   * @return 用户手机号信息
    * @throws WxErrorException .
-   * @deprecated 命名有些复杂，请使用替代方法 {@link #getPhoneNoInfo(String)}
+   * @apiNote 该接口用于将code换取用户手机号。
+   * @implNote 为保持命名风格一致，此方法将更名，推荐使用{@link WxMaUserService#getPhoneNumber(String)}
    */
   @Deprecated
-  WxMaPhoneNumberInfo getNewPhoneNoInfo(String code) throws WxErrorException;
+  WxMaPhoneNumberInfo getPhoneNoInfo(String code) throws WxErrorException;
 
   /**
    * 验证用户信息完整性.

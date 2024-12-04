@@ -42,8 +42,14 @@ public class WxMpProperties {
   private String aesKey;
 
   /**
+   * 是否使用稳定版 Access Token
+   */
+  private boolean useStableAccessToken = false;
+
+  /**
    * 自定义host配置
    */
+  @NestedConfigurationProperty
   private HostConfig hosts;
 
   /**

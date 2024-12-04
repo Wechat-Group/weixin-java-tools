@@ -179,7 +179,7 @@ public class FavorCouponsUseResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "single_price_max")
-    private Integer singlePriceMax;
+    private Long singlePriceMax;
   }
 
   @Data
@@ -194,7 +194,7 @@ public class FavorCouponsUseResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "cut_to_price")
-    private Integer cutToPrice;
+    private Long cutToPrice;
 
     /**
      * 最高价格
@@ -203,7 +203,7 @@ public class FavorCouponsUseResult implements Serializable {
      * 示例值：20
      */
     @SerializedName(value = "max_price")
-    private Integer maxPrice;
+    private Long maxPrice;
   }
 
   @Data
@@ -218,7 +218,7 @@ public class FavorCouponsUseResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "coupon_amount")
-    private Integer couponAmount;
+    private Long couponAmount;
 
     /**
      * 门槛
@@ -227,7 +227,7 @@ public class FavorCouponsUseResult implements Serializable {
      * 示例值：100
      */
     @SerializedName(value = "transaction_minimum")
-    private Integer transactionMinimum;
+    private Long transactionMinimum;
   }
 
   @Data

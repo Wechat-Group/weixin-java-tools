@@ -3,6 +3,7 @@ package me.chanjar.weixin.cp.api.impl;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.InputStreamData;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.UUID;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Media.*;
@@ -66,6 +68,28 @@ public class WxCpMediaServiceImpl implements WxCpMediaService {
       }
     }
   }
+
+  @Override
+  public WxMediaUploadResult upload(String mediaType, File file, String filename) throws WxErrorException {
+    if(!file.exists()){
+      throw new WxRuntimeException("文件[" + file.getAbsolutePath() + "]不存在");
+    }
+    try (InputStream inputStream = Files.newInputStream(file.toPath())) {
+      return this.mainService.execute(MediaInputStreamUploadRequestExecutor.create(this.mainService.getRequestHttp())
+        , this.mainService.getWxCpConfigStorage().getApiUrl(MEDIA_UPLOAD + mediaType),
+        new InputStreamData(inputStream, filename));
+    } catch (IOException e) {
+      throw new WxRuntimeException(e);
+    }
+  }
+
+  @Override
+  public WxMediaUploadResult upload(String mediaType, InputStream inputStream, String filename) throws WxErrorException{
+    return this.mainService.execute(MediaInputStreamUploadRequestExecutor.create(this.mainService.getRequestHttp())
+      , this.mainService.getWxCpConfigStorage().getApiUrl(MEDIA_UPLOAD + mediaType),
+      new InputStreamData(inputStream, filename));
+  }
+
 
   @Override
   public WxMediaUploadResult upload(String mediaType, File file) throws WxErrorException {

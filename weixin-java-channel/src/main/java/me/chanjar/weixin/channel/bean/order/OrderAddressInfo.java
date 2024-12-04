@@ -20,4 +20,22 @@ public class OrderAddressInfo extends AddressInfo {
   /** 虚拟发货订单联系方式(deliver_method=1时返回) */
   @JsonProperty("virtual_order_tel_number")
   private String virtualOrderTelNumber;
+
+  /**
+   * 额外的联系方式信息（虚拟号码相关），具体结构请参考TelNumberExtInfo结构体
+   */
+  @JsonProperty("tel_number_ext_info")
+  private TelNumberExtInfo telNumberExtInfo;
+
+  /**
+   * 0：不使用虚拟号码，1：使用虚拟号码
+   */
+  @JsonProperty("use_tel_number")
+  private Integer useTelNumber;
+
+  /**
+   * 标识当前店铺下一个唯一的用户收货地址
+   */
+  @JsonProperty("hash_code")
+  private String hashCode;
 }

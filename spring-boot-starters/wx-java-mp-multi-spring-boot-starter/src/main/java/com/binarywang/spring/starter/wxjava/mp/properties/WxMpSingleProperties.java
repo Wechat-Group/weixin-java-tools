@@ -32,4 +32,9 @@ public class WxMpSingleProperties implements Serializable {
    * 设置微信公众号的 EncodingAESKey.
    */
   private String aesKey;
+
+  /**
+   * 是否使用稳定版 Access Token
+   */
+  private boolean useStableAccessToken = false;
 }
