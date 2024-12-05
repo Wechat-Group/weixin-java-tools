@@ -36,4 +36,8 @@ public class WxOpenMaEmbeddedListResult extends WxOpenResult {
   public String toString() {
     return WxOpenGsonBuilder.create().toJson(this);
   }
+
+  public String toJson() {
+    return WxOpenGsonBuilder.create().toJson(this);
+  }
 }
