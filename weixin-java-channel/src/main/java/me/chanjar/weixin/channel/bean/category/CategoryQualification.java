@@ -39,4 +39,8 @@ public class CategoryQualification implements Serializable {
   @JsonProperty("product_qua_list")
   private List<QualificationInfo> productQuaList;
 
+  /** 放心买必须打开坏损包赔 */
+  @JsonProperty("is_confidence_require_bad_must_pay")
+  private Boolean confidenceRequireBadMustPay;
+
 }

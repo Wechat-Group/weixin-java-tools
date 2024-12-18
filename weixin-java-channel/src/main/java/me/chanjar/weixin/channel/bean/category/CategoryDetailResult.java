@@ -99,6 +99,10 @@ public class CategoryDetailResult extends WxChannelBaseResponse {
     @JsonProperty("size_chart")
     private SizeChart sizeChart;
 
+    /** 放心买必须打开坏损包赔 */
+    @JsonProperty("is_confidence_require_bad_must_pay")
+    private Boolean confidenceRequireBadMustPay;
+
     /** 资质信息 */
     @JsonProperty("product_qua_list")
     private List<QualificationInfo> productQuaList;
