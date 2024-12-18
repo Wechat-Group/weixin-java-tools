@@ -121,6 +121,7 @@ public class WxChannelMessageRouter {
     final Map<String, Object> context, final WxChannelService service, final WxSessionManager sessionManager) {
     // 如果是重复消息，那么就不做处理
     if (isMsgDuplicated(message)) {
+      log.info("收到重复消息，{}", content);
       return null;
     }
 

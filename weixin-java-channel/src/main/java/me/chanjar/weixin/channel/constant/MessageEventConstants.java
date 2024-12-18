@@ -16,6 +16,8 @@ public interface MessageEventConstants {
     String PRODUCT_SPU_UPDATE = "product_spu_update";
     /** 类目审核结果 */
     String PRODUCT_CATEGORY_AUDIT = "product_category_audit";
+    /** 库存不足 */
+    String PRODUCT_STOCK_NO_ENOUGH = "channels_ec_stock_no_enough";
     /** 订单下单 */
     String ORDER_NEW = "channels_ec_order_new";
     /** 订单取消 */
@@ -57,6 +59,8 @@ public interface MessageEventConstants {
     String USER_COUPON_UNUSE = "channels_ec_user_coupon_unuse";
     /** 优惠券核销通知 */
     String USER_COUPON_USE = "channels_ec_user_coupon_use";
+    /** 发放团购优惠成功回调 */
+    String VOUCHER_SEND_SUCC = "channels_ec_voucher_send_succ";
     // 资金相关
     /** 结算账户变更回调 */
     String ACCOUNT_NOTIFY = "channels_ec_acct_notify";

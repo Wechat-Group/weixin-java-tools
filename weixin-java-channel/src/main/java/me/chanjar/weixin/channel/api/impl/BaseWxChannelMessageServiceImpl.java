@@ -23,12 +23,14 @@ import me.chanjar.weixin.channel.bean.message.order.OrderStatusMessage;
 import me.chanjar.weixin.channel.bean.message.product.BrandMessage;
 import me.chanjar.weixin.channel.bean.message.product.CategoryAuditMessage;
 import me.chanjar.weixin.channel.bean.message.product.SpuAuditMessage;
+import me.chanjar.weixin.channel.bean.message.product.SpuStockMessage;
 import me.chanjar.weixin.channel.bean.message.sharer.SharerChangeMessage;
 import me.chanjar.weixin.channel.bean.message.store.CloseStoreMessage;
 import me.chanjar.weixin.channel.bean.message.store.NicknameUpdateMessage;
 import me.chanjar.weixin.channel.bean.message.supplier.SupplierItemMessage;
 import me.chanjar.weixin.channel.bean.message.vip.ExchangeInfoMessage;
 import me.chanjar.weixin.channel.bean.message.vip.UserInfoMessage;
+import me.chanjar.weixin.channel.bean.message.voucher.VoucherMessage;
 import me.chanjar.weixin.channel.message.WxChannelMessage;
 import me.chanjar.weixin.channel.message.WxChannelMessageRouter;
 import me.chanjar.weixin.channel.message.WxChannelMessageRouterRule;
@@ -64,6 +66,8 @@ public abstract class BaseWxChannelMessageServiceImpl implements BaseWxChannelMe
     this.addRule(SpuAuditMessage.class, PRODUCT_SPU_STATUS_UPDATE, this::spuStatusUpdate);
     /* 商品更新 */
     this.addRule(SpuAuditMessage.class, PRODUCT_SPU_UPDATE, this::spuUpdate);
+    /* 商品库存不足 */
+    this.addRule(SpuStockMessage.class, PRODUCT_STOCK_NO_ENOUGH, this::stockNoEnough);
     /* 类目审核结果 */
     this.addRule(CategoryAuditMessage.class, PRODUCT_CATEGORY_AUDIT, this::categoryAudit);
     /* 订单下单 */
@@ -106,6 +110,8 @@ public abstract class BaseWxChannelMessageServiceImpl implements BaseWxChannelMe
     this.addRule(UserCouponExpireMessage.class, USER_COUPON_UNUSE, this::userCouponUnuse);
     /* 优惠券返还通知 */
     this.addRule(UserCouponExpireMessage.class, USER_COUPON_USE, this::userCouponUse);
+    /* 发放团购优惠成功通知 */
+    this.addRule(VoucherMessage.class, VOUCHER_SEND_SUCC, this::voucherSendSucc);
     /* 结算账户变更回调 */
     this.addRule(AccountNotifyMessage.class, ACCOUNT_NOTIFY, this::accountNotify);
     /* 提现回调 */
@@ -151,6 +157,7 @@ public abstract class BaseWxChannelMessageServiceImpl implements BaseWxChannelMe
       consumer.accept(message, content, appId, context, sessionManager);
       return "success";
     });
+    rule.setNext(true);
     this.addRule(rule);
   }
 
@@ -243,6 +250,12 @@ public abstract class BaseWxChannelMessageServiceImpl implements BaseWxChannelMe
   }
 
   @Override
+  public void stockNoEnough(SpuStockMessage message, String content, String appId,
+          Map<String, Object> context, WxSessionManager sessionManager) {
+    log.info("商品库存不足:{}", JsonUtils.encode(message));
+  }
+
+  @Override
   public void categoryAudit(CategoryAuditMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
     log.info("分类审核:{}", JsonUtils.encode(message));
@@ -318,6 +331,12 @@ public abstract class BaseWxChannelMessageServiceImpl implements BaseWxChannelMe
   public void userCouponUnuse(UserCouponExpireMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
     log.info("用户优惠券取消使用:{}", JsonUtils.encode(message));
+  }
+
+  @Override
+  public void voucherSendSucc(VoucherMessage message, String content, String appId,
+          Map<String, Object> context, WxSessionManager sessionManager) {
+    log.info("发放团购优惠成功:{}", JsonUtils.encode(message));
   }
 
   @Override

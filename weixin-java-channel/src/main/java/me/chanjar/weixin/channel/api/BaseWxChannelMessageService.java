@@ -20,11 +20,13 @@ import me.chanjar.weixin.channel.bean.message.order.OrderStatusMessage;
 import me.chanjar.weixin.channel.bean.message.product.BrandMessage;
 import me.chanjar.weixin.channel.bean.message.product.CategoryAuditMessage;
 import me.chanjar.weixin.channel.bean.message.product.SpuAuditMessage;
+import me.chanjar.weixin.channel.bean.message.product.SpuStockMessage;
 import me.chanjar.weixin.channel.bean.message.store.CloseStoreMessage;
 import me.chanjar.weixin.channel.bean.message.store.NicknameUpdateMessage;
 import me.chanjar.weixin.channel.bean.message.supplier.SupplierItemMessage;
 import me.chanjar.weixin.channel.bean.message.vip.ExchangeInfoMessage;
 import me.chanjar.weixin.channel.bean.message.vip.UserInfoMessage;
+import me.chanjar.weixin.channel.bean.message.voucher.VoucherMessage;
 import me.chanjar.weixin.channel.message.WxChannelMessage;
 import me.chanjar.weixin.channel.message.WxChannelMessageRouterRule;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -198,6 +200,18 @@ public interface BaseWxChannelMessageService {
     final WxSessionManager sessionManager);
 
   /**
+   * 商品库存不足通知
+   *
+   * @param message        消息
+   * @param content        消息原始内容
+   * @param appId          appId
+   * @param context        上下文
+   * @param sessionManager session管理器
+   */
+  void stockNoEnough(SpuStockMessage message, final String content, final String appId,
+    final Map<String, Object> context, final WxSessionManager sessionManager);
+
+  /**
    * 类目审核结果
    *
    * @param message        消息
@@ -353,6 +367,17 @@ public interface BaseWxChannelMessageService {
   void userCouponUnuse(UserCouponExpireMessage message, final String content, final String appId,
     final Map<String, Object> context, final WxSessionManager sessionManager);
 
+  /**
+   * 发放团购优惠成功回调
+   *
+   * @param message        消息
+   * @param content        消息原始内容
+   * @param appId          appId
+   * @param context        上下文
+   * @param sessionManager session管理器
+   */
+  void voucherSendSucc(VoucherMessage message, final String content, final String appId,
+    final Map<String, Object> context, final WxSessionManager sessionManager);
   /**
    * 结算账户变更回调
    *
