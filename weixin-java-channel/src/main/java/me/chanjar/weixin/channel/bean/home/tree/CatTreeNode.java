@@ -28,5 +28,5 @@ public class CatTreeNode implements Serializable {
 
   /** 是否在用户端展示该分类。1为是，0为否 */
   @JsonProperty("is_displayed")
-  private Integer displayed;
+  private Boolean displayed;
 }
