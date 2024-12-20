@@ -1,5 +1,10 @@
 package me.chanjar.weixin.cp.api;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
@@ -10,12 +15,6 @@ import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRule;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleAddRequest;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleInfo;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleList;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
 
 /**
  * <pre>
@@ -380,6 +379,24 @@ public interface WxCpExternalContactService {
   WxCpExternalContactBatchInfo getContactDetailBatch(String[] userIdList, String cursor,
                                                      Integer limit)
     throws WxErrorException;
+
+  /**
+   * 获取已服务的外部联系人
+   * <pre>
+   *  企业可通过此接口获取所有已服务的外部联系人，及其添加人和加入的群聊。
+   * 外部联系人分为客户和其他外部联系人，如果是客户，接口将返回外部联系人临时ID和externaluserid；如果是其他外部联系人，接口将只返回外部联系人临时ID。
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/contact_list?access_token=ACCESS_TOKEN
+   * 文档地址: https://developer.work.weixin.qq.com/document/path/99434
+   * </pre>
+   *
+   * @param cursor     the cursor
+   * @param limit      the  limit
+   * @return 已服务的外部联系人列表
+   * @throws WxErrorException .
+   * @apiNote 企业可通过外部联系人临时ID排除重复数据，外部联系人临时ID有效期为4小时。
+   */
+  WxCpExternalContactListInfo getContactList(String cursor, Integer limit) throws WxErrorException;
 
   /**
    * 修改客户备注信息.

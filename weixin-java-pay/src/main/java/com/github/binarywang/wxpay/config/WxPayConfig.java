@@ -6,6 +6,16 @@ import com.github.binarywang.wxpay.util.ResourcesUtils;
 import com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder;
 import com.github.binarywang.wxpay.v3.auth.*;
 import com.github.binarywang.wxpay.v3.util.PemUtils;
+import java.io.*;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
+import java.util.Optional;
+import javax.net.ssl.SSLContext;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
@@ -15,17 +25,6 @@ import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.ssl.SSLContexts;
-
-import javax.net.ssl.SSLContext;
-import java.io.*;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyStore;
-import java.security.PrivateKey;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
-import java.util.Base64;
-import java.util.Optional;
 
 /**
  * 微信支付配置
@@ -139,6 +138,25 @@ public class WxPayConfig {
   private byte[] privateCertContent;
 
   /**
+   * 公钥ID
+   */
+  private String publicKeyId;
+
+  /**
+   * pub_key.pem证书base64编码
+   */
+  private String publicKeyString;
+
+  /**
+   * pub_key.pem证书文件的绝对路径或者以classpath:开头的类路径.
+   */
+  private String publicKeyPath;
+
+  /**
+   * pub_key.pem证书文件内容的字节数组.
+   */
+  private byte[] publicKeyContent;
+  /**
    * apiV3 秘钥值.
    */
   private String apiV3Key;
@@ -241,7 +259,7 @@ public class WxPayConfig {
     }
 
     try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
-      this.keyContent, "p12证书");) {
+      this.keyContent, "p12证书")) {
       KeyStore keystore = KeyStore.getInstance("PKCS12");
       char[] partnerId2charArray = this.getMchId().toCharArray();
       keystore.load(inputStream, partnerId2charArray);
@@ -276,15 +294,10 @@ public class WxPayConfig {
     }
     try {
       if (merchantPrivateKey == null) {
-        if (StringUtils.isNotBlank(this.getPrivateKeyString())) {
-          this.setPrivateKeyString(Base64.getEncoder().encodeToString(this.getPrivateKeyString().getBytes()));
-        }
-
         try (InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
           this.privateKeyContent, "privateKeyPath")) {
           merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
         }
-
       }
       if (certificate == null && StringUtils.isBlank(this.getCertSerialNo())) {
         try (InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
@@ -293,13 +306,28 @@ public class WxPayConfig {
         }
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
+      PublicKey publicKey = null;
+      if (this.getPublicKeyString() != null || this.getPublicKeyPath() != null || this.publicKeyContent != null) {
+        try (InputStream pubInputStream =
+            this.loadConfigInputStream(this.getPublicKeyString(), this.getPublicKeyPath(),
+              this.publicKeyContent, "publicKeyPath")) {
+          publicKey = PemUtils.loadPublicKey(pubInputStream);
+        }
+      }
 
       //构造Http Proxy正向代理
       WxPayHttpProxy wxPayHttpProxy = getWxPayHttpProxy();
 
-      AutoUpdateCertificatesVerifier certificatesVerifier = new AutoUpdateCertificatesVerifier(
-        new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
-        this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(), this.getPayBaseUrl(), wxPayHttpProxy);
+      Verifier certificatesVerifier;
+      if (publicKey == null) {
+        certificatesVerifier =
+            new AutoUpdateCertificatesVerifier(
+                new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
+                this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(),
+                this.getPayBaseUrl(), wxPayHttpProxy);
+      } else {
+        certificatesVerifier = new PublicCertificateVerifier(publicKey, publicKeyId);
+      }
 
       WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
@@ -416,13 +444,14 @@ public class WxPayConfig {
    */
   private Object[] p12ToPem() {
     String key = getMchId();
-    if (StringUtils.isBlank(key)) {
+    if (StringUtils.isBlank(key) ||
+      (StringUtils.isBlank(this.getKeyPath()) && this.keyContent == null && StringUtils.isBlank(this.keyString))) {
       return null;
     }
 
     // 分解p12证书文件
     try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
-      this.keyContent, "p12证书");) {
+      this.keyContent, "p12证书")) {
       KeyStore keyStore = KeyStore.getInstance("PKCS12");
       keyStore.load(inputStream, key.toCharArray());
 
@@ -433,7 +462,7 @@ public class WxPayConfig {
       X509Certificate x509Certificate = (X509Certificate) certificate;
       return new Object[]{privateKey, x509Certificate};
     } catch (Exception e) {
-      log.error("加载证书时发生异常", e);
+      log.error("加载p12证书时发生异常", e);
     }
 
     return null;

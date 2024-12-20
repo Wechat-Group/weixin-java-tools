@@ -1137,6 +1137,9 @@ public interface WxCpApiPathConsts {
      * The constant GET_CONTACT_DETAIL_BATCH.
      */
     String GET_CONTACT_DETAIL_BATCH = "/cgi-bin/externalcontact/batch/get_by_user?";
+
+    String GET_CONTACT_LIST = "/cgi-bin/externalcontact/contact_list?";
+
     /**
      * The constant UPDATE_REMARK.
      */

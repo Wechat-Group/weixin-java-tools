@@ -17,6 +17,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.exception.WxSignTestException;
 import com.github.binarywang.wxpay.service.*;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.github.binarywang.wxpay.util.XmlConfig;
@@ -343,7 +344,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
    * @param data   通知数据
    * @return true:校验通过 false:校验不通过
    */
-  private boolean verifyNotifySign(SignatureHeader header, String data) {
+  private boolean verifyNotifySign(SignatureHeader header, String data) throws WxSignTestException {
+    String wxPaySign = header.getSignature();
+    if(wxPaySign.startsWith("WECHATPAY/SIGNTEST/")){
+      throw new WxSignTestException("微信支付签名探测流量");
+    }
     String beforeSign = String.format("%s\n%s\n%s\n",
       header.getTimeStamp(),
       header.getNonce(),
