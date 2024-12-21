@@ -789,6 +789,24 @@ public class WxMaApiUrlConstants {
      * </pre>
      */
     String SET_MSG_JUMP_PATH = "https://api.weixin.qq.com/wxa/sec/order/set_msg_jump_path";
+
+    /**
+     * 查询小程序是否已完成交易结算管理确认.
+     *
+     * <pre>
+     * 文档地址： https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/order-shipping/order-shipping.html#%E5%85%AB%E3%80%81%E6%9F%A5%E8%AF%A2%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%98%AF%E5%90%A6%E5%B7%B2%E5%AE%8C%E6%88%90%E4%BA%A4%E6%98%93%E7%BB%93%E7%AE%97%E7%AE%A1%E7%90%86%E7%A1%AE%E8%AE%A4
+     * </pre>
+     */
+    String IS_TRADE_MANAGEMENT_CONFIRMATION_COMPLETED = "https://api.weixin.qq.com/wxa/sec/order/is_trade_management_confirmation_completed";
+    /**
+     * 特殊发货报备.
+     *
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/order-shipping/order-shipping.html#%E5%8D%81%E3%80%81%E7%89%B9%E6%AE%8A%E5%8F%91%E8%B4%A7%E6%8A%A5%E5%A4%87
+     * </pre>
+     */
+    String OP_SPECIAL_ORDER = "https://api.weixin.qq.com/wxa/sec/order/opspecialorder";
+
   }
 
   public interface Vod {
