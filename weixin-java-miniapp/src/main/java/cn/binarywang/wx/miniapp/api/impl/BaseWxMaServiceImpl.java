@@ -499,7 +499,10 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public void setWxMaConfig(WxMaConfig maConfig) {
     final String appid = maConfig.getAppid();
-    this.setMultiConfigs(ImmutableMap.of(appid, maConfig), appid);
+    Map<String, WxMaConfig> map = new HashMap<>();
+    map.put(appid, maConfig);
+    Map<String, WxMaConfig> configMap = Collections.unmodifiableMap(map);
+    this.setMultiConfigs(configMap, appid);
   }
 
   @Override
