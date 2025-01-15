@@ -11,6 +11,7 @@ import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.config.WxPayConfigHolder;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
@@ -440,6 +441,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public WxPayTransferBatchesNotifyV3Result parseTransferBatchesNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException {
     return this.baseParseOrderNotifyV3Result(notifyData, header, WxPayTransferBatchesNotifyV3Result.class, WxPayTransferBatchesNotifyV3Result.DecryptNotifyResult.class);
+  }
+
+  @Override
+  public TransferBillsNotifyResult parseTransferBillsNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException {
+    return this.baseParseOrderNotifyV3Result(notifyData, header, TransferBillsNotifyResult.class, TransferBillsNotifyResult.DecryptNotifyResult.class);
   }
 
   @Override

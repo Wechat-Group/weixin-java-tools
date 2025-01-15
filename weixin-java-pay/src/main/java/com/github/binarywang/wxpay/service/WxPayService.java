@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.bean.notify.*;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -990,6 +991,17 @@ public interface WxPayService {
    * @throws WxPayException
    */
   WxPayTransferBatchesNotifyV3Result parseTransferBatchesNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * 解析商家转账批次回调通知
+   * https://pay.weixin.qq.com/doc/v3/merchant/4012712115
+   *
+   * @param notifyData
+   * @param header
+   * @return
+   * @throws WxPayException
+   */
+  TransferBillsNotifyResult parseTransferBillsNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * 解析服务商模式退款结果通知
