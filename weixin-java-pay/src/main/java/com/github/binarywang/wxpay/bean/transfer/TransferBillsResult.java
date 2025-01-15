@@ -40,4 +40,16 @@ public class TransferBillsResult implements Serializable {
    */
   @SerializedName("status")
   private String status;
+
+  /**
+   * 失败原因
+   */
+  @SerializedName("fail_reason")
+  private String failReason;
+
+  /**
+   * 跳转领取页面的package信息
+   */
+  @SerializedName("package_info")
+  private String packageInfo;
 }
