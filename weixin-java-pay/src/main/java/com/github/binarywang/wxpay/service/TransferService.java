@@ -111,4 +111,31 @@ public interface TransferService {
    */
   TransferBatchDetailResult transferBatchesOutBatchNoDetail(String outBatchNo, String outDetailNo) throws WxPayException;
 
+  /**
+   * <pre>
+   *
+   * 2025.1.15 开始新接口 发起商家转账API
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/transfer-bills">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012716434">发起商家转账API</a>
+   * </pre>
+   *
+   * @param request 转账请求参数
+   * @return TransferBillsResult 转账结果
+   * @throws WxPayException .
+   */
+  TransferBillsResult transferBills(TransferBillsRequest request) throws WxPayException;
+
+  /**
+   * 2025.1.15 开始新接口 解析商家转账结果
+   * 详见<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012712115"></a>
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return the wx transfer notify result
+   * @throws WxPayException the wx pay exception
+   */
+  TransferBillsNotifyResult parseTransferBillsNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 }
