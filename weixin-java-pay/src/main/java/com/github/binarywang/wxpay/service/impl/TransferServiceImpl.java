@@ -90,10 +90,8 @@ public class TransferServiceImpl implements TransferService {
   public TransferBillsResult transferBills(TransferBillsRequest request) throws WxPayException {
     String url = String.format("%s/v3/fund-app/mch-transfer/transfer-bills", this.payService.getPayBaseUrl());
     if (request.getUserName() != null && request.getUserName().length() > 0) {
-      String userName = request.getUserName();
       X509Certificate validCertificate = this.payService.getConfig().getVerifier().getValidCertificate();
-      RsaCryptoUtil.encryptFields(userName, validCertificate);
-      request.setUserName(userName);
+      RsaCryptoUtil.encryptFields(request, validCertificate);
     }
     String result = this.payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(result, TransferBillsResult.class);

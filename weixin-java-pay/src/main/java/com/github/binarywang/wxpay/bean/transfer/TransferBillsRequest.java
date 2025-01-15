@@ -84,11 +84,8 @@ public class TransferBillsRequest implements Serializable {
   /**
    * 转账场景报备信息
    */
-  @SpecEncrypt
   @SerializedName("transfer_scene_report_infos")
   private List<TransferSceneReportInfo> transferSceneReportInfos;
-
-
 
 
   @Data
