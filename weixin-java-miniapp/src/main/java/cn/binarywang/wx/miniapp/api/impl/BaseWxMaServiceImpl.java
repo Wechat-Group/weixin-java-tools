@@ -153,6 +153,9 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaOrderShippingService wxMaOrderShippingService =
       new WxMaOrderShippingServiceImpl(this);
 
+  private final WxMaOrderManagementService wxMaOrderManagementService =
+      new WxMaOrderManagementServiceImpl(this);
+
   private final WxMaOpenApiService wxMaOpenApiService = new WxMaOpenApiServiceImpl(this);
   private final WxMaVodService wxMaVodService = new WxMaVodServiceImpl(this);
   private final WxMaXPayService wxMaXPayService = new WxMaXPayServiceImpl(this);
@@ -815,6 +818,16 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaOrderShippingService getWxMaOrderShippingService() {
     return this.wxMaOrderShippingService;
+  }
+
+  /**
+   * 小程序订单管理服务
+   *
+   * @return WxMaOrderManagementService
+   */
+  @Override
+  public WxMaOrderManagementService getWxMaOrderManagementService() {
+    return this.wxMaOrderManagementService;
   }
 
   @Override

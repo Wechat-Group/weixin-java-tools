@@ -751,7 +751,7 @@ public class WxMaApiUrlConstants {
      * </pre>
      */
     String UPLOAD_COMBINED_SHIPPING_INFO =
-        "https://api.weixin.qq.com/wxa/sec/order/upload_combined_shipping_info";
+      "https://api.weixin.qq.com/wxa/sec/order/upload_combined_shipping_info";
 
     /**
      * 查询订单发货状态.
@@ -779,7 +779,7 @@ public class WxMaApiUrlConstants {
      * </pre>
      */
     String NOTIFY_CONFIRM_RECEIVE =
-        "https://api.weixin.qq.com/wxa/sec/order/notify_confirm_receive";
+      "https://api.weixin.qq.com/wxa/sec/order/notify_confirm_receive";
 
     /**
      * 消息跳转路径设置接口.
@@ -806,6 +806,35 @@ public class WxMaApiUrlConstants {
      * </pre>
      */
     String OP_SPECIAL_ORDER = "https://api.weixin.qq.com/wxa/sec/order/opspecialorder";
+
+  }
+
+  /**
+   * 小程序订单管理
+   *
+   * <pre>
+   * 文档地址： https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/order_center/order_center.html
+   * </pre>
+   */
+  public interface OrderManagement {
+
+    /**
+     * 配置订单详情路径.
+     *
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/order_center/order_center.html
+     * </pre>
+     */
+    String UPDATE_ORDER_DETAIL_PATH = "https://api.weixin.qq.com/wxa/sec/order/update_order_detail_path";
+
+    /**
+     * 查询订单详情路径.
+     *
+     * <pre>
+     * 文档地址：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/order_center/order_center.html
+     * </pre>
+     */
+    String GET_ORDER_DETAIL_PATH = "https://api.weixin.qq.com/wxa/sec/order/get_order_detail_path";
 
   }
 
