@@ -691,7 +691,7 @@ public interface WxCpApiPathConsts {
     /**
      * The constant DEPARTMENT_LIST.
      */
-    String DEPARTMENT_LIST = "/cgi-bin/school/department/list?id=";
+    String DEPARTMENT_LIST = "/cgi-bin/school/department/list";
 
     /**
      * The constant GET_PAYMENT_RESULT.
