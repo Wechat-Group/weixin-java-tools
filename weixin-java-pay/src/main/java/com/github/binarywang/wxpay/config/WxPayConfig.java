@@ -14,6 +14,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import java.util.Base64;
 import java.util.Optional;
 import javax.net.ssl.SSLContext;
 import lombok.Data;
@@ -371,7 +372,7 @@ public class WxPayConfig {
     if (configContent != null) {
       inputStream = new ByteArrayInputStream(configContent);
     } else if (StringUtils.isNotEmpty(configString)) {
-      configContent = configString.getBytes(StandardCharsets.UTF_8);
+      configContent = Base64.getDecoder().decode(configString);
       inputStream = new ByteArrayInputStream(configContent);
     } else {
       if (StringUtils.isBlank(configPath)) {
