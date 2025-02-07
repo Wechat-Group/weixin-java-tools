@@ -66,6 +66,17 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   }
 
   @Override
+  public WxCpContactWayList listContactWay(Long startTime, Long endTime, String cursor, Long limit) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("start_time", startTime);
+    json.addProperty("end_time", endTime);
+    json.addProperty("cursor", cursor);
+    json.addProperty("limit", limit);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(LIST_CONTACT_WAY);
+    return WxCpContactWayList.fromJson(this.mainService.post(url, json.toString()));
+  }
+
+  @Override
   public WxCpBaseResp updateContactWay(WxCpContactWayInfo info) throws WxErrorException {
     if (StringUtils.isBlank(info.getContactWay().getConfigId())) {
       throw new WxRuntimeException("更新「联系我」方式需要指定configId");

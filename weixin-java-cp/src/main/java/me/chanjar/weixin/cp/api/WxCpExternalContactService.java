@@ -60,6 +60,25 @@ public interface WxCpExternalContactService {
   WxCpContactWayInfo getContactWay(String configId) throws WxErrorException;
 
   /**
+   * 获取企业已配置的「联系我」列表
+   *
+   * <pre>
+   * 获取企业配置的「联系我」二维码和「联系我」小程序插件列表。不包含临时会话。
+   * 注意，<b>该接口仅可获取2021年7月10日以后创建的「联系我」</b>
+   * </pre>
+   *
+   * 文档地址: <a href="https://developer.work.weixin.qq.com/document/path/92228#%E8%8E%B7%E5%8F%96%E4%BC%81%E4%B8%9A%E5%B7%B2%E9%85%8D%E7%BD%AE%E7%9A%84%E3%80%8C%E8%81%94%E7%B3%BB%E6%88%91%E3%80%8D%E5%88%97%E8%A1%A8">获取企业已配置的「联系我」列表</a>
+   *
+   * @param startTime 「联系我」创建起始时间戳, 默认为90天前
+   * @param endTime 「联系我」创建结束时间戳, 默认为当前时间
+   * @param cursor 分页查询使用的游标，为上次请求返回的 next_cursor
+   * @param limit 每次查询的分页大小，默认为100条，最多支持1000条
+   * @return contact way configId
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpContactWayList listContactWay(Long startTime, Long endTime, String cursor, Long limit) throws WxErrorException;
+
+  /**
    * 更新企业已配置的「联系我」方式
    *
    * <pre>

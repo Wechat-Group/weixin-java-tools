@@ -1086,6 +1086,10 @@ public interface WxCpApiPathConsts {
      */
     String GET_CONTACT_WAY = "/cgi-bin/externalcontact/get_contact_way";
     /**
+     * The constant LIST_CONTACT_WAY.
+     */
+    String LIST_CONTACT_WAY = "/cgi-bin/externalcontact/list_contact_way";
+    /**
      * The constant UPDATE_CONTACT_WAY.
      */
     String UPDATE_CONTACT_WAY = "/cgi-bin/externalcontact/update_contact_way";

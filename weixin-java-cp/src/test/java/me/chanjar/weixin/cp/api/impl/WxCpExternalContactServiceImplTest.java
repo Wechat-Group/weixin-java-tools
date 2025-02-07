@@ -4,6 +4,9 @@ import static org.testng.Assert.assertNotNull;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -88,6 +91,20 @@ public class WxCpExternalContactServiceImplTest {
     WxCpContactWayInfo contactWayInfo = this.wxCpService.getExternalContactService().getContactWay(configId);
     System.out.println(contactWayInfo.toJson());
     assertNotNull(contactWayInfo);
+  }
+
+  /**
+   * Test list contact way.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testListContactWay() throws WxErrorException {
+    long startTime = LocalDateTime.now().minusDays(1).toEpochSecond(ZoneOffset.of("+8"));
+    long endTime = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
+    WxCpContactWayList wxCpContactWayList = this.wxCpService.getExternalContactService().listContactWay(startTime, endTime, null, 100L);
+    System.out.println(wxCpContactWayList.toJson());
+    assertNotNull(wxCpContactWayList);
   }
 
   /**
