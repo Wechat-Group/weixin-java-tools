@@ -808,7 +808,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public <T> T combineTransactions(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException {
     CombineTransactionsResult result = this.combine(tradeType, request);
-    return result.getPayInfo(tradeType, request.getCombineAppid(), request.getCombineAppid(), this.getConfig().getPrivateKey());
+    return result.getPayInfo(tradeType, request.getCombineAppid(), request.getCombineMchid(), this.getConfig().getPrivateKey());
   }
 
   @Override
