@@ -6,6 +6,17 @@ import com.github.binarywang.wxpay.util.ResourcesUtils;
 import com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder;
 import com.github.binarywang.wxpay.v3.auth.*;
 import com.github.binarywang.wxpay.v3.util.PemUtils;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.SneakyThrows;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.ssl.SSLContexts;
+
+import javax.net.ssl.SSLContext;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -16,16 +27,6 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.Optional;
-import javax.net.ssl.SSLContext;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.SneakyThrows;
-import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RegExUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.ssl.SSLContexts;
 
 /**
  * 微信支付配置
@@ -310,8 +311,8 @@ public class WxPayConfig {
       PublicKey publicKey = null;
       if (this.getPublicKeyString() != null || this.getPublicKeyPath() != null || this.publicKeyContent != null) {
         try (InputStream pubInputStream =
-            this.loadConfigInputStream(this.getPublicKeyString(), this.getPublicKeyPath(),
-              this.publicKeyContent, "publicKeyPath")) {
+               this.loadConfigInputStream(this.getPublicKeyString(), this.getPublicKeyPath(),
+                 this.publicKeyContent, "publicKeyPath")) {
           publicKey = PemUtils.loadPublicKey(pubInputStream);
         }
       }
@@ -322,10 +323,10 @@ public class WxPayConfig {
       Verifier certificatesVerifier;
       if (publicKey == null) {
         certificatesVerifier =
-            new AutoUpdateCertificatesVerifier(
-                new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
-                this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(),
-                this.getPayBaseUrl(), wxPayHttpProxy);
+          new AutoUpdateCertificatesVerifier(
+            new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
+            this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(),
+            this.getPayBaseUrl(), wxPayHttpProxy);
       } else {
         certificatesVerifier = new PublicCertificateVerifier(publicKey, publicKeyId);
       }
@@ -366,21 +367,32 @@ public class WxPayConfig {
     return null;
   }
 
+  /**
+   * 从指定参数加载输入流
+   *
+   * @param configString  证书内容进行Base64加密后的字符串
+   * @param configPath    证书路径
+   * @param configContent 证书内容的字节数组
+   * @param certName      证书的标识
+   * @return 输入流
+   * @throws WxPayException 异常
+   */
   private InputStream loadConfigInputStream(String configString, String configPath, byte[] configContent,
-                                            String fileName) throws WxPayException {
-    InputStream inputStream;
+                                            String certName) throws WxPayException {
     if (configContent != null) {
-      inputStream = new ByteArrayInputStream(configContent);
-    } else if (StringUtils.isNotEmpty(configString)) {
-      configContent = Base64.getDecoder().decode(configString);
-      inputStream = new ByteArrayInputStream(configContent);
-    } else {
-      if (StringUtils.isBlank(configPath)) {
-        throw new WxPayException("请确保证书文件地址【" + fileName + "】或者内容已配置");
-      }
-      inputStream = this.loadConfigInputStream(configPath);
+      return new ByteArrayInputStream(configContent);
     }
-    return inputStream;
+    
+    if (StringUtils.isNotEmpty(configString)) {
+      configContent = Base64.getDecoder().decode(configString);
+      return new ByteArrayInputStream(configContent);
+    }
+
+    if (StringUtils.isBlank(configPath)) {
+      throw new WxPayException(String.format("请确保【%s】的文件地址【%s】存在", certName, configPath));
+    }
+
+    return this.loadConfigInputStream(configPath);
   }
 
 

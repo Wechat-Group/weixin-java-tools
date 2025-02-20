@@ -186,6 +186,14 @@ public class WxMpXmlMessage implements Serializable {
   @JacksonXmlCData
   private String unionId;
 
+  @XStreamAlias("ret")
+  @JacksonXmlProperty(localName = "ret")
+  private Integer ret;
+  
+  @XStreamAlias("nickname")
+  @JacksonXmlProperty(localName = "nickname")
+  private String nickname;
+
   ///////////////////////////////////////
   // 群发消息返回的结果
   ///////////////////////////////////////
