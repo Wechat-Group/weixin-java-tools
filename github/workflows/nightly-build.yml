@@ -1,0 +1,164 @@
+name: Nightly Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天UTC 0:00运行
+  workflow_dispatch:     # 允许手动触发
+
+jobs:
+  check_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has_changes: ${{ steps.check_commits.outputs.has_changes }}
+      last_commit: ${{ steps.check_commits.outputs.last_commit }}
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: develop
+          fetch-depth: 0
+      
+      - name: Check for new commits
+        id: check_commits
+        run: |
+          # 修复：使用创建日期排序而非字典排序获取最后一个nightly tag
+          LAST_TAG=$(git tag -l "nightly-*" --sort=-creatordate | head -n 1)
+          
+          if [ -z "$LAST_TAG" ]; then
+            # 没有找到上一个nightly tag，视为需要构建
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "last_commit=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+            echo "没有找到上一个nightly标签，将生成首个nightly构建"
+          else
+            # 获取上一个tag的commit hash
+            LAST_TAG_COMMIT=$(git rev-list -n 1 $LAST_TAG)
+            # 获取从上一个tag到现在的提交数量
+            COMMIT_COUNT=$(git rev-list --count $LAST_TAG_COMMIT..HEAD)
+            
+            if [ "$COMMIT_COUNT" -gt 0 ]; then
+              echo "has_changes=true" >> $GITHUB_OUTPUT
+              echo "发现 $COMMIT_COUNT 个新提交，将生成新的nightly构建"
+            else
+              echo "has_changes=false" >> $GITHUB_OUTPUT
+              echo "没有新的提交，将跳过nightly构建"
+            fi
+            echo "last_commit=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          fi
+      
+      # 新增：无论是否有更改，都记录检查结果
+      - name: Record check results
+        run: |
+          DATE=$(date +"%Y-%m-%d %H:%M:%S")
+          RESULT="${{ steps.check_commits.outputs.has_changes }}"
+          COMMIT="${{ steps.check_commits.outputs.last_commit }}"
+          
+          if [ "$RESULT" == "true" ]; then
+            STATUS="需要构建"
+          else
+            STATUS="无更改，跳过构建"
+          fi
+          
+          # 创建记录内容
+          echo "## Nightly检查记录 - $DATE" > check-record.md
+          echo "- 检查结果: $STATUS" >> check-record.md
+          echo "- 最新提交: $COMMIT" >> check-record.md
+          
+          # 记录最近的提交信息
+          echo "- 最近提交详情:" >> check-record.md
+          git log -n 3 --pretty=format:"  * %s (%h) - %an, %ad" --date=short >> check-record.md
+          
+          # 临时方案：输出到Action日志
+          cat check-record.md
+          
+          # 如果您希望创建一个文件保存这些记录，可以考虑以下方式：
+          # 1. 创建一个专门的分支保存记录
+          # 2. 使用GitHub Gist API保存
+          # 3. 使用GitHub Issues跟踪
+          # 4. 将记录发送到外部系统如Slack或邮件
+
+  build:
+    needs: check_changes
+    if: ${{ needs.check_changes.outputs.has_changes == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: develop   # 使用develop分支构建nightly版本
+          fetch-depth: 0 # 获取所有历史记录和标签以正确生成版本号
+      
+      - name: Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          java-version: 8
+          distribution: 'temurin'
+          cache: maven
+          server-id: github  # 对应pom.xml中的distributionManagement的id
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+      
+      - name: Set Nightly Version
+        id: set-version
+        run: |
+          # 修复：时间戳精确到分钟而非天
+          TIMESTAMP=$(date +%Y%m%d%H%M)
+          # 修复：使用8位Git hash而非默认7位
+          GIT_HASH=$(git rev-parse --short=8 HEAD)
+          
+          # 获取当前版本号并移除-SNAPSHOT后缀(如果有)
+          BASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | sed 's/-SNAPSHOT$//')
+          
+          # 创建nightly版本号 - 使用更精确的时间戳和更长的hash
+          NIGHTLY_VERSION="${BASE_VERSION}-nightly.${TIMESTAMP}.${GIT_HASH}"
+          
+          echo "构建版本: ${NIGHTLY_VERSION}"
+          echo "NIGHTLY_VERSION=${NIGHTLY_VERSION}" >> $GITHUB_ENV
+          echo "TIMESTAMP=${TIMESTAMP}" >> $GITHUB_ENV
+          
+          # 设置新版本号，不生成备份文件
+          mvn versions:set -DnewVersion=${NIGHTLY_VERSION} -DgenerateBackupPoms=false
+      
+      - name: Add GitHub Package Repository to pom
+        run: |
+          # 在根pom.xml中添加distributionManagement配置
+          GITHUB_REPO=$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')
+          
+          # 检查pom.xml是否已包含distributionManagement
+          if ! grep -q "<distributionManagement>" pom.xml; then
+            # 在pom.xml的</project>标签前添加distributionManagement配置
+            sed -i '/<\/project>/i \
+            <distributionManagement>\
+                <repository>\
+                    <id>github</id>\
+                    <name>GitHub Packages</name>\
+                    <url>https://maven.pkg.github.com/'"$GITHUB_REPO"'</url>\
+                </repository>\
+            </distributionManagement>' pom.xml
+          fi
+      
+      - name: Build with Maven
+        run: mvn -B clean package
+      
+      - name: Deploy to GitHub Packages
+        run: mvn deploy -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Generate release notes
+        run: |
+          echo "## WxJava Nightly Build ${NIGHTLY_VERSION}" > release-notes.md
+          echo "构建时间: $(date)" >> release-notes.md
+          echo "分支: develop" >> release-notes.md
+          echo "Commit: $(git rev-parse HEAD)" >> release-notes.md
+          echo "### 最近提交:" >> release-notes.md
+          git log -n 5 --pretty=format:"* %s (%h)" >> release-notes.md
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Nightly Build ${{ env.NIGHTLY_VERSION }}
+          # 修改：简化标签名，避免重复的nightly字样
+          tag_name: nightly-${{ env.TIMESTAMP }}
+          body_path: release-notes.md
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
