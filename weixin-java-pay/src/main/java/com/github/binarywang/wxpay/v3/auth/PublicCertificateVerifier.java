@@ -9,6 +9,8 @@ public class PublicCertificateVerifier implements Verifier{
 
     private final PublicKey publicKey;
 
+    private Verifier certificateVerifier;
+
     private final X509PublicCertificate publicCertificate;
 
     public PublicCertificateVerifier(PublicKey publicKey, String publicId) {
@@ -16,8 +18,15 @@ public class PublicCertificateVerifier implements Verifier{
         this.publicCertificate = new X509PublicCertificate(publicKey, publicId);
     }
 
+   public void setOtherVerifier(Verifier verifier) {
+      this.certificateVerifier = verifier;
+   }
+
     @Override
     public boolean verify(String serialNumber, byte[] message, String signature) {
+        if (!serialNumber.contains("PUB_KEY_ID")) {
+            return this.certificateVerifier.verify(serialNumber, message, signature);
+        }
         try {
             Signature sign = Signature.getInstance("SHA256withRSA");
             sign.initVerify(publicKey);
