@@ -320,16 +320,7 @@ public class WxPayConfig {
       //构造Http Proxy正向代理
       WxPayHttpProxy wxPayHttpProxy = getWxPayHttpProxy();
 
-      Verifier certificatesVerifier;
-      if (publicKey == null) {
-        certificatesVerifier =
-          new AutoUpdateCertificatesVerifier(
-            new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
-            this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(),
-            this.getPayBaseUrl(), wxPayHttpProxy);
-      } else {
-        certificatesVerifier = new PublicCertificateVerifier(publicKey, publicKeyId);
-      }
+      Verifier certificatesVerifier = getVerifier(merchantPrivateKey, wxPayHttpProxy, publicKey);
 
       WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
@@ -353,6 +344,19 @@ public class WxPayConfig {
     } catch (Exception e) {
       throw new WxPayException("v3请求构造异常！", e);
     }
+  }
+
+  private Verifier getVerifier(PrivateKey merchantPrivateKey, WxPayHttpProxy wxPayHttpProxy, PublicKey publicKey) {
+    Verifier certificatesVerifier = new AutoUpdateCertificatesVerifier(
+      new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
+      this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(),
+      this.getPayBaseUrl(), wxPayHttpProxy);
+    if (publicKey != null) {
+      Verifier publicCertificatesVerifier = new PublicCertificateVerifier(publicKey, publicKeyId);
+      publicCertificatesVerifier.setOtherVerifier(certificatesVerifier);
+      certificatesVerifier = publicCertificatesVerifier;
+    }
+    return certificatesVerifier;
   }
 
   /**
@@ -382,7 +386,7 @@ public class WxPayConfig {
     if (configContent != null) {
       return new ByteArrayInputStream(configContent);
     }
-    
+
     if (StringUtils.isNotEmpty(configString)) {
       configContent = Base64.getDecoder().decode(configString);
       return new ByteArrayInputStream(configContent);
